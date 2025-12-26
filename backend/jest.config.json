@@ -1,0 +1,14 @@
+{
+  "testEnvironment": "node",
+  "coveragePathIgnorePatterns": [
+    "/node_modules/"
+  ],
+  "testMatch": [
+    "**/tests/**/*.test.js"
+  ],
+  "transform": {},
+  "setupFiles": ["<rootDir>/tests/setup.js"],
+  "moduleNameMapper": {
+    "^(\\.{1,2}/.*)\\.js$": "$1"
+  }
+}

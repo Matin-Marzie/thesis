@@ -1,0 +1,300 @@
+import axios from 'axios';
+import * as SecureStore from 'expo-secure-store';
+import { API_BASE_URL } from '../config/api.config.js';
+
+// Constants for secure storage keys
+const REFRESH_TOKEN_KEY = 'refresh_token';
+
+// ✅ SECURE: Access token stored ONLY in memory (cleared on app restart)
+let accessToken = null;
+
+// Axios instance with default configuration
+const apiClient = axios.create({
+  baseURL: API_BASE_URL,
+  headers: {
+    'Content-Type': 'application/json',
+    'X-Client-Type': 'mobile', // ✅ Identify as mobile client
+  },
+  // Note: withCredentials not needed for React Native (no cookies)
+});
+
+// Request interceptor to add access token to headers
+apiClient.interceptors.request.use(
+  (config) => {
+    if (accessToken) {
+      config.headers.Authorization = `Bearer ${accessToken}`;
+    }
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
+
+// Response interceptor to handle token refresh
+apiClient.interceptors.response.use(
+  (response) => response,
+  async (error) => {
+    const originalRequest = error.config;
+
+    // If error is 401 or 403 and we haven't retried yet
+    if (
+      (error.response?.status === 401 || error.response?.status === 403) &&
+      !originalRequest._retry
+    ) {
+      originalRequest._retry = true;
+
+      try {
+        const refreshToken = await SecureStore.getItemAsync(REFRESH_TOKEN_KEY);
+        
+        if (refreshToken) {
+          // ✅ CORRECT: Send refresh token in request body (not cookies)
+          const response = await axios.post(
+            `${API_BASE_URL}/refresh`,
+            { refreshToken }, // Send in body
+            {
+              headers: {
+                'Content-Type': 'application/json',
+              },
+            }
+          );
+
+          if (response.data?.accessToken) {
+            accessToken = response.data.accessToken;
+            
+            // ✅ Update refresh token if backend rotates it
+            if (response.data?.refreshToken) {
+              await SecureStore.setItemAsync(REFRESH_TOKEN_KEY, response.data.refreshToken);
+            }
+            
+            originalRequest.headers.Authorization = `Bearer ${accessToken}`;
+            return apiClient(originalRequest);
+          }
+        }
+      } catch (refreshError) {
+        // Refresh failed, clear tokens and redirect to login
+        await clearTokens();
+        return Promise.reject(refreshError);
+      }
+    }
+
+    return Promise.reject(error);
+  }
+);
+
+// ==================== TOKEN MANAGEMENT ====================
+
+/**
+ * Set access token in memory
+ */
+export const setAccessToken = (token) => {
+  accessToken = token;
+};
+
+/**
+ * Get access token from memory
+ */
+export const getAccessToken = () => {
+  return accessToken;
+};
+
+/**
+ * Store refresh token securely using Expo SecureStore
+ */
+export const storeRefreshToken = async (token) => {
+  try {
+    await SecureStore.setItemAsync(REFRESH_TOKEN_KEY, token);
+  } catch (error) {
+    console.error('Error storing refresh token:', error);
+    throw error;
+  }
+};
+
+/**
+ * Get refresh token from SecureStore
+ */
+export const getRefreshToken = async () => {
+  try {
+    return await SecureStore.getItemAsync(REFRESH_TOKEN_KEY);
+  } catch (error) {
+    console.error('Error retrieving refresh token:', error);
+    return null;
+  }
+};
+
+/**
+ * Clear all tokens
+ */
+export const clearTokens = async () => {
+  try {
+    accessToken = null;
+    await SecureStore.deleteItemAsync(REFRESH_TOKEN_KEY);
+  } catch (error) {
+    console.error('Error clearing tokens:', error);
+  }
+};
+
+// ==================== AUTH API CALLS ====================
+
+/**
+ * Register a new user
+ * @param {Object} userData - { first_name, username, password }
+ */
+export const registerUser = async (userData) => {
+  try {
+    const response = await apiClient.post('/register', userData);
+    
+    // ✅ CORRECT: Store tokens from response body (not cookies)
+    if (response.data?.accessToken) {
+      setAccessToken(response.data.accessToken);
+    }
+    
+    if (response.data?.refreshToken) {
+      await storeRefreshToken(response.data.refreshToken);
+    }
+    
+    return response.data;
+  } catch (error) {
+    console.error('Registration error:', error.response?.data || error.message);
+    throw error;
+  }
+};
+
+/**
+ * Login with username and password
+ * @param {Object} credentials - { username, password }
+ */
+export const loginUser = async (credentials) => {
+  try {
+    const response = await apiClient.post('/auth/login', credentials);
+    
+    // ✅ CORRECT: Store tokens from response body (not cookies)
+    if (response.data?.accessToken) {
+      setAccessToken(response.data.accessToken);
+    }
+    
+    if (response.data?.refreshToken) {
+      await storeRefreshToken(response.data.refreshToken);
+    }
+    
+    return response.data;
+  } catch (error) {
+    console.error('Login error:', error.response?.data || error.message);
+    throw error;
+  }
+};
+
+/**
+ * Login with Google OAuth
+ * @param {Object} data - { credential } (Google ID token)
+ */
+export const loginWithGoogle = async (data) => {
+  try {
+    const response = await apiClient.post('/auth/google', data);
+    
+    // ✅ CORRECT: Store tokens from response body (not cookies)
+    if (response.data?.accessToken) {
+      setAccessToken(response.data.accessToken);
+    }
+    
+    if (response.data?.refreshToken) {
+      await storeRefreshToken(response.data.refreshToken);
+    }
+    
+    return response.data;
+  } catch (error) {
+    console.error('Google login error:', error.response?.data || error.message);
+    throw error;
+  }
+};
+
+/**
+ * Refresh access token using refresh token
+ */
+export const refreshAccessToken = async () => {
+  try {
+    const refreshToken = await getRefreshToken();
+    
+    if (!refreshToken) {
+      throw new Error('No refresh token available');
+    }
+
+    // ✅ CORRECT: Send refresh token in request body (not cookies)
+    const response = await axios.post(
+      `${API_BASE_URL}/refresh`,
+      { refreshToken }, // Send in body
+      {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }
+    );
+
+    if (response.data?.accessToken) {
+      setAccessToken(response.data.accessToken);
+      
+      // ✅ Update refresh token if backend rotates it
+      if (response.data?.refreshToken) {
+        await storeRefreshToken(response.data.refreshToken);
+      }
+      
+      return response.data.accessToken;
+    }
+
+    throw new Error('Failed to refresh token');
+  } catch (error) {
+    console.error('Token refresh error:', error.response?.data || error.message);
+    await clearTokens();
+    throw error;
+  }
+};
+
+/**
+ * Logout user
+ */
+export const logoutUser = async () => {
+  try {
+    const refreshToken = await getRefreshToken();
+    
+    if (refreshToken) {
+      // ✅ CORRECT: Send refresh token in request body (not cookies)
+      await apiClient.post('/logout', { refreshToken });
+    }
+  } catch (error) {
+    console.error('Logout error:', error.response?.data || error.message);
+  } finally {
+    // Always clear tokens, even if API call fails
+    await clearTokens();
+  }
+};
+
+// ==================== USER API CALLS ====================
+
+/**
+ * Get current user profile
+ */
+export const getCurrentUser = async () => {
+  try {
+    const response = await apiClient.get('/users/me');
+    return response.data;
+  } catch (error) {
+    console.error('Get user error:', error.response?.data || error.message);
+    throw error;
+  }
+};
+
+/**
+ * Update user profile
+ * @param {Object} userData - Updated user data
+ */
+export const updateUserProfile = async (userData) => {
+  try {
+    const response = await apiClient.patch('/users/me', userData);
+    return response.data;
+  } catch (error) {
+    console.error('Update user error:', error.response?.data || error.message);
+    throw error;
+  }
+};
+
+export default apiClient;

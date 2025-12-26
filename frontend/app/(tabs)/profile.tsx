@@ -1,0 +1,113 @@
+import React from 'react';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
+import { useRouter } from 'expo-router';
+import { useAppContext } from '@/context/AppContext';
+import { PRIMARY_COLOR } from '@/constants/App';
+
+export default function ProfileScreen() {
+  const { user, isAuthenticated } = useAppContext();
+  const router = useRouter();
+
+  return (
+    <ScrollView style={styles.container}>
+      <View style={styles.content}>
+        {/* User Info Section */}
+        {user && (
+          <View style={styles.userSection}>
+            <View style={styles.avatar}>
+              <Ionicons name="person" size={40} color="#fff" />
+            </View>
+            <Text style={styles.userName}>{user.first_name || user.username}</Text>
+            <Text style={styles.userEmail}>{user.email || `@${user.username}`}</Text>
+          </View>
+        )}
+
+        {/* Auth Buttons - Show only when not authenticated */}
+        {!isAuthenticated && (
+          <View style={styles.authSection}>
+            <TouchableOpacity 
+              style={styles.createAccountButton}
+              onPress={() => router.push('/onboarding/register')}
+            >
+              <Text style={styles.createAccountText}>CREATE ACCOUNT</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity 
+              style={styles.loginButton}
+              onPress={() => router.push('/onboarding/login')}
+            >
+              <Text style={styles.loginText}>LOGIN</Text>
+            </TouchableOpacity>
+          </View>
+        )}
+      </View>
+    </ScrollView>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+  },
+  content: {
+    padding: 20,
+  },
+  userSection: {
+    alignItems: 'center',
+    paddingVertical: 30,
+    borderBottomWidth: 1,
+    borderBottomColor: '#e0e0e0',
+    marginBottom: 20,
+  },
+  avatar: {
+    width: 80,
+    height: 80,
+    borderRadius: 40,
+    backgroundColor: '#4CAF50',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 15,
+  },
+  userName: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: '#333',
+    marginBottom: 5,
+  },
+  userEmail: {
+    fontSize: 16,
+    color: '#666',
+  },
+  authSection: {
+    paddingVertical: 20,
+    gap: 16,
+  },
+  createAccountButton: {
+    backgroundColor: PRIMARY_COLOR,
+    paddingVertical: 16,
+    borderRadius: 12,
+    alignItems: 'center',
+  },
+  createAccountText: {
+    color: '#fff',
+    fontSize: 16,
+    fontWeight: 'bold',
+    letterSpacing: 1,
+  },
+  loginButton: {
+    backgroundColor: '#fff',
+    paddingVertical: 16,
+    borderRadius: 12,
+    alignItems: 'center',
+    borderWidth: 2,
+    borderColor: PRIMARY_COLOR,
+  },
+  loginText: {
+    color: PRIMARY_COLOR,
+    fontSize: 16,
+    fontWeight: 'bold',
+    letterSpacing: 1,
+  },
+});
