@@ -9,7 +9,6 @@ import {
   ActivityIndicator,
   KeyboardAvoidingView,
   Platform,
-  Alert,
   Dimensions,
 } from 'react-native';
 import { useRouter } from 'expo-router';

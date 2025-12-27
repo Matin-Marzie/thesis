@@ -67,6 +67,7 @@ export default function OnboardingQuestions() {
             is_current_language: true,
             native_language_id: selectedNativeLanguage,
             learning_language_id: selectedLearningLanguage,
+            created_at: new Date().toISOString(),
             proficiency_level: selectedLevel,
             experience: 0,
             learned_vocabulary: [],

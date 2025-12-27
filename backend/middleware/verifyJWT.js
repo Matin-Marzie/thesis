@@ -4,8 +4,7 @@ const verifyJWT = (req, res, next) => {
   const authHeader = req.headers.authorization || req.headers.Authorization;
 
   if (!authHeader?.startsWith('Bearer ')) {
-    return res.status(401).json({ 
-      success: false, 
+    return res.status(401).json({
       message: 'Unauthorized - No token provided' 
     });
   }
@@ -15,7 +14,6 @@ const verifyJWT = (req, res, next) => {
   jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, decoded) => {
     if (err) {
       return res.status(403).json({ 
-        success: false, 
         message: 'Forbidden - Invalid token' 
       });
     }

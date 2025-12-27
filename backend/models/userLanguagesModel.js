@@ -60,7 +60,7 @@ const userLanguagesModel = {
 
   // Havn't used yet
   // Get all user languages
-  async GetUserLanguages(userId) {
+  async findByUserId(userId) {
     const query = `
       SELECT ul.*, 
              bl.name as native_language_name, bl.code as native_language_code,

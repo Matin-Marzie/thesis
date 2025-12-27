@@ -33,7 +33,7 @@ router.use(verifyJWT);
  *       404:
  *         description: User not found
  */
-router.get('/me', usersController.getProfile);
+router.get('/me', usersController.getUserObject);
 
 /**
  * @swagger

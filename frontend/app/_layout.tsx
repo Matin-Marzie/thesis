@@ -86,7 +86,7 @@ function RootLayoutNav() {
   if (isLoading) {
     return (
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#fff' }}>
-        <ActivityIndicator size="large" color="#0f8690" />
+        <ActivityIndicator size="large" color={PRIMARY_COLOR} />
       </View>
     );
   }

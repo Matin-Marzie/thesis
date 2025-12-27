@@ -77,13 +77,6 @@ const registerController = async (req, res) => {
         // If it's a different error, throw it
         throw error;
       }
-      finally {
-        // Log registration
-        logEvents(
-          `New user registered: ${newUser.email} (${newUser.username})`,
-          'authLog.log'
-        );
-      }
     }
 
     // If all username attempts failed
@@ -92,6 +85,12 @@ const registerController = async (req, res) => {
         message: 'Failed to create user - unable to generate unique username',
       });
     }
+
+    // Log registration
+    logEvents(
+      `New user registered: ${newUser.email} (${newUser.username})`,
+      'authLog.log'
+    );
 
     // Generate tokens
     const accessToken = jwt.sign(

@@ -40,7 +40,7 @@ export default function TabLayout() {
           tabBarIcon: ({ color }) => <TabBarIcon name="home" color={color} />,
         }}
       />
-      <Tabs.Screen
+      {/* <Tabs.Screen
         name="reels"
         options={{
           title: 'Reels',
@@ -54,11 +54,12 @@ export default function TabLayout() {
           title: 'Create',
           tabBarIcon: ({ color }) => <TabBarIcon name="plus-circle" color={color} />,
         }}
-      />
+      /> */}
       <Tabs.Screen
         name="practice"
         options={{
           title: 'Practice',
+          headerTitle: () => <HomeHeaderTitle />,
           tabBarIcon: ({ color }) => <TabBarIcon name="gamepad" color={color} />,
         }}
       />

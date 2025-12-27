@@ -71,6 +71,7 @@ export const AppProvider = ({ children }) => {
         is_current_language: true,
         native_language_id: 1,
         learning_language_id: 2,
+        created_at: null,
         proficiency_level: 'A1',
         experience: 0,
         learned_vocabulary: [], // { id: 100000, mastery_level: 1, last_review: null, created_at: null }
@@ -81,33 +82,7 @@ export const AppProvider = ({ children }) => {
   const [user, setUser] = useState(defaultUser);
 
   // all available words in the learning language
-  const [dictionary, setDictionary] = useState([
-  ]);
-  //   // Example word entries
-  //   add: { id: 7, written_form: "ADD", translation: "προσθέτω", transliteration: "", category: "", image_url: null, audio_url: null },
-  //   admin: { id: 11, written_form: "ADMIN", translation: "διαχειριστής", transliteration: "", category: "", image_url: null, audio_url: null },
-  //   aid: { id: 10, written_form: "AID", translation: "βοήθεια", transliteration: "", category: "", image_url: null, audio_url: null },
-  //   amid: { id: 20, written_form: "AMID", translation: "", transliteration: "", category: "", image_url: null, audio_url: null },
-  //   amino: { id: 21, written_form: "AMINO", translation: "", transliteration: "", category: "", image_url: null, audio_url: null },
-  //   and: { id: 19, written_form: "AND", translation: "και", transliteration: "", category: "", image_url: null, audio_url: null },
-  //   dam: { id: 17, written_form: "DAM", translation: "", transliteration: "", category: "", image_url: null, audio_url: null },
-  //   damn: { id: 18, written_form: "DAMN", translation: "", transliteration: "", category: "", image_url: null, audio_url: null },
-  //   dad: { id: 8, written_form: "DAD", translation: "μπαμπάς", transliteration: "", category: "", image_url: null, audio_url: null },
-  //   diamond: { id: 1, written_form: "DIAMOND", translation: "Διαμάντι", transliteration: "", category: "", image_url: null, audio_url: null },
-  //   did: { id: 9, written_form: "DID", translation: "κάνω(αόριστο)", transliteration: "", category: "", image_url: null, audio_url: null },
-  //   do: { id: 16, written_form: "DO", translation: "κάνω", transliteration: "", category: "", image_url: null, audio_url: null },
-  //   domain: { id: 2, written_form: "DOMAIN", translation: "πεδίο", transliteration: "", category: "", image_url: null, audio_url: null },
-  //   id: { id: 24, written_form: "ID", translation: "ταυτότητα", transliteration: "", category: "", image_url: null, audio_url: null },
-  //   maid: { id: 4, written_form: "MAID", translation: "", transliteration: "", category: "", image_url: null, audio_url: null },
-  //   main: { id: 12, written_form: "MAIN", translation: "", transliteration: "", category: "", image_url: null, audio_url: null },
-  //   man: { id: 15, written_form: "MAN", translation: "ο άνδρας", transliteration: "", category: "", image_url: null, audio_url: null },
-  //   mid: { id: 14, written_form: "MID", translation: "", transliteration: "", category: "", image_url: null, audio_url: null },
-  //   mind: { id: 5, written_form: "MIND", translation: "μυαλό", transliteration: "", category: "", image_url: null, audio_url: null },
-  //   moan: { id: 22, written_form: "MOAN", translation: "", transliteration: "", category: "", image_url: null, audio_url: null },
-  //   nomad: { id: 3, written_form: "NOMAD", translation: "νομάδας", transliteration: "", category: "", image_url: null, audio_url: null },
-  //   nod: { id: 6, written_form: "NOD", translation: "", transliteration: "", category: "", image_url: null, audio_url: null },
-  //   odd: { id: 13, written_form: "ODD", translation: "περιττός, ασυνήθιστος", transliteration: "", category: "", image_url: null, audio_url: null },
-  //   omni: { id: 23, written_form: "OMNI", translation: "", transliteration: "", category: "", image_url: null, audio_url: null }
+  const [dictionary, setDictionary] = useState({});
 
 
   // Sync user data with backend
@@ -229,8 +204,8 @@ export const AppProvider = ({ children }) => {
           if (newAccessToken) {
             // Fetch user profile
             const userData = await getCurrentUser();
-            // Backend returns { success, data: { user, languages } }
-            setUser(userData.data?.user || userData);
+            
+            updateUser(userData.data?.user);
             setIsAuthenticated(true);
 
             // 3️⃣ AUTHENTICATED ⇒ SKIP ONBOARDING
@@ -264,6 +239,7 @@ export const AppProvider = ({ children }) => {
 
   // On mount,
   // load user_profile from AsyncStorage,
+  // TO DO: load dictionary from AsyncStorage
   // Check auth status
   // TO Do: get user profile from backend if authenticated
   useEffect(() => {

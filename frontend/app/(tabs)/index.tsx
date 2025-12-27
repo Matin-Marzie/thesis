@@ -1,11 +1,45 @@
+import { useAppContext } from '@/context/AppContext';
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 
 export default function HomeScreen() {
+
+  const { user, dictionary } = useAppContext();
+
   return (
     <ScrollView style={styles.container}>
       <View style={styles.content}>
-        <Text style={styles.subtitle}>Welcome to Ionian Farsi</Text>
+        <Text> id: {user?.id}</Text>
+        <Text> first_name: {user?.first_name}</Text>
+        <Text> last_name: {user?.last_name}</Text>
+        <Text> email: {user?.email}</Text>
+        <Text> username: {user?.username}</Text>
+        <Text>
+          {user?.languages?.map((lang) => {
+            // generate a valid 6-digit hex color from ID
+            const color = `#${((lang.id * 1235) % 0xffffff).toString(16).padStart(6, '0')}`;
+            return (
+              <Text
+                key={lang.id}
+                style={{
+                  backgroundColor: color,
+                  padding: 4,        // add padding so bg is visible
+                  marginVertical: 2, // spacing between items
+                }}
+              >
+                Language ID: {lang.id} {"\n"}
+                Language Name: {lang.learning_language_id} {"\n"}
+                Language Code: {lang.native_language_id}
+              </Text>
+            );
+          })}
+        </Text>
+
+        <Text> Dictionary: </Text>
+        <Text>
+          
+        </Text>
+
       </View>
     </ScrollView>
   );
