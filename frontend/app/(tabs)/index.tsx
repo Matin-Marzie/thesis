@@ -1,63 +1,87 @@
+import React, { useState, useEffect, useRef, useMemo } from 'react';
+import { 
+  View, 
+  Text, 
+  StyleSheet, 
+  TextInput, 
+  Animated, 
+  FlatList, 
+  TouchableOpacity, 
+  KeyboardAvoidingView,
+  Platform
+} from 'react-native';
 import { useAppContext } from '@/context/AppContext';
-import React from 'react';
-import { View, Text, StyleSheet, ScrollView } from 'react-native';
 
 export default function HomeScreen() {
+  const { dictionary } = useAppContext();
+  const [search, setSearch] = useState('');
+  const [filteredWords, setFilteredWords] = useState([]);
+  const debounceTimeout = useRef(null);
 
-  const { user, dictionary } = useAppContext();
+  const words = useMemo(() => dictionary.words || [], [dictionary]);
+
+  // Debounced search effect
+  useEffect(() => {
+    if (debounceTimeout.current) clearTimeout(debounceTimeout.current);
+
+    debounceTimeout.current = setTimeout(() => {
+      const query = search.trim().toLowerCase();
+      if (!query) {
+        setFilteredWords([]);
+        return;
+      }
+
+      const filtered = words.filter(word => {
+        const writtenMatch = word.written_form?.toLowerCase().startsWith(query);
+        const translationMatch = word.translations?.some(t => t?.toLowerCase().includes(query));
+        return writtenMatch || translationMatch;
+      });
+
+      setFilteredWords(filtered);
+    }, 500);
+
+    return () => clearTimeout(debounceTimeout.current);
+  }, [search, words]);
+
+  // Render each word row
+  const renderItem = ({ item }) => (
+    <Animated.View style={styles.wordRow}>
+      <View style={styles.wordTextContainer}>
+        <Text style={styles.writtenForm}>{item.written_form}</Text>
+        <Text style={styles.translations}>{(item.translations || []).join(', ')}</Text>
+      </View>
+      <Text>
+        {item.level}
+      </Text>
+      <TouchableOpacity style={styles.addButton}>
+        <Text style={styles.addButtonText}>+</Text>
+      </TouchableOpacity>
+    </Animated.View>
+  );
 
   return (
-    <ScrollView style={styles.container}>
-      <View style={styles.content}>
-        <Text> id: {user?.id}</Text>
-        <Text> first_name: {user?.first_name}</Text>
-        <Text> last_name: {user?.last_name}</Text>
-        <Text> email: {user?.email}</Text>
-        <Text> username: {user?.username}</Text>
-        <Text>
-          {user?.languages?.map((lang) => {
-            // generate a valid 6-digit hex color from ID
-            const color = `#${((lang.id * 1235) % 0xffffff).toString(16).padStart(6, '0')}`;
-            return (
-              <Text
-                key={`lang-${lang.learning_language_id}-${lang.native_language_id}`}
-                style={{
-                  backgroundColor: color,
-                  padding: 4,        // add padding so bg is visible
-                  marginVertical: 2, // spacing between items
-                }}
-              >
-                id: {lang.id} {"\n"}
-                {"\n"}
-                language.learning_id: {lang.learning_language_id} {"\n"}
-                language.learning_name: {lang.learning_language_name} {"\n"}
-                language.learning_code: {lang.learning_language_code} {"\n"}
-                {"\n"}
-                language.native_id: {lang.native_language_id} {"\n"}
-                language.native_name: {lang.native_language_name} {"\n"}
-                language.native_code: {lang.native_language_code} {"\n"}
-                {"\n"}
-                is_current_language: {lang.is_current_language ? 'true' : 'false'} {"\n"}
-                proficiency_level: {lang.proficiency_level} {"\n"}
-                experience: {lang.experience} {"\n"}
-                created_at: {lang.created_at} {"\n"}
-              </Text>
-            );
-          })}
-        </Text>
-
-        <Text> Dictionary: </Text>
-        
-        <Text>
-          {dictionary.words?.map((word) => (
-            <Text key={`word-${word.id}`}>
-              id: {word.id} - {word.written_form} {"\n"}
-            </Text>
-          ))}
-        </Text>
-
+    <KeyboardAvoidingView
+      style={styles.container}
+      behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+    >
+      {/* Fixed search input */}
+      <View style={styles.searchContainer}>
+        <TextInput
+          style={styles.searchInput}
+          placeholder="Search dictionary..."
+          value={search}
+          onChangeText={setSearch}
+        />
       </View>
-    </ScrollView>
+
+      <Animated.FlatList
+        contentContainerStyle={{ padding: 20, paddingTop: 0 }}
+        data={filteredWords}
+        keyExtractor={item => `word-${item.id}`}
+        renderItem={renderItem}
+        keyboardShouldPersistTaps="handled"
+      />
+    </KeyboardAvoidingView>
   );
 }
 
@@ -66,16 +90,56 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
   },
-  content: {
-    padding: 20,
+  searchContainer: {
+    padding: 10,
+    backgroundColor: '#fff',
+    borderBottomWidth: 1,
+    borderBottomColor: '#ccc',
   },
-  title: {
-    fontSize: 32,
+  searchInput: {
+    height: 40,
+    backgroundColor: '#f2f2f2',
+    borderRadius: 8,
+    paddingHorizontal: 10,
+  },
+  wordRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginVertical: 6,
+    padding: 10,
+    backgroundColor: '#f9f9f9',
+    borderRadius: 6,
+    shadowColor: '#000',
+    shadowOpacity: 0.05,
+    shadowRadius: 2,
+    shadowOffset: { width: 0, height: 1 },
+  },
+  wordTextContainer: {
+    flex: 1,
+    marginRight: 10,
+  },
+  writtenForm: {
     fontWeight: 'bold',
-    marginBottom: 10,
+    fontSize: 16,
+    marginBottom: 2,
   },
-  subtitle: {
-    fontSize: 18,
-    color: '#666',
+  translations: {
+    fontSize: 14,
+    color: '#555',
+  },
+  addButton: {
+    width: 32,
+    height: 32,
+    borderRadius: 16,
+    backgroundColor: '#007bff',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginLeft: 20,
+  },
+  addButtonText: {
+    color: '#fff',
+    fontSize: 20,
+    lineHeight: 20,
   },
 });
