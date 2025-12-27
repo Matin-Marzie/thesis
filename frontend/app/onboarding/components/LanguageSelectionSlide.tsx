@@ -4,12 +4,20 @@ import { Ionicons } from '@expo/vector-icons';
 import { PRIMARY_COLOR } from '@/constants/App';
 import { SUPPORTED_LANGUAGES } from '@/constants/SupportedLanguages';
 
+// Language type
+interface Language {
+  id: number;
+  name: string;
+  code: string;
+}
+
+// Props for the slide component
 interface LanguageSelectionSlideProps {
-  onNext: () => void;
-  selectedNative: number | null;
-  selectedTarget: number | null;
-  setSelectedNative: (val: number) => void;
-  setSelectedTarget: (val: number) => void;
+  onNext: () => void; // Callback for "Continue" button
+  selectedNative: Language | null; // Currently selected native language
+  selectedTarget: Language | null; // Currently selected target language
+  setSelectedNative: (val: Language) => void; // Update native language
+  setSelectedTarget: (val: Language) => void; // Update target language
 }
 
 export default function LanguageSelectionSlide({
@@ -19,21 +27,32 @@ export default function LanguageSelectionSlide({
   setSelectedNative: setSelectedNativeLanguage,
   setSelectedTarget: setSelectedTargetLanguage,
 }: LanguageSelectionSlideProps) {
+
+  // Accordion state - which language group is expanded
   const [expanded, setExpanded] = useState<string | null>('english');
 
-
-  const handleSelect = (option: any) => {
+  /**
+   * Handle selecting a language pair
+   * @param option - object containing native and target languages
+   */
+  const handleSelect = (option: { native: Language; target: Language }) => {
+    // Update the selected native language
     setSelectedNativeLanguage(option.native);
+
+    // Update the selected target language
     setSelectedTargetLanguage(option.target);
   };
 
   return (
     <View style={styles.slideContainer}>
       <ScrollView style={styles.scrollContent} showsVerticalScrollIndicator={false}>
+        {/* Slide title */}
         <Text style={styles.title}>What would you like to learn?</Text>
 
+        {/* Render accordion for each supported language group */}
         {Object.entries(SUPPORTED_LANGUAGES).map(([key, lang]) => (
           <View key={key} style={styles.accordionContainer}>
+            {/* Accordion header */}
             <TouchableOpacity
               style={styles.accordionHeader}
               onPress={() => setExpanded(expanded === key ? null : key)}
@@ -46,6 +65,7 @@ export default function LanguageSelectionSlide({
               />
             </TouchableOpacity>
 
+            {/* Accordion content: language options */}
             {expanded === key && (
               <View style={styles.accordionContent}>
                 {lang.options.map((option) => (
@@ -53,19 +73,21 @@ export default function LanguageSelectionSlide({
                     key={option.id}
                     style={[
                       styles.optionButton,
-                      selectedNativeLanguage === option.native &&
-                        selectedTargetLanguage === option.target &&
+                      selectedNativeLanguage?.id === option.native.id &&
+                        selectedTargetLanguage?.id === option.target.id &&
                         styles.optionButtonSelected,
                     ]}
                     onPress={() => handleSelect(option)}
                   >
                     <View style={styles.optionContent}>
-                      <Text style={styles.flagEmoji}>{option.flag}</Text>
+                      {/* Show flag emoji */}
+                      <Text style={styles.flagEmoji}>{option.target.flag}</Text>
+                      {/* Language option label */}
                       <Text
                         style={[
                           styles.optionText,
-                          selectedNativeLanguage === option.native &&
-                            selectedTargetLanguage === option.target &&
+                          selectedNativeLanguage?.id === option.native.id &&
+                            selectedTargetLanguage?.id === option.target.id &&
                             styles.optionTextSelected,
                         ]}
                       >
@@ -80,8 +102,12 @@ export default function LanguageSelectionSlide({
         ))}
       </ScrollView>
 
+      {/* Continue button */}
       <TouchableOpacity
-        style={[styles.continueButton, (!selectedNativeLanguage || !selectedTargetLanguage) && styles.continueButtonDisabled]}
+        style={[
+          styles.continueButton,
+          (!selectedNativeLanguage || !selectedTargetLanguage) && styles.continueButtonDisabled,
+        ]}
         onPress={onNext}
         disabled={!selectedNativeLanguage || !selectedTargetLanguage}
       >

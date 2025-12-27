@@ -1,4 +1,4 @@
-import { createContext, useState, useEffect, useContext, useRef } from 'react';
+import { createContext, useState, useEffect, useContext, useRef, useMemo } from 'react';
 import { AppState } from 'react-native';
 import NetInfo from '@react-native-community/netinfo'; // Checks internet connection in OS level
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -6,6 +6,8 @@ import { getRefreshToken, clearTokens } from '../api/tokens';
 import { refreshAccessToken } from '../api/auth';
 import { getCurrentUser } from '../api/user';
 import * as SecureStore from 'expo-secure-store';
+import { useDictionary } from '../hooks/useDictionary';
+
 
 /**
  * @typedef {Object} User
@@ -70,7 +72,11 @@ export const AppProvider = ({ children }) => {
       {
         is_current_language: true,
         native_language_id: 1,
+        native_language_name: 'English',
+        native_language_code: 'en',
         learning_language_id: 2,
+        learning_language_name: 'Greek',
+        learning_language_code: 'el',
         created_at: null,
         proficiency_level: 'A1',
         experience: 0,
@@ -83,6 +89,7 @@ export const AppProvider = ({ children }) => {
 
   // all available words in the learning language
   const [dictionary, setDictionary] = useState({});
+  const [dictionaryLoading, setDictionaryLoading] = useState(false);
 
 
   // Sync user data with backend
@@ -189,6 +196,7 @@ export const AppProvider = ({ children }) => {
   }, [isOnline]);
 
   // Check for existing auth session on app load
+  // refetch user profile after access token refresh
   const checkAuthStatus = async () => {
     try {
 
@@ -204,7 +212,7 @@ export const AppProvider = ({ children }) => {
           if (newAccessToken) {
             // Fetch user profile
             const userData = await getCurrentUser();
-            
+
             updateUser(userData.data?.user);
             setIsAuthenticated(true);
 
@@ -237,11 +245,7 @@ export const AppProvider = ({ children }) => {
     }
   };
 
-  // On mount,
-  // load user_profile from AsyncStorage,
-  // TO DO: load dictionary from AsyncStorage
-  // Check auth status
-  // TO Do: get user profile from backend if authenticated
+  // On mount: load user profile from AsyncStorage and check auth status
   useEffect(() => {
     (async () => {
       try {
@@ -257,21 +261,51 @@ export const AppProvider = ({ children }) => {
     })();
   }, []);
 
+  // Handling Dictionary
+  const isDictionaryEnabled = useMemo(
+    () =>
+      hasCompletedOnboarding &&
+      user?.languages?.some(l => l.is_current_language),
+    [hasCompletedOnboarding, user?.languages]
+  );
+
+
+  // Using the custom hook hooks/useDictionary
+  const { dictionary: dict, dictionaryLoading: dictLoading } = useDictionary({ user, enabled: isDictionaryEnabled, isOnline });
+
+  // Sync dictionary state
+  useEffect(() => {
+    setDictionary(dict || {});
+    setDictionaryLoading(dictLoading);
+  }, [dict, dictLoading]);
+
+
+
   // Logout function
   const logout = async () => {
     try {
+      // clear tokens in SecureStore
       await clearTokens();
+
+      // Clear AsyncStorage and SecureStore
+      await AsyncStorage.clear(); 
+      // await SecureStore.setItemAsync('onboarding_complete', 'false');
+
+      // reset memory state
       updateUser(defaultUser);
       setIsAuthenticated(false);
-      await SecureStore.setItemAsync('onboarding_complete', 'false');
       setHasCompletedOnboarding(false);
+      setDictionary({});
+      setDictionaryLoading(false);
+
+      // Reset sync refs
+      hasUnsyncedChanges.current = false;
+      lastSyncTime.current = null;
 
     } catch (error) {
       console.error('Logout error:', error);
     }
   };
-
-
 
   const value = {
     user, setUser,

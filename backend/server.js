@@ -21,6 +21,7 @@ import authRouter from './routes/auth.js';
 import refreshRouter from './routes/refresh.js';
 import logoutRouter from './routes/logout.js';
 import usersRouter from './routes/api/users.js';
+import dictionaryRouter from './routes/api/dictionary.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -52,6 +53,7 @@ app.use(`/api/${API_VERSION}/auth`, authRouter);
 app.use(`/api/${API_VERSION}/refresh`, refreshRouter);
 app.use(`/api/${API_VERSION}/logout`, logoutRouter);
 app.use(`/api/${API_VERSION}/users`, usersRouter);
+app.use(`/api/${API_VERSION}/dictionary`, dictionaryRouter);
 // Root route
 /**
  * @swagger
@@ -80,7 +82,6 @@ app.use(`/api/${API_VERSION}/users`, usersRouter);
 
 app.get('/', (req, res) => {
   res.json({
-    success: true,
     message: 'Personalized Language Learning API v1.0',
     documentation: '/api-docs',
     endpoints: {
@@ -101,7 +102,6 @@ app.get('/', (req, res) => {
 // 404 handler
 app.all('*', (req, res) => {
   res.status(404).json({
-    success: false,
     message: 'Route not found',
   });
 });

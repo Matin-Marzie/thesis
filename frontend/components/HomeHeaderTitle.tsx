@@ -1,44 +1,44 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { useAppContext } from '@/context/AppContext';
-import { LANGUAGE_META } from '@/constants/SupportedLanguages';
+import { LANGUAGES_META } from '@/constants/SupportedLanguages';
 
 export default function HomeHeaderTitle() {
   const { user } = useAppContext();
 
-    // Find the current language object
-    const currentLang = user?.languages?.find(l => l.is_current_language);
-    const learningLanguageId = currentLang?.learning_language_id;
-    const proficiencyLevel = currentLang?.proficiency_level;
-    const experience = currentLang?.experience || 0;
-    const coins = user?.coins || 0;
-    const energy = user?.energy || 0;
-    const languageFlag = learningLanguageId && LANGUAGE_META[learningLanguageId as keyof typeof LANGUAGE_META]?.flag;
+  // Find the current language object
+  const currentLang = user?.languages?.find(l => l.is_current_language);
+  
+  // Find the LANGUAGES_META entry by ID
+  const languageMeta = Object.values(LANGUAGES_META).find(l => l.id === Number(currentLang?.learning_language_id));
+
+  const flag = languageMeta?.flag;
+
 
   return (
     <View style={styles.container}>
       {/* Language Flag + Proficiency Level */}
       <View style={styles.item}>
-        <Text style={styles.flag}>{languageFlag || '🏳️'}</Text>
-        <Text style={styles.text}>{proficiencyLevel || 'A1'}</Text>
+        <Text style={styles.flag}>{flag || '🏳️'}</Text>
+        <Text style={styles.text}>{currentLang?.proficiency_level || 'A1'}</Text>
       </View>
 
       {/* Experience */}
       <View style={styles.item}>
         <Text style={styles.icon}>⭐</Text>
-        <Text style={styles.text}>{experience}</Text>
+        <Text style={styles.text}>{currentLang?.experience || 0}</Text>
       </View>
 
       {/* Coins */}
       <View style={styles.item}>
         <Text style={styles.icon}>🪙</Text>
-        <Text style={styles.text}>{coins}</Text>
+        <Text style={styles.text}>{user?.coins || 0}</Text>
       </View>
 
       {/* Energy */}
       <View style={styles.item}>
         <Text style={styles.icon}>⚡</Text>
-        <Text style={styles.text}>{energy}</Text>
+        <Text style={styles.text}>{user?.energy || 0}</Text>
       </View>
     </View>
   );

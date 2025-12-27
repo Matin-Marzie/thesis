@@ -12,7 +12,6 @@ const apiClient = axios.create({
     'Content-Type': 'application/json',
     'X-Client-Type': 'mobile', // Identify as mobile client
   },
-  // Note: withCredentials not needed for React Native (no cookies)
 });
 
 // Request interceptor to add access token to headers

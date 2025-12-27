@@ -1,16 +1,30 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
 import { PRIMARY_COLOR } from '@/constants/App';
-import { LANGUAGE_META } from '@/constants/SupportedLanguages';
+import { LANGUAGES_META } from '@/constants/SupportedLanguages';
 
-interface ProficiencySlideProps {
-  onNext: () => void;
-  selectedLevel: string | null;
-  setSelectedLevel: (val: string) => void;
-  selectedLearningLanguage: number | null;
+// Language type
+interface Language {
+  id: number;
+  name: string;
+  code: string;
 }
 
-export default function ProficiencySlide({ onNext, selectedLevel, setSelectedLevel, selectedLearningLanguage }: ProficiencySlideProps) {
+// Props for the proficiency slide
+interface ProficiencySlideProps {
+  onNext: () => void; // Callback for "Continue" button
+  selectedLevel: string | null; // Selected proficiency level
+  setSelectedLevel: (val: string) => void; // Update proficiency level
+  selectedLearningLanguage: Language | null; // Current learning language
+}
+
+export default function ProficiencySlide({
+  onNext,
+  selectedLevel,
+  setSelectedLevel,
+  selectedLearningLanguage,
+}: ProficiencySlideProps) {
+  // Proficiency levels with label and number of bars
   const levels = [
     { value: 'A1', label: 'First time learning', bars: 0 },
     { value: 'A2', label: 'I know some common words', bars: 1 },
@@ -20,9 +34,14 @@ export default function ProficiencySlide({ onNext, selectedLevel, setSelectedLev
     { value: 'C2', label: 'I am native', bars: 5 },
   ];
 
+  /**
+   * Render the bars indicating proficiency level
+   * @param filledCount - number of bars to fill
+   * @param isSelected - if this level is currently selected
+   */
   const renderProficiencyBars = (filledCount: number, isSelected: boolean) => {
-    const barHeights = [12, 16, 20, 24, 28]; // Progressive heights
-    
+    const barHeights = [12, 16, 20, 24, 28]; // Progressive heights for bars
+
     return (
       <View style={styles.barsContainer}>
         {barHeights.map((height, index) => (
@@ -39,14 +58,21 @@ export default function ProficiencySlide({ onNext, selectedLevel, setSelectedLev
     );
   };
 
+  // Get language name from LANGUAGES_META using code
+  const languageName = selectedLearningLanguage
+    ? LANGUAGES_META[selectedLearningLanguage.code as keyof typeof LANGUAGES_META]?.name
+    : '';
+
   return (
     <View style={styles.slideContainer}>
       <ScrollView style={styles.scrollContent} showsVerticalScrollIndicator={false}>
+        {/* Slide title */}
         <Text style={styles.title}>
-          How much {selectedLearningLanguage && LANGUAGE_META[selectedLearningLanguage as keyof typeof LANGUAGE_META]?.name} do you know?
+          How much {languageName} do you know?
         </Text>
         <Text style={styles.subtitle}>Select your current level</Text>
 
+        {/* Render each proficiency level */}
         {levels.map((level) => (
           <TouchableOpacity
             key={level.value}
@@ -56,7 +82,10 @@ export default function ProficiencySlide({ onNext, selectedLevel, setSelectedLev
             ]}
             onPress={() => setSelectedLevel(level.value)}
           >
+            {/* Bars indicator */}
             {renderProficiencyBars(level.bars, selectedLevel === level.value)}
+
+            {/* Level label */}
             <Text
               style={[
                 styles.levelText,
@@ -65,6 +94,8 @@ export default function ProficiencySlide({ onNext, selectedLevel, setSelectedLev
             >
               {level.label}
             </Text>
+
+            {/* Level code (A1, B2, etc.) */}
             <Text
               style={[
                 styles.levelSublabel,
@@ -77,6 +108,7 @@ export default function ProficiencySlide({ onNext, selectedLevel, setSelectedLev
         ))}
       </ScrollView>
 
+      {/* Continue button */}
       <TouchableOpacity
         style={[styles.continueButton, !selectedLevel && styles.continueButtonDisabled]}
         onPress={onNext}

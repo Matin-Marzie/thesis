@@ -17,8 +17,8 @@ export default function OnboardingQuestions() {
   const [currentSlide, setCurrentSlide] = useState(0);
 
   // User selections
-  const [selectedNativeLanguage, setSelectedNativeLanguage] = useState<number | null>(null);
-  const [selectedLearningLanguage, setSelectedLearningLanguage] = useState<number | null>(null);
+  const [selectedNativeLanguage, setSelectedNativeLanguage] = useState<{id: number, name: string, code: string} | null>(null);
+  const [selectedLearningLanguage, setSelectedLearningLanguage] = useState<{id: number, name: string, code: string} | null>(null);
   const [selectedLevel, setSelectedLevel] = useState<string | null>('A1');
   const [selectedPreferences, setSelectedPreferences] = useState<string[]>([]);
   const [selectedAge, setSelectedAge] = useState<string>('25');
@@ -57,23 +57,27 @@ export default function OnboardingQuestions() {
     // Save onboarding data
 
     // Store user data using updateUser (saves to AsyncStorage and marks for sync)
-      await updateUser({
-        joined_date: new Date().toISOString(),
-        age: parseInt(selectedAge),
-        preferences: selectedPreferences.join(','),
-        notifications: true,
-        languages: [
-          {
-            is_current_language: true,
-            native_language_id: selectedNativeLanguage,
-            learning_language_id: selectedLearningLanguage,
-            created_at: new Date().toISOString(),
-            proficiency_level: selectedLevel,
-            experience: 0,
-            learned_vocabulary: [],
-          },
-        ],
-      });
+    await updateUser({
+      joined_date: new Date().toISOString(),
+      age: parseInt(selectedAge),
+      preferences: selectedPreferences.join(','),
+      notifications: true,
+      languages: [
+        {
+          is_current_language: true,
+          native_language_id: selectedNativeLanguage?.id,
+          native_language_name: selectedNativeLanguage?.name,
+          native_language_code: selectedNativeLanguage?.code,
+          learning_language_id: selectedLearningLanguage?.id,
+          learning_language_name: selectedLearningLanguage?.name,
+          learning_language_code: selectedLearningLanguage?.code,
+          created_at: new Date().toISOString(),
+          proficiency_level: selectedLevel,
+          experience: 0,
+          learned_vocabulary: [],
+        },
+      ],
+    });
 
     // TODO: Fetch Reels sending native_language_id and learning_language_id and proficiency_level and preferences and age
     // TODO: Fetch dictionary sending native_language_id and learning_language_id

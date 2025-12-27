@@ -6,7 +6,6 @@ import { logEvents } from '../middleware/logEvents.js';
 import usersModel from '../models/usersModel.js';
 import userLanguagesModel from '../models/userLanguagesModel.js';
 import userVocabularyModel from '../models/userVocabularyModel.js';
-import dictionaryModel from '../models/dictionaryModel.js';
 
 const registerController = async (req, res) => {
   try {

@@ -20,11 +20,20 @@ const userLanguagesModel = {
     }).join(',');
 
     const query = `
-    INSERT INTO user_languages
-    (user_id, native_language_id, learning_language_id, created_at, proficiency_level, experience, is_current_language)
-    VALUES ${placeholders}
-    RETURNING *;
-  `;
+    WITH inserted AS (
+      INSERT INTO user_languages
+        (user_id, native_language_id, learning_language_id, created_at, proficiency_level, experience, is_current_language)
+      VALUES
+        ${placeholders}
+      RETURNING *
+    )
+    SELECT i.*, 
+          bl.name AS native_language_name, bl.code AS native_language_code,
+          ll.name AS learning_language_name, ll.code AS learning_language_code
+    FROM inserted i
+    JOIN languages bl ON i.native_language_id = bl.id
+    JOIN languages ll ON i.learning_language_id = ll.id;
+    `;
 
     const result = await pool.query(query, values);
     return result.rows;
