@@ -20,7 +20,7 @@ export default function HomeScreen() {
             const color = `#${((lang.id * 1235) % 0xffffff).toString(16).padStart(6, '0')}`;
             return (
               <Text
-                key={lang.id}
+                key={`lang-${lang.learning_language_id}-${lang.native_language_id}`}
                 style={{
                   backgroundColor: color,
                   padding: 4,        // add padding so bg is visible

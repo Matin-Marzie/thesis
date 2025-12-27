@@ -30,6 +30,21 @@ const userLanguagesModel = {
     return result.rows;
   },
 
+  // Get all user languages
+  async findByUserId(userId) {
+    const query = `
+      SELECT ul.*, 
+             bl.name as native_language_name, bl.code as native_language_code,
+             ll.name as learning_language_name, ll.code as learning_language_code
+      FROM user_languages ul
+      JOIN languages bl ON ul.native_language_id = bl.id
+      JOIN languages ll ON ul.learning_language_id = ll.id
+      WHERE ul.user_id = $1
+    `;
+
+    const result = await pool.query(query, [userId]);
+    return result.rows;
+  },
 
 
 
@@ -57,23 +72,6 @@ const userLanguagesModel = {
     return result.rows[0];
   },
 
-
-  // Havn't used yet
-  // Get all user languages
-  async findByUserId(userId) {
-    const query = `
-      SELECT ul.*, 
-             bl.name as native_language_name, bl.code as native_language_code,
-             ll.name as learning_language_name, ll.code as learning_language_code
-      FROM user_languages ul
-      JOIN languages bl ON ul.native_language_id = bl.id
-      JOIN languages ll ON ul.learning_language_id = ll.id
-      WHERE ul.user_id = $1
-    `;
-
-    const result = await pool.query(query, [userId]);
-    return result.rows;
-  },
 
   // Havn't used yet
   // Update user language progress

@@ -1,8 +1,10 @@
 import jwt from 'jsonwebtoken';
-import usersModel from '../models/usersModel.js';
-import { comparePassword } from '../utils/password.js';
 import LoginSchema from '../validation/LoginSchema.js';
+import { comparePassword } from '../utils/password.js';
 import { logEvents } from '../middleware/logEvents.js';
+import usersModel from '../models/usersModel.js';
+import userLanguagesModel from '../models/userLanguagesModel.js';
+import userVocabularyModel from '../models/userVocabularyModel.js';
 
 const authController = async (req, res) => {
   try {
@@ -82,6 +84,24 @@ const authController = async (req, res) => {
     // Save refresh token to database
     await usersModel.updateRefreshToken(user.id, refreshToken);
 
+    // Fetch user_languages from DB
+    const userLanguages = await userLanguagesModel.findByUserId(user.id);
+    const current_language = userLanguages.find(lang => lang.is_current_language);
+    
+    // Fetch user vocabulary for current language
+    const learned_vocabulary = await userVocabularyModel.getLearnedVocabulary(
+      user.id,
+      current_language.learning_language_id,
+      current_language.native_language_id
+    )
+
+    // Attach languages and vocabulary to user object
+    userLanguages.forEach(lang => {
+      if (lang.is_current_language) {
+        lang.learned_vocabulary = learned_vocabulary;
+      }
+    });
+
     // Log login
     logEvents(`User logged in: ${user.username}`, 'authLog.log');
 
@@ -101,16 +121,7 @@ const authController = async (req, res) => {
         notifications: user.notifications,
         joined_date: user.joined_date,
         total_experience: user.total_experience,
-        languages: [ // TO DO: fetch user_languages from DB
-          {
-            is_current_language: true,
-            native_language_id: 1,
-            learning_language_id: 1,
-            proficiency_level: 'B2',
-            experience: 694662,
-            learned_vocabulary: [{ id: 1, mastery_level: 1, last_review: null, created_at: null }], // Words user has learned with metadata
-          },
-        ]
+        languages: userLanguages,
       },
       accessToken,
       refreshToken,
