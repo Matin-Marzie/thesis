@@ -17,7 +17,7 @@ const googleAuthController = async (req, res) => {
       });
     }
 
-    const { age, preferences, coins, joined_date, energy, languages } = value;
+    const { user_profile: { age, preferences, joined_date, notifications }, user_progress: { energy, coins, languages } } = value;
 
     // Check if user exists by Google ID
     let user = await usersModel.findByGoogleId(google_id);

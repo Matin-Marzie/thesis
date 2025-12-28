@@ -20,7 +20,6 @@ const logoutController = async (req, res) => {
     }
 
     // Refresh token cleared from database
-    // Client should remove it from SecureStore
     res.status(200).json({
       message: 'Logout successful',
     });

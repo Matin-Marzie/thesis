@@ -1,4 +1,4 @@
-import LanguageCodeSchema from '../validation/LanguageCodeSchema.js';
+import LanguageSchema from '../validation/LanguageSchema.js';
 import dictionaryModel from '../models/dictionaryModel.js';
 
 const dictionaryController = {
@@ -7,10 +7,7 @@ const dictionaryController = {
       const { language_code } = req.params;
 
       // Validate param
-      const { error } = LanguageCodeSchema.validate({
-        language_code,
-        translation_language_code: language_code, // dummy for validation
-      });
+      const { error } = LanguageSchema.validate({ code: language_code });
 
       if (error) {
         return res.status(400).json({
@@ -35,14 +32,23 @@ const dictionaryController = {
       const { language_code, translation_language_code } = req.params;
 
       // Validate params
-      const { error } = LanguageCodeSchema.validate({
-        language_code,
-        translation_language_code,
+      const { error } = LanguageSchema.validate({
+        code: language_code,
       });
 
       if (error) {
         return res.status(400).json({
           message: error.details[0].message,
+        });
+      }
+
+      const { error: translationError } = LanguageSchema.validate({
+        code: translation_language_code,
+      });
+
+      if (translationError) {
+        return res.status(400).json({
+          message: translationError.details[0].message,
         });
       }
 

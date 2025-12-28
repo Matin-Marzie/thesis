@@ -3,7 +3,7 @@ import usersModel from '../models/usersModel.js';
 
 const refreshTokenController = async (req, res) => {
   try {
-    // Get refresh token from request body (sent from react native clients)
+    
     const { refreshToken } = req.body;
 
     if (!refreshToken) {

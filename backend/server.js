@@ -20,7 +20,7 @@ import registerRouter from './routes/register.js';
 import authRouter from './routes/auth.js';
 import refreshRouter from './routes/refresh.js';
 import logoutRouter from './routes/logout.js';
-import usersRouter from './routes/api/users.js';
+import userRouter from './routes/api/user.js';
 import dictionaryRouter from './routes/api/dictionary.js';
 
 const __filename = fileURLToPath(import.meta.url);
@@ -52,7 +52,7 @@ app.use(`/api/${API_VERSION}/register`, registerRouter);
 app.use(`/api/${API_VERSION}/auth`, authRouter);
 app.use(`/api/${API_VERSION}/refresh`, refreshRouter);
 app.use(`/api/${API_VERSION}/logout`, logoutRouter);
-app.use(`/api/${API_VERSION}/users`, usersRouter);
+app.use(`/api/${API_VERSION}/user`, userRouter);
 app.use(`/api/${API_VERSION}/dictionary`, dictionaryRouter);
 // Root route
 /**
@@ -70,8 +70,6 @@ app.use(`/api/${API_VERSION}/dictionary`, dictionaryRouter);
  *             schema:
  *               type: object
  *               properties:
- *                 success:
- *                   type: boolean
  *                 message:
  *                   type: string
  *                 documentation:

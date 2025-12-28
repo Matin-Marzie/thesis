@@ -1,31 +1,24 @@
 import Joi from 'joi';
 import UserProfileSchema from './UserProfileSchema.js';
 import UserProgressSchema from './UserProgressSchema.js';
+import WordProgressSchema from './UserVocabularySchema.js';
+import PasswordSchema from './PasswordSchema.js';
 
-const GoogleAuthSchema = Joi.object({
-  idToken: Joi.string().required().messages({
-    'any.required': 'Google ID token is required',
-    'string.base': 'Google ID token must be a string',
-  }),
-  platform: Joi.string()
-    .valid('android', 'ios', 'web')
-    .required()
-    .messages({
-      'any.only': 'Platform must be one of android, ios, or web',
-      'any.required': 'Platform is required',
-      'string.base': 'Platform must be a string',
-    }),
+const RegisterSchema = Joi.object({
+  password: PasswordSchema,
   user_profile: UserProfileSchema.keys({
+    first_name: UserProfileSchema.extract('first_name').required(),
+    email: UserProfileSchema.extract('email').required(),
     age: UserProfileSchema.extract('age').required(),
     preferences: UserProfileSchema.extract('preferences').optional(),
-    joined_date: UserProfileSchema.extract('joined_date').required(),
     notifications: UserProfileSchema.extract('notifications').required(),
-  }).optional(),
+  }),
   user_progress: UserProgressSchema.keys({
     energy: UserProgressSchema.extract('energy').required(),
     coins: UserProgressSchema.extract('coins').required(),
     languages: UserProgressSchema.extract('languages').required(),
-  }).optional(),
+  }),
+  user_vocabulary: WordProgressSchema.required(),
 }).options({ stripUnknown: true });
 
-export default GoogleAuthSchema;
+export default RegisterSchema;

@@ -17,8 +17,8 @@ const authController = async (req, res) => {
       });
     }
 
-    const { username, email, password, coins, languages } = value;
-    // TO Do: merge coins and languages.
+    const { username, email, password, user_progress, user_vocabulary } = value;
+    // TO Do: merge user_progress and user_vocabulary with existing data in DB
 
     // Find user by username or email
     let user;
@@ -85,44 +85,38 @@ const authController = async (req, res) => {
     await usersModel.updateRefreshToken(user.id, refreshToken);
 
     // Fetch user_languages from DB
-    const userLanguages = await userLanguagesModel.findByUserId(user.id);
+    const userLanguages = await userLanguagesModel.get(user.id);
     const current_language = userLanguages.find(lang => lang.is_current_language);
     
     // Fetch user vocabulary for current language
-    const learned_vocabulary = await userVocabularyModel.getLearnedVocabulary(
+    const user_vocabulary_in_db = await userVocabularyModel.get(
       user.id,
-      current_language.learning_language_id,
-      current_language.native_language_id
-    )
-
-    // Attach languages and vocabulary to user object
-    userLanguages.forEach(lang => {
-      if (lang.is_current_language) {
-        lang.learned_vocabulary = learned_vocabulary;
-      }
-    });
+      current_language.learning_language.id,
+    );
 
     // Log login
     logEvents(`User logged in: ${user.username}`, 'authLog.log');
 
     res.status(200).json({
       message: 'Login successful',
-      user: {
+      user_profile: {
         id: user.id,
         email: user.email,
         username: user.username,
         first_name: user.first_name,
         last_name: user.last_name,
         profile_picture: user.profile_picture,
-        energy: user.energy,
-        coins: user.coins,
         age: user.age,
         preferences: user.preferences,
         notifications: user.notifications,
         joined_date: user.joined_date,
-        total_experience: user.total_experience,
+      },
+      user_progress:{
+        energy: user.energy,
+        coins: user.coins,
         languages: userLanguages,
       },
+      user_vocabulary: user_vocabulary_in_db,
       accessToken,
       refreshToken,
     });

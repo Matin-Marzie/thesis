@@ -1,17 +1,17 @@
-import UserSchema from '../validation/UserSchema.js';
+import UserProfileSchema from '../validation/UserProfileSchema.js';
 import usersModel from '../models/usersModel.js';
 import userLanguagesModel from '../models/userLanguagesModel.js';
 import userVocabularyModel from '../models/userVocabularyModel.js';
 
 
-const usersController = {
+const userController = {
   // Get current user profile
   // users, user_languages, user_vocabulary
-  async getUserObject(req, res) {
+  async getUserProfileProgress(req, res) {
     try {
       const userId = req.user.id;
 
-      const fetchedUser = await usersModel.findById(userId);
+      const fetchedUser = await usersModel.get(userId);
 
       if (!fetchedUser) {
         return res.status(404).json({
@@ -20,42 +20,35 @@ const usersController = {
       }
 
       // Get user languages
-      const userLanguages = await userLanguagesModel.findByUserId(userId);
-
+      const userLanguages = await userLanguagesModel.get(userId);
       const current_language = userLanguages.find(lang => lang.is_current_language);
 
       // Fetch learned_vocabulary(user_vocabulary) for current language
-      const learned_vocabulary = await userVocabularyModel.getLearnedVocabulary(
+      const learned_vocabulary = await userVocabularyModel.get(
         userId,
-        current_language.learning_language_id,
-        current_language.native_language_id
+        current_language.learning_language.id,
       );
-
-      // Attach learned_vocabulary to current language object
-      userLanguages.forEach(lang => {
-        if (lang.is_current_language) {
-          lang.learned_vocabulary = learned_vocabulary;
-        }
-      });
 
       res.status(200).json({
         message: 'User profile fetched successfully',
-        user: {
+        user_profile: {
           id: fetchedUser.id,
           email: fetchedUser.email,
           username: fetchedUser.username,
           first_name: fetchedUser.first_name,
           last_name: fetchedUser.last_name,
           profile_picture: fetchedUser.profile_picture,
-          energy: fetchedUser.energy,
-          coins: fetchedUser.coins,
           age: fetchedUser.age,
           preferences: fetchedUser.preferences,
           notifications: fetchedUser.notifications,
           joined_date: fetchedUser.joined_date,
-          total_experience: fetchedUser.total_experience,
+        },
+        user_progress: {
+          energy: fetchedUser.energy,
+          coins: fetchedUser.coins,
           languages: userLanguages,
-        }
+        },
+        user_vocabulary: learned_vocabulary,
       });
     } catch (error) {
       console.error('Get profile error:', error);
@@ -65,13 +58,31 @@ const usersController = {
     }
   },
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   // Update current user profile
   async updateProfile(req, res) {
     try {
       const userId = req.user.id;
 
       // Validate request body
-      const { error, value } = UserSchema.validate(req.body);
+      const { error, value } = UserProfileSchema.validate(req.body);
 
       if (error) {
         return res.status(400).json({
@@ -117,7 +128,7 @@ const usersController = {
     try {
       const { id } = req.params;
 
-      const user = await usersModel.findById(id);
+      const user = await usersModel.get(id);
 
       if (!user) {
         return res.status(404).json({
@@ -200,4 +211,4 @@ const usersController = {
   },
 };
 
-export default usersController;
+export default userController;

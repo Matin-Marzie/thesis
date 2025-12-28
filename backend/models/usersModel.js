@@ -13,43 +13,35 @@ const usersModel = {
       profile_picture,
       age,
       preferences,
-
-      total_experience,
+      energy,
+      coins,
     } = userData;
-
     const query = `
       INSERT INTO users (
-        email, password_hash, username, age, preferences, total_experience, first_name, last_name, 
+        email, password_hash, username, age, preferences, first_name, last_name, 
         google_id, profile_picture, energy, coins
       )
-      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, 100, 20)
+      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)
       RETURNING id, email, username, first_name, last_name, 
-                google_id, profile_picture, joined_date, energy, coins, age, preferences, total_experience
+                google_id, profile_picture, joined_date, energy, coins, age, preferences
     `;
-
     const values = [
       email,
       password_hash,
       username,
       age,
       preferences || null,
-      total_experience || 0,
       first_name,
       last_name || null,
       google_id || null,
       profile_picture || null,
+      energy,
+      coins,
     ];
-
     const result = await pool.query(query, values);
     return result.rows[0];
   },
 
-  // Find user by email
-  async findByEmail(email) {
-    const query = 'SELECT * FROM users WHERE email = $1';
-    const result = await pool.query(query, [email]);
-    return result.rows[0];
-  },
 
   // Update refresh token
   async updateRefreshToken(userId, refreshToken) {
@@ -57,38 +49,9 @@ const usersModel = {
     await pool.query(query, [refreshToken, userId]);
   },
 
-  
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-
-  // Find user by username
-  async findByUsername(username) {
-    const query = 'SELECT * FROM users WHERE username = $1';
-    const result = await pool.query(query, [username]);
-    return result.rows[0];
-  },
-
-  // Find user by Google ID
-  async findByGoogleId(googleId) {
-    const query = 'SELECT * FROM users WHERE google_id = $1';
-    const result = await pool.query(query, [googleId]);
-    return result.rows[0];
-  },
 
   // Find user by ID
-  async findById(id) {
+  async get(id) {
     const query = `
       SELECT id, email, username, first_name, last_name, 
              profile_picture, joined_date, last_login, energy, coins, google_id
@@ -99,11 +62,22 @@ const usersModel = {
     return result.rows[0];
   },
 
-  // Clear refresh token (logout)
-  async clearRefreshToken(userId) {
-    const query = 'UPDATE users SET refresh_token = NULL WHERE id = $1';
-    await pool.query(query, [userId]);
+
+  // Find user by username
+  async findByUsername(username) {
+    const query = 'SELECT * FROM users WHERE username = $1';
+    const result = await pool.query(query, [username]);
+    return result.rows[0];
   },
+
+
+  // Find user by email
+  async findByEmail(email) {
+    const query = 'SELECT * FROM users WHERE email = $1';
+    const result = await pool.query(query, [email]);
+    return result.rows[0];
+  },
+
 
   // Find user by refresh token
   async findByRefreshToken(refreshToken) {
@@ -111,6 +85,31 @@ const usersModel = {
     const result = await pool.query(query, [refreshToken]);
     return result.rows[0];
   },
+
+
+  // Find user by Google ID
+  async findByGoogleId(googleId) {
+    const query = 'SELECT * FROM users WHERE google_id = $1';
+    const result = await pool.query(query, [googleId]);
+    return result.rows[0];
+  },
+
+  // Clear refresh token (logout)
+  async clearRefreshToken(userId) {
+    const query = 'UPDATE users SET refresh_token = NULL WHERE id = $1';
+    await pool.query(query, [userId]);
+  },
+
+
+
+
+
+  
+
+
+
+
+
 
   // Update user profile, energy, or coins
   async updateProfile(userId, updates) {
