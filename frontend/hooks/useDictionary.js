@@ -2,25 +2,25 @@ import { useEffect, useMemo, useRef, useState, useCallback } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { getDictionaryByCodes } from '../api/dictionary';
 
-export const useDictionary = ({ user, enabled, isOnline }) => {
+export const useDictionary = ({ userProgress, enabled, isOnline }) => {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const DICTIONARY_TTL = 3 * 24 * 60 * 60 * 1000;
+  const DICTIONARY_TTL = 3 * 24 * 60 * 60 * 1000; // 3 days in milliseconds
   const requestIdRef = useRef(0);
 
   // ✅ stable derived state
   const currentLang = useMemo(() => {
-    return user?.languages?.find(l => l.is_current_language) || null;
-  }, [user?.languages]);
+    return userProgress?.languages?.find(l => l.is_current_language) || null;
+  }, [userProgress?.languages]);
 
   const cacheKey = useMemo(() => {
     if (!currentLang) return null;
-    return `dictionary:${currentLang.learning_language_code}:${currentLang.native_language_code}`;
+    return `dictionary:${currentLang.learning_language.code}:${currentLang.native_language.code}`;
   }, [
-    currentLang?.learning_language_code,
-    currentLang?.native_language_code,
+    currentLang?.learning_language.code,
+    currentLang?.native_language.code,
   ]);
 
   // ✅ stable callback (no eslint hack)
@@ -65,8 +65,8 @@ export const useDictionary = ({ user, enabled, isOnline }) => {
 
     try {
       const res = await getDictionaryByCodes(
-        currentLang.learning_language_code,
-        currentLang.native_language_code
+        currentLang.learning_language.code,
+        currentLang.native_language.code
       );
 
       // race-condition guard
@@ -92,10 +92,10 @@ export const useDictionary = ({ user, enabled, isOnline }) => {
     enabled,
     isOnline,
     cacheKey,
-    currentLang,
+    currentLang.learning_language.code,
+    currentLang.native_language.code,
   ]);
 
-  // ✅ eslint-compliant effect
   useEffect(() => {
     loadDictionary();
   }, [loadDictionary]);

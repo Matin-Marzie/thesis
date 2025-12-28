@@ -5,7 +5,6 @@ import { AppContext } from '../context/AppContext';
  * Custom hook to access authentication context
  * 
  * @returns {Object} Authentication state and methods
- * @property {Object|null} user - Current user object
  * @property {boolean} isAuthenticated - Whether user is authenticated
  * @property {boolean} isLoading - Whether auth state is being initialized
  * @property {Function} login - Login function (userData, accessToken)

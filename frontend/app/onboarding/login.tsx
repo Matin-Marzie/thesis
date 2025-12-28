@@ -36,7 +36,7 @@ export default function LoginScreen() {
   const width = Dimensions.get('window').width;
   const height = Dimensions.get('window').height;
 
-  const { updateUser, setIsAuthenticated, setHasCompletedOnboarding } = useAppContext();
+  const { updateUserProfile, updateUserProgress, updateUserVocabulary, setIsAuthenticated, setHasCompletedOnboarding } = useAppContext();
   const router = useRouter();
 
   const [usernameOrEmail, setUsernameOrEmail] = useState('');
@@ -75,9 +75,11 @@ export default function LoginScreen() {
         setIsAuthenticated(true);
         setHasCompletedOnboarding(true); // runtime only 
 
-        // updateUser
-        if (response.data?.user) {
-          await updateUser(response.data?.user);
+        // update user data
+        if (response.data) {
+          await updateUserProfile(response.data?.user_profile);
+          await updateUserProgress(response.data?.user_progress);
+          await updateUserVocabulary(response.data?.user_vocabulary);
         }
         router.replace('/(tabs)');
       }
@@ -104,7 +106,9 @@ export default function LoginScreen() {
     //   console.log('Google User Info:', userInfo);
     //   Alert.alert('Google Sign-In Success', `Welcome, ${userInfo.user.name || userInfo.user.email}`);
     //   // Optionally, update user context and navigate
-    //   // await updateUser(userInfo.user);
+    //   // await updateUserProfile(userInfo.user);
+    //   // await updateUserProgress();   // I DON'T KNOW
+    //   // await updateUserVocabulary(); // CHECK
     //   // setIsAuthenticated(true);
     //   // router.replace('/(tabs)');
     // } catch (error: any) {

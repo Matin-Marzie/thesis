@@ -13,7 +13,7 @@ import {
 import { useAppContext } from '@/context/AppContext';
 
 export default function HomeScreen() {
-  const { dictionary } = useAppContext();
+  const { dictionary, userVocabulary } = useAppContext();
   const [search, setSearch] = useState('');
   const [filteredWords, setFilteredWords] = useState([]);
   const debounceTimeout = useRef(null);

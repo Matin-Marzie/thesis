@@ -46,8 +46,7 @@ export default function RegisterScreen({ onRegisterSuccess }: RegisterScreenProp
   //   });
   // }, []);
 
-  
-  const { user, updateUser, setIsAuthenticated } = useAppContext();
+  const { user, updateUserProfile, updateUserProgress, updateUserVocabulary, setIsAuthenticated } = useAppContext();
   const router = useRouter();
 
   const [firstName, setFirstName] = useState('');
@@ -96,9 +95,11 @@ export default function RegisterScreen({ onRegisterSuccess }: RegisterScreenProp
       if (response.status === 201) {
         setIsAuthenticated(true); // we have set the token previously in auth.js
 
-        // updateUser
-        if (response.data?.user) {
-          await updateUser(response.data?.user);
+        // update user data
+        if (response.data) {
+          await updateUserProfile(response.data?.user_profile);
+          await updateUserProgress(response.data?.user_progress);
+          await updateUserVocabulary(response.data?.user_vocabulary);
         }
         router.replace('/(tabs)');
       }
@@ -123,7 +124,8 @@ export default function RegisterScreen({ onRegisterSuccess }: RegisterScreenProp
     //   // You should implement backend call here
     //   Alert.alert('Google Sign-In Success', `Welcome, ${userInfo.user.name || userInfo.user.email}`);
     //   // Optionally, update user context and navigate
-    //   // await updateUser(userInfo.user);
+    //   // await updateUserProfile(userInfo.user);
+    //   // update user data
     //   // setIsAuthenticated(true);
     //   // router.replace('/(tabs)');
     // } catch (error: any) {

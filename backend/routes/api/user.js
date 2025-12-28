@@ -4,7 +4,7 @@ import verifyJWT from '../../middleware/verifyJWT.js';
 
 const router = express.Router();
 
-router.get('/me', verifyJWT, userController.getUserProfileProgress);            // user_profile + user_progress(includes user_languages)
+router.get('/me', verifyJWT, userController.getUserProfileProgress);            // user_profile + user_progress(includes user_languages) + user_vocabulary
 // router.get('/profile', verifyJWT, userController.);
 // router.get('/progress', verifyJWT, userController.);
 // router.get('/language', verifyJWT, userController.);

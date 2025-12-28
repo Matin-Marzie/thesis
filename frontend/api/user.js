@@ -16,8 +16,8 @@ export const getCurrentUser = async () => {
 
 /**
  * Update user profile
- * @param {Object} userData - { username?, first_name?, last_name?, email?, profile_picture? }
- * @returns {Promise<Object>} - { success, data: { user } }
+ * @param {Object} userData - { user_profile }
+ * @returns {Promise<Object>} - { message, user_profile }
  */
 export const updateUserProfile = async (userData) => {
   try {
@@ -39,36 +39,6 @@ export const getUserVocabulary = async () => {
     return response.data;
   } catch (error) {
     console.error('Get vocabulary error:', error.response?.data || error.message);
-    throw error;
-  }
-};
-
-/**
- * Update user's energy
- * @param {number} energyChange - Amount to add/subtract
- * @returns {Promise<Object>} - Updated user data
- */
-export const updateUserEnergy = async (energyChange) => {
-  try {
-    const response = await apiClient.patch('/users/energy', { energy: energyChange });
-    return response.data;
-  } catch (error) {
-    console.error('Update energy error:', error.response?.data || error.message);
-    throw error;
-  }
-};
-
-/**
- * Update user's coins
- * @param {number} coinsChange - Amount to add/subtract
- * @returns {Promise<Object>} - Updated user data
- */
-export const updateUserCoins = async (coinsChange) => {
-  try {
-    const response = await apiClient.patch('/users/coins', { coins: coinsChange });
-    return response.data;
-  } catch (error) {
-    console.error('Update coins error:', error.response?.data || error.message);
     throw error;
   }
 };

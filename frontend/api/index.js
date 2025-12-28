@@ -26,8 +26,6 @@ export {
   getCurrentUser,
   updateUserProfile,
   getUserVocabulary,
-  updateUserEnergy,
-  updateUserCoins,
 } from './user.js';
 
 // Export token management functions

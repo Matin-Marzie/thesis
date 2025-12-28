@@ -10,17 +10,15 @@ import { useDictionary } from '../hooks/useDictionary';
 
 
 /**
- * @typedef {Object} User
+ * @typedef {Object} userProfile
  * @property {string} [id]
  * @property {string} [username]
  * @property {string} [email]
- * @property {string} [displayName]
  */
 
 /**
  * @typedef {Object} AppContextType
- * @property {User | null} user
- * @property {(user: User | null) => void} setUser
+ * @property {userProfile} userProfile
  * @property {boolean} isAuthenticated
  * @property {(isAuthenticated: boolean) => void} setIsAuthenticated
  * @property {boolean} hasCompletedOnboarding
@@ -29,9 +27,7 @@ import { useDictionary } from '../hooks/useDictionary';
  * @property {(isLoading: boolean) => void} setIsLoading
  * @property {boolean} isOnline
  * @property {() => Promise<void>} checkAuthStatus
- * @property {(userData: User, accessToken: string, refreshToken?: string) => Promise<void>} login
  * @property {() => Promise<void>} logout
- * @property {(userData: Partial<User>) => void} updateUser
  */
 
 /** @type {import('react').Context<AppContextType>} */
@@ -49,7 +45,7 @@ export const AppProvider = ({ children }) => {
   const syncIntervalRef = useRef(null);
 
 
-  const defaultUser = {
+  const defaultUserProfile = {
     // Profile
     id: null,
     first_name: 'Guest',
@@ -61,31 +57,37 @@ export const AppProvider = ({ children }) => {
     age: null,
     preferences: '',
     notifications: true,
+  }
 
-    total_experience: 0, // Database will compute this, total experience across all languages
-
+  const defaultUserProgress = {
     // Progress
+    // total_experience: 0, // Database will compute this, total experience across all languages
     energy: 100,
     coins: 20,
-
     languages: [
       {
+        id: null,
         is_current_language: true,
-        native_language_id: 1,
-        native_language_name: 'English',
-        native_language_code: 'en',
-        learning_language_id: 2,
-        learning_language_name: 'Greek',
-        learning_language_code: 'el',
+        native_language: {
+          id: 1,
+          name: 'English',
+          code: 'en',
+        },
+        learning_language: {
+          id: 2,
+          name: 'Greek',
+          code: 'el',
+        },
         created_at: null,
-        proficiency_level: 'A1',
-        experience: 0,
-        learned_vocabulary: [], // { id: 100000, mastery_level: 1, last_review: null, created_at: null }
+        proficiency_level: 'N',
+        experience: 0
       },
     ],
   }
 
-  const [user, setUser] = useState(defaultUser);
+  const [userProfile, setUserProfile] = useState(defaultUserProfile);
+  const [userProgress, setUserProgress] = useState(defaultUserProgress);
+  const [userVocabulary, setUserVocabulary] = useState({}); // { word_id: { language_id, mastery_level, last_review, created_at } }
 
   // all available words in the learning language
   const [dictionary, setDictionary] = useState({});
@@ -94,24 +96,11 @@ export const AppProvider = ({ children }) => {
 
   // Sync user data with backend
   const syncWithBackend = async () => {
-    if (!isOnline) {
-      console.log('[Sync] Offline - skipping sync');
-      return;
-    }
-
-    if (!hasUnsyncedChanges.current) {
-      console.log('[Sync] No changes to sync');
-      return;
-    }
-
+    if (!isOnline) return;
+    if (!hasUnsyncedChanges.current) return;
     try {
-      // Get current user_profile from AsyncStorage
-      const profileStr = await AsyncStorage.getItem('user_profile');
-      if (!profileStr) {
-        console.log('[Sync] No user_profile to sync');
-        hasUnsyncedChanges.current = false;
-        return;
-      }
+      // Get current user_progress from AsyncStorage
+      // const progressStr = await AsyncStorage.getItem('user_progress');
 
       // const userProfile = JSON.parse(profileStr);
 
@@ -130,35 +119,60 @@ export const AppProvider = ({ children }) => {
       // Mark as synced
       hasUnsyncedChanges.current = false;
       lastSyncTime.current = Date.now();
-      console.log('[Sync] Success');
-
     } catch (error) {
       console.error('[Sync] Error - will retry on next interval:', error.message);
       // Don't clear hasUnsyncedChanges - will retry on next interval
     }
   };
 
-  // Update user data locally and mark for sync
-  const updateUser = async (newUser) => {
+
+  // TO DO: handle user profile
+
+
+  // ----------------------------------------------------------------------------------------------------------
+  // update user profile in memory and asyncStorage
+  const updateUserProfile = async (newUserProfile) => {
     try {
-      setUser(prevUser => {
-        const mergedUser = { ...prevUser, ...newUser };
-        // Save merged user to AsyncStorage
-        AsyncStorage.setItem('user_profile', JSON.stringify(mergedUser));
-        return mergedUser;
+      setUserProfile(newUserProfile); // memory update
+      await AsyncStorage.setItem('user_profile', JSON.stringify(newUserProfile)); // persistent update
+    } catch (error) {
+      console.error('[updateUserProfile] Error saving to AsyncStorage:', error);
+    }
+  };
+
+  // update user progress locally and mark for sync
+  const updateUserProgress = async (newUserProgress) => {
+    try {
+      setUserProgress(prevUserProgress => {
+        const mergedUserProgress = { ...prevUserProgress, ...newUserProgress };
+        // Save merged user progress to AsyncStorage
+        AsyncStorage.setItem('user_progress', JSON.stringify(mergedUserProgress));
+        return mergedUserProgress;
       });
       hasUnsyncedChanges.current = true; // Mark for backend sync
     } catch (error) {
-      console.error('[updateUser] Error saving to AsyncStorage:', error);
+      console.error('[updateUserProgress] Error saving to AsyncStorage:', error);
     }
   };
+
+  // update user vocabulary memory+locally and mark for sync
+  const updateUserVocabulary = async (newUserVocabulary) => {
+    try {
+      setUserVocabulary(newUserVocabulary); // memory update
+      await AsyncStorage.setItem('user_vocabulary', JSON.stringify(newUserVocabulary)); // persistent update
+    } catch (error) {
+      console.error('[updateUserVocabulary] Error saving to AsyncStorage:', error);
+    }
+  };
+  // ----------------------------------------------------------------------------------------------------------
+
+
 
   // Monitor network connectivity
   useEffect(() => {
     const unsubscribe = NetInfo.addEventListener(state => {
       setIsOnline(state.isConnected ?? true);
     });
-
     return () => unsubscribe();
   }, []);
 
@@ -189,7 +203,6 @@ export const AppProvider = ({ children }) => {
         }
       }
     });
-
     return () => {
       subscription.remove();
     };
@@ -199,9 +212,7 @@ export const AppProvider = ({ children }) => {
   // refetch user profile after access token refresh
   const checkAuthStatus = async () => {
     try {
-
       const refreshToken = await getRefreshToken();
-      console.log('refreshToken:', refreshToken);
 
       if (refreshToken) {
         // Try to refresh access token
@@ -210,10 +221,13 @@ export const AppProvider = ({ children }) => {
           console.log('newAccessToken:', newAccessToken);
 
           if (newAccessToken) {
-            // Fetch user profile
-            const userData = await getCurrentUser();
+            // TO DO: SYNC WITH BACKEND user_profile, user_progress and user_vocabulary
+            // TO DO: for now just fetch user data
+            const data = await getCurrentUser();
 
-            updateUser(userData.data?.user);
+            await updateUserProfile(data?.user_profile);
+            await updateUserProgress(data?.user_progress);
+            await updateUserVocabulary(data?.user_vocabulary);
             setIsAuthenticated(true);
 
             // 3️⃣ AUTHENTICATED ⇒ SKIP ONBOARDING
@@ -226,35 +240,38 @@ export const AppProvider = ({ children }) => {
       }
 
       // // not authenticated → Check if user has completed onboarding
-      const { getItem } = await import('expo-secure-store');
-      const onboardingComplete =
-        (await SecureStore.getItemAsync('onboarding_complete')) === 'true';
+      const onboardingComplete = (await SecureStore.getItemAsync('onboarding_complete')) === 'true';
 
       setHasCompletedOnboarding(onboardingComplete);
-
       // No token or refresh failed - user not authenticated
       setIsAuthenticated(false);
 
     } catch (error) {
       console.error('Auth check error:', error);
-      setUser(defaultUser);
       setIsAuthenticated(false);
       await clearTokens();
+      await updateUserProfile(defaultUserProfile);
+      await updateUserProgress(defaultUserProgress);
+      await updateUserVocabulary(defaultUserVocabulary);
     } finally {
       setIsLoading(false);
     }
   };
 
-  // On mount: load user profile from AsyncStorage and check auth status
+  // On mount: load user data and check auth status
   useEffect(() => {
     (async () => {
       try {
         const profileStr = await AsyncStorage.getItem('user_profile');
-        if (profileStr) {
-          setUser(JSON.parse(profileStr));
-        }
+        if (profileStr) setUserProfile(JSON.parse(profileStr))
+
+        const progressStr = await AsyncStorage.getItem('user_progress');
+        if (progressStr) setUserProgress(JSON.parse(progressStr));
+
+        const vocabularyStr = await AsyncStorage.getItem('user_vocabulary');
+        if (vocabularyStr) setUserVocabulary(JSON.parse(vocabularyStr));
       } catch (e) {
-        console.error('[AppProvider] Failed to load user_profile from AsyncStorage:', e);
+        console.error('[AppProvider] Failed to load user data from AsyncStorage:', e);
       } finally {
         checkAuthStatus();
       }
@@ -264,21 +281,18 @@ export const AppProvider = ({ children }) => {
   // Handling Dictionary
   const isDictionaryEnabled = useMemo(
     () =>
-      hasCompletedOnboarding &&
-      user?.languages?.some(l => l.is_current_language),
-    [hasCompletedOnboarding, user?.languages]
+      hasCompletedOnboarding,
+    [hasCompletedOnboarding]
   );
 
-
   // Using the custom hook hooks/useDictionary
-  const { dictionary: dict, dictionaryLoading: dictLoading } = useDictionary({ user, enabled: isDictionaryEnabled, isOnline });
+  const { dictionary: dict, dictionaryLoading: dictLoading } = useDictionary({ userProgress, enabled: isDictionaryEnabled, isOnline });
 
   // Sync dictionary state
   useEffect(() => {
     setDictionary(dict || {});
     setDictionaryLoading(dictLoading);
   }, [dict, dictLoading]);
-
 
 
   // Logout function
@@ -288,13 +302,15 @@ export const AppProvider = ({ children }) => {
       await clearTokens();
 
       // Clear AsyncStorage and SecureStore
-      await AsyncStorage.clear(); 
-      // await SecureStore.setItemAsync('onboarding_complete', 'false');
+      await AsyncStorage.clear();
+      await SecureStore.setItemAsync('onboarding_complete', 'false');
 
       // reset memory state
-      updateUser(defaultUser);
       setIsAuthenticated(false);
       setHasCompletedOnboarding(false);
+      setUserProfile(defaultUserProfile);
+      setUserProgress(defaultUserProgress);
+      setUserVocabulary(defaultUserVocabulary);
       setDictionary({});
       setDictionaryLoading(false);
 
@@ -308,15 +324,15 @@ export const AppProvider = ({ children }) => {
   };
 
   const value = {
-    user, setUser,
-    dictionary, setDictionary,
-    isAuthenticated, setIsAuthenticated,
+    userProfile, setUserProfile, updateUserProfile,
+    userProgress, setUserProgress, updateUserProgress,
+    userVocabulary, setUserVocabulary, updateUserVocabulary,
+    dictionary, setDictionary, dictionaryLoading,
+    isAuthenticated, setIsAuthenticated, checkAuthStatus,
     hasCompletedOnboarding, setHasCompletedOnboarding,
     isLoading, setIsLoading,
     isOnline,
-    checkAuthStatus,
     logout,
-    updateUser,
   };
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;

@@ -6,20 +6,20 @@ import { useAppContext } from '@/context/AppContext';
 import { PRIMARY_COLOR } from '@/constants/App';
 
 export default function ProfileScreen() {
-  const { user, isAuthenticated } = useAppContext();
+  const { userProfile, isAuthenticated } = useAppContext();
   const router = useRouter();
 
   return (
     <ScrollView style={styles.container}>
       <View style={styles.content}>
         {/* User Info Section */}
-        {user && (
+        {userProfile && (
           <View style={styles.userSection}>
             <View style={styles.avatar}>
               <Ionicons name="person" size={40} color="#fff" />
             </View>
-            <Text style={styles.userName}>{user.first_name || user.username}</Text>
-            <Text style={styles.userEmail}>{user.email || `@${user.username}`}</Text>
+            <Text style={styles.userName}>{userProfile.first_name || userProfile.username}</Text>
+            <Text style={styles.userEmail}>{userProfile.email || `@${userProfile.username}`}</Text>
           </View>
         )}
 

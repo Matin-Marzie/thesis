@@ -4,13 +4,13 @@ import { useAppContext } from '@/context/AppContext';
 import { LANGUAGES_META } from '@/constants/SupportedLanguages';
 
 export default function HomeHeaderTitle() {
-  const { user } = useAppContext();
+  const { userProgress } = useAppContext();
 
   // Find the current language object
-  const currentLang = user?.languages?.find(l => l.is_current_language);
+  const currentLang = userProgress?.languages?.find(l => l.is_current_language);
   
   // Find the LANGUAGES_META entry by ID
-  const languageMeta = Object.values(LANGUAGES_META).find(l => l.id === Number(currentLang?.learning_language_id));
+  const languageMeta = Object.values(LANGUAGES_META).find(l => l.id === Number(currentLang?.learning_language.id));
 
   const flag = languageMeta?.flag;
 
@@ -32,13 +32,13 @@ export default function HomeHeaderTitle() {
       {/* Coins */}
       <View style={styles.item}>
         <Text style={styles.icon}>🪙</Text>
-        <Text style={styles.text}>{user?.coins || 0}</Text>
+        <Text style={styles.text}>{userProgress?.coins || 0}</Text>
       </View>
 
       {/* Energy */}
       <View style={styles.item}>
         <Text style={styles.icon}>⚡</Text>
-        <Text style={styles.text}>{user?.energy || 0}</Text>
+        <Text style={styles.text}>{userProgress?.energy || 0}</Text>
       </View>
     </View>
   );

@@ -146,35 +146,6 @@ const userLanguagesModel = {
     const result = await pool.query(query, values);
     return result.rows[0];
   },
-
-  // Havn't used yet
-  // Get specific user language
-  async findById(userLanguageId) {
-    const query = `
-      SELECT ul.*, 
-             bl.name as native_language_name, bl.code as base_language_code,
-             ll.name as learning_language_name, ll.code as learning_language_code
-      FROM user_languages ul
-      JOIN languages bl ON ul.native_language_id = bl.id
-      JOIN languages ll ON ul.learning_language_id = ll.id
-      WHERE ul.id = $1
-    `;
-
-    const result = await pool.query(query, [userLanguageId]);
-    return result.rows[0];
-  },
-
-  // Havn't used yet
-  // Check if user already has this language combination
-  async findByUserAndLanguages(userId, learning_language_id) {
-    const query = `
-      SELECT * FROM user_languages 
-      WHERE user_id = $1 AND learning_language_id = $2
-    `;
-
-    const result = await pool.query(query, [userId, learning_language_id]);
-    return result.rows[0];
-  },
 };
 
 export default userLanguagesModel;
