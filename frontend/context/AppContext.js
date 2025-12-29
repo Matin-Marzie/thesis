@@ -86,7 +86,7 @@ export const AppProvider = ({ children }) => {
 
   const [userProfile, setUserProfile] = useState(defaultUserProfile);
   const [userProgress, setUserProgress] = useState(defaultUserProgress);
-  const [userVocabulary, setUserVocabulary] = useState({}); // { word_id: { language_id, mastery_level, last_review, created_at } }
+  const [userVocabulary, setUserVocabulary] = useState({});
 
 
   // Sync user data with backend
@@ -147,16 +147,6 @@ export const AppProvider = ({ children }) => {
       hasUnsyncedChanges.current = true; // Mark for backend sync
     } catch (error) {
       console.error('[updateUserProgress] Error saving to AsyncStorage:', error);
-    }
-  };
-
-  // update user vocabulary memory+locally and mark for sync
-  const updateUserVocabulary = async (newUserVocabulary) => {
-    try {
-      setUserVocabulary(newUserVocabulary); // memory update
-      await AsyncStorage.setItem('user_vocabulary', JSON.stringify(newUserVocabulary)); // persistent update
-    } catch (error) {
-      console.error('[updateUserVocabulary] Error saving to AsyncStorage:', error);
     }
   };
   // ----------------------------------------------------------------------------------------------------------
@@ -221,7 +211,7 @@ export const AppProvider = ({ children }) => {
 
             await updateUserProfile(data?.user_profile);
             await updateUserProgress(data?.user_progress);
-            await updateUserVocabulary(data?.user_vocabulary);
+            await setUserVocabulary(data?.user_vocabulary);
             setIsAuthenticated(true);
 
             // 3️⃣ AUTHENTICATED ⇒ SKIP ONBOARDING
@@ -246,7 +236,6 @@ export const AppProvider = ({ children }) => {
       await clearTokens();
       await updateUserProfile(defaultUserProfile);
       await updateUserProgress(defaultUserProgress);
-      await updateUserVocabulary({});
     } finally {
       setIsLoading(false);
     }
@@ -256,11 +245,11 @@ export const AppProvider = ({ children }) => {
   useEffect(() => {
     (async () => {
       try {
-        const                                                                                                                                                                                                                                              profileStr = await AsyncStorage.getItem('user_profile');
+        const profileStr = await AsyncStorage.getItem('user_profile');
         if (profileStr) setUserProfile(JSON.parse(profileStr))
 
         const progressStr = await AsyncStorage.getItem('user_progress');
-        if (progressStr) setUserProgress(JSON.parse(progressStr));                                                                                                                                                                                                                                                                                                                                                                              
+        if (progressStr) setUserProgress(JSON.parse(progressStr));
 
         const vocabularyStr = await AsyncStorage.getItem('user_vocabulary');
         if (vocabularyStr) setUserVocabulary(JSON.parse(vocabularyStr));
@@ -301,7 +290,7 @@ export const AppProvider = ({ children }) => {
   const value = {
     userProfile, setUserProfile, updateUserProfile,
     userProgress, setUserProgress, updateUserProgress,
-    userVocabulary, setUserVocabulary, updateUserVocabulary,
+    userVocabulary, setUserVocabulary,
     isAuthenticated, setIsAuthenticated, checkAuthStatus,
     hasCompletedOnboarding, setHasCompletedOnboarding,
     isLoading, setIsLoading,

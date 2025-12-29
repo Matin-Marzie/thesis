@@ -36,7 +36,7 @@ export default function LoginScreen() {
   const width = Dimensions.get('window').width;
   const height = Dimensions.get('window').height;
 
-  const { updateUserProfile, updateUserProgress, updateUserVocabulary, setIsAuthenticated, setHasCompletedOnboarding } = useAppContext();
+  const { updateUserProfile, updateUserProgress, setUserVocabulary, setIsAuthenticated, setHasCompletedOnboarding } = useAppContext();
   const router = useRouter();
 
   const [usernameOrEmail, setUsernameOrEmail] = useState('');
@@ -79,7 +79,7 @@ export default function LoginScreen() {
         if (response.data) {
           await updateUserProfile(response.data?.user_profile);
           await updateUserProgress(response.data?.user_progress);
-          await updateUserVocabulary(response.data?.user_vocabulary);
+          await setUserVocabulary(response.data?.user_vocabulary);
         }
         router.replace('/(tabs)');
       }

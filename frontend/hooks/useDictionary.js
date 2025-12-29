@@ -1,10 +1,10 @@
-import { useEffect, useMemo, useRef, useState, useCallback, useContext } from 'react';
+import { useEffect, useMemo, useRef, useState, useCallback, useContext, use } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { getDictionaryByCodes } from '../api/dictionary';
-import AppContext from '../context/AppContext';
+import { useAppContext } from '../context/AppContext';
 
 export const useDictionary = () => {
-  const { userProgress, isOnline } = useContext(AppContext);
+  const { userProgress, isOnline } = useAppContext();
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
