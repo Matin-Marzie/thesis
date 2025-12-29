@@ -1,8 +1,10 @@
-import { useEffect, useMemo, useRef, useState, useCallback } from 'react';
+import { useEffect, useMemo, useRef, useState, useCallback, useContext } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { getDictionaryByCodes } from '../api/dictionary';
+import AppContext from '../context/AppContext';
 
-export const useDictionary = ({ userProgress, enabled, isOnline }) => {
+export const useDictionary = () => {
+  const { userProgress, isOnline } = useContext(AppContext);
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -10,7 +12,7 @@ export const useDictionary = ({ userProgress, enabled, isOnline }) => {
   const DICTIONARY_TTL = 3 * 24 * 60 * 60 * 1000; // 3 days in milliseconds
   const requestIdRef = useRef(0);
 
-  // ✅ stable derived state
+  // ✅ stable derived state - triggers refetch when is_current_language changes
   const currentLang = useMemo(() => {
     return userProgress?.languages?.find(l => l.is_current_language) || null;
   }, [userProgress?.languages]);
@@ -23,9 +25,9 @@ export const useDictionary = ({ userProgress, enabled, isOnline }) => {
     currentLang?.native_language.code,
   ]);
 
-  // ✅ stable callback (no eslint hack)
+  // ✅ stable callback
   const loadDictionary = useCallback(async () => {
-    if (!enabled || !currentLang || !cacheKey) return;
+    if (!currentLang || !cacheKey) return;
 
     setLoading(true);
     setError(null);
@@ -89,13 +91,12 @@ export const useDictionary = ({ userProgress, enabled, isOnline }) => {
       }
     }
   }, [
-    enabled,
-    isOnline,
     cacheKey,
-    currentLang.learning_language.code,
-    currentLang.native_language.code,
+    currentLang,
+    isOnline,
   ]);
 
+  // Trigger refetch only when currentLang changes
   useEffect(() => {
     loadDictionary();
   }, [loadDictionary]);

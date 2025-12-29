@@ -9,7 +9,7 @@ import { useColorScheme } from '@/components/useColorScheme';
 import { useClientOnlyValue } from '@/components/useClientOnlyValue';
 import { PRIMARY_COLOR } from '@/constants/App';
 import TabBarIcon from '@/components/TabBarIcon';
-import HomeHeaderTitle from '@/components/HomeHeaderTitle';
+import ProgressHeaderTitle from '@/components/ProgressHeaderTitle';
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
@@ -36,7 +36,7 @@ export default function TabLayout() {
         name="index"
         options={{
           title: 'Home',
-          headerTitle: () => <HomeHeaderTitle />,
+          headerTitle: () => <ProgressHeaderTitle />,
           tabBarIcon: ({ color }) => <TabBarIcon name="home" color={color} />,
         }}
       />
@@ -59,7 +59,7 @@ export default function TabLayout() {
         name="practice"
         options={{
           title: 'Practice',
-          headerTitle: () => <HomeHeaderTitle />,
+          headerTitle: () => <ProgressHeaderTitle />,
           tabBarIcon: ({ color }) => <TabBarIcon name="gamepad" color={color} />,
         }}
       />
@@ -75,7 +75,7 @@ export default function TabLayout() {
                   <FontAwesome
                     name="bars"
                     size={25}
-                    color={Colors[colorScheme ?? 'light'].text}
+                    color={'#fff'}
                     style={{ marginRight: 15, opacity: pressed ? 0.5 : 1 }}
                   />
                 )}

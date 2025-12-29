@@ -20,8 +20,6 @@ export interface AppContextType {
   login: (userData: User, accessToken: string, refreshToken?: string) => Promise<void>;
   logout: () => Promise<void>;
   updateUser: (userData: Partial<User>) => Promise<void>;
-  dictionary: any[];
-  setDictionary: (dictionary: any[]) => void;
 }
 
 export const AppProvider: React.FC<{ children: React.ReactNode }>;

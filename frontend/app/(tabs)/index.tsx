@@ -5,20 +5,19 @@ import {
   StyleSheet, 
   TextInput, 
   Animated, 
-  FlatList, 
-  TouchableOpacity, 
-  KeyboardAvoidingView,
-  Platform
+  TouchableOpacity,
 } from 'react-native';
 import { useAppContext } from '@/context/AppContext';
+import { useDictionary } from '@/hooks/useDictionary';
 
 export default function HomeScreen() {
-  const { dictionary, userVocabulary } = useAppContext();
+  const { userVocabulary } = useAppContext();
+  const { dictionary } = useDictionary();
   const [search, setSearch] = useState('');
   const [filteredWords, setFilteredWords] = useState([]);
   const debounceTimeout = useRef(null);
 
-  const words = useMemo(() => dictionary.words || [], [dictionary]);
+  const words = useMemo(() => dictionary?.words || [], [dictionary]);
 
   // Debounced search effect
   useEffect(() => {
@@ -60,10 +59,7 @@ export default function HomeScreen() {
   );
 
   return (
-    <KeyboardAvoidingView
-      style={styles.container}
-      behavior={Platform.OS === 'ios' ? 'padding' : undefined}
-    >
+    <View style={styles.container}>
       {/* Fixed search input */}
       <View style={styles.searchContainer}>
         <TextInput
@@ -81,7 +77,7 @@ export default function HomeScreen() {
         renderItem={renderItem}
         keyboardShouldPersistTaps="handled"
       />
-    </KeyboardAvoidingView>
+    </View>
   );
 }
 

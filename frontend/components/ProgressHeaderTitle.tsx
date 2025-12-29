@@ -3,7 +3,7 @@ import { View, Text, StyleSheet } from 'react-native';
 import { useAppContext } from '@/context/AppContext';
 import { LANGUAGES_META } from '@/constants/SupportedLanguages';
 
-export default function HomeHeaderTitle() {
+export default function ProgressHeaderTitle() {
   const { userProgress } = useAppContext();
 
   // Find the current language object

@@ -1,4 +1,4 @@
-import { createContext, useState, useEffect, useContext, useRef, useMemo } from 'react';
+import { createContext, useState, useEffect, useContext, useRef } from 'react';
 import { AppState } from 'react-native';
 import NetInfo from '@react-native-community/netinfo'; // Checks internet connection in OS level
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -6,7 +6,6 @@ import { getRefreshToken, clearTokens } from '../api/tokens';
 import { refreshAccessToken } from '../api/auth';
 import { getCurrentUser } from '../api/user';
 import * as SecureStore from 'expo-secure-store';
-import { useDictionary } from '../hooks/useDictionary';
 
 
 /**
@@ -88,10 +87,6 @@ export const AppProvider = ({ children }) => {
   const [userProfile, setUserProfile] = useState(defaultUserProfile);
   const [userProgress, setUserProgress] = useState(defaultUserProgress);
   const [userVocabulary, setUserVocabulary] = useState({}); // { word_id: { language_id, mastery_level, last_review, created_at } }
-
-  // all available words in the learning language
-  const [dictionary, setDictionary] = useState({});
-  const [dictionaryLoading, setDictionaryLoading] = useState(false);
 
 
   // Sync user data with backend
@@ -218,7 +213,6 @@ export const AppProvider = ({ children }) => {
         // Try to refresh access token
         try {
           const newAccessToken = await refreshAccessToken();
-          console.log('newAccessToken:', newAccessToken);
 
           if (newAccessToken) {
             // TO DO: SYNC WITH BACKEND user_profile, user_progress and user_vocabulary
@@ -252,7 +246,7 @@ export const AppProvider = ({ children }) => {
       await clearTokens();
       await updateUserProfile(defaultUserProfile);
       await updateUserProgress(defaultUserProgress);
-      await updateUserVocabulary(defaultUserVocabulary);
+      await updateUserVocabulary({});
     } finally {
       setIsLoading(false);
     }
@@ -262,11 +256,11 @@ export const AppProvider = ({ children }) => {
   useEffect(() => {
     (async () => {
       try {
-        const profileStr = await AsyncStorage.getItem('user_profile');
+        const                                                                                                                                                                                                                                              profileStr = await AsyncStorage.getItem('user_profile');
         if (profileStr) setUserProfile(JSON.parse(profileStr))
 
         const progressStr = await AsyncStorage.getItem('user_progress');
-        if (progressStr) setUserProgress(JSON.parse(progressStr));
+        if (progressStr) setUserProgress(JSON.parse(progressStr));                                                                                                                                                                                                                                                                                                                                                                              
 
         const vocabularyStr = await AsyncStorage.getItem('user_vocabulary');
         if (vocabularyStr) setUserVocabulary(JSON.parse(vocabularyStr));
@@ -277,23 +271,6 @@ export const AppProvider = ({ children }) => {
       }
     })();
   }, []);
-
-  // Handling Dictionary
-  const isDictionaryEnabled = useMemo(
-    () =>
-      hasCompletedOnboarding,
-    [hasCompletedOnboarding]
-  );
-
-  // Using the custom hook hooks/useDictionary
-  const { dictionary: dict, dictionaryLoading: dictLoading } = useDictionary({ userProgress, enabled: isDictionaryEnabled, isOnline });
-
-  // Sync dictionary state
-  useEffect(() => {
-    setDictionary(dict || {});
-    setDictionaryLoading(dictLoading);
-  }, [dict, dictLoading]);
-
 
   // Logout function
   const logout = async () => {
@@ -310,9 +287,7 @@ export const AppProvider = ({ children }) => {
       setHasCompletedOnboarding(false);
       setUserProfile(defaultUserProfile);
       setUserProgress(defaultUserProgress);
-      setUserVocabulary(defaultUserVocabulary);
-      setDictionary({});
-      setDictionaryLoading(false);
+      setUserVocabulary({});
 
       // Reset sync refs
       hasUnsyncedChanges.current = false;
@@ -327,7 +302,6 @@ export const AppProvider = ({ children }) => {
     userProfile, setUserProfile, updateUserProfile,
     userProgress, setUserProgress, updateUserProgress,
     userVocabulary, setUserVocabulary, updateUserVocabulary,
-    dictionary, setDictionary, dictionaryLoading,
     isAuthenticated, setIsAuthenticated, checkAuthStatus,
     hasCompletedOnboarding, setHasCompletedOnboarding,
     isLoading, setIsLoading,

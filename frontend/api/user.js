@@ -6,7 +6,7 @@ import apiClient from './client.js';
  */
 export const getCurrentUser = async () => {
   try {
-    const response = await apiClient.get('/users/me');
+    const response = await apiClient.get('/user/me');
     return response.data;
   } catch (error) {
     console.error('Get user error:', error.response?.data || error.message);
