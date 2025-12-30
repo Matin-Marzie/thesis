@@ -6,6 +6,8 @@ import * as SplashScreen from 'expo-splash-screen';
 import { useEffect } from 'react';
 import { View, ActivityIndicator } from 'react-native';
 import 'react-native-reanimated';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 
 import { useColorScheme } from '@/components/useColorScheme';
 import { AppProvider, useAppContext } from '../context/AppContext';
@@ -47,9 +49,13 @@ export default function RootLayout() {
 
   // Render the app with the AppProvider to provide context
   return (
-    <AppProvider>
-      <RootLayoutNav />
-    </AppProvider>
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <AppProvider>
+        <BottomSheetModalProvider>
+          <RootLayoutNav />
+        </BottomSheetModalProvider>
+      </AppProvider>
+    </GestureHandlerRootView>
   );
 }
 

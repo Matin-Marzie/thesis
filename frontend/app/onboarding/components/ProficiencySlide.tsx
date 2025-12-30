@@ -26,7 +26,8 @@ export default function ProficiencySlide({
 }: ProficiencySlideProps) {
   // Proficiency levels with label and number of bars
   const levels = [
-    { value: 'A1', label: 'First time learning', bars: 0 },
+    // { value: 'N',  label: 'Learning for the first time', bars: 0 },
+    { value: 'A1', label: 'I know the letters and some words', bars: 0 },
     { value: 'A2', label: 'I know some common words', bars: 1 },
     { value: 'B1', label: 'I can have basic conversations', bars: 2 },
     { value: 'B2', label: 'I can discuss various topics', bars: 3 },
