@@ -14,10 +14,11 @@ import { useRouter } from 'expo-router';
 
 import Grid from './Grid';
 import LettersCycle from './LettersCycle';
-import SettingsPopup from './SettingsPopup';
-import ExtraWordsPopup from './ExtraWordsPopup';
-import FinishScreen from './FinishScreen';
+import SettingsPopup from './pop-ups/SettingsPopup';
+import ExtraWordsPopup from './pop-ups/ExtraWordsPopup';
+import FinishScreen from './pop-ups/FinishScreen';
 import { gridWords, dictionary, letters, columns, rows, GREEN, MAX_WIDTH, width, height, horizontalOffset, BACKGROUND_IMAGE_URI, BACKGROUND_OVERLAY_OPACITY, boxData, user } from './gameConstants';
+import { useAppContext } from '@/context/AppContext';
 
 
 const HAMMER_HEIGHT = height * 0.69;
@@ -33,6 +34,11 @@ const shuffleArray = (array) => {
 };
 
 export default function WordOfWonders() {
+
+    const { userVocabulary, dictionary } = useAppContext();
+    console.log('User Vocabulary in gameConstants:', userVocabulary);
+    console.log('Dictionary :', dictionary);
+
     const router = useRouter();
     const [selectedLetters, setSelectedLetters] = useState([]);
     const [filledBoxes, setFilledBoxes] = useState([]);
@@ -65,6 +71,27 @@ export default function WordOfWonders() {
             .map(() => new Animated.Value(0))
     ).current;
 
+    // Reset game state when component mounts
+    useEffect(() => {
+        // Reset gridWords isFound state
+        Object.keys(gridWords).forEach(word => {
+            gridWords[word].isFound = false;
+        });
+
+        setGameFinished(false);
+        setFoundWords([]);
+        setFilledBoxes([]);
+        setSelectedLetters([]);
+        setAnimatingWord(null);
+        setShakeWord(null);
+        setExtraWordsScore(0);
+        setShuffledLetters(shuffleArray(letters));
+
+        // Reset box animations
+        boxAnimations.forEach(anim => anim.setValue(0));
+        letterAnimations.forEach(anim => anim.setValue(0));
+    }, []);
+
     // Check if game is complete
     useEffect(() => {
         const foundGridWordsCount = Object.values(gridWords).filter((w) => w.isFound).length;
@@ -73,7 +100,6 @@ export default function WordOfWonders() {
         if (foundGridWordsCount === totalGridWords && !gameFinished) {
             setTimeout(() => {
                 setGameFinished(true);
-                // Alert.alert('Well Done!', 'You found all the words!');
             }, 500);
         }
     }, [foundWords, filledBoxes]); // Also check when filledBoxes changes
@@ -154,7 +180,7 @@ export default function WordOfWonders() {
 
         // Find all unfound words
         const unfoundWords = Object.keys(gridWords).filter(word => !gridWords[word].isFound);
-        
+
         if (unfoundWords.length === 0) return;
 
         // Pick a random unfound word
@@ -241,16 +267,16 @@ export default function WordOfWonders() {
     const hammerActiveRef = useRef(false);
     const coinsRef = useRef(coins);
     const filledBoxesRef = useRef(filledBoxes);
-    
+
     // Keep refs in sync
     useEffect(() => {
         coinsRef.current = coins;
     }, [coins]);
-    
+
     useEffect(() => {
         filledBoxesRef.current = filledBoxes;
     }, [filledBoxes]);
-    
+
     const hammerPanResponder = useRef(
         PanResponder.create({
             onStartShouldSetPanResponder: (evt) => {
@@ -299,13 +325,13 @@ export default function WordOfWonders() {
             },
             onPanResponderRelease: (evt) => {
                 hammerActiveRef.current = false;
-                
+
                 // Check if hammer hit a grid box
                 const { pageX, pageY } = evt.nativeEvent;
                 // Adjust Y coordinate based on screen height to match where the hammer icon visually appears
                 const adjustedY = pageY - (height * 0.07);
                 const hitBoxIndex = findHitGridBox(pageX, adjustedY);
-                
+
                 // Only process if hit a valid box and it's not already filled
                 if (hitBoxIndex !== null && !filledBoxesRef.current.includes(hitBoxIndex)) {
                     // Only deduct coins if we have enough
@@ -317,7 +343,7 @@ export default function WordOfWonders() {
                             duration: 300,
                             useNativeDriver: false,
                         }).start();
-                        
+
                         // Decrease coins
                         setCoins(prev => {
                             const newCoins = prev - 80;
@@ -391,6 +417,9 @@ export default function WordOfWonders() {
         gridWords[word].isFound = true;
     }, [filledBoxes, boxAnimations]);
 
+    const handleFinishHome = useCallback(() => {
+        router.back();
+    }, [router]);
 
     const handleLetterRelease = useCallback(() => {
         if (selectedLetters.length === 0) return;
@@ -546,7 +575,7 @@ export default function WordOfWonders() {
             <View style={styles.selectedWordContainer}>
                 <Animated.Text
                     style={[
-                        
+
                         styles.selectedLetterText,
                         {
                             transform: [{ translateX: selectedWordShakeAnimation }],
@@ -571,7 +600,7 @@ export default function WordOfWonders() {
 
                 {/* Coins Bar */}
                 <View style={styles.HeaderBar}>
-                    <TouchableOpacity 
+                    <TouchableOpacity
                         style={styles.backButton}
                         onPress={() => router.back()}
                     >
@@ -581,7 +610,7 @@ export default function WordOfWonders() {
                         <FontAwesome5 name="coins" size={25} color="#FFD700" />
                         <Text style={styles.coinsText}>{coins}</Text>
                     </View>
-                    <TouchableOpacity 
+                    <TouchableOpacity
                         style={styles.settingsButton}
                         onPress={() => setSettingsVisible(true)}
                     >
@@ -732,10 +761,13 @@ export default function WordOfWonders() {
                 {renderSelectedWord()}
 
                 {/* Finish Screen (moved to component) */}
-                <FinishScreen visible={gameFinished} />
+                <FinishScreen
+                    visible={gameFinished}
+                    onHome={handleFinishHome}
+                />
 
                 {/* Settings Popup */}
-                <SettingsPopup 
+                <SettingsPopup
                     visible={settingsVisible}
                     onClose={() => setSettingsVisible(false)}
                 />

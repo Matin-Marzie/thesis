@@ -44,7 +44,9 @@ export default function HomeScreen() {
     debounceTimeout.current = setTimeout(() => {
       const query = search.trim().toLowerCase();
       if (!query) {
-        setFilteredWords([]);
+        // Show user's vocabulary words when search is empty
+        const vocabularyWords = words.filter(word => userVocabulary && word.id in userVocabulary);
+        setFilteredWords(vocabularyWords);
         return;
       }
 
@@ -58,7 +60,7 @@ export default function HomeScreen() {
     }, 500);
 
     return () => clearTimeout(debounceTimeout.current);
-  }, [search, words]);
+  }, [search, words, userVocabulary]);
 
   // Render each word row
   const renderItem = ({ item }) => (

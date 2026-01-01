@@ -9,7 +9,7 @@ import {
     Switch,
 } from 'react-native';
 import { FontAwesome5 } from '@expo/vector-icons';
-import { GREEN } from './gameConstants';
+import { GREEN } from '../gameConstants';
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
 export default function SettingsPopup({ visible, onClose }) {

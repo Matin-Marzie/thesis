@@ -9,7 +9,7 @@ import {
     FlatList,
 } from 'react-native';
 import { FontAwesome5 } from '@expo/vector-icons';
-import { GREEN, dictionary } from './gameConstants';
+import { GREEN, dictionary } from '../gameConstants';
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
 

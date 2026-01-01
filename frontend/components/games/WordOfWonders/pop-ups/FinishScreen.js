@@ -2,9 +2,9 @@ import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Modal } from 'react-native';
 import { useRouter } from 'expo-router';
 import { FontAwesome5 } from '@expo/vector-icons';
-import { GREEN } from './gameConstants';
+import { GREEN } from '../gameConstants';
 
-export default function FinishScreen({ visible = false, onHome, onPlayAgain }) {
+export default function FinishScreen({ visible = false, onHome }) {
     const router = useRouter();
 
     const handleHome = () => {
@@ -15,19 +15,10 @@ export default function FinishScreen({ visible = false, onHome, onPlayAgain }) {
         router.push('/practice');
     };
 
-    const handlePlayAgain = () => {
-        if (onPlayAgain) {
-            onPlayAgain();
-            return;
-        }
-        // default: reload current route or go to practice
-        router.replace(router.pathname || '/practice');
-    };
-
     if (!visible) return null;
 
     return (
-        <Modal visible={visible} transparent animationType="none" onRequestClose={() => {}}>
+        <Modal visible={visible} transparent animationType="none" onRequestClose={() => { }}>
             <View style={styles.overlay}>
                 <View style={styles.card}>
                     <Text style={styles.title}>Well Done!</Text>
@@ -35,13 +26,6 @@ export default function FinishScreen({ visible = false, onHome, onPlayAgain }) {
                         <View style={styles.actionInner}>
                             <FontAwesome5 name="home" size={18} color="#fff" />
                             <Text style={styles.actionText}>Home</Text>
-                        </View>
-                    </TouchableOpacity>
-
-                    <TouchableOpacity style={[styles.actionButton, styles.secondaryButton]} onPress={handlePlayAgain} accessibilityRole="button">
-                        <View style={styles.actionInnerSecondary}>
-                            <FontAwesome5 name="redo" size={16} color={GREEN || '#1E9FFC'} />
-                            <Text style={[styles.actionTextSecondary]}>Play Again</Text>
                         </View>
                     </TouchableOpacity>
                 </View>

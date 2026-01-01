@@ -2,6 +2,9 @@
 // maximum of 8 letters supported
 import { Dimensions } from 'react-native';
 
+
+// TO Do: add max height to boxData
+
 export const boxData = [
   [1, 1, 1, 1, 1, 1, 0],
   [1, 0, 0, 0, 0, 1, 0],
@@ -12,7 +15,7 @@ export const boxData = [
   [1, 0, 0, 0, 1, 1, 1],
 ];
 
-export const letters = ['D', 'I', 'A', 'M', 'O', 'N', 'D'];
+export const letters = ['D', 'I', 'A', 'M', 'O', 'N', 'D', 'D'];
 export const columns = boxData[0].length;
 export const rows = boxData.length;
 export const GREEN = '#0f8690';
@@ -34,17 +37,23 @@ export const BACKGROUND_OVERLAY_OPACITY = 0.4;
 
 
 export const gridWords = {
-  diamond: { id: 1, written_form: "diamond", translation: "Διαμάντι", transliteration: "", category: "", image_url: null, audio_url: null, direction: 'V', pos: [0, 0], isFound: false },
-  domain: { id: 2, written_form: "domain", translation: "Πεδίο Ορισμού, κτήση, κυριότητα, κτήματα", transliteration: "", category: "", image_url: null, audio_url: null, direction: 'H', pos: [0, 0], isFound: false },
-  nomad: { id: 3, written_form: "nomad", translation: "", transliteration: "", category: "", image_url: null, audio_url: null, direction: 'V', pos: [0, 5], isFound: false },
-  maid: { id: 4, written_form: "maid", translation: "", transliteration: "", category: "", image_url: null, audio_url: null, direction: 'H', pos: [3, 0], isFound: false },
-  mind: { id: 5, written_form: "mind", translation: "", transliteration: "", category: "", image_url: null, audio_url: null, direction: 'V', pos: [2, 2], isFound: false },
-  nod: { id: 6, written_form: "nod", translation: "", transliteration: "", category: "", image_url: null, audio_url: null, direction: 'H', pos: [5, 0], isFound: false },
-  add: { id: 7, written_form: "add", translation: "", transliteration: "", category: "", image_url: null, audio_url: null, direction: 'H', pos: [4, 4], isFound: false },
-  dad: { id: 8, written_form: "dad", translation: "", transliteration: "", category: "", image_url: null, audio_url: null, direction: 'V', pos: [4, 6], isFound: false },
-  did: { id: 9, written_form: "did", translation: "", transliteration: "", category: "", image_url: null, audio_url: null, direction: 'H', pos: [6, 4], isFound: false },
-  aid: { id: 10, written_form: "aid", translation: "", transliteration: "", category: "", image_url: null, audio_url: null, direction: 'V', pos: [4, 4], isFound: false },
+  diamond: { id: 1, written_form: "diamond", translation: "Διαμάντι", direction: 'V', pos: [0, 0], isFound: false },
+  domain: { id: 2, written_form: "domain", translation: "Πεδίο Ορισμού, κτήση, κυριότητα, κτήματα", direction: 'H', pos: [0, 0], isFound: false },
+  nomad: { id: 3, written_form: "nomad", translation: "", direction: 'V', pos: [0, 5], isFound: false },
+  maid: { id: 4, written_form: "maid", translation: "", direction: 'H', pos: [3, 0], isFound: false },
+  mind: { id: 5, written_form: "mind", translation: "", direction: 'V', pos: [2, 2], isFound: false },
+  nod: { id: 6, written_form: "nod", translation: "", direction: 'H', pos: [5, 0], isFound: false },
+  add: { id: 7, written_form: "add", translation: "", direction: 'H', pos: [4, 4], isFound: false },
+  dad: { id: 8, written_form: "dad", translation: "", direction: 'V', pos: [4, 6], isFound: false },
+  did: { id: 9, written_form: "did", translation: "", direction: 'H', pos: [6, 4], isFound: false },
+  aid: { id: 10, written_form: "aid", translation: "", direction: 'V', pos: [4, 4], isFound: false },
 };
+
+
+
+const gridWords2 = {
+
+}
 
 export const dictionary = {
   language: 'English',
