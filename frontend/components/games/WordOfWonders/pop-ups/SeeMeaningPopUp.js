@@ -5,18 +5,15 @@ import {
     StyleSheet,
     TouchableOpacity,
     Modal,
-    Dimensions,
     FlatList,
 } from 'react-native';
 import { FontAwesome5 } from '@expo/vector-icons';
-import { GREEN } from '../gameConstants';
-import { useDictionary } from '@/hooks/useDictionary';
 import { popupStyles } from './popupStyles';
+import { useDictionary } from '@/hooks/useDictionary';
 
-const SCREEN_WIDTH = Dimensions.get('window').width;
-
-export default function ExtraWordsPopup({ visible, onClose, extraWords = [], score = 0 }) {
+export default function SeeMeaningPopUp({ visible, onClose, foundWords = [] }) {
     const { dictionary } = useDictionary();
+
     return (
         <Modal
             visible={visible}
@@ -38,7 +35,7 @@ export default function ExtraWordsPopup({ visible, onClose, extraWords = [], sco
                         {/* Header */}
                         <View style={popupStyles.popupHeader}>
                             <View style={popupStyles.placeholder} />
-                            <Text style={popupStyles.headerText}>EXTRA WORDS</Text>
+                            <Text style={popupStyles.headerText}>MEANINGS</Text>
                             <TouchableOpacity
                                 style={popupStyles.closeButton}
                                 onPress={onClose}
@@ -49,17 +46,17 @@ export default function ExtraWordsPopup({ visible, onClose, extraWords = [], sco
 
                         {/* Content */}
                         <View style={popupStyles.content}>
-                            <Text style={styles.scoreText}>Score: {score}</Text>
-
                             <FlatList
-                                data={extraWords}
+                                data={foundWords}
                                 keyExtractor={(item, index) => `${item}-${index}`}
-                                scrollEnabled={true}
-                                nestedScrollEnabled={true}
                                 renderItem={({ item }) => {
-                                    const entry = dictionary?.words?.find(w => w.written_form.toLowerCase() === item.toLowerCase()) || null;
-                                    const translations = entry && entry.translations ? entry.translations.join(', ') : '';
-                                    const display = entry && entry.written_form ? entry.written_form : (item || '').toUpperCase();
+                                    const entry = dictionary?.words?.find(
+                                        (w) => w.written_form.toLowerCase() === item.toLowerCase()
+                                    ) || null;
+                                    const translations =
+                                        entry && entry.translations ? entry.translations.join(', ') : '';
+                                    const display =
+                                        entry && entry.written_form ? entry.written_form : (item || '').toUpperCase();
                                     return (
                                         <View style={styles.wordRow}>
                                             <Text style={styles.wordText}>{display}</Text>
@@ -68,7 +65,7 @@ export default function ExtraWordsPopup({ visible, onClose, extraWords = [], sco
                                     );
                                 }}
                                 style={styles.list}
-                                ListEmptyComponent={<Text style={styles.emptyText}>No extra words yet.</Text>}
+                                ListEmptyComponent={<Text style={styles.emptyText}>No words found.</Text>}
                             />
                         </View>
                     </View>
@@ -79,35 +76,29 @@ export default function ExtraWordsPopup({ visible, onClose, extraWords = [], sco
 }
 
 const styles = StyleSheet.create({
-    scoreText: {
-        fontSize: 16,
-        fontWeight: '600',
-        color: GREEN,
-        marginBottom: 12,
-    },
     list: {
-        flex: 1,
+        maxHeight: 300,
     },
     wordRow: {
-        paddingVertical: 10,
+        marginVertical: 10,
+        paddingBottom: 10,
         borderBottomWidth: 1,
-        borderBottomColor: '#f0f0f0',
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
+        borderBottomColor: '#eee',
     },
     wordText: {
         fontSize: 16,
+        fontWeight: 'bold',
         color: '#333',
+        marginBottom: 5,
     },
     translationText: {
         fontSize: 14,
         color: '#666',
-        marginLeft: 12,
     },
     emptyText: {
-        color: '#888',
         textAlign: 'center',
-        paddingVertical: 10,
+        color: '#999',
+        fontSize: 14,
+        marginVertical: 20,
     },
 });

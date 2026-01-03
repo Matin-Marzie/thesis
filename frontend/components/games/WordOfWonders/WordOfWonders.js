@@ -63,7 +63,7 @@ export default function WordOfWonders({ boxData: initialBoxData, gridWords: init
     const [settingsVisible, setSettingsVisible] = useState(false);
 
     // Create or update boxAnimations when grid dimensions change
-    const boxAnimations = useMemo(() => 
+    const boxAnimations = useMemo(() =>
         Array(rows * columns)
             .fill(0)
             .map(() => new Animated.Value(0)),
@@ -78,7 +78,7 @@ export default function WordOfWonders({ boxData: initialBoxData, gridWords: init
     }, [boxAnimations]);
 
     // Create or update letterAnimations when letter count changes
-    const letterAnimations = useMemo(() => 
+    const letterAnimations = useMemo(() =>
         letters.map(() => new Animated.Value(0)),
         [letters.length]
     );
@@ -363,7 +363,7 @@ export default function WordOfWonders({ boxData: initialBoxData, gridWords: init
                     if (coinsRef.current >= 80) {
                         // Hit an unfilled box - reveal it
                         setFilledBoxes(prev => [...prev, hitBoxIndex]);
-                        
+
                         // Ensure animation value exists for this box
                         if (boxAnimationsRef.current[hitBoxIndex]) {
                             Animated.timing(boxAnimationsRef.current[hitBoxIndex], {
@@ -644,7 +644,7 @@ export default function WordOfWonders({ boxData: initialBoxData, gridWords: init
                 {/* Semi-transparent overlay filter */}
                 <View style={styles.overlay} />
 
-                {/* Coins Bar */}
+                {/* HEADER */}
                 <View style={styles.HeaderBar}>
                     <TouchableOpacity
                         style={styles.backButton}
@@ -664,7 +664,23 @@ export default function WordOfWonders({ boxData: initialBoxData, gridWords: init
                     </TouchableOpacity>
                 </View>
 
-                {/* Hammer Button */}
+
+                {/* Game Grid - Memoized, won't re-render on letter selection */}
+                <Grid
+                    boxData={boxData}
+                    gridWords={gridWords}
+                    foundWords={foundWords}
+                    filledBoxes={filledBoxes}
+                    boxAnimations={boxAnimations}
+                    shakeWord={shakeWord}
+                    shakeAnimation={shakeAnimation}
+                />
+
+
+                {/* LettersCycle with HAMMER, HINT and EXTRA WORDS */}
+                <View style={styles.lettersCycleContainer}>
+
+                    {/* Hammer Button */}
                 <View
                     style={styles.hammerButton}
                 >
@@ -687,76 +703,41 @@ export default function WordOfWonders({ boxData: initialBoxData, gridWords: init
                     </View>
                 </View>
 
-                {/* Floating Hammer Pointer */}
-                {hammerActive && hammerPosition && (
-                    <Animated.View
-                        style={[
-                            styles.floatingHammer,
-                            {
-                                left: hammerPosition.x - 20,
-                                top: hammerPosition.y - 20,
-                                opacity: hammerOpacity,
-                                transform: [
-                                    { scale: hammerScale },
-                                    {
-                                        rotate: hammerRotation.interpolate({
-                                            inputRange: [0, 1],
-                                            outputRange: ['0deg', '70deg'],
-                                        })
-                                    }
-                                ],
-                            },
-                        ]}
-                    >
-                        <FontAwesome5 name="hammer" size={30} color="#FF6347" />
-                    </Animated.View>
-                )}
+                    {/* Floating Hammer Pointer */}
+                    {hammerActive && hammerPosition && (
+                        <Animated.View
+                            style={[
+                                styles.floatingHammer,
+                                {
+                                    left: hammerPosition.x - 20,
+                                    top: hammerPosition.y - 20,
+                                    opacity: hammerOpacity,
+                                    transform: [
+                                        { scale: hammerScale },
+                                        {
+                                            rotate: hammerRotation.interpolate({
+                                                inputRange: [0, 1],
+                                                outputRange: ['0deg', '70deg'],
+                                            })
+                                        }
+                                    ],
+                                },
+                            ]}
+                        >
+                            <FontAwesome5 name="hammer" size={30} color="#FF6347" />
+                        </Animated.View>
+                    )}
 
-                {/* Hint Button */}
-                <TouchableOpacity
-                    style={styles.hintButton}
-                    onPress={handleHint}
-                    disabled={coins < 40 || gameFinished}
-                    activeOpacity={0.7}
-                >
-                    <View
-                        style={{
-                            backgroundColor: coins >= 40 ? '#fff' : '#ccc',
-                            borderColor: '#ddd',
-                            padding: 5,
-                            borderRadius: 10,
-                            borderWidth: 2,
-                            flexDirection: 'row',
-                            alignItems: 'center',
-                            gap: 5,
-                        }}
-                    >
-                        <FontAwesome5 name="lightbulb" size={18} color={coins >= 40 ? "#FFD700" : "#888"} />
-                        <Text style={[styles.scoreText, { color: coins >= 40 ? '#000' : '#888' }]}>
-                            40
-                        </Text>
-                    </View>
-                </TouchableOpacity>
-
-                {/* Extra Words (opens popup) */}
-                <TouchableOpacity
-                    style={styles.ExtraWordsButton}
-                    onPress={() => setExtraWordsVisible(true)}
-                    activeOpacity={0.30}
-                    hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
-                    accessibilityRole="button"
-                    accessibilityLabel="Open extra words"
-                >
-                    <Animated.View
-                        style={[
-                            {
-                                transform: [{ scale: scoreScaleAnimation }],
-                            }
-                        ]}
+                    {/* Hint Button */}
+                    <TouchableOpacity
+                        style={styles.hintButton}
+                        onPress={handleHint}
+                        disabled={coins < 40 || gameFinished}
+                        activeOpacity={0.7}
                     >
                         <View
                             style={{
-                                backgroundColor: '#fff',
+                                backgroundColor: coins >= 40 ? '#fff' : '#ccc',
                                 borderColor: '#ddd',
                                 padding: 5,
                                 borderRadius: 10,
@@ -766,47 +747,74 @@ export default function WordOfWonders({ boxData: initialBoxData, gridWords: init
                                 gap: 5,
                             }}
                         >
-                            <FontAwesome5 name="book-medical" size={20} color="#000" />
-                            <Text style={{
-                                fontSize: 14,
-                                fontWeight: 'bold',
-                            }}>
-                                {extraWordsScore < 10 ? ` ${extraWordsScore}` : extraWordsScore}
+                            <FontAwesome5 name="lightbulb" size={18} color={coins >= 40 ? "#FFD700" : "#888"} />
+                            <Text style={[styles.scoreText, { color: coins >= 40 ? '#000' : '#888' }]}>
+                                40
                             </Text>
                         </View>
-                    </Animated.View>
-                </TouchableOpacity>
+                    </TouchableOpacity>
+
+                    {/* Extra Words Button */}
+                    <TouchableOpacity
+                        style={styles.ExtraWordsButton}
+                        onPress={() => setExtraWordsVisible(true)}
+                        activeOpacity={0.30}
+                        hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
+                        accessibilityRole="button"
+                        accessibilityLabel="Open extra words"
+                    >
+                        <Animated.View
+                            style={[
+                                {
+                                    transform: [{ scale: scoreScaleAnimation }],
+                                }
+                            ]}
+                        >
+                            <View
+                                style={{
+                                    backgroundColor: '#fff',
+                                    borderColor: '#ddd',
+                                    padding: 5,
+                                    borderRadius: 10,
+                                    borderWidth: 2,
+                                    flexDirection: 'row',
+                                    alignItems: 'center',
+                                    gap: 5,
+                                }}
+                            >
+                                <FontAwesome5 name="book-medical" size={20} color="#000" />
+                                <Text style={{
+                                    fontSize: 14,
+                                    fontWeight: 'bold',
+                                }}>
+                                    {extraWordsScore < 10 ? ` ${extraWordsScore}` : extraWordsScore}
+                                </Text>
+                            </View>
+                        </Animated.View>
+                    </TouchableOpacity>
+
+                    {/* Selected Word Display */}
+                    {renderSelectedWord()}
+
+                    {/* Letter Circle - Memoized, handles its own gestures */}
+                    <LettersCycle
+                        selectedLetters={selectedLetters}
+                        onLetterPress={handleLetterPress}
+                        onLetterRelease={handleLetterRelease}
+                        letterAnimations={letterAnimations}
+                        onShuffle={handleShuffle}
+                        shuffledLetters={shuffledLetters}
+                    />
+                </View>
+
 
                 {/* Extra Words Popup */}
                 <ExtraWordsPopup
-                    visible={extraWordsVisible}
-                    onClose={() => setExtraWordsVisible(false)}
-                    extraWords={foundWords.filter(w => dictionary?.words?.some(dw => dw.written_form.toLowerCase() === w) && !gridWords[w])}
-                    score={extraWordsScore}
+                        visible={extraWordsVisible}
+                        onClose={() => setExtraWordsVisible(false)}
+                        extraWords={foundWords.filter(w => dictionary?.words?.some(dw => dw.written_form.toLowerCase() === w) && !gridWords[w])}
+                        score={extraWordsScore}
                 />
-
-                {/* Game Grid - Memoized, won't re-render on letter selection */}
-                <Grid
-                    boxData={boxData}
-                    gridWords={gridWords}
-                    filledBoxes={filledBoxes}
-                    boxAnimations={boxAnimations}
-                    shakeWord={shakeWord}
-                    shakeAnimation={shakeAnimation}
-                />
-
-                {/* Letter Circle - Memoized, handles its own gestures */}
-                <LettersCycle
-                    selectedLetters={selectedLetters}
-                    onLetterPress={handleLetterPress}
-                    onLetterRelease={handleLetterRelease}
-                    letterAnimations={letterAnimations}
-                    onShuffle={handleShuffle}
-                    shuffledLetters={shuffledLetters}
-                />
-
-                {/* Selected Word Display */}
-                {renderSelectedWord()}
 
                 {/* Finish Screen (moved to component) */}
                 <FinishScreen
@@ -835,6 +843,7 @@ const styles = StyleSheet.create({
         flex: 1,
         width: width,
         maxWidth: MAX_WIDTH,
+        display: 'flex',
     },
     overlay: {
         ...StyleSheet.absoluteFillObject,
@@ -880,6 +889,8 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         color: '#333',
         padding: 5,
+    },
+    lettersCycleContainer: {
     },
     settingsButton: {
         width: 35,

@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { GREEN } from '../gameConstants';
+import { popupStyles } from './popupStyles';
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
 export default function SettingsPopup({ visible, onClose }) {
@@ -24,7 +25,7 @@ export default function SettingsPopup({ visible, onClose }) {
             statusBarTranslucent={true}
         >
             <TouchableOpacity 
-                style={styles.overlay}
+                style={popupStyles.overlay}
                 activeOpacity={1}
                 onPress={onClose}
             >
@@ -32,16 +33,16 @@ export default function SettingsPopup({ visible, onClose }) {
                     activeOpacity={1}
                     onPress={(e) => e.stopPropagation()}
                 >
-                    <View style={styles.popup}>
+                    <View style={popupStyles.popup}>
                         {/* Header */}
-                        <View style={styles.header}>
-                            <View style={styles.placeholder} />
-                            <Text style={styles.headerText}>SETTINGS</Text>
+                        <View style={popupStyles.popupHeader}>
+                            <View style={popupStyles.placeholder} />
+                            <Text style={popupStyles.headerText}>SETTINGS</Text>
                             <TouchableOpacity 
-                                style={styles.closeButton}
+                                style={popupStyles.closeButton}
                                 onPress={onClose}
                             >
-                                <FontAwesome5 name="times" size={24} color="#333" />
+                                <FontAwesome5 name="times" size={popupStyles.closeButton.size} style={popupStyles.closeButton} />
                             </TouchableOpacity>
                         </View>
 
@@ -75,49 +76,6 @@ export default function SettingsPopup({ visible, onClose }) {
 }
 
 const styles = StyleSheet.create({
-    overlay: {
-        flex: 1,
-        backgroundColor: 'rgba(0, 0, 0, 0.5)',
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    popup: {
-        backgroundColor: '#fff',
-        borderRadius: 15,
-        width: SCREEN_WIDTH * 0.8,
-        alignSelf: 'center',
-        maxWidth: 400,
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.25,
-        shadowRadius: 3.84,
-        elevation: 5,
-    },
-    header: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        paddingVertical: 15,
-        paddingHorizontal: 15,
-        borderBottomWidth: 1,
-        borderBottomColor: '#eee',
-    },
-    closeButton: {
-        width: 40,
-        height: 40,
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    headerText: {
-        fontSize: 20,
-        fontWeight: 'bold',
-        color: '#333',
-        flex: 1,
-        textAlign: 'center',
-    },
-    placeholder: {
-        width: 40,
-    },
     content: {
         padding: 20,
     },
