@@ -1,12 +1,12 @@
 import React from 'react';
 import { Stack } from 'expo-router';
-import WordOfWonders from '../../components/games/WordOfWonders/WordOfWonders';
+import GameLoader from '../../components/games/WordOfWonders/GameLoader';
 
 export default function WordOfWondersGame() {
   return (
     <>
       <Stack.Screen options={{ headerShown: false }} />
-      <WordOfWonders />
+      <GameLoader />
     </>
   );
 }

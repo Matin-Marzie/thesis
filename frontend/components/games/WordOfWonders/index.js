@@ -5,7 +5,9 @@
  * Import from here to use the game in your app.
  */
 
-export { default } from './WordOfWonders';
+export { default } from './GameLoader';
+export { default as WordOfWonders } from './WordOfWonders';
+export { default as GameLoader } from './GameLoader';
 export { default as Grid } from './Grid';
 export { default as LettersCycle } from './LettersCycle';
 export * from './gameConstants';

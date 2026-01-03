@@ -175,6 +175,11 @@ const LettersCycle = memo(({
       // Store letter center position
       letterCenters.current[index] = { x: pos.x, y: pos.y };
 
+      // Guard against undefined animations
+      if (!letterAnimations[index]) {
+        return null;
+      }
+
       const scale = letterAnimations[index].interpolate({
         inputRange: [0, 1],
         outputRange: [1, 1.3],

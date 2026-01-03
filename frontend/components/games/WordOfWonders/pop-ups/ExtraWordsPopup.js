@@ -9,11 +9,13 @@ import {
     FlatList,
 } from 'react-native';
 import { FontAwesome5 } from '@expo/vector-icons';
-import { GREEN, dictionary } from '../gameConstants';
+import { GREEN } from '../gameConstants';
+import { useDictionary } from '@/hooks/useDictionary';
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
 
 export default function ExtraWordsPopup({ visible, onClose, extraWords = [], score = 0 }) {
+    const { dictionary } = useDictionary();
     return (
         <Modal
             visible={visible}
@@ -52,13 +54,13 @@ export default function ExtraWordsPopup({ visible, onClose, extraWords = [], sco
                                 data={extraWords}
                                 keyExtractor={(item, index) => `${item}-${index}`}
                                 renderItem={({ item }) => {
-                                    const entry = dictionary.words[item] || null;
-                                    const translation = entry && entry.translation ? entry.translation : '';
+                                    const entry = dictionary?.words?.find(w => w.written_form.toLowerCase() === item.toLowerCase()) || null;
+                                    const translations = entry && entry.translations ? entry.translations.join(', ') : '';
                                     const display = entry && entry.written_form ? entry.written_form : (item || '').toUpperCase();
                                     return (
                                         <View style={styles.wordRow}>
                                             <Text style={styles.wordText}>{display}</Text>
-                                            <Text style={styles.translationText}>{translation}</Text>
+                                            <Text style={styles.translationText}>{translations}</Text>
                                         </View>
                                     );
                                 }}

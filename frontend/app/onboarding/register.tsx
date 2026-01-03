@@ -46,7 +46,7 @@ export default function RegisterScreen({ onRegisterSuccess }: RegisterScreenProp
   //   });
   // }, []);
 
-  const { user, updateUserProfile, updateUserProgress, setUserVocabulary, setIsAuthenticated } = useAppContext();
+  const { user, updateUserProfile, setUserProgress, setUserVocabulary, setIsAuthenticated } = useAppContext();
   const router = useRouter();
 
   const [firstName, setFirstName] = useState('');
@@ -98,7 +98,7 @@ export default function RegisterScreen({ onRegisterSuccess }: RegisterScreenProp
         // update user data
         if (response.data) {
           await updateUserProfile(response.data?.user_profile);
-          await updateUserProgress(response.data?.user_progress);
+          await setUserProgress(response.data?.user_progress);
           await setUserVocabulary(response.data?.user_vocabulary);
         }
         router.replace('/(tabs)');

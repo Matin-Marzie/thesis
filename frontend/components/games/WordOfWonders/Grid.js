@@ -1,34 +1,39 @@
 import React, { memo } from 'react';
 import { View, Text, Animated, StyleSheet } from 'react-native';
-import { boxData, columns, rows, GREEN, MAX_GRID_WIDTH, width, height, gridWords } from './gameConstants';
+import { GREEN, MAX_GRID_WIDTH, width, height } from './gameConstants';
 
-// Create a map of grid positions to letters
-const createLetterGrid = () => {
-  const letterGrid = Array(rows).fill(null).map(() => Array(columns).fill(''));
-  
-  Object.keys(gridWords).forEach((word) => {
-    const wordData = gridWords[word];
-    const [startRow, startCol] = wordData.pos;
-    const wordLetters = word.split('');
+const Grid = memo(({ boxData, gridWords, filledBoxes, boxAnimations, shakeWord, shakeAnimation }) => {
+
+  const columns = boxData[0].length;
+  const rows = boxData.length;
+
+  // Create a map of grid positions to letters
+  const createLetterGrid = () => {
+    const letterGrid = Array(rows).fill(null).map(() => Array(columns).fill(''));
     
-    wordLetters.forEach((letter, index) => {
-      if (wordData.direction === 'H') {
-        letterGrid[startRow][startCol + index] = letter.toUpperCase();
-      } else {
-        letterGrid[startRow + index][startCol] = letter.toUpperCase();
-      }
+    Object.keys(gridWords).forEach((word) => {
+      const wordData = gridWords[word];
+      const [startRow, startCol] = wordData.pos;
+      const wordLetters = word.split('');
+      
+      wordLetters.forEach((letter, index) => {
+        if (wordData.direction === 'H') {
+          letterGrid[startRow][startCol + index] = letter.toUpperCase();
+        } else {
+          letterGrid[startRow + index][startCol] = letter.toUpperCase();
+        }
+      });
     });
-  });
-  
-  return letterGrid;
-};
+    
+    return letterGrid;
+  };
 
-const letterGrid = createLetterGrid();
+  const letterGrid = createLetterGrid();
 
-const Grid = memo(({ filledBoxes, boxAnimations, shakeWord, shakeAnimation }) => {
   const horizontalMargin = width * 0.02;
   const availableWidth = Math.min(width - (horizontalMargin * 2), MAX_GRID_WIDTH);
-  const boxSize = availableWidth / columns;
+  let boxSize = availableWidth / columns;
+  boxSize = Math.min(boxSize, 50); // Cap box size to 50 for better visibility
   const gridWidth = columns * boxSize;
   const gridHeight = rows * boxSize;
   const gridLeft = (width - gridWidth) / 2; // Center the grid horizontally
@@ -65,6 +70,11 @@ const Grid = memo(({ filledBoxes, boxAnimations, shakeWord, shakeAnimation }) =>
           const boxIndex = rowIndex * columns + colIndex;
           const isFilled = filledBoxes.includes(boxIndex);
           const letter = letterGrid[rowIndex][colIndex];
+
+          // Guard against undefined animations
+          if (!boxAnimations[boxIndex]) {
+            return null;
+          }
 
           const backgroundColor = boxAnimations[boxIndex].interpolate({
             inputRange: [0, 1],

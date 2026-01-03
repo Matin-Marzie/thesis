@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect, useCallback } from 'react';
+import React, { useState, useRef, useEffect, useCallback, useMemo } from 'react';
 import {
     View,
     Text,
@@ -17,8 +17,9 @@ import LettersCycle from './LettersCycle';
 import SettingsPopup from './pop-ups/SettingsPopup';
 import ExtraWordsPopup from './pop-ups/ExtraWordsPopup';
 import FinishScreen from './pop-ups/FinishScreen';
-import { gridWords, dictionary, letters, columns, rows, GREEN, MAX_WIDTH, width, height, horizontalOffset, BACKGROUND_IMAGE_URI, BACKGROUND_OVERLAY_OPACITY, boxData, user } from './gameConstants';
+import { GREEN, MAX_WIDTH, width, height, horizontalOffset, BACKGROUND_IMAGE_URI, BACKGROUND_OVERLAY_OPACITY } from './gameConstants';
 import { useAppContext } from '@/context/AppContext';
+import { useDictionary } from '@/hooks/useDictionary';
 
 
 const HAMMER_HEIGHT = height * 0.69;
@@ -33,11 +34,18 @@ const shuffleArray = (array) => {
     return shuffled;
 };
 
-export default function WordOfWonders() {
+export default function WordOfWonders({ boxData: initialBoxData, gridWords: initialGridWords, letters: initialLetters }) {
 
-    const { userVocabulary, dictionary } = useAppContext();
-    console.log('User Vocabulary in gameConstants:', userVocabulary);
-    console.log('Dictionary :', dictionary);
+    const { userVocabulary, userProgress, setUserProgress } = useAppContext();
+    const { dictionary } = useDictionary();
+
+    const [boxData, setBoxData] = useState(initialBoxData);
+    const [gridWords, setGridWords] = useState(initialGridWords);
+    const [letters, setLetters] = useState(initialLetters);
+
+
+    const columns = boxData[0].length;
+    const rows = boxData.length;
 
     const router = useRouter();
     const [selectedLetters, setSelectedLetters] = useState([]);
@@ -48,13 +56,39 @@ export default function WordOfWonders() {
     const [shuffledLetters, setShuffledLetters] = useState(() => shuffleArray(letters));
     const [animatingWord, setAnimatingWord] = useState(null);
     const [shakeWord, setShakeWord] = useState(null);
-    const [coins, setCoins] = useState(user.coins);
+    const [coins, setCoins] = useState(userProgress.coins || 0);
     const [hammerActive, setHammerActive] = useState(false);
     const [hammerPosition, setHammerPosition] = useState(null);
     const [extraWordsVisible, setExtraWordsVisible] = useState(false);
     const [settingsVisible, setSettingsVisible] = useState(false);
 
-    const letterAnimations = useRef(letters.map(() => new Animated.Value(0))).current;
+    // Create or update boxAnimations when grid dimensions change
+    const boxAnimations = useMemo(() => 
+        Array(rows * columns)
+            .fill(0)
+            .map(() => new Animated.Value(0)),
+        [rows, columns]
+    );
+
+    const boxAnimationsRef = useRef(boxAnimations);
+
+    // Update ref when dimensions change
+    useEffect(() => {
+        boxAnimationsRef.current = boxAnimations;
+    }, [boxAnimations]);
+
+    // Create or update letterAnimations when letter count changes
+    const letterAnimations = useMemo(() => 
+        letters.map(() => new Animated.Value(0)),
+        [letters.length]
+    );
+
+    const letterAnimationsRef = useRef(letterAnimations);
+
+    // Update ref when letters change
+    useEffect(() => {
+        letterAnimationsRef.current = letterAnimations;
+    }, [letterAnimations]);
     const wordAnimationPosition = useRef(new Animated.ValueXY({ x: 0, y: 0 })).current;
     const wordAnimationOpacity = useRef(new Animated.Value(1)).current;
     const wordAnimationScale = useRef(new Animated.Value(1)).current;
@@ -65,19 +99,9 @@ export default function WordOfWonders() {
     const hammerOpacity = useRef(new Animated.Value(1)).current;
     const hammerScale = useRef(new Animated.Value(1)).current;
     const hammerRotation = useRef(new Animated.Value(0)).current;
-    const boxAnimations = useRef(
-        Array(rows * columns)
-            .fill(0)
-            .map(() => new Animated.Value(0))
-    ).current;
 
-    // Reset game state when component mounts
+    // Reset game state when component mounts or boxData, gridWords, letters changes
     useEffect(() => {
-        // Reset gridWords isFound state
-        Object.keys(gridWords).forEach(word => {
-            gridWords[word].isFound = false;
-        });
-
         setGameFinished(false);
         setFoundWords([]);
         setFilledBoxes([]);
@@ -88,9 +112,9 @@ export default function WordOfWonders() {
         setShuffledLetters(shuffleArray(letters));
 
         // Reset box animations
-        boxAnimations.forEach(anim => anim.setValue(0));
-        letterAnimations.forEach(anim => anim.setValue(0));
-    }, []);
+        boxAnimations.forEach(anim => anim?.setValue(0));
+        letterAnimations.forEach(anim => anim?.setValue(0));
+    }, [boxData, gridWords, letters, boxAnimations, letterAnimations]);
 
     // Check if game is complete
     useEffect(() => {
@@ -217,16 +241,17 @@ export default function WordOfWonders() {
         }).start();
 
         // Decrease coins
-        setCoins(prev => {
-            const newCoins = prev - 40;
-            return newCoins;
-        });
+        const newCoins = coins - 40;
+        setCoins(newCoins);
+        setUserProgress((prev) => ({ ...prev, coins: newCoins }));
         Vibration.vibrate(30);
     }, [coins, gameFinished, filledBoxes, boxAnimations]);    // Helper function to get grid box dimensions and position
+
     const getGridBoxInfo = useCallback(() => {
         const horizontalMargin = width * 0.02;
         const availableWidth = Math.min(width - (horizontalMargin * 2), 500); // MAX_GRID_WIDTH
-        const boxSize = availableWidth / columns;
+        let boxSize = availableWidth / columns;
+        boxSize = Math.min(boxSize, 50); // Cap box size to 50 for better visibility
         const gridWidth = columns * boxSize;
         const gridLeft = (width - gridWidth) / 2;
         const gridTop = height * 0.05;
@@ -338,17 +363,20 @@ export default function WordOfWonders() {
                     if (coinsRef.current >= 80) {
                         // Hit an unfilled box - reveal it
                         setFilledBoxes(prev => [...prev, hitBoxIndex]);
-                        Animated.timing(boxAnimations[hitBoxIndex], {
-                            toValue: 1,
-                            duration: 300,
-                            useNativeDriver: false,
-                        }).start();
+                        
+                        // Ensure animation value exists for this box
+                        if (boxAnimationsRef.current[hitBoxIndex]) {
+                            Animated.timing(boxAnimationsRef.current[hitBoxIndex], {
+                                toValue: 1,
+                                duration: 300,
+                                useNativeDriver: false,
+                            }).start();
+                        }
 
                         // Decrease coins
-                        setCoins(prev => {
-                            const newCoins = prev - 80;
-                            return newCoins;
-                        });
+                        const newCoins = coinsRef.current - 80;
+                        setCoins(newCoins);
+                        setUserProgress((prev) => ({ ...prev, coins: newCoins }));
                     }
                 }                // Animate hammer: rotate 90 degrees and then disappear
                 Animated.sequence([
@@ -423,6 +451,24 @@ export default function WordOfWonders() {
 
     const handleLetterRelease = useCallback(() => {
         if (selectedLetters.length === 0) return;
+        if (selectedLetters.length < 3) {
+            // Invalid word - shake the selected word
+            Vibration.vibrate([0, 50, 50, 50]);
+
+            // Don't clear selected letters immediately, let the shake finish
+            setTimeout(() => {
+                setSelectedLetters([]);
+            }, 250);
+
+            selectedWordShakeAnimation.setValue(0);
+            Animated.sequence([
+                Animated.timing(selectedWordShakeAnimation, { toValue: 3, duration: 50, useNativeDriver: true }),
+                Animated.timing(selectedWordShakeAnimation, { toValue: -3, duration: 50, useNativeDriver: true }),
+                Animated.timing(selectedWordShakeAnimation, { toValue: 3, duration: 50, useNativeDriver: true }),
+                Animated.timing(selectedWordShakeAnimation, { toValue: -3, duration: 50, useNativeDriver: true }),
+                Animated.timing(selectedWordShakeAnimation, { toValue: 0, duration: 50, useNativeDriver: true }),
+            ]).start();
+        }
 
         const word = selectedLetters.map((i) => shuffledLetters[i]).join('').toLowerCase();
         const lettersToReset = [...selectedLetters]; // Capture before clearing
@@ -456,7 +502,7 @@ export default function WordOfWonders() {
                 setFoundWords((prev) => [...prev, word]);
                 setSelectedLetters([]);
             }
-        } else if (dictionary.words[word]) {
+        } else if (dictionary?.words?.find(w => w.written_form.toLowerCase() === word)) {
             // Check if word is in dictionary (extra word)
             if (foundWords.includes(word)) {
                 // Extra word already found - animate score board
@@ -735,12 +781,14 @@ export default function WordOfWonders() {
                 <ExtraWordsPopup
                     visible={extraWordsVisible}
                     onClose={() => setExtraWordsVisible(false)}
-                    extraWords={foundWords.filter(w => dictionary.words[w] && !gridWords[w])}
+                    extraWords={foundWords.filter(w => dictionary?.words?.some(dw => dw.written_form.toLowerCase() === w) && !gridWords[w])}
                     score={extraWordsScore}
                 />
 
                 {/* Game Grid - Memoized, won't re-render on letter selection */}
                 <Grid
+                    boxData={boxData}
+                    gridWords={gridWords}
                     filledBoxes={filledBoxes}
                     boxAnimations={boxAnimations}
                     shakeWord={shakeWord}
