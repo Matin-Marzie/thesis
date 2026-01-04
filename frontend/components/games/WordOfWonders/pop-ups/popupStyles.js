@@ -46,6 +46,7 @@ export const popupStyles = StyleSheet.create({
     content: {
         flex: 1,
         paddingVertical: 15,
-        paddingHorizontal: 20,
+        paddingHorizontal: 2,
+        height: '100%',
     },
 });

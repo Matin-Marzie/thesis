@@ -18,7 +18,7 @@ const dictionaryController = {
       const words = await dictionaryModel.getWordsByLanguageCode(language_code);
 
       res.json({
-        language: language_code,
+        language_code: language_code,
         words,
       });
     } catch (err) {
@@ -61,8 +61,8 @@ const dictionaryController = {
           );
 
       res.json({
-        language: language_code,
-        translation: translation_language_code,
+        language_code: language_code,
+        translation_language_code: translation_language_code,
         words,
       });
     } catch (err) {

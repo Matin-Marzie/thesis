@@ -5,11 +5,12 @@ import {
     StyleSheet,
     TouchableOpacity,
     Modal,
-    FlatList,
+    Animated,
 } from 'react-native';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { popupStyles } from './popupStyles';
 import { useDictionary } from '@/hooks/useDictionary';
+import WordItem from '../../../vocabulary/WordItem';
 
 export default function SeeMeaningPopUp({ visible, onClose, foundWords = [] }) {
     const { dictionary } = useDictionary();
@@ -46,26 +47,20 @@ export default function SeeMeaningPopUp({ visible, onClose, foundWords = [] }) {
 
                         {/* Content */}
                         <View style={popupStyles.content}>
-                            <FlatList
+                            <Animated.FlatList
+                                style={{flex: 1}}
                                 data={foundWords}
                                 keyExtractor={(item, index) => `${item}-${index}`}
-                                renderItem={({ item }) => {
-                                    const entry = dictionary?.words?.find(
-                                        (w) => w.written_form.toLowerCase() === item.toLowerCase()
-                                    ) || null;
-                                    const translations =
-                                        entry && entry.translations ? entry.translations.join(', ') : '';
-                                    const display =
-                                        entry && entry.written_form ? entry.written_form : (item || '').toUpperCase();
-                                    return (
-                                        <View style={styles.wordRow}>
-                                            <Text style={styles.wordText}>{display}</Text>
-                                            <Text style={styles.translationText}>{translations}</Text>
-                                        </View>
-                                    );
-                                }}
-                                style={styles.list}
+                                renderItem={({ item }) => (
+                                    <WordItem
+                                        item={item}
+                                        dictionary={dictionary}
+                                    />
+                                )}
                                 ListEmptyComponent={<Text style={styles.emptyText}>No words found.</Text>}
+                                scrollEnabled={true}
+                                nestedScrollEnabled={true}
+                                keyboardShouldPersistTaps="handled"
                             />
                         </View>
                     </View>
@@ -76,29 +71,9 @@ export default function SeeMeaningPopUp({ visible, onClose, foundWords = [] }) {
 }
 
 const styles = StyleSheet.create({
-    list: {
-        maxHeight: 300,
-    },
-    wordRow: {
-        marginVertical: 10,
-        paddingBottom: 10,
-        borderBottomWidth: 1,
-        borderBottomColor: '#eee',
-    },
-    wordText: {
-        fontSize: 16,
-        fontWeight: 'bold',
-        color: '#333',
-        marginBottom: 5,
-    },
-    translationText: {
-        fontSize: 14,
-        color: '#666',
-    },
     emptyText: {
+        color: '#888',
         textAlign: 'center',
-        color: '#999',
-        fontSize: 14,
-        marginVertical: 20,
+        paddingVertical: 10,
     },
 });

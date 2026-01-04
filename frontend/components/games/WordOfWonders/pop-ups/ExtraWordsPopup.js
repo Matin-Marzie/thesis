@@ -6,12 +6,14 @@ import {
     TouchableOpacity,
     Modal,
     Dimensions,
-    FlatList,
+    Animated,
 } from 'react-native';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { GREEN } from '../gameConstants';
 import { useDictionary } from '@/hooks/useDictionary';
 import { popupStyles } from './popupStyles';
+import WordItem from '../../../vocabulary/WordItem';
+import { ScrollView } from 'react-native-gesture-handler';
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
 
@@ -50,26 +52,21 @@ export default function ExtraWordsPopup({ visible, onClose, extraWords = [], sco
                         {/* Content */}
                         <View style={popupStyles.content}>
                             <Text style={styles.scoreText}>Score: {score}</Text>
-
-                            <FlatList
-                                data={extraWords}
-                                keyExtractor={(item, index) => `${item}-${index}`}
-                                scrollEnabled={true}
-                                nestedScrollEnabled={true}
-                                renderItem={({ item }) => {
-                                    const entry = dictionary?.words?.find(w => w.written_form.toLowerCase() === item.toLowerCase()) || null;
-                                    const translations = entry && entry.translations ? entry.translations.join(', ') : '';
-                                    const display = entry && entry.written_form ? entry.written_form : (item || '').toUpperCase();
-                                    return (
-                                        <View style={styles.wordRow}>
-                                            <Text style={styles.wordText}>{display}</Text>
-                                            <Text style={styles.translationText}>{translations}</Text>
-                                        </View>
-                                    );
-                                }}
-                                style={styles.list}
-                                ListEmptyComponent={<Text style={styles.emptyText}>No extra words yet.</Text>}
-                            />
+                                <Animated.FlatList
+                                    style={{flex: 1}}
+                                    data={extraWords}
+                                    keyExtractor={(item, index) => `${item}-${index}`}
+                                    renderItem={({ item }) => (
+                                        <WordItem
+                                            item={item}
+                                            dictionary={dictionary}
+                                        />
+                                    )}
+                                    ListEmptyComponent={<Text style={styles.emptyText}>No extra words yet.</Text>}
+                                    scrollEnabled={true}
+                                    nestedScrollEnabled={true}
+                                    keyboardShouldPersistTaps="handled"
+                                />
                         </View>
                     </View>
                 </TouchableOpacity>
@@ -84,26 +81,6 @@ const styles = StyleSheet.create({
         fontWeight: '600',
         color: GREEN,
         marginBottom: 12,
-    },
-    list: {
-        flex: 1,
-    },
-    wordRow: {
-        paddingVertical: 10,
-        borderBottomWidth: 1,
-        borderBottomColor: '#f0f0f0',
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-    },
-    wordText: {
-        fontSize: 16,
-        color: '#333',
-    },
-    translationText: {
-        fontSize: 14,
-        color: '#666',
-        marginLeft: 12,
     },
     emptyText: {
         color: '#888',

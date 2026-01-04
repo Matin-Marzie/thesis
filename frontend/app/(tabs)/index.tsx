@@ -13,6 +13,7 @@ import { useAppContext } from '@/context/AppContext';
 import { useDictionary } from '@/hooks/useDictionary';
 import FilterBottomSheetModal from '@/components/vocabulary/FilterBottomSheetModal';
 import { PRIMARY_COLOR } from '@/constants/App';
+import WordItem from '@/components/vocabulary/WordItem';
 
 export default function HomeScreen() {
   const { userVocabulary } = useAppContext();
@@ -38,6 +39,7 @@ export default function HomeScreen() {
   const words = useMemo(() => dictionary?.words || [], [dictionary]);
 
   // Debounced search effect
+  // TO DO: depending on query language, search written_form or translations
   useEffect(() => {
     if (debounceTimeout.current) clearTimeout(debounceTimeout.current);
 
@@ -52,8 +54,9 @@ export default function HomeScreen() {
 
       const filtered = words.filter(word => {
         const writtenMatch = word.written_form?.toLowerCase().startsWith(query);
-        const translationMatch = word.translations?.some(t => t?.toLowerCase().includes(query));
-        return writtenMatch || translationMatch;
+        // const translationMatch = word.translations?.some(t => t?.toLowerCase().includes(query));
+        // return writtenMatch || translationMatch;
+        return writtenMatch;
       });
 
       setFilteredWords(filtered);
@@ -61,22 +64,6 @@ export default function HomeScreen() {
 
     return () => clearTimeout(debounceTimeout.current);
   }, [search, words, userVocabulary]);
-
-  // Render each word row
-  const renderItem = ({ item }) => (
-    <Animated.View style={styles.wordRow}>
-      <View style={styles.wordTextContainer}>
-        <Text style={styles.writtenForm}>{item.written_form}</Text>
-        <Text style={styles.translations}>{(item.translations || []).join(', ')}</Text>
-      </View>
-      <Text>
-        {item.level}
-      </Text>
-      <TouchableOpacity style={styles.addButton}>
-        <Text style={styles.addButtonText}>+</Text>
-      </TouchableOpacity>
-    </Animated.View>
-  );
 
 
 
@@ -103,10 +90,10 @@ export default function HomeScreen() {
       </View>
 
       <Animated.FlatList
-        contentContainerStyle={{ padding: 20, paddingTop: 0 }}
+        contentContainerStyle={{ padding: 4 }}
         data={filteredWords}
         keyExtractor={item => `word-${item.id}`}
-        renderItem={renderItem}
+        renderItem={({ item }) => <WordItem item={item.written_form} dictionary={dictionary} />}
         keyboardShouldPersistTaps="handled"
       />
 
@@ -155,45 +142,5 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: '600',
     color: PRIMARY_COLOR,
-  },
-  wordRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    marginVertical: 6,
-    padding: 10,
-    backgroundColor: '#f9f9f9',
-    borderRadius: 6,
-    shadowColor: '#000',
-    shadowOpacity: 0.05,
-    shadowRadius: 2,
-    shadowOffset: { width: 0, height: 1 },
-  },
-  wordTextContainer: {
-    flex: 1,
-    marginRight: 10,
-  },
-  writtenForm: {
-    fontWeight: 'bold',
-    fontSize: 16,
-    marginBottom: 2,
-  },
-  translations: {
-    fontSize: 14,
-    color: '#555',
-  },
-  addButton: {
-    width: 32,
-    height: 32,
-    borderRadius: 16,
-    backgroundColor: '#007bff',
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginLeft: 20,
-  },
-  addButtonText: {
-    color: '#fff',
-    fontSize: 20,
-    lineHeight: 20,
   },
 });
