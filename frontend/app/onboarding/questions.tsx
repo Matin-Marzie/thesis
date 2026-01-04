@@ -13,7 +13,7 @@ import { useAppContext } from '@/context/AppContext';
 
 export default function OnboardingQuestions() {
   const router = useRouter();
-  const { setHasCompletedOnboarding, updateUserProfile, updateUserProgress } = useAppContext();
+  const { setHasCompletedOnboarding, updateUserProfile, setUserProgress } = useAppContext();
   const [currentSlide, setCurrentSlide] = useState(0);
 
   // User selections
@@ -65,7 +65,8 @@ export default function OnboardingQuestions() {
     });
 
     // Store user progress
-    await updateUserProgress({
+    await setUserProgress((prev) => ({
+      ...prev,
       languages: [
         {
           id: null,
@@ -85,7 +86,7 @@ export default function OnboardingQuestions() {
           }
         }
       ]
-    });
+    }));
 
     // TODO: Fetch Reels sending native_language_id and learning_language_id and proficiency_level and preferences and age
     // TODO: Fetch dictionary sending native_language_id and learning_language_id

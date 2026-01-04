@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { PRIMARY_COLOR } from '@/constants/App';
-import { SUPPORTED_LANGUAGES } from '@/constants/SupportedLanguages';
+import { SUPPORTED_LANGUAGES, LANGUAGES_META } from '@/constants/SupportedLanguages';
 
 // Language type
 interface Language {
@@ -57,12 +57,18 @@ export default function LanguageSelectionSlide({
               style={styles.accordionHeader}
               onPress={() => setExpanded(expanded === key ? null : key)}
             >
-              <Text style={styles.accordionTitle}>{lang.label}</Text>
+              <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}>
+                {/* Native Language Flag */}
+                <Text style={styles.flagEmoji}>{LANGUAGES_META[key].flag}</Text>
+                {/* Native Language Label */}
+                <Text style={styles.accordionTitle}>{lang.label}</Text>
+              </View>
               <Ionicons
                 name={expanded === key ? 'chevron-up' : 'chevron-down'}
                 size={24}
                 color={PRIMARY_COLOR}
               />
+
             </TouchableOpacity>
 
             {/* Accordion content: language options */}
@@ -74,8 +80,8 @@ export default function LanguageSelectionSlide({
                     style={[
                       styles.optionButton,
                       selectedNativeLanguage?.id === option.native.id &&
-                        selectedTargetLanguage?.id === option.target.id &&
-                        styles.optionButtonSelected,
+                      selectedTargetLanguage?.id === option.target.id &&
+                      styles.optionButtonSelected,
                     ]}
                     onPress={() => handleSelect(option)}
                   >
@@ -87,8 +93,8 @@ export default function LanguageSelectionSlide({
                         style={[
                           styles.optionText,
                           selectedNativeLanguage?.id === option.native.id &&
-                            selectedTargetLanguage?.id === option.target.id &&
-                            styles.optionTextSelected,
+                          selectedTargetLanguage?.id === option.target.id &&
+                          styles.optionTextSelected,
                         ]}
                       >
                         {option.label}

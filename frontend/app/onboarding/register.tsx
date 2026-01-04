@@ -46,7 +46,7 @@ export default function RegisterScreen({ onRegisterSuccess }: RegisterScreenProp
   //   });
   // }, []);
 
-  const { user, updateUserProfile, setUserProgress, setUserVocabulary, setIsAuthenticated } = useAppContext();
+  const { userVocabulary, userProfile, userProgress, updateUserProfile, setUserProgress, setUserVocabulary, setIsAuthenticated } = useAppContext();
   const router = useRouter();
 
   const [firstName, setFirstName] = useState('');
@@ -84,20 +84,24 @@ export default function RegisterScreen({ onRegisterSuccess }: RegisterScreenProp
 
     try {
       const payload = {
-        ...user,
-        first_name: firstName.trim(),
-        email: email.trim(),
         password,
+        user_profile: {
+          ...userProfile,
+          first_name: firstName.trim(),
+          email: email.trim(),
+        },
+        user_progress: userProgress,
+        user_vocabulary: userVocabulary
       };
-
+      
       const response = await registerUser(payload);
-
+      
       if (response.status === 201) {
         setIsAuthenticated(true); // we have set the token previously in auth.js
 
         // update user data
         if (response.data) {
-          await updateUserProfile(response.data?.user_profile);
+          await userProfile, userProgress, updateUserProfile(response.data?.user_profile);
           await setUserProgress(response.data?.user_progress);
           await setUserVocabulary(response.data?.user_vocabulary);
         }
@@ -124,7 +128,7 @@ export default function RegisterScreen({ onRegisterSuccess }: RegisterScreenProp
     //   // You should implement backend call here
     //   Alert.alert('Google Sign-In Success', `Welcome, ${userInfo.user.name || userInfo.user.email}`);
     //   // Optionally, update user context and navigate
-    //   // await updateUserProfile(userInfo.user);
+    //   // await userProfile, userProgress, updateUserProfile(userInfo.user);
     //   // update user data
     //   // setIsAuthenticated(true);
     //   // router.replace('/(tabs)');
