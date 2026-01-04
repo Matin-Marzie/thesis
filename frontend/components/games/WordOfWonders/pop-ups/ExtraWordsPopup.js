@@ -13,7 +13,6 @@ import { GREEN } from '../gameConstants';
 import { useDictionary } from '@/hooks/useDictionary';
 import { popupStyles } from './popupStyles';
 import WordItem from '../../../vocabulary/WordItem';
-import { ScrollView } from 'react-native-gesture-handler';
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
 

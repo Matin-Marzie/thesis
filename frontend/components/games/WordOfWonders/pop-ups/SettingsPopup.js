@@ -24,12 +24,12 @@ export default function SettingsPopup({ visible, onClose }) {
             onRequestClose={onClose}
             statusBarTranslucent={true}
         >
-            <TouchableOpacity 
+            <TouchableOpacity
                 style={popupStyles.overlay}
                 activeOpacity={1}
                 onPress={onClose}
             >
-                <TouchableOpacity 
+                <TouchableOpacity
                     activeOpacity={1}
                     onPress={(e) => e.stopPropagation()}
                 >
@@ -38,7 +38,7 @@ export default function SettingsPopup({ visible, onClose }) {
                         <View style={popupStyles.popupHeader}>
                             <View style={popupStyles.placeholder} />
                             <Text style={popupStyles.headerText}>SETTINGS</Text>
-                            <TouchableOpacity 
+                            <TouchableOpacity
                                 style={popupStyles.closeButton}
                                 onPress={onClose}
                             >
@@ -48,23 +48,45 @@ export default function SettingsPopup({ visible, onClose }) {
 
                         {/* Content */}
                         <View style={styles.content}>
-                            <View style={styles.settingRow}>
-                                <Text style={styles.settingLabel}>Letter Sound</Text>
-                                <View style={styles.switchWrapper}>
-                                    <View
-                                        style={[
-                                            styles.customTrack,
-                                            { backgroundColor: letterSoundEnabled ? GREEN : '#ccc' },
-                                        ]}
-                                    />
-                                    <Switch
-                                        value={letterSoundEnabled}
-                                        onValueChange={setLetterSoundEnabled}
-                                        trackColor={{ false: 'transparent', true: 'transparent' }}
-                                        thumbColor={'#fff'}
-                                        ios_backgroundColor={'transparent'}
-                                        style={styles.nativeSwitch}
-                                    />
+                            <Text style={styles.sectionTitle}>Sounds</Text>
+                            <View style={styles.section}>
+                                <View style={styles.sectionRow}>
+                                    <Text style={styles.settingLabel}>Letters</Text>
+                                    <View style={styles.switchWrapper}>
+                                        <View
+                                            style={[
+                                                styles.customTrack,
+                                                { backgroundColor: letterSoundEnabled ? GREEN : '#ccc' },
+                                            ]}
+                                        />
+                                        <Switch
+                                            value={letterSoundEnabled}
+                                            onValueChange={setLetterSoundEnabled}
+                                            trackColor={{ false: 'transparent', true: 'transparent' }}
+                                            thumbColor={'#fff'}
+                                            ios_backgroundColor={'transparent'}
+
+                                        />
+                                    </View>
+                                </View>
+                                <View style={styles.sectionRow}>
+                                    <Text style={styles.settingLabel}>Words</Text>
+                                    <View style={styles.switchWrapper}>
+                                        <View
+                                            style={[
+                                                styles.customTrack,
+                                                { backgroundColor: letterSoundEnabled ? GREEN : '#ccc' },
+                                            ]}
+                                        />
+                                        <Switch
+                                            value={letterSoundEnabled}
+                                            onValueChange={setLetterSoundEnabled}
+                                            trackColor={{ false: 'transparent', true: 'transparent' }}
+                                            thumbColor={'#fff'}
+                                            ios_backgroundColor={'transparent'}
+
+                                        />
+                                    </View>
                                 </View>
                             </View>
                         </View>
@@ -77,30 +99,37 @@ export default function SettingsPopup({ visible, onClose }) {
 
 const styles = StyleSheet.create({
     content: {
-        padding: 20,
+        padding: 15,
     },
-    settingRow: {
+    section: {
+        gap: 2,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+    },
+    sectionTitle: {
+        fontSize: 18,
+        fontWeight: '600',
+        color: '#333',
+        marginBottom: 10,
+    },
+    sectionRow: {
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
-        paddingVertical: 15,
+        gap: 10,
     },
     settingLabel: {
-        fontSize: 16,
-        color: '#333',
-        fontWeight: '500',
     },
     switchWrapper: {
         justifyContent: 'center',
         alignItems: 'center',
+        width: 48,
+        height: 30,
     },
     customTrack: {
         position: 'absolute',
         width: 48,
         height: 30,
         borderRadius: 20,
-    },
-    nativeSwitch: {
-        // keep native switch size (do not scale)
     },
 });
