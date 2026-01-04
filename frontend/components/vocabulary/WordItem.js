@@ -5,8 +5,11 @@ import { View, Text, StyleSheet, TouchableOpacity, ActivityIndicator, Image } fr
 import { MASTERY_LEVELS } from '@/constants/Vocabulary';
 import { getWikimediaDictionary, extractDefinitions } from '@/api/dictionary';
 import { ScrollView } from 'react-native-gesture-handler';
+import { useDictionary } from '@/hooks/useDictionary';
 
-export default function WordItem({ item, dictionary }) {
+export default function WordItem({ item }) {
+    
+    const { dictionary } = useDictionary();
     const { userVocabulary, isOnline, userProgress } = useAppContext();
     const [isExpanded, setIsExpanded] = useState(false);
     const [meanings, setMeanings] = useState(null);

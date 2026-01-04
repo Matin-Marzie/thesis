@@ -58,7 +58,6 @@ export default function ExtraWordsPopup({ visible, onClose, extraWords = [], sco
                                     renderItem={({ item }) => (
                                         <WordItem
                                             item={item}
-                                            dictionary={dictionary}
                                         />
                                     )}
                                     ListEmptyComponent={<Text style={styles.emptyText}>No extra words yet.</Text>}

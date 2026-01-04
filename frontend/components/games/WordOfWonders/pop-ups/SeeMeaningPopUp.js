@@ -54,7 +54,6 @@ export default function SeeMeaningPopUp({ visible, onClose, foundWords = [] }) {
                                 renderItem={({ item }) => (
                                     <WordItem
                                         item={item}
-                                        dictionary={dictionary}
                                     />
                                 )}
                                 ListEmptyComponent={<Text style={styles.emptyText}>No words found.</Text>}

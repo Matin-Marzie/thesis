@@ -1,35 +1,35 @@
 import React from 'react';
-import { Stack } from 'expo-router';
-import { View, Text, StyleSheet } from 'react-native';
+import { Stack, useRouter } from 'expo-router';
+import Wordle from '@/components/games/Wordle/Wordle';
 
 export default function WordleGame() {
+  const router = useRouter();
+
   return (
     <>
       <Stack.Screen options={{ headerShown: false }} />
-      <View style={styles.container}>
-        <Text style={styles.title}>Wordle</Text>
-        <Text style={styles.subtitle}>Coming Soon</Text>
-      </View>
+      <Wordle onClose={() => router.back()} />
     </>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#4CAF50',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  title: {
-    fontSize: 48,
-    fontWeight: 'bold',
-    color: '#fff',
-    marginBottom: 20,
-  },
-  subtitle: {
-    fontSize: 24,
-    color: '#fff',
-    opacity: 0.9,
-  },
-});
+
+
+// import React from 'react';
+// import { Stack, useRouter } from 'expo-router';
+// import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
+// import Wordle from '@/components/games/Wordle/Wordle';
+
+// export default function WordleGame() {
+//   const router = useRouter();
+
+//   return (
+//     <SafeAreaProvider>
+//       <SafeAreaView style={{ flex: 1, backgroundColor: '#fff' }} edges={['top']}>
+//         <Stack.Screen options={{ headerShown: false }} />
+//         <Wordle onClose={() => router.back()} />
+//       </SafeAreaView>
+//     </SafeAreaProvider>
+//   );
+// }
+

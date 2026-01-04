@@ -93,7 +93,7 @@ export default function HomeScreen() {
         contentContainerStyle={{ padding: 4 }}
         data={filteredWords}
         keyExtractor={item => `word-${item.id}`}
-        renderItem={({ item }) => <WordItem item={item.written_form} dictionary={dictionary} />}
+        renderItem={({ item }) => <WordItem item={item.written_form} />}
         keyboardShouldPersistTaps="handled"
       />
 
