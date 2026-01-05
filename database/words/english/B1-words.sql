@@ -802,6 +802,6 @@ INSERT INTO words (id, written_form, part_of_speech, image_url, audio_url, langu
 (2573, 'yard', 'n', NULL, NULL, 1, 'B1'),
 (2574, 'yell', 'v', NULL, NULL, 1, 'B1'),
 (2575, 'youth', 'n', NULL, NULL, 1, 'B1')
-ON CONFLICT ON CONSTRAINT words_unique_combination
-DO NOTHING;
-
+-- ON CONFLICT ON CONSTRAINT words_unique_combination
+-- DO NOTHING
+;

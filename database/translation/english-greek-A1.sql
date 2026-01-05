@@ -845,6 +845,9 @@ VALUES
 (100841, 'ενώ', 'conj', NULL, NULL, 2, 'A1', NULL),
 (100842, 'μόλις', 'adv', NULL, NULL, 2, 'A1', NULL);
 
+INSERT INTO translations 
+(word_id, translation_word_id, level)
+VALUES
 (26, 100000, 'A1'), -- a = ένας
 (26, 100001, 'A1'), -- a = μία
 (26, 100002, 'A1'), -- a = ένα
