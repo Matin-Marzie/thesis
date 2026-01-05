@@ -3,7 +3,7 @@
 // import { API_URL, API_TOKEN } from '@env';
 
 // local IP for testing on physical device
-const ip_addr = '10.196.145.147';
+const ip_addr = '10.34.88.147';
 export const API_BASE_URL = `http://${ip_addr}:3500/api/v1`;
 
 

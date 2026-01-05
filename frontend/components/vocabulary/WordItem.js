@@ -1,13 +1,13 @@
 import { useAppContext } from '@/context/AppContext';
 import { FontAwesome5 } from '@expo/vector-icons';
-import React, { useState, useCallback, useMemo } from 'react';
+import React, { useState, useCallback, useMemo, memo } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, ActivityIndicator, Image } from 'react-native';
 import { MASTERY_LEVELS } from '@/constants/Vocabulary';
 import { getWikimediaDictionary, extractDefinitions } from '@/api/dictionary';
 import { ScrollView } from 'react-native-gesture-handler';
 import { useDictionary } from '@/hooks/useDictionary';
 
-export default function WordItem({ item }) {
+function WordItem({ item }) {
     
     const { dictionary } = useDictionary();
     const { userVocabulary, isOnline, userProgress } = useAppContext();
@@ -24,7 +24,7 @@ export default function WordItem({ item }) {
     ) || null;
 
     const article = word && word.article ? word.article : '';
-    const written_form = word && word.written_form ? word.written_form : (item || '').toUpperCase();
+    const written_form = word && word.written_form;
     const translations = word && word.translations ? word.translations.join(', ') : '';
     const level = word && word.level ? word.level : null;
 
@@ -293,4 +293,8 @@ const styles = StyleSheet.create({
         marginVertical: 4,
         lineHeight: 18,
     },
+});
+export default memo(WordItem, (prevProps, nextProps) => {
+    // Return true if props are equal (don't re-render), false if they differ (re-render)
+    return prevProps.item === nextProps.item;
 });

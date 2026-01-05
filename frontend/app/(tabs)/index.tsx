@@ -19,7 +19,7 @@ export default function HomeScreen() {
   const { userVocabulary } = useAppContext();
   const { dictionary } = useDictionary();
   const [search, setSearch] = useState('');
-  const [filteredWords, setFilteredWords] = useState([]);
+  const [filteredWords, setFilteredWords] = useState([]); // To Do: don't duplicate state, remove filteredWords
   const [isFilterModalOpen, setIsFilterModalOpen] = useState(false);
   const debounceTimeout = useRef(null);
 
@@ -35,6 +35,11 @@ export default function HomeScreen() {
   const handleFilterSheetChange = useCallback((index) => {
     setIsFilterModalOpen(index >= 0);
   }, []);
+
+  const renderWordItem = useCallback(
+    ({ item }) => <WordItem item={item.written_form} />,
+    []
+  );
 
   const words = useMemo(() => dictionary?.words || [], [dictionary]);
 
@@ -93,7 +98,7 @@ export default function HomeScreen() {
         contentContainerStyle={{ padding: 4 }}
         data={filteredWords}
         keyExtractor={item => `word-${item.id}`}
-        renderItem={({ item }) => <WordItem item={item.written_form} />}
+        renderItem={renderWordItem}
         keyboardShouldPersistTaps="handled"
       />
 
