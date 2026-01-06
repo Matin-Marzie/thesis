@@ -8,34 +8,54 @@ const router = express.Router();
  * /refresh:
  *   post:
  *     summary: Refresh access token
- *     description: Get a new access token using refresh token (from cookie or request body)
+ *     description: Get a new access token using refresh token. Token can be provided in request body (for React Native clients without cookies).
  *     tags: [Authentication]
  *     requestBody:
- *       required: false
+ *       required: true
  *       content:
  *         application/json:
  *           schema:
  *             type: object
+ *             required: [refreshToken]
  *             properties:
  *               refreshToken:
  *                 type: string
- *                 description: Refresh token (for React Native clients)
+ *                 description: Refresh token to exchange for new access token
  *     responses:
  *       200:
- *         description: New access token generated
+ *         description: New access token generated successfully
  *         content:
  *           application/json:
  *             schema:
  *               type: object
  *               properties:
- *                 success:
- *                   type: boolean
- *                 accessToken:
+ *                 message:
  *                   type: string
+ *                   example: 'Token refreshed successfully'
+ *                 data:
+ *                   type: object
+ *                   properties:
+ *                     accessToken:
+ *                       type: string
+ *                       description: New JWT access token
  *       401:
- *         description: Invalid or missing refresh token
+ *         description: Refresh token not found
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error'
  *       403:
- *         description: Token verification failed
+ *         description: Invalid or expired refresh token
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error'
+ *       500:
+ *         description: Server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error'
  */
 router.post('/', refreshTokenController);
 

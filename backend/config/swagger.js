@@ -204,6 +204,206 @@ const options = {
             },
           },
         },
+        UserLanguage: {
+          type: 'object',
+          properties: {
+            id: {
+              type: 'integer',
+              description: 'User language ID',
+            },
+            user_id: {
+              type: 'integer',
+              description: 'User ID',
+            },
+            native_language: {
+              type: 'object',
+              description: 'Native language object',
+            },
+            learning_language: {
+              type: 'object',
+              description: 'Language being learned',
+            },
+            is_current_language: {
+              type: 'boolean',
+              description: 'Whether this is the currently active language',
+            },
+          },
+        },
+        UserVocabulary: {
+          type: 'object',
+          properties: {
+            id: {
+              type: 'integer',
+              description: 'Vocabulary ID',
+            },
+            user_id: {
+              type: 'integer',
+              description: 'User ID',
+            },
+            word_id: {
+              type: 'integer',
+              description: 'Word ID',
+            },
+            language_id: {
+              type: 'integer',
+              description: 'Language ID',
+            },
+            status: {
+              type: 'string',
+              enum: ['new', 'learning', 'practiced', 'mastered'],
+              description: 'Learning status of the word',
+            },
+            created_at: {
+              type: 'string',
+              format: 'date-time',
+              description: 'When the word was added to vocabulary',
+            },
+          },
+        },
+        UserProfile: {
+          type: 'object',
+          properties: {
+            id: {
+              type: 'integer',
+              description: 'User ID',
+            },
+            email: {
+              type: 'string',
+              format: 'email',
+              description: 'User email',
+            },
+            username: {
+              type: 'string',
+              description: 'Username',
+            },
+            first_name: {
+              type: 'string',
+              description: 'First name',
+            },
+            last_name: {
+              type: 'string',
+              description: 'Last name',
+              nullable: true,
+            },
+            profile_picture: {
+              type: 'string',
+              description: 'Profile picture URL',
+              nullable: true,
+            },
+            age: {
+              type: 'integer',
+              description: 'User age',
+              nullable: true,
+            },
+            preferences: {
+              type: 'object',
+              description: 'User preferences',
+              nullable: true,
+            },
+            notifications: {
+              type: 'boolean',
+              description: 'Notifications enabled',
+            },
+            joined_date: {
+              type: 'string',
+              format: 'date-time',
+              description: 'Account creation date',
+            },
+          },
+        },
+        UserProgress: {
+          type: 'object',
+          properties: {
+            energy: {
+              type: 'integer',
+              description: 'Current energy points',
+            },
+            coins: {
+              type: 'integer',
+              description: 'Current coins',
+            },
+            languages: {
+              type: 'array',
+              items: {
+                $ref: '#/components/schemas/UserLanguage',
+              },
+              description: 'Languages the user is learning',
+            },
+          },
+        },
+        UserProfileProgressResponse: {
+          type: 'object',
+          properties: {
+            message: {
+              type: 'string',
+            },
+            user_profile: {
+              $ref: '#/components/schemas/UserProfile',
+            },
+            user_progress: {
+              $ref: '#/components/schemas/UserProgress',
+            },
+            user_vocabulary: {
+              type: 'array',
+              items: {
+                $ref: '#/components/schemas/UserVocabulary',
+              },
+            },
+          },
+        },
+        Word: {
+          type: 'object',
+          properties: {
+            id: {
+              type: 'integer',
+              description: 'Word ID',
+            },
+            word: {
+              type: 'string',
+              description: 'The word',
+            },
+            description: {
+              type: 'string',
+              description: 'Word description or definition',
+            },
+            example: {
+              type: 'string',
+              description: 'Example sentence using the word',
+              nullable: true,
+            },
+            pronunciation: {
+              type: 'string',
+              description: 'Pronunciation guide',
+              nullable: true,
+            },
+            translation: {
+              type: 'string',
+              description: 'Word translation (when requesting with translation language)',
+              nullable: true,
+            },
+          },
+        },
+        DictionaryResponse: {
+          type: 'object',
+          properties: {
+            language_code: {
+              type: 'string',
+              description: 'Language code (e.g., en, el, fa)',
+            },
+            translation_language_code: {
+              type: 'string',
+              description: 'Translation language code (if applicable)',
+              nullable: true,
+            },
+            words: {
+              type: 'array',
+              items: {
+                $ref: '#/components/schemas/Word',
+              },
+              description: 'List of words in the dictionary',
+            },
+          },
+        },
         Error: {
           type: 'object',
           properties: {
@@ -211,6 +411,15 @@ const options = {
               type: 'boolean',
               example: false,
             },
+            message: {
+              type: 'string',
+              description: 'Error message',
+            },
+          },
+        },
+        DictionaryError: {
+          type: 'object',
+          properties: {
             message: {
               type: 'string',
               description: 'Error message',
