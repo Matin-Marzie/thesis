@@ -42,7 +42,7 @@ app.use(cookieParser()); // Parse cookies
 app.use('/static', express.static(path.join(__dirname, 'public')));
 
 // Swagger documentation
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec, {
+app.use('/swagger', swaggerUi.serve, swaggerUi.setup(swaggerSpec, {
   customCss: '.swagger-ui .topbar { display: none }',
   customSiteTitle: 'Language Learning API Docs',
 }));
