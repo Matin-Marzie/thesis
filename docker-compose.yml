@@ -1,0 +1,58 @@
+version: '3.8'
+
+services:
+  # PostgreSQL Database
+  postgres:
+    image: postgres:15-alpine
+    container_name: thesis_postgres
+    environment:
+      POSTGRES_DB: thesis_db
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: 1234
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./database/thesis_db.sql:/docker-entrypoint-initdb.d/01-init.sql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U root -d thesis_db"]
+      interval: 5s
+      timeout: 10s
+      retries: 10
+      start_period: 30s
+
+  # Node.js Backend
+  backend:
+    build: ./backend
+    container_name: thesis_backend
+    environment:
+      PORT: 3500
+      NODE_ENV: development
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_NAME: thesis_db
+      DB_USER: root
+      DB_PASSWORD: 1234
+      DB_POOL_MIN: 2
+      DB_POOL_MAX: 10
+      ACCESS_TOKEN_SECRET: 66c7b39c5d4e086e32ec833a7000b74e4242ea68af4dcda7fdbf4ef01b7f42c21dd90af2dff43a47342077844ede2ade62e1df02b631f1d6d22a3dfd0334834f
+      REFRESH_TOKEN_SECRET: a53fcf3189648d2ac5f7d22eb6be3f7080c57db40d18f5d2b60e2089413f495d56c033e87a6252ae150e8bc869e77807168a4625acded90d7335d17058ec31c8
+      ACCESS_TOKEN_EXPIRES_IN: 15m
+      REFRESH_TOKEN_EXPIRES_IN: 30d
+      GOOGLE_CLIENT_ID: 749167384852-un7hkl1h8dgmopa3i4p6n87j3jn86usr.apps.googleusercontent.com
+      GOOGLE_CLIENT_ID_ANDROID: 749167384852-un7hkl1h8dgmopa3i4p6n87j3jn86usr.apps.googleusercontent.com
+      GOOGLE_CLIENT_ID_IOS: 749167384852-deptjfvib3mr44upckts5kbkec7vp3vl.apps.googleusercontent.com
+      ENERGY_REGEN_INTERVAL: 3600000
+      MAX_ENERGY: 5
+    ports:
+      - "3500:3500"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    volumes:
+      - ./backend:/app
+      - /app/node_modules
+    command: npm run dev
+
+volumes:
+  postgres_data:
