@@ -6,6 +6,15 @@
 - Docker & Docker Compose (for backend)
 - Git
 
+
+## Download app
+```bash
+git --version
+```
+```bash
+  git clone https://github.com/Matin-Marzie/thesis
+```
+
 ## Backend Setup
 
 ```bash
