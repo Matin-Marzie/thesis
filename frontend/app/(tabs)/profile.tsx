@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Image } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import { useAppContext } from '@/context/AppContext';
@@ -15,8 +15,16 @@ export default function ProfileScreen() {
         {/* User Info Section */}
         {userProfile && (
           <View style={styles.userSection}>
-            <View style={styles.avatar}>
-              <Ionicons name="person" size={40} color="#fff" />
+            <View style={styles.avatarContainer}>
+              { userProfile?.profile_picture ? (
+                <Image
+                  source={{ uri: userProfile.profile_picture }}
+                  style={styles.avatarImage}
+                />
+              ) : (
+                <Ionicons name="person-circle" size={80} color="#fff" />
+              )
+              }
             </View>
             <Text style={styles.userName}>{userProfile.first_name || userProfile.username}</Text>
             <Text style={styles.userEmail}>{userProfile.email || `@${userProfile.username}`}</Text>
@@ -61,7 +69,7 @@ const styles = StyleSheet.create({
     borderBottomColor: '#e0e0e0',
     marginBottom: 20,
   },
-  avatar: {
+  avatarContainer: {
     width: 80,
     height: 80,
     borderRadius: 40,
@@ -69,6 +77,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginBottom: 15,
+  },
+  avatarImage: {
+    width: 80,
+    height: 80,
+    borderRadius: 40,
   },
   userName: {
     fontSize: 24,
