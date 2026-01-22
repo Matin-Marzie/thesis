@@ -1,5 +1,4 @@
-import { useEffect, useCallback, useContext } from 'react';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useCallback, useContext } from 'react';
 import AppContext from '../context/AppContext';
 
 /**
@@ -10,21 +9,11 @@ import AppContext from '../context/AppContext';
  * @property {string} created_at
  */
 
-const VOCABULARY_STORAGE_KEY = 'user_vocabulary';
-
 export const useVocabulary = () => {
   const { userVocabulary, setUserVocabulary } = useContext(AppContext);
 
-  // Sync to AsyncStorage whenever vocabulary changes
-  useEffect(() => {
-    (async () => {
-      try {
-        await AsyncStorage.setItem(VOCABULARY_STORAGE_KEY, JSON.stringify(userVocabulary));
-      } catch (e) {
-        console.error('[useVocabulary] Failed to sync to AsyncStorage:', e);
-      }
-    })();
-  }, [userVocabulary]);
+  // Note: AsyncStorage persistence is now handled centrally in AppContext
+  // This hook only provides convenient methods to manipulate vocabulary
 
 
   // Add or update a single word
