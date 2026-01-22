@@ -88,17 +88,50 @@ export const AppProvider = ({ children }) => {
   const [userProgress, setUserProgress] = useState(defaultUserProgress);
   const [userVocabulary, setUserVocabulary] = useState({});
 
-  // Sync to AsyncStorage whenever useProgress changes
+  // Flag to prevent saving during initial load from AsyncStorage
+  const isInitialLoadComplete = useRef(false);
+
+  // Sync userProgress to AsyncStorage whenever it changes
   useEffect(() => {
+    if (!isInitialLoadComplete.current) return; // Skip during initial load
     (async () => {
       try {
         await AsyncStorage.setItem('user_progress', JSON.stringify(userProgress));
         hasUnsyncedChanges.current = true; // Mark for backend sync
+        console.log('[userProgress] Persisted to AsyncStorage');
       } catch (e) {
         console.error('[userProgress] Failed to sync to AsyncStorage:', e);
       }
     })();
   }, [userProgress]);
+
+  // Sync userProfile to AsyncStorage whenever it changes
+  useEffect(() => {
+    if (!isInitialLoadComplete.current) return; // Skip during initial load
+    (async () => {
+      try {
+        await AsyncStorage.setItem('user_profile', JSON.stringify(userProfile));
+        hasUnsyncedChanges.current = true; // Mark for backend sync
+        console.log('[userProfile] Persisted to AsyncStorage');
+      } catch (e) {
+        console.error('[userProfile] Failed to sync to AsyncStorage:', e);
+      }
+    })();
+  }, [userProfile]);
+
+  // Sync userVocabulary to AsyncStorage whenever it changes
+  useEffect(() => {
+    if (!isInitialLoadComplete.current) return; // Skip during initial load
+    (async () => {
+      try {
+        await AsyncStorage.setItem('user_vocabulary', JSON.stringify(userVocabulary));
+        hasUnsyncedChanges.current = true; // Mark for backend sync
+        console.log('[userVocabulary] Persisted to AsyncStorage');
+      } catch (e) {
+        console.error('[userVocabulary] Failed to sync to AsyncStorage:', e);
+      }
+    })();
+  }, [userVocabulary]);
 
 
   // Sync user data with backend
@@ -238,42 +271,91 @@ export const AppProvider = ({ children }) => {
     }
   };
 
+  // Helper to safely parse JSON from AsyncStorage
+  const safeJSONParse = (str, fallback) => {
+    if (!str || str === 'undefined' || str === 'null') return fallback;
+    try {
+      const parsed = JSON.parse(str);
+      // Validate that parsed value is an object (not null/array for objects, or valid for the type)
+      if (parsed === null || parsed === undefined) return fallback;
+      return parsed;
+    } catch (e) {
+      console.warn('[safeJSONParse] Failed to parse:', e.message);
+      return fallback;
+    }
+  };
+
   // On mount: load user data and check auth status
   useEffect(() => {
     (async () => {
       try {
+        console.log('[AppProvider] Loading state from AsyncStorage...');
+
         const profileStr = await AsyncStorage.getItem('user_profile');
-        if (profileStr) setUserProfile(JSON.parse(profileStr))
+        const loadedProfile = safeJSONParse(profileStr, null);
+        if (loadedProfile && typeof loadedProfile === 'object' && loadedProfile.username) {
+          setUserProfile(loadedProfile);
+          console.log('[AppProvider] Loaded user profile:', loadedProfile.username);
+        }
 
         const progressStr = await AsyncStorage.getItem('user_progress');
-        if (progressStr) setUserProgress(JSON.parse(progressStr));
+        const loadedProgress = safeJSONParse(progressStr, null);
+        if (loadedProgress && typeof loadedProgress === 'object') {
+          // Validate essential fields exist
+          if (loadedProgress.energy !== undefined && loadedProgress.coins !== undefined) {
+            setUserProgress(loadedProgress);
+            console.log('[AppProvider] Loaded user progress - coins:', loadedProgress.coins, 'energy:', loadedProgress.energy);
+          }
+        }
 
         const vocabularyStr = await AsyncStorage.getItem('user_vocabulary');
-        if (vocabularyStr) setUserVocabulary(JSON.parse(vocabularyStr));
+        const loadedVocabulary = safeJSONParse(vocabularyStr, null);
+        if (loadedVocabulary && typeof loadedVocabulary === 'object') {
+          setUserVocabulary(loadedVocabulary);
+          console.log('[AppProvider] Loaded vocabulary with', Object.keys(loadedVocabulary).length, 'words');
+        }
+
       } catch (e) {
         console.error('[AppProvider] Failed to load user data from AsyncStorage:', e);
       } finally {
+        // Mark initial load as complete - now useEffect saves will work
+        isInitialLoadComplete.current = true;
+        console.log('[AppProvider] Initial load complete, persistence enabled');
         checkAuthStatus();
       }
     })();
   }, []);
 
-  // Logout function
-  const logout = async () => {
+  // Logout function - clears user session but preserves offline data for guest use
+  const logout = async (clearAllData = false) => {
     try {
       // clear tokens in SecureStore
       await clearTokens();
 
-      // Clear AsyncStorage and SecureStore
-      await AsyncStorage.clear();
+      if (clearAllData) {
+        // Full clear - removes all offline data
+        await AsyncStorage.clear();
+        console.log('[logout] Cleared all AsyncStorage data');
+      } else {
+        // Partial clear - only remove user-specific data, keep progress for guest use
+        // This allows users to continue where they left off as a guest
+        await AsyncStorage.removeItem('user_profile');
+        console.log('[logout] Cleared user profile, preserving progress and vocabulary');
+      }
+
       await SecureStore.setItemAsync('onboarding_complete', 'false');
 
       // reset memory state
       setIsAuthenticated(false);
       setHasCompletedOnboarding(false);
       setUserProfile(defaultUserProfile);
-      setUserProgress(defaultUserProgress);
-      setUserVocabulary({});
+
+      if (clearAllData) {
+        setUserProgress(defaultUserProgress);
+        setUserVocabulary({});
+      }
+      // If not clearing all data, keep userProgress and userVocabulary in memory
+      // They are already loaded from AsyncStorage
 
       // Reset sync refs
       hasUnsyncedChanges.current = false;
@@ -281,6 +363,20 @@ export const AppProvider = ({ children }) => {
 
     } catch (error) {
       console.error('Logout error:', error);
+    }
+  };
+
+  // Clear all offline data (for use when user wants to reset everything)
+  const clearAllOfflineData = async () => {
+    try {
+      await AsyncStorage.clear();
+      setUserProfile(defaultUserProfile);
+      setUserProgress(defaultUserProgress);
+      setUserVocabulary({});
+      hasUnsyncedChanges.current = false;
+      console.log('[clearAllOfflineData] All offline data cleared');
+    } catch (error) {
+      console.error('[clearAllOfflineData] Error:', error);
     }
   };
 
@@ -293,6 +389,7 @@ export const AppProvider = ({ children }) => {
     isLoading, setIsLoading,
     isOnline,
     logout,
+    clearAllOfflineData,
   };
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
