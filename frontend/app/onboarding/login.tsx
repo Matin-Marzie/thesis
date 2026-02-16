@@ -17,10 +17,14 @@ import { Ionicons } from '@expo/vector-icons';
 import { loginUser } from '../../api/auth';
 import { PRIMARY_COLOR } from '@/constants/App';
 import { useAppContext } from '@/context/AppContext';
-// import { GoogleSigninButton, GoogleSignin, statusCodes, User as GoogleUser } from '@react-native-google-signin/google-signin';
+// import { GoogleSigninButton, GoogleSignin, statusCodes, User as GoogleUser, isSuccessResponse, isErrorWithCode } from '@react-native-google-signin/google-signin';
 
 const USERNAME_REGEX = /^[a-zA-Z][a-zA-Z0-9._-]{3,30}$/;
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+// const GOOGLE_CLIENT_ID_WEB = '749167384852-v7hhoooltfik3irda68r6j4plf82allp.apps.googleusercontent.com';
+// const GOOGLE_CLIENT_ID_ANDROID = '749167384852-m2bbpmr3dhnltq1sk0i3jkiu78k3pmkg.apps.googleusercontent.com';
+// const GOOGLE_CLIENT_ID_IOS = '749167384852-deptjfvib3mr44upckts5kbkec7vp3vl.apps.googleusercontent.com'; 
 
 
 export default function LoginScreen() {
@@ -28,7 +32,8 @@ export default function LoginScreen() {
   // Configure Google Sign-In on mount
   // useEffect(() => {
   //     GoogleSignin.configure({
-  //       webClientId: Platform.OS === 'ios' ? GOOGLE_CLIENT_ID_IOS : GOOGLE_CLIENT_ID_ANDROID,
+  //       webClientId: GOOGLE_CLIENT_ID_ANDROID,
+  //       // iosClientId: GOOGLE_CLIENT_ID_IOS,
   //       offlineAccess: true,
   //     });
   // }, []);
@@ -92,38 +97,56 @@ export default function LoginScreen() {
   };
 
   const handleGoogleSignIn = async () => {
-    if (Platform.OS === 'web') {
-      // For web, you should implement Google Auth using expo-auth-session or another web-compatible method
-      Alert.alert('Google Sign-In', 'Google Sign-In for web is not implemented.');
-      return;
-    }
     setLoading(true);
     setError('');
-    // try {
-    //   await GoogleSignin.hasPlayServices({ showPlayServicesUpdateDialog: true });
-    //   const userInfo: GoogleUser = await GoogleSignin.signIn();
-    //   // You can send userInfo.idToken to your backend for authentication
-    //   console.log('Google User Info:', userInfo);
-    //   Alert.alert('Google Sign-In Success', `Welcome, ${userInfo.user.name || userInfo.user.email}`);
-    //   // Optionally, update user context and navigate
-    //   // await updateUserProfile(userInfo.user);
-    //   // await setUserProgress();   // I DON'T KNOW
-    //   // await updateUserVocabulary(); // CHECK
-    //   // setIsAuthenticated(true);
-    //   // router.replace('/(tabs)');
-    // } catch (error: any) {
-    //   if (error.code === statusCodes.SIGN_IN_CANCELLED) {
-    //     // user cancelled
-    //   } else if (error.code === statusCodes.IN_PROGRESS) {
-    //     setError('Google Sign-In is in progress.');
-    //   } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
-    //     setError('Google Play Services not available or outdated.');
-    //   } else {
-    //     setError(error.message || 'Google Sign-In failed.');
-    //   }
-    // } finally {
-    //   setLoading(false);
-    // }
+    try {
+      // await GoogleSignin.hasPlayServices({ showPlayServicesUpdateDialog: true });
+      // const response = await GoogleSignin.signIn();
+      
+      // if (isSuccessResponse(response)) {
+      //   response
+      //   Alert.alert('Google Sign-In Success', `Welcome, ${response.user.name || response.user.email}`);
+      // }
+    
+    
+    
+    
+      // const userInfo: GoogleUser = await GoogleSignin.signIn();
+      // You can send userInfo.idToken to your backend for authentication
+      // console.log('Google User Info:', userInfo);
+      // Alert.alert('Google Sign-In Success', `Welcome, ${userInfo.user.name || userInfo.user.email}`);
+      // Optionally, update user context and navigate
+      // await updateUserProfile(userInfo.user);
+      // await setUserProgress();   // I DON'T KNOW
+      // await updateUserVocabulary(); // CHECK
+      // setIsAuthenticated(true);
+      // router.replace('/(tabs)');
+    } catch (error: any) {
+      // if (isErrorWithCode(error)) {
+      //   console.log(error.code)
+      // }
+
+
+
+
+
+
+
+
+
+
+      // if (error.code === statusCodes.SIGN_IN_CANCELLED) {
+      //   // user cancelled
+      // } else if (error.code === statusCodes.IN_PROGRESS) {
+      //   setError('Google Sign-In is in progress.');
+      // } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
+      //   setError('Google Play Services not available or outdated.');
+      // } else {
+      //   setError(error.message || 'Google Sign-In failed.');
+      // }
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -203,15 +226,15 @@ export default function LoginScreen() {
         </View>
 
         {/* Google Sign-In Button */}
-        <View style={{ alignItems: 'center', marginTop: 24 }}>
-            {/* <GoogleSigninButton
+        {/* <View style={{ alignItems: 'center', marginTop: 24 }}>
+            <GoogleSigninButton
               style={{ width: width * 0.8, height: 56 }}
               size={GoogleSigninButton.Size.Wide}
               color={GoogleSigninButton.Color.Dark}
               onPress={handleGoogleSignIn}
               disabled={loading}
-            /> */}
-        </View>
+            />
+        </View> */}
         
       </ScrollView>
     </KeyboardAvoidingView>
@@ -225,6 +248,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingTop: 10,
     paddingBottom: 5,
+    marginBottom: 50, // temporary space
   },
   header: {
     flexDirection: 'row',
