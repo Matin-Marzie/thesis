@@ -12,7 +12,7 @@ import { FontAwesome5 } from '@expo/vector-icons';
 import { GREEN } from '../gameConstants';
 import { useDictionary } from '@/hooks/useDictionary';
 import { popupStyles } from './popupStyles';
-import WordItem from '../../../vocabulary/WordItem';
+import VocabularyListItem from '../../../vocabulary/VocabularyListItem';
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
 
@@ -56,7 +56,7 @@ export default function ExtraWordsPopup({ visible, onClose, extraWords = [], sco
                                     data={extraWords}
                                     keyExtractor={(item, index) => `${item}-${index}`}
                                     renderItem={({ item }) => (
-                                        <WordItem
+                                        <VocabularyListItem
                                             item={item}
                                         />
                                     )}

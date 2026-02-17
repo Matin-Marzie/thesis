@@ -1,19 +1,10 @@
 import React, { useState, useEffect, useRef, useMemo, useCallback } from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  TextInput,
-  Animated,
-  TouchableOpacity,
-  Keyboard,
-} from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
+import { View, StyleSheet, Keyboard } from 'react-native';
 import { useAppContext } from '@/context/AppContext';
 import { useDictionary } from '@/hooks/useDictionary';
 import FilterBottomSheetModal from '@/components/vocabulary/FilterBottomSheetModal';
-import { PRIMARY_COLOR } from '@/constants/App';
-import WordItem from '@/components/vocabulary/WordItem';
+import VocabularySearchField from '@/components/vocabulary/VocabularySearchField';
+import VocabularyList from '@/components/vocabulary/VocabularyList';
 
 export default function HomeScreen() {
   const { userVocabulary } = useAppContext();
@@ -35,11 +26,6 @@ export default function HomeScreen() {
   const handleFilterSheetChange = useCallback((index) => {
     setIsFilterModalOpen(index >= 0);
   }, []);
-
-  const renderWordItem = useCallback(
-    ({ item }) => <WordItem item={item.written_form} />,
-    []
-  );
 
   const words = useMemo(() => dictionary?.words || [], [dictionary]);
 
@@ -70,37 +56,16 @@ export default function HomeScreen() {
     return () => clearTimeout(debounceTimeout.current);
   }, [search, words, userVocabulary]);
 
-
-
   return (
     <View style={styles.container}>
-      {/* Fixed search input */}
-      <View style={styles.searchContainer}>
-        <TextInput
-          style={styles.searchInput}
-          placeholder="Search dictionary..."
-          value={search}
-          onChangeText={setSearch}
-          editable={!isFilterModalOpen}
-        />
-
-      {/* Filter Button */}
-      <TouchableOpacity 
-        style={styles.filterButton}
-        onPress={handleFilterOpen}
-      >
-        <Ionicons name="funnel" size={20} color={PRIMARY_COLOR} style={{ marginRight: 6 }} />
-        <Text style={styles.filterButtonText}>Filters</Text>
-      </TouchableOpacity>
-      </View>
-
-      <Animated.FlatList
-        contentContainerStyle={{ padding: 4 }}
-        data={filteredWords}
-        keyExtractor={item => `word-${item.id}`}
-        renderItem={renderWordItem}
-        keyboardShouldPersistTaps="handled"
+      <VocabularySearchField
+        search={search}
+        onSearchChange={setSearch}
+        onFilterPress={handleFilterOpen}
+        editable={!isFilterModalOpen}
       />
+
+      <VocabularyList words={filteredWords} />
 
       {/* Filter Bottom Sheet Modal */}
       <FilterBottomSheetModal ref={vocabularyFilterRef} onSheetChange={handleFilterSheetChange} />
@@ -112,40 +77,5 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-  },
-  searchContainer: {
-    display: 'flex',
-    flexDirection: 'row',
-    padding: 10,
-    backgroundColor: '#fff',
-    borderBottomWidth: 1,
-    borderBottomColor: '#ccc',
-    gap: 6,
-  },
-  searchInput: {
-    flex: 1,
-    height: 50,
-    backgroundColor: '#f2f2f2',
-    paddingHorizontal: 10,
-    borderTopLeftRadius: 8,
-    borderBottomLeftRadius: 8,
-
-  },
-  filterButton: {
-    flexDirection: 'row',
-    height: 50,
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderTopRightRadius: 8,
-    borderBottomRightRadius: 8,
-    paddingHorizontal: 4,
-    backgroundColor: '#f0f0f0',
-    borderBottomWidth: 1,
-    borderBottomColor: '#e0e0e0',
-  },
-  filterButtonText: {
-    fontSize: 14,
-    fontWeight: '600',
-    color: PRIMARY_COLOR,
   },
 });

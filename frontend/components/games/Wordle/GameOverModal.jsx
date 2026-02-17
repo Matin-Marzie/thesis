@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { PRIMARY_COLOR } from '@/constants/App';
-import WordItem from '@/components/vocabulary/WordItem';
+import VocabularyListItem from '@/components/vocabulary/VocabularyListItem.js';
 
 const COLORS = {
     correct: '#6aaa64',
@@ -61,7 +61,7 @@ export default function GameOverModal({
                     )}
 
                     <View style={{ width: '100%', marginBottom: 20 }} >
-                        <WordItem item={secretWord} />
+                        <VocabularyListItem item={secretWord} />
                     </View>
 
                     <View style={styles.buttonContainer}>
