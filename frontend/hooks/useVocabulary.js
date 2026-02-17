@@ -1,42 +1,66 @@
-import { useCallback, useContext } from 'react';
-import AppContext from '../context/AppContext';
-
 /**
  * @typedef {Object} WordProgress
- * @property {string} language_id
- * @property {number} mastery_level
- * @property {string} last_review
- * @property {string} created_at
+ * @property {number} mastery_level - 1-5 mastery level
+ * @property {string} last_review - ISO date string
+ * @property {string} created_at - ISO date string
  */
 
-export const useVocabulary = () => {
-  const { userVocabulary, setUserVocabulary } = useContext(AppContext);
+// Vocabulary action types
+export const VOCABULARY_ACTIONS = {
+  ADD: 'ADD',
+  UPDATE: 'UPDATE',
+  REMOVE: 'REMOVE',
+  SET: 'SET', // For initial load from persistence
+};
 
-  // Note: AsyncStorage persistence is now handled centrally in AppContext
-  // This hook only provides convenient methods to manipulate vocabulary
+/**
+ * Vocabulary reducer for useReducer
+ * @param {Object} state - Current vocabulary state (object with word IDs as keys)
+ * @param {Object} action - Action object with type and payload
+ * @returns {Object} New vocabulary state
+ */
+export const vocabularyReducer = (state, action) => {
+  const now = new Date().toISOString();
 
+  switch (action.type) {
+    case VOCABULARY_ACTIONS.ADD: {
+      const { wordId, language_id } = action.payload;
+      return {
+        ...state,
+        [wordId]: {
+          language_id,
+          mastery_level: 1,
+          last_review: now,
+          created_at: now,
+        },
+      };
+    }
 
-  // Add or update a single word
-  const addOrUpdateWord = useCallback((wordId, data) => {
-    setUserVocabulary((prev) => ({
-      ...prev,
-      [wordId]: data, // O(1) operation
-    }));
-  }, [setUserVocabulary]);
+    case VOCABULARY_ACTIONS.UPDATE: {
+      const { wordId, mastery_level } = action.payload;
+      if (!state[wordId]) return state; // Word doesn't exist
+      return {
+        ...state,
+        [wordId]: {
+          ...state[wordId],
+          mastery_level,
+          last_review: now,
+        },
+      };
+    }
 
+    case VOCABULARY_ACTIONS.REMOVE: {
+      const { wordId } = action.payload;
+      const { [wordId]: removed, ...rest } = state;
+      return rest;
+    }
 
-  // Remove a word by ID
-  const removeWord = useCallback((wordId) => {
-    setUserVocabulary((prev) => {
-      const updated = { ...prev };
-      delete updated[wordId]; // O(1) operation
-      return updated;
-    });
-  }, [setUserVocabulary]);
+    case VOCABULARY_ACTIONS.SET: {
+      // Used for initial load from persistence
+      return action.payload || {};
+    }
 
-  return {
-    userVocabulary,
-    addOrUpdateWord,
-    removeWord,
-  };
+    default:
+      return state;
+  }
 };

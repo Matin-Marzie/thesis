@@ -17,6 +17,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { PRIMARY_COLOR } from '@/constants/App';
 import { registerUser,  } from '../../api/auth';
 import { useAppContext } from '../../context/AppContext';
+import { VOCABULARY_ACTIONS } from '@/hooks/useVocabulary';
 
 
 // Hardcoded client IDs for Google Sign-In
@@ -46,7 +47,7 @@ export default function RegisterScreen({ onRegisterSuccess }: RegisterScreenProp
   //   });
   // }, []);
 
-  const { userVocabulary, userProfile, userProgress, updateUserProfile, setUserProgress, setUserVocabulary, setIsAuthenticated } = useAppContext();
+  const { userVocabulary, userProfile, userProgress, updateUserProfile, setUserProgress, vocabularyDispatch, setIsAuthenticated } = useAppContext();
   const router = useRouter();
 
   const [firstName, setFirstName] = useState('');
@@ -101,9 +102,9 @@ export default function RegisterScreen({ onRegisterSuccess }: RegisterScreenProp
 
         // update user data
         if (response.data) {
-          await userProfile, userProgress, updateUserProfile(response.data?.user_profile);
+          await updateUserProfile(response.data?.user_profile);
           await setUserProgress(response.data?.user_progress);
-          await setUserVocabulary(response.data?.user_vocabulary);
+          vocabularyDispatch({ type: VOCABULARY_ACTIONS.SET, payload: response.data?.user_vocabulary });
         }
         router.replace('/(tabs)');
       }

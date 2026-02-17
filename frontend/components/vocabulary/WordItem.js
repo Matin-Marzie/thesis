@@ -6,11 +6,12 @@ import { MASTERY_LEVELS } from '@/constants/Vocabulary';
 import { getWikimediaDictionary, extractDefinitions } from '@/api/dictionary';
 import { ScrollView } from 'react-native-gesture-handler';
 import { useDictionary } from '@/hooks/useDictionary';
+import { VOCABULARY_ACTIONS } from '@/hooks/useVocabulary';
 
 function WordItem({ item }) {
     
     const { dictionary } = useDictionary();
-    const { userVocabulary, isOnline, userProgress } = useAppContext();
+    const { userVocabulary, vocabularyDispatch, isOnline, userProgress } = useAppContext();
     const [isExpanded, setIsExpanded] = useState(false);
     const [meanings, setMeanings] = useState(null);
     const [loading, setLoading] = useState(false);
@@ -33,6 +34,18 @@ function WordItem({ item }) {
     const language_code = current_language?.learning_language?.code;
 
     const UserVocabularyEntry = word ? userVocabulary[word.id] : null;
+
+    // Add word to vocabulary
+    const handleAddWord = useCallback(() => {
+        if (!word) return;
+        vocabularyDispatch({
+            type: VOCABULARY_ACTIONS.ADD,
+            payload: {
+                wordId: word.id,
+                language_id: current_language?.learning_language?.id,
+            },
+        });
+    }, [word, vocabularyDispatch, current_language]);
 
     const handleDictionaryLookup = useCallback(async () => {
         if (language_code !== 'en') return; // SUPPORT ONLY ENGLISH FOR NOW, TO DO: ADD OTHER LANGUAGES
@@ -94,7 +107,8 @@ function WordItem({ item }) {
                                 <Text style={styles.masterLevelChangeButtonText}>{MASTERY_LEVELS[UserVocabularyEntry?.mastery_level]}</Text>
                             </TouchableOpacity>
                         ) : (
-                            <TouchableOpacity style={styles.addButton}>
+                            // Add new Vocabulary word
+                            <TouchableOpacity style={styles.addButton} onPress={handleAddWord}>
                                 <Text style={styles.addButtonText}>+</Text>
                             </TouchableOpacity>
                         )}

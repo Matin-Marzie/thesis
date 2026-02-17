@@ -25,14 +25,14 @@ export default function MoreScreen() {
             try {
               // Call backend logout endpoint
               await logoutUser();
-              // Clear local state and tokens
-              await logout();
+              // Clear local state and tokens (including vocabulary and progress)
+              await logout(true);
               // Navigate to login
               router.replace('/onboarding/login');
             } catch (error) {
               console.error('Logout error:', error);
               // Still logout locally even if backend call fails
-              await logout();
+              await logout(true);
               router.replace('/onboarding/login');
             }
           },

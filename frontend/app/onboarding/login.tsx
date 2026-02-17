@@ -17,6 +17,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { loginUser } from '../../api/auth';
 import { PRIMARY_COLOR } from '@/constants/App';
 import { useAppContext } from '@/context/AppContext';
+import { VOCABULARY_ACTIONS } from '@/hooks/useVocabulary';
 // import { GoogleSigninButton, GoogleSignin, statusCodes, User as GoogleUser, isSuccessResponse, isErrorWithCode } from '@react-native-google-signin/google-signin';
 
 const USERNAME_REGEX = /^[a-zA-Z][a-zA-Z0-9._-]{3,30}$/;
@@ -41,7 +42,7 @@ export default function LoginScreen() {
   const width = Dimensions.get('window').width;
   const height = Dimensions.get('window').height;
 
-  const { updateUserProfile, setUserProgress, setUserVocabulary, setIsAuthenticated, setHasCompletedOnboarding } = useAppContext();
+  const { updateUserProfile, setUserProgress, vocabularyDispatch, setIsAuthenticated, setHasCompletedOnboarding } = useAppContext();
   const router = useRouter();
 
   const [usernameOrEmail, setUsernameOrEmail] = useState('');
@@ -84,7 +85,7 @@ export default function LoginScreen() {
         if (response.data) {
           await updateUserProfile(response.data?.user_profile);
           await setUserProgress(response.data?.user_progress);
-          await setUserVocabulary(response.data?.user_vocabulary);
+          vocabularyDispatch({ type: VOCABULARY_ACTIONS.SET, payload: response.data?.user_vocabulary });
         }
         router.replace('/(tabs)');
       }

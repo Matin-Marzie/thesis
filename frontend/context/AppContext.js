@@ -10,6 +10,9 @@ import { useNetworkStatus } from '../hooks/useNetworkStatus';
 import { usePersistedState, clearAllPersistedData } from '../hooks/usePersistedState';
 import { useBackendSync } from '../hooks/useBackendSync';
 
+// Vocabulary reducer
+import { vocabularyReducer, VOCABULARY_ACTIONS } from '../hooks/useVocabulary';
+
 // Constants
 import {
   DEFAULT_USER_PROFILE,
@@ -25,6 +28,7 @@ import {
  * @property {Object} userProfile
  * @property {Object} userProgress
  * @property {Object} userVocabulary
+ * @property {Function} vocabularyDispatch
  * @property {boolean} isAuthenticated
  * @property {boolean} hasCompletedOnboarding
  * @property {boolean} isLoading
@@ -64,6 +68,11 @@ export const AppProvider = ({ children }) => {
     isLoaded: isVocabularyLoaded,
   } = usePersistedState(STORAGE_KEYS.USER_VOCABULARY, DEFAULT_USER_VOCABULARY, validators.userVocabulary);
 
+  // Dispatch that applies reducer logic and persists via usePersistedState
+  const vocabularyDispatch = useCallback((action) => {
+    setUserVocabulary((prev) => vocabularyReducer(prev, action));
+  }, [setUserVocabulary]);
+
   // Backend sync function (TODO: implement actual API call)
   const syncToBackend = useCallback(async () => {
     // TODO: Implement actual backend sync
@@ -93,7 +102,10 @@ export const AppProvider = ({ children }) => {
 
   // Update user profile helper
   const updateUserProfile = useCallback(async (newUserProfile) => {
-    setUserProfile(newUserProfile);
+    setUserProfile((prev) => ({
+      ...prev,
+      ...newUserProfile,
+    }));
   }, [setUserProfile]);
 
   // Check for existing auth session on app load
@@ -185,7 +197,7 @@ export const AppProvider = ({ children }) => {
   const value = {
     userProfile, setUserProfile, updateUserProfile,
     userProgress, setUserProgress,
-    userVocabulary, setUserVocabulary,
+    userVocabulary, vocabularyDispatch,
     isAuthenticated, setIsAuthenticated, checkAuthStatus,
     hasCompletedOnboarding, setHasCompletedOnboarding,
     isLoading, setIsLoading,
