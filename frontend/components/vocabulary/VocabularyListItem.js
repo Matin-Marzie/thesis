@@ -2,8 +2,8 @@ import { useAppContext } from '@/context/AppContext';
 import { FontAwesome5 } from '@expo/vector-icons';
 import React, { useState, useCallback, useMemo, memo } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, ActivityIndicator, Image } from 'react-native';
-import { MASTERY_LEVELS } from '@/constants/Vocabulary';
 import { getWikimediaDictionary, extractDefinitions } from '@/api/dictionary';
+import MasteryLevelButton from '@/components/vocabulary/MasteryLevelButton';
 import { ScrollView } from 'react-native-gesture-handler';
 import { useDictionary } from '@/hooks/useDictionary';
 import { VOCABULARY_ACTIONS } from '@/hooks/useVocabulary';
@@ -103,9 +103,7 @@ function WordItem({ item }) {
                         <Text>{level}</Text>
 
                         {UserVocabularyEntry ? (
-                            <TouchableOpacity style={styles.masterLevelChangeButton}>
-                                <Text style={styles.masterLevelChangeButtonText}>{MASTERY_LEVELS[UserVocabularyEntry?.mastery_level]}</Text>
-                            </TouchableOpacity>
+                            <MasteryLevelButton masteryLevel={UserVocabularyEntry?.mastery_level} />
                         ) : (
                             // Add new Vocabulary word
                             <TouchableOpacity style={styles.addButton} onPress={handleAddWord}>
@@ -217,18 +215,7 @@ const styles = StyleSheet.create({
         fontSize: 20,
         lineHeight: 20,
     },
-    masterLevelChangeButton: {
-        width: 68,
-        height: 38,
-        borderRadius: 16,
-        backgroundColor: '#007bff',
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    masterLevelChangeButtonText: {
-        color: '#fff',
-        fontSize: 10,
-    },
+
     dictionaryButton: {
         width: 38,
         height: 38,
