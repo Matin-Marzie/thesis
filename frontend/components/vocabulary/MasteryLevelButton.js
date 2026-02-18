@@ -1,8 +1,14 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { MASTERY_LEVELS } from '@/constants/Vocabulary';
 
 export default function MasteryLevelButton({ masteryLevel, onPress }) {
+
+
+    // Add word to vocabulary
+        // const handleChangeMasteryLevel
+
+    
     return (
         <TouchableOpacity style={styles.masterLevelChangeButton} onPress={onPress}>
             <Text style={styles.masterLevelChangeButtonText}>

@@ -1,10 +1,11 @@
 import { useAppContext } from '@/context/AppContext';
 import { FontAwesome5 } from '@expo/vector-icons';
-import React, { useState, useCallback, useMemo, memo } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, ActivityIndicator, Image } from 'react-native';
+import React, { useState, useCallback, useMemo, useRef, memo } from 'react';
+import { View, Text, StyleSheet, TouchableOpacity, ActivityIndicator, Image, Animated, Vibration, Dimensions } from 'react-native';
 import { getWikimediaDictionary, extractDefinitions } from '@/api/dictionary';
 import MasteryLevelButton from '@/components/vocabulary/MasteryLevelButton';
-import { ScrollView } from 'react-native-gesture-handler';
+import { Swipeable, ScrollView } from 'react-native-gesture-handler';
+import { Ionicons } from '@expo/vector-icons';
 import { useDictionary } from '@/hooks/useDictionary';
 import { VOCABULARY_ACTIONS } from '@/hooks/useVocabulary';
 
@@ -16,6 +17,7 @@ function WordItem({ item }) {
     const [meanings, setMeanings] = useState(null);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
+    const [isDeleting, setIsDeleting] = useState(false);
 
     // Cache for Wikimedia results
     const cache = useMemo(() => ({}), []);
@@ -34,6 +36,47 @@ function WordItem({ item }) {
     const language_code = current_language?.learning_language?.code;
 
     const UserVocabularyEntry = word ? userVocabulary[word.id] : null;
+    const swipeableRef = useRef(null);
+    
+    // Get half of screen width for swipe threshold
+    const screenWidth = Dimensions.get('window').width;
+    const swipeThreshold = screenWidth / 2;
+
+    // Remove word from vocabulary (swipe to delete)
+    const handleRemoveWord = useCallback(() => {
+        if (!word || isDeleting) return;
+        setIsDeleting(true);
+        Vibration.vibrate(20); // Haptic feedback for delete action
+        vocabularyDispatch({
+            type: VOCABULARY_ACTIONS.REMOVE,
+            payload: { wordId: word.id },
+        });
+    }, [word, vocabularyDispatch, isDeleting]);
+
+    const renderLeftActions = useCallback((progress, dragX) => {
+        if (!UserVocabularyEntry) return null;
+
+        const scale = dragX.interpolate({
+            inputRange: [0, swipeThreshold],
+            outputRange: [0.5, 1],
+            extrapolate: 'clamp',
+        });
+
+        return (
+            <TouchableOpacity
+                style={styles.deleteAction}
+                onPress={() => {
+                    handleRemoveWord();
+                    swipeableRef.current?.close();
+                }}
+            >
+                <Animated.View style={{ transform: [{ scale }], alignItems: 'center' }}>
+                    <Ionicons name="trash-outline" size={24} color="#fff" />
+                    <Text style={styles.deleteActionText}>Delete</Text>
+                </Animated.View>
+            </TouchableOpacity>
+        );
+    }, [UserVocabularyEntry, handleRemoveWord, swipeThreshold]);
 
     // Add word to vocabulary
     const handleAddWord = useCallback(() => {
@@ -88,7 +131,24 @@ function WordItem({ item }) {
         }
     }, [isExpanded, meanings, language_code, written_form, cache]);
 
+    // Don't render if item is being deleted
+    if (isDeleting) {
+        return null;
+    }
+
     return (
+        <Swipeable
+            ref={swipeableRef}
+            renderLeftActions={renderLeftActions}
+            onSwipeableWillOpen={(direction) => {
+                if (direction === 'left') {
+                    handleRemoveWord();
+                }
+            }}
+            leftThreshold={swipeThreshold}
+            overshootLeft={false}
+            enabled={!!UserVocabularyEntry && !isDeleting}
+        >
         <View style={styles.row}>
             <View style={[styles.wordRow]}>
                 <View style={{ flexDirection: 'row' }}>
@@ -99,7 +159,7 @@ function WordItem({ item }) {
                     </View>
                 </View>
                 <View>
-                    <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end', gap: 8 }}>
+                    <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end', gap: 8, marginHorizontal: 10 }}>
                         <Text>{level}</Text>
 
                         {UserVocabularyEntry ? (
@@ -110,6 +170,7 @@ function WordItem({ item }) {
                                 <Text style={styles.addButtonText}>+</Text>
                             </TouchableOpacity>
                         )}
+                        {/* wiktionary icon */}
                         {isOnline && (
                             <TouchableOpacity
                                 style={styles.dictionaryButton}
@@ -127,7 +188,6 @@ function WordItem({ item }) {
                                         style={{
                                             width: 35,
                                             height: 35,
-                                            // resizeMode: "contain"
                                         }}
                                     />
                                 )}
@@ -137,7 +197,7 @@ function WordItem({ item }) {
                 </View>
             </View>
             {/* Wikimedia dictionary section */}
-            {isExpanded && (
+            {isExpanded && isOnline && (
                 <ScrollView style={styles.wikimediaDictionarySection}>
                     {loading && (
                         <View style={styles.loadingContainer}>
@@ -173,6 +233,7 @@ function WordItem({ item }) {
                 </ScrollView>
             )}
         </View>
+        </Swipeable>
     );
 }
 
@@ -181,6 +242,19 @@ const styles = StyleSheet.create({
         zIndex: 1,
         borderBottomWidth: 2,
         borderBottomColor: '#f0f0f0',
+        backgroundColor: '#fff',
+    },
+    deleteAction: {
+        backgroundColor: '#e74c3c',
+        justifyContent: 'center',
+        alignItems: 'center',
+        width: Dimensions.get('window').width / 2,
+    },
+    deleteActionText: {
+        color: '#fff',
+        fontSize: 12,
+        fontWeight: '600',
+        marginTop: 4,
     },
     wordRow: {
         flexDirection: 'row',
@@ -233,7 +307,6 @@ const styles = StyleSheet.create({
         backgroundColor: '#f9f9f9',
         borderTopLeftRadius: 8,
         borderBottomLeftRadius: 8,
-        padding: 8,
         marginBottom: 10,
         maxHeight: 250,
         borderTopWidth: 2,
