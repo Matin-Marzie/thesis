@@ -46,7 +46,7 @@ function WordItem({ item }) {
     const handleRemoveWord = useCallback(() => {
         if (!word || isDeleting) return;
         setIsDeleting(true);
-        Vibration.vibrate(20); // Haptic feedback for delete action
+        Vibration.vibrate(20);
         vocabularyDispatch({
             type: VOCABULARY_ACTIONS.REMOVE,
             payload: { wordId: word.id },
@@ -93,6 +93,7 @@ function WordItem({ item }) {
     const handleDictionaryLookup = useCallback(async () => {
         if (language_code !== 'en') return; // SUPPORT ONLY ENGLISH FOR NOW, TO DO: ADD OTHER LANGUAGES
         if (!isExpanded) {
+            Vibration.vibrate(20);
             // Opening - fetch if not cached
             setIsExpanded(true);
 
@@ -163,7 +164,7 @@ function WordItem({ item }) {
                         <Text>{level}</Text>
 
                         {UserVocabularyEntry ? (
-                            <MasteryLevelButton masteryLevel={UserVocabularyEntry?.mastery_level} />
+                            <MasteryLevelButton masteryLevel={UserVocabularyEntry?.mastery_level} wordId={word.id} vocabularyDispatch={vocabularyDispatch} />
                         ) : (
                             // Add new Vocabulary word
                             <TouchableOpacity style={styles.addButton} onPress={handleAddWord}>

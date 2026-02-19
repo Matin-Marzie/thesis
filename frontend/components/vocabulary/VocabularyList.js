@@ -10,7 +10,6 @@ export default function VocabularyList({ words }) {
 
   return (
     <Animated.FlatList
-      // contentContainerStyle={{ padding: 4 }}
       data={words}
       keyExtractor={item => `word-${item.id}`}
       renderItem={renderWordItem}
