@@ -118,16 +118,17 @@ export const AppProvider = ({ children }) => {
           const newAccessToken = await refreshAccessToken();
 
           if (newAccessToken) {
+            // userProfile, userProgress, and userVocabulary will be loaded from AsyncStorage by their respective hooks.
             const data = await getCurrentUser();
-            setUserProfile(data?.user_profile);
-            setUserProgress(data?.user_progress);
-            setUserVocabulary(data?.user_vocabulary);
+            // setUserProfile(data?.user_profile);
+            // setUserProgress(data?.user_progress);
+            // setUserVocabulary(data?.user_vocabulary);
             setIsAuthenticated(true);
             setHasCompletedOnboarding(true);
             return;
           }
         } catch {
-          await clearTokens();
+          
         }
       }
 
@@ -137,62 +138,19 @@ export const AppProvider = ({ children }) => {
 
     } catch (error) {
       console.error('Auth check error:', error);
-      setIsAuthenticated(false);
-      await clearTokens();
-      setUserProfile(DEFAULT_USER_PROFILE);
-      setUserProgress(DEFAULT_USER_PROGRESS);
     } finally {
       setIsLoading(false);
     }
   }, [setUserProfile, setUserProgress, setUserVocabulary]);
 
-  // Check auth status once all persisted state is loaded
+  // Initialization Logic of Application
+  // 1. Wait for persisted state to load
+  // 2. Check auth status and if dirty data needs to be synced
   useEffect(() => {
     if (isProfileLoaded && isProgressLoaded && isVocabularyLoaded) {
-      console.log('[AppProvider] All state loaded, checking auth status');
       checkAuthStatus();
     }
   }, [isProfileLoaded, isProgressLoaded, isVocabularyLoaded, checkAuthStatus]);
-
-  // Logout function
-  const logout = useCallback(async (clearAllData = false) => {
-    try {
-      await clearTokens();
-
-      if (clearAllData) {
-        await clearAllPersistedData();
-        setUserProgress(DEFAULT_USER_PROGRESS);
-        setUserVocabulary(DEFAULT_USER_VOCABULARY);
-        console.log('[logout] Cleared all data');
-      } else {
-        await AsyncStorage.removeItem(STORAGE_KEYS.USER_PROFILE);
-        console.log('[logout] Cleared user profile, preserving progress');
-      }
-
-      await SecureStore.setItemAsync('onboarding_complete', 'false');
-      setIsAuthenticated(false);
-      setHasCompletedOnboarding(false);
-      setUserProfile(DEFAULT_USER_PROFILE);
-      resetSyncState();
-
-    } catch (error) {
-      console.error('Logout error:', error);
-    }
-  }, [setUserProfile, setUserProgress, setUserVocabulary, resetSyncState]);
-
-  // Clear all offline data
-  const clearAllOfflineData = useCallback(async () => {
-    try {
-      await clearAllPersistedData();
-      setUserProfile(DEFAULT_USER_PROFILE);
-      setUserProgress(DEFAULT_USER_PROGRESS);
-      setUserVocabulary(DEFAULT_USER_VOCABULARY);
-      resetSyncState();
-      console.log('[clearAllOfflineData] All offline data cleared');
-    } catch (error) {
-      console.error('[clearAllOfflineData] Error:', error);
-    }
-  }, [setUserProfile, setUserProgress, setUserVocabulary, resetSyncState]);
 
   const value = {
     userProfile, setUserProfile, updateUserProfile,
@@ -202,8 +160,7 @@ export const AppProvider = ({ children }) => {
     hasCompletedOnboarding, setHasCompletedOnboarding,
     isLoading, setIsLoading,
     isOnline,
-    logout,
-    clearAllOfflineData,
+    resetSyncState,
   };
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;

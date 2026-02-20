@@ -18,7 +18,7 @@ export interface AppContextType {
   isOnline: boolean;
   checkAuthStatus: () => Promise<void>;
   login: (userData: User, accessToken: string, refreshToken?: string) => Promise<void>;
-  logout: () => Promise<void>;
+  resetSyncState: () => void;
   updateUser: (userData: Partial<User>) => Promise<void>;
 }
 

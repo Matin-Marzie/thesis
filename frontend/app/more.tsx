@@ -3,11 +3,13 @@ import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Alert } from 'rea
 import { useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { useAppContext } from '../context/AppContext';
+import { useLogout } from '../hooks/useLogout';
 import { logoutUser } from '../api/auth';
 
 export default function MoreScreen() {
   const router = useRouter();
-  const { logout, isAuthenticated } = useAppContext();
+  const { isAuthenticated } = useAppContext();
+  const { logout } = useLogout();
 
   const handleLogout = () => {
     Alert.alert(
