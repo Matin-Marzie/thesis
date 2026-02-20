@@ -49,7 +49,7 @@ export const AppProvider = ({ children }) => {
   // Network status from custom hook
   const isOnline = useNetworkStatus();
 
-  // Persisted state from custom hooks
+  // On app load, Persisted state(fetch from localStorage) from custom hooks
   const {
     value: userProfile,
     setValue: setUserProfile,
@@ -87,18 +87,11 @@ export const AppProvider = ({ children }) => {
   // Backend sync from custom hook
   const { markDirty, resetSyncState } = useBackendSync(isOnline, syncToBackend);
 
-  // Mark dirty when state changes
+  
+  // Mark dirty when state changes (but only after initial load to avoid marking dirty on load)
   useEffect(() => {
-    if (isProfileLoaded) markDirty();
-  }, [userProfile, isProfileLoaded, markDirty]);
-
-  useEffect(() => {
-    if (isProgressLoaded) markDirty();
-  }, [userProgress, isProgressLoaded, markDirty]);
-
-  useEffect(() => {
-    if (isVocabularyLoaded) markDirty();
-  }, [userVocabulary, isVocabularyLoaded, markDirty]);
+    if (isProgressLoaded || isVocabularyLoaded) markDirty();
+  }, [userProgress, isProgressLoaded, userVocabulary, isVocabularyLoaded, markDirty]);
 
   // Update user profile helper
   const updateUserProfile = useCallback(async (newUserProfile) => {
@@ -128,7 +121,7 @@ export const AppProvider = ({ children }) => {
             return;
           }
         } catch {
-          
+
         }
       }
 
