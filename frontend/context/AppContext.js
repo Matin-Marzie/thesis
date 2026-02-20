@@ -1,17 +1,16 @@
 import { createContext, useState, useEffect, useContext, useCallback } from 'react';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as SecureStore from 'expo-secure-store';
-import { getRefreshToken, clearTokens } from '../api/tokens';
+import { getRefreshToken } from '../api/tokens';
 import { refreshAccessToken } from '../api/auth';
 import { getCurrentUser } from '../api/user';
 
 // Custom hooks
 import { useNetworkStatus } from '../hooks/useNetworkStatus';
-import { usePersistedState, clearAllPersistedData } from '../hooks/usePersistedState';
+import { usePersistedState } from '../hooks/usePersistedState';
 import { useBackendSync } from '../hooks/useBackendSync';
 
 // Vocabulary reducer
-import { vocabularyReducer, VOCABULARY_ACTIONS } from '../hooks/useVocabulary';
+import { vocabularyReducer } from '../hooks/useVocabulary';
 
 // Constants
 import {
@@ -73,25 +72,8 @@ export const AppProvider = ({ children }) => {
     setUserVocabulary((prev) => vocabularyReducer(prev, action));
   }, [setUserVocabulary]);
 
-  // Backend sync function (TODO: implement actual API call)
-  const syncToBackend = useCallback(async () => {
-    // TODO: Implement actual backend sync
-    // const response = await fetch('/api/v1/users/sync', {
-    //   method: 'PUT',
-    //   headers: { 'Content-Type': 'application/json' },
-    //   body: JSON.stringify({ userProfile, userProgress, userVocabulary }),
-    // });
-    console.log('[syncToBackend] Would sync to backend (not implemented)');
-  }, []);
-
   // Backend sync from custom hook
-  const { markDirty, resetSyncState } = useBackendSync(isOnline, syncToBackend);
-
-  
-  // Mark dirty when state changes (but only after initial load to avoid marking dirty on load)
-  useEffect(() => {
-    if (isProgressLoaded || isVocabularyLoaded) markDirty();
-  }, [userProgress, isProgressLoaded, userVocabulary, isVocabularyLoaded, markDirty]);
+  useBackendSync(isOnline, userProgress, isProgressLoaded, userVocabulary, isVocabularyLoaded);
 
   // Update user profile helper
   const updateUserProfile = useCallback(async (newUserProfile) => {
@@ -153,7 +135,6 @@ export const AppProvider = ({ children }) => {
     hasCompletedOnboarding, setHasCompletedOnboarding,
     isLoading, setIsLoading,
     isOnline,
-    resetSyncState,
   };
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;

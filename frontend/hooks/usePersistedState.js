@@ -40,17 +40,13 @@ export const usePersistedState = (key, defaultValue, validator = null) => {
           if (validator) {
             if (validator(loaded)) {
               setValue(loaded);
-              console.log(`[${key}] Loaded from AsyncStorage`);
             } else {
-              console.log(`[${key}] Validation failed, using default`);
             }
           } else {
             setValue(loaded);
-            console.log(`[${key}] Loaded from AsyncStorage`);
           }
         }
       } catch (e) {
-        console.error(`[${key}] Failed to load from AsyncStorage:`, e);
       } finally {
         isInitialLoadComplete.current = true;
         setIsLoaded(true);
@@ -65,7 +61,6 @@ export const usePersistedState = (key, defaultValue, validator = null) => {
     (async () => {
       try {
         await AsyncStorage.setItem(key, JSON.stringify(value));
-        console.log(`[${key}] Persisted to AsyncStorage`);
       } catch (e) {
         console.error(`[${key}] Failed to persist to AsyncStorage:`, e);
       }
@@ -86,7 +81,6 @@ export const usePersistedState = (key, defaultValue, validator = null) => {
 export const clearPersistedKeys = async (keys) => {
   try {
     await Promise.all(keys.map(key => AsyncStorage.removeItem(key)));
-    console.log('[clearPersistedKeys] Cleared:', keys);
   } catch (e) {
     console.error('[clearPersistedKeys] Error:', e);
   }
@@ -98,7 +92,6 @@ export const clearPersistedKeys = async (keys) => {
 export const clearAllPersistedData = async () => {
   try {
     await AsyncStorage.clear();
-    console.log('[clearAllPersistedData] All data cleared');
   } catch (e) {
     console.error('[clearAllPersistedData] Error:', e);
   }

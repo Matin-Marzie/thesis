@@ -3,6 +3,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as SecureStore from 'expo-secure-store';
 import { clearTokens } from '../api/tokens';
 import { clearAllPersistedData } from './usePersistedState';
+import { resetSyncState } from './useBackendSync';
 import { useAppContext } from '../context/AppContext';
 import {
   DEFAULT_USER_PROFILE,
@@ -23,7 +24,6 @@ export function useLogout() {
     setUserProgress,
     setIsAuthenticated,
     setHasCompletedOnboarding,
-    resetSyncState,
   } = useAppContext();
 
   const logout = useCallback(async (clearAllData = false) => {
@@ -47,7 +47,7 @@ export function useLogout() {
     } catch (error) {
       console.error('Logout error:', error);
     }
-  }, [setUserProfile, setUserProgress, setIsAuthenticated, setHasCompletedOnboarding, resetSyncState]);
+  }, [setUserProfile, setUserProgress, setIsAuthenticated, setHasCompletedOnboarding]);
 
   const clearAllOfflineData = useCallback(async () => {
     try {
@@ -59,7 +59,7 @@ export function useLogout() {
     } catch (error) {
       console.error('[clearAllOfflineData] Error:', error);
     }
-  }, [setUserProfile, setUserProgress, resetSyncState]);
+  }, [setUserProfile, setUserProgress]);
 
   return { logout, clearAllOfflineData };
 }
