@@ -83,7 +83,7 @@ export const AppProvider = ({ children }) => {
   }, [setUserVocabulary, setVocabularyChanges]);
 
   // Backend sync from custom hook
-  const { forceSync } = useBackendSync(isOnline, userProgress, isProgressLoaded, userVocabulary, isVocabularyLoaded, setVocabularyChanges);
+  const { forceSync } = useBackendSync(isOnline, isAuthenticated, userProgress, isProgressLoaded, userVocabulary, isVocabularyLoaded, setVocabularyChanges);
 
   // Update user profile helper
   const updateUserProfile = useCallback(async (newUserProfile) => {
@@ -140,7 +140,8 @@ export const AppProvider = ({ children }) => {
   const value = {
     userProfile, setUserProfile, updateUserProfile,
     userProgress, setUserProgress,
-    userVocabulary, vocabularyDispatch,
+    userVocabulary, setUserVocabulary, vocabularyDispatch,
+    setVocabularyChanges,
     isAuthenticated, setIsAuthenticated, checkAuthStatus,
     hasCompletedOnboarding, setHasCompletedOnboarding,
     isLoading, setIsLoading,

@@ -38,29 +38,40 @@ export const resetSyncState = () => {
  * @returns {{ forceSync: function }}
  */
 
-export const useBackendSync = (isOnline, userProgress, isProgressLoaded, userVocabulary, isVocabularyLoaded, setVocabularyChanges) => {
+export const useBackendSync = (isOnline, isAuthenticated, userProgress, isProgressLoaded, userVocabulary, isVocabularyLoaded, setVocabularyChanges) => {
   const syncIntervalRef = useRef(null);
   const wasOnlineRef = useRef(isOnline);
   const isOnlineRef = useRef(isOnline);
+  const isAuthenticatedRef = useRef(isAuthenticated);
 
   // Keep refs of latest data to avoid stale closures
   const userProgressRef = useRef(userProgress);
   const userVocabularyRef = useRef(userVocabulary);
 
+  // Track whether the initial load has been skipped (to avoid syncing defaults)
+  const hasInitializedRef = useRef(false);
+
   useEffect(() => { isOnlineRef.current = isOnline; }, [isOnline]);
+  useEffect(() => { isAuthenticatedRef.current = isAuthenticated; }, [isAuthenticated]);
   useEffect(() => { userProgressRef.current = userProgress; }, [userProgress]);
   useEffect(() => { userVocabularyRef.current = userVocabulary; }, [userVocabulary]);
 
-    // Auto-mark dirty when userProgress or userVocabulary changes (after initial load)
+  // Auto-mark dirty when userProgress or userVocabulary changes (after initial load)
   useEffect(() => {
-    if (isProgressLoaded || isVocabularyLoaded) {
+    if (isProgressLoaded && isVocabularyLoaded) {
+      // Skip the first trigger — it's just the initial load from AsyncStorage
+      if (!hasInitializedRef.current) {
+        hasInitializedRef.current = true;
+        return;
+      }
       hasUnsyncedChanges = true;
     }
   }, [userProgress, isProgressLoaded, userVocabulary, isVocabularyLoaded]);
 
-  // Sync to backend — only runs if online and there are unsynced changes
+  // Sync to backend — only runs if online, authenticated, and there are unsynced changes
   const performSync = useCallback(async () => {
     if (!isOnlineRef.current) return;
+    if (!isAuthenticatedRef.current) return;
     if (!hasUnsyncedChanges) return;
 
     try {
@@ -92,7 +103,6 @@ export const useBackendSync = (isOnline, userProgress, isProgressLoaded, userVoc
 
       // Clear vocabulary changes via React state setter (usePersistedState will persist it)
       if (hasVocabularyChanges) {
-        console.log('[useBackendSync] Clearing vocabulary changes');
         setVocabularyChanges(DEFAULT_VOCABULARY_CHANGES);
       }
 
