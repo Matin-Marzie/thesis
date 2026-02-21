@@ -1,7 +1,10 @@
 import { useEffect, useRef, useCallback } from 'react';
 import { AppState } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { STORAGE_KEYS } from '../constants/defaults';
+import { DEFAULT_VOCABULARY_CHANGES } from './useVocabulary';
 
-const SYNC_INTERVAL_MS = 60000; // 1 minute
+const SYNC_INTERVAL_MS = 10000; // 1 minute
 
 // Module-scoped sync state — shared across the single hook instance
 let hasUnsyncedChanges = false;
@@ -35,7 +38,7 @@ export const resetSyncState = () => {
  * @returns {{ forceSync: function }}
  */
 
-export const useBackendSync = (isOnline, userProgress, isProgressLoaded, userVocabulary, isVocabularyLoaded) => {
+export const useBackendSync = (isOnline, userProgress, isProgressLoaded, userVocabulary, isVocabularyLoaded, setVocabularyChanges) => {
   const syncIntervalRef = useRef(null);
   const wasOnlineRef = useRef(isOnline);
   const isOnlineRef = useRef(isOnline);
@@ -61,15 +64,37 @@ export const useBackendSync = (isOnline, userProgress, isProgressLoaded, userVoc
     if (!hasUnsyncedChanges) return;
 
     try {
+      // Read vocabulary changes from AsyncStorage before syncing
+      let vocabularyChanges = DEFAULT_VOCABULARY_CHANGES;
+      try {
+        const stored = await AsyncStorage.getItem(STORAGE_KEYS.USER_VOCABULARY_CHANGES);
+        if (stored) {
+          vocabularyChanges = JSON.parse(stored);
+        }
+      } catch (e) {
+        console.error('[useBackendSync] Failed to read vocabulary changes:', e.message);
+      }
+
+      const hasVocabularyChanges =
+        Object.keys(vocabularyChanges.inserts).length > 0 ||
+        Object.keys(vocabularyChanges.updates).length > 0 ||
+        Object.keys(vocabularyChanges.deletes).length > 0;
+
+      console.log('userProgress:', userProgressRef.current.coins, userProgressRef.current.energy);
+      console.log('vocabularyChanges:', vocabularyChanges);
+
+      // API CALL
       // TODO: Replace with actual API call, e.g.:
       // await apiClient.put('/users/sync', {
-      //   userProgress: userProgressRef.current,
-      //   userVocabulary: userVocabularyRef.current,
+      //   user_progress: userProgressRef.current,
+      //   vocabulary_changes: hasVocabularyChanges ? vocabularyChanges : null,
       // });
-      console.log('[useBackendSync] Would sync to backend:', {
-        userProgress: userProgressRef.current,
-        userVocabulary: userVocabularyRef.current,
-      });
+
+      // Clear vocabulary changes via React state setter (usePersistedState will persist it)
+      if (hasVocabularyChanges) {
+        console.log('[useBackendSync] Clearing vocabulary changes');
+        setVocabularyChanges(DEFAULT_VOCABULARY_CHANGES);
+      }
 
       hasUnsyncedChanges = false;
       lastSyncTime = Date.now();

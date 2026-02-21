@@ -46,6 +46,7 @@ export const STORAGE_KEYS = {
   USER_PROFILE: 'user_profile',
   USER_PROGRESS: 'user_progress',
   USER_VOCABULARY: 'user_vocabulary',
+  USER_VOCABULARY_CHANGES: 'user_vocabulary_changes',
 };
 
 // Validators for loaded data
@@ -60,4 +61,10 @@ export const validators = {
 
   userVocabulary: (data) =>
     data && typeof data === 'object',
+
+  vocabularyChanges: (data) =>
+    data && typeof data === 'object' &&
+    typeof data.inserts === 'object' &&
+    typeof data.updates === 'object' &&
+    typeof data.deletes === 'object',
 };

@@ -24,10 +24,14 @@ export function useLogout() {
     setUserProgress,
     setIsAuthenticated,
     setHasCompletedOnboarding,
+    forceSync,
   } = useAppContext();
 
   const logout = useCallback(async (clearAllData = false) => {
     try {
+      // Sync any pending changes before logging out
+      await forceSync();
+
       await clearTokens();
 
       if (clearAllData) {
@@ -47,7 +51,7 @@ export function useLogout() {
     } catch (error) {
       console.error('Logout error:', error);
     }
-  }, [setUserProfile, setUserProgress, setIsAuthenticated, setHasCompletedOnboarding]);
+  }, [setUserProfile, setUserProgress, setIsAuthenticated, setHasCompletedOnboarding, forceSync]);
 
   const clearAllOfflineData = useCallback(async () => {
     try {

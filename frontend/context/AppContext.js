@@ -9,8 +9,8 @@ import { useNetworkStatus } from '../hooks/useNetworkStatus';
 import { usePersistedState } from '../hooks/usePersistedState';
 import { useBackendSync } from '../hooks/useBackendSync';
 
-// Vocabulary reducer
-import { vocabularyReducer } from '../hooks/useVocabulary';
+// Vocabulary reducer & changes tracker
+import { vocabularyReducer, vocabularyChangesReducer, DEFAULT_VOCABULARY_CHANGES, VOCABULARY_ACTIONS } from '../hooks/useVocabulary';
 
 // Constants
 import {
@@ -67,13 +67,23 @@ export const AppProvider = ({ children }) => {
     isLoaded: isVocabularyLoaded,
   } = usePersistedState(STORAGE_KEYS.USER_VOCABULARY, DEFAULT_USER_VOCABULARY, validators.userVocabulary);
 
-  // Dispatch that applies reducer logic and persists via usePersistedState
+  // Persisted vocabulary changes for offline sync tracking
+  const {
+    value: vocabularyChanges,
+    setValue: setVocabularyChanges,
+    isLoaded: isVocabularyChangesLoaded,
+  } = usePersistedState(STORAGE_KEYS.USER_VOCABULARY_CHANGES, DEFAULT_VOCABULARY_CHANGES, validators.vocabularyChanges);
+
+  // Dispatch that applies reducer logic, tracks changes, and persists both
   const vocabularyDispatch = useCallback((action) => {
     setUserVocabulary((prev) => vocabularyReducer(prev, action));
-  }, [setUserVocabulary]);
+    if (action.type !== VOCABULARY_ACTIONS.SET) {
+      setVocabularyChanges((prev) => vocabularyChangesReducer(prev, action));
+    }
+  }, [setUserVocabulary, setVocabularyChanges]);
 
   // Backend sync from custom hook
-  useBackendSync(isOnline, userProgress, isProgressLoaded, userVocabulary, isVocabularyLoaded);
+  const { forceSync } = useBackendSync(isOnline, userProgress, isProgressLoaded, userVocabulary, isVocabularyLoaded, setVocabularyChanges);
 
   // Update user profile helper
   const updateUserProfile = useCallback(async (newUserProfile) => {
@@ -135,6 +145,7 @@ export const AppProvider = ({ children }) => {
     hasCompletedOnboarding, setHasCompletedOnboarding,
     isLoading, setIsLoading,
     isOnline,
+    forceSync,
   };
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
