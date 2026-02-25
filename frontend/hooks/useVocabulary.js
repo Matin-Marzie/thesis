@@ -24,11 +24,10 @@ export const vocabularyReducer = (state, action) => {
 
   switch (action.type) {
     case VOCABULARY_ACTIONS.ADD: {
-      const { wordId, language_id } = action.payload;
+      const { wordId } = action.payload;
       return {
         ...state,
         [wordId]: {
-          language_id,
           mastery_level: 1,
           last_review: now,
           created_at: now,
@@ -92,9 +91,9 @@ export const vocabularyChangesReducer = (state, action) => {
 
   switch (action.type) {
     case VOCABULARY_ACTIONS.ADD: {
-      const { wordId, language_id } = action.payload;
+      const { wordId } = action.payload;
       const now = new Date().toISOString();
-      const entry = { language_id, mastery_level: 1, last_review: now, created_at: now };
+      const entry = { mastery_level: 1, last_review: now, created_at: now };
 
       // when adding a word, if it's in pending deletes, remove from deletes and add to pending updates
       if (deletes[wordId]) {

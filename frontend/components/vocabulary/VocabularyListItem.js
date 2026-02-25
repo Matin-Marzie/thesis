@@ -85,7 +85,6 @@ function WordItem({ item }) {
             type: VOCABULARY_ACTIONS.ADD,
             payload: {
                 wordId: word.id,
-                language_id: current_language?.learning_language?.id,
             },
         });
     }, [word, vocabularyDispatch, current_language]);

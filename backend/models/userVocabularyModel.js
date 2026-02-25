@@ -2,6 +2,31 @@ import pool from '../config/db.js';
 
 const userVocabularyModel = {
 
+     // fetch user vocabulary of current language
+    async get(userId, userLanguagesId) {
+        const query = `
+        SELECT
+            word_id,
+            user_languages_id,
+            mastery_level,
+            last_review,
+            created_at
+        FROM user_vocabulary
+        WHERE user_id = $1 AND user_languages_id = $2
+    `;
+
+        const result = await pool.query(query, [userId, userLanguagesId]);
+        // reshape → { wordId: { mastery_level, last_review, created_at } }
+        return result.rows.reduce((acc, row) => {
+            acc[row.word_id] = {
+                mastery_level: row.mastery_level,
+                last_review: row.last_review,
+                created_at: row.created_at,
+            };
+            return acc;
+        }, {});
+    },
+
     // Add vocabulary words for user and return only current language words
     async add(userId, userVocabulary, currentUserLanguagesId) {
         const values = [];
@@ -36,10 +61,9 @@ const userVocabularyModel = {
             WHERE user_languages_id = $${values.length};
         `;
         const result = await pool.query(query, values);
-        // reshape → { wordId: { user_languages_id, mastery_level, last_review, created_at } }
+        // reshape → { wordId: { mastery_level, last_review, created_at } }
         return result.rows.reduce((acc, row) => {
             acc[row.word_id] = {
-                user_languages_id: row.user_languages_id,
                 mastery_level: row.mastery_level,
                 last_review: row.last_review,
                 created_at: row.created_at,
@@ -47,40 +71,6 @@ const userVocabularyModel = {
             return acc;
         }, {});
     },
-
-
-
-
-    // fetch user vocabulary of current language
-    async get(userId, userLanguagesId) {
-        const query = `
-        SELECT
-            word_id,
-            user_languages_id,
-            mastery_level,
-            last_review,
-            created_at
-        FROM user_vocabulary
-        WHERE user_id = $1 AND user_languages_id = $2
-    `;
-
-        const result = await pool.query(query, [userId, userLanguagesId]);
-        // reshape → { wordId: { user_languages_id, mastery_level, last_review, created_at } }
-        return result.rows.reduce((acc, row) => {
-            acc[row.word_id] = {
-                user_languages_id: row.user_languages_id,
-                mastery_level: row.mastery_level,
-                last_review: row.last_review,
-                created_at: row.created_at,
-            };
-            return acc;
-        }, {});
-    },
-
-
-
-
-
 
 
 
