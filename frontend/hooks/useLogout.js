@@ -2,6 +2,7 @@ import { useCallback } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as SecureStore from 'expo-secure-store';
 import { clearTokens } from '../api/tokens';
+import { logoutUser } from '../api/auth';
 import { clearAllPersistedData } from './usePersistedState';
 import { resetSyncState } from './useBackendSync';
 import { useAppContext } from '../context/AppContext';
@@ -32,9 +33,22 @@ export function useLogout() {
 
   const logout = useCallback(async (clearAllData = false) => {
     try {
-      // Sync any pending changes before logging out
-      await forceSync();
+      // Sync any pending changes before logging out (token still valid here)
+      try {
+        await forceSync();
+      } catch (syncError) {
+        console.warn('[logout] Pre-logout sync failed, proceeding with logout:', syncError.message);
+      }
 
+      // Tell backend to invalidate refresh token (while token is still valid)
+      try {
+        await logoutUser();
+      } catch (logoutError) {
+        console.warn('[logout] Backend logout failed, proceeding:', logoutError.message);
+      }
+
+      // Stop sync listeners, then clear tokens
+      resetSyncState();
       await clearTokens();
 
       if (clearAllData) {
@@ -52,7 +66,6 @@ export function useLogout() {
       setIsAuthenticated(false);
       setHasCompletedOnboarding(false);
       setUserProfile(DEFAULT_USER_PROFILE);
-      resetSyncState();
     } catch (error) {
       console.error('Logout error:', error);
     }

@@ -1,5 +1,6 @@
 import express from 'express';
 import userController from '../../controllers/userController.js';
+import syncController from '../../controllers/syncController.js';
 import verifyJWT from '../../middleware/verifyJWT.js';
 
 const router = express.Router();
@@ -146,65 +147,13 @@ router.get('/:id', userController.getUserById);
  */
 router.patch('/profile', verifyJWT, userController.updateProfile);
 
-/**
- * @swagger
- * /user/energy:
- *   patch:
- *     summary: Update user's energy points
- *     description: Update the energy points for the current user. Energy values are validated against MAX_ENERGY environment variable.
- *     tags: [User]
- *     security:
- *       - bearerAuth: []
- *       - cookieAuth: []
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             $ref: '#/components/schemas/UpdateEnergyRequest'
- *     responses:
- *       200:
- *         description: Energy updated successfully
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 success:
- *                   type: boolean
- *                   example: true
- *                 message:
- *                   type: string
- *                   example: 'Energy updated successfully'
- *                 data:
- *                   type: object
- *       400:
- *         description: Invalid energy value
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/Error'
- *       401:
- *         description: Unauthorized - Missing or invalid token
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/Error'
- *       500:
- *         description: Internal server error
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/Error'
- */
-router.patch('/energy', verifyJWT, userController.updateEnergy);
 
 /**
  * @swagger
- * /user/coins:
- *   patch:
- *     summary: Update user's coins
- *     description: Update the coins balance for the current user
+ * /user/sync:
+ *   post:
+ *     summary: Sync user progress and vocabulary changes
+ *     description: Synchronize frontend data with backend including user progress (energy, coins) and vocabulary changes (inserts, updates, deletes)
  *     tags: [User]
  *     security:
  *       - bearerAuth: []
@@ -214,43 +163,47 @@ router.patch('/energy', verifyJWT, userController.updateEnergy);
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/UpdateCoinsRequest'
+ *             type: object
+ *             properties:
+ *               user_progress:
+ *                 type: object
+ *                 properties:
+ *                   energy:
+ *                     type: integer
+ *                     minimum: 0
+ *                     maximum: 100
+ *                   coins:
+ *                     type: integer
+ *                     minimum: 0
+ *                   current_user_languages_id:
+ *                     type: integer
+ *               vocabulary_changes:
+ *                 type: object
+ *                 properties:
+ *                   inserts:
+ *                     type: object
+ *                   updates:
+ *                     type: object
+ *                   deletes:
+ *                     type: object
  *     responses:
  *       200:
- *         description: Coins updated successfully
+ *         description: Sync completed successfully
  *         content:
  *           application/json:
  *             schema:
  *               type: object
  *               properties:
- *                 success:
- *                   type: boolean
- *                   example: true
  *                 message:
  *                   type: string
- *                   example: 'Coins updated successfully'
- *                 data:
+ *                 results:
  *                   type: object
  *       400:
- *         description: Invalid coins value
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/Error'
- *       401:
- *         description: Unauthorized - Missing or invalid token
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/Error'
+ *         description: Validation error
  *       500:
  *         description: Internal server error
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/Error'
  */
-router.patch('/coins', verifyJWT, userController.updateCoins);
+router.post('/sync', verifyJWT, syncController.sync);
 
 export default router;
 

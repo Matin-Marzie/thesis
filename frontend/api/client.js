@@ -69,7 +69,7 @@ apiClient.interceptors.response.use(
           }
         }
       } catch (refreshError) {
-        // Refresh failed, clear tokens and redirect to login
+        // If refresh fails, clear tokens and reject the original request
         await clearTokens();
         return Promise.reject(refreshError);
       }

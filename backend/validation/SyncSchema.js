@@ -17,6 +17,11 @@ const SyncSchema = Joi.object({
       'number.min': 'Coins must be at least 0',
       'number.max': 'Coins must be at most 100000000',
     }),
+    current_user_languages_id: Joi.number().integer().required().messages({
+          'number.base': 'current_user_languages_id must be a number',
+          'number.integer': 'current_user_languages_id must be an integer',
+          'any.required': 'current_user_languages_id is required for inserts',
+        }),
   }).min(1).messages({
     'object.min': 'user_progress must contain at least one field (energy or coins)',
   }),
@@ -26,11 +31,6 @@ const SyncSchema = Joi.object({
     inserts: Joi.object().pattern(
       wordIdKey,
       Joi.object({
-        language_id: Joi.number().integer().required().messages({
-          'number.base': 'language_id must be a number',
-          'number.integer': 'language_id must be an integer',
-          'any.required': 'language_id is required for inserts',
-        }),
         mastery_level: Joi.number().integer().min(0).max(6).required().messages({
           'number.base': 'mastery_level must be a number',
           'number.integer': 'mastery_level must be an integer',

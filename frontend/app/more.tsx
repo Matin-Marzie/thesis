@@ -4,7 +4,6 @@ import { useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { useAppContext } from '../context/AppContext';
 import { useLogout } from '../hooks/useLogout';
-import { logoutUser } from '../api/auth';
 
 export default function MoreScreen() {
   const router = useRouter();
@@ -25,16 +24,11 @@ export default function MoreScreen() {
           style: 'destructive',
           onPress: async () => {
             try {
-              // Call backend logout endpoint
-              await logoutUser();
-              // Clear local state and tokens (including vocabulary and progress)
+              // use Hook useLogout to perform logout and token clearing and API call to invalidate refresh token
               await logout(true);
-              // Navigate to login
-              router.replace('/onboarding/login');
             } catch (error) {
               console.error('Logout error:', error);
-              // Still logout locally even if backend call fails
-              await logout(true);
+            } finally {
               router.replace('/onboarding/login');
             }
           },

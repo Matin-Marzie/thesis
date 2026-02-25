@@ -14,20 +14,25 @@ export const getCurrentUser = async () => {
   }
 };
 
+
 /**
- * Update user profile
- * @param {Object} userData - { user_profile }
- * @returns {Promise<Object>} - { message, user_profile }
+ * Sync user progress and vocabulary changes with the backend
+ * @param {Object} syncPayload
+ * @param {Object} syncPayload.user_progress - { energy, coins, current_user_languages_id }
+ * @param {Object|null} syncPayload.vocabulary_changes - { inserts, updates, deletes }
+ * @returns {Promise<Object>} - { message, results }
  */
-export const updateUserProfile = async (userData) => {
+export const syncUserData = async (syncPayload) => {
   try {
-    const response = await apiClient.patch('/users/me', userData);
+    const response = await apiClient.post('/user/sync', syncPayload);
     return response.data;
   } catch (error) {
-    console.error('Update user error:', error.response?.data || error.message);
+    console.error('Sync error:', error.response?.data || error.message);
     throw error;
   }
 };
+
+
 
 /**
  * Get user's vocabulary progress
@@ -39,6 +44,23 @@ export const getUserVocabulary = async () => {
     return response.data;
   } catch (error) {
     console.error('Get vocabulary error:', error.response?.data || error.message);
+    throw error;
+  }
+};
+
+
+/**
+ * Update user profile
+ * @param {Object} userData - { user_profile }
+ * @returns {Promise<Object>} - { message, user_profile }
+ */
+// NOT TESTED AND NOT USING THIS FUNCTION
+export const updateUserProfile = async (userData) => {
+  try {
+    const response = await apiClient.patch('/user/me', userData);
+    return response.data;
+  } catch (error) {
+    console.error('Update user error:', error.response?.data || error.message);
     throw error;
   }
 };

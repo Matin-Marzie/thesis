@@ -101,16 +101,6 @@ const usersModel = {
   },
 
 
-
-
-
-  
-
-
-
-
-
-
   // Update user profile, energy, or coins
   async updateProfile(userId, updates) {
     const allowedFields = ['first_name', 'last_name', 'username', 'profile_picture', 'energy', 'coins'];

@@ -3,8 +3,9 @@ import { AppState } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { STORAGE_KEYS } from '../constants/defaults';
 import { DEFAULT_VOCABULARY_CHANGES } from './useVocabulary';
+import { syncUserData } from '../api/user';
 
-const SYNC_INTERVAL_MS = 10000; // 1 minute
+const SYNC_INTERVAL_MS = 5 * 60000; // 5 minute
 
 // Module-scoped sync state — shared across the single hook instance
 let hasUnsyncedChanges = false;
@@ -91,15 +92,17 @@ export const useBackendSync = (isOnline, isAuthenticated, userProgress, isProgre
         Object.keys(vocabularyChanges.updates).length > 0 ||
         Object.keys(vocabularyChanges.deletes).length > 0;
 
-      console.log('userProgress:', userProgressRef.current.coins, userProgressRef.current.energy);
-      console.log('vocabularyChanges:', vocabularyChanges);
+      const current_user_lang = userProgressRef.current?.languages?.find(lang => lang.is_current_language);
+      const syncPayload = {
+        user_progress: {
+          coins: userProgressRef.current.coins,
+          energy: userProgressRef.current.energy,
+          current_user_languages_id: current_user_lang?.id,
+        },
+        vocabulary_changes: hasVocabularyChanges ? vocabularyChanges : undefined,
+      };
 
-      // API CALL
-      // TODO: Replace with actual API call, e.g.:
-      // await apiClient.put('/users/sync', {
-      //   user_progress: userProgressRef.current,
-      //   vocabulary_changes: hasVocabularyChanges ? vocabularyChanges : null,
-      // });
+      await syncUserData(syncPayload);
 
       // Clear vocabulary changes via React state setter (usePersistedState will persist it)
       if (hasVocabularyChanges) {
@@ -110,6 +113,11 @@ export const useBackendSync = (isOnline, isAuthenticated, userProgress, isProgre
       lastSyncTime = Date.now();
       console.log('[useBackendSync] Sync completed');
     } catch (error) {
+      if (error.response?.status === 401) {
+        // Token is gone (logged out) — stop retrying
+        hasUnsyncedChanges = false;
+        return;
+      }
       console.error('[useBackendSync] Sync error - will retry:', error.message);
       // Don't clear hasUnsyncedChanges — will retry on next interval
     }
