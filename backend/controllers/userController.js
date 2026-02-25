@@ -26,7 +26,7 @@ const userController = {
       // Fetch learned_vocabulary(user_vocabulary) for current language
       const learned_vocabulary = await userVocabularyModel.get(
         userId,
-        current_language.learning_language.id,
+        current_language.id,
       );
 
       res.status(200).json({

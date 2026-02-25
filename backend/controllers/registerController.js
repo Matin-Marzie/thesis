@@ -114,7 +114,7 @@ const registerController = async (req, res) => {
     if(user_vocabulary && Object.keys(user_vocabulary).length > 0) {
       const user_vocabulary_array = Object.entries(user_vocabulary); // [word_id, data]
       // Add user vocabulary to DB, return only current learning language words
-      new_user_vocabulary = await userVocabularyModel.add(newUser.id, user_vocabulary_array, current_language.learning_language.id);
+      new_user_vocabulary = await userVocabularyModel.add(newUser.id, user_vocabulary_array, current_language.id);
     }
 
     // Respond with user data, dictionary and tokens

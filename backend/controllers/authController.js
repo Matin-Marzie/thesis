@@ -91,7 +91,7 @@ const authController = async (req, res) => {
     // Fetch user vocabulary for current language
     const user_vocabulary_in_db = await userVocabularyModel.get(
       user.id,
-      current_language.learning_language.id,
+      current_language.id,
     );
 
     // Log login
