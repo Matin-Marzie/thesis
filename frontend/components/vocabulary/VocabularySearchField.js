@@ -21,13 +21,13 @@ export default function VocabularySearchField({ search, onSearchChange, onFilter
       />
 
       {/* Filter Button */}
-      <TouchableOpacity
+      {/* <TouchableOpacity
         style={styles.filterButton}
         onPress={onFilterPress}
       >
         <Ionicons name="funnel" size={20} color={PRIMARY_COLOR} style={{ marginRight: 6 }} />
         <Text style={styles.filterButtonText}>Filters</Text>
-      </TouchableOpacity>
+      </TouchableOpacity> */}
     </View>
   );
 }
