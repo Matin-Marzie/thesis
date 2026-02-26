@@ -52,7 +52,6 @@ export default function MasteryLevelButton({ masteryLevel, wordId, vocabularyDis
     const hoveredLevelRef = useRef(null);
     const pickerAbsoluteY = useRef(0);
     const pickerAbsoluteX = useRef(0);
-    const timeoutId = useRef(null);
 
     // Refs for stable access inside PanResponder (avoids stale closures)
     const wordIdRef = useRef(wordId);
@@ -67,10 +66,6 @@ export default function MasteryLevelButton({ masteryLevel, wordId, vocabularyDis
     // PanResponder for handling long press and drag to select mastery level
     const panResponder = useMemo(() => {
         const cleanup = () => {
-            if (timeoutId.current) {
-                clearTimeout(timeoutId.current);
-                timeoutId.current = null;
-            }
             setShowPicker(false);
             setHoveredLevel(null);
             hoveredLevelRef.current = null;
@@ -87,20 +82,17 @@ export default function MasteryLevelButton({ masteryLevel, wordId, vocabularyDis
                 hoveredLevelRef.current = null;
                     isLongPress.current = true;
                     Vibration.vibrate(20);
-                    
-                    timeoutId.current = setTimeout(() => {
-                        buttonRef.current?.measureInWindow((x, y, width, height) => {
-                            // min: Don't let the picker go below 575 (where the bottom tab bar starts)
-                            // max: Don't let the picker go above 153 (where the header ends)
-                            let top = Math.min(575, y + (height - ITEM_HEIGHT) / 2 * ITEM_HEIGHT - 10); // Center picker vertically on button, with a slight upward 10 offset
-                            top = Math.max(153, top); // Don't go too high
-                            const left = x - PICKER_WIDTH - 2; // 2px gap between button and picker
-                            pickerAbsoluteY.current = top;
-                            pickerAbsoluteX.current = left;
-                            setPickerPosition({ top, left });
-                            setShowPicker(true);
-                        });
-                    }, 500);
+                    buttonRef.current?.measureInWindow((x, y, width, height) => {
+                        // min: Don't let the picker go below 575 (where the bottom tab bar starts)
+                        // max: Don't let the picker go above 153 (where the header ends)
+                        let top = Math.min(575, y + (height - ITEM_HEIGHT) / 2 * ITEM_HEIGHT - 10); // Center picker vertically on button, with a slight upward 10 offset
+                        top = Math.max(153, top); // Don't go too high
+                        const left = x - PICKER_WIDTH - 2; // 2px gap between button and picker
+                        pickerAbsoluteY.current = top;
+                        pickerAbsoluteX.current = left;
+                        setPickerPosition({ top, left });
+                        setShowPicker(true);
+                    });
             },
 
             onPanResponderMove: (evt) => {
