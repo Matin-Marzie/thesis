@@ -16,7 +16,7 @@ export interface AppContextType {
   isLoading: boolean;
   setIsLoading: (isLoading: boolean) => void;
   isOnline: boolean;
-  checkAuthStatus: () => Promise<void>;
+  initApp: () => Promise<void>;
   login: (userData: User, accessToken: string, refreshToken?: string) => Promise<void>;
   updateUser: (userData: Partial<User>) => Promise<void>;
 }

@@ -117,6 +117,7 @@ export const refreshAccessToken = async () => {
       }
     );
 
+    // TO DO: remove data.data
     if (response.data?.data?.accessToken) {
       setAccessToken(response.data.data.accessToken);
 
@@ -150,9 +151,7 @@ export const logoutUser = async () => {
       await apiClient.post('/logout', { refreshToken });
     }
   } catch (error) {
-    // Silently fail - tokens will still be cleared locally in finally block
-  } finally {
-    // Always clear tokens locally, even if API call fails
-    await clearTokens();
+    // Silently fail - tokens will still be cleared locally - check hooks/useLogout.js
+    console.warn('Logout API call failed:', error.message);
   }
 };

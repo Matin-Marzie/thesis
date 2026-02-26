@@ -47,7 +47,7 @@ export default function RootLayout() {
     return null;
   }
 
-  // Render the app with the AppProvider to provide context
+  {/* Render the app with the AppProvider to provide context */ }
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <AppProvider>
@@ -75,13 +75,13 @@ function RootLayoutNav() {
     const inGames = segments[0] === 'games';
     const inLoginOrRegister = segments[1] === 'login' || segments[1] === 'register';
 
+    // [2] Check: onboardingComplete? — if NO, redirect to onboarding
     if (!hasCompletedOnboarding) {
-      // User hasn't completed onboarding - keep them in onboarding flow
       if (!inOnboardingGroup) {
         router.replace('/onboarding/landing');
       }
     } else {
-      // User completed onboarding - allow access to app (tabs, more, modal, games)
+      // Onboarding complete — allow access to app (tabs, more, modal, games)
       // Also allow access to login/register for guest users
       if (!inTabsGroup && !inMoreScreen && !inModal && !inGames && !inLoginOrRegister) {
         router.replace('/(tabs)');
@@ -102,9 +102,9 @@ function RootLayoutNav() {
       <Stack screenOptions={{ headerShown: false }}>
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
         <Stack.Screen name="onboarding" options={{ headerShown: false }} />
-        <Stack.Screen 
-          name="more" 
-          options={{ 
+        <Stack.Screen
+          name="more"
+          options={{
             presentation: 'modal',
             headerShown: true,
             title: 'More',
@@ -115,15 +115,15 @@ function RootLayoutNav() {
             headerTitleStyle: {
               fontWeight: 'bold',
             },
-          }} 
+          }}
         />
-        <Stack.Screen 
-          name="games/wordle" 
-          options={{ headerShown: false }} 
+        <Stack.Screen
+          name="games/wordle"
+          options={{ headerShown: false }}
         />
-        <Stack.Screen 
-          name="games/wordofwonders" 
-          options={{ headerShown: false }} 
+        <Stack.Screen
+          name="games/wordofwonders"
+          options={{ headerShown: false }}
         />
         <Stack.Screen name="modal" options={{ presentation: 'modal' }} />
       </Stack>

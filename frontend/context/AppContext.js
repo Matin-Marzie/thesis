@@ -1,7 +1,6 @@
 import { createContext, useState, useEffect, useContext, useCallback } from 'react';
 import { getRefreshToken } from '../api/tokens';
 import { refreshAccessToken } from '../api/auth';
-import { getCurrentUser } from '../api/user';
 
 // Custom hooks
 import { useNetworkStatus } from '../hooks/useNetworkStatus';
@@ -31,7 +30,7 @@ import {
  * @property {boolean} hasCompletedOnboarding
  * @property {boolean} isLoading
  * @property {boolean} isOnline
- * @property {() => Promise<void>} checkAuthStatus
+ * @property {() => Promise<void>} initApp
  * @property {(clearAllData?: boolean) => Promise<void>} logout
  */
 
@@ -42,6 +41,7 @@ export const AppProvider = ({ children }) => {
   // UI state
   const [isLoading, setIsLoading] = useState(true);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isBackendServerReachable, setIsBackendServerReachable] = useState(false);
 
   // Network status from custom hook
   const isOnline = useNetworkStatus();
@@ -98,63 +98,59 @@ export const AppProvider = ({ children }) => {
   }, [setUserProfile]);
 
   // Check for existing auth session on app load
-  const checkAuthStatus = useCallback(async () => {
+  const initApp = useCallback(async () => {
     try {
       const refreshToken = await getRefreshToken();
 
+      // [3] Check if there is a refreshToken:
       if (refreshToken) {
-        try {
+        // [4] 
+        if (isOnline) {
+          // [5] 
           const newAccessToken = await refreshAccessToken();
 
           if (newAccessToken) {
-            // userProfile, userProgress, and userVocabulary will be loaded from AsyncStorage by their respective hooks.
-            const data = await getCurrentUser();
-            // setUserProfile(data?.user_profile);
-            // setUserProgress(data?.user_progress);
-            // setUserVocabulary(data?.user_vocabulary);
             setIsAuthenticated(true);
-            return;
+            // Sync local changes with backend (push dirty data, then pull fresh data)
+            await forceSync();
           }
-        } catch {
-
+        }
+        // Offline mode - allow access to persisted data, sync will happen when they go online (handled by useBackendSync)
+        else {
+          setIsAuthenticated(true);
         }
       }
-
-      setIsAuthenticated(false);
-
+      // No refreshToken - guest user || onboarding not completed
+      else {
+        setIsAuthenticated(false);
+      }
     } catch (error) {
-      console.error('Auth check error:', error);
+      console.error('initApp check error:', error);
     } finally {
       setIsLoading(false);
     }
-  }, [setUserProfile, setUserProgress, setUserVocabulary]);
+
+    // [4] check isOnline, if yes:
+    // refreshAcessToken
+  }, [setUserProfile, setUserProgress, setUserVocabulary, isOnline, forceSync]);
 
   // Initialization Logic of Application
   // 1. Wait for persisted state to load
   // 2. Check auth status and if dirty data needs to be synced
   useEffect(() => {
-    if (isProfileLoaded && isProgressLoaded && isVocabularyLoaded && isVocabularyChangesLoaded && isOnboardingLoaded) {
-      // [1] All persisted state is loaded ✓
-      // [2] hasCompletedOnboarding is loaded ✓
-
-      // [3] Check if there is a refreshToken:
-              // setIsAuthenticated(true)
-      // else:
-              // setIsAuthenticated(false)
-      // [4] check isOnline, if yes:
-              // refreshAcessToken
-      // else:
-              // 
-      checkAuthStatus();
+    if (isProfileLoaded && isProgressLoaded && isVocabularyLoaded && isVocabularyChangesLoaded && isOnboardingLoaded && isOnline !== null) {
+      // [1] All persisted state is loaded - check the code above
+      // [2] reroute to /onboarding/landing if user hasn't completed onboarding - check /app/_layout.js
+      initApp(); // (check auth, sync dirty data if online, etc)
     }
-  }, [isProfileLoaded, isProgressLoaded, isVocabularyLoaded, isVocabularyChangesLoaded, isOnboardingLoaded, checkAuthStatus]);
+  }, [isProfileLoaded, isProgressLoaded, isVocabularyLoaded, isVocabularyChangesLoaded, isOnboardingLoaded, initApp, isOnline]);
 
   const value = {
     userProfile, setUserProfile, updateUserProfile,
     userProgress, setUserProgress,
     userVocabulary, setUserVocabulary, vocabularyDispatch,
     setVocabularyChanges,
-    isAuthenticated, setIsAuthenticated, checkAuthStatus,
+    isAuthenticated, setIsAuthenticated, initApp,
     hasCompletedOnboarding, setHasCompletedOnboarding,
     isLoading, setIsLoading,
     isOnline,
