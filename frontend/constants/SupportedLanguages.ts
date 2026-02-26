@@ -12,7 +12,7 @@ export const SUPPORTED_LANGUAGES = {
     options: [
       { id: 'improve_english', label: 'Improve my English', native: LANGUAGES_META.english, target: LANGUAGES_META.english },
       { id: 'learn_greek',     label: 'Learn Greek',        native: LANGUAGES_META.english, target: LANGUAGES_META.greek },
-      // { id: 'learn_farsi',     label: 'Learn Farsi',        native: LANGUAGES_META.english, target: LANGUAGES_META.farsi },
+      { id: 'learn_farsi',     label: 'Learn Farsi',        native: LANGUAGES_META.english, target: LANGUAGES_META.farsi },
     ],
   },
   greek: {
