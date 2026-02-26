@@ -266,7 +266,10 @@ export default function RegisterScreen({ onRegisterSuccess }: RegisterScreenProp
             }
           >
             {loading ? (
-              <ActivityIndicator color="#fff" />
+              <View style={styles.loadingContainer}>
+                <ActivityIndicator color="#fff" size="small" />
+                <Text style={styles.registerButtonText}>Registering...</Text>
+              </View>
             ) : (
               <Text
                 style={[
@@ -388,6 +391,11 @@ const styles = StyleSheet.create({
     paddingVertical: 16,
     alignItems: 'center',
     marginTop: 24,
+  },
+  loadingContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
   },
   registerButtonText: {
     color: '#fff',
