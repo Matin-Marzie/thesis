@@ -377,6 +377,6 @@ INSERT INTO words (id, written_form, part_of_speech, image_url, audio_url, langu
 (7608, 'proper', 'adjective', NULL, NULL, 1, 'B1'),
 (7609, 'instruments', 'noun', NULL, NULL, 1, 'A2'),
 (7610, 'things', 'noun', NULL, NULL, 1, 'A1'),
-(7611, 'transportation', 'noun', NULL, NULL, 1, 'B1')
-ON CONFLICT ON CONSTRAINT words_unique_combination
-DO NOTHING;
+(7611, 'transportation', 'noun', NULL, NULL, 1, 'B1');
+-- ON CONFLICT ON CONSTRAINT words_unique_combination
+-- DO NOTHING;

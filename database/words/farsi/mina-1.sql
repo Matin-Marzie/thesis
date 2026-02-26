@@ -1089,6 +1089,6 @@ VALUES
 (201486, 'یادگیری', 'noun', NULL, NULL, 3, 'AB', NULL),
 (201487, 'یک/یکی', 'number', NULL, NULL, 3, 'AB', NULL),
 (201488, 'یکشنبه', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201489, 'یوگا', 'noun', NULL, NULL, 3, 'AB', NULL)
-ON CONFLICT ON CONSTRAINT words_unique_combination
-DO NOTHING;
+(201489, 'یوگا', 'noun', NULL, NULL, 3, 'AB', NULL);
+-- ON CONFLICT ON CONSTRAINT words_unique_combination
+-- DO NOTHING;
