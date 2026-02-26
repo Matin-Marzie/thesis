@@ -111,7 +111,6 @@ export const useBackendSync = (isOnline, isAuthenticated, userProgress, isProgre
 
       hasUnsyncedChanges = false;
       lastSyncTime = Date.now();
-      console.log('[useBackendSync] Sync completed');
     } catch (error) {
       if (error.response?.status === 401) {
         // Token is gone (logged out) — stop retrying

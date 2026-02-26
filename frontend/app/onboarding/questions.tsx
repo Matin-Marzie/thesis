@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { View, StyleSheet, TouchableOpacity, BackHandler } from 'react-native';
 import { useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
-import * as SecureStore from 'expo-secure-store';
 import WelcomeSlide from './components/WelcomeSlide';
 import LanguageSelectionSlide from './components/LanguageSelectionSlide';
 import ProficiencySlide from './components/ProficiencySlide';
@@ -91,8 +90,7 @@ export default function OnboardingQuestions() {
     // TODO: Fetch Reels sending native_language_id and learning_language_id and proficiency_level and preferences and age
     // TODO: Fetch dictionary sending native_language_id and learning_language_id
 
-    // Mark onboarding as complete
-    await SecureStore.setItemAsync('onboarding_complete', 'true');
+    // Mark onboarding as complete (persisted via usePersistedState in AppContext)
     setHasCompletedOnboarding(true);
 
     // Navigate to home

@@ -47,6 +47,7 @@ export const STORAGE_KEYS = {
   USER_PROGRESS: 'user_progress',
   USER_VOCABULARY: 'user_vocabulary',
   USER_VOCABULARY_CHANGES: 'user_vocabulary_changes',
+  ONBOARDING_COMPLETE: 'onboarding_complete',
 };
 
 // Validators for loaded data
@@ -67,4 +68,7 @@ export const validators = {
     typeof data.inserts === 'object' &&
     typeof data.updates === 'object' &&
     typeof data.deletes === 'object',
+
+  onboardingComplete: (data) =>
+    typeof data === 'boolean',
 };

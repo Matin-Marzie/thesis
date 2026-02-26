@@ -1,6 +1,5 @@
 import { useCallback } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import * as SecureStore from 'expo-secure-store';
 import { clearTokens } from '../api/tokens';
 import { logoutUser } from '../api/auth';
 import { clearAllPersistedData } from './usePersistedState';
@@ -62,7 +61,6 @@ export function useLogout() {
         setVocabularyChanges(DEFAULT_VOCABULARY_CHANGES);
       }
 
-      await SecureStore.setItemAsync('onboarding_complete', 'false');
       setIsAuthenticated(false);
       setHasCompletedOnboarding(false);
       setUserProfile(DEFAULT_USER_PROFILE);

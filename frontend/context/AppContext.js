@@ -1,5 +1,4 @@
 import { createContext, useState, useEffect, useContext, useCallback } from 'react';
-import * as SecureStore from 'expo-secure-store';
 import { getRefreshToken } from '../api/tokens';
 import { refreshAccessToken } from '../api/auth';
 import { getCurrentUser } from '../api/user';
@@ -43,12 +42,17 @@ export const AppProvider = ({ children }) => {
   // UI state
   const [isLoading, setIsLoading] = useState(true);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [hasCompletedOnboarding, setHasCompletedOnboarding] = useState(false);
 
   // Network status from custom hook
   const isOnline = useNetworkStatus();
 
-  // On app load, Persisted state(fetch from localStorage) from custom hooks
+  // [1] On app load, Persisted state(fetch from localStorage) from custom hooks
+  const {
+    value: hasCompletedOnboarding,
+    setValue: setHasCompletedOnboarding,
+    isLoaded: isOnboardingLoaded,
+  } = usePersistedState(STORAGE_KEYS.ONBOARDING_COMPLETE, false, validators.onboardingComplete);
+
   const {
     value: userProfile,
     setValue: setUserProfile,
@@ -82,10 +86,10 @@ export const AppProvider = ({ children }) => {
     }
   }, [setUserVocabulary, setVocabularyChanges]);
 
-  // Backend sync from custom hook
+  // Backend sync periodically from custom hook
   const { forceSync } = useBackendSync(isOnline, isAuthenticated, userProgress, isProgressLoaded, userVocabulary, isVocabularyLoaded, setVocabularyChanges);
 
-  // Update user profile helper
+  // Update user profile helper 
   const updateUserProfile = useCallback(async (newUserProfile) => {
     setUserProfile((prev) => ({
       ...prev,
@@ -109,7 +113,6 @@ export const AppProvider = ({ children }) => {
             // setUserProgress(data?.user_progress);
             // setUserVocabulary(data?.user_vocabulary);
             setIsAuthenticated(true);
-            setHasCompletedOnboarding(true);
             return;
           }
         } catch {
@@ -117,8 +120,6 @@ export const AppProvider = ({ children }) => {
         }
       }
 
-      const onboardingComplete = (await SecureStore.getItemAsync('onboarding_complete')) === 'true';
-      setHasCompletedOnboarding(onboardingComplete);
       setIsAuthenticated(false);
 
     } catch (error) {
@@ -132,10 +133,21 @@ export const AppProvider = ({ children }) => {
   // 1. Wait for persisted state to load
   // 2. Check auth status and if dirty data needs to be synced
   useEffect(() => {
-    if (isProfileLoaded && isProgressLoaded && isVocabularyLoaded) {
+    if (isProfileLoaded && isProgressLoaded && isVocabularyLoaded && isVocabularyChangesLoaded && isOnboardingLoaded) {
+      // [1] All persisted state is loaded ✓
+      // [2] hasCompletedOnboarding is loaded ✓
+
+      // [3] Check if there is a refreshToken:
+              // setIsAuthenticated(true)
+      // else:
+              // setIsAuthenticated(false)
+      // [4] check isOnline, if yes:
+              // refreshAcessToken
+      // else:
+              // 
       checkAuthStatus();
     }
-  }, [isProfileLoaded, isProgressLoaded, isVocabularyLoaded, checkAuthStatus]);
+  }, [isProfileLoaded, isProgressLoaded, isVocabularyLoaded, isVocabularyChangesLoaded, isOnboardingLoaded, checkAuthStatus]);
 
   const value = {
     userProfile, setUserProfile, updateUserProfile,
