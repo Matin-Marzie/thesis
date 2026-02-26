@@ -1,5 +1,5 @@
-import React from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Alert } from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Alert, ActivityIndicator } from 'react-native';
 import { useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { useAppContext } from '../context/AppContext';
@@ -9,6 +9,7 @@ export default function MoreScreen() {
   const router = useRouter();
   const { isAuthenticated } = useAppContext();
   const { logout } = useLogout();
+  const [isLoggingOut, setIsLoggingOut] = useState(false);
 
   const handleLogout = () => {
     Alert.alert(
@@ -23,12 +24,14 @@ export default function MoreScreen() {
           text: 'Logout',
           style: 'destructive',
           onPress: async () => {
+            setIsLoggingOut(true);
             try {
               // use Hook useLogout to perform logout and token clearing and API call to invalidate refresh token
               await logout(true);
             } catch (error) {
               console.error('Logout error:', error);
             } finally {
+              setIsLoggingOut(false);
               router.replace('/onboarding/login');
             }
           },
@@ -69,9 +72,17 @@ export default function MoreScreen() {
 
         {/* Logout Button */}
         {isAuthenticated && (
-          <TouchableOpacity style={styles.logoutButton} onPress={handleLogout}>
-            <Ionicons name="log-out-outline" size={24} color="#fff" />
-            <Text style={styles.logoutText}>Logout</Text>
+          <TouchableOpacity 
+            style={[styles.logoutButton, isLoggingOut && styles.logoutButtonDisabled]} 
+            onPress={handleLogout}
+            disabled={isLoggingOut}
+          >
+            {isLoggingOut ? (
+              <ActivityIndicator size="small" color="#fff" />
+            ) : (
+              <Ionicons name="log-out-outline" size={24} color="#fff" />
+            )}
+            <Text style={styles.logoutText}>{isLoggingOut ? 'Logging out...' : 'Logout'}</Text>
           </TouchableOpacity>
         )}
       </View>
@@ -114,6 +125,9 @@ const styles = StyleSheet.create({
     paddingVertical: 16,
     borderRadius: 12,
     gap: 8,
+  },
+  logoutButtonDisabled: {
+    opacity: 0.7,
   },
   logoutText: {
     fontSize: 16,
