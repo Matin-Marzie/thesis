@@ -1,7 +1,8 @@
 import axios from 'axios';
 import apiClient from './client.js';
-import { setAccessToken, storeRefreshToken, getRefreshToken, clearTokens } from './tokens.js';
+import { setAccessToken, storeRefreshToken, getRefreshToken } from './tokens.js';
 import { API_BASE_URL } from '../config/api.config.js';
+import { apiEvents, API_EVENTS } from './apiEvents.js';
 
 /**
  * Register a new user
@@ -131,8 +132,28 @@ export const refreshAccessToken = async () => {
 
     throw new Error('Failed to refresh token');
   } catch (error) {
-    // Clear tokens and throw clean error message
-    await clearTokens();
+    // Preserve error type for proper handling in initApp
+    // Network errors: error.response is undefined and error.code might be 'ERR_NETWORK'
+    // Server errors: error.response?.status >= 500
+    const isNetworkError = !error.response || error.code === 'ERR_NETWORK';
+    const isServerError = error.response?.status >= 500;
+    
+    if (isNetworkError || isServerError) {
+      // Emit server error event so the banner shows
+      apiEvents.emit(API_EVENTS.SERVER_ERROR, {
+        isNetworkError,
+        status: error.response?.status,
+        message: 'Server not reachable',
+      });
+      
+      // Create error with specific type for offline mode handling
+      const networkError = new Error('Server not reachable');
+      networkError.isServerUnreachable = true;
+      networkError.originalError = error;
+      throw networkError;
+    }
+    
+    // Auth error (invalid/expired refresh token) - throw clean error
     const errorMessage = error.response?.data?.message || error.message || 'Token refresh failed';
     throw new Error(errorMessage);
   }

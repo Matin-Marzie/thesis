@@ -1,6 +1,13 @@
 import axios from 'axios';
 import { API_BASE_URL } from '../config/api.config.js';
-import { getAccessToken, getRefreshToken, setAccessToken, storeRefreshToken, clearTokens } from './tokens.js';
+import { getAccessToken, getRefreshToken, setAccessToken, storeRefreshToken } from './tokens.js';
+import { apiEvents, API_EVENTS } from './apiEvents.js';
+
+/**
+ * Tracks whether the server was previously unreachable
+ * Used to only emit SERVER_RECOVERED when transitioning from unreachable → reachable
+ */
+let wasServerUnreachable = false;
 
 /**
  * Axios instance with default configuration
@@ -28,11 +35,37 @@ apiClient.interceptors.request.use(
   }
 );
 
-// Response interceptor to handle token refresh
+// Response interceptor to handle token refresh and server errors
 apiClient.interceptors.response.use(
-  (response) => response,
+  (response) => {
+    // Only emit recovery event if server was previously unreachable
+    if (wasServerUnreachable) {
+      wasServerUnreachable = false;
+      apiEvents.emit(API_EVENTS.SERVER_RECOVERED);
+    }
+    return response;
+  },
   async (error) => {
     const originalRequest = error.config;
+
+    // Check for network error (no response) or 5xx server error
+    const isNetworkError = !error.response;
+    const isServerError = error.response?.status >= 500 && error.response?.status < 600;
+
+    if (isNetworkError || isServerError) {
+      wasServerUnreachable = true;
+      // Only emit SERVER_ERROR if not a silent background request
+      // Silent requests (like periodic sync) shouldn't show the banner repeatedly - only the first one should trigger it
+      if (!originalRequest?.silent) {
+        apiEvents.emit(API_EVENTS.SERVER_ERROR, {
+          isNetworkError,
+          status: error.response?.status,
+          message: isNetworkError 
+            ? 'Unable to reach the server' 
+            : `Server error: ${error.response?.status}`,
+        });
+      }
+    }
 
     // If error is 401 or 403 and we haven't retried yet
     if (
@@ -56,21 +89,22 @@ apiClient.interceptors.response.use(
             }
           );
 
-          if (response.data?.accessToken) {
-            setAccessToken(response.data.accessToken);
+          // Backend returns { data: { accessToken, refreshToken } } - it has extra {data} wrapper for consistency with other responses
+          // TO DO: remove extra data wrapper in backend response for refresh endpoint data: { data: { accessToken, refreshToken } }
+          if (response.data?.data?.accessToken) {
+            setAccessToken(response.data.data.accessToken);
             
             // Update refresh token if backend rotates it
-            if (response.data?.refreshToken) {
-              await storeRefreshToken(response.data.refreshToken);
+            if (response.data?.data?.refreshToken) {
+              await storeRefreshToken(response.data.data.refreshToken);
             }
             
-            originalRequest.headers.Authorization = `Bearer ${response.data.accessToken}`;
+            originalRequest.headers.Authorization = `Bearer ${response.data.data.accessToken}`;
             return apiClient(originalRequest);
           }
         }
       } catch (refreshError) {
         // If refresh fails, clear tokens and reject the original request
-        await clearTokens();
         return Promise.reject(refreshError);
       }
     }

@@ -12,6 +12,7 @@ import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import { useColorScheme } from '@/components/useColorScheme';
 import { AppProvider, useAppContext } from '../context/AppContext';
 import { PRIMARY_COLOR } from '@/constants/App';
+import ServerErrorBanner from '@/components/ServerErrorBanner';
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -99,6 +100,7 @@ function RootLayoutNav() {
 
   return (
     <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+      <ServerErrorBanner />
       <Stack screenOptions={{ headerShown: false }}>
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
         <Stack.Screen name="onboarding" options={{ headerShown: false }} />

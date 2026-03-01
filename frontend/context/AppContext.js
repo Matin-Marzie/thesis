@@ -1,6 +1,7 @@
 import { createContext, useState, useEffect, useContext, useCallback } from 'react';
 import { getRefreshToken } from '../api/tokens';
 import { refreshAccessToken } from '../api/auth';
+import { apiEvents, API_EVENTS } from '../api/apiEvents';
 
 // Custom hooks
 import { useNetworkStatus } from '../hooks/useNetworkStatus';
@@ -30,6 +31,8 @@ import {
  * @property {boolean} hasCompletedOnboarding
  * @property {boolean} isLoading
  * @property {boolean} isOnline
+ * @property {boolean} isBackendServerReachable
+ * @property {Function} setIsBackendServerReachable
  * @property {() => Promise<void>} initApp
  * @property {(clearAllData?: boolean) => Promise<void>} logout
  */
@@ -41,7 +44,7 @@ export const AppProvider = ({ children }) => {
   // UI state
   const [isLoading, setIsLoading] = useState(true);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [isBackendServerReachable, setIsBackendServerReachable] = useState(false);
+  const [isBackendServerReachable, setIsBackendServerReachable] = useState(true);
 
   // Network status from custom hook
   const isOnline = useNetworkStatus();
@@ -106,13 +109,28 @@ export const AppProvider = ({ children }) => {
       if (refreshToken) {
         // [4] 
         if (isOnline) {
-          // [5] 
-          const newAccessToken = await refreshAccessToken();
+          // [5] Try to refresh access token from server
+          try {
+            const newAccessToken = await refreshAccessToken();
 
-          if (newAccessToken) {
-            setIsAuthenticated(true);
-            // Sync local changes with backend (push dirty data, then pull fresh data)
-            await forceSync();
+            if (newAccessToken) {
+              setIsAuthenticated(true);
+              // Sync local changes with backend (push dirty data, then pull fresh data)
+              await forceSync();
+            }
+          } catch (refreshError) {
+            // Check if server is unreachable (network error or 5xx)
+            // refreshAccessToken sets isServerUnreachable flag for these cases
+            if (refreshError.isServerUnreachable) {
+              // Server is not reachable - allow offline mode since user has a refresh token
+              console.warn('Server not reachable during init, entering offline mode:', refreshError.message);
+              setIsBackendServerReachable(false);
+              setIsAuthenticated(true); // Allow access to local data
+            } else {
+              // Auth error (invalid/expired refresh token) - user needs to re-login
+              console.error('Auth error during init:', refreshError.message);
+              setIsAuthenticated(false);
+            }
           }
         }
         // Offline mode - allow access to persisted data, sync will happen when they go online (handled by useBackendSync)
@@ -145,6 +163,22 @@ export const AppProvider = ({ children }) => {
     }
   }, [isProfileLoaded, isProgressLoaded, isVocabularyLoaded, isVocabularyChangesLoaded, isOnboardingLoaded, initApp, isOnline]);
 
+  // Listen for API server errors (5xx or network errors)
+  useEffect(() => {
+    const unsubscribeError = apiEvents.on(API_EVENTS.SERVER_ERROR, () => {
+      setIsBackendServerReachable(false);
+    });
+
+    const unsubscribeRecovery = apiEvents.on(API_EVENTS.SERVER_RECOVERED, () => {
+      setIsBackendServerReachable(true);
+    });
+
+    return () => {
+      unsubscribeError();
+      unsubscribeRecovery();
+    };
+  }, []);
+
   const value = {
     userProfile, setUserProfile, updateUserProfile,
     userProgress, setUserProgress,
@@ -154,6 +188,7 @@ export const AppProvider = ({ children }) => {
     hasCompletedOnboarding, setHasCompletedOnboarding,
     isLoading, setIsLoading,
     isOnline,
+    isBackendServerReachable, setIsBackendServerReachable,
     forceSync,
   };
 

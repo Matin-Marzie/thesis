@@ -22,12 +22,18 @@ export const getCurrentUser = async () => {
  * @param {Object|null} syncPayload.vocabulary_changes - { inserts, updates, deletes }
  * @returns {Promise<Object>} - { message, results }
  */
-export const syncUserData = async (syncPayload) => {
+/**
+ * @param {Object} options
+ * @param {boolean} [options.silent=false] - If true, suppress error banner (for background sync)
+ */
+export const syncUserData = async (syncPayload, options = {}) => {
   try {
-    const response = await apiClient.post('/user/sync', syncPayload);
+    const response = await apiClient.post('/user/sync', syncPayload, {
+      silent: options.silent || false,
+    });
     return response.data;
   } catch (error) {
-    console.error('Sync error:', error.response?.data || error.message);
+    // Error handling is done by the caller and/or apiClient interceptor (shows banner)
     throw error;
   }
 };

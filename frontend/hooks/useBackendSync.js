@@ -5,11 +5,12 @@ import { STORAGE_KEYS } from '../constants/defaults';
 import { DEFAULT_VOCABULARY_CHANGES } from './useVocabulary';
 import { syncUserData } from '../api/user';
 
-const SYNC_INTERVAL_MS = 5 * 60000; // 5 minute
+const SYNC_INTERVAL_MS = 1 * 10000; // 5 minute
 
 // Module-scoped sync state — shared across the single hook instance
 let hasUnsyncedChanges = false;
 let lastSyncTime = null;
+let hasShownSyncError = false; // Track if we've already shown error banner for sync
 
 /**
  * Reset sync state (e.g., on logout).
@@ -18,6 +19,7 @@ let lastSyncTime = null;
 export const resetSyncState = () => {
   hasUnsyncedChanges = false;
   lastSyncTime = null;
+  hasShownSyncError = false;
 };
 
 /**
@@ -102,7 +104,7 @@ export const useBackendSync = (isOnline, isAuthenticated, userProgress, isProgre
         vocabulary_changes: hasVocabularyChanges ? vocabularyChanges : undefined,
       };
 
-      await syncUserData(syncPayload);
+      await syncUserData(syncPayload, { silent: hasShownSyncError });
 
       // Clear vocabulary changes via React state setter (usePersistedState will persist it)
       if (hasVocabularyChanges) {
@@ -111,13 +113,16 @@ export const useBackendSync = (isOnline, isAuthenticated, userProgress, isProgre
 
       hasUnsyncedChanges = false;
       lastSyncTime = Date.now();
+      hasShownSyncError = false; // Reset on successful sync
     } catch (error) {
       if (error.response?.status === 401) {
         // Token is gone (logged out) — stop retrying
         hasUnsyncedChanges = false;
         return;
       }
-      console.error('[useBackendSync] Sync error - will retry:', error.message);
+      // Mark that we've shown the error - subsequent retries will be silent
+      hasShownSyncError = true;
+      // Silently retry - don't spam console, banner was already shown on first error
       // Don't clear hasUnsyncedChanges — will retry on next interval
     }
   }, []);
