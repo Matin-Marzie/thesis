@@ -18,7 +18,7 @@ export default function OnboardingQuestions() {
   // User selections
   const [selectedNativeLanguage, setSelectedNativeLanguage] = useState<{ id: number, name: string, code: string } | null>(null);
   const [selectedLearningLanguage, setSelectedLearningLanguage] = useState<{ id: number, name: string, code: string } | null>(null);
-  const [selectedLevel, setSelectedLevel] = useState<string | null>('A1');
+  const [selectedLevel, setSelectedLevel] = useState<string | null>('N');
   const [selectedPreferences, setSelectedPreferences] = useState<string[]>([]);
   const [selectedAge, setSelectedAge] = useState<string>('25');
 

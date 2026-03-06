@@ -1,7 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
 import { PRIMARY_COLOR } from '@/constants/App';
-import { LANGUAGES_META } from '@/constants/SupportedLanguages';
 
 // Language type
 interface Language {
@@ -24,15 +23,18 @@ export default function ProficiencySlide({
   setSelectedLevel,
   selectedLearningLanguage,
 }: ProficiencySlideProps) {
+  // Get language name directly from the selected language object
+  const languageName = selectedLearningLanguage?.name ?? '';
+
   // Proficiency levels with label and number of bars
   const levels = [
-    // { value: 'N',  label: 'Learning for the first time', bars: 0 },
-    { value: 'A1', label: 'I know the letters and some words', bars: 0 },
-    { value: 'A2', label: 'I know some common words', bars: 1 },
-    { value: 'B1', label: 'I can have basic conversations', bars: 2 },
-    { value: 'B2', label: 'I can discuss various topics', bars: 3 },
-    { value: 'C1', label: 'I am fluent', bars: 4 },
-    { value: 'C2', label: 'I am native', bars: 5 },
+    { value: 'N', label: `Learning ${languageName} for the first time`, bars: 0 },
+    { value: 'A1', label: 'I know the letters and basic greetings and phrases', bars: 1 },
+    { value: 'A2', label: 'I can handle simple everyday tasks', bars: 2 },
+    { value: 'B1', label: 'I can have everyday conversations', bars: 3 },
+    { value: 'B2', label: 'I can speak confidently on most topics', bars: 4 },
+    { value: 'C1', label: 'I can express complex ideas fluently', bars: 5 },
+    { value: 'C2', label: 'I have mastered the language completely', bars: 6 },
   ];
 
   /**
@@ -41,7 +43,7 @@ export default function ProficiencySlide({
    * @param isSelected - if this level is currently selected
    */
   const renderProficiencyBars = (filledCount: number, isSelected: boolean) => {
-    const barHeights = [12, 16, 20, 24, 28]; // Progressive heights for bars
+    const barHeights = [12, 15, 18, 21, 24, 28]; // Progressive heights for bars (6 bars)
 
     return (
       <View style={styles.barsContainer}>
@@ -59,20 +61,15 @@ export default function ProficiencySlide({
     );
   };
 
-  // Get language name from LANGUAGES_META using code
-  const languageName = selectedLearningLanguage
-    ? LANGUAGES_META[selectedLearningLanguage.code as keyof typeof LANGUAGES_META]?.name
-    : '';
-
   return (
     <View style={styles.slideContainer}>
-      <ScrollView style={styles.scrollContent} showsVerticalScrollIndicator={false}>
-        {/* Slide title */}
-        <Text style={styles.title}>
-          How much {languageName} do you know?
-        </Text>
-        <Text style={styles.subtitle}>Select your current level</Text>
+      {/* Slide title */}
+      <Text style={styles.title}>
+        How much <Text style={styles.languageNameUnderline}>{languageName}</Text> do you know?
+      </Text>
+      <Text style={styles.subtitle}>Select your current level</Text>
 
+      <ScrollView style={styles.scrollContent} showsVerticalScrollIndicator={false}>
         {/* Render each proficiency level */}
         {levels.map((level) => (
           <TouchableOpacity
@@ -124,7 +121,6 @@ export default function ProficiencySlide({
 const styles = StyleSheet.create({
   slideContainer: {
     flex: 1,
-    paddingHorizontal: 10,
     paddingBottom: 10,
   },
   scrollContent: {
@@ -135,20 +131,24 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: '#333',
     textAlign: 'center',
-    marginBottom: 12,
+    paddingHorizontal: 10,
+  },
+  languageNameUnderline: {
+    textDecorationLine: 'underline',
   },
   subtitle: {
     fontSize: 16,
     color: '#666',
     textAlign: 'center',
-    marginBottom: 20,
+    marginBottom: 10,
   },
   continueButton: {
     backgroundColor: PRIMARY_COLOR,
     paddingVertical: 16,
     borderRadius: 12,
     alignItems: 'center',
-    marginTop: 20,
+    marginTop: 10,
+    marginHorizontal: 10,
   },
   continueButtonDisabled: {
     backgroundColor: '#ccc',
@@ -167,6 +167,8 @@ const styles = StyleSheet.create({
     marginBottom: 8,
     borderWidth: 2,
     borderColor: 'transparent',
+    gap: 8,
+    marginHorizontal: 10,
   },
   levelButtonSelected: {
     backgroundColor: PRIMARY_COLOR,
@@ -180,7 +182,7 @@ const styles = StyleSheet.create({
     width: 60,
   },
   bar: {
-    width: 8,
+    width: 7,
     backgroundColor: '#e0e0e0',
     borderRadius: 2,
   },
