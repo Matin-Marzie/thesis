@@ -4,11 +4,11 @@ const UserVocabularySchema = Joi.object()
   .pattern(
     Joi.string(), // wordId as key
     Joi.object({
-      language_id: Joi.number().integer().required().messages({
-        'number.base': 'language_id must be a number',
-        'number.integer': 'language_id must be an integer',
-        'any.required': 'language_id is required',
-      }),
+      // language_id: Joi.number().integer().required().messages({
+      //   'number.base': 'language_id must be a number',
+      //   'number.integer': 'language_id must be an integer',
+      //   'any.required': 'language_id is required',
+      // }),
       mastery_level: Joi.number().integer().min(0).max(6).required().messages({
         'number.base': 'mastery_level must be a number',
         'number.integer': 'mastery_level must be an integer',
