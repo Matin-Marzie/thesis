@@ -37,18 +37,31 @@ export default function HomeScreen() {
     debounceTimeout.current = setTimeout(() => {
       const query = search.trim().toLowerCase();
       if (!query) {
-        // Show user's vocabulary words when search is empty
-        const vocabularyWords = words.filter(word => userVocabulary && word.id in userVocabulary);
+        // Show user's vocabulary words when search is empty, sorted by created_at (newest first)
+        const vocabularyWords = words
+          .filter(word => userVocabulary && word.id in userVocabulary)
+          .sort((a, b) => {
+            const dateA = new Date(userVocabulary[a.id]?.created_at || 0);
+            const dateB = new Date(userVocabulary[b.id]?.created_at || 0);
+            return dateB - dateA;
+          });
         setFilteredWords(vocabularyWords);
         return;
       }
 
-      const filtered = words.filter(word => {
-        const writtenMatch = word.written_form?.toLowerCase().startsWith(query);
-        // const translationMatch = word.translations?.some(t => t?.toLowerCase().includes(query));
-        // return writtenMatch || translationMatch;
-        return writtenMatch;
-      });
+      // Filter words by search query and sort by created_at (newest first)
+      const filtered = words
+        .filter(word => {
+          const writtenMatch = word.written_form?.toLowerCase().startsWith(query);
+          // const translationMatch = word.translations?.some(t => t?.toLowerCase().includes(query));
+          // return writtenMatch || translationMatch;
+          return writtenMatch;
+        })
+        .sort((a, b) => {
+          const dateA = new Date(userVocabulary?.[a.id]?.created_at || 0);
+          const dateB = new Date(userVocabulary?.[b.id]?.created_at || 0);
+          return dateB - dateA;
+        });
 
       setFilteredWords(filtered);
     }, 500);
