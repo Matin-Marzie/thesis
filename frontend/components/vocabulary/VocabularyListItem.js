@@ -6,12 +6,12 @@ import { getWikimediaDictionary, extractDefinitions } from '@/api/dictionary';
 import MasteryLevelButton from '@/components/vocabulary/MasteryLevelButton';
 import { Swipeable, ScrollView } from 'react-native-gesture-handler';
 import { Ionicons } from '@expo/vector-icons';
-import { useDictionary } from '@/hooks/useDictionary';
+import { useDictionaryContext } from '@/context/DictionaryContext';
 import { VOCABULARY_ACTIONS } from '@/hooks/useVocabulary';
 
 function WordItem({ item }) {
     
-    const { dictionary } = useDictionary();
+    const { dictionary } = useDictionaryContext();
     const { userVocabulary, vocabularyDispatch, isOnline, userProgress } = useAppContext();
     const [isExpanded, setIsExpanded] = useState(false);
     const [meanings, setMeanings] = useState(null);

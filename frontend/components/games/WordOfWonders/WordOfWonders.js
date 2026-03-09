@@ -19,7 +19,7 @@ import ExtraWordsPopup from './pop-ups/ExtraWordsPopup';
 import FinishScreen from './pop-ups/FinishScreen';
 import { GREEN, MAX_WIDTH, width, height, horizontalOffset, BACKGROUND_IMAGE_URI, BACKGROUND_OVERLAY_OPACITY } from './gameConstants';
 import { useAppContext } from '@/context/AppContext';
-import { useDictionary } from '@/hooks/useDictionary';
+import { useDictionaryContext } from '@/context/DictionaryContext';
 
 
 const HAMMER_HEIGHT = height * 0.69;
@@ -37,7 +37,7 @@ const shuffleArray = (array) => {
 export default function WordOfWonders({ boxData: initialBoxData, gridWords: initialGridWords, letters: initialLetters }) {
 
     const { userVocabulary, userProgress, setUserProgress } = useAppContext();
-    const { dictionary } = useDictionary();
+    const { dictionary } = useDictionaryContext();
 
     const [boxData, setBoxData] = useState(initialBoxData);
     const [gridWords, setGridWords] = useState(initialGridWords);

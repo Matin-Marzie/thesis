@@ -9,10 +9,12 @@ import NotificationsSlide from './components/NotificationsSlide';
 import PersonalizationSlide from './components/PersonalizationSlide';
 import { PRIMARY_COLOR } from '@/constants/App';
 import { useAppContext } from '@/context/AppContext';
+import { useDictionaryContext } from '@/context/DictionaryContext';
 
 export default function OnboardingQuestions() {
   const router = useRouter();
   const { setHasCompletedOnboarding, updateUserProfile, setUserProgress } = useAppContext();
+  const { fetchDictionary } = useDictionaryContext();
   const [currentSlide, setCurrentSlide] = useState(0);
 
   // User selections
@@ -88,7 +90,11 @@ export default function OnboardingQuestions() {
     }));
 
     // TODO: Fetch Reels sending native_language_id and learning_language_id and proficiency_level and preferences and age
-    // TODO: Fetch dictionary sending native_language_id and learning_language_id
+
+    // Start fetching dictionary in background (non-blocking)
+    if (selectedLearningLanguage?.code && selectedNativeLanguage?.code) {
+      fetchDictionary(selectedLearningLanguage.code, selectedNativeLanguage.code);
+    }
 
     // Mark onboarding as complete (persisted via usePersistedState in AppContext)
     setHasCompletedOnboarding(true);

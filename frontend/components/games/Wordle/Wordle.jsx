@@ -11,7 +11,7 @@ import {
 } from 'react-native';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { useAppContext } from '@/context/AppContext';
-import { useDictionary } from '@/hooks/useDictionary';
+import { useDictionaryContext } from '@/context/DictionaryContext';
 import Keyboard from './Keyboard';
 import WordleGrid from './WordleGrid';
 import GameOverModal from './GameOverModal';
@@ -30,7 +30,7 @@ const COLORS = {
 
 export default function Wordle({ onClose }) {
     const { userVocabulary, userProgress } = useAppContext();
-    const { dictionary } = useDictionary();
+    const { dictionary } = useDictionaryContext();
 
     const [secretWord, setSecretWord] = useState('');
     const [guesses, setGuesses] = useState([]);

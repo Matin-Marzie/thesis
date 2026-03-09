@@ -9,11 +9,11 @@ import {
 } from 'react-native';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { popupStyles } from './popupStyles';
-import { useDictionary } from '@/hooks/useDictionary';
+import { useDictionaryContext } from '@/context/DictionaryContext';
 import VocabularyListItem from '../../../vocabulary/VocabularyListItem';
 
 export default function SeeMeaningPopUp({ visible, onClose, foundWords = [] }) {
-    const { dictionary } = useDictionary();
+    const { dictionary } = useDictionaryContext();
 
     return (
         <Modal

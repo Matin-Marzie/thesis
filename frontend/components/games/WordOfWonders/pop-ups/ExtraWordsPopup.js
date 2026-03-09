@@ -10,14 +10,14 @@ import {
 } from 'react-native';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { GREEN } from '../gameConstants';
-import { useDictionary } from '@/hooks/useDictionary';
+import { useDictionaryContext } from '@/context/DictionaryContext';
 import { popupStyles } from './popupStyles';
 import VocabularyListItem from '../../../vocabulary/VocabularyListItem';
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
 
 export default function ExtraWordsPopup({ visible, onClose, extraWords = [], score = 0 }) {
-    const { dictionary } = useDictionary();
+    const { dictionary } = useDictionaryContext();
     return (
         <Modal
             visible={visible}

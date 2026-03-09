@@ -11,6 +11,7 @@ import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 
 import { useColorScheme } from '@/components/useColorScheme';
 import { AppProvider, useAppContext } from '../context/AppContext';
+import { DictionaryProvider } from '../context/DictionaryContext';
 import { PRIMARY_COLOR } from '@/constants/App';
 import ServerErrorBanner from '@/components/ServerErrorBanner';
 
@@ -52,9 +53,11 @@ export default function RootLayout() {
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <AppProvider>
-        <BottomSheetModalProvider>
-          <RootLayoutNav />
-        </BottomSheetModalProvider>
+        <DictionaryProvider>
+          <BottomSheetModalProvider>
+            <RootLayoutNav />
+          </BottomSheetModalProvider>
+        </DictionaryProvider>
       </AppProvider>
     </GestureHandlerRootView>
   );

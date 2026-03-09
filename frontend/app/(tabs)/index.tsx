@@ -1,14 +1,14 @@
 import React, { useState, useEffect, useRef, useMemo, useCallback } from 'react';
 import { View, StyleSheet, Keyboard } from 'react-native';
 import { useAppContext } from '@/context/AppContext';
-import { useDictionary } from '@/hooks/useDictionary';
+import { useDictionaryContext } from '@/context/DictionaryContext';
 import FilterBottomSheetModal from '@/components/vocabulary/FilterBottomSheetModal';
 import VocabularySearchField from '@/components/vocabulary/VocabularySearchField';
 import VocabularyList from '@/components/vocabulary/VocabularyList';
 
 export default function HomeScreen() {
   const { userVocabulary } = useAppContext();
-  const { dictionary } = useDictionary();
+  const { dictionary } = useDictionaryContext();
   const [search, setSearch] = useState('');
   const [filteredWords, setFilteredWords] = useState([]); // To Do: don't duplicate state, remove filteredWords
   const [isFilterModalOpen, setIsFilterModalOpen] = useState(false);

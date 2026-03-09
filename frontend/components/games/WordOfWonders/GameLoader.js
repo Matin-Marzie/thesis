@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, ImageBackground } from 'react-native';
-import { useDictionary } from '@/hooks/useDictionary';
+import { useDictionaryContext } from '@/context/DictionaryContext';
 import GenerateWordOfWonderLevel from './LevelGenerator';
 import WordOfWonders from './WordOfWonders';
 import { BACKGROUND_IMAGE_URI, width, height, MAX_WIDTH } from './gameConstants';
 
 export default function GameLoader() {
-    const { dictionary } = useDictionary();
+    const { dictionary } = useDictionaryContext();
     const [levelData, setLevelData] = useState(null);
     const [isGenerating, setIsGenerating] = useState(true);
 
