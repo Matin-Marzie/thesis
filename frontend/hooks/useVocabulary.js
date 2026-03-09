@@ -8,6 +8,7 @@
 // Vocabulary action types
 export const VOCABULARY_ACTIONS = {
   ADD: 'ADD',
+  ADD_MANY: 'ADD_MANY', // Bulk add after onboarding without tracking changes(vocabularyChanges)
   UPDATE: 'UPDATE',
   REMOVE: 'REMOVE',
   SET: 'SET', // For initial load from persistence
@@ -32,6 +33,27 @@ export const vocabularyReducer = (state, action) => {
           last_review: now,
           created_at: now,
         },
+      };
+    }
+
+    case VOCABULARY_ACTIONS.ADD_MANY: {
+      // Bulk add words with specified mastery_level
+      // payload: { wordIds: number[], mastery_level: number }
+      const { wordIds, mastery_level = 1 } = action.payload;
+      const newEntries = {};
+      for (const wordId of wordIds) {
+        // Skip if word already exists
+        if (!state[wordId]) {
+          newEntries[wordId] = {
+            mastery_level,
+            last_review: now,
+            created_at: now,
+          };
+        }
+      }
+      return {
+        ...state,
+        ...newEntries,
       };
     }
 

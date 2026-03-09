@@ -10,10 +10,11 @@ import PersonalizationSlide from './components/PersonalizationSlide';
 import { PRIMARY_COLOR } from '@/constants/App';
 import { useAppContext } from '@/context/AppContext';
 import { useDictionaryContext } from '@/context/DictionaryContext';
+import { getLevelsBelowProficiency } from '@/constants/Vocabulary';
 
 export default function OnboardingQuestions() {
   const router = useRouter();
-  const { setHasCompletedOnboarding, updateUserProfile, setUserProgress } = useAppContext();
+  const { setHasCompletedOnboarding, updateUserProfile, setUserProgress, bulkAddVocabulary } = useAppContext();
   const { fetchDictionary } = useDictionaryContext();
   const [currentSlide, setCurrentSlide] = useState(0);
 
@@ -91,9 +92,21 @@ export default function OnboardingQuestions() {
 
     // TODO: Fetch Reels sending native_language_id and learning_language_id and proficiency_level and preferences and age
 
-    // Start fetching dictionary in background (non-blocking)
+    // Fetch dictionary and add words below user's proficiency level to vocabulary
     if (selectedLearningLanguage?.code && selectedNativeLanguage?.code) {
-      fetchDictionary(selectedLearningLanguage.code, selectedNativeLanguage.code);
+      const dictionaryData = await fetchDictionary(selectedLearningLanguage.code, selectedNativeLanguage.code) as { words?: Array<{ id: number; level: string }> } | null;
+      
+      // Add words below proficiency level to user's vocabulary with mastery_level 3
+      if (dictionaryData?.words && selectedLevel) {
+        const levelsBelowProficiency = getLevelsBelowProficiency(selectedLevel);
+        const wordIdsToAdd = dictionaryData.words
+          .filter((word) => levelsBelowProficiency.includes(word.level))
+          .map((word) => word.id);
+        
+        if (wordIdsToAdd.length > 0) {
+          bulkAddVocabulary(wordIdsToAdd, 3);
+        }
+      }
     }
 
     // Mark onboarding as complete (persisted via usePersistedState in AppContext)

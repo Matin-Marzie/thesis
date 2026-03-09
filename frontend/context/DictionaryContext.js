@@ -10,7 +10,7 @@ const DICTIONARY_TTL = 7 * 24 * 60 * 60 * 1000; // 7 days in milliseconds
  * @property {Object|null} dictionary - The dictionary data
  * @property {boolean} dictionaryLoading - Whether dictionary is loading
  * @property {string|null} dictionaryError - Error message if any
- * @property {(learningCode: string, nativeCode: string) => Promise<void>} fetchDictionary - Manual fetch function
+ * @property {(learningCode: string, nativeCode: string) => Promise<Object|null>} fetchDictionary - Manual fetch function, returns dictionary data
  * @property {() => Promise<void>} reload - Reload current dictionary
  */
 
@@ -37,8 +37,9 @@ export const DictionaryProvider = ({ children }) => {
   }, []);
 
   // Core fetch function - can be called with explicit codes or uses currentLang
+  // Returns the dictionary data (or null if failed)
   const fetchDictionary = useCallback(async (learningCode, nativeCode) => {
-    if (!learningCode || !nativeCode) return;
+    if (!learningCode || !nativeCode) return null;
 
     const cacheKey = getCacheKey(learningCode, nativeCode);
 
@@ -62,7 +63,7 @@ export const DictionaryProvider = ({ children }) => {
         setDictionary(cached.data);
         setLoading(false);
       }
-      return;
+      return cached.data;
     }
 
     // --- Offline strategy ---
@@ -71,7 +72,7 @@ export const DictionaryProvider = ({ children }) => {
         if (cached?.data) setDictionary(cached.data);
         setLoading(false);
       }
-      return;
+      return cached?.data || null;
     }
 
     // --- Use stale cache while fetching ---
@@ -83,7 +84,7 @@ export const DictionaryProvider = ({ children }) => {
       const res = await getDictionaryByCodes(learningCode, nativeCode);
 
       // Race-condition guard
-      if (requestIdRef.current !== currentRequestId) return;
+      if (requestIdRef.current !== currentRequestId) return null;
 
       const payload = {
         data: res,
@@ -92,9 +93,11 @@ export const DictionaryProvider = ({ children }) => {
 
       await AsyncStorage.setItem(cacheKey, JSON.stringify(payload));
       setDictionary(res);
+      return res;
     } catch (err) {
-      if (requestIdRef.current !== currentRequestId) return;
+      if (requestIdRef.current !== currentRequestId) return null;
       setError(err.message);
+      return null;
     } finally {
       if (requestIdRef.current === currentRequestId) {
         setLoading(false);

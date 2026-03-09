@@ -24,17 +24,25 @@ import {
 /**
  * @typedef {Object} AppContextType
  * @property {Object} userProfile
+ * @property {Function} setUserProfile
+ * @property {Function} updateUserProfile
  * @property {Object} userProgress
+ * @property {Function} setUserProgress
  * @property {Object} userVocabulary
+ * @property {Function} setUserVocabulary
  * @property {Function} vocabularyDispatch
+ * @property {(wordIds: number[], mastery_level?: number) => void} bulkAddVocabulary
  * @property {boolean} isAuthenticated
+ * @property {Function} setIsAuthenticated
  * @property {boolean} hasCompletedOnboarding
+ * @property {Function} setHasCompletedOnboarding
  * @property {boolean} isLoading
+ * @property {Function} setIsLoading
  * @property {boolean} isOnline
  * @property {boolean} isBackendServerReachable
  * @property {Function} setIsBackendServerReachable
  * @property {() => Promise<void>} initApp
- * @property {(clearAllData?: boolean) => Promise<void>} logout
+ * @property {() => Promise<void>} forceSync
  */
 
 /** @type {import('react').Context<AppContextType>} */
@@ -88,6 +96,15 @@ export const AppProvider = ({ children }) => {
       setVocabularyChanges((prev) => vocabularyChangesReducer(prev, action));
     }
   }, [setUserVocabulary, setVocabularyChanges]);
+
+  // Bulk add vocabulary without tracking changes(vocabularyChanges) (for onboarding auto-fill)
+  const bulkAddVocabulary = useCallback((wordIds, mastery_level = 3) => {
+    setUserVocabulary((prev) => vocabularyReducer(prev, {
+      type: VOCABULARY_ACTIONS.ADD_MANY,
+      payload: { wordIds, mastery_level },
+    }));
+    // Note: We do NOT update vocabularyChanges here - these are not synced to backend
+  }, [setUserVocabulary]);
 
   // Backend sync periodically from custom hook
   const { forceSync } = useBackendSync(isOnline, isAuthenticated, userProgress, isProgressLoaded, userVocabulary, isVocabularyLoaded, setVocabularyChanges);
@@ -182,7 +199,7 @@ export const AppProvider = ({ children }) => {
   const value = {
     userProfile, setUserProfile, updateUserProfile,
     userProgress, setUserProgress,
-    userVocabulary, setUserVocabulary, vocabularyDispatch,
+    userVocabulary, setUserVocabulary, vocabularyDispatch, bulkAddVocabulary,
     setVocabularyChanges,
     isAuthenticated, setIsAuthenticated, initApp,
     hasCompletedOnboarding, setHasCompletedOnboarding,
