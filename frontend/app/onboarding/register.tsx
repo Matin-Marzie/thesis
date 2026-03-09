@@ -47,7 +47,7 @@ export default function RegisterScreen({ onRegisterSuccess }: RegisterScreenProp
   //   });
   // }, []);
 
-  const { userVocabulary, userProfile, userProgress, updateUserProfile, setUserProgress, vocabularyDispatch, setIsAuthenticated } = useAppContext();
+  const { vocabularyChanges, userProfile, userProgress, updateUserProfile, setUserProgress, vocabularyDispatch, setIsAuthenticated } = useAppContext();
   const router = useRouter();
 
   const [firstName, setFirstName] = useState('');
@@ -92,7 +92,7 @@ export default function RegisterScreen({ onRegisterSuccess }: RegisterScreenProp
           email: email.trim(),
         },
         user_progress: userProgress,
-        user_vocabulary: userVocabulary
+        vocabulary_changes: vocabularyChanges
       };
       
       const response = await registerUser(payload);

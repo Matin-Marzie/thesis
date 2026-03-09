@@ -23,7 +23,7 @@ const registerController = async (req, res) => {
       password,
       user_profile,
       user_progress,
-      user_vocabulary,
+      vocabulary_changes,
     } = value;
 
     // Check if email already exists
@@ -109,12 +109,46 @@ const registerController = async (req, res) => {
     const new_user_languages = await userLanguagesModel.add(newUser.id, user_progress.languages);
     const current_language = new_user_languages.find(lang => lang.is_current_language);
 
-    // Add vocabulary if provided
-    let new_user_vocabulary = [];
-    if(user_vocabulary && Object.keys(user_vocabulary).length > 0) {
-      const user_vocabulary_array = Object.entries(user_vocabulary); // [word_id, data]
-      // Add user vocabulary to DB, return only current learning language words
-      new_user_vocabulary = await userVocabularyModel.add(newUser.id, user_vocabulary_array, current_language.id);
+    // Add vocabulary based on proficiency level (bulk insert words below user's level)
+    let new_user_vocabulary = {};
+    const proficiencyLevel = current_language.proficiency_level;
+    const learningLanguageId = current_language.learning_language.id;
+    
+    // Bulk add words below proficiency level with mastery_level = 3
+    new_user_vocabulary = await userVocabularyModel.addByProficiencyLevel(
+      newUser.id,
+      current_language.id,
+      learningLanguageId,
+      proficiencyLevel,
+      3, // mastery_level = "Understood"
+      newUser.joined_date
+    );
+
+    // Apply any additional vocabulary changes from the client (manual additions during onboarding)
+    if (vocabulary_changes) {
+      // Handle inserts
+      if (vocabulary_changes.inserts && Object.keys(vocabulary_changes.inserts).length > 0) {
+        const insertsArray = Object.entries(vocabulary_changes.inserts);
+        const insertedVocabulary = await userVocabularyModel.add(
+          newUser.id,
+          insertsArray,
+          current_language.id
+        );
+        // Merge with existing vocabulary (overwrites duplicates)
+        new_user_vocabulary = { ...new_user_vocabulary, ...insertedVocabulary };
+      }
+      
+      // Handle updates (in case user modified mastery of existing words)
+      if (vocabulary_changes.updates && Object.keys(vocabulary_changes.updates).length > 0) {
+        const updatedVocabulary = await userVocabularyModel.update(
+          newUser.id,
+          current_language.id,
+          vocabulary_changes.updates
+        );
+        new_user_vocabulary = { ...new_user_vocabulary, ...updatedVocabulary };
+      }
+      
+      // Note: deletes are not processed during registration (nothing to delete for new user)
     }
 
     // Respond with user data, dictionary and tokens

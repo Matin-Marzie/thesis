@@ -32,6 +32,8 @@ import {
  * @property {Function} setUserVocabulary
  * @property {Function} vocabularyDispatch
  * @property {(wordIds: number[], mastery_level?: number) => void} bulkAddVocabulary
+ * @property {Object} vocabularyChanges
+ * @property {Function} setVocabularyChanges
  * @property {boolean} isAuthenticated
  * @property {Function} setIsAuthenticated
  * @property {boolean} hasCompletedOnboarding
@@ -200,7 +202,7 @@ export const AppProvider = ({ children }) => {
     userProfile, setUserProfile, updateUserProfile,
     userProgress, setUserProgress,
     userVocabulary, setUserVocabulary, vocabularyDispatch, bulkAddVocabulary,
-    setVocabularyChanges,
+    vocabularyChanges, setVocabularyChanges,
     isAuthenticated, setIsAuthenticated, initApp,
     hasCompletedOnboarding, setHasCompletedOnboarding,
     isLoading, setIsLoading,

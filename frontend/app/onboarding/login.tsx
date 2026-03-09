@@ -76,6 +76,7 @@ export default function LoginScreen() {
         ? { email: usernameOrEmail.trim(), password: password.trim() }
         : { username: usernameOrEmail.trim(), password: password.trim() };
 
+      // Backend login request
       const response = await loginUser(credentials);
       if (response.status === 200) {
         setIsAuthenticated(true);
