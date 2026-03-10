@@ -2,10 +2,10 @@
 -- PostgreSQL database dump
 --
 
-\restrict 6uf7G2lvzRYrdvjQAMcmzs62HLxkoPz8M6DcdVn4JHyMLghojhAshcSnFAzpzAS
+\restrict KXMKGlV3vWUlKODmzEuJoq6tVpWkNYnodUO5ugzw04OticdImuS8YWEF8vxMbtg
 
--- Dumped from database version 16.11 (Ubuntu 16.11-0ubuntu0.24.04.1)
--- Dumped by pg_dump version 16.11 (Ubuntu 16.11-0ubuntu0.24.04.1)
+-- Dumped from database version 16.13 (Ubuntu 16.13-0ubuntu0.24.04.1)
+-- Dumped by pg_dump version 16.13 (Ubuntu 16.13-0ubuntu0.24.04.1)
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -121,10 +121,10 @@ ALTER SEQUENCE public.letters_id_seq OWNED BY public.letters.id;
 
 
 --
--- Name: translations; Type: TABLE; Schema: public; Owner: root
+-- Name: word_translations; Type: TABLE; Schema: public; Owner: root
 --
 
-CREATE TABLE public.translations (
+CREATE TABLE public.word_translations (
     id bigint NOT NULL,
     word_id bigint NOT NULL,
     translation_word_id bigint NOT NULL,
@@ -133,7 +133,7 @@ CREATE TABLE public.translations (
 );
 
 
-ALTER TABLE public.translations OWNER TO root;
+ALTER TABLE public.word_translations OWNER TO root;
 
 --
 -- Name: translations_id_seq; Type: SEQUENCE; Schema: public; Owner: root
@@ -153,7 +153,7 @@ ALTER SEQUENCE public.translations_id_seq OWNER TO root;
 -- Name: translations_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: root
 --
 
-ALTER SEQUENCE public.translations_id_seq OWNED BY public.translations.id;
+ALTER SEQUENCE public.translations_id_seq OWNED BY public.word_translations.id;
 
 
 --
@@ -340,13 +340,6 @@ ALTER TABLE ONLY public.letters ALTER COLUMN id SET DEFAULT nextval('public.lett
 
 
 --
--- Name: translations id; Type: DEFAULT; Schema: public; Owner: root
---
-
-ALTER TABLE ONLY public.translations ALTER COLUMN id SET DEFAULT nextval('public.translations_id_seq'::regclass);
-
-
---
 -- Name: user_languages id; Type: DEFAULT; Schema: public; Owner: root
 --
 
@@ -365,6 +358,13 @@ ALTER TABLE ONLY public.user_vocabulary ALTER COLUMN id SET DEFAULT nextval('pub
 --
 
 ALTER TABLE ONLY public.users ALTER COLUMN id SET DEFAULT nextval('public.users_id_seq'::regclass);
+
+
+--
+-- Name: word_translations id; Type: DEFAULT; Schema: public; Owner: root
+--
+
+ALTER TABLE ONLY public.word_translations ALTER COLUMN id SET DEFAULT nextval('public.translations_id_seq'::regclass);
 
 
 --
@@ -407,18 +407,18 @@ ALTER TABLE ONLY public.letters
 
 
 --
--- Name: translations translations_from_word_id_to_word_id_key; Type: CONSTRAINT; Schema: public; Owner: root
+-- Name: word_translations translations_from_word_id_to_word_id_key; Type: CONSTRAINT; Schema: public; Owner: root
 --
 
-ALTER TABLE ONLY public.translations
+ALTER TABLE ONLY public.word_translations
     ADD CONSTRAINT translations_from_word_id_to_word_id_key UNIQUE (word_id, translation_word_id);
 
 
 --
--- Name: translations translations_pkey; Type: CONSTRAINT; Schema: public; Owner: root
+-- Name: word_translations translations_pkey; Type: CONSTRAINT; Schema: public; Owner: root
 --
 
-ALTER TABLE ONLY public.translations
+ALTER TABLE ONLY public.word_translations
     ADD CONSTRAINT translations_pkey PRIMARY KEY (id);
 
 
@@ -515,18 +515,18 @@ ALTER TABLE ONLY public.letters
 
 
 --
--- Name: translations translations_translation_word_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: root
+-- Name: word_translations translations_translation_word_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: root
 --
 
-ALTER TABLE ONLY public.translations
+ALTER TABLE ONLY public.word_translations
     ADD CONSTRAINT translations_translation_word_id_fkey FOREIGN KEY (translation_word_id) REFERENCES public.words(id) ON DELETE CASCADE;
 
 
 --
--- Name: translations translations_word_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: root
+-- Name: word_translations translations_word_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: root
 --
 
-ALTER TABLE ONLY public.translations
+ALTER TABLE ONLY public.word_translations
     ADD CONSTRAINT translations_word_id_fkey FOREIGN KEY (word_id) REFERENCES public.words(id) ON DELETE CASCADE;
 
 
@@ -582,5 +582,5 @@ ALTER TABLE ONLY public.words
 -- PostgreSQL database dump complete
 --
 
-\unrestrict 6uf7G2lvzRYrdvjQAMcmzs62HLxkoPz8M6DcdVn4JHyMLghojhAshcSnFAzpzAS
+\unrestrict KXMKGlV3vWUlKODmzEuJoq6tVpWkNYnodUO5ugzw04OticdImuS8YWEF8vxMbtg
 

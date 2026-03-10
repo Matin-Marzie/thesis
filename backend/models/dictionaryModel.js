@@ -23,7 +23,7 @@ const dictionaryModel = {
             ON ll.id = w.language_id
         AND ll.code = $1              -- learning_language_code
 
-        LEFT JOIN translations t
+        LEFT JOIN word_translations t
             ON t.word_id = w.id
 
         LEFT JOIN languages tl
@@ -71,7 +71,7 @@ const dictionaryModel = {
                 FILTER (WHERE tw.id IS NOT NULL) AS translation_levels
 
         FROM words w
-        LEFT JOIN translations t
+        LEFT JOIN word_translations t
             ON t.word_id = w.id
         LEFT JOIN words tw
             ON tw.id = t.translation_word_id

@@ -53,3 +53,5 @@ frontend/android
 
 # lock files
 package-lock.json
+
+database/execute.sql
