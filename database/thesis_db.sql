@@ -2,7 +2,7 @@
 -- PostgreSQL database dump
 --
 
-\restrict lcWcR8vGb8dth4kC0wtQbEF94Va1rbxXXv7z8MTRlxmUyvVP3NFBck3mfFjwduT
+\restrict q5tgDnm5BIfP5XzD6kyXOR6J5lbdg9Ks4Ga2gWTaiMmZeBbB5KS7rb3hAY87uE3
 
 -- Dumped from database version 16.13 (Ubuntu 16.13-0ubuntu0.24.04.1)
 -- Dumped by pg_dump version 16.13 (Ubuntu 16.13-0ubuntu0.24.04.1)
@@ -193,24 +193,32 @@ ALTER SEQUENCE public.letters_id_seq OWNED BY public.letters.id;
 
 
 --
--- Name: reel_views; Type: TABLE; Schema: public; Owner: root
+-- Name: reel_interactions; Type: TABLE; Schema: public; Owner: root
 --
 
-CREATE TABLE public.reel_views (
+CREATE TABLE public.reel_interactions (
     id bigint NOT NULL,
     reel_id bigint NOT NULL,
     user_id bigint NOT NULL,
-    viewed_at timestamp with time zone DEFAULT now() NOT NULL
+    viewed_at timestamp with time zone DEFAULT now() NOT NULL,
+    is_liked boolean DEFAULT false NOT NULL,
+    is_saved boolean DEFAULT false NOT NULL,
+    comment text,
+    commented_at timestamp with time zone,
+    is_shared boolean DEFAULT false NOT NULL,
+    is_reported boolean DEFAULT false NOT NULL,
+    report_reason text,
+    reported_at timestamp with time zone
 );
 
 
-ALTER TABLE public.reel_views OWNER TO root;
+ALTER TABLE public.reel_interactions OWNER TO root;
 
 --
--- Name: reel_views_id_seq; Type: SEQUENCE; Schema: public; Owner: root
+-- Name: reel_interactions_id_seq; Type: SEQUENCE; Schema: public; Owner: root
 --
 
-CREATE SEQUENCE public.reel_views_id_seq
+CREATE SEQUENCE public.reel_interactions_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -218,13 +226,13 @@ CREATE SEQUENCE public.reel_views_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.reel_views_id_seq OWNER TO root;
+ALTER SEQUENCE public.reel_interactions_id_seq OWNER TO root;
 
 --
--- Name: reel_views_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: root
+-- Name: reel_interactions_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: root
 --
 
-ALTER SEQUENCE public.reel_views_id_seq OWNED BY public.reel_views.id;
+ALTER SEQUENCE public.reel_interactions_id_seq OWNED BY public.reel_interactions.id;
 
 
 --
@@ -610,10 +618,10 @@ ALTER TABLE ONLY public.letters ALTER COLUMN id SET DEFAULT nextval('public.lett
 
 
 --
--- Name: reel_views id; Type: DEFAULT; Schema: public; Owner: root
+-- Name: reel_interactions id; Type: DEFAULT; Schema: public; Owner: root
 --
 
-ALTER TABLE ONLY public.reel_views ALTER COLUMN id SET DEFAULT nextval('public.reel_views_id_seq'::regclass);
+ALTER TABLE ONLY public.reel_interactions ALTER COLUMN id SET DEFAULT nextval('public.reel_interactions_id_seq'::regclass);
 
 
 --
@@ -736,11 +744,19 @@ ALTER TABLE ONLY public.letters
 
 
 --
--- Name: reel_views reel_views_pkey; Type: CONSTRAINT; Schema: public; Owner: root
+-- Name: reel_interactions reel_interactions_pkey; Type: CONSTRAINT; Schema: public; Owner: root
 --
 
-ALTER TABLE ONLY public.reel_views
-    ADD CONSTRAINT reel_views_pkey PRIMARY KEY (id);
+ALTER TABLE ONLY public.reel_interactions
+    ADD CONSTRAINT reel_interactions_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: reel_interactions reel_interactions_reel_id_user_id_key; Type: CONSTRAINT; Schema: public; Owner: root
+--
+
+ALTER TABLE ONLY public.reel_interactions
+    ADD CONSTRAINT reel_interactions_reel_id_user_id_key UNIQUE (reel_id, user_id);
 
 
 --
@@ -924,19 +940,19 @@ ALTER TABLE ONLY public.letters
 
 
 --
--- Name: reel_views reel_views_reel_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: root
+-- Name: reel_interactions reel_interactions_reel_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: root
 --
 
-ALTER TABLE ONLY public.reel_views
-    ADD CONSTRAINT reel_views_reel_id_fkey FOREIGN KEY (reel_id) REFERENCES public.reels(id) ON DELETE CASCADE;
+ALTER TABLE ONLY public.reel_interactions
+    ADD CONSTRAINT reel_interactions_reel_id_fkey FOREIGN KEY (reel_id) REFERENCES public.reels(id) ON DELETE CASCADE;
 
 
 --
--- Name: reel_views reel_views_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: root
+-- Name: reel_interactions reel_interactions_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: root
 --
 
-ALTER TABLE ONLY public.reel_views
-    ADD CONSTRAINT reel_views_user_id_fkey FOREIGN KEY (user_id) REFERENCES public.users(id) ON UPDATE CASCADE ON DELETE CASCADE;
+ALTER TABLE ONLY public.reel_interactions
+    ADD CONSTRAINT reel_interactions_user_id_fkey FOREIGN KEY (user_id) REFERENCES public.users(id) ON DELETE CASCADE;
 
 
 --
@@ -1071,5 +1087,5 @@ ALTER TABLE ONLY public.words
 -- PostgreSQL database dump complete
 --
 
-\unrestrict lcWcR8vGb8dth4kC0wtQbEF94Va1rbxXXv7z8MTRlxmUyvVP3NFBck3mfFjwduT
+\unrestrict q5tgDnm5BIfP5XzD6kyXOR6J5lbdg9Ks4Ga2gWTaiMmZeBbB5KS7rb3hAY87uE3
 
