@@ -26,12 +26,12 @@ const dictionaryModel = {
         LEFT JOIN translations t
             ON t.word_id = w.id
 
+        LEFT JOIN languages tl
+            ON tl.code = $2          -- native_language_code
+
         LEFT JOIN words tw
             ON tw.id = t.translation_word_id
-
-        LEFT JOIN languages tl
-            ON tl.id = tw.language_id
-        AND tl.code = $2             -- translation_language_code
+            AND tw.language_id = tl.id   -- only translations in native language
 
         GROUP BY w.id;
         `;
