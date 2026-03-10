@@ -2,7 +2,7 @@
 -- PostgreSQL database dump
 --
 
-\restrict EbcSdtXvP8BlkhISuEfsmq4dNNBx6L4SzXgeKFpTCSgIA5w7D1X9FV9VRoxOKab
+\restrict lcWcR8vGb8dth4kC0wtQbEF94Va1rbxXXv7z8MTRlxmUyvVP3NFBck3mfFjwduT
 
 -- Dumped from database version 16.13 (Ubuntu 16.13-0ubuntu0.24.04.1)
 -- Dumped by pg_dump version 16.13 (Ubuntu 16.13-0ubuntu0.24.04.1)
@@ -936,7 +936,7 @@ ALTER TABLE ONLY public.reel_views
 --
 
 ALTER TABLE ONLY public.reel_views
-    ADD CONSTRAINT reel_views_user_id_fkey FOREIGN KEY (user_id) REFERENCES public.users(id) ON DELETE CASCADE;
+    ADD CONSTRAINT reel_views_user_id_fkey FOREIGN KEY (user_id) REFERENCES public.users(id) ON UPDATE CASCADE ON DELETE CASCADE;
 
 
 --
@@ -944,7 +944,7 @@ ALTER TABLE ONLY public.reel_views
 --
 
 ALTER TABLE ONLY public.reels
-    ADD CONSTRAINT reels_created_by_fkey FOREIGN KEY (created_by) REFERENCES public.users(id) ON DELETE SET NULL;
+    ADD CONSTRAINT reels_created_by_fkey FOREIGN KEY (created_by) REFERENCES public.users(id) ON UPDATE CASCADE ON DELETE SET NULL;
 
 
 --
@@ -1040,7 +1040,7 @@ ALTER TABLE ONLY public.user_languages
 --
 
 ALTER TABLE ONLY public.user_languages
-    ADD CONSTRAINT user_languages_user_id_fkey FOREIGN KEY (user_id) REFERENCES public.users(id) ON DELETE CASCADE;
+    ADD CONSTRAINT user_languages_user_id_fkey FOREIGN KEY (user_id) REFERENCES public.users(id) ON UPDATE CASCADE ON DELETE CASCADE;
 
 
 --
@@ -1048,7 +1048,7 @@ ALTER TABLE ONLY public.user_languages
 --
 
 ALTER TABLE ONLY public.user_vocabulary
-    ADD CONSTRAINT user_vocabulary_user_id_fkey FOREIGN KEY (user_id) REFERENCES public.users(id) ON DELETE CASCADE;
+    ADD CONSTRAINT user_vocabulary_user_id_fkey FOREIGN KEY (user_id) REFERENCES public.users(id) ON UPDATE CASCADE ON DELETE CASCADE;
 
 
 --
@@ -1071,5 +1071,5 @@ ALTER TABLE ONLY public.words
 -- PostgreSQL database dump complete
 --
 
-\unrestrict EbcSdtXvP8BlkhISuEfsmq4dNNBx6L4SzXgeKFpTCSgIA5w7D1X9FV9VRoxOKab
+\unrestrict lcWcR8vGb8dth4kC0wtQbEF94Va1rbxXXv7z8MTRlxmUyvVP3NFBck3mfFjwduT
 
