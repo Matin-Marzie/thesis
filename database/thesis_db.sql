@@ -2,7 +2,7 @@
 -- PostgreSQL database dump
 --
 
-\restrict Utg2vzZJQ1HGEq1U7ELP65hzNimsrV6WuXCLfFsk3VqcwQTFGfZbxOeXOhI3GCn
+\restrict EbcSdtXvP8BlkhISuEfsmq4dNNBx6L4SzXgeKFpTCSgIA5w7D1X9FV9VRoxOKab
 
 -- Dumped from database version 16.13 (Ubuntu 16.13-0ubuntu0.24.04.1)
 -- Dumped by pg_dump version 16.13 (Ubuntu 16.13-0ubuntu0.24.04.1)
@@ -47,6 +47,78 @@ COMMENT ON FUNCTION public.update_last_login_on_refresh_token() IS 'Automaticall
 SET default_tablespace = '';
 
 SET default_table_access_method = heap;
+
+--
+-- Name: dialogue_sentences; Type: TABLE; Schema: public; Owner: root
+--
+
+CREATE TABLE public.dialogue_sentences (
+    id bigint NOT NULL,
+    dialogue_id bigint NOT NULL,
+    sentence_id bigint NOT NULL,
+    "position" smallint NOT NULL,
+    start_time_ms integer,
+    end_time_ms integer,
+    CONSTRAINT valid_time CHECK ((((start_time_ms IS NULL) AND (end_time_ms IS NULL)) OR (end_time_ms > start_time_ms)))
+);
+
+
+ALTER TABLE public.dialogue_sentences OWNER TO root;
+
+--
+-- Name: dialogue_sentences_id_seq; Type: SEQUENCE; Schema: public; Owner: root
+--
+
+CREATE SEQUENCE public.dialogue_sentences_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.dialogue_sentences_id_seq OWNER TO root;
+
+--
+-- Name: dialogue_sentences_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: root
+--
+
+ALTER SEQUENCE public.dialogue_sentences_id_seq OWNED BY public.dialogue_sentences.id;
+
+
+--
+-- Name: dialogues; Type: TABLE; Schema: public; Owner: root
+--
+
+CREATE TABLE public.dialogues (
+    id bigint NOT NULL,
+    language_id integer NOT NULL,
+    created_at timestamp with time zone DEFAULT now() NOT NULL
+);
+
+
+ALTER TABLE public.dialogues OWNER TO root;
+
+--
+-- Name: dialogues_id_seq; Type: SEQUENCE; Schema: public; Owner: root
+--
+
+CREATE SEQUENCE public.dialogues_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.dialogues_id_seq OWNER TO root;
+
+--
+-- Name: dialogues_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: root
+--
+
+ALTER SEQUENCE public.dialogues_id_seq OWNED BY public.dialogues.id;
+
 
 --
 -- Name: languages; Type: TABLE; Schema: public; Owner: root
@@ -118,6 +190,82 @@ ALTER SEQUENCE public.letters_id_seq OWNER TO root;
 --
 
 ALTER SEQUENCE public.letters_id_seq OWNED BY public.letters.id;
+
+
+--
+-- Name: reel_views; Type: TABLE; Schema: public; Owner: root
+--
+
+CREATE TABLE public.reel_views (
+    id bigint NOT NULL,
+    reel_id bigint NOT NULL,
+    user_id bigint NOT NULL,
+    viewed_at timestamp with time zone DEFAULT now() NOT NULL
+);
+
+
+ALTER TABLE public.reel_views OWNER TO root;
+
+--
+-- Name: reel_views_id_seq; Type: SEQUENCE; Schema: public; Owner: root
+--
+
+CREATE SEQUENCE public.reel_views_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.reel_views_id_seq OWNER TO root;
+
+--
+-- Name: reel_views_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: root
+--
+
+ALTER SEQUENCE public.reel_views_id_seq OWNED BY public.reel_views.id;
+
+
+--
+-- Name: reels; Type: TABLE; Schema: public; Owner: root
+--
+
+CREATE TABLE public.reels (
+    id bigint NOT NULL,
+    language_id integer,
+    dialogue_id bigint,
+    created_by bigint,
+    url text NOT NULL,
+    thumbnail_url text,
+    title text,
+    description text,
+    duration smallint,
+    created_at timestamp with time zone DEFAULT now() NOT NULL
+);
+
+
+ALTER TABLE public.reels OWNER TO root;
+
+--
+-- Name: reels_id_seq; Type: SEQUENCE; Schema: public; Owner: root
+--
+
+CREATE SEQUENCE public.reels_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.reels_id_seq OWNER TO root;
+
+--
+-- Name: reels_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: root
+--
+
+ALTER SEQUENCE public.reels_id_seq OWNED BY public.reels.id;
 
 
 --
@@ -434,6 +582,20 @@ ALTER SEQUENCE public.words_id_seq OWNED BY public.words.id;
 
 
 --
+-- Name: dialogue_sentences id; Type: DEFAULT; Schema: public; Owner: root
+--
+
+ALTER TABLE ONLY public.dialogue_sentences ALTER COLUMN id SET DEFAULT nextval('public.dialogue_sentences_id_seq'::regclass);
+
+
+--
+-- Name: dialogues id; Type: DEFAULT; Schema: public; Owner: root
+--
+
+ALTER TABLE ONLY public.dialogues ALTER COLUMN id SET DEFAULT nextval('public.dialogues_id_seq'::regclass);
+
+
+--
 -- Name: languages id; Type: DEFAULT; Schema: public; Owner: root
 --
 
@@ -445,6 +607,20 @@ ALTER TABLE ONLY public.languages ALTER COLUMN id SET DEFAULT nextval('public.la
 --
 
 ALTER TABLE ONLY public.letters ALTER COLUMN id SET DEFAULT nextval('public.letters_id_seq'::regclass);
+
+
+--
+-- Name: reel_views id; Type: DEFAULT; Schema: public; Owner: root
+--
+
+ALTER TABLE ONLY public.reel_views ALTER COLUMN id SET DEFAULT nextval('public.reel_views_id_seq'::regclass);
+
+
+--
+-- Name: reels id; Type: DEFAULT; Schema: public; Owner: root
+--
+
+ALTER TABLE ONLY public.reels ALTER COLUMN id SET DEFAULT nextval('public.reels_id_seq'::regclass);
 
 
 --
@@ -504,6 +680,30 @@ ALTER TABLE ONLY public.words ALTER COLUMN id SET DEFAULT nextval('public.words_
 
 
 --
+-- Name: dialogue_sentences dialogue_sentences_dialogue_id_position_key; Type: CONSTRAINT; Schema: public; Owner: root
+--
+
+ALTER TABLE ONLY public.dialogue_sentences
+    ADD CONSTRAINT dialogue_sentences_dialogue_id_position_key UNIQUE (dialogue_id, "position");
+
+
+--
+-- Name: dialogue_sentences dialogue_sentences_pkey; Type: CONSTRAINT; Schema: public; Owner: root
+--
+
+ALTER TABLE ONLY public.dialogue_sentences
+    ADD CONSTRAINT dialogue_sentences_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: dialogues dialogues_pkey; Type: CONSTRAINT; Schema: public; Owner: root
+--
+
+ALTER TABLE ONLY public.dialogues
+    ADD CONSTRAINT dialogues_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: languages languages_code_key; Type: CONSTRAINT; Schema: public; Owner: root
 --
 
@@ -533,6 +733,22 @@ ALTER TABLE ONLY public.letters
 
 ALTER TABLE ONLY public.letters
     ADD CONSTRAINT letters_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: reel_views reel_views_pkey; Type: CONSTRAINT; Schema: public; Owner: root
+--
+
+ALTER TABLE ONLY public.reel_views
+    ADD CONSTRAINT reel_views_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: reels reels_pkey; Type: CONSTRAINT; Schema: public; Owner: root
+--
+
+ALTER TABLE ONLY public.reels
+    ADD CONSTRAINT reels_pkey PRIMARY KEY (id);
 
 
 --
@@ -668,6 +884,30 @@ COMMENT ON TRIGGER trigger_update_last_login ON public.users IS 'Updates last_lo
 
 
 --
+-- Name: dialogue_sentences dialogue_sentences_dialogue_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: root
+--
+
+ALTER TABLE ONLY public.dialogue_sentences
+    ADD CONSTRAINT dialogue_sentences_dialogue_id_fkey FOREIGN KEY (dialogue_id) REFERENCES public.dialogues(id) ON DELETE CASCADE;
+
+
+--
+-- Name: dialogue_sentences dialogue_sentences_sentence_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: root
+--
+
+ALTER TABLE ONLY public.dialogue_sentences
+    ADD CONSTRAINT dialogue_sentences_sentence_id_fkey FOREIGN KEY (sentence_id) REFERENCES public.sentences(id);
+
+
+--
+-- Name: dialogues dialogues_language_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: root
+--
+
+ALTER TABLE ONLY public.dialogues
+    ADD CONSTRAINT dialogues_language_id_fkey FOREIGN KEY (language_id) REFERENCES public.languages(id);
+
+
+--
 -- Name: user_vocabulary fk_user_vocabulary_user_languages; Type: FK CONSTRAINT; Schema: public; Owner: root
 --
 
@@ -681,6 +921,46 @@ ALTER TABLE ONLY public.user_vocabulary
 
 ALTER TABLE ONLY public.letters
     ADD CONSTRAINT letters_language_id_fkey FOREIGN KEY (language_id) REFERENCES public.languages(id) ON DELETE CASCADE;
+
+
+--
+-- Name: reel_views reel_views_reel_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: root
+--
+
+ALTER TABLE ONLY public.reel_views
+    ADD CONSTRAINT reel_views_reel_id_fkey FOREIGN KEY (reel_id) REFERENCES public.reels(id) ON DELETE CASCADE;
+
+
+--
+-- Name: reel_views reel_views_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: root
+--
+
+ALTER TABLE ONLY public.reel_views
+    ADD CONSTRAINT reel_views_user_id_fkey FOREIGN KEY (user_id) REFERENCES public.users(id) ON DELETE CASCADE;
+
+
+--
+-- Name: reels reels_created_by_fkey; Type: FK CONSTRAINT; Schema: public; Owner: root
+--
+
+ALTER TABLE ONLY public.reels
+    ADD CONSTRAINT reels_created_by_fkey FOREIGN KEY (created_by) REFERENCES public.users(id) ON DELETE SET NULL;
+
+
+--
+-- Name: reels reels_dialogue_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: root
+--
+
+ALTER TABLE ONLY public.reels
+    ADD CONSTRAINT reels_dialogue_id_fkey FOREIGN KEY (dialogue_id) REFERENCES public.dialogues(id) ON DELETE SET NULL;
+
+
+--
+-- Name: reels reels_language_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: root
+--
+
+ALTER TABLE ONLY public.reels
+    ADD CONSTRAINT reels_language_id_fkey FOREIGN KEY (language_id) REFERENCES public.languages(id);
 
 
 --
@@ -791,5 +1071,5 @@ ALTER TABLE ONLY public.words
 -- PostgreSQL database dump complete
 --
 
-\unrestrict Utg2vzZJQ1HGEq1U7ELP65hzNimsrV6WuXCLfFsk3VqcwQTFGfZbxOeXOhI3GCn
+\unrestrict EbcSdtXvP8BlkhISuEfsmq4dNNBx6L4SzXgeKFpTCSgIA5w7D1X9FV9VRoxOKab
 
