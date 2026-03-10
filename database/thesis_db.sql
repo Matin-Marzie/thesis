@@ -2,7 +2,7 @@
 -- PostgreSQL database dump
 --
 
-\restrict KXMKGlV3vWUlKODmzEuJoq6tVpWkNYnodUO5ugzw04OticdImuS8YWEF8vxMbtg
+\restrict Utg2vzZJQ1HGEq1U7ELP65hzNimsrV6WuXCLfFsk3VqcwQTFGfZbxOeXOhI3GCn
 
 -- Dumped from database version 16.13 (Ubuntu 16.13-0ubuntu0.24.04.1)
 -- Dumped by pg_dump version 16.13 (Ubuntu 16.13-0ubuntu0.24.04.1)
@@ -118,6 +118,114 @@ ALTER SEQUENCE public.letters_id_seq OWNER TO root;
 --
 
 ALTER SEQUENCE public.letters_id_seq OWNED BY public.letters.id;
+
+
+--
+-- Name: sentence_tokens; Type: TABLE; Schema: public; Owner: root
+--
+
+CREATE TABLE public.sentence_tokens (
+    id bigint NOT NULL,
+    sentence_id bigint NOT NULL,
+    word_id integer NOT NULL,
+    "position" smallint NOT NULL,
+    part_of_speech character varying(10),
+    created_at timestamp with time zone DEFAULT now() NOT NULL
+);
+
+
+ALTER TABLE public.sentence_tokens OWNER TO root;
+
+--
+-- Name: sentence_tokens_id_seq; Type: SEQUENCE; Schema: public; Owner: root
+--
+
+CREATE SEQUENCE public.sentence_tokens_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.sentence_tokens_id_seq OWNER TO root;
+
+--
+-- Name: sentence_tokens_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: root
+--
+
+ALTER SEQUENCE public.sentence_tokens_id_seq OWNED BY public.sentence_tokens.id;
+
+
+--
+-- Name: sentence_translations; Type: TABLE; Schema: public; Owner: root
+--
+
+CREATE TABLE public.sentence_translations (
+    id bigint NOT NULL,
+    sentence_id bigint NOT NULL,
+    translation_sentence_id bigint NOT NULL
+);
+
+
+ALTER TABLE public.sentence_translations OWNER TO root;
+
+--
+-- Name: sentence_translations_id_seq; Type: SEQUENCE; Schema: public; Owner: root
+--
+
+CREATE SEQUENCE public.sentence_translations_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.sentence_translations_id_seq OWNER TO root;
+
+--
+-- Name: sentence_translations_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: root
+--
+
+ALTER SEQUENCE public.sentence_translations_id_seq OWNED BY public.sentence_translations.id;
+
+
+--
+-- Name: sentences; Type: TABLE; Schema: public; Owner: root
+--
+
+CREATE TABLE public.sentences (
+    id bigint NOT NULL,
+    language_id integer NOT NULL,
+    text text NOT NULL,
+    normalized_text text,
+    audio_url text,
+    created_at timestamp with time zone DEFAULT now() NOT NULL
+);
+
+
+ALTER TABLE public.sentences OWNER TO root;
+
+--
+-- Name: sentences_id_seq; Type: SEQUENCE; Schema: public; Owner: root
+--
+
+CREATE SEQUENCE public.sentences_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.sentences_id_seq OWNER TO root;
+
+--
+-- Name: sentences_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: root
+--
+
+ALTER SEQUENCE public.sentences_id_seq OWNED BY public.sentences.id;
 
 
 --
@@ -340,6 +448,27 @@ ALTER TABLE ONLY public.letters ALTER COLUMN id SET DEFAULT nextval('public.lett
 
 
 --
+-- Name: sentence_tokens id; Type: DEFAULT; Schema: public; Owner: root
+--
+
+ALTER TABLE ONLY public.sentence_tokens ALTER COLUMN id SET DEFAULT nextval('public.sentence_tokens_id_seq'::regclass);
+
+
+--
+-- Name: sentence_translations id; Type: DEFAULT; Schema: public; Owner: root
+--
+
+ALTER TABLE ONLY public.sentence_translations ALTER COLUMN id SET DEFAULT nextval('public.sentence_translations_id_seq'::regclass);
+
+
+--
+-- Name: sentences id; Type: DEFAULT; Schema: public; Owner: root
+--
+
+ALTER TABLE ONLY public.sentences ALTER COLUMN id SET DEFAULT nextval('public.sentences_id_seq'::regclass);
+
+
+--
 -- Name: user_languages id; Type: DEFAULT; Schema: public; Owner: root
 --
 
@@ -404,6 +533,46 @@ ALTER TABLE ONLY public.letters
 
 ALTER TABLE ONLY public.letters
     ADD CONSTRAINT letters_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: sentence_tokens sentence_tokens_pkey; Type: CONSTRAINT; Schema: public; Owner: root
+--
+
+ALTER TABLE ONLY public.sentence_tokens
+    ADD CONSTRAINT sentence_tokens_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: sentence_tokens sentence_tokens_sentence_id_position_key; Type: CONSTRAINT; Schema: public; Owner: root
+--
+
+ALTER TABLE ONLY public.sentence_tokens
+    ADD CONSTRAINT sentence_tokens_sentence_id_position_key UNIQUE (sentence_id, "position");
+
+
+--
+-- Name: sentence_translations sentence_translations_pkey; Type: CONSTRAINT; Schema: public; Owner: root
+--
+
+ALTER TABLE ONLY public.sentence_translations
+    ADD CONSTRAINT sentence_translations_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: sentence_translations sentence_translations_sentence_id_translation_sentence_id_key; Type: CONSTRAINT; Schema: public; Owner: root
+--
+
+ALTER TABLE ONLY public.sentence_translations
+    ADD CONSTRAINT sentence_translations_sentence_id_translation_sentence_id_key UNIQUE (sentence_id, translation_sentence_id);
+
+
+--
+-- Name: sentences sentences_pkey; Type: CONSTRAINT; Schema: public; Owner: root
+--
+
+ALTER TABLE ONLY public.sentences
+    ADD CONSTRAINT sentences_pkey PRIMARY KEY (id);
 
 
 --
@@ -515,6 +684,46 @@ ALTER TABLE ONLY public.letters
 
 
 --
+-- Name: sentence_tokens sentence_tokens_sentence_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: root
+--
+
+ALTER TABLE ONLY public.sentence_tokens
+    ADD CONSTRAINT sentence_tokens_sentence_id_fkey FOREIGN KEY (sentence_id) REFERENCES public.sentences(id) ON DELETE CASCADE;
+
+
+--
+-- Name: sentence_tokens sentence_tokens_word_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: root
+--
+
+ALTER TABLE ONLY public.sentence_tokens
+    ADD CONSTRAINT sentence_tokens_word_id_fkey FOREIGN KEY (word_id) REFERENCES public.words(id);
+
+
+--
+-- Name: sentence_translations sentence_translations_sentence_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: root
+--
+
+ALTER TABLE ONLY public.sentence_translations
+    ADD CONSTRAINT sentence_translations_sentence_id_fkey FOREIGN KEY (sentence_id) REFERENCES public.sentences(id) ON DELETE CASCADE;
+
+
+--
+-- Name: sentence_translations sentence_translations_translation_sentence_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: root
+--
+
+ALTER TABLE ONLY public.sentence_translations
+    ADD CONSTRAINT sentence_translations_translation_sentence_id_fkey FOREIGN KEY (translation_sentence_id) REFERENCES public.sentences(id) ON DELETE CASCADE;
+
+
+--
+-- Name: sentences sentences_language_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: root
+--
+
+ALTER TABLE ONLY public.sentences
+    ADD CONSTRAINT sentences_language_id_fkey FOREIGN KEY (language_id) REFERENCES public.languages(id);
+
+
+--
 -- Name: word_translations translations_translation_word_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: root
 --
 
@@ -582,5 +791,5 @@ ALTER TABLE ONLY public.words
 -- PostgreSQL database dump complete
 --
 
-\unrestrict KXMKGlV3vWUlKODmzEuJoq6tVpWkNYnodUO5ugzw04OticdImuS8YWEF8vxMbtg
+\unrestrict Utg2vzZJQ1HGEq1U7ELP65hzNimsrV6WuXCLfFsk3VqcwQTFGfZbxOeXOhI3GCn
 
