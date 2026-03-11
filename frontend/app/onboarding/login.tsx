@@ -42,7 +42,7 @@ export default function LoginScreen() {
   const width = Dimensions.get('window').width;
   const height = Dimensions.get('window').height;
 
-  const { updateUserProfile, setUserProgress, vocabularyDispatch, setIsAuthenticated, setHasCompletedOnboarding } = useAppContext();
+  const { updateUserProfile, setUserProgress, vocabularyDispatch, setIsAuthenticated, setHasCompletedOnboarding, hasCompletedOnboarding } = useAppContext();
   const router = useRouter();
 
   const [usernameOrEmail, setUsernameOrEmail] = useState('');
@@ -222,12 +222,15 @@ export default function LoginScreen() {
             )}
           </TouchableOpacity>
 
-          <View style={styles.registerLink}>
-            <Text style={styles.registerLinkText}>Don't have an account? </Text>
-            <TouchableOpacity onPress={() => router.push('/onboarding/register')}>
-              <Text style={styles.registerLinkLink}>Sign up</Text>
-            </TouchableOpacity>
-          </View>
+          {/* SIGN UP */}
+          {hasCompletedOnboarding && (
+            <View style={styles.registerLink}>
+              <Text style={styles.registerLinkText}>Don't have an account? </Text>
+              <TouchableOpacity onPress={() => router.push('/onboarding/register')}>
+                <Text style={styles.registerLinkLink}>Sign up</Text>
+              </TouchableOpacity>
+            </View>
+          )}
         </View>
 
         {/* Google Sign-In Button */}
