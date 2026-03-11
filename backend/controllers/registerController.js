@@ -88,7 +88,6 @@ const registerController = async (req, res) => {
     const accessToken = jwt.sign(
       {
         id: newUser.id,
-        email: newUser.email,
         username: newUser.username,
       },
       process.env.ACCESS_TOKEN_SECRET,
