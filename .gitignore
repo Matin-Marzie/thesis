@@ -3,11 +3,31 @@
 .env.local
 .env.*.local
 
-# vscode
+# IDE
 .vscode/
+.idea/
+*.swp
+*.swo
 
-# dependencies
+# Node.js dependencies
 node_modules/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+venv/
+.venv/
+env/
+ENV/
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+.nox/
+.mypy_cache/
+*.egg-info/
+build/
 
 # Logs
 logs/
@@ -36,8 +56,9 @@ npm-debug.*
 yarn-debug.*
 yarn-error.*
 
-# macOS
+# macOS / Windows
 .DS_Store
+Thumbs.db
 *.pem
 
 # local env files
@@ -54,4 +75,5 @@ frontend/android
 # lock files
 package-lock.json
 
+# ----------Database----------
 database/execute.sql
