@@ -1,9 +1,11 @@
-from fastapi import APIRouter, Depends, HTTPException, Query, status
+from fastapi import APIRouter, Depends, HTTPException, Query, Header, status
 from sqlalchemy.ext.asyncio import AsyncSession
+from typing import Optional, Union
 
 from app.db import get_db
 from app.services.reel_service import ReelService
 from app.schemas.reel import ReelsListResponse
+from app.core.security import decode_access_token, extract_token_from_header
 
 
 router = APIRouter(prefix="/reels", tags=["reels"])
@@ -11,7 +13,7 @@ router = APIRouter(prefix="/reels", tags=["reels"])
 
 @router.get(
     "",
-    response_model=ReelsListResponse,
+    response_model=None,
     summary="Get random reels",
     description="Retrieve a list of random reels based on the user's native and learning language.",
     responses={
@@ -41,14 +43,17 @@ async def get_reels(
         le=50,
         description="Number of reels to return (default: 10, max: 50)"
     ),
+    authorization: Optional[str] = Header(None, description="Bearer access token"),
     db: AsyncSession = Depends(get_db)
-) -> ReelsListResponse:
+) -> Union[ReelsListResponse, dict]:
     """
     Get random reels for language learning.
     
     This endpoint returns random reels in the learning language with
-    translations provided in the native language. No authentication
-    is required for this endpoint.
+    translations provided in the native language.
+    
+    - If authenticated: Returns personalized reels (future: ML/Cosine similarity)
+    - If not authenticated: Returns random reels
     
     Parameters:
     - **native_language_code**: The ISO 639-1 code of the user's native language.
@@ -56,33 +61,50 @@ async def get_reels(
     - **learning_language_code**: The ISO 639-1 code of the language being learned.
       Reels will be filtered to show content in this language.
     - **limit**: Maximum number of reels to return (1-50, default: 10)
+    - **authorization**: Optional Bearer token for authenticated requests
     
     Returns:
     - List of reels with dialogue, sentences, tokens, and translations
     """
-    # Validate that the languages are different
-    if native_language_code == learning_language_code:
-        raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            detail="Native and learning language codes must be different"
+    # Check for authentication
+    token = extract_token_from_header(authorization)
+    user_id, username = None, None
+    
+    if token:
+        user_id, username = decode_access_token(token)
+    
+    # If authenticated, return placeholder message (future: personalized reels)
+    if user_id:
+        return {
+            "message": "user is authenticated",
+            "user_id": user_id,
+            "username": username
+        }
+    # If not authenticated, return random reels based on language parameters
+    else:
+        # Validate that the languages are different
+        if native_language_code == learning_language_code:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail="Native and learning language codes must be different"
+            )
+        
+        # Chech /services/reel_service.py
+        service = ReelService(db)
+        
+        reels, total = await service.get_random_reels(
+            native_language_code=native_language_code,
+            learning_language_code=learning_language_code,
+            limit=limit
         )
-    
-    # Chech /services/reel_service.py
-    service = ReelService(db)
-    
-    reels, total = await service.get_random_reels(
-        native_language_code=native_language_code,
-        learning_language_code=learning_language_code,
-        limit=limit
-    )
-    
-    if total == 0:
-        raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND,
-            detail=f"No reels found for language '{learning_language_code}'"
+        
+        if total == 0:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail=f"No reels found for language '{learning_language_code}'"
+            )
+        
+        return ReelsListResponse(
+            reels=reels,
+            total_reels_available_in_db_for_learning_language=total
         )
-    
-    return ReelsListResponse(
-        reels=reels,
-        total_reels_available_in_db_for_learning_language=total
-    )

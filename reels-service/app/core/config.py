@@ -23,6 +23,9 @@ class Settings(BaseSettings):
     API_V1_PREFIX: str = "/api/v1"
     PROJECT_NAME: str = "Reels Service"
     
+    # JWT Configuration
+    ACCESS_TOKEN_SECRET: str = ""
+    
     @property
     def database_url(self) -> str:
         """Construct the database connection URL."""
