@@ -73,38 +73,43 @@ async def get_reels(
     if token:
         user_id, username = decode_access_token(token)
     
-    # If authenticated, return placeholder message (future: personalized reels)
-    if user_id:
-        return {
-            "message": "user is authenticated",
-            "user_id": user_id,
-            "username": username
-        }
-    # If not authenticated, return random reels based on language parameters
-    else:
-        # Validate that the languages are different
-        if native_language_code == learning_language_code:
-            raise HTTPException(
-                status_code=status.HTTP_400_BAD_REQUEST,
-                detail="Native and learning language codes must be different"
-            )
-        
-        # Chech /services/reel_service.py
-        service = ReelService(db)
-        
+
+    # Validate that the languages are different
+    if native_language_code == learning_language_code:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Native and learning language codes must be different"
+        )
+    
+    # Chech /services/reel_service.py
+    service = ReelService(db)
+
+    if user_id: # Authenticated user
+        # reels, total = await service.get_personalized_reels(
+        #     user_id=user_id,
+        #     native_language_code=native_language_code,
+        #     learning_language_code=learning_language_code,
+        #     limit=limit
+        # )
+        reels, total = await service.get_random_reels(
+        native_language_code=native_language_code,
+        learning_language_code=learning_language_code,
+        limit=limit
+        )
+    else: # Not authenticated user
         reels, total = await service.get_random_reels(
             native_language_code=native_language_code,
             learning_language_code=learning_language_code,
             limit=limit
         )
-        
-        if total == 0:
-            raise HTTPException(
-                status_code=status.HTTP_404_NOT_FOUND,
-                detail=f"No reels found for language '{learning_language_code}'"
-            )
-        
-        return ReelsListResponse(
-            reels=reels,
-            total_reels_available_in_db_for_learning_language=total
+    
+    if total == 0:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f"No reels found for language '{learning_language_code}'"
         )
+    
+    return ReelsListResponse(
+        reels=reels,
+        total_reels_available_in_db_for_learning_language=total
+    )
