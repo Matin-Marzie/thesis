@@ -25,7 +25,7 @@ import { REELS_LIMIT } from '../constants/Reels';
  * @property {boolean} isFetchingMore
  * @property {boolean} hasMore
  * @property {string|null} error
- * @property {() => Promise<void>} fetchReels
+ * @property {(refresh?: boolean) => Promise<void>} fetchReels
  * @property {() => void} resetReels
  */
 
