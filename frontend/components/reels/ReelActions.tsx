@@ -1,18 +1,19 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, StyleProp, ViewStyle } from 'react-native';
-import { FontAwesome } from '@expo/vector-icons';
+import { FontAwesome, MaterialIcons } from '@expo/vector-icons';
 import Animated, { AnimatedStyle } from 'react-native-reanimated';
 
 interface ReelActionsProps {
   isLiked: boolean;
-  isSaved: boolean;
   likesCount: number;
   commentsCount: number;
-  savesCount: number;
+  sharesCount: number;
+  hasDialogue: boolean;
   // Animated style passed down from ReelItem so the spring animation stays outside this component
   animatedLikeStyle: StyleProp<AnimatedStyle<StyleProp<ViewStyle>>>;
   onLike: () => void;
   onComment: () => void;
+  onDialogue: () => void;
   onShare: () => void;
   onMoreOptions: () => void;
 }
@@ -24,17 +25,18 @@ const formatCount = (count: number): string => {
   return count?.toString() || '0';
 };
 
-// Right-side vertical action bar (like, comment, share, save, more)
+// Right-side vertical action bar (like, comment, share, dialogue, more)
 export const ReelActions = React.memo(
   ({
     isLiked,
-    isSaved,
     likesCount,
     commentsCount,
-    savesCount,
+    sharesCount,
+    hasDialogue,
     animatedLikeStyle,
     onLike,
     onComment,
+    onDialogue,
     onShare,
     onMoreOptions,
   }: ReelActionsProps) => (
@@ -60,7 +62,16 @@ export const ReelActions = React.memo(
       {/* Share */}
       <TouchableOpacity style={[styles.actionButton, { paddingHorizontal: 7 }]} onPress={onShare}>
         <FontAwesome name="paper-plane-o" size={26} color="#fff" />
-        <Text style={styles.actionText}>{formatCount(savesCount)}</Text>
+        <Text style={styles.actionText}>{formatCount(sharesCount)}</Text>
+      </TouchableOpacity>
+
+      {/* Dialogue */}
+      <TouchableOpacity
+        style={[styles.actionButton, !hasDialogue && styles.actionButtonDisabled]}
+        onPress={hasDialogue ? onDialogue : undefined}
+        disabled={!hasDialogue}
+      >
+        <MaterialIcons name="subtitles" size={28} color={hasDialogue ? '#fff' : 'rgba(255,255,255,0.35)'} />
       </TouchableOpacity>
 
 
@@ -83,6 +94,9 @@ const styles = StyleSheet.create({
   actionButton: {
     alignItems: 'center',
     padding: 6,
+  },
+  actionButtonDisabled: {
+    opacity: 0.4,
   },
   actionText: {
     color: '#fff',

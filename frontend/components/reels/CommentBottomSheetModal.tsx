@@ -11,7 +11,6 @@ import {
 } from 'react-native';
 import {
   BottomSheetModal,
-  BottomSheetView,
   BottomSheetFlatList,
   BottomSheetBackdrop,
   BottomSheetFooter,
@@ -270,7 +269,7 @@ export function CommentBottomSheetModal({
       ref={sheetRef}
       snapPoints={SNAP_POINTS}
       enablePanDownToClose
-      enableContentPanningGesture={true}
+      enableContentPanningGesture={false}
       keyboardBehavior="extend"
       keyboardBlurBehavior="restore"
       backdropComponent={renderBackdrop}
@@ -281,17 +280,15 @@ export function CommentBottomSheetModal({
     >
 
       {/* Scrollable comment list */}
-      <BottomSheetView style={styles.commentList}>
-        <BottomSheetFlatList
-          data={MOCK_COMMENTS}
-          renderItem={renderItem}
-          keyExtractor={keyExtractor}
-          ListHeaderComponent={ListHeaderComponent}
-          contentContainerStyle={styles.listContent}
-          showsVerticalScrollIndicator={false}
-          keyboardShouldPersistTaps="handled"
-        />
-      </BottomSheetView>
+      <BottomSheetFlatList
+        data={MOCK_COMMENTS}
+        renderItem={renderItem}
+        keyExtractor={keyExtractor}
+        ListHeaderComponent={ListHeaderComponent}
+        contentContainerStyle={styles.listContent}
+        showsVerticalScrollIndicator={false}
+        keyboardShouldPersistTaps="handled"
+      />
 
     </BottomSheetModal>
   );
@@ -308,6 +305,7 @@ const styles = StyleSheet.create({
   handle: {
     backgroundColor: '#444',
     width: 36,
+    marginVertical: 8,
   },
   // List sub-header ("N comments")
   listHeader: {
@@ -317,9 +315,6 @@ const styles = StyleSheet.create({
   listHeaderTitle: {
     color: '#888',
     fontSize: 13,
-  },
-  commentList: {
-    flex: 1,
   },
   listContent: {
     paddingBottom: 80,

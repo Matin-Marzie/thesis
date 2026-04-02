@@ -11,16 +11,16 @@ import { ReelActions } from './ReelActions';
 interface ReelOverlayProps {
   item: any;
   isLiked: boolean;
-  isSaved: boolean;
+  hasDialogue: boolean;
   onLike: () => void;
-  onSave: () => void;
   onComment: () => void;
+  onDialogue: () => void;
 }
 
 // Translucent overlay rendered on top of the video.
 // Splits into three zones: creator info (top), action bar (right), title + tag (bottom).
 export const ReelOverlay = React.memo(
-  ({ item, isLiked, isSaved, onLike, onSave, onComment }: ReelOverlayProps) => {
+  ({ item, isLiked, hasDialogue, onLike, onComment, onDialogue }: ReelOverlayProps) => {
     // Spring animation for the like button
     const likeScale = useSharedValue(1);
     const animatedLikeStyle = useAnimatedStyle(() => ({
@@ -71,15 +71,15 @@ export const ReelOverlay = React.memo(
         {/* Right: vertical action bar */}
         <ReelActions
           isLiked={isLiked}
-          isSaved={isSaved}
           likesCount={item.stats?.likes || 0}
           commentsCount={item.stats?.comments || 0}
-          savesCount={item.stats?.saves || 0}
+          sharesCount={item.stats?.shares || 0}
           animatedLikeStyle={animatedLikeStyle}
           onLike={handleLike}
           onComment={onComment}
+          hasDialogue={hasDialogue}
+          onDialogue={onDialogue}
           onShare={handleShare}
-          onSave={onSave}
           onMoreOptions={handleMoreOptions}
         />
         

@@ -1,8 +1,8 @@
 // Language metadata for easy lookup
 export const LANGUAGES_META = {
-  english: { id: 1, name: 'English', nativeName: 'English', flag: '🇬🇧', code: 'en' },
-  greek:   { id: 2, name: 'Greek', nativeName: 'Ελληνικά', flag: '🇬🇷', code: 'el' },
-  farsi:   { id: 3, name: 'Farsi', nativeName: 'فارسی', flag: '🇮🇷', code: 'fa' },
+  english: { id: 1, name: 'English', nativeName: 'English', flag: '🇬🇧', code: 'en', rightToLeft: false },
+  greek:   { id: 2, name: 'Greek', nativeName: 'Ελληνικά', flag: '🇬🇷', code: 'el', rightToLeft: false },
+  farsi:   { id: 3, name: 'Farsi', nativeName: 'فارسی', flag: '🇮🇷', code: 'fa', rightToLeft: true },
 };
 
 // Supported language pairs for onboarding

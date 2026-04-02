@@ -15,6 +15,9 @@ import Animated, {
 import { API_BASE_URL } from '@/config/api.config';
 import { ReelOverlay } from './ReelOverlay';
 import { CommentBottomSheetModal } from './CommentBottomSheetModal';
+import { DialogueBottomSheetModal } from './DialogueBottomSheetModal';
+import { WordMeaningPopup } from './WordMeaningPopup';
+import type { Word } from '../../types/dialogue';
 
 const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get('window');
 
@@ -37,7 +40,10 @@ export const ReelItem = React.memo(
   ({ item, isActive, isScreenFocused }: ReelItemProps) => {
     const [isLiked, setIsLiked] = useState(item.user_interaction?.is_liked || false);
     const [isCommentOpen, setIsCommentOpen] = useState(false);
+    const [isDialogueOpen, setIsDialogueOpen] = useState(false);
     const [isPaused, setIsPaused] = useState(false);
+    const [popupWord, setPopupWord] = useState<Word | null>(null);
+    const [popupTranslation, setPopupTranslation] = useState('');
     const pauseIconOpacity = useSharedValue(0);
     const animatedPauseIconStyle = useAnimatedStyle(() => ({
       opacity: pauseIconOpacity.value,
@@ -85,6 +91,17 @@ export const ReelItem = React.memo(
     const handleLike = useCallback(() => setIsLiked((prev: boolean) => !prev), []);
     const handleCommentOpen = useCallback(() => setIsCommentOpen(true), []);
     const handleCommentClose = useCallback(() => setIsCommentOpen(false), []);
+    const handleDialogueOpen = useCallback(() => setIsDialogueOpen(true), []);
+    const handleDialogueClose = useCallback(() => setIsDialogueOpen(false), []);
+    const handleWordPress = useCallback((word: Word, translation: string) => {
+      setPopupWord(word);
+      setPopupTranslation(translation);
+    }, []);
+    const handlePopupClose = useCallback(() => setPopupWord(null), []);
+    const handleAddToVocabulary = useCallback(() => {
+      if (!popupWord) return;
+      console.log('Adding word to vocabulary:', popupWord.written_form);
+    }, [popupWord]);
 
     return (
       <View style={styles.reelContainer}>
@@ -111,7 +128,9 @@ export const ReelItem = React.memo(
         <ReelOverlay
           item={item}
           isLiked={isLiked}
+          hasDialogue={!!(item.dialogue?.sentences?.length)}
           onComment={handleCommentOpen}
+          onDialogue={handleDialogueOpen}
           onLike={handleLike}
         />
 
@@ -120,6 +139,23 @@ export const ReelItem = React.memo(
           visible={isCommentOpen}
           onClose={handleCommentClose}
           sheetHeight={sheetHeight}
+        />
+
+        <DialogueBottomSheetModal
+           reelId={item.id}
+           visible={isDialogueOpen}
+           onClose={handleDialogueClose}
+           reel={item}
+           player={player}
+           onWordPress={handleWordPress}
+        />
+
+        <WordMeaningPopup
+          word={popupWord}
+          translation={popupTranslation}
+          isVisible={!!popupWord}
+          onClose={handlePopupClose}
+          onAddToVocabulary={handleAddToVocabulary}
         />
       </View>
     );
