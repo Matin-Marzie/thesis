@@ -1,10 +1,11 @@
 import React, { useCallback } from 'react';
-import { View, Text, Image, StyleSheet, Platform } from 'react-native';
+import { View, Text, Image, StyleSheet, Platform, Share } from 'react-native';
 import {
   useSharedValue,
   useAnimatedStyle,
   withSpring,
 } from 'react-native-reanimated';
+import Animated from 'react-native-reanimated';
 import { ReelActions } from './ReelActions';
 
 interface ReelOverlayProps {
@@ -13,13 +14,14 @@ interface ReelOverlayProps {
   isSaved: boolean;
   onLike: () => void;
   onSave: () => void;
+  onComment: () => void;
 }
 
 // Translucent overlay rendered on top of the video.
 // Splits into three zones: creator info (top), action bar (right), title + tag (bottom).
 export const ReelOverlay = React.memo(
-  ({ item, isLiked, isSaved, onLike, onSave }: ReelOverlayProps) => {
-    // Spring animation for the like button — lives here so it is scoped to the overlay
+  ({ item, isLiked, isSaved, onLike, onSave, onComment }: ReelOverlayProps) => {
+    // Spring animation for the like button
     const likeScale = useSharedValue(1);
     const animatedLikeStyle = useAnimatedStyle(() => ({
       transform: [{ scale: likeScale.value }],
@@ -32,21 +34,23 @@ export const ReelOverlay = React.memo(
       onLike();
     }, [likeScale, onLike]);
 
-    // TODO: wire up comment / share / more-options to real handlers
-    const handleComment = useCallback(() => {
-      console.log('Comment pressed for reel:', item.id);
-    }, [item.id]);
-
-    const handleShare = useCallback(() => {
-      console.log('Share pressed for reel:', item.id);
-    }, [item.id]);
+    const handleShare = useCallback(async () => {
+      try {
+        const username = item.created_by?.username || 'Unknown';
+        await Share.share({
+          message: `${username}:\n${item.url}`,
+        });
+      } catch (e) {
+        // user cancelled or share not supported
+      }
+    }, [item]);
 
     const handleMoreOptions = useCallback(() => {
       console.log('More options pressed for reel:', item.id);
     }, [item.id]);
 
     return (
-      <View style={styles.overlay}>
+      <Animated.View style={styles.overlay} pointerEvents="box-none">
         {/* Top: creator avatar + username */}
         <View style={styles.topSection}>
           <View style={styles.creatorInfo}>
@@ -73,30 +77,18 @@ export const ReelOverlay = React.memo(
           savesCount={item.stats?.saves || 0}
           animatedLikeStyle={animatedLikeStyle}
           onLike={handleLike}
-          onComment={handleComment}
+          onComment={onComment}
           onShare={handleShare}
           onSave={onSave}
           onMoreOptions={handleMoreOptions}
         />
-
-        {/* Bottom: reel title + optional language tag */}
-        <View style={styles.bottomSection}>
-          <Text style={styles.title} numberOfLines={2}>
-            {item.title}
-          </Text>
-          {item.language?.name && (
-            <View style={styles.languageTag}>
-              <Text style={styles.languageText}>{item.language.name}</Text>
-            </View>
-          )}
-        </View>
-      </View>
+        
+      </Animated.View>
     );
   }
 );
 
 const styles = StyleSheet.create({
-  // Fills the entire reel card and distributes children with space-between
   overlay: {
     ...StyleSheet.absoluteFillObject,
     justifyContent: 'space-between',
@@ -125,7 +117,6 @@ const styles = StyleSheet.create({
     textShadowOffset: { width: 1, height: 1 },
     textShadowRadius: 3,
   },
-  // Leaves room for the right-side action bar (paddingRight: 80)
   bottomSection: {
     paddingHorizontal: 16,
     paddingBottom: Platform.OS === 'ios' ? 100 : 80,

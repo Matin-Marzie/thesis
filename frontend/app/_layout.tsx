@@ -7,6 +7,7 @@ import { useEffect } from 'react';
 import { View, ActivityIndicator } from 'react-native';
 import 'react-native-reanimated';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { SafeAreaProvider, initialWindowMetrics } from 'react-native-safe-area-context';
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 
 import { useColorScheme } from '@/components/useColorScheme';
@@ -53,6 +54,7 @@ export default function RootLayout() {
   {/* Render the app with the AppProvider to provide context */ }
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
+      <SafeAreaProvider initialMetrics={initialWindowMetrics}>
       <AppProvider>
         <DictionaryProvider>
           <ReelsProvider>
@@ -62,6 +64,7 @@ export default function RootLayout() {
           </ReelsProvider>
         </DictionaryProvider>
       </AppProvider>
+      </SafeAreaProvider>
     </GestureHandlerRootView>
   );
 }

@@ -1,18 +1,23 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import {
   View,
-  ActivityIndicator,
   StyleSheet,
   Dimensions,
+  Pressable,
 } from 'react-native';
+import { FontAwesome } from '@expo/vector-icons';
 import { useVideoPlayer, VideoView } from 'expo-video';
+import Animated, {
+  useSharedValue,
+  useAnimatedStyle,
+  withTiming,
+} from 'react-native-reanimated';
 import { API_BASE_URL } from '@/config/api.config';
 import { ReelOverlay } from './ReelOverlay';
+import { CommentBottomSheetModal } from './CommentBottomSheetModal';
 
 const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get('window');
 
-// Replaces "localhost" in video URLs with the actual LAN host so physical
-// devices can reach the dev server (extracted from API_BASE_URL).
 const fixVideoUrl = (url: string): string => {
   if (!url) return url;
   const apiHost = API_BASE_URL.match(/https?:\/\/([^:/]+)/)?.[1];
@@ -24,28 +29,28 @@ const fixVideoUrl = (url: string): string => {
 
 interface ReelItemProps {
   item: any;
-  // True when this card is the one currently visible in the FlatList viewport
   isActive: boolean;
-  // False when the user navigates to a different tab
   isScreenFocused: boolean;
 }
 
-// Full-screen reel card: video player + buffering spinner + translucent overlay.
-// Wrapped in React.memo so only active-index or focus changes trigger re-renders.
 export const ReelItem = React.memo(
   ({ item, isActive, isScreenFocused }: ReelItemProps) => {
-    const [isLiked, setIsLiked] = useState(
-      item.user_interaction?.is_liked || false
-    );
-    const [isSaved, setIsSaved] = useState(
-      item.user_interaction?.is_saved || false
-    );
-    // Show a spinner for the first 2 s while the video buffers
-    const [isBuffering, setIsBuffering] = useState(true);
+    const [isLiked, setIsLiked] = useState(item.user_interaction?.is_liked || false);
+    const [isCommentOpen, setIsCommentOpen] = useState(false);
+    const [isPaused, setIsPaused] = useState(false);
+    const pauseIconOpacity = useSharedValue(0);
+    const animatedPauseIconStyle = useAnimatedStyle(() => ({
+      opacity: pauseIconOpacity.value,
+    }));
 
-    // Video should play only when the card is visible AND the screen is active
-    const shouldPlay = isActive && isScreenFocused;
+    // Height of the phantom spacer at the bottom of the flex container.
+    // Growing this value pushes videoContainer (flex: 1) upward naturally.
+    const sheetHeight = useSharedValue(0);
+    const animatedSpacerStyle = useAnimatedStyle(() => ({
+      height: sheetHeight.value,
+    }));
 
+    const shouldPlay = isActive && isScreenFocused && !isPaused;
     const videoUrl = fixVideoUrl(item.url);
 
     const player = useVideoPlayer(videoUrl, (p) => {
@@ -53,19 +58,10 @@ export const ReelItem = React.memo(
       p.muted = false;
     });
 
-    // Track the previous focus state to detect tab-switch returns
     const wasFocusedRef = useRef(isScreenFocused);
 
-    // Hide buffering spinner after a short delay
-    useEffect(() => {
-      const timer = setTimeout(() => setIsBuffering(false), 2000);
-      return () => clearTimeout(timer);
-    }, []);
-
-    // Play / pause and optionally restart from the beginning on tab return
     useEffect(() => {
       if (shouldPlay) {
-        // Returning to this tab after navigating away → restart from beginning
         if (!wasFocusedRef.current && isScreenFocused) {
           player.currentTime = 0;
         }
@@ -76,35 +72,54 @@ export const ReelItem = React.memo(
       wasFocusedRef.current = isScreenFocused;
     }, [shouldPlay, player, isScreenFocused]);
 
-    // TODO: wire to a real like API call
-    const handleLike = () => setIsLiked((prev: boolean) => !prev);
-    // TODO: wire to a real save API call
-    const handleSave = () => setIsSaved((prev: boolean) => !prev);
+    useEffect(() => {
+      pauseIconOpacity.value = isPaused
+        ? withTiming(1, { duration: 150 })
+        : withTiming(0, { duration: 300 });
+    }, [isPaused, pauseIconOpacity]);
+
+    const handleTogglePause = useCallback(() => {
+      setIsPaused((prev) => !prev);
+    }, []);
+
+    const handleLike = useCallback(() => setIsLiked((prev: boolean) => !prev), []);
+    const handleCommentOpen = useCallback(() => setIsCommentOpen(true), []);
+    const handleCommentClose = useCallback(() => setIsCommentOpen(false), []);
 
     return (
       <View style={styles.reelContainer}>
-        {/* Fullscreen video — sits behind everything */}
-        <VideoView
-          player={player}
-          style={styles.video}
-          contentFit="contain"
-          nativeControls={false}
-        />
+        {/* flex: 1 — expands to fill all space above the spacer */}
+        <View style={styles.videoContainer} pointerEvents="none">
+          <VideoView
+            player={player}
+            style={styles.video}
+            contentFit="contain"
+            nativeControls={false}
+          />
+        </View>
 
-        {/* Spinner shown while the video is still buffering */}
-        {isBuffering && (
-          <View style={styles.bufferingOverlay}>
-            <ActivityIndicator size="large" color="#fff" />
-          </View>
-        )}
+        {/* Phantom spacer — grows as the comment sheet opens, pushing the video up */}
+        <Animated.View style={animatedSpacerStyle} />
 
-        {/* Creator info + action bar + title / language tag */}
+        {/* Tap-to-pause layer */}
+        <Pressable style={styles.tapOverlay} onPress={handleTogglePause}>
+          <Animated.View style={[styles.pauseIconContainer, animatedPauseIconStyle]}>
+            <FontAwesome name="pause" size={30} color="rgba(255,255,255,0.85)" />
+          </Animated.View>
+        </Pressable>
+
         <ReelOverlay
           item={item}
           isLiked={isLiked}
-          isSaved={isSaved}
+          onComment={handleCommentOpen}
           onLike={handleLike}
-          onSave={handleSave}
+        />
+
+        <CommentBottomSheetModal
+          reelId={item.id}
+          visible={isCommentOpen}
+          onClose={handleCommentClose}
+          sheetHeight={sheetHeight}
         />
       </View>
     );
@@ -116,14 +131,27 @@ const styles = StyleSheet.create({
     width: SCREEN_WIDTH,
     height: SCREEN_HEIGHT,
     backgroundColor: '#000',
+    // Default flexDirection is 'column' — videoContainer + spacer stack vertically
+  },
+  videoContainer: {
+    flex: 1, // takes all height not claimed by the spacer
+    overflow: 'hidden',
   },
   video: {
+    // Fills the container; contentFit="contain" scales the video to fit
     ...StyleSheet.absoluteFillObject,
   },
-  bufferingOverlay: {
+  tapOverlay: {
     ...StyleSheet.absoluteFillObject,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.3)',
+  },
+  pauseIconContainer: {
+    width: 60,
+    height: 60,
+    borderRadius: 50,
+    backgroundColor: 'rgba(0, 0, 0, 0.4)',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });
