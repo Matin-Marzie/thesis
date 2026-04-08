@@ -173,8 +173,6 @@ export function DialogueBottomSheetModal({
         (sentence: Sentence) => {
             if (!player) return;
 
-
-
             if (sentenceStopTimeoutRef.current) {
                 clearTimeout(sentenceStopTimeoutRef.current);
                 sentenceStopTimeoutRef.current = null;
@@ -188,13 +186,6 @@ export function DialogueBottomSheetModal({
             player.currentTime = sentence.start_time_ms / 1000;
             player.play();
             setIsPlaying(true);
-
-            const durationMs = Math.max(sentence.end_time_ms - sentence.start_time_ms, 0);
-            sentenceStopTimeoutRef.current = setTimeout(() => {
-                player.pause();
-                setIsPlaying(false);
-                sentenceStopTimeoutRef.current = null;
-            }, durationMs);
         },
         [player, sentences]
     );
