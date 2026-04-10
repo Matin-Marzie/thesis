@@ -1,6 +1,7 @@
 import React, { useMemo } from 'react';
-import { View, TouchableOpacity, StyleSheet, Text } from 'react-native';
+import { View, TouchableOpacity, StyleSheet, Text, Vibration } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { getWordleConfig } from '@/constants/wordleConfig';
 
 const COLORS = {
   correct: '#6aaa64',
@@ -10,91 +11,91 @@ const COLORS = {
   border: '#999',
 };
 
-const KEYBOARD_ROWS = [
-  ['Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P'],
-  ['A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L'],
-  ['Z', 'X', 'C', 'V', 'B', 'N', 'M'],
-];
-
 export default function Keyboard({
   onKeyPress,
   guesses,
   secretWord,
   getLetterColor,
   disabled,
+  langCode = 'en',
 }) {
+  const { keyboardRows, isRTL } = useMemo(() => getWordleConfig(langCode), [langCode]);
+
+  // Use compact sizing when any row has more than 10 keys
+  const isCompact = keyboardRows.some(row => row.length > 10);
+
   const getKeyColor = useMemo(() => {
     return (letter) => {
       let bestState = COLORS.empty;
 
-      for (let guess of guesses) {
-        for (let i = 0; i < guess.length; i++) {
-          if (guess[i] === letter) {
+      for (const guess of guesses) {
+        const chars = [...guess];
+        for (let i = 0; i < chars.length; i++) {
+          if (chars[i] === letter) {
             const color = getLetterColor(letter, i, guess);
-            
-            // Update to best state: correct > present > absent
-            if (color === COLORS.correct) {
-              return COLORS.correct;
-            }
-            if (color === COLORS.present && bestState !== COLORS.correct) {
-              bestState = COLORS.present;
-            }
-            if (color === COLORS.absent && bestState === COLORS.empty) {
-              bestState = COLORS.absent;
-            }
+            if (color === COLORS.correct) return COLORS.correct;
+            if (color === COLORS.present && bestState !== COLORS.correct) bestState = COLORS.present;
+            if (color === COLORS.absent && bestState === COLORS.empty) bestState = COLORS.absent;
           }
         }
       }
-      
+
       return bestState;
     };
   }, [guesses, getLetterColor]);
 
+  const pressKey = (letter) => {
+    Vibration.vibrate(10);
+    onKeyPress(letter);
+  };
+
   const renderKey = (letter) => {
     const backgroundColor = getKeyColor(letter);
-    const isDisabled = disabled || (getKeyColor(letter) === COLORS.empty && !letter);
-
     return (
       <TouchableOpacity
         key={letter}
-        onPress={() => onKeyPress(letter)}
-        disabled={isDisabled}
+        onPress={() => pressKey(letter)}
+        disabled={disabled}
         style={[
           styles.key,
-          {
-            backgroundColor,
-            opacity: isDisabled && !letter ? 0.5 : 1,
-          },
+          isCompact && styles.keyCompact,
+          { backgroundColor },
         ]}
       >
-        <Text style={styles.keyText}>{letter}</Text>
+        <Text style={[styles.keyText, isCompact && styles.keyTextCompact]}>{letter}</Text>
       </TouchableOpacity>
     );
   };
 
   return (
     <View style={styles.keyboard}>
-      {KEYBOARD_ROWS.map((row, rowIndex) => (
+      {keyboardRows.map((row, rowIndex) => (
         <View key={`row-${rowIndex}`} style={styles.row}>
-          {rowIndex === 2 && <View style={styles.spacer} />}
-          {row.map((letter) => renderKey(letter))}
-          {rowIndex === 2 && <View style={styles.spacer} />}
+          {row.map((letter) =>
+            renderKey(letter)
+          )}
         </View>
       ))}
       <View style={[styles.row, styles.specialKeysRow]}>
         <TouchableOpacity
-          onPress={() => onKeyPress('BACKSPACE')}
+          onPress={() => pressKey('BACKSPACE')}
+          onLongPress={() => pressKey('CLEAR')}
           disabled={disabled}
           style={[styles.specialKey, { backgroundColor: COLORS.empty }]}
         >
-          <Ionicons name="backspace-outline" size={20} color="#333" />
+          <Ionicons
+            name="backspace-outline"
+            size={32}
+            color="#333"
+            style={isRTL && { transform: [{ scaleX: -1 }] }}
+          />
         </TouchableOpacity>
         <TouchableOpacity
-          onPress={() => onKeyPress('ENTER')}
+          onPress={() => pressKey('ENTER')}
           disabled={disabled}
           style={[styles.specialKey, { backgroundColor: COLORS.correct }]}
         >
-          <Text style={[styles.keyText, { color: '#fff' }]}>ENTER</Text>
+          <Text style={styles.enterText}>ENTER</Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -104,9 +105,10 @@ export default function Keyboard({
 const styles = StyleSheet.create({
   keyboard: {
     backgroundColor: '#f5f5f5',
-    padding: 8,
+    padding: 6,
     borderTopWidth: 1,
     borderTopColor: '#e0e0e0',
+
   },
   row: {
     flexDirection: 'row',
@@ -118,26 +120,36 @@ const styles = StyleSheet.create({
     marginBottom: 0,
   },
   key: {
-    paddingVertical: 10,
-    paddingHorizontal: 6,
+    paddingVertical: 14,
+    paddingHorizontal: 8,
     borderRadius: 4,
-    minWidth: 32,
+    minWidth: 40,
     justifyContent: 'center',
     alignItems: 'center',
   },
+  keyCompact: {
+    paddingVertical: 8,
+    paddingHorizontal: 4,
+    minWidth: 30,
+  },
   specialKey: {
-    paddingVertical: 10,
-    paddingHorizontal: 16,
+    paddingVertical: 6,
+    paddingHorizontal: 12,
     borderRadius: 4,
     justifyContent: 'center',
     alignItems: 'center',
   },
   keyText: {
-    fontSize: 14,
+    fontSize: 22,
     fontWeight: 'bold',
     color: '#fff',
   },
-  spacer: {
-    width: 32,
+  enterText: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#fff',
+  },
+  keyTextCompact: {
+    fontSize: 22,
   },
 });

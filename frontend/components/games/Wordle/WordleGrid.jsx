@@ -1,15 +1,12 @@
-import React from 'react';
-import { View, StyleSheet, Text } from 'react-native';
-
-const WORD_LENGTH = 5;
-const MAX_ATTEMPTS = 6;
+import React, { useEffect, useRef } from 'react';
+import { View, StyleSheet, Text, TouchableOpacity, Animated } from 'react-native';
 
 const COLORS = {
   correct: '#6aaa64',
   present: '#c9b458',
   absent: '#787c7e',
   empty: '#d3d6da',
-  border: '#999',
+  border: '#ddd',
 };
 
 export default function WordleGrid({
@@ -17,61 +14,73 @@ export default function WordleGrid({
   currentGuess,
   maxAttempts,
   wordLength,
-  secretWord,
+  secretWord: _secretWord,
   getLetterColor,
+  isRTL = false,
+  onCellPress,
+  invalidTrigger = 0,
 }) {
-  const renderCell = (letter, index, guess, isCurrentGuess = false) => {
-    if (!letter) {
-      return (
-        <View key={`${guess}-${index}`} style={styles.emptyCell}>
-          <Text style={styles.cellText}></Text>
-        </View>
-      );
-    }
+  const flashOpacity = useRef(new Animated.Value(0)).current;
 
-    // For the current guess being typed, always show absent color
-    const backgroundColor = isCurrentGuess ? COLORS.absent : getLetterColor(letter, index, guess);
+  useEffect(() => {
+    if (!invalidTrigger) return;
+
+    flashOpacity.setValue(0);
+    Animated.sequence([
+      Animated.timing(flashOpacity, { toValue: 0.9, duration: 60, useNativeDriver: true }),
+      Animated.timing(flashOpacity, { toValue: 0,   duration: 60, useNativeDriver: true }),
+      Animated.timing(flashOpacity, { toValue: 0.9, duration: 60, useNativeDriver: true }),
+      Animated.timing(flashOpacity, { toValue: 0,   duration: 60, useNativeDriver: true }),
+      Animated.timing(flashOpacity, { toValue: 0.9, duration: 60, useNativeDriver: true }),
+      Animated.timing(flashOpacity, { toValue: 0,   duration: 150, useNativeDriver: true }),
+    ]).start();
+  }, [invalidTrigger]);
+
+  const renderCell = (letter, rowIndex, colIndex, guess, isCurrentGuess = false) => {
+    const isEmpty = !letter;
+    const backgroundColor = isEmpty || isCurrentGuess
+      ? (isCurrentGuess && letter ? COLORS.absent : '#fff')
+      : getLetterColor(letter, colIndex, guess);
+    const borderColor = isEmpty ? COLORS.border : backgroundColor;
 
     return (
-      <View
-        key={`${guess}-${index}`}
-        style={[
-          styles.cell,
-          {
-            backgroundColor,
-            borderColor: backgroundColor === COLORS.empty ? COLORS.border : backgroundColor,
-          },
-        ]}
+      <TouchableOpacity
+        key={`${rowIndex}-${colIndex}`}
+        activeOpacity={0.75}
+        onPress={() => onCellPress?.(rowIndex, colIndex, letter)}
+        style={[styles.cell, { backgroundColor, borderColor }]}
       >
-        <Text style={styles.cellText}>{letter}</Text>
-      </View>
+        {/* Red flash overlay — only on the active row */}
+        {isCurrentGuess && (
+          <Animated.View
+            style={[StyleSheet.absoluteFill, styles.flashOverlay, { opacity: flashOpacity }]}
+          />
+        )}
+        {!!letter && <Text style={styles.cellText}>{letter}</Text>}
+      </TouchableOpacity>
     );
   };
 
   const renderRow = (rowIndex) => {
-    let rowContent = '';
-
-    if (rowIndex < guesses.length) {
-      rowContent = guesses[rowIndex];
-    } else if (rowIndex === guesses.length) {
-      rowContent = currentGuess;
-    }
-
     const cells = [];
-    const isCurrentGuessRow = rowIndex === guesses.length;
 
     for (let i = 0; i < wordLength; i++) {
       if (rowIndex < guesses.length) {
-        cells.push(renderCell(guesses[rowIndex][i], i, guesses[rowIndex], false));
+        const chars = [...guesses[rowIndex]];
+        cells.push(renderCell(chars[i] ?? '', rowIndex, i, guesses[rowIndex], false));
       } else if (rowIndex === guesses.length) {
-        cells.push(renderCell(currentGuess[i], i, currentGuess, true));
+        const chars = [...currentGuess];
+        cells.push(renderCell(chars[i] ?? '', rowIndex, i, currentGuess, true));
       } else {
-        cells.push(renderCell('', i, '', false));
+        cells.push(renderCell('', rowIndex, i, '', false));
       }
     }
 
     return (
-      <View key={`row-${rowIndex}`} style={styles.row}>
+      <View
+        key={`row-${rowIndex}`}
+        style={[styles.row, isRTL && styles.rowRTL]}
+      >
         {cells}
       </View>
     );
@@ -94,26 +103,24 @@ const styles = StyleSheet.create({
     gap: 6,
     justifyContent: 'center',
   },
+  rowRTL: {
+    flexDirection: 'row-reverse',
+  },
   cell: {
     width: 50,
     height: 50,
     borderWidth: 2,
+    borderRadius: 5,
     justifyContent: 'center',
     alignItems: 'center',
-    borderRadius: 4,
+    overflow: 'hidden',
   },
-  emptyCell: {
-    width: 50,
-    height: 50,
-    borderWidth: 2,
-    borderColor: COLORS.empty,
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderRadius: 4,
-    backgroundColor: '#fff',
+  flashOverlay: {
+    backgroundColor: '#e53935',
+    borderRadius: 5,
   },
   cellText: {
-    fontSize: 20,
+    fontSize: 22,
     fontWeight: 'bold',
     color: '#fff',
   },

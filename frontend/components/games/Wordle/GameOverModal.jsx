@@ -5,7 +5,6 @@ import {
     Text,
     TouchableOpacity,
     StyleSheet,
-    SafeAreaView,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { PRIMARY_COLOR } from '@/constants/App';
@@ -23,7 +22,10 @@ export default function GameOverModal({
     maxAttempts,
     onPlayAgain,
     onClose,
+    isRTL = false,
 }) {
+    const rtlText = isRTL ? { writingDirection: 'rtl', textAlign: 'center' } : {};
+
     return (
         <Modal
             visible={visible}
@@ -42,7 +44,7 @@ export default function GameOverModal({
                         )}
                     </View>
 
-                    <Text style={styles.title}>
+                    <Text style={[styles.title, rtlText]}>
                         {won ? '🎉 You Won!' : '😔 Game Over'}
                     </Text>
 
@@ -56,11 +58,11 @@ export default function GameOverModal({
                     ) : (
                         <View style={styles.statsContainer}>
                             <Text style={styles.statsLabel}>The word was:</Text>
-                            <Text style={styles.secretWord}>{secretWord}</Text>
+                            <Text style={[styles.secretWord, rtlText]}>{secretWord}</Text>
                         </View>
                     )}
 
-                    <View style={{ width: '100%', marginBottom: 20 }} >
+                    <View style={{ width: '100%', marginBottom: 20 }}>
                         <VocabularyListItem item={secretWord} />
                     </View>
 
