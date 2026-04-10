@@ -59,9 +59,10 @@ export function DialogueBottomSheetModal({
     const syncCurrentLineByTime = useCallback(
         (currentTimeMs: number) => {
             const index = sentences.findIndex(
-                (sentence) =>
-                    currentTimeMs >= sentence.start_time_ms &&
-                    currentTimeMs <= sentence.end_time_ms
+                (sentence, i) => {
+                    const effectiveEnd = sentence.end_time_ms ?? sentences[i + 1]?.start_time_ms ?? Infinity;
+                    return currentTimeMs >= sentence.start_time_ms && currentTimeMs <= effectiveEnd;
+                }
             );
 
             if (index !== -1) {

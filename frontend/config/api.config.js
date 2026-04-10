@@ -1,7 +1,7 @@
 // API Configuration
 
 // import { API_URL, API_TOKEN } from '@env';
-const ip_addr = '10.64.121.147';
+const ip_addr = '172.24.45.147';
 
 // local IP for testing on physical device
 // Base url for authentication, user engagement, and other services
