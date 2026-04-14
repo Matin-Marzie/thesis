@@ -2,7 +2,7 @@
 -- PostgreSQL database dump
 --
 
-\restrict GHMBG3hv2JhNAty2jJdjRFmPGvTrApXNuDmCfCPYIv5jduAwXr7lQ2Rqyh59wES
+\restrict jTpNYw2RsUXxXOd1peuskAW9wkO1syjn1HfNdQjaDhXlNgHwI0vxxLaEyOmEwhC
 
 -- Dumped from database version 16.13 (Ubuntu 16.13-0ubuntu0.24.04.1)
 -- Dumped by pg_dump version 16.13 (Ubuntu 16.13-0ubuntu0.24.04.1)
@@ -562,6 +562,7 @@ CREATE TABLE public.words (
     language_id bigint NOT NULL,
     level character varying(2),
     article character varying(10),
+    normalized_text text,
     CONSTRAINT words_level_check CHECK (((level)::text = ANY (ARRAY['N'::text, 'A1'::text, 'A2'::text, 'B1'::text, 'B2'::text, 'AB'::text, 'C1'::text, 'C2'::text])))
 );
 
@@ -1075,10 +1076,29 @@ COPY public.user_vocabulary (id, user_id, word_id, mastery_level, last_review, c
 17103	2	200028	2	2026-04-07 16:06:33.219+03	2026-03-11 23:13:36.677+02	127
 17914	2	200910	1	2026-04-07 16:06:46.445+03	2026-04-07 16:06:46.445+03	127
 17915	2	190	1	2026-04-07 16:08:01.701+03	2026-04-07 16:08:01.701+03	127
+17916	2	201292	1	2026-04-10 09:50:50.699+03	2026-04-10 09:50:50.699+03	127
+17208	2	201591	1	2026-04-10 10:32:52.628+03	2026-03-11 23:13:36.677+02	127
+17293	2	201676	1	2026-04-10 10:38:06.076+03	2026-03-11 23:13:36.677+02	127
+17600	2	201983	1	2026-04-10 10:47:32.343+03	2026-03-11 23:13:36.677+02	127
+17616	2	201999	1	2026-04-10 11:02:29.274+03	2026-03-11 23:13:36.677+02	127
 14008	1	26	3	2026-03-09 17:08:32.449+02	2026-03-09 17:08:32.449+02	125
+17917	2	200416	1	2026-04-10 10:54:52.496+03	2026-04-10 10:54:52.496+03	127
+17918	2	200640	1	2026-04-10 10:34:12.562+03	2026-04-10 10:34:12.562+03	127
+17920	2	201272	1	2026-04-10 11:03:54.613+03	2026-04-10 11:03:54.613+03	127
+17919	2	200746	1	2026-04-10 11:59:30.191+03	2026-04-10 11:08:41.518+03	127
 14009	1	27	3	2026-03-09 17:08:32.449+02	2026-03-09 17:08:32.449+02	125
+17484	2	201867	1	2026-04-10 12:46:29.569+03	2026-03-11 23:13:36.677+02	127
+17362	2	201745	1	2026-04-10 12:49:31.469+03	2026-03-11 23:13:36.677+02	127
+17922	2	201444	1	2026-04-10 12:50:26.599+03	2026-04-10 12:50:26.599+03	127
+17923	2	201418	1	2026-04-10 17:13:58.521+03	2026-04-10 17:13:58.521+03	127
+17921	2	201393	2	2026-04-10 17:38:16.786+03	2026-04-10 12:41:59.131+03	127
+17927	2	200888	1	2026-04-13 10:46:03.968+03	2026-04-13 10:46:03.968+03	127
 17075	2	200000	3	2026-03-11 23:13:36.677+02	2026-03-11 23:13:36.677+02	127
+17924	2	200898	1	2026-04-10 17:47:19.523+03	2026-04-10 17:47:19.523+03	127
+17925	2	200644	1	2026-04-10 17:49:16.016+03	2026-04-10 17:49:16.016+03	127
+17926	1	5050	1	2026-04-10 18:09:36.635+03	2026-04-10 18:09:36.635+03	125
 14010	1	28	3	2026-03-09 17:08:32.449+02	2026-03-09 17:08:32.449+02	125
+14031	1	49	3	2026-04-13 10:44:44.954+03	2026-03-09 17:08:32.449+02	125
 14011	1	29	3	2026-03-09 17:08:32.449+02	2026-03-09 17:08:32.449+02	125
 14012	1	30	3	2026-03-09 17:08:32.449+02	2026-03-09 17:08:32.449+02	125
 14013	1	31	3	2026-03-09 17:08:32.449+02	2026-03-09 17:08:32.449+02	125
@@ -1097,7 +1117,6 @@ COPY public.user_vocabulary (id, user_id, word_id, mastery_level, last_review, c
 14027	1	45	3	2026-03-09 17:08:32.449+02	2026-03-09 17:08:32.449+02	125
 14029	1	47	3	2026-03-09 17:08:32.449+02	2026-03-09 17:08:32.449+02	125
 14030	1	48	3	2026-03-09 17:08:32.449+02	2026-03-09 17:08:32.449+02	125
-14031	1	49	3	2026-03-09 17:08:32.449+02	2026-03-09 17:08:32.449+02	125
 17862	2	202245	3	2026-03-11 23:13:36.677+02	2026-03-11 23:13:36.677+02	127
 14032	1	50	3	2026-03-09 17:08:32.449+02	2026-03-09 17:08:32.449+02	125
 17863	2	202246	3	2026-03-11 23:13:36.677+02	2026-03-11 23:13:36.677+02	127
@@ -1258,7 +1277,6 @@ COPY public.user_vocabulary (id, user_id, word_id, mastery_level, last_review, c
 17205	2	201588	3	2026-03-11 23:13:36.677+02	2026-03-11 23:13:36.677+02	127
 17206	2	201589	3	2026-03-11 23:13:36.677+02	2026-03-11 23:13:36.677+02	127
 17207	2	201590	3	2026-03-11 23:13:36.677+02	2026-03-11 23:13:36.677+02	127
-17208	2	201591	3	2026-03-11 23:13:36.677+02	2026-03-11 23:13:36.677+02	127
 17209	2	201592	3	2026-03-11 23:13:36.677+02	2026-03-11 23:13:36.677+02	127
 17210	2	201593	3	2026-03-11 23:13:36.677+02	2026-03-11 23:13:36.677+02	127
 17211	2	201594	3	2026-03-11 23:13:36.677+02	2026-03-11 23:13:36.677+02	127
@@ -1343,7 +1361,6 @@ COPY public.user_vocabulary (id, user_id, word_id, mastery_level, last_review, c
 17290	2	201673	3	2026-03-11 23:13:36.677+02	2026-03-11 23:13:36.677+02	127
 17291	2	201674	3	2026-03-11 23:13:36.677+02	2026-03-11 23:13:36.677+02	127
 17292	2	201675	3	2026-03-11 23:13:36.677+02	2026-03-11 23:13:36.677+02	127
-17293	2	201676	3	2026-03-11 23:13:36.677+02	2026-03-11 23:13:36.677+02	127
 17294	2	201677	3	2026-03-11 23:13:36.677+02	2026-03-11 23:13:36.677+02	127
 17295	2	201678	3	2026-03-11 23:13:36.677+02	2026-03-11 23:13:36.677+02	127
 17296	2	201679	3	2026-03-11 23:13:36.677+02	2026-03-11 23:13:36.677+02	127
@@ -1361,7 +1378,6 @@ COPY public.user_vocabulary (id, user_id, word_id, mastery_level, last_review, c
 17308	2	201691	3	2026-03-11 23:13:36.677+02	2026-03-11 23:13:36.677+02	127
 17309	2	201692	3	2026-03-11 23:13:36.677+02	2026-03-11 23:13:36.677+02	127
 17310	2	201693	3	2026-03-11 23:13:36.677+02	2026-03-11 23:13:36.677+02	127
-17311	2	201694	3	2026-03-11 23:13:36.677+02	2026-03-11 23:13:36.677+02	127
 17312	2	201695	3	2026-03-11 23:13:36.677+02	2026-03-11 23:13:36.677+02	127
 17313	2	201696	3	2026-03-11 23:13:36.677+02	2026-03-11 23:13:36.677+02	127
 17314	2	201697	3	2026-03-11 23:13:36.677+02	2026-03-11 23:13:36.677+02	127
@@ -1390,6 +1406,7 @@ COPY public.user_vocabulary (id, user_id, word_id, mastery_level, last_review, c
 17337	2	201720	3	2026-03-11 23:13:36.677+02	2026-03-11 23:13:36.677+02	127
 17338	2	201721	3	2026-03-11 23:13:36.677+02	2026-03-11 23:13:36.677+02	127
 17339	2	201722	3	2026-03-11 23:13:36.677+02	2026-03-11 23:13:36.677+02	127
+17311	2	201694	1	2026-04-10 11:07:22.354+03	2026-03-11 23:13:36.677+02	127
 17340	2	201723	3	2026-03-11 23:13:36.677+02	2026-03-11 23:13:36.677+02	127
 17341	2	201724	3	2026-03-11 23:13:36.677+02	2026-03-11 23:13:36.677+02	127
 17342	2	201725	3	2026-03-11 23:13:36.677+02	2026-03-11 23:13:36.677+02	127
@@ -1412,7 +1429,6 @@ COPY public.user_vocabulary (id, user_id, word_id, mastery_level, last_review, c
 17359	2	201742	3	2026-03-11 23:13:36.677+02	2026-03-11 23:13:36.677+02	127
 17360	2	201743	3	2026-03-11 23:13:36.677+02	2026-03-11 23:13:36.677+02	127
 17361	2	201744	3	2026-03-11 23:13:36.677+02	2026-03-11 23:13:36.677+02	127
-17362	2	201745	3	2026-03-11 23:13:36.677+02	2026-03-11 23:13:36.677+02	127
 17363	2	201746	3	2026-03-11 23:13:36.677+02	2026-03-11 23:13:36.677+02	127
 17364	2	201747	3	2026-03-11 23:13:36.677+02	2026-03-11 23:13:36.677+02	127
 17365	2	201748	3	2026-03-11 23:13:36.677+02	2026-03-11 23:13:36.677+02	127
@@ -1534,7 +1550,6 @@ COPY public.user_vocabulary (id, user_id, word_id, mastery_level, last_review, c
 17481	2	201864	3	2026-03-11 23:13:36.677+02	2026-03-11 23:13:36.677+02	127
 17482	2	201865	3	2026-03-11 23:13:36.677+02	2026-03-11 23:13:36.677+02	127
 17483	2	201866	3	2026-03-11 23:13:36.677+02	2026-03-11 23:13:36.677+02	127
-17484	2	201867	3	2026-03-11 23:13:36.677+02	2026-03-11 23:13:36.677+02	127
 17485	2	201868	3	2026-03-11 23:13:36.677+02	2026-03-11 23:13:36.677+02	127
 17486	2	201869	3	2026-03-11 23:13:36.677+02	2026-03-11 23:13:36.677+02	127
 17487	2	201870	3	2026-03-11 23:13:36.677+02	2026-03-11 23:13:36.677+02	127
@@ -1637,7 +1652,6 @@ COPY public.user_vocabulary (id, user_id, word_id, mastery_level, last_review, c
 17584	2	201967	3	2026-03-11 23:13:36.677+02	2026-03-11 23:13:36.677+02	127
 17585	2	201968	3	2026-03-11 23:13:36.677+02	2026-03-11 23:13:36.677+02	127
 17586	2	201969	3	2026-03-11 23:13:36.677+02	2026-03-11 23:13:36.677+02	127
-17587	2	201970	3	2026-03-11 23:13:36.677+02	2026-03-11 23:13:36.677+02	127
 17588	2	201971	3	2026-03-11 23:13:36.677+02	2026-03-11 23:13:36.677+02	127
 17589	2	201972	3	2026-03-11 23:13:36.677+02	2026-03-11 23:13:36.677+02	127
 17590	2	201973	3	2026-03-11 23:13:36.677+02	2026-03-11 23:13:36.677+02	127
@@ -1650,10 +1664,10 @@ COPY public.user_vocabulary (id, user_id, word_id, mastery_level, last_review, c
 17597	2	201980	3	2026-03-11 23:13:36.677+02	2026-03-11 23:13:36.677+02	127
 17598	2	201981	3	2026-03-11 23:13:36.677+02	2026-03-11 23:13:36.677+02	127
 17599	2	201982	3	2026-03-11 23:13:36.677+02	2026-03-11 23:13:36.677+02	127
-17600	2	201983	3	2026-03-11 23:13:36.677+02	2026-03-11 23:13:36.677+02	127
 17601	2	201984	3	2026-03-11 23:13:36.677+02	2026-03-11 23:13:36.677+02	127
 17602	2	201985	3	2026-03-11 23:13:36.677+02	2026-03-11 23:13:36.677+02	127
 17603	2	201986	3	2026-03-11 23:13:36.677+02	2026-03-11 23:13:36.677+02	127
+17587	2	201970	1	2026-04-10 17:49:39.937+03	2026-03-11 23:13:36.677+02	127
 17604	2	201987	3	2026-03-11 23:13:36.677+02	2026-03-11 23:13:36.677+02	127
 17605	2	201988	3	2026-03-11 23:13:36.677+02	2026-03-11 23:13:36.677+02	127
 17606	2	201989	3	2026-03-11 23:13:36.677+02	2026-03-11 23:13:36.677+02	127
@@ -1666,7 +1680,6 @@ COPY public.user_vocabulary (id, user_id, word_id, mastery_level, last_review, c
 17613	2	201996	3	2026-03-11 23:13:36.677+02	2026-03-11 23:13:36.677+02	127
 17614	2	201997	3	2026-03-11 23:13:36.677+02	2026-03-11 23:13:36.677+02	127
 17615	2	201998	3	2026-03-11 23:13:36.677+02	2026-03-11 23:13:36.677+02	127
-17616	2	201999	3	2026-03-11 23:13:36.677+02	2026-03-11 23:13:36.677+02	127
 17617	2	202000	3	2026-03-11 23:13:36.677+02	2026-03-11 23:13:36.677+02	127
 17618	2	202001	3	2026-03-11 23:13:36.677+02	2026-03-11 23:13:36.677+02	127
 17619	2	202002	3	2026-03-11 23:13:36.677+02	2026-03-11 23:13:36.677+02	127
@@ -1721,7 +1734,6 @@ COPY public.user_vocabulary (id, user_id, word_id, mastery_level, last_review, c
 17668	2	202051	3	2026-03-11 23:13:36.677+02	2026-03-11 23:13:36.677+02	127
 17669	2	202052	3	2026-03-11 23:13:36.677+02	2026-03-11 23:13:36.677+02	127
 17670	2	202053	3	2026-03-11 23:13:36.677+02	2026-03-11 23:13:36.677+02	127
-17671	2	202054	3	2026-03-11 23:13:36.677+02	2026-03-11 23:13:36.677+02	127
 17672	2	202055	3	2026-03-11 23:13:36.677+02	2026-03-11 23:13:36.677+02	127
 17673	2	202056	3	2026-03-11 23:13:36.677+02	2026-03-11 23:13:36.677+02	127
 17674	2	202057	3	2026-03-11 23:13:36.677+02	2026-03-11 23:13:36.677+02	127
@@ -1742,6 +1754,7 @@ COPY public.user_vocabulary (id, user_id, word_id, mastery_level, last_review, c
 17689	2	202072	3	2026-03-11 23:13:36.677+02	2026-03-11 23:13:36.677+02	127
 17690	2	202073	3	2026-03-11 23:13:36.677+02	2026-03-11 23:13:36.677+02	127
 17691	2	202074	3	2026-03-11 23:13:36.677+02	2026-03-11 23:13:36.677+02	127
+17671	2	202054	1	2026-04-10 17:45:56.971+03	2026-03-11 23:13:36.677+02	127
 17692	2	202075	3	2026-03-11 23:13:36.677+02	2026-03-11 23:13:36.677+02	127
 17693	2	202076	3	2026-03-11 23:13:36.677+02	2026-03-11 23:13:36.677+02	127
 17694	2	202077	3	2026-03-11 23:13:36.677+02	2026-03-11 23:13:36.677+02	127
@@ -1930,17 +1943,16 @@ COPY public.user_vocabulary (id, user_id, word_id, mastery_level, last_review, c
 17899	2	202282	3	2026-03-11 23:13:36.677+02	2026-03-11 23:13:36.677+02	127
 17900	2	202283	3	2026-03-11 23:13:36.677+02	2026-03-11 23:13:36.677+02	127
 17901	2	202284	3	2026-03-11 23:13:36.677+02	2026-03-11 23:13:36.677+02	127
-17902	2	202285	3	2026-03-11 23:13:36.677+02	2026-03-11 23:13:36.677+02	127
 17903	2	202286	3	2026-03-11 23:13:36.677+02	2026-03-11 23:13:36.677+02	127
 17904	2	202287	3	2026-03-11 23:13:36.677+02	2026-03-11 23:13:36.677+02	127
 17905	2	202288	3	2026-03-11 23:13:36.677+02	2026-03-11 23:13:36.677+02	127
 17906	2	202289	3	2026-03-11 23:13:36.677+02	2026-03-11 23:13:36.677+02	127
 17907	2	202290	3	2026-03-11 23:13:36.677+02	2026-03-11 23:13:36.677+02	127
+17902	2	202285	1	2026-04-10 10:58:29.368+03	2026-03-11 23:13:36.677+02	127
 14033	1	51	3	2026-03-09 17:08:32.449+02	2026-03-09 17:08:32.449+02	125
 14034	1	52	3	2026-03-09 17:08:32.449+02	2026-03-09 17:08:32.449+02	125
 14035	1	53	3	2026-03-09 17:08:32.449+02	2026-03-09 17:08:32.449+02	125
 14036	1	54	3	2026-03-09 17:08:32.449+02	2026-03-09 17:08:32.449+02	125
-14037	1	55	3	2026-03-09 17:08:32.449+02	2026-03-09 17:08:32.449+02	125
 14038	1	56	3	2026-03-09 17:08:32.449+02	2026-03-09 17:08:32.449+02	125
 14039	1	57	3	2026-03-09 17:08:32.449+02	2026-03-09 17:08:32.449+02	125
 14040	1	58	3	2026-03-09 17:08:32.449+02	2026-03-09 17:08:32.449+02	125
@@ -3945,10 +3957,10 @@ COPY public.user_vocabulary (id, user_id, word_id, mastery_level, last_review, c
 --
 
 COPY public.users (id, google_id, first_name, last_name, username, password_hash, refresh_token, email, profile_picture, joined_date, last_login, energy, coins, age, preferences, notifications, email_verified) FROM stdin;
-1	\N	admin	\N	admin	$2b$10$QUDz5xnUbe77Rk9VYBzzl.sZKS7EkU0YVLIb78oICrsCcMd2lU8SG	\N	matin@ionio.gr	\N	2026-03-09 17:08:32.449024+02	2026-04-01 03:11:39.33081+03	100	20	25	Video games	t	f
-3	\N		\N	sedkhareji	\N	\N	\N	\N	2026-04-07 09:31:43.637905+03	\N	100	20	\N	\N	t	f
+2	\N	Matin	\N	matin	$2b$10$BAhmVr5MLQm7kkXjUuBeJO4Wlvc.de1dqIh1yipm1ddACHyz3m.VG	eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjIiLCJpYXQiOjE3NzYxOTI0NTIsImV4cCI6MTc3ODc4NDQ1Mn0.RBsPItKc_76VekAPYB8OZbqJSwwxeDXP0VDVLLVhVOk	matin1@ionio.gr	\N	2026-03-11 23:13:36.677333+02	2026-04-14 21:47:32.989722+03	100	680	25	Make up	t	f
 4	\N	\N	\N	calligraphy_ghasemian	\N	\N	\N	\N	2026-04-07 10:41:29.363921+03	\N	100	20	\N	\N	t	f
-2	\N	Matin	\N	matin	$2b$10$BAhmVr5MLQm7kkXjUuBeJO4Wlvc.de1dqIh1yipm1ddACHyz3m.VG	eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjIiLCJpYXQiOjE3NzU1Njc0NTAsImV4cCI6MTc3ODE1OTQ1MH0.KA-GBTRvw4QPo7eX_r3sUUPYWaxomx705KOKHRqkDJE	matin1@ionio.gr	\N	2026-03-11 23:13:36.677333+02	2026-04-07 16:10:50.19197+03	100	20	25	Make up	t	f
+1	\N	admin	\N	admin	$2b$10$QUDz5xnUbe77Rk9VYBzzl.sZKS7EkU0YVLIb78oICrsCcMd2lU8SG	\N	matin@ionio.gr	\N	2026-03-09 17:08:32.449024+02	2026-04-10 17:59:42.441012+03	100	400	25	Video games	t	f
+3	\N		\N	sedkhareji	\N	\N	\N	\N	2026-04-07 09:31:43.637905+03	\N	100	20	\N	\N	t	f
 \.
 
 
@@ -7672,12240 +7684,12240 @@ COPY public.word_translations (id, word_id, translation_word_id, level) FROM std
 -- Data for Name: words; Type: TABLE DATA; Schema: public; Owner: root
 --
 
-COPY public.words (id, written_form, part_of_speech, image_url, audio_url, language_id, level, article) FROM stdin;
-26	a	det	\N	\N	1	A1	\N
-27	an	det	\N	\N	1	A1	\N
-28	about	prep	\N	\N	1	A1	\N
-29	above	prep	\N	\N	1	A1	\N
-30	across	prep	\N	\N	1	A1	\N
-31	action	n	\N	\N	1	A1	\N
-32	activity	n	\N	\N	1	A1	\N
-33	actor	n	\N	\N	1	A1	\N
-34	actress	n	\N	\N	1	A1	\N
-35	add	v	\N	\N	1	A1	\N
-36	address	n	\N	\N	1	A1	\N
-37	adult	n	\N	\N	1	A1	\N
-38	afraid	adj	\N	\N	1	A1	\N
-39	after	prep	\N	\N	1	A1	\N
-40	afternoon	n	\N	\N	1	A1	\N
-41	again	adv	\N	\N	1	A1	\N
-42	age	n	\N	\N	1	A1	\N
-43	ago	adv	\N	\N	1	A1	\N
-44	air	n	\N	\N	1	A1	\N
-45	airport	n	\N	\N	1	A1	\N
-46	all	det	\N	\N	1	A1	\N
-47	all right	adj	\N	\N	1	A1	\N
-48	also	adv	\N	\N	1	A1	\N
-49	always	adv	\N	\N	1	A1	\N
-50	amazing	adj	\N	\N	1	A1	\N
-51	and	conj	\N	\N	1	A1	\N
-52	angry	adj	\N	\N	1	A1	\N
-53	animal	n	\N	\N	1	A1	\N
-54	another	det	\N	\N	1	A1	\N
-55	answer	n	\N	\N	1	A1	\N
-56	any	det	\N	\N	1	A1	\N
-57	anyone	pron	\N	\N	1	A1	\N
-58	anything	pron	\N	\N	1	A1	\N
-59	apartment	n	\N	\N	1	A1	\N
-60	apple	n	\N	\N	1	A1	\N
-61	April	n	\N	\N	1	A1	\N
-62	area	n	\N	\N	1	A1	\N
-63	arm	n	\N	\N	1	A1	\N
-64	around	prep	\N	\N	1	A1	\N
-65	arrive	v	\N	\N	1	A1	\N
-66	art	n	\N	\N	1	A1	\N
-67	article	n	\N	\N	1	A1	\N
-68	artist	n	\N	\N	1	A1	\N
-69	as	prep	\N	\N	1	A1	\N
-70	ask	v	\N	\N	1	A1	\N
-71	at	prep	\N	\N	1	A1	\N
-72	August	n	\N	\N	1	A1	\N
-73	aunt	n	\N	\N	1	A1	\N
-74	autumn	n	\N	\N	1	A1	\N
-75	away	adv	\N	\N	1	A1	\N
-76	baby	n	\N	\N	1	A1	\N
-77	back	adv	\N	\N	1	A1	\N
-78	bad	adj	\N	\N	1	A1	\N
-79	bag	n	\N	\N	1	A1	\N
-80	ball	n	\N	\N	1	A1	\N
-81	banana	n	\N	\N	1	A1	\N
-82	band	n	\N	\N	1	A1	\N
-83	bank	n	\N	\N	1	A1	\N
-84	bar	n	\N	\N	1	A1	\N
-85	bath	n	\N	\N	1	A1	\N
-86	bathroom	n	\N	\N	1	A1	\N
-87	be	v	\N	\N	1	A1	\N
-88	beach	n	\N	\N	1	A1	\N
-89	beautiful	adj	\N	\N	1	A1	\N
-90	because	conj	\N	\N	1	A1	\N
-91	become	v	\N	\N	1	A1	\N
-92	bed	n	\N	\N	1	A1	\N
-93	bedroom	n	\N	\N	1	A1	\N
-94	beer	n	\N	\N	1	A1	\N
-95	before	prep	\N	\N	1	A1	\N
-96	begin	v	\N	\N	1	A1	\N
-97	beginning	n	\N	\N	1	A1	\N
-98	behind	prep	\N	\N	1	A1	\N
-99	believe	v	\N	\N	1	A1	\N
-100	below	prep	\N	\N	1	A1	\N
-101	best	adj	\N	\N	1	A1	\N
-102	better	adj	\N	\N	1	A1	\N
-103	between	prep	\N	\N	1	A1	\N
-104	bicycle	n	\N	\N	1	A1	\N
-105	big	adj	\N	\N	1	A1	\N
-106	cafe	n	\N	\N	1	A1	\N
-107	cake	n	\N	\N	1	A1	\N
-108	call	v	\N	\N	1	A1	\N
-109	camera	n	\N	\N	1	A1	\N
-110	can	v	\N	\N	1	A1	\N
-111	car	n	\N	\N	1	A1	\N
-112	card	n	\N	\N	1	A1	\N
-113	carrot	n	\N	\N	1	A1	\N
-114	carry	v	\N	\N	1	A1	\N
-115	cat	n	\N	\N	1	A1	\N
-116	CD	n	\N	\N	1	A1	\N
-117	cent	n	\N	\N	1	A1	\N
-118	centre	n	\N	\N	1	A1	\N
-119	chair	n	\N	\N	1	A1	\N
-120	change	v	\N	\N	1	A1	\N
-121	chart	n	\N	\N	1	A1	\N
-122	cheap	adj	\N	\N	1	A1	\N
-123	check	v	\N	\N	1	A1	\N
-124	cheese	n	\N	\N	1	A1	\N
-125	chicken	n	\N	\N	1	A1	\N
-126	child	n	\N	\N	1	A1	\N
-127	chocolate	n	\N	\N	1	A1	\N
-128	choose	v	\N	\N	1	A1	\N
-129	cinema	n	\N	\N	1	A1	\N
-130	city	n	\N	\N	1	A1	\N
-131	class	n	\N	\N	1	A1	\N
-132	classroom	n	\N	\N	1	A1	\N
-133	clean	adj	\N	\N	1	A1	\N
-134	climb	v	\N	\N	1	A1	\N
-135	clock	n	\N	\N	1	A1	\N
-136	close	v	\N	\N	1	A1	\N
-137	clothes	n	\N	\N	1	A1	\N
-138	club	n	\N	\N	1	A1	\N
-139	coat	n	\N	\N	1	A1	\N
-140	coffee	n	\N	\N	1	A1	\N
-141	cold	adj	\N	\N	1	A1	\N
-142	college	n	\N	\N	1	A1	\N
-143	colour	n	\N	\N	1	A1	\N
-144	come	v	\N	\N	1	A1	\N
-145	company	n	\N	\N	1	A1	\N
-146	complete	v	\N	\N	1	A1	\N
-147	computer	n	\N	\N	1	A1	\N
-148	concert	n	\N	\N	1	A1	\N
-149	cook	v	\N	\N	1	A1	\N
-150	cooking	n	\N	\N	1	A1	\N
-151	cool	adj	\N	\N	1	A1	\N
-152	correct	adj	\N	\N	1	A1	\N
-153	cost	v	\N	\N	1	A1	\N
-154	could	v	\N	\N	1	A1	\N
-155	country	n	\N	\N	1	A1	\N
-156	course	n	\N	\N	1	A1	\N
-157	cousin	n	\N	\N	1	A1	\N
-158	cow	n	\N	\N	1	A1	\N
-159	cream	n	\N	\N	1	A1	\N
-160	cup	n	\N	\N	1	A1	\N
-161	dad	n	\N	\N	1	A1	\N
-162	daily	adj	\N	\N	1	A1	\N
-163	dance	v	\N	\N	1	A1	\N
-164	dancer	n	\N	\N	1	A1	\N
-165	dancing	n	\N	\N	1	A1	\N
-166	dangerous	adj	\N	\N	1	A1	\N
-167	dark	adj	\N	\N	1	A1	\N
-168	date	n	\N	\N	1	A1	\N
-169	daughter	n	\N	\N	1	A1	\N
-170	day	n	\N	\N	1	A1	\N
-171	dear	adj	\N	\N	1	A1	\N
-172	December	n	\N	\N	1	A1	\N
-173	decide	v	\N	\N	1	A1	\N
-174	delicious	adj	\N	\N	1	A1	\N
-175	desk	n	\N	\N	1	A1	\N
-176	detail	n	\N	\N	1	A1	\N
-177	dialogue	n	\N	\N	1	A1	\N
-178	dictionary	n	\N	\N	1	A1	\N
-179	die	v	\N	\N	1	A1	\N
-180	diet	n	\N	\N	1	A1	\N
-181	different	adj	\N	\N	1	A1	\N
-182	difficult	adj	\N	\N	1	A1	\N
-183	dinner	n	\N	\N	1	A1	\N
-184	dirty	adj	\N	\N	1	A1	\N
-185	dish	n	\N	\N	1	A1	\N
-186	do	v	\N	\N	1	A1	\N
-187	doctor	n	\N	\N	1	A1	\N
-188	dog	n	\N	\N	1	A1	\N
-189	dollar	n	\N	\N	1	A1	\N
-190	door	n	\N	\N	1	A1	\N
-191	down	adv	\N	\N	1	A1	\N
-192	downstairs	adv	\N	\N	1	A1	\N
-193	draw	v	\N	\N	1	A1	\N
-194	dress	n	\N	\N	1	A1	\N
-195	drink	v	\N	\N	1	A1	\N
-196	drive	v	\N	\N	1	A1	\N
-197	driver	n	\N	\N	1	A1	\N
-198	driving	n	\N	\N	1	A1	\N
-199	during	prep	\N	\N	1	A1	\N
-200	DVD	n	\N	\N	1	A1	\N
-201	each	det	\N	\N	1	A1	\N
-202	ear	n	\N	\N	1	A1	\N
-203	early	adj	\N	\N	1	A1	\N
-204	east	n	\N	\N	1	A1	\N
-205	easy	adj	\N	\N	1	A1	\N
-206	eat	v	\N	\N	1	A1	\N
-207	egg	n	\N	\N	1	A1	\N
-208	eight	num	\N	\N	1	A1	\N
-209	eighteen	num	\N	\N	1	A1	\N
-210	eighty	num	\N	\N	1	A1	\N
-211	elephant	n	\N	\N	1	A1	\N
-212	eleven	num	\N	\N	1	A1	\N
-213	else	adv	\N	\N	1	A1	\N
-214	email	n	\N	\N	1	A1	\N
-215	end	n	\N	\N	1	A1	\N
-216	enjoy	v	\N	\N	1	A1	\N
-217	enough	det	\N	\N	1	A1	\N
-218	euro	n	\N	\N	1	A1	\N
-219	even	adv	\N	\N	1	A1	\N
-220	evening	n	\N	\N	1	A1	\N
-221	ever	adv	\N	\N	1	A1	\N
-222	every	det	\N	\N	1	A1	\N
-223	everybody	pron	\N	\N	1	A1	\N
-224	everyone	pron	\N	\N	1	A1	\N
-225	everything	pron	\N	\N	1	A1	\N
-226	exam	n	\N	\N	1	A1	\N
-227	example	n	\N	\N	1	A1	\N
-228	excited	adj	\N	\N	1	A1	\N
-229	exciting	adj	\N	\N	1	A1	\N
-230	exercise	n	\N	\N	1	A1	\N
-231	expensive	adj	\N	\N	1	A1	\N
-232	explain	v	\N	\N	1	A1	\N
-233	extra	adj	\N	\N	1	A1	\N
-234	eye	n	\N	\N	1	A1	\N
-235	face	n	\N	\N	1	A1	\N
-236	fall	v	\N	\N	1	A1	\N
-237	false	adj	\N	\N	1	A1	\N
-238	family	n	\N	\N	1	A1	\N
-239	famous	adj	\N	\N	1	A1	\N
-240	fantastic	adj	\N	\N	1	A1	\N
-241	far	adv	\N	\N	1	A1	\N
-242	farm	n	\N	\N	1	A1	\N
-243	farmer	n	\N	\N	1	A1	\N
-244	fast	adj	\N	\N	1	A1	\N
-245	fat	adj	\N	\N	1	A1	\N
-246	father	n	\N	\N	1	A1	\N
-247	favourite	adj	\N	\N	1	A1	\N
-248	February	n	\N	\N	1	A1	\N
-249	feel	v	\N	\N	1	A1	\N
-250	festival	n	\N	\N	1	A1	\N
-251	few	det	\N	\N	1	A1	\N
-252	fifteen	num	\N	\N	1	A1	\N
-253	fifth	num	\N	\N	1	A1	\N
-254	fifty	num	\N	\N	1	A1	\N
-255	fill	v	\N	\N	1	A1	\N
-256	film	n	\N	\N	1	A1	\N
-257	final	adj	\N	\N	1	A1	\N
-258	find	v	\N	\N	1	A1	\N
-259	fine	adj	\N	\N	1	A1	\N
-260	finish	v	\N	\N	1	A1	\N
-261	fire	n	\N	\N	1	A1	\N
-262	first	num	\N	\N	1	A1	\N
-263	fish	n	\N	\N	1	A1	\N
-264	five	num	\N	\N	1	A1	\N
-265	fix	v	\N	\N	1	A1	\N
-266	flat	n	\N	\N	1	A1	\N
-267	flight	n	\N	\N	1	A1	\N
-268	floor	n	\N	\N	1	A1	\N
-269	flower	n	\N	\N	1	A1	\N
-270	fly	v	\N	\N	1	A1	\N
-271	follow	v	\N	\N	1	A1	\N
-272	food	n	\N	\N	1	A1	\N
-273	foot	n	\N	\N	1	A1	\N
-274	football	n	\N	\N	1	A1	\N
-275	for	prep	\N	\N	1	A1	\N
-276	forget	v	\N	\N	1	A1	\N
-277	form	n	\N	\N	1	A1	\N
-278	forty	num	\N	\N	1	A1	\N
-279	four	num	\N	\N	1	A1	\N
-280	fourteen	num	\N	\N	1	A1	\N
-281	fourth	num	\N	\N	1	A1	\N
-282	free	adj	\N	\N	1	A1	\N
-283	Friday	n	\N	\N	1	A1	\N
-284	friend	n	\N	\N	1	A1	\N
-285	friendly	adj	\N	\N	1	A1	\N
-286	from	prep	\N	\N	1	A1	\N
-287	front	n	\N	\N	1	A1	\N
-288	fruit	n	\N	\N	1	A1	\N
-289	full	adj	\N	\N	1	A1	\N
-290	fun	n	\N	\N	1	A1	\N
-291	funny	adj	\N	\N	1	A1	\N
-292	future	n	\N	\N	1	A1	\N
-293	game	n	\N	\N	1	A1	\N
-294	garden	n	\N	\N	1	A1	\N
-295	geography	n	\N	\N	1	A1	\N
-296	get	v	\N	\N	1	A1	\N
-297	girl	n	\N	\N	1	A1	\N
-298	girlfriend	n	\N	\N	1	A1	\N
-299	give	v	\N	\N	1	A1	\N
-300	glass	n	\N	\N	1	A1	\N
-301	go	v	\N	\N	1	A1	\N
-302	good	adj	\N	\N	1	A1	\N
-303	goodbye	interj	\N	\N	1	A1	\N
-304	grandfather	n	\N	\N	1	A1	\N
-305	grandmother	n	\N	\N	1	A1	\N
-306	grandparent	n	\N	\N	1	A1	\N
-307	great	adj	\N	\N	1	A1	\N
-308	green	adj	\N	\N	1	A1	\N
-309	grey	adj	\N	\N	1	A1	\N
-310	group	n	\N	\N	1	A1	\N
-311	grow	v	\N	\N	1	A1	\N
-312	guess	v	\N	\N	1	A1	\N
-313	guitar	n	\N	\N	1	A1	\N
-314	gym	n	\N	\N	1	A1	\N
-315	hair	n	\N	\N	1	A1	\N
-316	half	n	\N	\N	1	A1	\N
-317	hand	n	\N	\N	1	A1	\N
-318	happen	v	\N	\N	1	A1	\N
-319	happy	adj	\N	\N	1	A1	\N
-320	hard	adj	\N	\N	1	A1	\N
-321	hat	n	\N	\N	1	A1	\N
-322	hate	v	\N	\N	1	A1	\N
-323	have	v	\N	\N	1	A1	\N
-324	have to	v	\N	\N	1	A1	\N
-325	he	pron	\N	\N	1	A1	\N
-326	head	n	\N	\N	1	A1	\N
-327	health	n	\N	\N	1	A1	\N
-328	healthy	adj	\N	\N	1	A1	\N
-329	hear	v	\N	\N	1	A1	\N
-330	hello	interj	\N	\N	1	A1	\N
-331	help	v	\N	\N	1	A1	\N
-332	her	pron	\N	\N	1	A1	\N
-333	here	adv	\N	\N	1	A1	\N
-334	hey	interj	\N	\N	1	A1	\N
-335	hi	interj	\N	\N	1	A1	\N
-336	high	adj	\N	\N	1	A1	\N
-337	him	pron	\N	\N	1	A1	\N
-338	his	det	\N	\N	1	A1	\N
-339	history	n	\N	\N	1	A1	\N
-340	hobby	n	\N	\N	1	A1	\N
-341	holiday	n	\N	\N	1	A1	\N
-342	home	n	\N	\N	1	A1	\N
-343	homework	n	\N	\N	1	A1	\N
-344	hope	v	\N	\N	1	A1	\N
-345	horse	n	\N	\N	1	A1	\N
-346	hospital	n	\N	\N	1	A1	\N
-347	hot	adj	\N	\N	1	A1	\N
-348	hotel	n	\N	\N	1	A1	\N
-349	hour	n	\N	\N	1	A1	\N
-350	house	n	\N	\N	1	A1	\N
-351	how	adv	\N	\N	1	A1	\N
-352	hundred	num	\N	\N	1	A1	\N
-353	hungry	adj	\N	\N	1	A1	\N
-354	husband	n	\N	\N	1	A1	\N
-355	I	pron	\N	\N	1	A1	\N
-356	ice	n	\N	\N	1	A1	\N
-357	ice cream	n	\N	\N	1	A1	\N
-358	idea	n	\N	\N	1	A1	\N
-359	if	conj	\N	\N	1	A1	\N
-360	important	adj	\N	\N	1	A1	\N
-361	in	prep	\N	\N	1	A1	\N
-362	include	v	\N	\N	1	A1	\N
-363	information	n	\N	\N	1	A1	\N
-364	interest	n	\N	\N	1	A1	\N
-365	interested	adj	\N	\N	1	A1	\N
-366	interesting	adj	\N	\N	1	A1	\N
-367	internet	n	\N	\N	1	A1	\N
-368	interview	n	\N	\N	1	A1	\N
-369	into	prep	\N	\N	1	A1	\N
-370	introduce	v	\N	\N	1	A1	\N
-371	island	n	\N	\N	1	A1	\N
-372	it	pron	\N	\N	1	A1	\N
-373	its	det	\N	\N	1	A1	\N
-374	jacket	n	\N	\N	1	A1	\N
-375	January	n	\N	\N	1	A1	\N
-376	jeans	n	\N	\N	1	A1	\N
-377	job	n	\N	\N	1	A1	\N
-378	join	v	\N	\N	1	A1	\N
-379	journey	n	\N	\N	1	A1	\N
-380	juice	n	\N	\N	1	A1	\N
-381	keep	v	\N	\N	1	A1	\N
-382	key	n	\N	\N	1	A1	\N
-383	kilometre	n	\N	\N	1	A1	\N
-384	kind	n	\N	\N	1	A1	\N
-385	kitchen	n	\N	\N	1	A1	\N
-386	know	v	\N	\N	1	A1	\N
-387	land	n	\N	\N	1	A1	\N
-388	language	n	\N	\N	1	A1	\N
-389	large	adj	\N	\N	1	A1	\N
-390	last	adj	\N	\N	1	A1	\N
-391	late	adj	\N	\N	1	A1	\N
-392	later	adv	\N	\N	1	A1	\N
-393	laugh	v	\N	\N	1	A1	\N
-394	learn	v	\N	\N	1	A1	\N
-395	leave	v	\N	\N	1	A1	\N
-396	left	adj	\N	\N	1	A1	\N
-397	leg	n	\N	\N	1	A1	\N
-398	lesson	n	\N	\N	1	A1	\N
-399	let	v	\N	\N	1	A1	\N
-400	letter	n	\N	\N	1	A1	\N
-401	library	n	\N	\N	1	A1	\N
-402	lie	v	\N	\N	1	A1	\N
-403	life	n	\N	\N	1	A1	\N
-404	light	n	\N	\N	1	A1	\N
-405	like	prep	\N	\N	1	A1	\N
-406	like	v	\N	\N	1	A1	\N
-407	line	n	\N	\N	1	A1	\N
-408	lion	n	\N	\N	1	A1	\N
-409	list	n	\N	\N	1	A1	\N
-410	listen	v	\N	\N	1	A1	\N
-411	little	adj	\N	\N	1	A1	\N
-412	live	v	\N	\N	1	A1	\N
-413	long	adj	\N	\N	1	A1	\N
-414	look	v	\N	\N	1	A1	\N
-415	lose	v	\N	\N	1	A1	\N
-416	lot	n	\N	\N	1	A1	\N
-417	love	v	\N	\N	1	A1	\N
-418	lunch	n	\N	\N	1	A1	\N
-419	machine	n	\N	\N	1	A1	\N
-420	magazine	n	\N	\N	1	A1	\N
-421	main	adj	\N	\N	1	A1	\N
-422	make	v	\N	\N	1	A1	\N
-423	man	n	\N	\N	1	A1	\N
-424	many	det	\N	\N	1	A1	\N
-425	map	n	\N	\N	1	A1	\N
-426	March	n	\N	\N	1	A1	\N
-427	market	n	\N	\N	1	A1	\N
-428	married	adj	\N	\N	1	A1	\N
-429	match	n	\N	\N	1	A1	\N
-430	May	n	\N	\N	1	A1	\N
-431	maybe	adv	\N	\N	1	A1	\N
-432	me	pron	\N	\N	1	A1	\N
-433	meal	n	\N	\N	1	A1	\N
-434	mean	v	\N	\N	1	A1	\N
-435	meaning	n	\N	\N	1	A1	\N
-436	meat	n	\N	\N	1	A1	\N
-437	meet	v	\N	\N	1	A1	\N
-438	meeting	n	\N	\N	1	A1	\N
-439	member	n	\N	\N	1	A1	\N
-440	menu	n	\N	\N	1	A1	\N
-441	message	n	\N	\N	1	A1	\N
-442	metre	n	\N	\N	1	A1	\N
-443	midnight	n	\N	\N	1	A1	\N
-444	mile	n	\N	\N	1	A1	\N
-445	milk	n	\N	\N	1	A1	\N
-446	million	num	\N	\N	1	A1	\N
-447	minute	n	\N	\N	1	A1	\N
-448	miss	v	\N	\N	1	A1	\N
-449	mistake	n	\N	\N	1	A1	\N
-450	model	n	\N	\N	1	A1	\N
-451	modern	adj	\N	\N	1	A1	\N
-452	moment	n	\N	\N	1	A1	\N
-453	Monday	n	\N	\N	1	A1	\N
-454	money	n	\N	\N	1	A1	\N
-455	month	n	\N	\N	1	A1	\N
-456	more	det	\N	\N	1	A1	\N
-457	morning	n	\N	\N	1	A1	\N
-458	most	det	\N	\N	1	A1	\N
-459	mother	n	\N	\N	1	A1	\N
-460	mountain	n	\N	\N	1	A1	\N
-461	mouse	n	\N	\N	1	A1	\N
-462	mouth	n	\N	\N	1	A1	\N
-463	move	v	\N	\N	1	A1	\N
-464	movie	n	\N	\N	1	A1	\N
-465	much	det	\N	\N	1	A1	\N
-466	mum	n	\N	\N	1	A1	\N
-467	museum	n	\N	\N	1	A1	\N
-468	music	n	\N	\N	1	A1	\N
-469	must	v	\N	\N	1	A1	\N
-470	my	det	\N	\N	1	A1	\N
-471	name	n	\N	\N	1	A1	\N
-472	near	prep	\N	\N	1	A1	\N
-473	need	v	\N	\N	1	A1	\N
-474	neighbour	n	\N	\N	1	A1	\N
-475	never	adv	\N	\N	1	A1	\N
-476	new	adj	\N	\N	1	A1	\N
-477	news	n	\N	\N	1	A1	\N
-478	newspaper	n	\N	\N	1	A1	\N
-479	next	adj	\N	\N	1	A1	\N
-480	next to	prep	\N	\N	1	A1	\N
-481	nice	adj	\N	\N	1	A1	\N
-482	night	n	\N	\N	1	A1	\N
-483	nine	num	\N	\N	1	A1	\N
-484	nineteen	num	\N	\N	1	A1	\N
-485	ninety	num	\N	\N	1	A1	\N
-486	no	det	\N	\N	1	A1	\N
-487	no one	pron	\N	\N	1	A1	\N
-488	nobody	pron	\N	\N	1	A1	\N
-489	noon	n	\N	\N	1	A1	\N
-490	north	n	\N	\N	1	A1	\N
-491	nose	n	\N	\N	1	A1	\N
-492	not	adv	\N	\N	1	A1	\N
-493	note	n	\N	\N	1	A1	\N
-494	nothing	pron	\N	\N	1	A1	\N
-495	November	n	\N	\N	1	A1	\N
-496	now	adv	\N	\N	1	A1	\N
-497	number	n	\N	\N	1	A1	\N
-498	o'clock	adv	\N	\N	1	A1	\N
-499	October	n	\N	\N	1	A1	\N
-500	of	prep	\N	\N	1	A1	\N
-501	off	adv	\N	\N	1	A1	\N
-502	office	n	\N	\N	1	A1	\N
-503	often	adv	\N	\N	1	A1	\N
-504	oh	interj	\N	\N	1	A1	\N
-505	OK	adj	\N	\N	1	A1	\N
-506	old	adj	\N	\N	1	A1	\N
-507	on	prep	\N	\N	1	A1	\N
-508	once	adv	\N	\N	1	A1	\N
-509	one	num	\N	\N	1	A1	\N
-510	onion	n	\N	\N	1	A1	\N
-511	online	adj	\N	\N	1	A1	\N
-512	only	adv	\N	\N	1	A1	\N
-513	open	v	\N	\N	1	A1	\N
-514	opposite	adj	\N	\N	1	A1	\N
-515	or	conj	\N	\N	1	A1	\N
-516	orange	n	\N	\N	1	A1	\N
-517	order	v	\N	\N	1	A1	\N
-518	other	adj	\N	\N	1	A1	\N
-519	our	det	\N	\N	1	A1	\N
-520	out	adv	\N	\N	1	A1	\N
-521	outside	adv	\N	\N	1	A1	\N
-522	over	prep	\N	\N	1	A1	\N
-523	own	v	\N	\N	1	A1	\N
-524	page	n	\N	\N	1	A1	\N
-525	paint	v	\N	\N	1	A1	\N
-526	painting	n	\N	\N	1	A1	\N
-527	pair	n	\N	\N	1	A1	\N
-528	paper	n	\N	\N	1	A1	\N
-529	paragraph	n	\N	\N	1	A1	\N
-530	parent	n	\N	\N	1	A1	\N
-531	park	n	\N	\N	1	A1	\N
-532	part	n	\N	\N	1	A1	\N
-533	partner	n	\N	\N	1	A1	\N
-534	party	n	\N	\N	1	A1	\N
-535	passport	n	\N	\N	1	A1	\N
-536	past	adj	\N	\N	1	A1	\N
-537	pay	v	\N	\N	1	A1	\N
-538	pen	n	\N	\N	1	A1	\N
-539	pencil	n	\N	\N	1	A1	\N
-540	people	n	\N	\N	1	A1	\N
-541	pepper	n	\N	\N	1	A1	\N
-542	perfect	adj	\N	\N	1	A1	\N
-543	period	n	\N	\N	1	A1	\N
-544	person	n	\N	\N	1	A1	\N
-545	personal	adj	\N	\N	1	A1	\N
-546	phone	n	\N	\N	1	A1	\N
-547	photo	n	\N	\N	1	A1	\N
-548	photograph	n	\N	\N	1	A1	\N
-549	phrase	n	\N	\N	1	A1	\N
-550	piano	n	\N	\N	1	A1	\N
-551	picture	n	\N	\N	1	A1	\N
-552	piece	n	\N	\N	1	A1	\N
-553	pig	n	\N	\N	1	A1	\N
-554	pink	adj	\N	\N	1	A1	\N
-555	place	n	\N	\N	1	A1	\N
-556	plan	n	\N	\N	1	A1	\N
-557	plane	n	\N	\N	1	A1	\N
-558	plant	n	\N	\N	1	A1	\N
-559	play	v	\N	\N	1	A1	\N
-560	player	n	\N	\N	1	A1	\N
-561	please	interj	\N	\N	1	A1	\N
-562	point	n	\N	\N	1	A1	\N
-563	police	n	\N	\N	1	A1	\N
-564	policeman	n	\N	\N	1	A1	\N
-565	pool	n	\N	\N	1	A1	\N
-566	poor	adj	\N	\N	1	A1	\N
-567	pop	n	\N	\N	1	A1	\N
-568	popular	adj	\N	\N	1	A1	\N
-569	possible	adj	\N	\N	1	A1	\N
-570	post	n	\N	\N	1	A1	\N
-571	potato	n	\N	\N	1	A1	\N
-572	pound	n	\N	\N	1	A1	\N
-573	practice	n	\N	\N	1	A1	\N
-574	practise	v	\N	\N	1	A1	\N
-575	present	n	\N	\N	1	A1	\N
-576	pretty	adj	\N	\N	1	A1	\N
-577	price	n	\N	\N	1	A1	\N
-578	problem	n	\N	\N	1	A1	\N
-579	programme	n	\N	\N	1	A1	\N
-580	project	n	\N	\N	1	A1	\N
-581	purple	adj	\N	\N	1	A1	\N
-582	put	v	\N	\N	1	A1	\N
-583	snake	n	\N	\N	1	A1	\N
-584	snow	n	\N	\N	1	A1	\N
-585	so	conj	\N	\N	1	A1	\N
-586	some	det	\N	\N	1	A1	\N
-1587	side	n	\N	\N	1	A2	\N
-587	somebody	pron	\N	\N	1	A1	\N
-588	someone	pron	\N	\N	1	A1	\N
-589	something	pron	\N	\N	1	A1	\N
-590	sometimes	adv	\N	\N	1	A1	\N
-591	son	n	\N	\N	1	A1	\N
-592	song	n	\N	\N	1	A1	\N
-593	soon	adv	\N	\N	1	A1	\N
-594	sorry	adj	\N	\N	1	A1	\N
-595	sound	n	\N	\N	1	A1	\N
-596	soup	n	\N	\N	1	A1	\N
-597	south	n	\N	\N	1	A1	\N
-598	space	n	\N	\N	1	A1	\N
-599	speak	v	\N	\N	1	A1	\N
-600	special	adj	\N	\N	1	A1	\N
-601	spell	v	\N	\N	1	A1	\N
-602	spelling	n	\N	\N	1	A1	\N
-603	spend	v	\N	\N	1	A1	\N
-604	sport	n	\N	\N	1	A1	\N
-605	spring	n	\N	\N	1	A1	\N
-606	stand	v	\N	\N	1	A1	\N
-607	start	v	\N	\N	1	A1	\N
-608	station	n	\N	\N	1	A1	\N
-609	stop	v	\N	\N	1	A1	\N
-610	story	n	\N	\N	1	A1	\N
-611	street	n	\N	\N	1	A1	\N
-612	strong	adj	\N	\N	1	A1	\N
-613	student	n	\N	\N	1	A1	\N
-614	study	v	\N	\N	1	A1	\N
-615	style	n	\N	\N	1	A1	\N
-616	subject	n	\N	\N	1	A1	\N
-617	sugar	n	\N	\N	1	A1	\N
-618	summer	n	\N	\N	1	A1	\N
-619	sun	n	\N	\N	1	A1	\N
-620	Sunday	n	\N	\N	1	A1	\N
-621	supermarket	n	\N	\N	1	A1	\N
-622	sure	adj	\N	\N	1	A1	\N
-623	sweater	n	\N	\N	1	A1	\N
-624	swim	v	\N	\N	1	A1	\N
-625	swimming	n	\N	\N	1	A1	\N
-626	table	n	\N	\N	1	A1	\N
-627	take	v	\N	\N	1	A1	\N
-628	talk	v	\N	\N	1	A1	\N
-629	tall	adj	\N	\N	1	A1	\N
-630	taxi	n	\N	\N	1	A1	\N
-631	tea	n	\N	\N	1	A1	\N
-632	teach	v	\N	\N	1	A1	\N
-633	teacher	n	\N	\N	1	A1	\N
-634	team	n	\N	\N	1	A1	\N
-635	teenager	n	\N	\N	1	A1	\N
-636	telephone	n	\N	\N	1	A1	\N
-637	television	n	\N	\N	1	A1	\N
-638	tell	v	\N	\N	1	A1	\N
-639	ten	num	\N	\N	1	A1	\N
-640	tennis	n	\N	\N	1	A1	\N
-641	terrible	adj	\N	\N	1	A1	\N
-642	test	n	\N	\N	1	A1	\N
-643	text	n	\N	\N	1	A1	\N
-644	than	conj	\N	\N	1	A1	\N
-645	thank	v	\N	\N	1	A1	\N
-646	thanks	interj	\N	\N	1	A1	\N
-647	that	det	\N	\N	1	A1	\N
-648	the	det	\N	\N	1	A1	\N
-649	theatre	n	\N	\N	1	A1	\N
-650	their	det	\N	\N	1	A1	\N
-651	them	pron	\N	\N	1	A1	\N
-652	then	adv	\N	\N	1	A1	\N
-653	there	adv	\N	\N	1	A1	\N
-654	they	pron	\N	\N	1	A1	\N
-655	thing	n	\N	\N	1	A1	\N
-656	think	v	\N	\N	1	A1	\N
-657	third	num	\N	\N	1	A1	\N
-658	thirsty	adj	\N	\N	1	A1	\N
-659	thirteen	num	\N	\N	1	A1	\N
-660	thirty	num	\N	\N	1	A1	\N
-661	this	det	\N	\N	1	A1	\N
-662	thousand	num	\N	\N	1	A1	\N
-663	three	num	\N	\N	1	A1	\N
-664	through	prep	\N	\N	1	A1	\N
-665	Thursday	n	\N	\N	1	A1	\N
-666	ticket	n	\N	\N	1	A1	\N
-667	time	n	\N	\N	1	A1	\N
-668	tired	adj	\N	\N	1	A1	\N
-669	title	n	\N	\N	1	A1	\N
-670	to	prep	\N	\N	1	A1	\N
-671	today	adv	\N	\N	1	A1	\N
-672	together	adv	\N	\N	1	A1	\N
-673	toilet	n	\N	\N	1	A1	\N
-674	tomato	n	\N	\N	1	A1	\N
-675	tomorrow	adv	\N	\N	1	A1	\N
-676	tonight	adv	\N	\N	1	A1	\N
-677	too	adv	\N	\N	1	A1	\N
-678	top	n	\N	\N	1	A1	\N
-679	tooth	n	\N	\N	1	A1	\N
-680	tourist	n	\N	\N	1	A1	\N
-681	town	n	\N	\N	1	A1	\N
-682	traffic	n	\N	\N	1	A1	\N
-683	train	n	\N	\N	1	A1	\N
-684	travel	v	\N	\N	1	A1	\N
-685	tree	n	\N	\N	1	A1	\N
-686	trip	n	\N	\N	1	A1	\N
-687	trousers	n	\N	\N	1	A1	\N
-688	true	adj	\N	\N	1	A1	\N
-689	try	v	\N	\N	1	A1	\N
-690	T-shirt	n	\N	\N	1	A1	\N
-691	Tuesday	n	\N	\N	1	A1	\N
-692	turn	v	\N	\N	1	A1	\N
-693	TV	n	\N	\N	1	A1	\N
-694	twelve	num	\N	\N	1	A1	\N
-695	twenty	num	\N	\N	1	A1	\N
-696	twice	adv	\N	\N	1	A1	\N
-697	two	num	\N	\N	1	A1	\N
-698	type	n	\N	\N	1	A1	\N
-699	umbrella	n	\N	\N	1	A1	\N
-700	uncle	n	\N	\N	1	A1	\N
-701	under	prep	\N	\N	1	A1	\N
-702	understand	v	\N	\N	1	A1	\N
-703	university	n	\N	\N	1	A1	\N
-704	until	conj	\N	\N	1	A1	\N
-705	up	adv	\N	\N	1	A1	\N
-706	upstairs	adv	\N	\N	1	A1	\N
-707	us	pron	\N	\N	1	A1	\N
-708	use	v	\N	\N	1	A1	\N
-709	usually	adv	\N	\N	1	A1	\N
-710	vacation	n	\N	\N	1	A1	\N
-711	vegetable	n	\N	\N	1	A1	\N
-712	very	adv	\N	\N	1	A1	\N
-713	video	n	\N	\N	1	A1	\N
-714	village	n	\N	\N	1	A1	\N
-715	visit	v	\N	\N	1	A1	\N
-716	visitor	n	\N	\N	1	A1	\N
-717	wait	v	\N	\N	1	A1	\N
-718	waiter	n	\N	\N	1	A1	\N
-719	wake	v	\N	\N	1	A1	\N
-720	walk	v	\N	\N	1	A1	\N
-721	wall	n	\N	\N	1	A1	\N
-722	want	v	\N	\N	1	A1	\N
-723	warm	adj	\N	\N	1	A1	\N
-724	wash	v	\N	\N	1	A1	\N
-725	watch	v	\N	\N	1	A1	\N
-726	water	n	\N	\N	1	A1	\N
-727	way	n	\N	\N	1	A1	\N
-728	we	pron	\N	\N	1	A1	\N
-729	wear	v	\N	\N	1	A1	\N
-730	weather	n	\N	\N	1	A1	\N
-731	website	n	\N	\N	1	A1	\N
-732	Wednesday	n	\N	\N	1	A1	\N
-733	week	n	\N	\N	1	A1	\N
-734	weekend	n	\N	\N	1	A1	\N
-735	welcome	interj	\N	\N	1	A1	\N
-736	well	adv	\N	\N	1	A1	\N
-737	west	n	\N	\N	1	A1	\N
-738	what	pron	\N	\N	1	A1	\N
-739	when	adv	\N	\N	1	A1	\N
-740	where	adv	\N	\N	1	A1	\N
-741	which	pron	\N	\N	1	A1	\N
-742	white	adj	\N	\N	1	A1	\N
-743	who	pron	\N	\N	1	A1	\N
-744	why	adv	\N	\N	1	A1	\N
-745	wife	n	\N	\N	1	A1	\N
-746	will	v	\N	\N	1	A1	\N
-747	win	v	\N	\N	1	A1	\N
-748	window	n	\N	\N	1	A1	\N
-749	wine	n	\N	\N	1	A1	\N
-750	winter	n	\N	\N	1	A1	\N
-751	with	prep	\N	\N	1	A1	\N
-752	without	prep	\N	\N	1	A1	\N
-753	woman	n	\N	\N	1	A1	\N
-754	wonderful	adj	\N	\N	1	A1	\N
-755	word	n	\N	\N	1	A1	\N
-756	work	n	\N	\N	1	A1	\N
-757	work	v	\N	\N	1	A1	\N
-758	worker	n	\N	\N	1	A1	\N
-759	world	n	\N	\N	1	A1	\N
-760	would	v	\N	\N	1	A1	\N
-761	write	v	\N	\N	1	A1	\N
-762	writer	n	\N	\N	1	A1	\N
-763	writing	n	\N	\N	1	A1	\N
-764	wrong	adj	\N	\N	1	A1	\N
-765	yeah	interj	\N	\N	1	A1	\N
-766	year	n	\N	\N	1	A1	\N
-767	yellow	adj	\N	\N	1	A1	\N
-768	yes	interj	\N	\N	1	A1	\N
-769	yesterday	adv	\N	\N	1	A1	\N
-770	you	pron	\N	\N	1	A1	\N
-771	young	adj	\N	\N	1	A1	\N
-772	your	det	\N	\N	1	A1	\N
-773	yourself	pron	\N	\N	1	A1	\N
-774	I	pron	\N	\N	1	A1	\N
-775	you	pron	\N	\N	1	A1	\N
-776	he	pron	\N	\N	1	A1	\N
-777	she	pron	\N	\N	1	A1	\N
-778	it	pron	\N	\N	1	A1	\N
-779	we	pron	\N	\N	1	A1	\N
-780	they	pron	\N	\N	1	A1	\N
-781	me	pron	\N	\N	1	A1	\N
-782	him	pron	\N	\N	1	A1	\N
-783	her	pron	\N	\N	1	A1	\N
-784	us	pron	\N	\N	1	A1	\N
-785	them	pron	\N	\N	1	A1	\N
-786	my	det	\N	\N	1	A1	\N
-787	your	det	\N	\N	1	A1	\N
-788	his	det	\N	\N	1	A1	\N
-789	its	det	\N	\N	1	A1	\N
-790	our	det	\N	\N	1	A1	\N
-791	their	det	\N	\N	1	A1	\N
-792	mine	pron	\N	\N	1	A1	\N
-793	yours	pron	\N	\N	1	A1	\N
-794	hers	pron	\N	\N	1	A1	\N
-795	ours	pron	\N	\N	1	A1	\N
-796	theirs	pron	\N	\N	1	A1	\N
-797	am	v	\N	\N	1	A1	\N
-798	is	v	\N	\N	1	A1	\N
-799	are	v	\N	\N	1	A1	\N
-800	was	v	\N	\N	1	A1	\N
-801	were	v	\N	\N	1	A1	\N
-802	be	v	\N	\N	1	A1	\N
-803	been	v	\N	\N	1	A1	\N
-804	being	v	\N	\N	1	A1	\N
-805	have	v	\N	\N	1	A1	\N
-806	has	v	\N	\N	1	A1	\N
-807	had	v	\N	\N	1	A1	\N
-808	shall	v	\N	\N	1	A1	\N
-809	may	v	\N	\N	1	A1	\N
-810	might	v	\N	\N	1	A1	\N
-811	I'm	contr	\N	\N	1	A1	\N
-812	you're	contr	\N	\N	1	A1	\N
-813	he's	contr	\N	\N	1	A1	\N
-814	she's	contr	\N	\N	1	A1	\N
-815	it's	contr	\N	\N	1	A1	\N
-816	we're	contr	\N	\N	1	A1	\N
-817	they're	contr	\N	\N	1	A1	\N
-818	I've	contr	\N	\N	1	A1	\N
-819	you've	contr	\N	\N	1	A1	\N
-820	we've	contr	\N	\N	1	A1	\N
-821	they've	contr	\N	\N	1	A1	\N
-822	I'll	contr	\N	\N	1	A1	\N
-823	you'll	contr	\N	\N	1	A1	\N
-824	he'll	contr	\N	\N	1	A1	\N
-825	she'll	contr	\N	\N	1	A1	\N
-826	we'll	contr	\N	\N	1	A1	\N
-827	they'll	contr	\N	\N	1	A1	\N
-828	don't	contr	\N	\N	1	A1	\N
-829	doesn't	contr	\N	\N	1	A1	\N
-830	didn't	contr	\N	\N	1	A1	\N
-831	can't	contr	\N	\N	1	A1	\N
-832	couldn't	contr	\N	\N	1	A1	\N
-833	won't	contr	\N	\N	1	A1	\N
-834	shouldn't	contr	\N	\N	1	A1	\N
-835	wouldn't	contr	\N	\N	1	A1	\N
-836	isn't	contr	\N	\N	1	A1	\N
-837	aren't	contr	\N	\N	1	A1	\N
-838	wasn't	contr	\N	\N	1	A1	\N
-839	weren't	contr	\N	\N	1	A1	\N
-840	haven't	contr	\N	\N	1	A1	\N
-841	hasn't	contr	\N	\N	1	A1	\N
-842	hadn't	contr	\N	\N	1	A1	\N
-843	beside	prep	\N	\N	1	A1	\N
-844	in front of	prep	\N	\N	1	A1	\N
-845	into	prep	\N	\N	1	A1	\N
-846	onto	prep	\N	\N	1	A1	\N
-847	of	prep	\N	\N	1	A1	\N
-848	while	conj	\N	\N	1	A1	\N
-849	until	conj	\N	\N	1	A1	\N
-850	the	det	\N	\N	1	A1	\N
-851	now	adv	\N	\N	1	A1	\N
-852	also	adv	\N	\N	1	A1	\N
-853	just	adv	\N	\N	1	A1	\N
-854	even	adv	\N	\N	1	A1	\N
-855	ability	n	\N	\N	1	A2	\N
-856	able	adj	\N	\N	1	A2	\N
-857	abroad	adv	\N	\N	1	A2	\N
-858	accept	v	\N	\N	1	A2	\N
-859	accident	n	\N	\N	1	A2	\N
-860	achieve	v	\N	\N	1	A2	\N
-861	act	v	\N	\N	1	A2	\N
-862	active	adj	\N	\N	1	A2	\N
-863	actually	adv	\N	\N	1	A2	\N
-864	advantage	n	\N	\N	1	A2	\N
-865	adventure	n	\N	\N	1	A2	\N
-866	advertise	v	\N	\N	1	A2	\N
-867	advertisement	n	\N	\N	1	A2	\N
-868	advertising	n	\N	\N	1	A2	\N
-869	advice	n	\N	\N	1	A2	\N
-870	affect	v	\N	\N	1	A2	\N
-871	after	prep	\N	\N	1	A2	\N
-872	against	prep	\N	\N	1	A2	\N
-873	agree	v	\N	\N	1	A2	\N
-874	ah	interj	\N	\N	1	A2	\N
-875	airline	n	\N	\N	1	A2	\N
-876	alive	adj	\N	\N	1	A2	\N
-877	all	det	\N	\N	1	A2	\N
-878	allow	v	\N	\N	1	A2	\N
-879	almost	adv	\N	\N	1	A2	\N
-880	alone	adj	\N	\N	1	A2	\N
-881	along	prep	\N	\N	1	A2	\N
-882	already	adv	\N	\N	1	A2	\N
-883	although	conj	\N	\N	1	A2	\N
-884	among	prep	\N	\N	1	A2	\N
-885	amount	n	\N	\N	1	A2	\N
-886	ancient	adj	\N	\N	1	A2	\N
-887	ankle	n	\N	\N	1	A2	\N
-888	any	det	\N	\N	1	A2	\N
-889	anybody	pron	\N	\N	1	A2	\N
-890	any more	adv	\N	\N	1	A2	\N
-891	anyway	adv	\N	\N	1	A2	\N
-892	anywhere	adv	\N	\N	1	A2	\N
-893	app	n	\N	\N	1	A2	\N
-894	appear	v	\N	\N	1	A2	\N
-895	appearance	n	\N	\N	1	A2	\N
-896	apply	v	\N	\N	1	A2	\N
-897	architect	n	\N	\N	1	A2	\N
-898	architecture	n	\N	\N	1	A2	\N
-899	argue	v	\N	\N	1	A2	\N
-900	argument	n	\N	\N	1	A2	\N
-901	army	n	\N	\N	1	A2	\N
-902	arrange	v	\N	\N	1	A2	\N
-903	arrangement	n	\N	\N	1	A2	\N
-904	as	prep	\N	\N	1	A2	\N
-905	asleep	adj	\N	\N	1	A2	\N
-906	assistant	n	\N	\N	1	A2	\N
-907	athlete	n	\N	\N	1	A2	\N
-908	attack	n	\N	\N	1	A2	\N
-909	attack	v	\N	\N	1	A2	\N
-910	attend	v	\N	\N	1	A2	\N
-911	attention	n	\N	\N	1	A2	\N
-912	attractive	adj	\N	\N	1	A2	\N
-913	audience	n	\N	\N	1	A2	\N
-914	author	n	\N	\N	1	A2	\N
-915	available	adj	\N	\N	1	A2	\N
-916	average	n	\N	\N	1	A2	\N
-917	average	adj	\N	\N	1	A2	\N
-918	avoid	v	\N	\N	1	A2	\N
-919	award	n	\N	\N	1	A2	\N
-920	awful	adj	\N	\N	1	A2	\N
-921	background	n	\N	\N	1	A2	\N
-922	badly	adv	\N	\N	1	A2	\N
-923	baseball	n	\N	\N	1	A2	\N
-924	basketball	n	\N	\N	1	A2	\N
-925	bass	n	\N	\N	1	A2	\N
-926	bean	n	\N	\N	1	A2	\N
-927	bear	n	\N	\N	1	A2	\N
-928	beat	v	\N	\N	1	A2	\N
-929	beef	n	\N	\N	1	A2	\N
-930	before	prep	\N	\N	1	A2	\N
-931	behave	v	\N	\N	1	A2	\N
-932	belong	v	\N	\N	1	A2	\N
-933	belt	n	\N	\N	1	A2	\N
-934	benefit	n	\N	\N	1	A2	\N
-935	best	adj	\N	\N	1	A2	\N
-936	best	adv	\N	\N	1	A2	\N
-937	better	adj	\N	\N	1	A2	\N
-938	better	adv	\N	\N	1	A2	\N
-939	between	prep	\N	\N	1	A2	\N
-940	billion	num	\N	\N	1	A2	\N
-941	bin	n	\N	\N	1	A2	\N
-942	biology	n	\N	\N	1	A2	\N
-943	birth	n	\N	\N	1	A2	\N
-944	biscuit	n	\N	\N	1	A2	\N
-945	bit	n	\N	\N	1	A2	\N
-946	blank	adj	\N	\N	1	A2	\N
-947	blood	n	\N	\N	1	A2	\N
-948	blow	v	\N	\N	1	A2	\N
-949	board	n	\N	\N	1	A2	\N
-950	boil	v	\N	\N	1	A2	\N
-951	bone	n	\N	\N	1	A2	\N
-952	book	v	\N	\N	1	A2	\N
-953	borrow	v	\N	\N	1	A2	\N
-954	boss	n	\N	\N	1	A2	\N
-955	bottom	n	\N	\N	1	A2	\N
-956	bottom	adj	\N	\N	1	A2	\N
-957	bowl	n	\N	\N	1	A2	\N
-958	brain	n	\N	\N	1	A2	\N
-959	bridge	n	\N	\N	1	A2	\N
-960	bright	adj	\N	\N	1	A2	\N
-961	brilliant	adj	\N	\N	1	A2	\N
-962	broken	adj	\N	\N	1	A2	\N
-963	brush	n	\N	\N	1	A2	\N
-964	brush	v	\N	\N	1	A2	\N
-965	buddy	n	\N	\N	1	A2	\N
-966	burn	v	\N	\N	1	A2	\N
-967	businessman	n	\N	\N	1	A2	\N
-968	button	n	\N	\N	1	A2	\N
-969	camp	n	\N	\N	1	A2	\N
-970	camp	v	\N	\N	1	A2	\N
-971	camping	n	\N	\N	1	A2	\N
-972	can	n	\N	\N	1	A2	\N
-973	care	n	\N	\N	1	A2	\N
-974	care	v	\N	\N	1	A2	\N
-975	careful	adj	\N	\N	1	A2	\N
-976	carefully	adv	\N	\N	1	A2	\N
-977	carpet	n	\N	\N	1	A2	\N
-978	cartoon	n	\N	\N	1	A2	\N
-979	case	n	\N	\N	1	A2	\N
-980	cash	n	\N	\N	1	A2	\N
-981	casino	n	\N	\N	1	A2	\N
-982	castle	n	\N	\N	1	A2	\N
-983	catch	v	\N	\N	1	A2	\N
-984	cause	v	\N	\N	1	A2	\N
-985	cause	n	\N	\N	1	A2	\N
-986	celebrate	v	\N	\N	1	A2	\N
-987	celebrity	n	\N	\N	1	A2	\N
-988	certain	adj	\N	\N	1	A2	\N
-989	certainly	adv	\N	\N	1	A2	\N
-990	chance	n	\N	\N	1	A2	\N
-991	character	n	\N	\N	1	A2	\N
-992	charity	n	\N	\N	1	A2	\N
-993	chat	n	\N	\N	1	A2	\N
-994	chat	v	\N	\N	1	A2	\N
-995	chef	n	\N	\N	1	A2	\N
-996	chemistry	n	\N	\N	1	A2	\N
-997	chip	n	\N	\N	1	A2	\N
-998	choice	n	\N	\N	1	A2	\N
-999	church	n	\N	\N	1	A2	\N
-1000	cigarette	n	\N	\N	1	A2	\N
-1001	circle	n	\N	\N	1	A2	\N
-1002	classical	adj	\N	\N	1	A2	\N
-1003	clear	adj	\N	\N	1	A2	\N
-1004	clearly	adv	\N	\N	1	A2	\N
-1005	clever	adj	\N	\N	1	A2	\N
-1006	climate	n	\N	\N	1	A2	\N
-1007	close	adj	\N	\N	1	A2	\N
-1008	close	adv	\N	\N	1	A2	\N
-1009	closed	adj	\N	\N	1	A2	\N
-1010	clothing	n	\N	\N	1	A2	\N
-1011	cloud	n	\N	\N	1	A2	\N
-1012	coach	n	\N	\N	1	A2	\N
-1013	coast	n	\N	\N	1	A2	\N
-1014	code	n	\N	\N	1	A2	\N
-1015	coin	n	\N	\N	1	A2	\N
-1016	colleague	n	\N	\N	1	A2	\N
-1017	collect	v	\N	\N	1	A2	\N
-1018	column	n	\N	\N	1	A2	\N
-1019	comedy	n	\N	\N	1	A2	\N
-1020	comfortable	adj	\N	\N	1	A2	\N
-1021	common	adj	\N	\N	1	A2	\N
-1022	comment	n	\N	\N	1	A2	\N
-1023	communicate	v	\N	\N	1	A2	\N
-1024	community	n	\N	\N	1	A2	\N
-1025	compare	v	\N	\N	1	A2	\N
-1026	compete	v	\N	\N	1	A2	\N
-1027	competition	n	\N	\N	1	A2	\N
-1028	complain	v	\N	\N	1	A2	\N
-1029	completely	adv	\N	\N	1	A2	\N
-1030	condition	n	\N	\N	1	A2	\N
-1031	conference	n	\N	\N	1	A2	\N
-1032	connect	v	\N	\N	1	A2	\N
-1033	connected	adj	\N	\N	1	A2	\N
-1034	consider	v	\N	\N	1	A2	\N
-1035	contain	v	\N	\N	1	A2	\N
-1036	continent	n	\N	\N	1	A2	\N
-1037	continue	v	\N	\N	1	A2	\N
-1038	conversation	n	\N	\N	1	A2	\N
-1039	control	n	\N	\N	1	A2	\N
-1040	control	v	\N	\N	1	A2	\N
-1041	cook	n	\N	\N	1	A2	\N
-1042	cooker	n	\N	\N	1	A2	\N
-1043	copy	n	\N	\N	1	A2	\N
-1044	copy	v	\N	\N	1	A2	\N
-1045	corner	n	\N	\N	1	A2	\N
-1046	correctly	adv	\N	\N	1	A2	\N
-1047	count	v	\N	\N	1	A2	\N
-1048	couple	n	\N	\N	1	A2	\N
-1049	crazy	adj	\N	\N	1	A2	\N
-1050	creative	adj	\N	\N	1	A2	\N
-1051	crime	n	\N	\N	1	A2	\N
-1052	criminal	n	\N	\N	1	A2	\N
-1053	criminal	adj	\N	\N	1	A2	\N
-1054	daily	adj	\N	\N	1	A2	\N
-1055	daily	adv	\N	\N	1	A2	\N
-1056	danger	n	\N	\N	1	A2	\N
-1057	dark	adj	\N	\N	1	A2	\N
-1058	dark	n	\N	\N	1	A2	\N
-1059	dead	adj	\N	\N	1	A2	\N
-1060	deal with	v	\N	\N	1	A2	\N
-1061	death	n	\N	\N	1	A2	\N
-1062	decision	n	\N	\N	1	A2	\N
-1063	deep	adj	\N	\N	1	A2	\N
-1064	definitely	adv	\N	\N	1	A2	\N
-1065	degree	n	\N	\N	1	A2	\N
-1066	dentist	n	\N	\N	1	A2	\N
-1067	department	n	\N	\N	1	A2	\N
-1068	depend	v	\N	\N	1	A2	\N
-1069	describe	v	\N	\N	1	A2	\N
-1070	description	n	\N	\N	1	A2	\N
-1071	desert	n	\N	\N	1	A2	\N
-1072	design	n	\N	\N	1	A2	\N
-1073	design	v	\N	\N	1	A2	\N
-1074	designer	n	\N	\N	1	A2	\N
-1075	destroy	v	\N	\N	1	A2	\N
-1076	detective	n	\N	\N	1	A2	\N
-1077	develop	v	\N	\N	1	A2	\N
-1078	device	n	\N	\N	1	A2	\N
-1079	diary	n	\N	\N	1	A2	\N
-1080	difference	n	\N	\N	1	A2	\N
-1081	differently	adv	\N	\N	1	A2	\N
-1082	digital	adj	\N	\N	1	A2	\N
-1083	direct	adj	\N	\N	1	A2	\N
-1084	direct	v	\N	\N	1	A2	\N
-1085	direction	n	\N	\N	1	A2	\N
-1086	director	n	\N	\N	1	A2	\N
-1087	disagree	v	\N	\N	1	A2	\N
-1088	disappear	v	\N	\N	1	A2	\N
-1089	disaster	n	\N	\N	1	A2	\N
-1090	discover	v	\N	\N	1	A2	\N
-1091	discovery	n	\N	\N	1	A2	\N
-1092	discussion	n	\N	\N	1	A2	\N
-1093	disease	n	\N	\N	1	A2	\N
-1094	distance	n	\N	\N	1	A2	\N
-1095	divorced	adj	\N	\N	1	A2	\N
-1096	document	n	\N	\N	1	A2	\N
-1097	double	adj	\N	\N	1	A2	\N
-1098	double	det	\N	\N	1	A2	\N
-1099	double	v	\N	\N	1	A2	\N
-1100	download	v	\N	\N	1	A2	\N
-1101	downstairs	adv	\N	\N	1	A2	\N
-1102	downstairs	adj	\N	\N	1	A2	\N
-1103	drama	n	\N	\N	1	A2	\N
-1104	dream	n	\N	\N	1	A2	\N
-1105	dream	v	\N	\N	1	A2	\N
-1106	drive	n	\N	\N	1	A2	\N
-1107	driving	n	\N	\N	1	A2	\N
-1108	drop	v	\N	\N	1	A2	\N
-1109	drug	n	\N	\N	1	A2	\N
-1110	dry	adj	\N	\N	1	A2	\N
-1111	dry	v	\N	\N	1	A2	\N
-1112	earn	v	\N	\N	1	A2	\N
-1113	earth	n	\N	\N	1	A2	\N
-1114	easily	adv	\N	\N	1	A2	\N
-1115	education	n	\N	\N	1	A2	\N
-1116	either	det	\N	\N	1	A2	\N
-1117	either	pron	\N	\N	1	A2	\N
-1118	either	adv	\N	\N	1	A2	\N
-1119	electric	adj	\N	\N	1	A2	\N
-1120	electrical	adj	\N	\N	1	A2	\N
-1121	electricity	n	\N	\N	1	A2	\N
-1122	electronic	adj	\N	\N	1	A2	\N
-1123	employ	v	\N	\N	1	A2	\N
-1124	employee	n	\N	\N	1	A2	\N
-1125	employer	n	\N	\N	1	A2	\N
-1126	empty	adj	\N	\N	1	A2	\N
-1127	ending	n	\N	\N	1	A2	\N
-1128	energy	n	\N	\N	1	A2	\N
-1129	engine	n	\N	\N	1	A2	\N
-1130	engineer	n	\N	\N	1	A2	\N
-1131	enormous	adj	\N	\N	1	A2	\N
-1132	enter	v	\N	\N	1	A2	\N
-1133	equipment	n	\N	\N	1	A2	\N
-1134	error	n	\N	\N	1	A2	\N
-1135	especially	adv	\N	\N	1	A2	\N
-1136	essay	n	\N	\N	1	A2	\N
-1137	everyday	adj	\N	\N	1	A2	\N
-1138	everywhere	adv	\N	\N	1	A2	\N
-1139	exact	adj	\N	\N	1	A2	\N
-1140	exactly	adv	\N	\N	1	A2	\N
-1141	excellent	adj	\N	\N	1	A2	\N
-1142	except	prep	\N	\N	1	A2	\N
-1143	except	conj	\N	\N	1	A2	\N
-1144	exist	v	\N	\N	1	A2	\N
-1145	expect	v	\N	\N	1	A2	\N
-1146	experience	n	\N	\N	1	A2	\N
-1147	experiment	n	\N	\N	1	A2	\N
-1148	expert	n	\N	\N	1	A2	\N
-1149	expert	adj	\N	\N	1	A2	\N
-1150	explanation	n	\N	\N	1	A2	\N
-1151	express	v	\N	\N	1	A2	\N
-1152	expression	n	\N	\N	1	A2	\N
-1153	extreme	adj	\N	\N	1	A2	\N
-1154	extremely	adv	\N	\N	1	A2	\N
-1155	factory	n	\N	\N	1	A2	\N
-1156	fail	v	\N	\N	1	A2	\N
-1157	fair	adj	\N	\N	1	A2	\N
-1158	fan	n	\N	\N	1	A2	\N
-1159	farming	n	\N	\N	1	A2	\N
-1160	fashion	n	\N	\N	1	A2	\N
-1161	fat	adj	\N	\N	1	A2	\N
-1162	fat	n	\N	\N	1	A2	\N
-1163	fear	n	\N	\N	1	A2	\N
-1164	feeling	n	\N	\N	1	A2	\N
-1165	female	adj	\N	\N	1	A2	\N
-1166	female	n	\N	\N	1	A2	\N
-1167	fiction	n	\N	\N	1	A2	\N
-1168	field	n	\N	\N	1	A2	\N
-1169	fight	n	\N	\N	1	A2	\N
-1170	fight	v	\N	\N	1	A2	\N
-1171	figure	n	\N	\N	1	A2	\N
-1172	film	n	\N	\N	1	A2	\N
-1173	film	v	\N	\N	1	A2	\N
-1174	finally	adv	\N	\N	1	A2	\N
-1175	finger	n	\N	\N	1	A2	\N
-1176	first	adj	\N	\N	1	A2	\N
-1177	first	adv	\N	\N	1	A2	\N
-1178	firstly	adv	\N	\N	1	A2	\N
-1179	fish	v	\N	\N	1	A2	\N
-1180	fishing	n	\N	\N	1	A2	\N
-1181	fit	adj	\N	\N	1	A2	\N
-1182	flag	n	\N	\N	1	A2	\N
-1183	flat	adj	\N	\N	1	A2	\N
-1184	flu	n	\N	\N	1	A2	\N
-1185	flying	adj	\N	\N	1	A2	\N
-1186	focus	v	\N	\N	1	A2	\N
-1187	following	adj	\N	\N	1	A2	\N
-1188	foreign	adj	\N	\N	1	A2	\N
-1189	forest	n	\N	\N	1	A2	\N
-1190	fork	n	\N	\N	1	A2	\N
-1191	formal	adj	\N	\N	1	A2	\N
-1192	fortunately	adv	\N	\N	1	A2	\N
-1193	forward	adv	\N	\N	1	A2	\N
-1194	fresh	adj	\N	\N	1	A2	\N
-1195	fridge	n	\N	\N	1	A2	\N
-1196	furniture	n	\N	\N	1	A2	\N
-1197	further	adv	\N	\N	1	A2	\N
-1198	gallery	n	\N	\N	1	A2	\N
-1199	gap	n	\N	\N	1	A2	\N
-1200	gas	n	\N	\N	1	A2	\N
-1201	gate	n	\N	\N	1	A2	\N
-1202	general	adj	\N	\N	1	A2	\N
-1203	gift	n	\N	\N	1	A2	\N
-1204	goal	n	\N	\N	1	A2	\N
-1205	god	n	\N	\N	1	A2	\N
-1206	gold	n	\N	\N	1	A2	\N
-1207	gold	adj	\N	\N	1	A2	\N
-1208	golf	n	\N	\N	1	A2	\N
-1209	grass	n	\N	\N	1	A2	\N
-1210	greet	v	\N	\N	1	A2	\N
-1211	ground	n	\N	\N	1	A2	\N
-1212	guest	n	\N	\N	1	A2	\N
-1213	guide	n	\N	\N	1	A2	\N
-1214	guide	v	\N	\N	1	A2	\N
-1215	habit	n	\N	\N	1	A2	\N
-1216	half	n	\N	\N	1	A2	\N
-1217	half	det	\N	\N	1	A2	\N
-1218	hall	n	\N	\N	1	A2	\N
-1219	happily	adv	\N	\N	1	A2	\N
-1220	headache	n	\N	\N	1	A2	\N
-1221	heart	n	\N	\N	1	A2	\N
-1222	heat	n	\N	\N	1	A2	\N
-1223	heavy	adj	\N	\N	1	A2	\N
-1224	height	n	\N	\N	1	A2	\N
-1225	helpful	adj	\N	\N	1	A2	\N
-1226	hero	n	\N	\N	1	A2	\N
-1227	hers	pron	\N	\N	1	A2	\N
-1228	herself	pron	\N	\N	1	A2	\N
-1229	hide	v	\N	\N	1	A2	\N
-1230	high	adj	\N	\N	1	A2	\N
-1231	high	adv	\N	\N	1	A2	\N
-1232	hill	n	\N	\N	1	A2	\N
-1233	himself	pron	\N	\N	1	A2	\N
-1234	his	det	\N	\N	1	A2	\N
-1235	his	pron	\N	\N	1	A2	\N
-1236	hit	n	\N	\N	1	A2	\N
-1237	hit	v	\N	\N	1	A2	\N
-1238	hockey	n	\N	\N	1	A2	\N
-1239	hold	v	\N	\N	1	A2	\N
-1240	hole	n	\N	\N	1	A2	\N
-1241	hope	n	\N	\N	1	A2	\N
-1242	huge	adj	\N	\N	1	A2	\N
-1243	human	n	\N	\N	1	A2	\N
-1244	human	adj	\N	\N	1	A2	\N
-1245	hurry	v	\N	\N	1	A2	\N
-1246	hurry	n	\N	\N	1	A2	\N
-1247	hurt	v	\N	\N	1	A2	\N
-1248	ideal	adj	\N	\N	1	A2	\N
-1249	idiot	n	\N	\N	1	A2	\N
-1250	ill	adj	\N	\N	1	A2	\N
-1251	illness	n	\N	\N	1	A2	\N
-1252	image	n	\N	\N	1	A2	\N
-1253	immediately	adv	\N	\N	1	A2	\N
-1254	impossible	adj	\N	\N	1	A2	\N
-1255	included	adj	\N	\N	1	A2	\N
-1256	including	prep	\N	\N	1	A2	\N
-1257	increase	v	\N	\N	1	A2	\N
-1258	incredible	adj	\N	\N	1	A2	\N
-1259	independent	adj	\N	\N	1	A2	\N
-1260	individual	n	\N	\N	1	A2	\N
-1261	individual	adj	\N	\N	1	A2	\N
-1262	industry	n	\N	\N	1	A2	\N
-1263	informal	adj	\N	\N	1	A2	\N
-1264	injury	n	\N	\N	1	A2	\N
-1265	ink	n	\N	\N	1	A2	\N
-1266	insect	n	\N	\N	1	A2	\N
-1267	inside	adv	\N	\N	1	A2	\N
-1268	inside	prep	\N	\N	1	A2	\N
-1269	instruction	n	\N	\N	1	A2	\N
-1270	instructor	n	\N	\N	1	A2	\N
-1271	instrument	n	\N	\N	1	A2	\N
-1272	intelligent	adj	\N	\N	1	A2	\N
-1273	international	adj	\N	\N	1	A2	\N
-1274	introduction	n	\N	\N	1	A2	\N
-1275	invent	v	\N	\N	1	A2	\N
-1276	invention	n	\N	\N	1	A2	\N
-1277	jam	n	\N	\N	1	A2	\N
-1278	jazz	n	\N	\N	1	A2	\N
-1279	jewellery	n	\N	\N	1	A2	\N
-1280	joke	n	\N	\N	1	A2	\N
-1281	journalist	n	\N	\N	1	A2	\N
-1282	jump	v	\N	\N	1	A2	\N
-1283	kid	n	\N	\N	1	A2	\N
-1284	kill	v	\N	\N	1	A2	\N
-1285	king	n	\N	\N	1	A2	\N
-1286	kiss	v	\N	\N	1	A2	\N
-1287	kiss	n	\N	\N	1	A2	\N
-1288	knee	n	\N	\N	1	A2	\N
-1289	knife	n	\N	\N	1	A2	\N
-1290	knock	v	\N	\N	1	A2	\N
-1291	knowledge	n	\N	\N	1	A2	\N
-1292	lab	n	\N	\N	1	A2	\N
-1293	lady	n	\N	\N	1	A2	\N
-1294	lake	n	\N	\N	1	A2	\N
-1295	lamp	n	\N	\N	1	A2	\N
-1296	land	n	\N	\N	1	A2	\N
-1297	land	v	\N	\N	1	A2	\N
-1298	laptop	n	\N	\N	1	A2	\N
-1299	last	adj	\N	\N	1	A2	\N
-1300	last	adv	\N	\N	1	A2	\N
-1301	laughter	n	\N	\N	1	A2	\N
-1302	law	n	\N	\N	1	A2	\N
-1303	lawyer	n	\N	\N	1	A2	\N
-1304	lazy	adj	\N	\N	1	A2	\N
-1305	lead	v	\N	\N	1	A2	\N
-1306	lead	n	\N	\N	1	A2	\N
-1307	leader	n	\N	\N	1	A2	\N
-1308	learning	n	\N	\N	1	A2	\N
-1309	least	det	\N	\N	1	A2	\N
-1310	least	pron	\N	\N	1	A2	\N
-1311	least	adv	\N	\N	1	A2	\N
-1312	lecture	n	\N	\N	1	A2	\N
-1313	lemon	n	\N	\N	1	A2	\N
-1314	lend	v	\N	\N	1	A2	\N
-1315	less	det	\N	\N	1	A2	\N
-1316	less	pron	\N	\N	1	A2	\N
-1317	less	adv	\N	\N	1	A2	\N
-1318	level	n	\N	\N	1	A2	\N
-1319	lifestyle	n	\N	\N	1	A2	\N
-1320	lift	n	\N	\N	1	A2	\N
-1321	lift	v	\N	\N	1	A2	\N
-1322	light	adj	\N	\N	1	A2	\N
-1323	likely	adj	\N	\N	1	A2	\N
-1324	link	n	\N	\N	1	A2	\N
-1325	link	v	\N	\N	1	A2	\N
-1326	mail	n	\N	\N	1	A2	\N
-1327	mail	v	\N	\N	1	A2	\N
-1328	major	adj	\N	\N	1	A2	\N
-1329	male	adj	\N	\N	1	A2	\N
-1330	male	n	\N	\N	1	A2	\N
-1331	manage	v	\N	\N	1	A2	\N
-1332	manager	n	\N	\N	1	A2	\N
-1333	manner	n	\N	\N	1	A2	\N
-1334	mark	n	\N	\N	1	A2	\N
-1335	mark	v	\N	\N	1	A2	\N
-1336	marry	v	\N	\N	1	A2	\N
-1337	mask	n	\N	\N	1	A2	\N
-1338	material	n	\N	\N	1	A2	\N
-1339	mathematics	n	\N	\N	1	A2	\N
-1340	maths	n	\N	\N	1	A2	\N
-1341	matter	n	\N	\N	1	A2	\N
-1342	matter	v	\N	\N	1	A2	\N
-1343	may	v	\N	\N	1	A2	\N
-1344	media	n	\N	\N	1	A2	\N
-1345	medical	adj	\N	\N	1	A2	\N
-1346	medicine	n	\N	\N	1	A2	\N
-1347	memory	n	\N	\N	1	A2	\N
-1348	mention	v	\N	\N	1	A2	\N
-1349	metal	n	\N	\N	1	A2	\N
-1350	middle	n	\N	\N	1	A2	\N
-1351	middle	adj	\N	\N	1	A2	\N
-1352	might	v	\N	\N	1	A2	\N
-1353	mind	n	\N	\N	1	A2	\N
-1354	mind	v	\N	\N	1	A2	\N
-1355	mine	pron	\N	\N	1	A2	\N
-1356	mirror	n	\N	\N	1	A2	\N
-1357	missing	adj	\N	\N	1	A2	\N
-1358	mobile	adj	\N	\N	1	A2	\N
-1359	monkey	n	\N	\N	1	A2	\N
-1360	moon	n	\N	\N	1	A2	\N
-1361	mostly	adv	\N	\N	1	A2	\N
-1362	motorcycle	n	\N	\N	1	A2	\N
-1363	movement	n	\N	\N	1	A2	\N
-1364	musical	adj	\N	\N	1	A2	\N
-1365	musical	n	\N	\N	1	A2	\N
-1366	musician	n	\N	\N	1	A2	\N
-1367	myself	pron	\N	\N	1	A2	\N
-1368	narrow	adj	\N	\N	1	A2	\N
-1369	national	adj	\N	\N	1	A2	\N
-1370	natural	adj	\N	\N	1	A2	\N
-1371	nature	n	\N	\N	1	A2	\N
-1372	nearly	adv	\N	\N	1	A2	\N
-1373	necessary	adj	\N	\N	1	A2	\N
-1374	neck	n	\N	\N	1	A2	\N
-1375	need	n	\N	\N	1	A2	\N
-1376	neither	det	\N	\N	1	A2	\N
-1377	neither	pron	\N	\N	1	A2	\N
-1378	nervous	adj	\N	\N	1	A2	\N
-1379	nest	n	\N	\N	1	A2	\N
-1380	net	n	\N	\N	1	A2	\N
-1381	network	n	\N	\N	1	A2	\N
-1382	noise	n	\N	\N	1	A2	\N
-1383	noisy	adj	\N	\N	1	A2	\N
-1384	none	pron	\N	\N	1	A2	\N
-1385	normal	adj	\N	\N	1	A2	\N
-1386	normally	adv	\N	\N	1	A2	\N
-1387	notice	n	\N	\N	1	A2	\N
-1388	notice	v	\N	\N	1	A2	\N
-1389	novel	n	\N	\N	1	A2	\N
-1390	nowhere	adv	\N	\N	1	A2	\N
-1391	ocean	n	\N	\N	1	A2	\N
-1392	offer	n	\N	\N	1	A2	\N
-1393	offer	v	\N	\N	1	A2	\N
-1394	officer	n	\N	\N	1	A2	\N
-1395	oil	n	\N	\N	1	A2	\N
-1396	onto	prep	\N	\N	1	A2	\N
-1397	option	n	\N	\N	1	A2	\N
-1398	ordinary	adj	\N	\N	1	A2	\N
-1399	organisation	n	\N	\N	1	A2	\N
-1400	organise	v	\N	\N	1	A2	\N
-1401	original	adj	\N	\N	1	A2	\N
-1402	original	n	\N	\N	1	A2	\N
-1403	ourselves	pron	\N	\N	1	A2	\N
-1404	outside	adv	\N	\N	1	A2	\N
-1405	outside	prep	\N	\N	1	A2	\N
-1406	outside	adj	\N	\N	1	A2	\N
-1407	outside	n	\N	\N	1	A2	\N
-1408	oven	n	\N	\N	1	A2	\N
-1409	owner	n	\N	\N	1	A2	\N
-1410	pack	n	\N	\N	1	A2	\N
-1411	pack	v	\N	\N	1	A2	\N
-1412	pain	n	\N	\N	1	A2	\N
-1413	painter	n	\N	\N	1	A2	\N
-1414	palace	n	\N	\N	1	A2	\N
-1415	pants	n	\N	\N	1	A2	\N
-1416	parking	n	\N	\N	1	A2	\N
-1417	particular	adj	\N	\N	1	A2	\N
-1418	pass	v	\N	\N	1	A2	\N
-1419	passenger	n	\N	\N	1	A2	\N
-1420	past	adj	\N	\N	1	A2	\N
-1421	past	n	\N	\N	1	A2	\N
-1422	past	prep	\N	\N	1	A2	\N
-1423	patient	n	\N	\N	1	A2	\N
-1424	pattern	n	\N	\N	1	A2	\N
-1425	peace	n	\N	\N	1	A2	\N
-1426	penny	n	\N	\N	1	A2	\N
-1427	per	prep	\N	\N	1	A2	\N
-1428	per cent	n	\N	\N	1	A2	\N
-1429	perform	v	\N	\N	1	A2	\N
-1430	perhaps	adv	\N	\N	1	A2	\N
-1431	permission	n	\N	\N	1	A2	\N
-1432	personality	n	\N	\N	1	A2	\N
-1433	pet	n	\N	\N	1	A2	\N
-1434	petrol	n	\N	\N	1	A2	\N
-1435	photograph	v	\N	\N	1	A2	\N
-1436	physical	adj	\N	\N	1	A2	\N
-1437	physics	n	\N	\N	1	A2	\N
-1438	pick	v	\N	\N	1	A2	\N
-1439	pilot	n	\N	\N	1	A2	\N
-1440	pirate	n	\N	\N	1	A2	\N
-1441	planet	n	\N	\N	1	A2	\N
-1442	plant	v	\N	\N	1	A2	\N
-1443	plastic	n	\N	\N	1	A2	\N
-1444	plastic	adj	\N	\N	1	A2	\N
-1445	plate	n	\N	\N	1	A2	\N
-1446	platform	n	\N	\N	1	A2	\N
-1447	pleased	adj	\N	\N	1	A2	\N
-1448	plug	n	\N	\N	1	A2	\N
-1449	pocket	n	\N	\N	1	A2	\N
-1450	polite	adj	\N	\N	1	A2	\N
-1451	pollution	n	\N	\N	1	A2	\N
-1452	pond	n	\N	\N	1	A2	\N
-1453	pop	n	\N	\N	1	A2	\N
-1454	pop	v	\N	\N	1	A2	\N
-1455	population	n	\N	\N	1	A2	\N
-1456	position	n	\N	\N	1	A2	\N
-1457	possession	n	\N	\N	1	A2	\N
-1458	possibility	n	\N	\N	1	A2	\N
-1459	poster	n	\N	\N	1	A2	\N
-1460	power	n	\N	\N	1	A2	\N
-1461	predict	v	\N	\N	1	A2	\N
-1462	prefer	v	\N	\N	1	A2	\N
-1463	prepare	v	\N	\N	1	A2	\N
-1464	present	n	\N	\N	1	A2	\N
-1465	present	adj	\N	\N	1	A2	\N
-1466	president	n	\N	\N	1	A2	\N
-1467	prevent	v	\N	\N	1	A2	\N
-1468	print	v	\N	\N	1	A2	\N
-1469	printer	n	\N	\N	1	A2	\N
-1470	prison	n	\N	\N	1	A2	\N
-1471	prize	n	\N	\N	1	A2	\N
-1472	professional	adj	\N	\N	1	A2	\N
-1473	professional	n	\N	\N	1	A2	\N
-1474	professor	n	\N	\N	1	A2	\N
-1475	profile	n	\N	\N	1	A2	\N
-1476	program	n	\N	\N	1	A2	\N
-1477	progress	n	\N	\N	1	A2	\N
-1478	promise	n	\N	\N	1	A2	\N
-1479	promise	v	\N	\N	1	A2	\N
-1480	pronounce	v	\N	\N	1	A2	\N
-1481	protect	v	\N	\N	1	A2	\N
-1482	pub	n	\N	\N	1	A2	\N
-1483	public	adj	\N	\N	1	A2	\N
-1484	public	n	\N	\N	1	A2	\N
-1485	publish	v	\N	\N	1	A2	\N
-1486	pull	v	\N	\N	1	A2	\N
-1487	push	v	\N	\N	1	A2	\N
-1488	quality	n	\N	\N	1	A2	\N
-1489	quantity	n	\N	\N	1	A2	\N
-1490	queen	n	\N	\N	1	A2	\N
-1491	quietly	adv	\N	\N	1	A2	\N
-1492	race	n	\N	\N	1	A2	\N
-1493	railway	n	\N	\N	1	A2	\N
-1494	raise	v	\N	\N	1	A2	\N
-1495	rat	n	\N	\N	1	A2	\N
-1496	rate	n	\N	\N	1	A2	\N
-1497	rather	adv	\N	\N	1	A2	\N
-1498	reach	v	\N	\N	1	A2	\N
-1499	react	v	\N	\N	1	A2	\N
-1500	realise	v	\N	\N	1	A2	\N
-1501	receive	v	\N	\N	1	A2	\N
-1502	recent	adj	\N	\N	1	A2	\N
-1503	recently	adv	\N	\N	1	A2	\N
-1504	reception	n	\N	\N	1	A2	\N
-1505	recipe	n	\N	\N	1	A2	\N
-1506	recognise	v	\N	\N	1	A2	\N
-1507	recommend	v	\N	\N	1	A2	\N
-1508	record	n	\N	\N	1	A2	\N
-1509	record	v	\N	\N	1	A2	\N
-1510	recording	n	\N	\N	1	A2	\N
-1511	recycle	v	\N	\N	1	A2	\N
-1512	reduce	v	\N	\N	1	A2	\N
-1513	refer	v	\N	\N	1	A2	\N
-1514	refuse	v	\N	\N	1	A2	\N
-1515	region	n	\N	\N	1	A2	\N
-1516	regular	adj	\N	\N	1	A2	\N
-1517	relationship	n	\N	\N	1	A2	\N
-1518	remove	v	\N	\N	1	A2	\N
-1519	repair	v	\N	\N	1	A2	\N
-1520	replace	v	\N	\N	1	A2	\N
-1521	reply	n	\N	\N	1	A2	\N
-1522	reply	v	\N	\N	1	A2	\N
-1523	report	v	\N	\N	1	A2	\N
-1524	reporter	n	\N	\N	1	A2	\N
-1525	request	n	\N	\N	1	A2	\N
-1526	request	v	\N	\N	1	A2	\N
-1527	researcher	n	\N	\N	1	A2	\N
-1528	rest	n	\N	\N	1	A2	\N
-1529	rest	v	\N	\N	1	A2	\N
-1530	review	n	\N	\N	1	A2	\N
-1531	review	v	\N	\N	1	A2	\N
-1532	ride	n	\N	\N	1	A2	\N
-1533	ring	n	\N	\N	1	A2	\N
-1534	ring	v	\N	\N	1	A2	\N
-1535	rock	n	\N	\N	1	A2	\N
-1536	role	n	\N	\N	1	A2	\N
-1537	roof	n	\N	\N	1	A2	\N
-1538	round	adj	\N	\N	1	A2	\N
-1539	round	prep	\N	\N	1	A2	\N
-1540	routine	n	\N	\N	1	A2	\N
-1541	rubbish	n	\N	\N	1	A2	\N
-1542	rude	adj	\N	\N	1	A2	\N
-1543	run	n	\N	\N	1	A2	\N
-1544	runner	n	\N	\N	1	A2	\N
-1545	sadly	adv	\N	\N	1	A2	\N
-1546	safe	adj	\N	\N	1	A2	\N
-1547	sail	n	\N	\N	1	A2	\N
-1548	sail	v	\N	\N	1	A2	\N
-1549	sailing	n	\N	\N	1	A2	\N
-1550	salary	n	\N	\N	1	A2	\N
-1551	sale	n	\N	\N	1	A2	\N
-1552	sauce	n	\N	\N	1	A2	\N
-1553	save	v	\N	\N	1	A2	\N
-1554	scared	adj	\N	\N	1	A2	\N
-1555	scary	adj	\N	\N	1	A2	\N
-1556	scene	n	\N	\N	1	A2	\N
-1557	schedule	n	\N	\N	1	A2	\N
-1558	score	n	\N	\N	1	A2	\N
-1559	score	v	\N	\N	1	A2	\N
-1560	screen	n	\N	\N	1	A2	\N
-1561	search	v	\N	\N	1	A2	\N
-1562	season	n	\N	\N	1	A2	\N
-1563	seat	n	\N	\N	1	A2	\N
-1564	second	adj	\N	\N	1	A2	\N
-1565	second	adv	\N	\N	1	A2	\N
-1566	secret	n	\N	\N	1	A2	\N
-1567	secret	adj	\N	\N	1	A2	\N
-1568	secretary	n	\N	\N	1	A2	\N
-1569	seem	v	\N	\N	1	A2	\N
-1570	sell	v	\N	\N	1	A2	\N
-1571	sense	n	\N	\N	1	A2	\N
-1572	separate	adj	\N	\N	1	A2	\N
-1573	series	n	\N	\N	1	A2	\N
-1574	serious	adj	\N	\N	1	A2	\N
-1575	serve	v	\N	\N	1	A2	\N
-1576	service	n	\N	\N	1	A2	\N
-1577	several	det	\N	\N	1	A2	\N
-1578	shake	v	\N	\N	1	A2	\N
-1579	shall	v	\N	\N	1	A2	\N
-1580	share	v	\N	\N	1	A2	\N
-1581	shape	n	\N	\N	1	A2	\N
-1582	sheet	n	\N	\N	1	A2	\N
-1583	ship	n	\N	\N	1	A2	\N
-1584	shoulder	n	\N	\N	1	A2	\N
-1585	shout	v	\N	\N	1	A2	\N
-1586	shut	v	\N	\N	1	A2	\N
-1588	sign	n	\N	\N	1	A2	\N
-1589	silver	n	\N	\N	1	A2	\N
-1590	silver	adj	\N	\N	1	A2	\N
-1591	similar	adj	\N	\N	1	A2	\N
-1592	simple	adj	\N	\N	1	A2	\N
-1593	since	prep	\N	\N	1	A2	\N
-1594	since	conj	\N	\N	1	A2	\N
-1595	singing	n	\N	\N	1	A2	\N
-1596	single	adj	\N	\N	1	A2	\N
-1597	sir	n	\N	\N	1	A2	\N
-1598	site	n	\N	\N	1	A2	\N
-1599	size	n	\N	\N	1	A2	\N
-1600	ski	n	\N	\N	1	A2	\N
-1601	ski	v	\N	\N	1	A2	\N
-1602	skiing	n	\N	\N	1	A2	\N
-1603	skin	n	\N	\N	1	A2	\N
-1604	sky	n	\N	\N	1	A2	\N
-1605	slowly	adv	\N	\N	1	A2	\N
-1606	smartphone	n	\N	\N	1	A2	\N
-1607	smell	n	\N	\N	1	A2	\N
-1608	smell	v	\N	\N	1	A2	\N
-1609	smile	n	\N	\N	1	A2	\N
-1610	smile	v	\N	\N	1	A2	\N
-1611	smoke	n	\N	\N	1	A2	\N
-1612	smoke	v	\N	\N	1	A2	\N
-1613	smoking	n	\N	\N	1	A2	\N
-1614	soap	n	\N	\N	1	A2	\N
-1615	soccer	n	\N	\N	1	A2	\N
-1616	social	adj	\N	\N	1	A2	\N
-1617	sock	n	\N	\N	1	A2	\N
-1618	soft	adj	\N	\N	1	A2	\N
-1619	soldier	n	\N	\N	1	A2	\N
-1620	solution	n	\N	\N	1	A2	\N
-1621	somewhere	adv	\N	\N	1	A2	\N
-1622	sort	n	\N	\N	1	A2	\N
-1623	speaker	n	\N	\N	1	A2	\N
-1624	specific	adj	\N	\N	1	A2	\N
-1625	speech	n	\N	\N	1	A2	\N
-1626	speed	n	\N	\N	1	A2	\N
-1627	spider	n	\N	\N	1	A2	\N
-1628	spoon	n	\N	\N	1	A2	\N
-1629	square	n	\N	\N	1	A2	\N
-1630	square	adj	\N	\N	1	A2	\N
-1631	stage	n	\N	\N	1	A2	\N
-1632	stair	n	\N	\N	1	A2	\N
-1633	stamp	n	\N	\N	1	A2	\N
-1634	star	n	\N	\N	1	A2	\N
-1635	state	n	\N	\N	1	A2	\N
-1636	statement	n	\N	\N	1	A2	\N
-1637	stay	v	\N	\N	1	A2	\N
-1638	steal	v	\N	\N	1	A2	\N
-1639	step	n	\N	\N	1	A2	\N
-1640	step	v	\N	\N	1	A2	\N
-1641	still	adv	\N	\N	1	A2	\N
-1642	stomach	n	\N	\N	1	A2	\N
-1643	stone	n	\N	\N	1	A2	\N
-1644	store	n	\N	\N	1	A2	\N
-1645	storm	n	\N	\N	1	A2	\N
-1646	straight	adj	\N	\N	1	A2	\N
-1647	straight	adv	\N	\N	1	A2	\N
-1648	strange	adj	\N	\N	1	A2	\N
-1649	stress	n	\N	\N	1	A2	\N
-1650	stupid	adj	\N	\N	1	A2	\N
-1651	succeed	v	\N	\N	1	A2	\N
-1652	successful	adj	\N	\N	1	A2	\N
-1653	such	det	\N	\N	1	A2	\N
-1654	suddenly	adv	\N	\N	1	A2	\N
-1655	suggest	v	\N	\N	1	A2	\N
-1656	suggestion	n	\N	\N	1	A2	\N
-1657	suit	n	\N	\N	1	A2	\N
-1658	support	n	\N	\N	1	A2	\N
-1659	support	v	\N	\N	1	A2	\N
-1660	suppose	v	\N	\N	1	A2	\N
-1661	surprise	n	\N	\N	1	A2	\N
-1662	surprise	v	\N	\N	1	A2	\N
-1663	surprised	adj	\N	\N	1	A2	\N
-1664	surprising	adj	\N	\N	1	A2	\N
-1665	sweet	adj	\N	\N	1	A2	\N
-1666	swing	n	\N	\N	1	A2	\N
-1667	swing	v	\N	\N	1	A2	\N
-1668	tablet	n	\N	\N	1	A2	\N
-1669	talk	n	\N	\N	1	A2	\N
-1670	target	n	\N	\N	1	A2	\N
-1671	task	n	\N	\N	1	A2	\N
-1672	taste	n	\N	\N	1	A2	\N
-1673	taste	v	\N	\N	1	A2	\N
-1674	teaching	n	\N	\N	1	A2	\N
-1675	technology	n	\N	\N	1	A2	\N
-1676	teenage	adj	\N	\N	1	A2	\N
-1677	temperature	n	\N	\N	1	A2	\N
-1678	tent	n	\N	\N	1	A2	\N
-1679	term	n	\N	\N	1	A2	\N
-1680	text	v	\N	\N	1	A2	\N
-1681	themselves	pron	\N	\N	1	A2	\N
-1682	thick	adj	\N	\N	1	A2	\N
-1683	thief	n	\N	\N	1	A2	\N
-1684	thin	adj	\N	\N	1	A2	\N
-1685	tidy	adj	\N	\N	1	A2	\N
-1686	tidy	v	\N	\N	1	A2	\N
-1687	tie	n	\N	\N	1	A2	\N
-1688	tie	v	\N	\N	1	A2	\N
-1689	tip	n	\N	\N	1	A2	\N
-1690	toe	n	\N	\N	1	A2	\N
-1691	tool	n	\N	\N	1	A2	\N
-1692	top	n	\N	\N	1	A2	\N
-1693	top	adj	\N	\N	1	A2	\N
-1694	total	adj	\N	\N	1	A2	\N
-1695	touch	v	\N	\N	1	A2	\N
-1696	tour	n	\N	\N	1	A2	\N
-1697	tourism	n	\N	\N	1	A2	\N
-1698	towards	prep	\N	\N	1	A2	\N
-1699	towel	n	\N	\N	1	A2	\N
-1700	tower	n	\N	\N	1	A2	\N
-1701	toy	n	\N	\N	1	A2	\N
-1702	track	n	\N	\N	1	A2	\N
-1703	tradition	n	\N	\N	1	A2	\N
-1704	traditional	adj	\N	\N	1	A2	\N
-1705	trainers	n	\N	\N	1	A2	\N
-1706	training	n	\N	\N	1	A2	\N
-1707	transport	n	\N	\N	1	A2	\N
-1708	traveller	n	\N	\N	1	A2	\N
-1709	trouble	n	\N	\N	1	A2	\N
-1710	truck	n	\N	\N	1	A2	\N
-1711	twin	n	\N	\N	1	A2	\N
-1712	typical	adj	\N	\N	1	A2	\N
-1713	underground	adj	\N	\N	1	A2	\N
-1714	underground	adv	\N	\N	1	A2	\N
-1715	understanding	n	\N	\N	1	A2	\N
-1716	unfortunately	adv	\N	\N	1	A2	\N
-1717	unhappy	adj	\N	\N	1	A2	\N
-1718	uniform	n	\N	\N	1	A2	\N
-1719	unit	n	\N	\N	1	A2	\N
-1720	united	adj	\N	\N	1	A2	\N
-1721	unusual	adj	\N	\N	1	A2	\N
-1722	upset	adj	\N	\N	1	A2	\N
-1723	upstairs	adv	\N	\N	1	A2	\N
-1724	upstairs	adj	\N	\N	1	A2	\N
-1725	use	n	\N	\N	1	A2	\N
-1726	used to	v	\N	\N	1	A2	\N
-1727	useful	adj	\N	\N	1	A2	\N
-1728	user	n	\N	\N	1	A2	\N
-1729	usual	adj	\N	\N	1	A2	\N
-1730	valley	n	\N	\N	1	A2	\N
-1731	van	n	\N	\N	1	A2	\N
-1732	variety	n	\N	\N	1	A2	\N
-1733	view	n	\N	\N	1	A2	\N
-1734	virus	n	\N	\N	1	A2	\N
-1735	voice	n	\N	\N	1	A2	\N
-1736	war	n	\N	\N	1	A2	\N
-1737	washing	n	\N	\N	1	A2	\N
-1738	wave	n	\N	\N	1	A2	\N
-1739	wave	v	\N	\N	1	A2	\N
-1740	weak	adj	\N	\N	1	A2	\N
-1741	web	n	\N	\N	1	A2	\N
-1742	wedding	n	\N	\N	1	A2	\N
-1743	weight	n	\N	\N	1	A2	\N
-1744	welcome	n	\N	\N	1	A2	\N
-1745	welcome	adj	\N	\N	1	A2	\N
-1746	welcome	v	\N	\N	1	A2	\N
-1747	wet	adj	\N	\N	1	A2	\N
-1748	wheel	n	\N	\N	1	A2	\N
-1749	while	conj	\N	\N	1	A2	\N
-1750	whole	adj	\N	\N	1	A2	\N
-1751	whose	det	\N	\N	1	A2	\N
-1752	whose	pron	\N	\N	1	A2	\N
-1753	wide	adj	\N	\N	1	A2	\N
-1754	wild	adj	\N	\N	1	A2	\N
-1755	wind	n	\N	\N	1	A2	\N
-1756	winner	n	\N	\N	1	A2	\N
-1757	wish	n	\N	\N	1	A2	\N
-1758	wish	v	\N	\N	1	A2	\N
-1759	wood	n	\N	\N	1	A2	\N
-1760	wooden	adj	\N	\N	1	A2	\N
-1761	working	adj	\N	\N	1	A2	\N
-1762	worried	adj	\N	\N	1	A2	\N
-1763	worry	v	\N	\N	1	A2	\N
-1764	worry	n	\N	\N	1	A2	\N
-1765	worse	adj	\N	\N	1	A2	\N
-1766	worse	adv	\N	\N	1	A2	\N
-1767	worst	adj	\N	\N	1	A2	\N
-1768	worst	adv	\N	\N	1	A2	\N
-1769	wow	interj	\N	\N	1	A2	\N
-1770	yet	adv	\N	\N	1	A2	\N
-1771	yours	pron	\N	\N	1	A2	\N
-1772	zero	num	\N	\N	1	A2	\N
-1773	absolutely	adv	\N	\N	1	B1	\N
-1774	academic	adj	\N	\N	1	B1	\N
-1775	access	n	\N	\N	1	B1	\N
-1776	to access	v	\N	\N	1	B1	\N
-1777	accommodation	n	\N	\N	1	B1	\N
-1778	account	n	\N	\N	1	B1	\N
-1779	according to	prep	\N	\N	1	B1	\N
-1780	achievement	n	\N	\N	1	B1	\N
-1781	ad	n	\N	\N	1	B1	\N
-1782	addition	n	\N	\N	1	B1	\N
-1783	to admire	v	\N	\N	1	B1	\N
-1784	to admit	v	\N	\N	1	B1	\N
-1785	advanced	adj	\N	\N	1	B1	\N
-1786	to advise	v	\N	\N	1	B1	\N
-1787	to afford	v	\N	\N	1	B1	\N
-1788	aged	adj	\N	\N	1	B1	\N
-1789	agent	n	\N	\N	1	B1	\N
-1790	agreement	n	\N	\N	1	B1	\N
-1791	ahead	adv	\N	\N	1	B1	\N
-1792	aim	n	\N	\N	1	B1	\N
-1793	to aim	v	\N	\N	1	B1	\N
-1794	alarm	n	\N	\N	1	B1	\N
-1795	album	n	\N	\N	1	B1	\N
-1796	alcohol	n	\N	\N	1	B1	\N
-1797	alcoholic	adj	\N	\N	1	B1	\N
-1798	alcoholic	n	\N	\N	1	B1	\N
-1799	alternative	adj	\N	\N	1	B1	\N
-1800	alternative	n	\N	\N	1	B1	\N
-1801	amazed	adj	\N	\N	1	B1	\N
-1802	ambition	n	\N	\N	1	B1	\N
-1803	ambitious	adj	\N	\N	1	B1	\N
-1804	to announce	v	\N	\N	1	B1	\N
-1805	announcement	n	\N	\N	1	B1	\N
-1806	to annoy	v	\N	\N	1	B1	\N
-1807	annoyed	adj	\N	\N	1	B1	\N
-1808	annoying	adj	\N	\N	1	B1	\N
-1809	apart	adv	\N	\N	1	B1	\N
-1810	to apologise	v	\N	\N	1	B1	\N
-1811	application	n	\N	\N	1	B1	\N
-1812	appointment	n	\N	\N	1	B1	\N
-1813	to appreciate	v	\N	\N	1	B1	\N
-1814	approximately	adv	\N	\N	1	B1	\N
-1815	to arrest	v	\N	\N	1	B1	\N
-1816	arrival	n	\N	\N	1	B1	\N
-1817	assignment	n	\N	\N	1	B1	\N
-1818	to assist	v	\N	\N	1	B1	\N
-1819	atmosphere	n	\N	\N	1	B1	\N
-1820	to attach	v	\N	\N	1	B1	\N
-1821	attitude	n	\N	\N	1	B1	\N
-1822	to attract	v	\N	\N	1	B1	\N
-1823	attraction	n	\N	\N	1	B1	\N
-1824	authority	n	\N	\N	1	B1	\N
-1825	average	adj	\N	\N	1	B1	\N
-1826	average	n	\N	\N	1	B1	\N
-1827	award	n	\N	\N	1	B1	\N
-1828	to award	v	\N	\N	1	B1	\N
-1829	aware	adj	\N	\N	1	B1	\N
-1830	backwards	adv	\N	\N	1	B1	\N
-1831	to bake	v	\N	\N	1	B1	\N
-1832	balance	n	\N	\N	1	B1	\N
-1833	to balance	v	\N	\N	1	B1	\N
-1834	ban	n	\N	\N	1	B1	\N
-1835	to ban	v	\N	\N	1	B1	\N
-1836	bank	n	\N	\N	1	B1	\N
-1837	base	n	\N	\N	1	B1	\N
-1838	to base	v	\N	\N	1	B1	\N
-1839	basic	adj	\N	\N	1	B1	\N
-1840	battery	n	\N	\N	1	B1	\N
-1841	battle	n	\N	\N	1	B1	\N
-1842	beauty	n	\N	\N	1	B1	\N
-1843	bee	n	\N	\N	1	B1	\N
-1844	behaviour	n	\N	\N	1	B1	\N
-1845	belief	n	\N	\N	1	B1	\N
-1846	bell	n	\N	\N	1	B1	\N
-1847	to bend	v	\N	\N	1	B1	\N
-1848	to benefit	v	\N	\N	1	B1	\N
-1849	to bite	v	\N	\N	1	B1	\N
-1850	block	n	\N	\N	1	B1	\N
-1851	to block	v	\N	\N	1	B1	\N
-1852	to board	v	\N	\N	1	B1	\N
-1853	bomb	n	\N	\N	1	B1	\N
-1854	to bomb	v	\N	\N	1	B1	\N
-1855	booking	n	\N	\N	1	B1	\N
-1856	border	n	\N	\N	1	B1	\N
-1857	to bother	v	\N	\N	1	B1	\N
-1858	branch	n	\N	\N	1	B1	\N
-1859	brand	n	\N	\N	1	B1	\N
-1860	brave	adj	\N	\N	1	B1	\N
-1861	breath	n	\N	\N	1	B1	\N
-1862	to breathe	v	\N	\N	1	B1	\N
-1863	breathing	n	\N	\N	1	B1	\N
-1864	bride	n	\N	\N	1	B1	\N
-1865	bubble	n	\N	\N	1	B1	\N
-1866	to burst	v	\N	\N	1	B1	\N
-1867	to bury	v	\N	\N	1	B1	\N
-1868	calm	adj	\N	\N	1	B1	\N
-1869	campaign	n	\N	\N	1	B1	\N
-1870	campus	n	\N	\N	1	B1	\N
-1871	candidate	n	\N	\N	1	B1	\N
-1872	cap	n	\N	\N	1	B1	\N
-1873	captain	n	\N	\N	1	B1	\N
-1874	career	n	\N	\N	1	B1	\N
-1875	careless	adj	\N	\N	1	B1	\N
-1876	category	n	\N	\N	1	B1	\N
-1877	ceiling	n	\N	\N	1	B1	\N
-1878	celebration	n	\N	\N	1	B1	\N
-1879	central	adj	\N	\N	1	B1	\N
-1880	century	n	\N	\N	1	B1	\N
-1881	ceremony	n	\N	\N	1	B1	\N
-1882	chain	n	\N	\N	1	B1	\N
-1883	challenge	n	\N	\N	1	B1	\N
-1884	to challenge	v	\N	\N	1	B1	\N
-1885	champion	n	\N	\N	1	B1	\N
-1886	channel	n	\N	\N	1	B1	\N
-1887	chapter	n	\N	\N	1	B1	\N
-1888	charge	n	\N	\N	1	B1	\N
-1889	to charge	v	\N	\N	1	B1	\N
-1890	to cheat	v	\N	\N	1	B1	\N
-1891	cheerful	adj	\N	\N	1	B1	\N
-1892	chemical	n	\N	\N	1	B1	\N
-1893	chemical	adj	\N	\N	1	B1	\N
-1894	chest	n	\N	\N	1	B1	\N
-1895	childhood	n	\N	\N	1	B1	\N
-1896	claim	n	\N	\N	1	B1	\N
-1897	to claim	v	\N	\N	1	B1	\N
-1898	click	n	\N	\N	1	B1	\N
-1899	to click	v	\N	\N	1	B1	\N
-1900	client	n	\N	\N	1	B1	\N
-1901	close	adj	\N	\N	1	B1	\N
-1902	cloth	n	\N	\N	1	B1	\N
-1903	clue	n	\N	\N	1	B1	\N
-1904	coach	n	\N	\N	1	B1	\N
-1905	coal	n	\N	\N	1	B1	\N
-1906	collection	n	\N	\N	1	B1	\N
-1907	coloured	adj	\N	\N	1	B1	\N
-1908	to combine	v	\N	\N	1	B1	\N
-1909	to comment	v	\N	\N	1	B1	\N
-1910	commercial	adj	\N	\N	1	B1	\N
-1911	commercial	n	\N	\N	1	B1	\N
-1912	to commit	v	\N	\N	1	B1	\N
-1913	communication	n	\N	\N	1	B1	\N
-1914	comparison	n	\N	\N	1	B1	\N
-1915	competitor	n	\N	\N	1	B1	\N
-1916	competitive	adj	\N	\N	1	B1	\N
-1917	complaint	n	\N	\N	1	B1	\N
-1918	complex	adj	\N	\N	1	B1	\N
-1919	to concentrate	v	\N	\N	1	B1	\N
-1920	to conclude	v	\N	\N	1	B1	\N
-1921	confident	adj	\N	\N	1	B1	\N
-1922	to confirm	v	\N	\N	1	B1	\N
-1923	to confuse	v	\N	\N	1	B1	\N
-1924	confused	adj	\N	\N	1	B1	\N
-1925	connection	n	\N	\N	1	B1	\N
-1926	to contact	v	\N	\N	1	B1	\N
-1927	contact	n	\N	\N	1	B1	\N
-1928	container	n	\N	\N	1	B1	\N
-1929	content	n	\N	\N	1	B1	\N
-1930	continuous	adj	\N	\N	1	B1	\N
-1931	contrast	n	\N	\N	1	B1	\N
-1932	to contrast	v	\N	\N	1	B1	\N
-1933	convenient	adj	\N	\N	1	B1	\N
-1934	to convince	v	\N	\N	1	B1	\N
-1935	copper	n	\N	\N	1	B1	\N
-1936	costume	n	\N	\N	1	B1	\N
-1937	cottage	n	\N	\N	1	B1	\N
-1938	cotton	n	\N	\N	1	B1	\N
-1939	countryside	n	\N	\N	1	B1	\N
-1940	court	n	\N	\N	1	B1	\N
-1941	cover	n	\N	\N	1	B1	\N
-1942	to cover	v	\N	\N	1	B1	\N
-1943	covered	adj	\N	\N	1	B1	\N
-1944	to create	v	\N	\N	1	B1	\N
-1945	credit	n	\N	\N	1	B1	\N
-1946	cruel	adj	\N	\N	1	B1	\N
-1947	cultural	adj	\N	\N	1	B1	\N
-1948	culture	n	\N	\N	1	B1	\N
-1949	currency	n	\N	\N	1	B1	\N
-1950	current	adj	\N	\N	1	B1	\N
-1951	currently	adv	\N	\N	1	B1	\N
-1952	curtain	n	\N	\N	1	B1	\N
-1953	custom	n	\N	\N	1	B1	\N
-1954	damage	n	\N	\N	1	B1	\N
-1955	to damage	v	\N	\N	1	B1	\N
-1956	to deal	v	\N	\N	1	B1	\N
-1957	decade	n	\N	\N	1	B1	\N
-1958	to decorate	v	\N	\N	1	B1	\N
-1959	definite	adj	\N	\N	1	B1	\N
-1960	to deliver	v	\N	\N	1	B1	\N
-1961	departure	n	\N	\N	1	B1	\N
-1962	desktop	n	\N	\N	1	B1	\N
-1963	despite	prep	\N	\N	1	B1	\N
-1964	destination	n	\N	\N	1	B1	\N
-1965	determined	adj	\N	\N	1	B1	\N
-1966	development	n	\N	\N	1	B1	\N
-1967	diagram	n	\N	\N	1	B1	\N
-1968	diamond	n	\N	\N	1	B1	\N
-1969	difficulty	n	\N	\N	1	B1	\N
-1970	direct	adj	\N	\N	1	B1	\N
-1971	directly	adv	\N	\N	1	B1	\N
-1972	dirt	n	\N	\N	1	B1	\N
-1973	disadvantage	n	\N	\N	1	B1	\N
-1974	disappointed	adj	\N	\N	1	B1	\N
-1975	disappointing	adj	\N	\N	1	B1	\N
-1976	discount	n	\N	\N	1	B1	\N
-1977	to discuss	v	\N	\N	1	B1	\N
-1978	to dislike	v	\N	\N	1	B1	\N
-1979	to divide	v	\N	\N	1	B1	\N
-1980	documentary	n	\N	\N	1	B1	\N
-1981	to donate	v	\N	\N	1	B1	\N
-1982	doubt	n	\N	\N	1	B1	\N
-1983	to doubt	v	\N	\N	1	B1	\N
-1984	dressed	adj	\N	\N	1	B1	\N
-1985	drunk	adj	\N	\N	1	B1	\N
-1986	due	adj	\N	\N	1	B1	\N
-1987	dust	n	\N	\N	1	B1	\N
-1988	duty	n	\N	\N	1	B1	\N
-1989	earthquake	n	\N	\N	1	B1	\N
-1990	eastern	adj	\N	\N	1	B1	\N
-1991	economic	adj	\N	\N	1	B1	\N
-1992	economy	n	\N	\N	1	B1	\N
-1993	edge	n	\N	\N	1	B1	\N
-1994	editor	n	\N	\N	1	B1	\N
-1995	to educate	v	\N	\N	1	B1	\N
-1996	educated	adj	\N	\N	1	B1	\N
-1997	educational	adj	\N	\N	1	B1	\N
-1998	effect	n	\N	\N	1	B1	\N
-1999	effective	adj	\N	\N	1	B1	\N
-2000	effectively	adv	\N	\N	1	B1	\N
-2001	effort	n	\N	\N	1	B1	\N
-2002	election	n	\N	\N	1	B1	\N
-2003	embarrassed	adj	\N	\N	1	B1	\N
-2004	embarrassing	adj	\N	\N	1	B1	\N
-2005	emergency	n	\N	\N	1	B1	\N
-2006	emotion	n	\N	\N	1	B1	\N
-2007	employment	n	\N	\N	1	B1	\N
-2008	to encourage	v	\N	\N	1	B1	\N
-2009	enemy	n	\N	\N	1	B1	\N
-2010	engaged	adj	\N	\N	1	B1	\N
-2011	engineering	n	\N	\N	1	B1	\N
-2012	to entertain	v	\N	\N	1	B1	\N
-2013	entertainment	n	\N	\N	1	B1	\N
-2014	entrance	n	\N	\N	1	B1	\N
-2015	entry	n	\N	\N	1	B1	\N
-2016	environment	n	\N	\N	1	B1	\N
-2017	environmental	adj	\N	\N	1	B1	\N
-2018	episode	n	\N	\N	1	B1	\N
-2019	equal	adj	\N	\N	1	B1	\N
-2020	equally	adv	\N	\N	1	B1	\N
-2021	to escape	v	\N	\N	1	B1	\N
-2022	essential	adj	\N	\N	1	B1	\N
-2023	event	n	\N	\N	1	B1	\N
-2024	eventually	adv	\N	\N	1	B1	\N
-2025	to examine	v	\N	\N	1	B1	\N
-2026	exchange	n	\N	\N	1	B1	\N
-2027	to exchange	v	\N	\N	1	B1	\N
-2028	excitement	n	\N	\N	1	B1	\N
-2029	exhibition	n	\N	\N	1	B1	\N
-2030	to expand	v	\N	\N	1	B1	\N
-2031	expected	adj	\N	\N	1	B1	\N
-2032	expedition	n	\N	\N	1	B1	\N
-2033	experienced	adj	\N	\N	1	B1	\N
-2034	to explode	v	\N	\N	1	B1	\N
-2035	to explore	v	\N	\N	1	B1	\N
-2036	explosion	n	\N	\N	1	B1	\N
-2037	export	n	\N	\N	1	B1	\N
-2038	to export	v	\N	\N	1	B1	\N
-2039	to face	v	\N	\N	1	B1	\N
-2040	fact	n	\N	\N	1	B1	\N
-2041	fairly	adv	\N	\N	1	B1	\N
-2042	familiar	adj	\N	\N	1	B1	\N
-2043	to fancy	v	\N	\N	1	B1	\N
-2044	fascinating	adj	\N	\N	1	B1	\N
-2045	fashionable	adj	\N	\N	1	B1	\N
-2046	to fasten	v	\N	\N	1	B1	\N
-2047	favour	n	\N	\N	1	B1	\N
-2048	fear	n	\N	\N	1	B1	\N
-2049	to fear	v	\N	\N	1	B1	\N
-2050	feature	n	\N	\N	1	B1	\N
-2051	to feature	v	\N	\N	1	B1	\N
-2052	to feed	v	\N	\N	1	B1	\N
-2053	fence	n	\N	\N	1	B1	\N
-2054	fighting	n	\N	\N	1	B1	\N
-2055	figure	n	\N	\N	1	B1	\N
-2056	file	n	\N	\N	1	B1	\N
-2057	to file	v	\N	\N	1	B1	\N
-2058	financial	adj	\N	\N	1	B1	\N
-2059	fine	n	\N	\N	1	B1	\N
-2060	fitness	n	\N	\N	1	B1	\N
-2061	fixed	adj	\N	\N	1	B1	\N
-2062	flash	n	\N	\N	1	B1	\N
-2063	flood	n	\N	\N	1	B1	\N
-2064	to flood	v	\N	\N	1	B1	\N
-2065	flour	n	\N	\N	1	B1	\N
-2066	flow	n	\N	\N	1	B1	\N
-2067	to flow	v	\N	\N	1	B1	\N
-2068	to fold	v	\N	\N	1	B1	\N
-2069	folk	n	\N	\N	1	B1	\N
-2070	following	adj	\N	\N	1	B1	\N
-2071	force	n	\N	\N	1	B1	\N
-2072	to force	v	\N	\N	1	B1	\N
-2073	forever	adv	\N	\N	1	B1	\N
-2074	frame	n	\N	\N	1	B1	\N
-2075	to freeze	v	\N	\N	1	B1	\N
-2076	frequently	adv	\N	\N	1	B1	\N
-2077	friendship	n	\N	\N	1	B1	\N
-2078	to frighten	v	\N	\N	1	B1	\N
-2079	frightened	adj	\N	\N	1	B1	\N
-2080	frightening	adj	\N	\N	1	B1	\N
-2081	frozen	adj	\N	\N	1	B1	\N
-2082	to fry	v	\N	\N	1	B1	\N
-2083	fuel	n	\N	\N	1	B1	\N
-2084	function	n	\N	\N	1	B1	\N
-2085	to function	v	\N	\N	1	B1	\N
-2086	fur	n	\N	\N	1	B1	\N
-2087	further	adv	\N	\N	1	B1	\N
-2088	garage	n	\N	\N	1	B1	\N
-2089	to gather	v	\N	\N	1	B1	\N
-2090	generally	adv	\N	\N	1	B1	\N
-2091	generation	n	\N	\N	1	B1	\N
-2092	generous	adj	\N	\N	1	B1	\N
-2093	gentle	adj	\N	\N	1	B1	\N
-2094	gentleman	n	\N	\N	1	B1	\N
-2095	ghost	n	\N	\N	1	B1	\N
-2096	giant	n	\N	\N	1	B1	\N
-2097	giant	adj	\N	\N	1	B1	\N
-2098	gig	n	\N	\N	1	B1	\N
-2099	glad	adj	\N	\N	1	B1	\N
-2100	global	adj	\N	\N	1	B1	\N
-2101	glove	n	\N	\N	1	B1	\N
-2102	goods	n	\N	\N	1	B1	\N
-2103	grade	n	\N	\N	1	B1	\N
-2104	to graduate	v	\N	\N	1	B1	\N
-2105	grain	n	\N	\N	1	B1	\N
-2106	grateful	adj	\N	\N	1	B1	\N
-2107	growth	n	\N	\N	1	B1	\N
-2108	guard	n	\N	\N	1	B1	\N
-2109	to guard	v	\N	\N	1	B1	\N
-2110	guilty	adj	\N	\N	1	B1	\N
-2111	to hang	v	\N	\N	1	B1	\N
-2112	happiness	n	\N	\N	1	B1	\N
-2113	hardly	adv	\N	\N	1	B1	\N
-2114	headline	n	\N	\N	1	B1	\N
-2115	heating	n	\N	\N	1	B1	\N
-2116	heavily	adv	\N	\N	1	B1	\N
-2117	helicopter	n	\N	\N	1	B1	\N
-2118	to highlight	v	\N	\N	1	B1	\N
-2119	highly	adv	\N	\N	1	B1	\N
-2120	to hire	v	\N	\N	1	B1	\N
-2121	hint	n	\N	\N	1	B1	\N
-2122	to hint	v	\N	\N	1	B1	\N
-2123	historic	adj	\N	\N	1	B1	\N
-2124	historical	adj	\N	\N	1	B1	\N
-2125	honest	adj	\N	\N	1	B1	\N
-2126	honey	n	\N	\N	1	B1	\N
-2127	horrible	adj	\N	\N	1	B1	\N
-2128	horror	n	\N	\N	1	B1	\N
-2129	host	n	\N	\N	1	B1	\N
-2130	to host	v	\N	\N	1	B1	\N
-2131	however	adv	\N	\N	1	B1	\N
-2132	to hunt	v	\N	\N	1	B1	\N
-2133	hurricane	n	\N	\N	1	B1	\N
-2134	ignorant	adj	\N	\N	1	B1	\N
-2135	to ignore	v	\N	\N	1	B1	\N
-2136	illegal	adj	\N	\N	1	B1	\N
-2137	to imagine	v	\N	\N	1	B1	\N
-2138	imaginary	adj	\N	\N	1	B1	\N
-2139	immediate	adj	\N	\N	1	B1	\N
-2140	immigrant	n	\N	\N	1	B1	\N
-2141	impact	n	\N	\N	1	B1	\N
-2142	import	n	\N	\N	1	B1	\N
-2143	to import	v	\N	\N	1	B1	\N
-2144	importance	n	\N	\N	1	B1	\N
-2145	impression	n	\N	\N	1	B1	\N
-2146	impressive	adj	\N	\N	1	B1	\N
-2147	to improve	v	\N	\N	1	B1	\N
-2148	improvement	n	\N	\N	1	B1	\N
-2149	incredibly	adv	\N	\N	1	B1	\N
-2150	indeed	adv	\N	\N	1	B1	\N
-2151	to indicate	v	\N	\N	1	B1	\N
-2152	indirect	adj	\N	\N	1	B1	\N
-2153	indoor	adj	\N	\N	1	B1	\N
-2154	indoors	adv	\N	\N	1	B1	\N
-2155	infant	n	\N	\N	1	B1	\N
-2156	influence	n	\N	\N	1	B1	\N
-2157	to influence	v	\N	\N	1	B1	\N
-2158	ingredient	n	\N	\N	1	B1	\N
-2159	to injure	v	\N	\N	1	B1	\N
-2160	injured	adj	\N	\N	1	B1	\N
-2161	innocent	adj	\N	\N	1	B1	\N
-2162	intelligence	n	\N	\N	1	B1	\N
-2163	to intend	v	\N	\N	1	B1	\N
-2164	intention	n	\N	\N	1	B1	\N
-2165	to invest	v	\N	\N	1	B1	\N
-2166	to investigate	v	\N	\N	1	B1	\N
-2167	involved	adj	\N	\N	1	B1	\N
-2168	iron	n	\N	\N	1	B1	\N
-2169	to iron	v	\N	\N	1	B1	\N
-2170	issue	n	\N	\N	1	B1	\N
-2171	IT	n	\N	\N	1	B1	\N
-2172	journal	n	\N	\N	1	B1	\N
-2173	judge	n	\N	\N	1	B1	\N
-2174	to judge	v	\N	\N	1	B1	\N
-2175	keen	adj	\N	\N	1	B1	\N
-2176	key	adj	\N	\N	1	B1	\N
-2177	keyboard	n	\N	\N	1	B1	\N
-2178	to kick	v	\N	\N	1	B1	\N
-2179	killing	n	\N	\N	1	B1	\N
-2180	kind	adj	\N	\N	1	B1	\N
-2181	kingdom	n	\N	\N	1	B1	\N
-2182	label	n	\N	\N	1	B1	\N
-2183	to label	v	\N	\N	1	B1	\N
-2184	laboratory	n	\N	\N	1	B1	\N
-2185	lack	n	\N	\N	1	B1	\N
-2186	to lack	v	\N	\N	1	B1	\N
-2187	latest	adj	\N	\N	1	B1	\N
-2188	to lay	v	\N	\N	1	B1	\N
-2189	layer	n	\N	\N	1	B1	\N
-2190	lead	n	\N	\N	1	B1	\N
-2191	leading	adj	\N	\N	1	B1	\N
-2192	leaf	n	\N	\N	1	B1	\N
-2193	leather	n	\N	\N	1	B1	\N
-2194	legal	adj	\N	\N	1	B1	\N
-2195	leisure	n	\N	\N	1	B1	\N
-2196	length	n	\N	\N	1	B1	\N
-2197	level	n	\N	\N	1	B1	\N
-2198	to level	v	\N	\N	1	B1	\N
-2199	to lie	v	\N	\N	1	B1	\N
-2200	limit	n	\N	\N	1	B1	\N
-2201	to limit	v	\N	\N	1	B1	\N
-2202	lip	n	\N	\N	1	B1	\N
-2203	liquid	n	\N	\N	1	B1	\N
-2204	literature	n	\N	\N	1	B1	\N
-2205	living	n	\N	\N	1	B1	\N
-2206	living	adj	\N	\N	1	B1	\N
-2207	to locate	v	\N	\N	1	B1	\N
-2208	located	adj	\N	\N	1	B1	\N
-2209	location	n	\N	\N	1	B1	\N
-2210	log	n	\N	\N	1	B1	\N
-2211	lonely	adj	\N	\N	1	B1	\N
-2212	loss	n	\N	\N	1	B1	\N
-2213	luxury	n	\N	\N	1	B1	\N
-2214	mad	adj	\N	\N	1	B1	\N
-2215	magic	n	\N	\N	1	B1	\N
-2216	mainly	adv	\N	\N	1	B1	\N
-2217	mall	n	\N	\N	1	B1	\N
-2218	management	n	\N	\N	1	B1	\N
-2219	marketing	n	\N	\N	1	B1	\N
-2220	marriage	n	\N	\N	1	B1	\N
-2221	material	n	\N	\N	1	B1	\N
-2222	meanwhile	adv	\N	\N	1	B1	\N
-2223	measure	n	\N	\N	1	B1	\N
-2224	to measure	v	\N	\N	1	B1	\N
-2225	medium	adj	\N	\N	1	B1	\N
-2226	mental	adj	\N	\N	1	B1	\N
-2227	mess	n	\N	\N	1	B1	\N
-2228	mild	adj	\N	\N	1	B1	\N
-2229	mill	n	\N	\N	1	B1	\N
-2230	mine	n	\N	\N	1	B1	\N
-2231	to mix	v	\N	\N	1	B1	\N
-2232	mixture	n	\N	\N	1	B1	\N
-2233	model	n	\N	\N	1	B1	\N
-2234	mood	n	\N	\N	1	B1	\N
-2235	mud	n	\N	\N	1	B1	\N
-2236	murder	n	\N	\N	1	B1	\N
-2237	to murder	v	\N	\N	1	B1	\N
-2238	muscle	n	\N	\N	1	B1	\N
-2239	mystery	n	\N	\N	1	B1	\N
-2240	nail	n	\N	\N	1	B1	\N
-2241	narrative	n	\N	\N	1	B1	\N
-2242	nation	n	\N	\N	1	B1	\N
-2243	native	adj / n	\N	\N	1	B1	\N
-2244	naturally	adv	\N	\N	1	B1	\N
-2245	necessarily	adv	\N	\N	1	B1	\N
-2246	needle	n	\N	\N	1	B1	\N
-2247	negative	adj	\N	\N	1	B1	\N
-2248	neighbourhood	n	\N	\N	1	B1	\N
-2249	neither	conj / det / pron	\N	\N	1	B1	\N
-2250	net	n	\N	\N	1	B1	\N
-2251	nor	conj	\N	\N	1	B1	\N
-2252	normal	adj / n	\N	\N	1	B1	\N
-2253	northern	adj	\N	\N	1	B1	\N
-2254	to note	v	\N	\N	1	B1	\N
-2255	nuclear	adj	\N	\N	1	B1	\N
-2256	obvious	adj	\N	\N	1	B1	\N
-2257	obviously	adv	\N	\N	1	B1	\N
-2258	occasion	n	\N	\N	1	B1	\N
-2259	to occur	v	\N	\N	1	B1	\N
-2260	odd	adj	\N	\N	1	B1	\N
-2261	official	adj	\N	\N	1	B1	\N
-2262	old-fashioned	adj	\N	\N	1	B1	\N
-2263	once	conj	\N	\N	1	B1	\N
-2264	opinion	n	\N	\N	1	B1	\N
-2265	operation	n	\N	\N	1	B1	\N
-2266	opportunity	n	\N	\N	1	B1	\N
-2267	organised	adj	\N	\N	1	B1	\N
-2268	organiser	n	\N	\N	1	B1	\N
-2269	original	adj	\N	\N	1	B1	\N
-2270	originally	adv	\N	\N	1	B1	\N
-2271	ought to	v	\N	\N	1	B1	\N
-2272	ours	pron	\N	\N	1	B1	\N
-2273	outdoor	adj	\N	\N	1	B1	\N
-2274	outdoors	adv	\N	\N	1	B1	\N
-2275	package	n	\N	\N	1	B1	\N
-2276	pad	n	\N	\N	1	B1	\N
-2277	painful	adj	\N	\N	1	B1	\N
-2278	pale	adj	\N	\N	1	B1	\N
-2279	pan	n	\N	\N	1	B1	\N
-2280	to participate	v	\N	\N	1	B1	\N
-2281	particularly	adv	\N	\N	1	B1	\N
-2282	passion	n	\N	\N	1	B1	\N
-2283	path	n	\N	\N	1	B1	\N
-2284	payment	n	\N	\N	1	B1	\N
-2285	peaceful	adj	\N	\N	1	B1	\N
-2286	percentage	n	\N	\N	1	B1	\N
-2287	perfectly	adv	\N	\N	1	B1	\N
-2288	performance	n	\N	\N	1	B1	\N
-2289	personally	adv	\N	\N	1	B1	\N
-2290	pessimistic	adj	\N	\N	1	B1	\N
-2291	to persuade	v	\N	\N	1	B1	\N
-2292	photographer	n	\N	\N	1	B1	\N
-2293	photography	n	\N	\N	1	B1	\N
-2294	pin	n	\N	\N	1	B1	\N
-2295	to pin	v	\N	\N	1	B1	\N
-2296	pipe	n	\N	\N	1	B1	\N
-2297	planning	n	\N	\N	1	B1	\N
-2298	pleasant	adj	\N	\N	1	B1	\N
-2299	pleasure	n	\N	\N	1	B1	\N
-2300	plenty	pron	\N	\N	1	B1	\N
-2301	plot	n	\N	\N	1	B1	\N
-2302	plus	prep / conj	\N	\N	1	B1	\N
-2303	poem	n	\N	\N	1	B1	\N
-2304	poet	n	\N	\N	1	B1	\N
-2305	poetry	n	\N	\N	1	B1	\N
-2306	to point	v	\N	\N	1	B1	\N
-2307	poison	n	\N	\N	1	B1	\N
-2308	to poison	v	\N	\N	1	B1	\N
-2309	poisonous	adj	\N	\N	1	B1	\N
-2310	policy	n	\N	\N	1	B1	\N
-2311	political	adj	\N	\N	1	B1	\N
-2312	politician	n	\N	\N	1	B1	\N
-2313	politics	n	\N	\N	1	B1	\N
-2314	port	n	\N	\N	1	B1	\N
-2315	portrait	n	\N	\N	1	B1	\N
-2316	position	n	\N	\N	1	B1	\N
-2317	positive	adj	\N	\N	1	B1	\N
-2318	possibly	adv	\N	\N	1	B1	\N
-2319	pot	n	\N	\N	1	B1	\N
-2320	to pour	v	\N	\N	1	B1	\N
-2321	poverty	n	\N	\N	1	B1	\N
-2322	powder	n	\N	\N	1	B1	\N
-2323	power	n	\N	\N	1	B1	\N
-2324	powerful	adj	\N	\N	1	B1	\N
-2325	practical	adj	\N	\N	1	B1	\N
-2326	to pray	v	\N	\N	1	B1	\N
-2327	prayer	n	\N	\N	1	B1	\N
-2328	qualification	n	\N	\N	1	B1	\N
-2329	qualified	adj	\N	\N	1	B1	\N
-2330	to qualify	v	\N	\N	1	B1	\N
-2331	queue	n	\N	\N	1	B1	\N
-2332	to queue	v	\N	\N	1	B1	\N
-2333	to quit	v	\N	\N	1	B1	\N
-2334	quotation	n	\N	\N	1	B1	\N
-2335	quote	n	\N	\N	1	B1	\N
-2336	to quote	v	\N	\N	1	B1	\N
-2337	race	n	\N	\N	1	B1	\N
-2338	racing	n	\N	\N	1	B1	\N
-2339	range	n	\N	\N	1	B1	\N
-2340	rare	adj	\N	\N	1	B1	\N
-2341	rarely	adv	\N	\N	1	B1	\N
-2342	reaction	n	\N	\N	1	B1	\N
-2343	reality	n	\N	\N	1	B1	\N
-2344	receipt	n	\N	\N	1	B1	\N
-2345	recommendation	n	\N	\N	1	B1	\N
-2346	reference	n	\N	\N	1	B1	\N
-2347	to reflect	v	\N	\N	1	B1	\N
-2348	regularly	adv	\N	\N	1	B1	\N
-2349	to reject	v	\N	\N	1	B1	\N
-2350	to relate	v	\N	\N	1	B1	\N
-2351	related	adj	\N	\N	1	B1	\N
-2352	relation	n	\N	\N	1	B1	\N
-2353	relative	n	\N	\N	1	B1	\N
-2354	relaxed	adj	\N	\N	1	B1	\N
-2355	relaxing	adj	\N	\N	1	B1	\N
-2356	to release	v	\N	\N	1	B1	\N
-2357	reliable	adj	\N	\N	1	B1	\N
-2358	religion	n	\N	\N	1	B1	\N
-2359	religious	adj	\N	\N	1	B1	\N
-2360	to remain	v	\N	\N	1	B1	\N
-2361	to remind	v	\N	\N	1	B1	\N
-2362	remote	adj	\N	\N	1	B1	\N
-2363	rent	n	\N	\N	1	B1	\N
-2364	to rent	v	\N	\N	1	B1	\N
-2365	repeated	adj	\N	\N	1	B1	\N
-2366	to represent	v	\N	\N	1	B1	\N
-2367	to require	v	\N	\N	1	B1	\N
-2368	reservation	n	\N	\N	1	B1	\N
-2369	resource	n	\N	\N	1	B1	\N
-2370	respect	n	\N	\N	1	B1	\N
-2371	to respect	v	\N	\N	1	B1	\N
-2372	response	n	\N	\N	1	B1	\N
-2373	responsibility	n	\N	\N	1	B1	\N
-2374	responsible	adj	\N	\N	1	B1	\N
-2375	result	n	\N	\N	1	B1	\N
-2376	to retire	v	\N	\N	1	B1	\N
-2377	retired	adj	\N	\N	1	B1	\N
-2378	to revise	v	\N	\N	1	B1	\N
-2379	rifle	n	\N	\N	1	B1	\N
-2380	to rise	v	\N	\N	1	B1	\N
-2381	risk	n	\N	\N	1	B1	\N
-2382	to risk	v	\N	\N	1	B1	\N
-2383	robot	n	\N	\N	1	B1	\N
-2384	to roll	v	\N	\N	1	B1	\N
-2385	romantic	adj	\N	\N	1	B1	\N
-2386	rope	n	\N	\N	1	B1	\N
-2387	rough	adj	\N	\N	1	B1	\N
-2388	row	n	\N	\N	1	B1	\N
-2389	royal	adj	\N	\N	1	B1	\N
-2390	rugby	n	\N	\N	1	B1	\N
-2391	to rule	v	\N	\N	1	B1	\N
-2392	safety	n	\N	\N	1	B1	\N
-2393	sailor	n	\N	\N	1	B1	\N
-2394	sample	n	\N	\N	1	B1	\N
-2395	sand	n	\N	\N	1	B1	\N
-2396	to scan	v	\N	\N	1	B1	\N
-2397	scientific	adj	\N	\N	1	B1	\N
-2398	script	n	\N	\N	1	B1	\N
-2399	sculpture	n	\N	\N	1	B1	\N
-2400	secondary	adj	\N	\N	1	B1	\N
-2401	security	n	\N	\N	1	B1	\N
-2402	seed	n	\N	\N	1	B1	\N
-2403	sensible	adj	\N	\N	1	B1	\N
-2404	to separate	v	\N	\N	1	B1	\N
-2405	seriously	adv	\N	\N	1	B1	\N
-2406	servant	n	\N	\N	1	B1	\N
-2407	to set	v	\N	\N	1	B1	\N
-2408	set	n	\N	\N	1	B1	\N
-2409	setting	n	\N	\N	1	B1	\N
-2410	sex	n	\N	\N	1	B1	\N
-2411	sexual	adj	\N	\N	1	B1	\N
-2412	sharp	adj	\N	\N	1	B1	\N
-2413	shelf	n	\N	\N	1	B1	\N
-2414	shell	n	\N	\N	1	B1	\N
-2415	shift	n	\N	\N	1	B1	\N
-2416	to shift	v	\N	\N	1	B1	\N
-2417	to shine	v	\N	\N	1	B1	\N
-2418	shiny	adj	\N	\N	1	B1	\N
-2419	to shoot	v	\N	\N	1	B1	\N
-2420	shock	n	\N	\N	1	B1	\N
-2421	to shock	v	\N	\N	1	B1	\N
-2422	shot	n	\N	\N	1	B1	\N
-2423	shy	adj	\N	\N	1	B1	\N
-2424	sight	n	\N	\N	1	B1	\N
-2425	signal	n	\N	\N	1	B1	\N
-2426	silent	adj	\N	\N	1	B1	\N
-2427	silly	adj	\N	\N	1	B1	\N
-2428	similarity	n	\N	\N	1	B1	\N
-2429	similarly	adv	\N	\N	1	B1	\N
-2430	simply	adv	\N	\N	1	B1	\N
-2431	since	conj	\N	\N	1	B1	\N
-2432	to sink	v	\N	\N	1	B1	\N
-2433	skill	n	\N	\N	1	B1	\N
-2434	to skip	v	\N	\N	1	B1	\N
-2435	to slam	v	\N	\N	1	B1	\N
-2436	to slap	v	\N	\N	1	B1	\N
-2437	slice	n	\N	\N	1	B1	\N
-2438	to slice	v	\N	\N	1	B1	\N
-2439	slightly	adv	\N	\N	1	B1	\N
-2440	smart	adj	\N	\N	1	B1	\N
-2441	smooth	adj	\N	\N	1	B1	\N
-2442	society	n	\N	\N	1	B1	\N
-2443	software	n	\N	\N	1	B1	\N
-2444	soil	n	\N	\N	1	B1	\N
-2445	solid	adj	\N	\N	1	B1	\N
-2446	to solve	v	\N	\N	1	B1	\N
-2447	to sort	v	\N	\N	1	B1	\N
-2448	southern	adj	\N	\N	1	B1	\N
-2449	spam	n	\N	\N	1	B1	\N
-2450	specifically	adv	\N	\N	1	B1	\N
-2451	speed	n	\N	\N	1	B1	\N
-2452	spending	n	\N	\N	1	B1	\N
-2453	spicy	adj	\N	\N	1	B1	\N
-2454	spirit	n	\N	\N	1	B1	\N
-2455	spoken	adj	\N	\N	1	B1	\N
-2456	spot	n	\N	\N	1	B1	\N
-2457	to spot	v	\N	\N	1	B1	\N
-2458	to spread	v	\N	\N	1	B1	\N
-2459	spring	n	\N	\N	1	B1	\N
-2460	spy	n	\N	\N	1	B1	\N
-2461	to spy	v	\N	\N	1	B1	\N
-2462	stadium	n	\N	\N	1	B1	\N
-2463	staff	n	\N	\N	1	B1	\N
-2464	standard	n	\N	\N	1	B1	\N
-2465	standard	adj	\N	\N	1	B1	\N
-2466	to state	v	\N	\N	1	B1	\N
-2467	statue	n	\N	\N	1	B1	\N
-2468	to stick	v	\N	\N	1	B1	\N
-2469	stick	n	\N	\N	1	B1	\N
-2470	to store	v	\N	\N	1	B1	\N
-2471	stranger	n	\N	\N	1	B1	\N
-2472	strength	n	\N	\N	1	B1	\N
-2473	string	n	\N	\N	1	B1	\N
-2474	strongly	adv	\N	\N	1	B1	\N
-2475	studio	n	\N	\N	1	B1	\N
-2476	stuff	n	\N	\N	1	B1	\N
-2477	successfully	adv	\N	\N	1	B1	\N
-2478	sudden	adj	\N	\N	1	B1	\N
-2479	to suffer	v	\N	\N	1	B1	\N
-2480	to suit	v	\N	\N	1	B1	\N
-2481	suitable	adj	\N	\N	1	B1	\N
-2482	success	n	\N	\N	1	B1	\N
-2483	to summarise	v	\N	\N	1	B1	\N
-2484	summary	n	\N	\N	1	B1	\N
-2485	supply	n	\N	\N	1	B1	\N
-2486	to supply	v	\N	\N	1	B1	\N
-2487	supporter	n	\N	\N	1	B1	\N
-2488	surely	adv	\N	\N	1	B1	\N
-2489	surface	n	\N	\N	1	B1	\N
-2490	to survive	v	\N	\N	1	B1	\N
-2491	survey	n	\N	\N	1	B1	\N
-2492	switch	n	\N	\N	1	B1	\N
-2493	to switch	v	\N	\N	1	B1	\N
-2494	sword	n	\N	\N	1	B1	\N
-2495	symptom	n	\N	\N	1	B1	\N
-2496	tail	n	\N	\N	1	B1	\N
-2497	talent	n	\N	\N	1	B1	\N
-2498	talented	adj	\N	\N	1	B1	\N
-2499	tape	n	\N	\N	1	B1	\N
-2500	tax	n	\N	\N	1	B1	\N
-2501	technical	adj	\N	\N	1	B1	\N
-2502	technique	n	\N	\N	1	B1	\N
-2503	to tend	v	\N	\N	1	B1	\N
-2504	theme	n	\N	\N	1	B1	\N
-2505	though	adv / conj	\N	\N	1	B1	\N
-2506	throat	n	\N	\N	1	B1	\N
-2507	throughout	prep / adv	\N	\N	1	B1	\N
-2508	tight	adj	\N	\N	1	B1	\N
-2509	till	conj / prep	\N	\N	1	B1	\N
-2510	tin	n	\N	\N	1	B1	\N
-2511	tiny	adj	\N	\N	1	B1	\N
-2512	tongue	n	\N	\N	1	B1	\N
-2513	topic	n	\N	\N	1	B1	\N
-2514	total	adj / n	\N	\N	1	B1	\N
-2515	totally	adv	\N	\N	1	B1	\N
-2516	trade	n / v	\N	\N	1	B1	\N
-2517	trailer	n	\N	\N	1	B1	\N
-2518	to translate	v	\N	\N	1	B1	\N
-2519	translation	n	\N	\N	1	B1	\N
-2520	to treat	v	\N	\N	1	B1	\N
-2521	treatment	n	\N	\N	1	B1	\N
-2522	trend	n	\N	\N	1	B1	\N
-2523	trick	n / v	\N	\N	1	B1	\N
-2524	truth	n	\N	\N	1	B1	\N
-2525	tube	n	\N	\N	1	B1	\N
-2526	to type	v	\N	\N	1	B1	\N
-2527	typically	adv	\N	\N	1	B1	\N
-2528	tyre	n	\N	\N	1	B1	\N
-2529	ugly	adj	\N	\N	1	B1	\N
-2530	unable	adj	\N	\N	1	B1	\N
-2531	uncomfortable	adj	\N	\N	1	B1	\N
-2532	underwear	n	\N	\N	1	B1	\N
-2533	unemployed	adj	\N	\N	1	B1	\N
-2534	unemployment	n	\N	\N	1	B1	\N
-2535	unfair	adj	\N	\N	1	B1	\N
-2536	union	n	\N	\N	1	B1	\N
-2537	unless	conj	\N	\N	1	B1	\N
-2538	unlike	prep	\N	\N	1	B1	\N
-2539	unlikely	adj	\N	\N	1	B1	\N
-2540	unnecessary	adj	\N	\N	1	B1	\N
-2541	unpleasant	adj	\N	\N	1	B1	\N
-2542	to update	v	\N	\N	1	B1	\N
-2543	upon	prep	\N	\N	1	B1	\N
-2544	to upset	v	\N	\N	1	B1	\N
-2545	used	adj	\N	\N	1	B1	\N
-2546	valuable	adj	\N	\N	1	B1	\N
-2547	value	n	\N	\N	1	B1	\N
-2548	various	adj	\N	\N	1	B1	\N
-2549	vehicle	n	\N	\N	1	B1	\N
-2550	version	n	\N	\N	1	B1	\N
-2551	victim	n	\N	\N	1	B1	\N
-2552	violent	adj	\N	\N	1	B1	\N
-2553	volunteer	n / v	\N	\N	1	B1	\N
-2554	vote	n / v	\N	\N	1	B1	\N
-2555	warn	v	\N	\N	1	B1	\N
-2556	warning	n	\N	\N	1	B1	\N
-2557	waste	n / v	\N	\N	1	B1	\N
-2558	weapon	n	\N	\N	1	B1	\N
-2559	weigh	v	\N	\N	1	B1	\N
-2560	western	adj	\N	\N	1	B1	\N
-2561	whatever	det / pron	\N	\N	1	B1	\N
-2562	whenever	conj	\N	\N	1	B1	\N
-2563	whether	conj	\N	\N	1	B1	\N
-2564	while	conj	\N	\N	1	B1	\N
-2565	wing	n	\N	\N	1	B1	\N
-2566	within	prep	\N	\N	1	B1	\N
-2567	wonder	v	\N	\N	1	B1	\N
-2568	wool	n	\N	\N	1	B1	\N
-2569	worldwide	adj / adv	\N	\N	1	B1	\N
-2570	worth	adj	\N	\N	1	B1	\N
-2571	wrinkle	n	\N	\N	1	B1	\N
-2572	written	adj	\N	\N	1	B1	\N
-2573	yard	n	\N	\N	1	B1	\N
-2574	yell	v	\N	\N	1	B1	\N
-2575	youth	n	\N	\N	1	B1	\N
-100000	ένας	det	\N	\N	2	A1	ο
-100001	μία	det	\N	\N	2	A1	η
-100002	ένα	det	\N	\N	2	A1	το
-100003	σχετικά με	prep	\N	\N	2	A1	\N
-100004	περίπου	adv	\N	\N	2	A1	\N
-100005	πάνω από	prep	\N	\N	2	A1	\N
-100006	απέναντι	prep	\N	\N	2	A1	\N
-100007	διά μέσου	prep	\N	\N	2	A1	\N
-100008	δράση	n	\N	\N	2	A1	η
-100009	ενέργεια	n	\N	\N	2	A1	η
-100010	δραστηριότητα	n	\N	\N	2	A1	η
-100011	ηθοποιός	n	\N	\N	2	A1	ο/η
-100012	προσθέτω	v	\N	\N	2	A1	\N
-100013	διεύθυνση	n	\N	\N	2	A1	η
-100014	ενήλικας	n	\N	\N	2	A1	ο/η
-100015	φοβισμένος	adj	\N	\N	2	A1	\N
-100016	μετά	prep	\N	\N	2	A1	\N
-100017	απόγευμα	n	\N	\N	2	A1	το
-100018	ξανά	adv	\N	\N	2	A1	\N
-100019	πάλι	adv	\N	\N	2	A1	\N
-100020	ηλικία	n	\N	\N	2	A1	η
-100021	πριν	adv	\N	\N	2	A1	\N
-100022	αέρας	n	\N	\N	2	A1	ο
-100023	αεροδρόμιο	n	\N	\N	2	A1	το
-100024	όλος	det	\N	\N	2	A1	ο
-100025	όλη	det	\N	\N	2	A1	η
-100026	όλο	det	\N	\N	2	A1	το
-100027	εντάξει	adj	\N	\N	2	A1	\N
-100028	επίσης	adv	\N	\N	2	A1	\N
-100029	πάντα	adv	\N	\N	2	A1	\N
-100030	εκπληκτικός	adj	\N	\N	2	A1	\N
-100031	φανταστικός	adj	\N	\N	2	A1	\N
-100032	και	conj	\N	\N	2	A1	\N
-100033	θυμωμένος	adj	\N	\N	2	A1	\N
-100034	ζώο	n	\N	\N	2	A1	το
-100035	άλλος	det	\N	\N	2	A1	ο
-100036	άλλη	det	\N	\N	2	A1	η
-100037	άλλο	det	\N	\N	2	A1	το
-100038	απάντηση	n	\N	\N	2	A1	η
-100039	οποιοσδήποτε	det	\N	\N	2	A1	\N
-100040	κανένας	pron	\N	\N	2	A1	\N
-100041	οποιοσδήποτε	pron	\N	\N	2	A1	\N
-100042	οτιδήποτε	pron	\N	\N	2	A1	\N
-100043	τίποτα	pron	\N	\N	2	A1	\N
-100044	διαμέρισμα	n	\N	\N	2	A1	το
-100045	μήλο	n	\N	\N	2	A1	το
-100046	Απρίλιος	n	\N	\N	2	A1	ο
-100047	περιοχή	n	\N	\N	2	A1	η
-100048	χέρι	n	\N	\N	2	A1	το
-100049	βραχίονας	n	\N	\N	2	A1	ο
-100050	γύρω	prep	\N	\N	2	A1	\N
-100051	φτάνω	v	\N	\N	2	A1	\N
-100052	τέχνη	n	\N	\N	2	A1	η
-100053	άρθρο	n	\N	\N	2	A1	το
-100054	καλλιτέχνης	n	\N	\N	2	A1	ο/η
-100055	ως	prep	\N	\N	2	A1	\N
-100056	σαν	prep	\N	\N	2	A1	\N
-100057	ρωτάω	v	\N	\N	2	A1	\N
-100058	ζητάω	v	\N	\N	2	A1	\N
-100059	σε	prep	\N	\N	2	A1	\N
-100060	στον	prep	\N	\N	2	A1	\N
-100061	στην	prep	\N	\N	2	A1	\N
-100062	στο	prep	\N	\N	2	A1	\N
-100063	Αύγουστος	n	\N	\N	2	A1	ο
-100064	θεία	n	\N	\N	2	A1	η
-100065	φθινόπωρο	n	\N	\N	2	A1	το
-100066	μακριά	adv	\N	\N	2	A1	\N
-100067	μωρό	n	\N	\N	2	A1	το
-100068	πίσω	adv	\N	\N	2	A1	\N
-100069	κακός	adj	\N	\N	2	A1	\N
-100070	τσάντα	n	\N	\N	2	A1	η
-100071	μπάλα	n	\N	\N	2	A1	η
-100072	μπανάνα	n	\N	\N	2	A1	η
-100073	συγκρότημα	n	\N	\N	2	A1	το
-100074	μπάντα	n	\N	\N	2	A1	η
-100075	τράπεζα	n	\N	\N	2	A1	η
-100076	μπαρ	n	\N	\N	2	A1	το
-100077	μπάνιο	n	\N	\N	2	A1	το
-100078	λουτρό	n	\N	\N	2	A1	το
-100079	είμαι	v	\N	\N	2	A1	\N
-100080	παραλία	n	\N	\N	2	A1	η
-100081	όμορφος	adj	\N	\N	2	A1	\N
-100082	επειδή	conj	\N	\N	2	A1	\N
-100083	γίνομαι	v	\N	\N	2	A1	\N
-100084	κρεβάτι	n	\N	\N	2	A1	το
-100085	υπνοδωμάτιο	n	\N	\N	2	A1	το
-100086	μπίρα	n	\N	\N	2	A1	η
-100087	αρχίζω	v	\N	\N	2	A1	\N
-100088	αρχή	n	\N	\N	2	A1	η
-100089	πίσω από	prep	\N	\N	2	A1	\N
-100090	πιστεύω	v	\N	\N	2	A1	\N
-100091	κάτω από	prep	\N	\N	2	A1	\N
-100092	καλύτερος	adj	\N	\N	2	A1	\N
-100093	ανάμεσα σε	prep	\N	\N	2	A1	\N
-100094	ποδήλατο	n	\N	\N	2	A1	το
-100095	μεγάλος	adj	\N	\N	2	A1	\N
-100096	καφετέρια	n	\N	\N	2	A1	η
-100097	κέικ	n	\N	\N	2	A1	το
-100098	τούρτα	n	\N	\N	2	A1	η
-100099	καλώ	v	\N	\N	2	A1	\N
-100100	τηλεφωνώ	v	\N	\N	2	A1	\N
-100101	φωτογραφική μηχανή	n	\N	\N	2	A1	η
-100102	μπορώ	v	\N	\N	2	A1	\N
-100103	αυτοκίνητο	n	\N	\N	2	A1	το
-100104	κάρτα	n	\N	\N	2	A1	η
-100105	καρότο	n	\N	\N	2	A1	το
-100106	κουβαλάω	v	\N	\N	2	A1	\N
-100107	μεταφέρω	v	\N	\N	2	A1	\N
-100108	γάτα	n	\N	\N	2	A1	η
-100109	CD	n	\N	\N	2	A1	το
-100110	σεντ	n	\N	\N	2	A1	το
-100111	κέντρο	n	\N	\N	2	A1	το
-100112	καρέκλα	n	\N	\N	2	A1	η
-100113	αλλάζω	v	\N	\N	2	A1	\N
-100114	πίνακας	n	\N	\N	2	A1	ο
-100115	διάγραμμα	n	\N	\N	2	A1	το
-100116	φθηνός	adj	\N	\N	2	A1	\N
-100117	ελέγχω	v	\N	\N	2	A1	\N
-100118	τυρί	n	\N	\N	2	A1	το
-100119	κοτόπουλο	n	\N	\N	2	A1	το
-100120	παιδί	n	\N	\N	2	A1	το
-100121	σοκολάτα	n	\N	\N	2	A1	η
-100122	επιλέγω	v	\N	\N	2	A1	\N
-100123	διαλέγω	v	\N	\N	2	A1	\N
-100124	κινηματογράφος	n	\N	\N	2	A1	ο
-100125	σινεμά	n	\N	\N	2	A1	το
-100126	πόλη	n	\N	\N	2	A1	η
-100127	τάξη	n	\N	\N	2	A1	η
-100128	αίθουσα	n	\N	\N	2	A1	η
-100129	καθαρός	adj	\N	\N	2	A1	\N
-100130	σκαρφαλώνω	v	\N	\N	2	A1	\N
-100131	ρολόι	n	\N	\N	2	A1	το
-100132	κλείνω	v	\N	\N	2	A1	\N
-100133	ρούχα	n	\N	\N	2	A1	τα
-100134	κλαμπ	n	\N	\N	2	A1	το
-100135	σύλλογος	n	\N	\N	2	A1	ο
-100136	παλτό	n	\N	\N	2	A1	το
-100137	καφές	n	\N	\N	2	A1	ο
-100138	κρύος	adj	\N	\N	2	A1	\N
-100139	κολέγιο	n	\N	\N	2	A1	το
-100140	χρώμα	n	\N	\N	2	A1	το
-100141	έρχομαι	v	\N	\N	2	A1	\N
-100142	εταιρεία	n	\N	\N	2	A1	η
-100143	συμπληρώνω	v	\N	\N	2	A1	\N
-100144	ολοκληρώνω	v	\N	\N	2	A1	\N
-100145	υπολογιστής	n	\N	\N	2	A1	ο
-100146	συναυλία	n	\N	\N	2	A1	η
-100147	μαγειρεύω	v	\N	\N	2	A1	\N
-100148	μαγειρική	n	\N	\N	2	A1	η
-100149	δροσερός	adj	\N	\N	2	A1	\N
-100150	σωστός	adj	\N	\N	2	A1	\N
-100151	κοστίζω	v	\N	\N	2	A1	\N
-100152	θα μπορούσα	v	\N	\N	2	A1	\N
-100153	χώρα	n	\N	\N	2	A1	η
-100154	επαρχία	n	\N	\N	2	A1	η
-100155	μάθημα	n	\N	\N	2	A1	το
-100156	σειρά μαθημάτων	n	\N	\N	2	A1	η
-100157	ξάδερφος	n	\N	\N	2	A1	ο
-100158	ξαδέρφη	n	\N	\N	2	A1	η
-100159	αγελάδα	n	\N	\N	2	A1	η
-100160	κρέμα	n	\N	\N	2	A1	η
-100161	φλιτζάνι	n	\N	\N	2	A1	το
-100162	μπαμπάς	n	\N	\N	2	A1	ο
-100163	καθημερινός	adj	\N	\N	2	A1	\N
-100164	χορεύω	v	\N	\N	2	A1	\N
-100165	χορευτής	n	\N	\N	2	A1	ο
-100166	χορεύτρια	n	\N	\N	2	A1	η
-100167	χορός	n	\N	\N	2	A1	ο
-100168	επικίνδυνος	adj	\N	\N	2	A1	\N
-100169	σκοτεινός	adj	\N	\N	2	A1	\N
-100170	σκούρος	adj	\N	\N	2	A1	\N
-100171	ημερομηνία	n	\N	\N	2	A1	η
-100172	κόρη	n	\N	\N	2	A1	η
-100173	ημέρα	n	\N	\N	2	A1	η
-100174	μέρα	n	\N	\N	2	A1	η
-100175	αγαπητός	adj	\N	\N	2	A1	\N
-100176	Δεκέμβριος	n	\N	\N	2	A1	ο
-100177	αποφασίζω	v	\N	\N	2	A1	\N
-100178	νόστιμος	adj	\N	\N	2	A1	\N
-100179	γραφείο	n	\N	\N	2	A1	το
-100180	λεπτομέρεια	n	\N	\N	2	A1	η
-100181	διάλογος	n	\N	\N	2	A1	ο
-100182	λεξικό	n	\N	\N	2	A1	το
-100183	πεθαίνω	v	\N	\N	2	A1	\N
-100184	δίαιτα	n	\N	\N	2	A1	η
-100185	διατροφή	n	\N	\N	2	A1	η
-100186	διαφορετικός	adj	\N	\N	2	A1	\N
-100187	δύσκολος	adj	\N	\N	2	A1	\N
-100188	βραδινό	n	\N	\N	2	A1	το
-100189	βρώμικος	adj	\N	\N	2	A1	\N
-100190	πιάτο	n	\N	\N	2	A1	το
-100191	κάνω	v	\N	\N	2	A1	\N
-100192	γιατρός	n	\N	\N	2	A1	ο/η
-100193	σκύλος	n	\N	\N	2	A1	ο
-100194	δολάριο	n	\N	\N	2	A1	το
-100195	πόρτα	n	\N	\N	2	A1	η
-100196	κάτω	adv	\N	\N	2	A1	\N
-100197	κάτω όροφος	adv	\N	\N	2	A1	ο
-3156	heal	v	\N	\N	1	B2	\N
-100198	σχεδιάζω	v	\N	\N	2	A1	\N
-100199	ζωγραφίζω	v	\N	\N	2	A1	\N
-100200	φόρεμα	n	\N	\N	2	A1	το
-100201	πίνω	v	\N	\N	2	A1	\N
-100202	οδηγώ	v	\N	\N	2	A1	\N
-100203	οδηγός	n	\N	\N	2	A1	ο/η
-100204	οδήγηση	n	\N	\N	2	A1	η
-100205	κατά τη διάρκεια	prep	\N	\N	2	A1	\N
-100206	DVD	n	\N	\N	2	A1	το
-100207	κάθε	det	\N	\N	2	A1	\N
-100208	αυτί	n	\N	\N	2	A1	το
-100209	νωρίς	adj	\N	\N	2	A1	\N
-100210	ανατολή	n	\N	\N	2	A1	η
-100211	εύκολος	adj	\N	\N	2	A1	\N
-100212	τρώω	v	\N	\N	2	A1	\N
-100213	αυγό	n	\N	\N	2	A1	το
-100214	οκτώ	num	\N	\N	2	A1	\N
-100215	δεκαοκτώ	num	\N	\N	2	A1	\N
-100216	ογδόντα	num	\N	\N	2	A1	\N
-100217	ελέφαντας	n	\N	\N	2	A1	ο
-100218	έντεκα	num	\N	\N	2	A1	\N
-100219	άλλο	adv	\N	\N	2	A1	\N
-100220	email	n	\N	\N	2	A1	το
-100221	τέλος	n	\N	\N	2	A1	το
-100222	απολαμβάνω	v	\N	\N	2	A1	\N
-100223	αρκετός	det	\N	\N	2	A1	\N
-100224	ευρώ	n	\N	\N	2	A1	το
-100225	ακόμα	adv	\N	\N	2	A1	\N
-100226	βράδυ	n	\N	\N	2	A1	το
-100227	ποτέ	adv	\N	\N	2	A1	\N
-100228	οποιοσδήποτε	adv	\N	\N	2	A1	\N
-100229	όλοι	pron	\N	\N	2	A1	οι
-100230	καθένας	pron	\N	\N	2	A1	ο
-100231	τα πάντα	pron	\N	\N	2	A1	\N
-100232	εξέταση	n	\N	\N	2	A1	η
-100233	παράδειγμα	n	\N	\N	2	A1	το
-100234	ενθουσιασμένος	adj	\N	\N	2	A1	\N
-100235	συναρπαστικός	adj	\N	\N	2	A1	\N
-100236	άσκηση	n	\N	\N	2	A1	η
-100237	ακριβός	adj	\N	\N	2	A1	\N
-100238	εξηγώ	v	\N	\N	2	A1	\N
-100239	επιπλέον	adj	\N	\N	2	A1	\N
-100240	μάτι	n	\N	\N	2	A1	το
-100241	πρόσωπο	n	\N	\N	2	A1	το
-100242	πέφτω	v	\N	\N	2	A1	\N
-100243	λάθος	adj	\N	\N	2	A1	\N
-100244	ψεύτικος	adj	\N	\N	2	A1	\N
-100245	οικογένεια	n	\N	\N	2	A1	η
-100246	διάσημος	adj	\N	\N	2	A1	\N
-100247	υπέροχος	adj	\N	\N	2	A1	\N
-100249	φάρμα	n	\N	\N	2	A1	η
-100250	αγρόκτημα	n	\N	\N	2	A1	το
-100251	αγρότης	n	\N	\N	2	A1	ο
-100252	γρήγορος	adj	\N	\N	2	A1	\N
-100253	παχύς	adj	\N	\N	2	A1	\N
-100254	πατέρας	n	\N	\N	2	A1	ο
-100255	αγαπημένος	adj	\N	\N	2	A1	\N
-100256	Φεβρουάριος	n	\N	\N	2	A1	ο
-100257	νιώθω	v	\N	\N	2	A1	\N
-100258	αισθάνομαι	v	\N	\N	2	A1	\N
-100259	φεστιβάλ	n	\N	\N	2	A1	το
-100260	λίγοι	det	\N	\N	2	A1	\N
-100261	μερικοί	det	\N	\N	2	A1	\N
-100262	δέκατος πέμπτος	num	\N	\N	2	A1	ο
-100263	πέμπτος	num	\N	\N	2	A1	ο
-100264	πενήντα	num	\N	\N	2	A1	\N
-100265	γεμίζω	v	\N	\N	2	A1	\N
-100266	ταινία	n	\N	\N	2	A1	η
-100267	φιλμ	n	\N	\N	2	A1	το
-100268	τελικός	adj	\N	\N	2	A1	\N
-100269	βρίσκω	v	\N	\N	2	A1	\N
-100270	καλά	adj	\N	\N	2	A1	\N
-100271	τελειώνω	v	\N	\N	2	A1	\N
-100272	φωτιά	n	\N	\N	2	A1	η
-100273	πρώτος	num	\N	\N	2	A1	ο
-100274	ψάρι	n	\N	\N	2	A1	το
-100275	πέντε	num	\N	\N	2	A1	\N
-100276	φτιάχνω	v	\N	\N	2	A1	\N
-100277	επισκευάζω	v	\N	\N	2	A1	\N
-100278	διαμέρισμα (flat)	n	\N	\N	2	A1	το
-100279	πτήση	n	\N	\N	2	A1	η
-100280	πάτωμα	n	\N	\N	2	A1	το
-100281	όροφος	n	\N	\N	2	A1	ο
-100282	λουλούδι	n	\N	\N	2	A1	το
-100283	πετάω	v	\N	\N	2	A1	\N
-100284	ακολουθώ	v	\N	\N	2	A1	\N
-100285	φαγητό	n	\N	\N	2	A1	το
-100286	πόδι	n	\N	\N	2	A1	το
-100287	ποδόσφαιρο	n	\N	\N	2	A1	το
-100288	για	prep	\N	\N	2	A1	\N
-100289	ξεχνώ	v	\N	\N	2	A1	\N
-100290	φόρμα	n	\N	\N	2	A1	η
-100291	έντυπο	n	\N	\N	2	A1	το
-100292	σαράντα	num	\N	\N	2	A1	\N
-100293	τέσσερα	num	\N	\N	2	A1	\N
-100294	δεκατέσσερα	num	\N	\N	2	A1	\N
-100295	τέταρτος	num	\N	\N	2	A1	ο
-100296	ελεύθερος	adj	\N	\N	2	A1	\N
-100297	δωρεάν	adj	\N	\N	2	A1	\N
-100298	Παρασκευή	n	\N	\N	2	A1	η
-100299	φίλος	n	\N	\N	2	A1	ο
-100300	φίλη	n	\N	\N	2	A1	η
-100301	φιλικός	adj	\N	\N	2	A1	\N
-100302	από	prep	\N	\N	2	A1	\N
-100303	μπροστινό μέρος	n	\N	\N	2	A1	το
-100304	φρούτο	n	\N	\N	2	A1	το
-100305	γεμάτος	adj	\N	\N	2	A1	\N
-100306	διασκέδαση	n	\N	\N	2	A1	η
-100307	αστείος	adj	\N	\N	2	A1	\N
-100308	μέλλον	n	\N	\N	2	A1	το
-100309	παιχνίδι	n	\N	\N	2	A1	το
-100310	κήπος	n	\N	\N	2	A1	ο
-100311	γεωγραφία	n	\N	\N	2	A1	η
-100312	παίρνω	v	\N	\N	2	A1	\N
-100313	κορίτσι	n	\N	\N	2	A1	το
-100314	κοπέλα	n	\N	\N	2	A1	η
-100315	κοπέλα (σχέση)	n	\N	\N	2	A1	η
-100316	δίνω	v	\N	\N	2	A1	\N
-100317	ποτήρι	n	\N	\N	2	A1	το
-100318	γυαλί	n	\N	\N	2	A1	το
-100319	πηγαίνω	v	\N	\N	2	A1	\N
-100320	καλός	adj	\N	\N	2	A1	\N
-100321	αντίο	interj	\N	\N	2	A1	\N
-100322	παππούς	n	\N	\N	2	A1	ο
-100323	γιαγιά	n	\N	\N	2	A1	η
-100324	παππούδες	n	\N	\N	2	A1	οι
-100325	σπουδαίος	adj	\N	\N	2	A1	\N
-100326	πράσινος	adj	\N	\N	2	A1	\N
-100327	γκρι	adj	\N	\N	2	A1	\N
-100328	ομάδα	n	\N	\N	2	A1	η
-100329	μεγαλώνω	v	\N	\N	2	A1	\N
-100330	μαντεύω	v	\N	\N	2	A1	\N
-100331	κιθάρα	n	\N	\N	2	A1	η
-100332	γυμναστήριο	n	\N	\N	2	A1	το
-100333	μαλλιά	n	\N	\N	2	A1	τα
-100334	μισό	n	\N	\N	2	A1	το
-100335	συμβαίνω	v	\N	\N	2	A1	\N
-100336	χαρούμενος	adj	\N	\N	2	A1	\N
-100337	σκληρός	adj	\N	\N	2	A1	\N
-100338	καπέλο	n	\N	\N	2	A1	το
-100339	μισώ	v	\N	\N	2	A1	\N
-100340	έχω	v	\N	\N	2	A1	\N
-100341	πρέπει	v	\N	\N	2	A1	\N
-100342	αυτός	pron	\N	\N	2	A1	ο
-100343	κεφάλι	n	\N	\N	2	A1	το
-100344	υγεία	n	\N	\N	2	A1	η
-100345	υγιής	adj	\N	\N	2	A1	\N
-100346	ακούω	v	\N	\N	2	A1	\N
-100347	γεια	interj	\N	\N	2	A1	\N
-100348	βοηθώ	v	\N	\N	2	A1	\N
-100349	εδώ	adv	\N	\N	2	A1	\N
-100350	ψηλός	adj	\N	\N	2	A1	\N
-100351	ιστορία	n	\N	\N	2	A1	η
-100352	χόμπι	n	\N	\N	2	A1	το
-100353	διακοπές	n	\N	\N	2	A1	οι
-100354	σπίτι	n	\N	\N	2	A1	το
-100355	εργασία για το σπίτι	n	\N	\N	2	A1	η
-100356	ελπίζω	v	\N	\N	2	A1	\N
-100357	άλογο	n	\N	\N	2	A1	το
-100358	νοσοκομείο	n	\N	\N	2	A1	το
-100359	ζεστός	adj	\N	\N	2	A1	\N
-100360	καυτός	adj	\N	\N	2	A1	\N
-100361	ξενοδοχείο	n	\N	\N	2	A1	το
-100362	ώρα	n	\N	\N	2	A1	η
-100363	πεινασμένος	adj	\N	\N	2	A1	\N
-100364	σύζυγος (άνδρας)	n	\N	\N	2	A1	ο
-100365	πάγος	n	\N	\N	2	A1	ο
-100366	παγωτό	n	\N	\N	2	A1	το
-100367	ιδέα	n	\N	\N	2	A1	η
-100368	αν	conj	\N	\N	2	A1	\N
-100369	σημαντικός	adj	\N	\N	2	A1	\N
-100370	περιλαμβάνω	v	\N	\N	2	A1	\N
-100371	πληροφορία	n	\N	\N	2	A1	η
-100372	πληροφορίες	n	\N	\N	2	A1	οι
-100373	ενδιαφέρον	n	\N	\N	2	A1	το
-100374	ενδιαφερόμενος	adj	\N	\N	2	A1	\N
-100375	ενδιαφέρων	adj	\N	\N	2	A1	\N
-100376	διαδίκτυο	n	\N	\N	2	A1	το
-100377	ίντερνετ	n	\N	\N	2	A1	το
-100378	συνέντευξη	n	\N	\N	2	A1	η
-100379	μέσα σε	prep	\N	\N	2	A1	\N
-100380	παρουσιάζω	v	\N	\N	2	A1	\N
-100381	συστήνω	v	\N	\N	2	A1	\N
-100382	νησί	n	\N	\N	2	A1	το
-100383	τζάκετ	n	\N	\N	2	A1	το
-100384	μπουφάν	n	\N	\N	2	A1	το
-100385	Ιανουάριος	n	\N	\N	2	A1	ο
-100386	τζιν	n	\N	\N	2	A1	το
-100387	δουλειά	n	\N	\N	2	A1	η
-100388	επάγγελμα	n	\N	\N	2	A1	το
-100389	συμμετέχω	v	\N	\N	2	A1	\N
-100390	ταξίδι	n	\N	\N	2	A1	το
-100391	διαδρομή	n	\N	\N	2	A1	η
-100392	χυμός	n	\N	\N	2	A1	ο
-100393	κρατάω	v	\N	\N	2	A1	\N
-100394	διατηρώ	v	\N	\N	2	A1	\N
-100395	κλειδί	n	\N	\N	2	A1	το
-100396	χιλιόμετρο	n	\N	\N	2	A1	το
-100397	είδος	n	\N	\N	2	A1	το
-100398	κουζίνα	n	\N	\N	2	A1	η
-100399	ξέρω	v	\N	\N	2	A1	\N
-100400	γνωρίζω	v	\N	\N	2	A1	\N
-100401	ξηρά	n	\N	\N	2	A1	η
-100402	γη	n	\N	\N	2	A1	η
-100403	γλώσσα	n	\N	\N	2	A1	η
-100404	τεράστιος	adj	\N	\N	2	A1	\N
-100405	τελευταίος	adj	\N	\N	2	A1	\N
-100406	αργά	adj	\N	\N	2	A1	\N
-100407	αργότερα	adv	\N	\N	2	A1	\N
-100408	αριστερός	adj	\N	\N	2	A1	\N
-100409	αριστερά	adv	\N	\N	2	A1	\N
-100410	πόδι (κάτω μέρος)	n	\N	\N	2	A1	το
-100411	μάθημα (ενότητα)	n	\N	\N	2	A1	το
-100412	αφήνω	v	\N	\N	2	A1	\N
-100413	επιτρέπω	v	\N	\N	2	A1	\N
-100414	γράμμα	n	\N	\N	2	A1	το
-100415	επιστολή	n	\N	\N	2	A1	η
-100416	βιβλιοθήκη	n	\N	\N	2	A1	η
-100417	λέω ψέματα	v	\N	\N	2	A1	\N
-100418	κείτομαι	v	\N	\N	2	A1	\N
-100419	ζωή	n	\N	\N	2	A1	η
-100420	φως	n	\N	\N	2	A1	το
-100421	γραμμή	n	\N	\N	2	A1	η
-100422	λιοντάρι	n	\N	\N	2	A1	το
-100423	λίστα	n	\N	\N	2	A1	η
-100424	κατάλογος	n	\N	\N	2	A1	ο
-100425	ακούω (προσέχω)	v	\N	\N	2	A1	\N
-100426	μικρός	adj	\N	\N	2	A1	\N
-100427	λίγος	adj	\N	\N	2	A1	\N
-100428	μένω (κατοικώ)	v	\N	\N	2	A1	\N
-100429	μακρύς	adj	\N	\N	2	A1	\N
-100430	κοιτάζω	v	\N	\N	2	A1	\N
-100431	χάνω	v	\N	\N	2	A1	\N
-100432	πολύ	n	\N	\N	2	A1	το
-100433	αγαπώ	v	\N	\N	2	A1	\N
-100434	μεσημεριανό	n	\N	\N	2	A1	το
-100435	μηχανή	n	\N	\N	2	A1	η
-100436	μηχάνημα	n	\N	\N	2	A1	το
-100437	περιοδικό	n	\N	\N	2	A1	το
-100438	κύριος	adj	\N	\N	2	A1	\N
-100439	βασικός	adj	\N	\N	2	A1	\N
-100440	φτιάχνω (δημιουργώ)	v	\N	\N	2	A1	\N
-100441	άνδρας	n	\N	\N	2	A1	ο
-100442	άντρας	n	\N	\N	2	A1	ο
-100443	πολλοί	det	\N	\N	2	A1	\N
-100444	χάρτης	n	\N	\N	2	A1	ο
-100445	Μάρτιος	n	\N	\N	2	A1	ο
-100446	αγορά	n	\N	\N	2	A1	η
-100447	παντρεμένος	adj	\N	\N	2	A1	\N
-100448	αγώνας	n	\N	\N	2	A1	ο
-100449	ταίριασμα	n	\N	\N	2	A1	το
-100450	Μάιος	n	\N	\N	2	A1	ο
-100451	ίσως	adv	\N	\N	2	A1	\N
-100452	γεύμα	n	\N	\N	2	A1	το
-100453	σημαίνω	v	\N	\N	2	A1	\N
-100454	σημασία	n	\N	\N	2	A1	η
-100455	έννοια	n	\N	\N	2	A1	η
-100456	κρέας	n	\N	\N	2	A1	το
-100457	συναντώ	v	\N	\N	2	A1	\N
-100458	συνάντηση	n	\N	\N	2	A1	η
-100459	μέλος	n	\N	\N	2	A1	το
-100460	μενού	n	\N	\N	2	A1	το
-100461	κατάλογος (μενού)	n	\N	\N	2	A1	ο
-100462	μήνυμα	n	\N	\N	2	A1	το
-100463	μέτρο	n	\N	\N	2	A1	το
-100464	μεσάνυχτα	n	\N	\N	2	A1	τα
-100465	μίλι	n	\N	\N	2	A1	το
-100466	γάλα	n	\N	\N	2	A1	το
-100467	εκατομμύριο	num	\N	\N	2	A1	το
-100468	λεπτό (ώρας)	n	\N	\N	2	A1	το
-100469	χάνω (κάτι/κάποιον)	v	\N	\N	2	A1	\N
-100470	μου λείπει	v	\N	\N	2	A1	\N
-100471	λάθος (σφάλμα)	n	\N	\N	2	A1	το
-100472	μοντέλο	n	\N	\N	2	A1	το
-100473	μοντέρνος	adj	\N	\N	2	A1	\N
-100474	σύγχρονος	adj	\N	\N	2	A1	\N
-100475	στιγμή	n	\N	\N	2	A1	η
-100476	Δευτέρα	n	\N	\N	2	A1	η
-100477	χρήματα	n	\N	\N	2	A1	τα
-100478	λεφτά	n	\N	\N	2	A1	τα
-100479	μήνας	n	\N	\N	2	A1	ο
-100480	περισσότερο	det	\N	\N	2	A1	\N
-100481	πρωί	n	\N	\N	2	A1	το
-100482	περισσότερο (συγκριτικός)	det	\N	\N	2	A1	\N
-100483	μητέρα	n	\N	\N	2	A1	η
-100484	μαμά	n	\N	\N	2	A1	η
-100485	βουνό	n	\N	\N	2	A1	το
-100486	ποντίκι	n	\N	\N	2	A1	το
-100487	στόμα	n	\N	\N	2	A1	το
-100488	κουνάω	v	\N	\N	2	A1	\N
-100489	μετακομίζω	v	\N	\N	2	A1	\N
-100490	ταινία (movie)	n	\N	\N	2	A1	η
-100491	πολύ (ποσότητα)	det	\N	\N	2	A1	\N
-100492	μουσείο	n	\N	\N	2	A1	το
-100493	μουσική	n	\N	\N	2	A1	η
-100494	πρέπει (must)	v	\N	\N	2	A1	\N
-100495	όνομα	n	\N	\N	2	A1	το
-100496	κοντά	prep	\N	\N	2	A1	\N
-100497	χρειάζομαι	v	\N	\N	2	A1	\N
-100498	γείτονας	n	\N	\N	2	A1	ο
-100499	νέος	adj	\N	\N	2	A1	\N
-100500	καινούργιος	adj	\N	\N	2	A1	\N
-100501	νέα (news)	n	\N	\N	2	A1	τα
-100502	ειδήσεις	n	\N	\N	2	A1	οι
-100503	εφημερίδα	n	\N	\N	2	A1	η
-100504	επόμενος	adj	\N	\N	2	A1	\N
-100505	δίπλα σε	prep	\N	\N	2	A1	\N
-100506	ωραίος	adj	\N	\N	2	A1	\N
-100507	ευχάριστος	adj	\N	\N	2	A1	\N
-100508	νύχτα	n	\N	\N	2	A1	η
-100509	εννέα	num	\N	\N	2	A1	\N
-100510	δεκαεννέα	num	\N	\N	2	A1	\N
-100511	ενενήντα	num	\N	\N	2	A1	\N
-100512	όχι	det	\N	\N	2	A1	\N
-100513	κανείς (no one)	pron	\N	\N	2	A1	\N
-100514	βορράς	n	\N	\N	2	A1	ο
-100515	μύτη	n	\N	\N	2	A1	η
-100516	σημείωση	n	\N	\N	2	A1	η
-100517	Νοέμβριος	n	\N	\N	2	A1	ο
-100518	τώρα	adv	\N	\N	2	A1	\N
-100519	αριθμός	n	\N	\N	2	A1	ο
-100520	Οκτώβριος	n	\N	\N	2	A1	ο
-100521	του	prep	\N	\N	2	A1	\N
-100522	της	prep	\N	\N	2	A1	\N
-100523	κλειστός	adv	\N	\N	2	A1	\N
-100524	γραφείο (χώρος)	n	\N	\N	2	A1	το
-100525	συχνά	adv	\N	\N	2	A1	\N
-100526	ω!	interj	\N	\N	2	A1	\N
-100527	παλιός	adj	\N	\N	2	A1	\N
-100528	πάνω σε	prep	\N	\N	2	A1	\N
-100529	μία φορά	adv	\N	\N	2	A1	\N
-100530	ένας	num	\N	\N	2	A1	\N
-100531	κρεμμύδι	n	\N	\N	2	A1	το
-100532	διαδικτυακός	adj	\N	\N	2	A1	\N
-100533	μόνο	adv	\N	\N	2	A1	\N
-100534	ανοίγω	v	\N	\N	2	A1	\N
-100535	απέναντι	adj	\N	\N	2	A1	\N
-100536	ή	conj	\N	\N	2	A1	\N
-100537	πορτοκάλι	n	\N	\N	2	A1	το
-100538	παραγγέλνω	v	\N	\N	2	A1	\N
-100539	άλλος	adj	\N	\N	2	A1	\N
-100540	έξω	adv	\N	\N	2	A1	\N
-100541	έξω (υπαίθρια)	adv	\N	\N	2	A1	\N
-100542	πάνω από (λήξη)	prep	\N	\N	2	A1	\N
-100543	κατέχω	v	\N	\N	2	A1	\N
-100544	σελίδα	n	\N	\N	2	A1	η
-100545	βάφω	v	\N	\N	2	A1	\N
-100546	ζωγραφίζω (με χρώμα)	v	\N	\N	2	A1	\N
-100547	πίνακας ζωγραφικής	n	\N	\N	2	A1	ο
-100548	ζευγάρι	n	\N	\N	2	A1	το
-100549	χαρτί	n	\N	\N	2	A1	το
-100550	παράγραφος	n	\N	\N	2	A1	η
-100551	γονέας	n	\N	\N	2	A1	ο
-100552	πάρκο	n	\N	\N	2	A1	το
-100553	μέρος (τμήμα)	n	\N	\N	2	A1	το
-100554	σύντροφος	n	\N	\N	2	A1	ο/η
-100555	πάρτι	n	\N	\N	2	A1	το
-100556	διαβατήριο	n	\N	\N	2	A1	το
-100557	περασμένος	adj	\N	\N	2	A1	\N
-100558	πληρώνω	v	\N	\N	2	A1	\N
-100559	στυλό	n	\N	\N	2	A1	το
-100560	μολύβι	n	\N	\N	2	A1	το
-100561	άνθρωποι	n	\N	\N	2	A1	οι
-100562	κόκκινο πιπέρι	n	\N	\N	2	A1	το
-100563	τέλειος	adj	\N	\N	2	A1	\N
-100564	περίοδος	n	\N	\N	2	A1	η
-100565	άνθρωπος	n	\N	\N	2	A1	ο
-100566	προσωπικός	adj	\N	\N	2	A1	\N
-100567	τηλέφωνο	n	\N	\N	2	A1	το
-100568	φωτογραφία	n	\N	\N	2	A1	η
-100569	φράση	n	\N	\N	2	A1	η
-100570	πιάνο	n	\N	\N	2	A1	το
-100571	εικόνα	n	\N	\N	2	A1	η
-100572	κομμάτι	n	\N	\N	2	A1	το
-100573	γουρούνι	n	\N	\N	2	A1	το
-100574	ροζ	adj	\N	\N	2	A1	\N
-100575	μέρος (τοποθεσία)	n	\N	\N	2	A1	το
-100576	σχέδιο	n	\N	\N	2	A1	το
-100577	αεροπλάνο	n	\N	\N	2	A1	το
-100578	φυτό	n	\N	\N	2	A1	το
-100579	παίζω	v	\N	\N	2	A1	\N
-100580	παίκτης	n	\N	\N	2	A1	ο
-100581	παρακαλώ	interj	\N	\N	2	A1	\N
-100582	σημείο	n	\N	\N	2	A1	το
-100583	βαθμός	n	\N	\N	2	A1	ο
-100584	αστυνομία	n	\N	\N	2	A1	η
-100585	αστυνομικός	n	\N	\N	2	A1	ο
-100586	πισίνα	n	\N	\N	2	A1	η
-100587	φτωχός	adj	\N	\N	2	A1	\N
-100588	ποπ (μουσική)	n	\N	\N	2	A1	η
-100589	δημοφιλής	adj	\N	\N	2	A1	\N
-100590	πιθανός	adj	\N	\N	2	A1	\N
-100591	δημοσίευση	n	\N	\N	2	A1	η
-100592	πατάτα	n	\N	\N	2	A1	η
-100593	λίρα	n	\N	\N	2	A1	η
-100594	εξάσκηση	n	\N	\N	2	A1	η
-100595	εξασκούμαι	v	\N	\N	2	A1	\N
-100596	δώρο	n	\N	\N	2	A1	το
-100597	όμορφος (για κοπέλα/πράγμα)	adj	\N	\N	2	A1	\N
-100598	τιμή	n	\N	\N	2	A1	η
-100599	πρόβλημα	n	\N	\N	2	A1	το
-100600	πρόγραμμα	n	\N	\N	2	A1	το
-100601	έργο	n	\N	\N	2	A1	το
-100602	μωβ	adj	\N	\N	2	A1	\N
-100603	βάζω	v	\N	\N	2	A1	\N
-100604	φίδι	n	\N	\N	2	A1	το
-100605	χιόνι	n	\N	\N	2	A1	το
-100606	λοιπόν	conj	\N	\N	2	A1	\N
-100607	κάποιος	pron	\N	\N	2	A1	ο
-100608	κάποια	pron	\N	\N	2	A1	η
-100609	κάποιο	pron	\N	\N	2	A1	το
-100610	κάτι	pron	\N	\N	2	A1	το
-100611	μερικές φορές	adv	\N	\N	2	A1	\N
-100612	γιος	n	\N	\N	2	A1	ο
-100613	τραγούδι	n	\N	\N	2	A1	το
-100614	σύντομα	adv	\N	\N	2	A1	\N
-100615	συγγνώμη	adj	\N	\N	2	A1	\N
-100616	ήχος	n	\N	\N	2	A1	ο
-100617	σούπα	n	\N	\N	2	A1	η
-100618	νότος	n	\N	\N	2	A1	ο
-100619	διάστημα	n	\N	\N	2	A1	το
-100620	χώρος	n	\N	\N	2	A1	ο
-100621	μιλάω	v	\N	\N	2	A1	\N
-100622	ειδικός	adj	\N	\N	2	A1	\N
-100623	συλλαβίζω	v	\N	\N	2	A1	\N
-100624	ορθογραφία	n	\N	\N	2	A1	η
-100625	ξοδεύω	v	\N	\N	2	A1	\N
-100626	άθλημα	n	\N	\N	2	A1	το
-100627	άνοιξη	n	\N	\N	2	A1	η
-100628	στέκομαι	v	\N	\N	2	A1	\N
-100629	αρχίζω (start)	v	\N	\N	2	A1	\N
-100630	σταθμός	n	\N	\N	2	A1	ο
-100631	σταματάω	v	\N	\N	2	A1	\N
-100632	ιστορία (story)	n	\N	\N	2	A1	η
-100633	δρόμος	n	\N	\N	2	A1	ο
-100634	δυνατός	adj	\N	\N	2	A1	\N
-100635	μαθητής	n	\N	\N	2	A1	ο
-100636	φοιτητής	n	\N	\N	2	A1	ο
-100637	μελετώ	v	\N	\N	2	A1	\N
-100638	στυλ	n	\N	\N	2	A1	το
-100639	θέμα	n	\N	\N	2	A1	το
-100640	ζάχαρη	n	\N	\N	2	A1	η
-100641	καλοκαίρι	n	\N	\N	2	A1	το
-100642	ήλιος	n	\N	\N	2	A1	ο
-100643	Κυριακή	n	\N	\N	2	A1	η
-100644	σουπερμάρκετ	n	\N	\N	2	A1	το
-100645	σίγουρος	adj	\N	\N	2	A1	\N
-100646	πουλόβερ	n	\N	\N	2	A1	το
-100647	κολυμπάω	v	\N	\N	2	A1	\N
-100648	κολύμβηση	n	\N	\N	2	A1	η
-100649	τραπέζι	n	\N	\N	2	A1	το
-100650	παίρνω (take)	v	\N	\N	2	A1	\N
-100651	κουβεντιάζω	v	\N	\N	2	A1	\N
-100652	ταξί	n	\N	\N	2	A1	το
-100653	τσάι	n	\N	\N	2	A1	το
-100654	διδάσκω	v	\N	\N	2	A1	\N
-100655	δάσκαλος	n	\N	\N	2	A1	ο
-100656	δασκάλα	n	\N	\N	2	A1	η
-100657	ομάδα (team)	n	\N	\N	2	A1	η
-100658	έφηβος	n	\N	\N	2	A1	ο
-100659	τηλεφωνώ (v)	v	\N	\N	2	A1	\N
-100660	τηλεόραση	n	\N	\N	2	A1	η
-100661	λέω	v	\N	\N	2	A1	\N
-100662	δέκα	num	\N	\N	2	A1	\N
-100663	τένις	n	\N	\N	2	A1	το
-100664	τρομερός	adj	\N	\N	2	A1	\N
-100665	απαίσιος	adj	\N	\N	2	A1	\N
-100666	τεστ	n	\N	\N	2	A1	το
-100667	κείμενο	n	\N	\N	2	A1	το
-100668	από (than)	conj	\N	\N	2	A1	\N
-100669	ευχαριστώ	v	\N	\N	2	A1	\N
-100670	ευχαριστίες	interj	\N	\N	2	A1	οι
-100671	εκείνο	det	\N	\N	2	A1	το
-100672	θέατρο	n	\N	\N	2	A1	το
-100673	τους (their)	det	\N	\N	2	A1	\N
-100674	αυτούς	pron	\N	\N	2	A1	\N
-100675	τότε	adv	\N	\N	2	A1	\N
-100676	εκεί	adv	\N	\N	2	A1	\N
-100677	αυτοί	pron	\N	\N	2	A1	\N
-100678	πράγμα	n	\N	\N	2	A1	το
-100679	νομίζω	v	\N	\N	2	A1	\N
-100680	σκέφτομαι	v	\N	\N	2	A1	\N
-100681	τρίτος	num	\N	\N	2	A1	ο
-100682	διψασμένος	adj	\N	\N	2	A1	\N
-100683	δεκατρία	num	\N	\N	2	A1	\N
-100684	τριάντα	num	\N	\N	2	A1	\N
-100685	αυτό (this)	det	\N	\N	2	A1	το
-100686	χίλια	num	\N	\N	2	A1	\N
-100687	τρία	num	\N	\N	2	A1	\N
-100688	μέσα από	prep	\N	\N	2	A1	\N
-100689	Πέμπτη	n	\N	\N	2	A1	η
-100690	εισιτήριο	n	\N	\N	2	A1	το
-100691	κουρασμένος	adj	\N	\N	2	A1	\N
-100692	τίτλος	n	\N	\N	2	A1	ο
-100693	σε / προς	prep	\N	\N	2	A1	\N
-100694	σήμερα	adv	\N	\N	2	A1	\N
-100695	μαζί	adv	\N	\N	2	A1	\N
-100696	τουαλέτα	n	\N	\N	2	A1	η
-100697	ντομάτα	n	\N	\N	2	A1	η
-100698	αύριο	adv	\N	\N	2	A1	\N
-100699	απόψε	adv	\N	\N	2	A1	\N
-100700	επίσης (too)	adv	\N	\N	2	A1	\N
-100701	πολύ (too)	adv	\N	\N	2	A1	\N
-100702	κορυφή	n	\N	\N	2	A1	η
-100703	δόντι	n	\N	\N	2	A1	το
-100704	τουρίστας	n	\N	\N	2	A1	ο
-100705	πόλη (town)	n	\N	\N	2	A1	η
-100706	τρένο	n	\N	\N	2	A1	το
-100707	ταξιδεύω	v	\N	\N	2	A1	\N
-100708	δέντρο	n	\N	\N	2	A1	το
-100709	εκδρομή	n	\N	\N	2	A1	η
-100710	παντελόνι	n	\N	\N	2	A1	το
-100711	αληθινός	adj	\N	\N	2	A1	\N
-100712	προσπαθώ	v	\N	\N	2	A1	\N
-100713	δοκιμάζω	v	\N	\N	2	A1	\N
-100714	μπλουζάκι	n	\N	\N	2	A1	το
-100715	Τρίτη	n	\N	\N	2	A1	η
-100716	στρίβω	v	\N	\N	2	A1	\N
-100717	γυρίζω	v	\N	\N	2	A1	\N
-100718	δώδεκα	num	\N	\N	2	A1	\N
-100719	είκοσι	num	\N	\N	2	A1	\N
-100720	δύο φορές	adv	\N	\N	2	A1	\N
-100721	δύο	num	\N	\N	2	A1	\N
-100722	τύπος	n	\N	\N	2	A1	ο
-100723	ομπρέλα	n	\N	\N	2	A1	η
-100724	θείος	n	\N	\N	2	A1	ο
-100725	κάτω από (under)	prep	\N	\N	2	A1	\N
-100726	καταλαβαίνω	v	\N	\N	2	A1	\N
-100727	πανεπιστήμιο	n	\N	\N	2	A1	το
-100728	μέχρι	conj	\N	\N	2	A1	\N
-100729	πάνω (up)	adv	\N	\N	2	A1	\N
-100730	επάνω όροφος	adv	\N	\N	2	A1	ο
-100731	εμάς	pron	\N	\N	2	A1	\N
-100732	χρησιμοποιώ	v	\N	\N	2	A1	\N
-100733	συνήθως	adv	\N	\N	2	A1	\N
-100734	διακοπές (vacation)	n	\N	\N	2	A1	οι
-100735	λαχανικό	n	\N	\N	2	A1	το
-100736	πολύ (very)	adv	\N	\N	2	A1	\N
-100737	βίντεο	n	\N	\N	2	A1	το
-100738	χωριό	n	\N	\N	2	A1	το
-100739	επισκέπτομαι	v	\N	\N	2	A1	\N
-100740	επισκέπτης	n	\N	\N	2	A1	ο
-100741	περιμένω	v	\N	\N	2	A1	\N
-100742	σερβιτόρος	n	\N	\N	2	A1	ο
-100743	ξυπνάω	v	\N	\N	2	A1	\N
-100744	περπατάω	v	\N	\N	2	A1	\N
-100745	τοίχος	n	\N	\N	2	A1	ο
-100746	θέλω	v	\N	\N	2	A1	\N
-100747	ζεστός (warm)	adj	\N	\N	2	A1	\N
-100748	πλένω	v	\N	\N	2	A1	\N
-100749	παρακολουθώ	v	\N	\N	2	A1	\N
-100750	νερό	n	\N	\N	2	A1	το
-100751	τρόπος	n	\N	\N	2	A1	ο
-100752	Τετάρτη	n	\N	\N	2	A1	η
-100753	εβδομάδα	n	\N	\N	2	A1	η
-100754	σαββατοκύριακο	n	\N	\N	2	A1	το
-100755	καλώς ορίσατε	interj	\N	\N	2	A1	\N
-100756	καλά (well)	adv	\N	\N	2	A1	\N
-100757	δύση	n	\N	\N	2	A1	η
-100758	τι	pron	\N	\N	2	A1	\N
-100759	πότε	adv	\N	\N	2	A1	\N
-100760	πού	adv	\N	\N	2	A1	\N
-100761	ποιο	pron	\N	\N	2	A1	το
-100762	λευκό	adj	\N	\N	2	A1	\N
-100763	άσπρο	adj	\N	\N	2	A1	\N
-100764	ποιος	pron	\N	\N	2	A1	ο
-100765	γιατί	adv	\N	\N	2	A1	\N
-100766	σύζυγος (γυναίκα)	n	\N	\N	2	A1	η
-100767	θα	v	\N	\N	2	A1	\N
-100768	κερδίζω	v	\N	\N	2	A1	\N
-100769	παράθυρο	n	\N	\N	2	A1	το
-100770	κρασί	n	\N	\N	2	A1	το
-100771	χειμώνας	n	\N	\N	2	A1	ο
-100772	με	prep	\N	\N	2	A1	\N
-100773	χωρίς	prep	\N	\N	2	A1	\N
-100774	γυναίκα	n	\N	\N	2	A1	η
-100775	υπέροχος (wonderful)	adj	\N	\N	2	A1	\N
-100776	λέξη	n	\N	\N	2	A1	η
-100777	εργασία	n	\N	\N	2	A1	η
-100778	δουλεύω	v	\N	\N	2	A1	\N
-100779	εργάτης	n	\N	\N	2	A1	ο
-100780	κόσμος	n	\N	\N	2	A1	ο
-100781	θα (would)	v	\N	\N	2	A1	\N
-100782	γράφω	v	\N	\N	2	A1	\N
-100783	συγγραφέας	n	\N	\N	2	A1	ο/η
-100784	γράψιμο	n	\N	\N	2	A1	το
-100785	λάθος (wrong)	adj	\N	\N	2	A1	\N
-100786	ναι (yeah)	interj	\N	\N	2	A1	\N
-100787	χρόνος (year)	n	\N	\N	2	A1	ο
-100788	έτος	n	\N	\N	2	A1	το
-100789	κίτρινο	adj	\N	\N	2	A1	\N
-100790	ναι (yes)	interj	\N	\N	2	A1	\N
-100791	χθες	adv	\N	\N	2	A1	\N
-100792	εσύ	pron	\N	\N	2	A1	\N
-100793	νέος (young)	adj	\N	\N	2	A1	\N
-100794	σου	det	\N	\N	2	A1	\N
-100795	τον εαυτό σου	pron	\N	\N	2	A1	\N
-3811	trace	n	\N	\N	1	B2	\N
-100796	εγώ	pron	\N	\N	2	A1	\N
-100797	εσείς	pron	\N	\N	2	A1	\N
-100798	αυτή	pron	\N	\N	2	A1	η
-100799	αυτό (pron)	pron	\N	\N	2	A1	το
-100800	εμείς	pron	\N	\N	2	A1	\N
-100801	εμένα	pron	\N	\N	2	A1	\N
-100802	αυτόν	pron	\N	\N	2	A1	\N
-100803	αυτήν	pron	\N	\N	2	A1	\N
-100804	εμάς (us)	pron	\N	\N	2	A1	\N
-100805	αυτούς (them)	pron	\N	\N	2	A1	\N
-100806	δικός μου	det	\N	\N	2	A1	\N
-100807	δικός σου	det	\N	\N	2	A1	\N
-100808	δικός του	det	\N	\N	2	A1	\N
-100809	δικό του	det	\N	\N	2	A1	\N
-100810	δικός μας	det	\N	\N	2	A1	\N
-100811	δικός τους	det	\N	\N	2	A1	\N
-100812	δικό μου (mine)	pron	\N	\N	2	A1	\N
-100813	δικό σου (yours)	pron	\N	\N	2	A1	\N
-100814	δικό της (hers)	pron	\N	\N	2	A1	\N
-100815	δικό μας (ours)	pron	\N	\N	2	A1	\N
-100816	δικό τους (theirs)	pron	\N	\N	2	A1	\N
-100817	είμαι (am)	v	\N	\N	2	A1	\N
-100818	είναι (is)	v	\N	\N	2	A1	\N
-100819	είναι (are)	v	\N	\N	2	A1	\N
-100820	ήμουν	v	\N	\N	2	A1	\N
-100821	ήταν	v	\N	\N	2	A1	\N
-100822	έχω (have)	v	\N	\N	2	A1	\N
-100823	έχει	v	\N	\N	2	A1	\N
-100824	είχα	v	\N	\N	2	A1	\N
-100825	θα (shall)	v	\N	\N	2	A1	\N
-100826	μπορεί (may)	v	\N	\N	2	A1	\N
-100827	μπορεί να (might)	v	\N	\N	2	A1	\N
-100828	δεν μπορούσα	v	\N	\N	2	A1	\N
-100829	δεν θα	v	\N	\N	2	A1	\N
-100830	δεν θα έπρεπε	v	\N	\N	2	A1	\N
-100831	δεν θα ήθελα	v	\N	\N	2	A1	\N
-100832	δεν είναι (isn't)	v	\N	\N	2	A1	\N
-100833	δεν είναι (aren't)	v	\N	\N	2	A1	\N
-100834	δεν ήταν (wasn't)	v	\N	\N	2	A1	\N
-100835	δεν ήταν (weren't)	v	\N	\N	2	A1	\N
-100836	δεν έχω (haven't)	v	\N	\N	2	A1	\N
-100837	δεν έχει (hasn't)	v	\N	\N	2	A1	\N
-100838	δεν είχα (hadn't)	v	\N	\N	2	A1	\N
-100839	δίπλα	prep	\N	\N	2	A1	\N
-100840	πάνω σε (onto)	prep	\N	\N	2	A1	\N
-100841	ενώ	conj	\N	\N	2	A1	\N
-100842	μόλις	adv	\N	\N	2	A1	\N
-100843	ικανότητα	n	\N	\N	2	A2	η
-100844	ικανός	adj	\N	\N	2	A2	\N
-100845	στο εξωτερικό	adv	\N	\N	2	A2	\N
-100846	αποδέχομαι	v	\N	\N	2	A2	\N
-100847	ατύχημα	n	\N	\N	2	A2	το
-100848	κατορθώνω	v	\N	\N	2	A2	\N
-100849	επιτυγχάνω	v	\N	\N	2	A2	\N
-100850	δρω	v	\N	\N	2	A2	\N
-100851	ενεργός	adj	\N	\N	2	A2	\N
-100852	δραστήριος	adj	\N	\N	2	A2	\N
-100853	στην πραγματικότητα	adv	\N	\N	2	A2	\N
-100854	πλεονέκτημα	n	\N	\N	2	A2	το
-100855	περιπέτεια	n	\N	\N	2	A2	η
-100856	διαφημίζω	v	\N	\N	2	A2	\N
-100857	διαφήμιση	n	\N	\N	2	A2	η
-100858	συμβουλή	n	\N	\N	2	A2	η
-100859	επηρεάζω	v	\N	\N	2	A2	\N
-100860	εναντίον	prep	\N	\N	2	A2	\N
-100861	συμφωνώ	v	\N	\N	2	A2	\N
-100862	α!	interj	\N	\N	2	A2	\N
-100863	αεροπορική εταιρεία	n	\N	\N	2	A2	η
-100864	ζωντανός	adj	\N	\N	2	A2	\N
-100865	επιτρέπω	v	\N	\N	2	A2	\N
-100866	σχεδόν	adv	\N	\N	2	A2	\N
-100867	μόνος	adj	\N	\N	2	A2	\N
-100868	κατά μήκος	prep	\N	\N	2	A2	\N
-100869	ήδη	adv	\N	\N	2	A2	\N
-100870	αν και	conj	\N	\N	2	A2	\N
-100871	μεταξύ	prep	\N	\N	2	A2	\N
-100872	ποσότητα	n	\N	\N	2	A2	η
-100873	ποσό	n	\N	\N	2	A2	το
-100874	αρχαίος	adj	\N	\N	2	A2	\N
-100875	αστράγαλος	n	\N	\N	2	A2	ο
-100876	οποιοσδήποτε	pron	\N	\N	2	A2	\N
-100877	πια	adv	\N	\N	2	A2	\N
-100878	έτσι κι αλλιώς	adv	\N	\N	2	A2	\N
-100879	οπουδήποτε	adv	\N	\N	2	A2	\N
-100880	εφαρμογή	n	\N	\N	2	A2	η
-100881	εμφανίζομαι	v	\N	\N	2	A2	\N
-100882	εμφάνιση	n	\N	\N	2	A2	η
-100883	κάνω αίτηση	v	\N	\N	2	A2	\N
-100884	αρχιτέκτονας	n	\N	\N	2	A2	ο/η
-100885	αρχιτεκτονική	n	\N	\N	2	A2	η
-100886	λογομαχώ	v	\N	\N	2	A2	\N
-100887	επιχείρημα	n	\N	\N	2	A2	το
-100888	στρατός	n	\N	\N	2	A2	ο
-100889	κανονίζω	v	\N	\N	2	A2	\N
-100890	διευθέτηση	n	\N	\N	2	A2	η
-100891	κοιμισμένος	adj	\N	\N	2	A2	\N
-100892	βοηθός	n	\N	\N	2	A2	ο/η
-100893	αθλητής	n	\N	\N	2	A2	ο
-100894	αθλήτρια	n	\N	\N	2	A2	η
-100895	επίθεση	n	\N	\N	2	A2	η
-100896	επιτίθεμαι	v	\N	\N	2	A2	\N
-100897	παρευρίσκομαι	v	\N	\N	2	A2	\N
-100898	προσοχή	n	\N	\N	2	A2	η
-100899	ελκυστικός	adj	\N	\N	2	A2	\N
-100900	κοινό	n	\N	\N	2	A2	το
-100901	ακροατήριο	n	\N	\N	2	A2	το
-100902	συγγραφέας (author)	n	\N	\N	2	A2	ο/η
-100903	διαθέσιμος	adj	\N	\N	2	A2	\N
-100904	μέσος όρος	n	\N	\N	2	A2	ο
-100905	μέσος	adj	\N	\N	2	A2	\N
-100906	αποφεύγω	v	\N	\N	2	A2	\N
-100907	βραβείο	n	\N	\N	2	A2	το
-100908	φόντο	n	\N	\N	2	A2	το
-100909	υπόβαθρο	n	\N	\N	2	A2	το
-100910	άσχημα	adv	\N	\N	2	A2	\N
-100911	μπέιζμπολ	n	\N	\N	2	A2	το
-100912	μπάσκετ	n	\N	\N	2	A2	το
-100913	μπάσο	n	\N	\N	2	A2	το
-100914	φασόλι	n	\N	\N	2	A2	το
-100915	αρκούδα	n	\N	\N	2	A2	η
-100916	νικώ	v	\N	\N	2	A2	\N
-100917	χτυπώ (beat)	v	\N	\N	2	A2	\N
-100918	βοδινό κρέας	n	\N	\N	2	A2	το
-100919	συμπεριφέρομαι	v	\N	\N	2	A2	\N
-100920	ανήκω	v	\N	\N	2	A2	\N
-100921	ζώνη	n	\N	\N	2	A2	η
-100922	όφελος	n	\N	\N	2	A2	το
-100923	ευεργέτημα	n	\N	\N	2	A2	το
-100924	δισεκατομμύριο	num	\N	\N	2	A2	το
-100925	κάδος	n	\N	\N	2	A2	ο
-100926	βιολογία	n	\N	\N	2	A2	η
-100927	γέννηση	n	\N	\N	2	A2	η
-100928	μπισκότο	n	\N	\N	2	A2	το
-100929	κομμάτι (bit)	n	\N	\N	2	A2	το
-100930	κενός	adj	\N	\N	2	A2	\N
-100931	αίμα	n	\N	\N	2	A2	το
-100932	φυσώ	v	\N	\N	2	A2	\N
-100933	σανίδα	n	\N	\N	2	A2	η
-100934	συμβούλιο	n	\N	\N	2	A2	το
-100935	βράζω	v	\N	\N	2	A2	\N
-100936	κόκκαλο	n	\N	\N	2	A2	το
-100937	κλείνω (book)	v	\N	\N	2	A2	\N
-100938	δανείζομαι	v	\N	\N	2	A2	\N
-100939	αφεντικό	n	\N	\N	2	A2	το
-100940	πάτος	n	\N	\N	2	A2	ο
-100941	κάτω μέρος	n	\N	\N	2	A2	το
-100942	μπολ	n	\N	\N	2	A2	το
-100943	εγκέφαλος	n	\N	\N	2	A2	ο
-100944	γέφυρα	n	\N	\N	2	A2	η
-100945	φωτεινός	adj	\N	\N	2	A2	\N
-100946	λαμπρός	adj	\N	\N	2	A2	\N
-100947	εξαιρετικός	adj	\N	\N	2	A2	\N
-100948	σπασμένος	adj	\N	\N	2	A2	\N
-100949	βούρτσα	n	\N	\N	2	A2	η
-100950	βουρτσίζω	v	\N	\N	2	A2	\N
-100951	κολλητός	n	\N	\N	2	A2	ο
-100952	καίω	v	\N	\N	2	A2	\N
-100953	επιχειρηματίας	n	\N	\N	2	A2	ο
-100954	κουμπί	n	\N	\N	2	A2	το
-100955	κατασκήνωση	n	\N	\N	2	A2	η
-100956	κατασκηνώνω	v	\N	\N	2	A2	\N
-100957	φροντίδα	n	\N	\N	2	A2	η
-100958	φροντίζω	v	\N	\N	2	A2	\N
-100959	προσεκτικός	adj	\N	\N	2	A2	\N
-100960	προσεκτικά	adv	\N	\N	2	A2	\N
-100961	χαλί	n	\N	\N	2	A2	το
-100962	κινούμενα σχέδια	n	\N	\N	2	A2	τα
-100963	περίπτωση	n	\N	\N	2	A2	η
-100964	μετρητά	n	\N	\N	2	A2	τα
-100965	καζίνο	n	\N	\N	2	A2	το
-100966	κάστρο	n	\N	\N	2	A2	το
-100967	πιάνω	v	\N	\N	2	A2	\N
-100968	αιτία	n	\N	\N	2	A2	η
-100969	προκαλώ	v	\N	\N	2	A2	\N
-100970	γιορτάζω	v	\N	\N	2	A2	\N
-100971	διασημότητα	n	\N	\N	2	A2	η
-100972	συγκεκριμένος	adj	\N	\N	2	A2	\N
-100973	βέβαιος	adj	\N	\N	2	A2	\N
-100974	σίγουρα	adv	\N	\N	2	A2	\N
-100975	ευκαιρία	n	\N	\N	2	A2	η
-100976	χαρακτήρας	n	\N	\N	2	A2	ο
-100977	φιλανθρωπία	n	\N	\N	2	A2	η
-100978	συνομιλία	n	\N	\N	2	A2	η
-100979	συνομιλώ	v	\N	\N	2	A2	\N
-100980	σεφ	n	\N	\N	2	A2	ο
-100981	χημεία	n	\N	\N	2	A2	η
-100982	πατατάκι	n	\N	\N	2	A2	το
-100983	επιλογή	n	\N	\N	2	A2	η
-100984	εκκλησία	n	\N	\N	2	A2	η
-100985	τσιγάρο	n	\N	\N	2	A2	το
-100986	κύκλος	n	\N	\N	2	A2	ο
-100987	κλασικός	adj	\N	\N	2	A2	\N
-100988	σαφώς	adv	\N	\N	2	A2	\N
-100989	έξυπνος	adj	\N	\N	2	A2	\N
-100990	κλίμα	n	\N	\N	2	A2	το
-100991	σύννεφο	n	\N	\N	2	A2	το
-100992	πούλμαν	n	\N	\N	2	A2	το
-100993	προπονητής	n	\N	\N	2	A2	ο
-100994	ακτή	n	\N	\N	2	A2	η
-100995	παραλία (coast)	n	\N	\N	2	A2	η
-100996	κώδικας	n	\N	\N	2	A2	ο
-100997	κωδικός	n	\N	\N	2	A2	ο
-100998	νόμισμα	n	\N	\N	2	A2	το
-100999	συνάδελφος	n	\N	\N	2	A2	ο/η
-101000	συλλέγω	v	\N	\N	2	A2	\N
-101001	στήλη	n	\N	\N	2	A2	η
-101002	κωμωδία	n	\N	\N	2	A2	η
-101003	άνετος	adj	\N	\N	2	A2	\N
-101004	κοινός	adj	\N	\N	2	A2	\N
-101005	σχόλιο	n	\N	\N	2	A2	το
-101006	επικοινωνώ	v	\N	\N	2	A2	\N
-101007	κοινότητα	n	\N	\N	2	A2	η
-101008	συγκρίνω	v	\N	\N	2	A2	\N
-101009	συναγωνίζομαι	v	\N	\N	2	A2	\N
-101010	διαγωνίζομαι	v	\N	\N	2	A2	\N
-101011	διαγωνισμός	n	\N	\N	2	A2	ο
-101012	παραπονιέμαι	v	\N	\N	2	A2	\N
-101013	εντελώς	adv	\N	\N	2	A2	\N
-101014	κατάσταση	n	\N	\N	2	A2	η
-101015	συνθήκη	n	\N	\N	2	A2	η
-101016	συνέδριο	n	\N	\N	2	A2	το
-101017	συνδέω	v	\N	\N	2	A2	\N
-101018	συνδεδεμένος	adj	\N	\N	2	A2	\N
-101019	εξετάζω (consider)	v	\N	\N	2	A2	\N
-101020	περιέχω	v	\N	\N	2	A2	\N
-101021	ήπειρος	n	\N	\N	2	A2	η
-101022	συζήτηση	n	\N	\N	2	A2	η
-101023	έλεγχος	n	\N	\N	2	A2	ο
-101024	ελέγχω (control)	v	\N	\N	2	A2	\N
-101025	μάγειρας	n	\N	\N	2	A2	ο
-101026	κουζίνα (συσκευή)	n	\N	\N	2	A2	η
-101027	αντίγραφο	n	\N	\N	2	A2	το
-101028	αντιγράφω	v	\N	\N	2	A2	\N
-101029	γωνία	n	\N	\N	2	A2	η
-101030	σωστά	adv	\N	\N	2	A2	\N
-101031	μετρώ	v	\N	\N	2	A2	\N
-101032	ζευγάρι (people)	n	\N	\N	2	A2	το
-101033	τρελός	adj	\N	\N	2	A2	\N
-101034	δημιουργικός	adj	\N	\N	2	A2	\N
-101035	έγκλημα	n	\N	\N	2	A2	το
-101036	εγκληματίας	n	\N	\N	2	A2	ο/η
-101037	εγκληματικός	adj	\N	\N	2	A2	\N
-101038	καθημερινά	adv	\N	\N	2	A2	\N
-101039	κίνδυνος	n	\N	\N	2	A2	ο
-101040	σκοτάδι	n	\N	\N	2	A2	το
-101041	νεκρός	adj	\N	\N	2	A2	\N
-101042	αντιμετωπίζω	v	\N	\N	2	A2	\N
-101043	ασχολούμαι με	v	\N	\N	2	A2	\N
-101044	θάνατος	n	\N	\N	2	A2	ο
-101045	απόφαση	n	\N	\N	2	A2	η
-101046	βαθύς	adj	\N	\N	2	A2	\N
-101047	οπωσδήποτε	adv	\N	\N	2	A2	\N
-101048	βαθμός (πτυχίο)	n	\N	\N	2	A2	ο
-101049	οδοντίατρος	n	\N	\N	2	A2	ο/η
-101050	τμήμα (υπηρεσία)	n	\N	\N	2	A2	το
-101051	εξαρτώμαι	v	\N	\N	2	A2	\N
-101052	περιγράφω	v	\N	\N	2	A2	\N
-101053	περιγραφή	n	\N	\N	2	A2	η
-101054	έρημος	n	\N	\N	2	A2	η
-101055	σχεδιαστής	n	\N	\N	2	A2	ο
-101056	σχεδιάστρια	n	\N	\N	2	A2	η
-101057	καταστρέφω	v	\N	\N	2	A2	\N
-101058	ντετέκτιβ	n	\N	\N	2	A2	ο/η
-101059	αναπτύσσω	v	\N	\N	2	A2	\N
-101060	συσκευή	n	\N	\N	2	A2	η
-101061	ημερολόγιο (diary)	n	\N	\N	2	A2	το
-101062	διαφορά	n	\N	\N	2	A2	η
-101063	διαφορετικά	adv	\N	\N	2	A2	\N
-101064	ψηφιακός	adj	\N	\N	2	A2	\N
-101065	άμεσος	adj	\N	\N	2	A2	\N
-101066	κατευθύνω	v	\N	\N	2	A2	\N
-101067	κατεύθυνση	n	\N	\N	2	A2	η
-101068	διευθυντής	n	\N	\N	2	A2	ο
-101069	διευθύντρια	n	\N	\N	2	A2	η
-101070	διαφωνώ	v	\N	\N	2	A2	\N
-101071	εξαφανίζομαι	v	\N	\N	2	A2	\N
-101072	καταστροφή	n	\N	\N	2	A2	η
-101073	ανακαλύπτω	v	\N	\N	2	A2	\N
-101074	ανακάλυψη	n	\N	\N	2	A2	η
-101075	συζήτηση (group)	n	\N	\N	2	A2	η
-101076	ασθένεια	n	\N	\N	2	A2	η
-101077	νόσος	n	\N	\N	2	A2	η
-101078	απόσταση	n	\N	\N	2	A2	η
-101079	χωρισμένος	adj	\N	\N	2	A2	\N
-101080	έγγραφο	n	\N	\N	2	A2	το
-101081	διπλός	adj	\N	\N	2	A2	\N
-101082	διπλασιάζω	v	\N	\N	2	A2	\N
-101083	κατεβάζω (download)	v	\N	\N	2	A2	\N
-101084	δράμα	n	\N	\N	2	A2	το
-101085	όνειρο	n	\N	\N	2	A2	το
-101086	ονειρεύομαι	v	\N	\N	2	A2	\N
-101087	ρίχνω	v	\N	\N	2	A2	\N
-101088	πέφτω (drop)	v	\N	\N	2	A2	\N
-101089	φάρμακο	n	\N	\N	2	A2	το
-101090	στεγνός	adj	\N	\N	2	A2	\N
-101091	στεγνώνω	v	\N	\N	2	A2	\N
-101092	κερδίζω (χρήματα)	v	\N	\N	2	A2	\N
-101093	γη (πλανήτης)	n	\N	\N	2	A2	η
-101094	εύκολα	adv	\N	\N	2	A2	\N
-101095	εκπαίδευση	n	\N	\N	2	A2	η
-101096	είτε	conj	\N	\N	2	A2	\N
-101097	ηλεκτρικός	adj	\N	\N	2	A2	\N
-101098	ηλεκτρολογικός	adj	\N	\N	2	A2	\N
-101099	ηλεκτρισμός	n	\N	\N	2	A2	ο
-101100	ηλεκτρονικός	adj	\N	\N	2	A2	\N
-101101	προσλαμβάνω	v	\N	\N	2	A2	\N
-101102	υπάλληλος	n	\N	\N	2	A2	ο/η
-101103	εργοδότης	n	\N	\N	2	A2	ο
-101104	άδειος	adj	\N	\N	2	A2	\N
-101105	τέλος (ending)	n	\N	\N	2	A2	το
-101106	ενέργεια (energy)	n	\N	\N	2	A2	η
-101107	μηχανή (engine)	n	\N	\N	2	A2	η
-101108	μηχανικός	n	\N	\N	2	A2	ο/η
-101109	τεράστιος (enormous)	adj	\N	\N	2	A2	\N
-101110	μπαίνω	v	\N	\N	2	A2	\N
-101111	εξοπλισμός	n	\N	\N	2	A2	ο
-101112	λάθος (error)	n	\N	\N	2	A2	το
-101113	ειδικά	adv	\N	\N	2	A2	\N
-101114	έκθεση (essay)	n	\N	\N	2	A2	η
-101115	καθημερινός (everyday)	adj	\N	\N	2	A2	\N
-101116	παντού	adv	\N	\N	2	A2	\N
-101117	ακριβής	adj	\N	\N	2	A2	\N
-101118	ακριβώς	adv	\N	\N	2	A2	\N
-101119	εξαιρετικός (excellent)	adj	\N	\N	2	A2	\N
-101120	εκτός από	prep	\N	\N	2	A2	\N
-101121	υπάρχω	v	\N	\N	2	A2	\N
-101122	περιμένω (expect)	v	\N	\N	2	A2	\N
-101123	εμπειρία	n	\N	\N	2	A2	η
-101124	πείραμα	n	\N	\N	2	A2	το
-101125	ειδικός (expert)	n	\N	\N	2	A2	ο/η
-101126	επεξήγηση	n	\N	\N	2	A2	η
-101127	εκφράζω	v	\N	\N	2	A2	\N
-101128	έκφραση	n	\N	\N	2	A2	η
-101129	ακραίος	adj	\N	\N	2	A2	\N
-101130	εξαιρετικά (extremely)	adv	\N	\N	2	A2	\N
-101131	εργοστάσιο	n	\N	\N	2	A2	το
-101132	δίκαιος	adj	\N	\N	2	A2	\N
-101133	θαυμαστής	n	\N	\N	2	A2	ο
-101134	ανεμιστήρας	n	\N	\N	2	A2	ο
-101135	καλλιέργεια	n	\N	\N	2	A2	η
-101136	μόδα	n	\N	\N	2	A2	η
-101137	φόβος	n	\N	\N	2	A2	ο
-101138	συναίσθημα	n	\N	\N	2	A2	το
-101139	θήλυ	adj	\N	\N	2	A2	\N
-101140	γυναίκα (female)	n	\N	\N	2	A2	η
-101141	μυθοπλασία	n	\N	\N	2	A2	η
-101142	πεδίο	n	\N	\N	2	A2	το
-101143	γήπεδο	n	\N	\N	2	A2	το
-101144	μάχη	n	\N	\N	2	A2	η
-101145	πολεμώ	v	\N	\N	2	A2	\N
-101146	φιγούρα	n	\N	\N	2	A2	η
-101147	σχήμα (figure)	n	\N	\N	2	A2	το
-101148	επιτέλους	adv	\N	\N	2	A2	\N
-101149	δάχτυλο	n	\N	\N	2	A2	το
-101150	πρώτα	adv	\N	\N	2	A2	\N
-101151	ψάρεμα	n	\N	\N	2	A2	το
-101152	ταιριάζω	v	\N	\N	2	A2	\N
-101153	σημαία	n	\N	\N	2	A2	η
-101154	γρίπη	n	\N	\N	2	A2	η
-101155	πετώντας	adj	\N	\N	2	A2	\N
-101156	εστιάζω	v	\N	\N	2	A2	\N
-101157	ακόλουθος	adj	\N	\N	2	A2	\N
-101158	ξένος	adj	\N	\N	2	A2	\N
-101159	δάσος	n	\N	\N	2	A2	το
-101160	πιρούνι	n	\N	\N	2	A2	το
-101161	τυπικός	adj	\N	\N	2	A2	\N
-101162	ευτυχώς	adv	\N	\N	2	A2	\N
-101163	μπροστά	adv	\N	\N	2	A2	\N
-101164	φρέσκος	adj	\N	\N	2	A2	\N
-101165	ψυγείο	n	\N	\N	2	A2	το
-101166	έπιπλα	n	\N	\N	2	A2	τα
-101167	περαιτέρω	adv	\N	\N	2	A2	\N
-101168	γκαλερί	n	\N	\N	2	A2	η
-101169	κενό	n	\N	\N	2	A2	το
-101170	αέριο	n	\N	\N	2	A2	το
-101171	γκάζι	n	\N	\N	2	A2	το
-101172	πύλη	n	\N	\N	2	A2	η
-101173	γενικός	adj	\N	\N	2	A2	\N
-101174	στόχος	n	\N	\N	2	A2	ο
-101175	θεός	n	\N	\N	2	A2	ο
-101176	χρυσός	n	\N	\N	2	A2	ο
-101177	χρυσός (adj)	adj	\N	\N	2	A2	\N
-101178	γκολφ	n	\N	\N	2	A2	το
-101179	γρασίδι	n	\N	\N	2	A2	το
-101180	χαιρετώ	v	\N	\N	2	A2	\N
-101181	έδαφος	n	\N	\N	2	A2	το
-101182	καλεσμένος	n	\N	\N	2	A2	ο
-101183	φιλοξενούμενος	n	\N	\N	2	A2	ο
-101184	οδηγός (guide)	n	\N	\N	2	A2	ο/η
-101185	καθοδηγώ	v	\N	\N	2	A2	\N
-101186	συνήθεια	n	\N	\N	2	A2	η
-101187	αίθουσα (hall)	n	\N	\N	2	A2	η
-101188	ευτυχισμένα	adv	\N	\N	2	A2	\N
-101189	πονοκέφαλος	n	\N	\N	2	A2	ο
-101190	καρδιά	n	\N	\N	2	A2	η
-101191	θερμότητα	n	\N	\N	2	A2	η
-101192	ζέστη	n	\N	\N	2	A2	η
-101193	βαρύς	adj	\N	\N	2	A2	\N
-101194	ύψος	n	\N	\N	2	A2	το
-101195	χρήσιμος	adj	\N	\N	2	A2	\N
-101196	ήρωας	n	\N	\N	2	A2	ο
-101197	δικός της (hers)	pron	\N	\N	2	A2	\N
-101198	η ίδια (herself)	pron	\N	\N	2	A2	\N
-101199	κρύβω	v	\N	\N	2	A2	\N
-101200	κρύβομαι	v	\N	\N	2	A2	\N
-101201	λόφος	n	\N	\N	2	A2	ο
-101202	ο ίδιος (himself)	pron	\N	\N	2	A2	\N
-101203	χτύπημα	n	\N	\N	2	A2	το
-101204	χτυπώ (hit)	v	\N	\N	2	A2	\N
-101205	χόκεϊ	n	\N	\N	2	A2	το
-101206	κρατώ (hold)	v	\N	\N	2	A2	\N
-101207	τρύπα	n	\N	\N	2	A2	η
-101208	ελπίδα	n	\N	\N	2	A2	η
-101209	άνθρωπος (human)	n	\N	\N	2	A2	ο
-101210	ανθρώπινος	adj	\N	\N	2	A2	\N
-101211	βιάζομαι	v	\N	\N	2	A2	\N
-101212	βιασύνη	n	\N	\N	2	A2	η
-101213	πονάω	v	\N	\N	2	A2	\N
-101214	ιδανικός	adj	\N	\N	2	A2	\N
-101215	ηλίθιος	n	\N	\N	2	A2	ο
-101216	άρρωστος	adj	\N	\N	2	A2	\N
-101217	αρρώστια	n	\N	\N	2	A2	η
-101218	αμέσως	adv	\N	\N	2	A2	\N
-101219	αδύνατος (impossible)	adj	\N	\N	2	A2	\N
-101220	συμπεριλαμβανόμενος	adj	\N	\N	2	A2	\N
-101221	αύξηση	n	\N	\N	2	A2	η
-101222	αυξάνω	v	\N	\N	2	A2	\N
-101223	απίστευτος	adj	\N	\N	2	A2	\N
-101224	ανεξάρτητος	adj	\N	\N	2	A2	\N
-101225	άτομο	n	\N	\N	2	A2	το
-101226	ατομικός	adj	\N	\N	2	A2	\N
-101227	βιομηχανία	n	\N	\N	2	A2	η
-101228	ανεπίσημος	adj	\N	\N	2	A2	\N
-101229	τραυματισμός	n	\N	\N	2	A2	ο
-101230	μελάνι	n	\N	\N	2	A2	το
-101231	έντομο	n	\N	\N	2	A2	το
-101232	μέσα	adv	\N	\N	2	A2	\N
-101233	οδηγία	n	\N	\N	2	A2	η
-101234	εκπαιδευτής	n	\N	\N	2	A2	ο
-101235	εκπαιδεύτρια	n	\N	\N	2	A2	η
-101236	όργανο	n	\N	\N	2	A2	το
-101237	έξυπνος (intelligent)	adj	\N	\N	2	A2	\N
-101238	διεθνής	adj	\N	\N	2	A2	\N
-101239	εισαγωγή	n	\N	\N	2	A2	η
-101240	εφευρίσκω	v	\N	\N	2	A2	\N
-101241	εφεύρεση	n	\N	\N	2	A2	η
-101242	μαρμελάδα	n	\N	\N	2	A2	η
-101243	τζάζ	n	\N	\N	2	A2	η
-101244	κόσμημα	n	\N	\N	2	A2	το
-101245	αστείο	n	\N	\N	2	A2	το
-101246	δημοσιογράφος	n	\N	\N	2	A2	ο/η
-101247	άλμα	n	\N	\N	2	A2	το
-101248	πηδάω	v	\N	\N	2	A2	\N
-101249	σκοτώνω	v	\N	\N	2	A2	\N
-101250	βασιλιάς	n	\N	\N	2	A2	ο
-101251	φιλί	n	\N	\N	2	A2	το
-101252	φιλάω	v	\N	\N	2	A2	\N
-101253	γόνατο	n	\N	\N	2	A2	το
-101254	μαχαίρι	n	\N	\N	2	A2	το
-101255	χτυπάω (knock)	v	\N	\N	2	A2	\N
-101256	γνώση	n	\N	\N	2	A2	η
-101257	εργαστήριο	n	\N	\N	2	A2	το
-101258	κυρία	n	\N	\N	2	A2	η
-101259	λίμνη	n	\N	\N	2	A2	η
-101260	λάμπα	n	\N	\N	2	A2	η
-101261	προσγειώνομαι	v	\N	\N	2	A2	\N
-101262	φορητός υπολογιστής	n	\N	\N	2	A2	ο
-101263	γέλιο	n	\N	\N	2	A2	το
-101264	νόμος	n	\N	\N	2	A2	ο
-101265	δικηγόρος	n	\N	\N	2	A2	ο/η
-101266	τεμπέλης	adj	\N	\N	2	A2	\N
-101267	ηγούμαι	v	\N	\N	2	A2	\N
-101268	οδηγώ (lead)	v	\N	\N	2	A2	\N
-101269	μόλυβδος	n	\N	\N	2	A2	ο
-101270	ηγέτης	n	\N	\N	2	A2	ο
-101271	μάθηση	n	\N	\N	2	A2	η
-101272	τουλάχιστον	adv	\N	\N	2	A2	\N
-101273	διάλεξη	n	\N	\N	2	A2	η
-101274	λεμόνι	n	\N	\N	2	A2	το
-101275	δανείζω	v	\N	\N	2	A2	\N
-101276	λιγότερο	adv	\N	\N	2	A2	\N
-101277	επίπεδο	n	\N	\N	2	A2	το
-101278	τρόπος ζωής	n	\N	\N	2	A2	ο
-3812	track	n	\N	\N	1	B2	\N
-101279	ασανσέρ	n	\N	\N	2	A2	το
-101280	σηκώνω	v	\N	\N	2	A2	\N
-101281	πιθανός (likely)	adj	\N	\N	2	A2	\N
-101282	σύνδεσμος	n	\N	\N	2	A2	ο
-101283	συνδέω (link)	v	\N	\N	2	A2	\N
-101284	ταχυδρομείο	n	\N	\N	2	A2	το
-101285	ταχυδρομώ	v	\N	\N	2	A2	\N
-101286	κύριος (major)	adj	\N	\N	2	A2	\N
-101287	σημαντικός (major)	adj	\N	\N	2	A2	\N
-101288	αρσενικό	adj	\N	\N	2	A2	\N
-101289	άνδρας (male)	n	\N	\N	2	A2	ο
-101290	διαχειρίζομαι	v	\N	\N	2	A2	\N
-101291	διευθυντής (manager)	n	\N	\N	2	A2	ο
-101292	τρόπος (manner)	n	\N	\N	2	A2	ο
-101293	σημάδι	n	\N	\N	2	A2	το
-101294	βαθμολογώ	v	\N	\N	2	A2	\N
-101295	παντρεύομαι	v	\N	\N	2	A2	\N
-101296	μάσκα	n	\N	\N	2	A2	η
-101297	υλικό	n	\N	\N	2	A2	το
-101298	μαθηματικά	n	\N	\N	2	A2	τα
-101299	ζήτημα	n	\N	\N	2	A2	το
-101300	πειράζει	v	\N	\N	2	A2	\N
-101301	μέσα ενημέρωσης	n	\N	\N	2	A2	τα
-101302	ιατρικός	adj	\N	\N	2	A2	\N
-101303	φάρμακο (medicine)	n	\N	\N	2	A2	το
-101304	μνήμη	n	\N	\N	2	A2	η
-101305	αναφέρω	v	\N	\N	2	A2	\N
-101306	μέταλλο	n	\N	\N	2	A2	το
-101307	μέση	n	\N	\N	2	A2	η
-101308	μεσαίος	adj	\N	\N	2	A2	\N
-101309	νου	n	\N	\N	2	A2	ο
-101310	μυαλό	n	\N	\N	2	A2	το
-101311	προσέχω (mind)	v	\N	\N	2	A2	\N
-101312	καθρέφτης	n	\N	\N	2	A2	ο
-101313	λείπει	adj	\N	\N	2	A2	\N
-101314	κινητό (τηλέφωνο)	adj	\N	\N	2	A2	\N
-101315	μαϊμού	n	\N	\N	2	A2	η
-101316	φεγγάρι	n	\N	\N	2	A2	το
-101317	κυρίως	adv	\N	\N	2	A2	\N
-101318	μοτοσυκλέτα	n	\N	\N	2	A2	η
-101319	κίνηση (movement)	n	\N	\N	2	A2	η
-101320	μουσικός (adj)	adj	\N	\N	2	A2	\N
-101321	μουσικό έργο	n	\N	\N	2	A2	το
-101322	μουσικός (n)	n	\N	\N	2	A2	ο/η
-101323	ο εαυτός μου	pron	\N	\N	2	A2	\N
-101324	στενός	adj	\N	\N	2	A2	\N
-101325	εθνικός	adj	\N	\N	2	A2	\N
-101326	φυσικός (natural)	adj	\N	\N	2	A2	\N
-101327	φύση	n	\N	\N	2	A2	η
-101328	σχεδόν (nearly)	adv	\N	\N	2	A2	\N
-101329	απαραίτητος	adj	\N	\N	2	A2	\N
-101330	λαιμός	n	\N	\N	2	A2	ο
-101331	ούτε ο ένας ούτε ο άλλος	det	\N	\N	2	A2	\N
-101332	νευρικός	adj	\N	\N	2	A2	\N
-101333	φωλιά	n	\N	\N	2	A2	η
-101334	δίχτυ	n	\N	\N	2	A2	το
-101335	δίκτυο	n	\N	\N	2	A2	το
-101336	θόρυβος	n	\N	\N	2	A2	ο
-101337	θορυβώδης	adj	\N	\N	2	A2	\N
-101338	κανένας (none)	pron	\N	\N	2	A2	\N
-101339	κανονικός	adj	\N	\N	2	A2	\N
-101340	φυσιολογικός	adj	\N	\N	2	A2	\N
-101341	φυσιολογικά	adv	\N	\N	2	A2	\N
-101342	ειδοποίηση	n	\N	\N	2	A2	η
-101343	παρατηρώ	v	\N	\N	2	A2	\N
-101344	μυθιστόρημα	n	\N	\N	2	A2	το
-101345	πουθενά	adv	\N	\N	2	A2	\N
-101346	ωκεανός	n	\N	\N	2	A2	ο
-101347	προσφορά	n	\N	\N	2	A2	η
-101348	προσφέρω	v	\N	\N	2	A2	\N
-101349	αξιωματικός	n	\N	\N	2	A2	ο/η
-101350	λάδι	n	\N	\N	2	A2	το
-101351	πετρέλαιο	n	\N	\N	2	A2	το
-101352	επιλογή (option)	n	\N	\N	2	A2	η
-101353	συνηθισμένος	adj	\N	\N	2	A2	\N
-101354	οργάνωση	n	\N	\N	2	A2	η
-101355	οργανώνω	v	\N	\N	2	A2	\N
-101356	πρωτότυπος	adj	\N	\N	2	A2	\N
-101357	πρωτότυπο	n	\N	\N	2	A2	το
-101358	εμείς οι ίδιοι	pron	\N	\N	2	A2	\N
-101359	εξωτερικός	adj	\N	\N	2	A2	\N
-101360	φούρνος	n	\N	\N	2	A2	ο
-101361	ιδιοκτήτης	n	\N	\N	2	A2	ο
-101362	ιδιοκτήτρια	n	\N	\N	2	A2	η
-101363	πακέτο	n	\N	\N	2	A2	το
-101364	πακετάρω	v	\N	\N	2	A2	\N
-101365	πόνος	n	\N	\N	2	A2	ο
-101366	ζωγράφος	n	\N	\N	2	A2	ο/η
-101367	παλάτι	n	\N	\N	2	A2	το
-101368	παντελόνι (pants)	n	\N	\N	2	A2	το
-101369	παρκάρισμα	n	\N	\N	2	A2	το
-101370	ιδιαίτερος	adj	\N	\N	2	A2	\N
-101371	συγκεκριμένος (particular)	adj	\N	\N	2	A2	\N
-101372	περνώ	v	\N	\N	2	A2	\N
-101373	επιβάτης	n	\N	\N	2	A2	ο
-101374	επιβάτισσα	n	\N	\N	2	A2	η
-101375	παρελθόν	n	\N	\N	2	A2	το
-101376	ασθενής	n	\N	\N	2	A2	ο/η
-101377	μοτίβο	n	\N	\N	2	A2	το
-101378	ειρήνη	n	\N	\N	2	A2	η
-101379	πενάκι	n	\N	\N	2	A2	το
-101380	ανά	prep	\N	\N	2	A2	\N
-101381	τοις εκατό	n	\N	\N	2	A2	το
-101382	παρουσιάζω (perform)	v	\N	\N	2	A2	\N
-101383	εκτελώ	v	\N	\N	2	A2	\N
-101384	ίσως (perhaps)	adv	\N	\N	2	A2	\N
-101385	άδεια	n	\N	\N	2	A2	η
-101386	προσωπικότητα	n	\N	\N	2	A2	η
-101387	κατοικίδιο	n	\N	\N	2	A2	το
-101388	βενζίνη	n	\N	\N	2	A2	η
-101389	φωτογραφίζω	v	\N	\N	2	A2	\N
-101390	σωματικός	adj	\N	\N	2	A2	\N
-101391	φυσικός (physics)	adj	\N	\N	2	A2	\N
-101392	φυσική	n	\N	\N	2	A2	η
-101393	διαλέγω (pick)	v	\N	\N	2	A2	\N
-101394	μαζεύω	v	\N	\N	2	A2	\N
-101395	πιλότος	n	\N	\N	2	A2	ο/η
-101396	πειρατής	n	\N	\N	2	A2	ο
-101397	πειρατίνα	n	\N	\N	2	A2	η
-101398	πλανήτης	n	\N	\N	2	A2	ο
-101399	φυτεύω	v	\N	\N	2	A2	\N
-101400	πλαστικός	adj	\N	\N	2	A2	\N
-101401	πλαστικό	n	\N	\N	2	A2	το
-101402	πιάτο (plate)	n	\N	\N	2	A2	το
-101403	αποβάθρα	n	\N	\N	2	A2	η
-101404	ευχαριστημένος	adj	\N	\N	2	A2	\N
-101405	φις (plug)	n	\N	\N	2	A2	το
-101406	τσέπη	n	\N	\N	2	A2	η
-101407	ευγενικός	adj	\N	\N	2	A2	\N
-101408	ρύπανση	n	\N	\N	2	A2	η
-101409	λιμνούλα	n	\N	\N	2	A2	η
-101410	σκάω (pop)	v	\N	\N	2	A2	\N
-101411	πληθυσμός	n	\N	\N	2	A2	ο
-101412	θέση	n	\N	\N	2	A2	η
-101413	κατοχή	n	\N	\N	2	A2	η
-101414	πιθανότητα	n	\N	\N	2	A2	η
-101415	αφίσα	n	\N	\N	2	A2	η
-101416	δύναμη	n	\N	\N	2	A2	η
-101417	ισχύς	n	\N	\N	2	A2	η
-101418	προβλέπω	v	\N	\N	2	A2	\N
-101419	προτιμώ	v	\N	\N	2	A2	\N
-101420	προετοιμάζω	v	\N	\N	2	A2	\N
-101421	παρόν	n	\N	\N	2	A2	το
-101422	τωρινός	adj	\N	\N	2	A2	\N
-101423	πρόεδρος	n	\N	\N	2	A2	ο/η
-101424	εμποδίζω	v	\N	\N	2	A2	\N
-101425	προλαβαίνω	v	\N	\N	2	A2	\N
-101426	εκτυπώνω	v	\N	\N	2	A2	\N
-101427	εκτυπωτής	n	\N	\N	2	A2	ο
-101428	φυλακή	n	\N	\N	2	A2	η
-101429	έπαθλο	n	\N	\N	2	A2	το
-101430	επαγγελματικός	adj	\N	\N	2	A2	\N
-101431	επαγγελματίας	n	\N	\N	2	A2	ο/η
-101432	καθηγητής (πανεπιστημίου)	n	\N	\N	2	A2	ο
-101433	καθηγήτρια (πανεπιστημίου)	n	\N	\N	2	A2	η
-101434	προφίλ	n	\N	\N	2	A2	το
-101435	πρόγραμμα (it)	n	\N	\N	2	A2	το
-101436	πρόοδος	n	\N	\N	2	A2	η
-101437	υπόσχεση	n	\N	\N	2	A2	η
-101438	υπόσχομαι	v	\N	\N	2	A2	\N
-101439	προφέρω	v	\N	\N	2	A2	\N
-101440	προστατεύω	v	\N	\N	2	A2	\N
-101441	παμπ	n	\N	\N	2	A2	η
-101442	δημόσιος	adj	\N	\N	2	A2	\N
-101443	δημοσιεύω	v	\N	\N	2	A2	\N
-101444	τραβώ	v	\N	\N	2	A2	\N
-101445	σπρώχνω	v	\N	\N	2	A2	\N
-101446	ποιότητα	n	\N	\N	2	A2	η
-101447	ποσότητα (quantity)	n	\N	\N	2	A2	η
-101448	βασίλισσα	n	\N	\N	2	A2	η
-101449	ήσυχα	adv	\N	\N	2	A2	\N
-101450	φυλή (race)	n	\N	\N	2	A2	η
-101451	αγώνας δρόμου	n	\N	\N	2	A2	ο
-101452	σιδηρόδρομος	n	\N	\N	2	A2	ο
-101453	σηκώνω (raise)	v	\N	\N	2	A2	\N
-101454	αρουραίος	n	\N	\N	2	A2	ο
-101455	ρυθμός	n	\N	\N	2	A2	ο
-101456	μάλλον	adv	\N	\N	2	A2	\N
-101457	φτάνω (reach)	v	\N	\N	2	A2	\N
-101458	αντιδρώ	v	\N	\N	2	A2	\N
-101459	συνειδητοποιώ	v	\N	\N	2	A2	\N
-101460	λαμβάνω	v	\N	\N	2	A2	\N
-101461	πρόσφατος	adj	\N	\N	2	A2	\N
-101462	πρόσφατα	adv	\N	\N	2	A2	\N
-101463	υποδοχή	n	\N	\N	2	A2	η
-101464	συνταγή	n	\N	\N	2	A2	η
-101465	αναγνωρίζω	v	\N	\N	2	A2	\N
-101466	συνιστώ	v	\N	\N	2	A2	\N
-101467	δίσκος (record)	n	\N	\N	2	A2	ο
-101468	αρχείο	n	\N	\N	2	A2	το
-101469	καταγράφω	v	\N	\N	2	A2	\N
-4248	demon	n	\N	\N	1	C1	\N
-101470	ηχογραφώ	v	\N	\N	2	A2	\N
-101471	ηχογράφηση	n	\N	\N	2	A2	η
-101472	ανακυκλώνω	v	\N	\N	2	A2	\N
-101473	μειώνω	v	\N	\N	2	A2	\N
-101474	αναφέρομαι	v	\N	\N	2	A2	\N
-101475	αρνούμαι	v	\N	\N	2	A2	\N
-101476	περιοχή (region)	n	\N	\N	2	A2	η
-101477	τακτικός	adj	\N	\N	2	A2	\N
-101478	σχέση	n	\N	\N	2	A2	η
-101479	αφαιρώ	v	\N	\N	2	A2	\N
-101480	αντικαθιστώ	v	\N	\N	2	A2	\N
-101481	απάντηση (reply)	n	\N	\N	2	A2	η
-101482	απαντώ	v	\N	\N	2	A2	\N
-101483	αναφορά	n	\N	\N	2	A2	η
-101484	αναφέρω (report)	v	\N	\N	2	A2	\N
-101485	δημοσιογράφος (reporter)	n	\N	\N	2	A2	ο/η
-101486	αίτημα	n	\N	\N	2	A2	το
-101487	ζητώ (request)	v	\N	\N	2	A2	\N
-101488	ερευνητής	n	\N	\N	2	A2	ο
-101489	ερευνήτρια	n	\N	\N	2	A2	η
-101490	ξεκούραση	n	\N	\N	2	A2	η
-101491	ξεκουράζομαι	v	\N	\N	2	A2	\N
-101492	κριτική	n	\N	\N	2	A2	η
-101493	επανεξετάζω	v	\N	\N	2	A2	\N
-101494	διαδρομή (ride)	n	\N	\N	2	A2	η
-101495	δαχτυλίδι	n	\N	\N	2	A2	το
-101496	κουδουνίζω	v	\N	\N	2	A2	\N
-101497	βράχος	n	\N	\N	2	A2	ο
-101498	ρόλος	n	\N	\N	2	A2	ο
-101499	στέγη	n	\N	\N	2	A2	η
-101500	στρογγυλός	adj	\N	\N	2	A2	\N
-101501	γύρω (round)	prep	\N	\N	2	A2	\N
-101502	ρουτίνα	n	\N	\N	2	A2	η
-101503	σκουπίδια	n	\N	\N	2	A2	τα
-101504	αγενής	adj	\N	\N	2	A2	\N
-101505	τρέξιμο	n	\N	\N	2	A2	το
-101506	δρομέας	n	\N	\N	2	A2	ο/η
-101507	δυστυχώς	adv	\N	\N	2	A2	\N
-101508	ασφαλής	adj	\N	\N	2	A2	\N
-101509	πανί (sail)	n	\N	\N	2	A2	το
-101510	σαλπάρω	v	\N	\N	2	A2	\N
-101511	ιστιοπλοΐα	n	\N	\N	2	A2	η
-101512	μισθός	n	\N	\N	2	A2	ο
-101513	πώληση	n	\N	\N	2	A2	η
-101514	σάλτσα	n	\N	\N	2	A2	η
-101515	σώζω	v	\N	\N	2	A2	\N
-101516	τρομαγμένος	adj	\N	\N	2	A2	\N
-101517	τρομακτικός	adj	\N	\N	2	A2	\N
-101518	σκηνή	n	\N	\N	2	A2	η
-101519	πρόγραμμα (schedule)	n	\N	\N	2	A2	το
-101520	σκορ	n	\N	\N	2	A2	το
-101521	βαθμολογία	n	\N	\N	2	A2	η
-101522	σκοράρω	v	\N	\N	2	A2	\N
-101523	οθόνη	n	\N	\N	2	A2	η
-101524	αναζήτηση	n	\N	\N	2	A2	η
-101525	αναζητώ	v	\N	\N	2	A2	\N
-101526	εποχή	n	\N	\N	2	A2	η
-101527	κάθισμα	n	\N	\N	2	A2	το
-101528	δεύτερος	adj	\N	\N	2	A2	ο
-101529	δεύτερο (χρόνος)	n	\N	\N	2	A2	το
-101530	δεύτερον	adv	\N	\N	2	A2	\N
-101531	μυστικό	n	\N	\N	2	A2	το
-101532	μυστικός	adj	\N	\N	2	A2	\N
-101533	γραμματέας	n	\N	\N	2	A2	ο/η
-101534	φαίνομαι	v	\N	\N	2	A2	\N
-101535	πουλάω	v	\N	\N	2	A2	\N
-101536	αίσθηση	n	\N	\N	2	A2	η
-101537	χωριστός	adj	\N	\N	2	A2	\N
-101538	σειρά	n	\N	\N	2	A2	η
-101539	σοβαρός	adj	\N	\N	2	A2	\N
-101540	σερβίρω	v	\N	\N	2	A2	\N
-101541	εξυπηρέτηση	n	\N	\N	2	A2	η
-101542	αρκετοί	det	\N	\N	2	A2	\N
-101543	κουνώ	v	\N	\N	2	A2	\N
-101544	θα (shall/A2)	v	\N	\N	2	A2	\N
-101545	μοιράζομαι	v	\N	\N	2	A2	\N
-101546	σχήμα	n	\N	\N	2	A2	το
-101547	σεντόνι	n	\N	\N	2	A2	το
-101548	φύλλο (χαρτιού)	n	\N	\N	2	A2	το
-101549	πλοίο	n	\N	\N	2	A2	το
-101550	ώμος	n	\N	\N	2	A2	ο
-101551	φωνάζω	v	\N	\N	2	A2	\N
-101552	κλείνω (shut)	v	\N	\N	2	A2	\N
-101553	πλευρά	n	\N	\N	2	A2	η
-101554	μεριά	n	\N	\N	2	A2	η
-101555	πινακίδα	n	\N	\N	2	A2	η
-101556	σημάδι (sign)	n	\N	\N	2	A2	το
-101557	ασήμι	n	\N	\N	2	A2	το
-101558	ασημένιος	adj	\N	\N	2	A2	\N
-101559	παρόμοιος	adj	\N	\N	2	A2	\N
-101560	απλός	adj	\N	\N	2	A2	\N
-101561	από τότε	prep	\N	\N	2	A2	\N
-101562	εφόσον	conj	\N	\N	2	A2	\N
-101563	τραγούδι (singing)	n	\N	\N	2	A2	το
-101564	μονός	adj	\N	\N	2	A2	\N
-101565	ανύπαντρος	adj	\N	\N	2	A2	\N
-101566	κύριος (sir)	n	\N	\N	2	A2	ο
-5762	foray	n	\N	\N	1	C2	\N
-101567	τοποθεσία	n	\N	\N	2	A2	η
-101568	μέγεθος	n	\N	\N	2	A2	το
-101569	πέδιλο του σκι	n	\N	\N	2	A2	το
-101570	κάνω σκι	v	\N	\N	2	A2	\N
-101571	σκι	n	\N	\N	2	A2	το
-101572	δέρμα	n	\N	\N	2	A2	το
-101573	ουρανός	n	\N	\N	2	A2	ο
-101574	αργά (slowly)	adv	\N	\N	2	A2	\N
-101575	έξυπνο τηλέφωνο	n	\N	\N	2	A2	το
-101576	οσμή	n	\N	\N	2	A2	η
-101577	μυρίζω	v	\N	\N	2	A2	\N
-101578	χαμόγελο	n	\N	\N	2	A2	το
-101579	χαμογελώ	v	\N	\N	2	A2	\N
-101580	καπνός	n	\N	\N	2	A2	ο
-101581	καπνίζω	v	\N	\N	2	A2	\N
-101582	κάπνισμα	n	\N	\N	2	A2	το
-101583	σαπούνι	n	\N	\N	2	A2	το
-101584	κοινωνικός	adj	\N	\N	2	A2	\N
-101585	κάλτσα	n	\N	\N	2	A2	η
-101586	μαλακός	adj	\N	\N	2	A2	\N
-101587	στρατιώτης	n	\N	\N	2	A2	ο
-101588	λύση	n	\N	\N	2	A2	η
-101589	κάπου	adv	\N	\N	2	A2	\N
-101590	είδος (sort)	n	\N	\N	2	A2	το
-101591	ηχείο	n	\N	\N	2	A2	το
-101592	ομιλητής	n	\N	\N	2	A2	ο
-101593	συγκεκριμένος (specific)	adj	\N	\N	2	A2	\N
-101594	ομιλία	n	\N	\N	2	A2	η
-101595	λόγος (speech)	n	\N	\N	2	A2	ο
-101596	ταχύτητα	n	\N	\N	2	A2	η
-101597	αράχνη	n	\N	\N	2	A2	η
-101598	κουτάλι	n	\N	\N	2	A2	το
-101599	τετράγωνο	n	\N	\N	2	A2	το
-101600	τετράγωνος	adj	\N	\N	2	A2	\N
-101601	σκηνή (stage)	n	\N	\N	2	A2	η
-101602	στάδιο (stage)	n	\N	\N	2	A2	το
-101603	σκαλοπάτι	n	\N	\N	2	A2	το
-101604	γραμματόσημο	n	\N	\N	2	A2	το
-101605	αστέρι	n	\N	\N	2	A2	το
-101606	κράτος	n	\N	\N	2	A2	το
-101607	δήλωση	n	\N	\N	2	A2	η
-101608	κλέβω	v	\N	\N	2	A2	\N
-101609	βήμα	n	\N	\N	2	A2	το
-101610	πατάω	v	\N	\N	2	A2	\N
-101611	ακόμα (still)	adv	\N	\N	2	A2	\N
-101612	στομάχι	n	\N	\N	2	A2	το
-101613	πέτρα	n	\N	\N	2	A2	η
-101614	κατάστημα	n	\N	\N	2	A2	το
-101615	καταιγίδα	n	\N	\N	2	A2	η
-101616	ίσιος	adj	\N	\N	2	A2	\N
-101617	κατευθείαν	adv	\N	\N	2	A2	\N
-101618	παράξενος	adj	\N	\N	2	A2	\N
-101619	άγχος	n	\N	\N	2	A2	το
-101620	στρες	n	\N	\N	2	A2	το
-101621	πετυχαίνω (succeed)	v	\N	\N	2	A2	\N
-101622	επιτυχημένος	adj	\N	\N	2	A2	\N
-101623	τέτοιος	det	\N	\N	2	A2	\N
-101624	ξαφνικά	adv	\N	\N	2	A2	\N
-101625	προτείνω	v	\N	\N	2	A2	\N
-101626	πρόταση (suggestion)	n	\N	\N	2	A2	η
-101627	κοστούμι	n	\N	\N	2	A2	το
-101628	υποστήριξη	n	\N	\N	2	A2	η
-101629	υποστηρίζω	v	\N	\N	2	A2	\N
-101630	υποθέτω	v	\N	\N	2	A2	\N
-101631	έκπληξη	n	\N	\N	2	A2	η
-101632	εκπλήσσω	v	\N	\N	2	A2	\N
-101633	ξαφνιασμένος	adj	\N	\N	2	A2	\N
-101634	ξαφνικός	adj	\N	\N	2	A2	\N
-101635	γλυκός	adj	\N	\N	2	A2	\N
-101636	κούνια	n	\N	\N	2	A2	η
-101637	αιωρούμαι	v	\N	\N	2	A2	\N
-101638	ταμπλέτα	n	\N	\N	2	A2	η
-101639	στόχος (target)	n	\N	\N	2	A2	ο
-101640	εργασία (task)	n	\N	\N	2	A2	η
-101641	γεύση	n	\N	\N	2	A2	η
-101642	γεύομαι	v	\N	\N	2	A2	\N
-101643	διδασκαλία	n	\N	\N	2	A2	η
-101644	τεχνολογία	n	\N	\N	2	A2	η
-101645	εφηβικός	adj	\N	\N	2	A2	\N
-101646	θερμοκρασία	n	\N	\N	2	A2	η
-101647	σκηνή (tent)	n	\N	\N	2	A2	η
-101648	όρος (term)	n	\N	\N	2	A2	ο
-101649	στέλνω μήνυμα	v	\N	\N	2	A2	\N
-101650	οι ίδιοι	pron	\N	\N	2	A2	\N
-101651	πυκνός	adj	\N	\N	2	A2	\N
-101652	χοντρός (thick)	adj	\N	\N	2	A2	\N
-101653	κλέφτης	n	\N	\N	2	A2	ο/η
-101654	λεπτός (thin)	adj	\N	\N	2	A2	\N
-101655	τακτοποιημένος	adj	\N	\N	2	A2	\N
-101656	τακτοποιώ	v	\N	\N	2	A2	\N
-101657	γραβάτα	n	\N	\N	2	A2	η
-101658	δένω	v	\N	\N	2	A2	\N
-101659	φιλοδώρημα	n	\N	\N	2	A2	το
-101660	δάχτυλο ποδιού	n	\N	\N	2	A2	το
-101661	εργαλείο	n	\N	\N	2	A2	το
-101662	συνολικός	adj	\N	\N	2	A2	\N
-101663	αγγίζω	v	\N	\N	2	A2	\N
-101664	περιοδεία	n	\N	\N	2	A2	η
-101665	τουρισμός	n	\N	\N	2	A2	ο
-101666	προς	prep	\N	\N	2	A2	\N
-101667	πετσέτα	n	\N	\N	2	A2	η
-101668	πύργος	n	\N	\N	2	A2	ο
-101669	παιχνίδι (toy)	n	\N	\N	2	A2	το
-101670	στίβος	n	\N	\N	2	A2	ο
-101671	παράδοση	n	\N	\N	2	A2	η
-101672	παραδοσιακός	adj	\N	\N	2	A2	\N
-101673	αθλητικά παπούτσια	n	\N	\N	2	A2	τα
-101674	εκπαίδευση (training)	n	\N	\N	2	A2	η
-101675	μεταφορά	n	\N	\N	2	A2	η
-101676	μεταφορικό μέσο	n	\N	\N	2	A2	το
-101677	ταξιδιώτης	n	\N	\N	2	A2	ο
-101678	ταξιδιώτισσα	n	\N	\N	2	A2	η
-101679	πρόβλημα (trouble)	n	\N	\N	2	A2	το
-101680	μπελάς	n	\N	\N	2	A2	ο
-101681	φορτηγό	n	\N	\N	2	A2	το
-101682	δίδυμος	n	\N	\N	2	A2	ο
-101683	υπόγειος	adj	\N	\N	2	A2	\N
-101684	υπογείως	adv	\N	\N	2	A2	\N
-101685	κατανόηση	n	\N	\N	2	A2	η
-101686	δυστυχισμένος	adj	\N	\N	2	A2	\N
-101687	στολή	n	\N	\N	2	A2	η
-101688	μονάδα	n	\N	\N	2	A2	η
-101689	ενωμένος	adj	\N	\N	2	A2	\N
-101690	ασυνήθιστος	adj	\N	\N	2	A2	\N
-101691	αναστατωμένος	adj	\N	\N	2	A2	\N
-101692	χρήση	n	\N	\N	2	A2	η
-101693	συνήθιζα να	v	\N	\N	2	A2	\N
-101694	χρήστης	n	\N	\N	2	A2	ο
-101695	κοιλάδα	n	\N	\N	2	A2	η
-101696	φορτηγάκι	n	\N	\N	2	A2	το
-101697	ποικιλία	n	\N	\N	2	A2	η
-101698	θέα	n	\N	\N	2	A2	η
-101699	ιός	n	\N	\N	2	A2	ο
-101700	φωνή	n	\N	\N	2	A2	η
-101701	πόλεμος	n	\N	\N	2	A2	ο
-101702	πλύσιμο	n	\N	\N	2	A2	το
-101703	κύμα	n	\N	\N	2	A2	το
-101704	χαιρετώ (wave)	v	\N	\N	2	A2	\N
-101705	αδύναμος	adj	\N	\N	2	A2	\N
-101706	ιστός	n	\N	\N	2	A2	ο
-101707	γάμος	n	\N	\N	2	A2	ο
-101708	βάρος	n	\N	\N	2	A2	το
-101709	υποδοχή (welcome)	n	\N	\N	2	A2	η
-101710	καλοδεχούμενος	adj	\N	\N	2	A2	\N
-101711	καλωσορίζω	v	\N	\N	2	A2	\N
-101712	υγρός	adj	\N	\N	2	A2	\N
-101713	βρεγμένος	adj	\N	\N	2	A2	\N
-101714	ρόδα	n	\N	\N	2	A2	η
-101715	τροχός	n	\N	\N	2	A2	ο
-101716	ολόκληρος	adj	\N	\N	2	A2	\N
-101717	τίνος	det	\N	\N	2	A2	\N
-101718	πλατύς	adj	\N	\N	2	A2	\N
-101719	άγριος	adj	\N	\N	2	A2	\N
-101720	άνεμος	n	\N	\N	2	A2	ο
-101721	νικητής	n	\N	\N	2	A2	ο
-101722	ευχή	n	\N	\N	2	A2	η
-101723	εύχομαι	v	\N	\N	2	A2	\N
-101724	ξύλο	n	\N	\N	2	A2	το
-101725	ξύλινος	adj	\N	\N	2	A2	\N
-101726	εργαζόμενος (adj)	adj	\N	\N	2	A2	\N
-101727	ανήσυχος	adj	\N	\N	2	A2	\N
-101728	ανησυχώ	v	\N	\N	2	A2	\N
-101729	ανησυχία	n	\N	\N	2	A2	η
-101730	χειρότερος	adj	\N	\N	2	A2	\N
-101731	χειρότερα	adv	\N	\N	2	A2	\N
-101732	χείριστος	adj	\N	\N	2	A2	\N
-101733	χείριστα	adv	\N	\N	2	A2	\N
-101734	ουάου	interj	\N	\N	2	A2	\N
-101735	ακόμα (yet)	adv	\N	\N	2	A2	\N
-101736	μηδέν	num	\N	\N	2	A2	το
-101737	απολύτως	adv	\N	\N	2	B1	\N
-101738	ακαδημαϊκός	adj	\N	\N	2	B1	\N
-101739	πρόσβαση	n	\N	\N	2	B1	η
-101740	αποκτώ πρόσβαση	v	\N	\N	2	B1	\N
-101741	κατάλυμα	n	\N	\N	2	B1	το
-101742	λογαριασμός	n	\N	\N	2	B1	ο
-101743	σύμφωνα με	prep	\N	\N	2	B1	\N
-101744	επίτευγμα	n	\N	\N	2	B1	το
-101745	διαφήμιση	n	\N	\N	2	B1	η
-101746	προσθήκη	n	\N	\N	2	B1	η
-101747	θαυμάζω	v	\N	\N	2	B1	\N
-101748	παραδέχομαι	v	\N	\N	2	B1	\N
-101749	προχωρημένος	adj	\N	\N	2	B1	\N
-101750	συμβουλεύω	v	\N	\N	2	B1	\N
-101751	αντέχω οικονομικά	v	\N	\N	2	B1	\N
-101752	ηλικιωμένος	adj	\N	\N	2	B1	\N
-101753	πράκτορας	n	\N	\N	2	B1	ο
-101754	συμφωνία	n	\N	\N	2	B1	η
-101755	μπροστά	adv	\N	\N	2	B1	\N
-101756	στόχος	n	\N	\N	2	B1	ο
-101757	στοχεύω	v	\N	\N	2	B1	\N
-101758	συναγερμός	n	\N	\N	2	B1	ο
-101759	άλμπουμ	n	\N	\N	2	B1	το
-6730	shun	v	\N	\N	1	C2	\N
-101760	αλκοόλ	n	\N	\N	2	B1	το
-101761	αλκοολούχος	adj	\N	\N	2	B1	\N
-101762	εναλλακτικός	adj	\N	\N	2	B1	\N
-101763	εναλλακτική	n	\N	\N	2	B1	η
-101764	έκπληκτος	adj	\N	\N	2	B1	\N
-101765	φιλοδοξία	n	\N	\N	2	B1	η
-101766	φιλόδοξος	adj	\N	\N	2	B1	\N
-101767	ανακοινώνω	v	\N	\N	2	B1	\N
-101768	ανακοίνωση	n	\N	\N	2	B1	η
-101769	ενοχλώ	v	\N	\N	2	B1	\N
-101770	ενοχλημένος	adj	\N	\N	2	B1	\N
-101771	ενοχλητικός	adj	\N	\N	2	B1	\N
-101772	χωριστά	adv	\N	\N	2	B1	\N
-101773	ζητώ συγγνώμη	v	\N	\N	2	B1	\N
-101774	αίτηση	n	\N	\N	2	B1	η
-101775	ραντεβού	n	\N	\N	2	B1	το
-101776	εκτιμώ	v	\N	\N	2	B1	\N
-101777	περίπου	adv	\N	\N	2	B1	\N
-101778	συλλαμβάνω	v	\N	\N	2	B1	\N
-101779	άφιξη	n	\N	\N	2	B1	η
-101780	εργασία	n	\N	\N	2	B1	η
-101781	βοηθώ	v	\N	\N	2	B1	\N
-101782	ατμόσφαιρα	n	\N	\N	2	B1	η
-101783	επισυνάπτω	v	\N	\N	2	B1	\N
-101784	στάση	n	\N	\N	2	B1	η
-101785	ελκύω	v	\N	\N	2	B1	\N
-101786	ατραξιόν	n	\N	\N	2	B1	η
-101787	αρχή	n	\N	\N	2	B1	η
-101788	μέσος όρος	n	\N	\N	2	B1	ο
-101789	βραβείο	n	\N	\N	2	B1	το
-101790	βραβεύω	v	\N	\N	2	B1	\N
-101791	ενήμερος	adj	\N	\N	2	B1	\N
-101792	προς τα πίσω	adv	\N	\N	2	B1	\N
-101793	ψήνω	v	\N	\N	2	B1	\N
-101794	ισορροπία	n	\N	\N	2	B1	η
-101795	απαγόρευση	n	\N	\N	2	B1	η
-101796	όχθη	n	\N	\N	2	B1	η
-101797	βάση	n	\N	\N	2	B1	η
-101798	βασικός	adj	\N	\N	2	B1	\N
-101799	μπαταρία	n	\N	\N	2	B1	η
-101800	μάχη	n	\N	\N	2	B1	η
-101801	ομορφιά	n	\N	\N	2	B1	η
-101802	μέλισσα	n	\N	\N	2	B1	η
-101803	συμπεριφορά	n	\N	\N	2	B1	η
-101804	πεποίθηση	n	\N	\N	2	B1	η
-101805	πίστη	n	\N	\N	2	B1	η
-101806	καμπάνα	n	\N	\N	2	B1	η
-101807	κουδούνι	n	\N	\N	2	B1	το
-101808	λυγίζω	v	\N	\N	2	B1	\N
-101809	ωφελούμαι	v	\N	\N	2	B1	\N
-101810	δαγκώνω	v	\N	\N	2	B1	\N
-101811	τετράγωνο	n	\N	\N	2	B1	το
-101812	μπλοκάρω	v	\N	\N	2	B1	\N
-101813	επιβιβάζομαι	v	\N	\N	2	B1	\N
-101814	βόμβα	n	\N	\N	2	B1	η
-101815	βομβαρδίζω	v	\N	\N	2	B1	\N
-101816	κράτηση	n	\N	\N	2	B1	η
-101817	σύνορο	n	\N	\N	2	B1	το
-101818	ενοχλώ	v	\N	\N	2	B1	\N
-101819	κατάστημα	n	\N	\N	2	B1	το
-101820	κλαδί	n	\N	\N	2	B1	το
-101821	μάρκα	n	\N	\N	2	B1	η
-101822	γενναίος	adj	\N	\N	2	B1	\N
-101823	ανάσα	n	\N	\N	2	B1	η
-101824	αναπνέω	v	\N	\N	2	B1	\N
-101825	αναπνοή	n	\N	\N	2	B1	η
-101826	νύφη	n	\N	\N	2	B1	η
-101827	φούσκα	n	\N	\N	2	B1	η
-101828	σκάω	v	\N	\N	2	B1	\N
-101829	θάβω	v	\N	\N	2	B1	\N
-101830	ήρεμος	adj	\N	\N	2	B1	\N
-101831	εκστρατεία	n	\N	\N	2	B1	η
-101832	πανεπιστημιούπολη	n	\N	\N	2	B1	η
-101833	υποψήφιος	n	\N	\N	2	B1	ο
-101834	καπέλο	n	\N	\N	2	B1	το
-101835	καπετάνιος	n	\N	\N	2	B1	ο
-101836	καριέρα	n	\N	\N	2	B1	η
-101837	απρόσεκτος	adj	\N	\N	2	B1	\N
-101838	κατηγορία	n	\N	\N	2	B1	η
-101839	ταβάνι	n	\N	\N	2	B1	το
-101840	γιορτή	n	\N	\N	2	B1	η
-101841	κεντρικός	adj	\N	\N	2	B1	\N
-101842	αιώνας	n	\N	\N	2	B1	ο
-101843	τελετή	n	\N	\N	2	B1	η
-101844	αλυσίδα	n	\N	\N	2	B1	η
-101845	πρόκληση	n	\N	\N	2	B1	η
-101846	προκαλώ	v	\N	\N	2	B1	\N
-101847	πρωταθλητής	n	\N	\N	2	B1	ο
-101848	κανάλι	n	\N	\N	2	B1	το
-101849	κεφάλαιο	n	\N	\N	2	B1	το
-101850	χρέωση	n	\N	\N	2	B1	η
-101851	κατηγορία	n	\N	\N	2	B1	η
-101852	χρεώνω	v	\N	\N	2	B1	\N
-101853	κλέβω	v	\N	\N	2	B1	\N
-101854	αντιγράφω	v	\N	\N	2	B1	\N
-101855	χαρούμενος	adj	\N	\N	2	B1	\N
-101856	χημική ουσία	n	\N	\N	2	B1	η
-101857	χημικός	adj	\N	\N	2	B1	\N
-101858	στήθος	n	\N	\N	2	B1	το
-101859	παιδική ηλικία	n	\N	\N	2	B1	η
-101860	ισχυρισμός	n	\N	\N	2	B1	ο
-101861	αξίωση	n	\N	\N	2	B1	η
-101862	ισχυρίζομαι	v	\N	\N	2	B1	\N
-101863	κλικ	n	\N	\N	2	B1	το
-101864	κάνω κλικ	v	\N	\N	2	B1	\N
-101865	πελάτης	n	\N	\N	2	B1	ο
-101866	κοντινός	adj	\N	\N	2	B1	\N
-101867	πανί	n	\N	\N	2	B1	το
-101868	ύφασμα	n	\N	\N	2	B1	το
-101869	στοιχείο	n	\N	\N	2	B1	το
-101870	ένδειξη	n	\N	\N	2	B1	η
-101871	πούλμαν	n	\N	\N	2	B1	το
-101872	προπονητής	n	\N	\N	2	B1	ο
-101873	κάρβουνο	n	\N	\N	2	B1	το
-101874	συλλογή	n	\N	\N	2	B1	η
-101875	έγχρωμος	adj	\N	\N	2	B1	\N
-101876	συνδυάζω	v	\N	\N	2	B1	\N
-101877	σχολιάζω	v	\N	\N	2	B1	\N
-101878	εμπορικός	adj	\N	\N	2	B1	\N
-101879	διαφήμιση	n	\N	\N	2	B1	η
-101880	διαπράττω	v	\N	\N	2	B1	\N
-101881	επικοινωνία	n	\N	\N	2	B1	η
-101882	σύγκριση	n	\N	\N	2	B1	η
-101883	ανταγωνιστής	n	\N	\N	2	B1	ο
-101884	ανταγωνιστικός	adj	\N	\N	2	B1	\N
-101885	παράπονο	n	\N	\N	2	B1	το
-101886	σύνθετος	adj	\N	\N	2	B1	\N
-101887	περίπλοκος	adj	\N	\N	2	B1	\N
-101888	συγκεντρώνομαι	v	\N	\N	2	B1	\N
-101889	συμπεραίνω	v	\N	\N	2	B1	\N
-101890	σίγουρος	adj	\N	\N	2	B1	\N
-101891	επιβεβαιώνω	v	\N	\N	2	B1	\N
-101892	μπερδεύω	v	\N	\N	2	B1	\N
-101893	μπερδεμένος	adj	\N	\N	2	B1	\N
-101894	σύνδεση	n	\N	\N	2	B1	η
-101895	επικοινωνώ	v	\N	\N	2	B1	\N
-101896	επαφή	n	\N	\N	2	B1	η
-101897	δοχείο	n	\N	\N	2	B1	το
-101898	περιεχόμενο	n	\N	\N	2	B1	το
-101899	συνεχής	adj	\N	\N	2	B1	\N
-101900	αντίθεση	n	\N	\N	2	B1	η
-101901	κάνω αντίθεση	v	\N	\N	2	B1	\N
-101902	βολικός	adj	\N	\N	2	B1	\N
-101903	πείθω	v	\N	\N	2	B1	\N
-101904	χαλκός	n	\N	\N	2	B1	ο
-101905	κοστούμι	n	\N	\N	2	B1	το
-101906	εξοχικό	n	\N	\N	2	B1	το
-101907	βαμβάκι	n	\N	\N	2	B1	το
-101908	επαρχία	n	\N	\N	2	B1	η
-101909	δικαστήριο	n	\N	\N	2	B1	το
-101910	γήπεδο	n	\N	\N	2	B1	το
-101911	εξώφυλλο	n	\N	\N	2	B1	το
-101912	κάλυμμα	n	\N	\N	2	B1	το
-101913	καλύπτω	v	\N	\N	2	B1	\N
-101914	καλυμμένος	adj	\N	\N	2	B1	\N
-101915	δημιουργώ	v	\N	\N	2	B1	\N
-101916	πίστωση	n	\N	\N	2	B1	η
-101917	σκληρός	adj	\N	\N	2	B1	\N
-101918	πολιτιστικός	adj	\N	\N	2	B1	\N
-101919	πολιτισμός	n	\N	\N	2	B1	ο
-101920	νόμισμα	n	\N	\N	2	B1	το
-101921	τρέχων	adj	\N	\N	2	B1	\N
-101922	επί του παρόντος	adv	\N	\N	2	B1	\N
-101923	κουρτίνα	n	\N	\N	2	B1	η
-101924	έθιμο	n	\N	\N	2	B1	το
-101925	ζημιά	n	\N	\N	2	B1	η
-101926	βλάβη	n	\N	\N	2	B1	η
-101927	προξενώ ζημιά	v	\N	\N	2	B1	\N
-101928	ασχολούμαι	v	\N	\N	2	B1	\N
-101929	δεκαετία	n	\N	\N	2	B1	η
-101930	διακοσμώ	v	\N	\N	2	B1	\N
-101931	οριστικός	adj	\N	\N	2	B1	\N
-101932	παραδίδω	v	\N	\N	2	B1	\N
-101933	αναχώρηση	n	\N	\N	2	B1	η
-101934	επιφάνεια εργασίας	n	\N	\N	2	B1	η
-101935	παρά το γεγονός	prep	\N	\N	2	B1	\N
-101936	προορισμός	n	\N	\N	2	B1	ο
-101937	αποφασισμένος	adj	\N	\N	2	B1	\N
-101938	ανάπτυξη	n	\N	\N	2	B1	η
-101939	διάγραμμα	n	\N	\N	2	B1	το
-101940	διαμάντι	n	\N	\N	2	B1	το
-101941	δυσκολία	n	\N	\N	2	B1	η
-101942	άμεσος	adj	\N	\N	2	B1	\N
-101943	απευθείας	adv	\N	\N	2	B1	\N
-101944	βρωμιά	n	\N	\N	2	B1	η
-101945	μειονέκτημα	n	\N	\N	2	B1	το
-101946	απογοητευμένος	adj	\N	\N	2	B1	\N
-101947	απογοητευτικός	adj	\N	\N	2	B1	\N
-101948	έκπτωση	n	\N	\N	2	B1	η
-101949	συζητώ	v	\N	\N	2	B1	\N
-101950	αντιπαθώ	v	\N	\N	2	B1	\N
-101951	διαιρώ	v	\N	\N	2	B1	\N
-101952	ντοκιμαντέρ	n	\N	\N	2	B1	το
-101953	δωρίζω	v	\N	\N	2	B1	\N
-101954	αμφιβολία	n	\N	\N	2	B1	η
-101955	αμφιβάλλω	v	\N	\N	2	B1	\N
-101956	ντυμένος	adj	\N	\N	2	B1	\N
-101957	μεθυσμένος	adj	\N	\N	2	B1	\N
-101958	αναμενόμενος	adj	\N	\N	2	B1	\N
-101959	σκόνη	n	\N	\N	2	B1	η
-101960	καθήκον	n	\N	\N	2	B1	το
-101961	σεισμός	n	\N	\N	2	B1	ο
-101962	ανατολικός	adj	\N	\N	2	B1	\N
-101963	οικονομικός	adj	\N	\N	2	B1	\N
-101964	οικονομία	n	\N	\N	2	B1	η
-101965	άκρη	n	\N	\N	2	B1	η
-101966	συντάκτης	n	\N	\N	2	B1	ο
-101967	εκπαιδεύω	v	\N	\N	2	B1	\N
-101968	μορφωμένος	adj	\N	\N	2	B1	\N
-101969	εκπαιδευτικός	adj	\N	\N	2	B1	\N
-101970	αποτέλεσμα	n	\N	\N	2	B1	το
-101971	επίδραση	n	\N	\N	2	B1	η
-101972	αποτελεσματικός	adj	\N	\N	2	B1	\N
-101973	αποτελεσματικά	adv	\N	\N	2	B1	\N
-101974	προσπάθεια	n	\N	\N	2	B1	η
-101975	εκλογή	n	\N	\N	2	B1	η
-101976	φέρνω σε δύσκολη θέση	v	\N	\N	2	B1	\N
-101977	αμήχανος	adj	\N	\N	2	B1	\N
-101978	ντροπιαστικός	adj	\N	\N	2	B1	\N
-101979	έκτακτη ανάγκη	n	\N	\N	2	B1	η
-101980	συναίσθημα	n	\N	\N	2	B1	το
-101981	απασχόληση	n	\N	\N	2	B1	η
-101982	ενθαρρύνω	v	\N	\N	2	B1	\N
-101983	εχθρός	n	\N	\N	2	B1	ο
-101984	αρραβωνιασμένος	adj	\N	\N	2	B1	\N
-101985	μηχανική	n	\N	\N	2	B1	η
-101986	ψυχαγωγώ	v	\N	\N	2	B1	\N
-101987	διασκέδαση	n	\N	\N	2	B1	η
-101988	είσοδος	n	\N	\N	2	B1	η
-101989	συμμετοχή	n	\N	\N	2	B1	η
-101990	περιβάλλον	n	\N	\N	2	B1	το
-101991	περιβαλλοντικός	adj	\N	\N	2	B1	\N
-101992	επεισόδιο	n	\N	\N	2	B1	το
-101993	ίσος	adj	\N	\N	2	B1	\N
-101994	εξίσου	adv	\N	\N	2	B1	\N
-101995	δραπετεύω	v	\N	\N	2	B1	\N
-101996	απαραίτητος	adj	\N	\N	2	B1	\N
-101997	εκδήλωση	n	\N	\N	2	B1	η
-101998	γεγονός	n	\N	\N	2	B1	το
-101999	τελικά	adv	\N	\N	2	B1	\N
-102000	εξετάζω	v	\N	\N	2	B1	\N
-102001	ανταλλαγή	n	\N	\N	2	B1	η
-102002	ανταλλάσσω	v	\N	\N	2	B1	\N
-102003	ενθουσιασμός	n	\N	\N	2	B1	ο
-102004	έκθεση	n	\N	\N	2	B1	η
-102005	επεκτείνω	v	\N	\N	2	B1	\N
-102006	αναμενόμενος	adj	\N	\N	2	B1	\N
-102007	αποστολή	n	\N	\N	2	B1	η
-102008	εκστρατεία	n	\N	\N	2	B1	η
-102009	έμπειρος	adj	\N	\N	2	B1	\N
-102010	εκρήγνυμαι	v	\N	\N	2	B1	\N
-102011	εξερευνώ	v	\N	\N	2	B1	\N
-102012	έκρηξη	n	\N	\N	2	B1	η
-102013	εξαγωγή	n	\N	\N	2	B1	η
-102014	εξάγω	v	\N	\N	2	B1	\N
-102015	αντιμετωπίζω	v	\N	\N	2	B1	\N
-102016	γεγονός	n	\N	\N	2	B1	το
-102017	μάλλον	adv	\N	\N	2	B1	\N
-102018	σχετικά	adv	\N	\N	2	B1	\N
-102019	οικείος	adj	\N	\N	2	B1	\N
-102020	γνώριμος	adj	\N	\N	2	B1	\N
-102021	μου αρέσει	v	\N	\N	2	B1	\N
-102022	φαντάζομαι	v	\N	\N	2	B1	\N
-102023	συναρπαστικός	adj	\N	\N	2	B1	\N
-102024	μοντέρνος	adj	\N	\N	2	B1	\N
-102025	της μόδας	adj	\N	\N	2	B1	\N
-102026	δένω	v	\N	\N	2	B1	\N
-102027	ασφαλίζω	v	\N	\N	2	B1	\N
-102028	χάρη	n	\N	\N	2	B1	η
-102029	φόβος	n	\N	\N	2	B1	ο
-102030	φοβάμαι	v	\N	\N	2	B1	\N
-102031	χαρακτηριστικό	n	\N	\N	2	B1	το
-102032	παρουσιάζω	v	\N	\N	2	B1	\N
-102033	ταΐζω	v	\N	\N	2	B1	\N
-102034	φράχτης	n	\N	\N	2	B1	ο
-102035	μάχη	n	\N	\N	2	B1	η
-102036	αριθμός	n	\N	\N	2	B1	ο
-102037	φιγούρα	n	\N	\N	2	B1	η
-102038	αρχείο	n	\N	\N	2	B1	το
-102039	αρχειοθετώ	v	\N	\N	2	B1	\N
-102040	οικονομικός	adj	\N	\N	2	B1	\N
-102041	πρόστιμο	n	\N	\N	2	B1	το
-102042	φυσική κατάσταση	n	\N	\N	2	B1	η
-102043	σταθερός	adj	\N	\N	2	B1	\N
-102044	καθορισμένος	adj	\N	\N	2	B1	\N
-102045	λάμψη	n	\N	\N	2	B1	η
-102046	φλας	n	\N	\N	2	B1	το
-102047	πλημμύρα	n	\N	\N	2	B1	η
-102048	πλημμυρίζω	v	\N	\N	2	B1	\N
-102049	αλεύρι	n	\N	\N	2	B1	το
-102050	ροή	n	\N	\N	2	B1	η
-102051	ρέω	v	\N	\N	2	B1	\N
-102052	διπλώνω	v	\N	\N	2	B1	\N
-102053	κόσμος	n	\N	\N	2	B1	ο
-102054	λαϊκός	adj	\N	\N	2	B1	\N
-102055	επόμενος	adj	\N	\N	2	B1	\N
-102056	δύναμη	n	\N	\N	2	B1	η
-102057	ισχύς	n	\N	\N	2	B1	η
-102058	αναγκάζω	v	\N	\N	2	B1	\N
-102059	για πάντα	adv	\N	\N	2	B1	\N
-102060	πλαίσιο	n	\N	\N	2	B1	το
-102061	κορνίζα	n	\N	\N	2	B1	η
-102062	παγώνω	v	\N	\N	2	B1	\N
-102063	συχνά	adv	\N	\N	2	B1	\N
-102064	φιλία	n	\N	\N	2	B1	η
-102065	τρομάζω	v	\N	\N	2	B1	\N
-102066	τρομαγμένος	adj	\N	\N	2	B1	\N
-102067	τρομακτικός	adj	\N	\N	2	B1	\N
-102068	κατεψυγμένος	adj	\N	\N	2	B1	\N
-102069	τηγανίζω	v	\N	\N	2	B1	\N
-102070	καύσιμο	n	\N	\N	2	B1	το
-102071	λειτουργία	n	\N	\N	2	B1	η
-102072	λειτουργώ	v	\N	\N	2	B1	\N
-102073	γούνα	n	\N	\N	2	B1	η
-102074	περαιτέρω	adv	\N	\N	2	B1	\N
-102075	γκαράζ	n	\N	\N	2	B1	το
-102076	συγκεντρώνομαι	v	\N	\N	2	B1	\N
-102077	μαζεύω	v	\N	\N	2	B1	\N
-102078	γενικά	adv	\N	\N	2	B1	\N
-102079	γενιά	n	\N	\N	2	B1	η
-102080	γενναιόδωρος	adj	\N	\N	2	B1	\N
-102081	ευγενικός	adj	\N	\N	2	B1	\N
-102082	πράος	adj	\N	\N	2	B1	\N
-102083	κύριος	n	\N	\N	2	B1	ο
-102084	φάντασμα	n	\N	\N	2	B1	το
-102085	γίγαντας	n	\N	\N	2	B1	ο
-102086	γιγαντιαίος	adj	\N	\N	2	B1	\N
-102087	συναυλία	n	\N	\N	2	B1	η
-102088	εμφάνιση	n	\N	\N	2	B1	η
-102089	χαρούμενος	adj	\N	\N	2	B1	\N
-102090	ευτυχής	adj	\N	\N	2	B1	\N
-102091	παγκόσμιος	adj	\N	\N	2	B1	\N
-102092	γάντι	n	\N	\N	2	B1	το
-102093	αγαθά	n	\N	\N	2	B1	τα
-102094	εμπορεύματα	n	\N	\N	2	B1	τα
-102095	βαθμός	n	\N	\N	2	B1	ο
-102096	τάξη	n	\N	\N	2	B1	η
-102097	αποφοιτώ	v	\N	\N	2	B1	\N
-102098	κόκκος	n	\N	\N	2	B1	ο
-102099	δημητριακά	n	\N	\N	2	B1	τα
-102100	ευγνώμων	adj	\N	\N	2	B1	\N
-102101	ανάπτυξη	n	\N	\N	2	B1	η
-102102	φύλακας	n	\N	\N	2	B1	ο
-102103	φρουρός	n	\N	\N	2	B1	ο
-102104	φυλάω	v	\N	\N	2	B1	\N
-102105	ένοχος	adj	\N	\N	2	B1	\N
-102106	κρεμάω	v	\N	\N	2	B1	\N
-102107	ευτυχία	n	\N	\N	2	B1	η
-102108	σχεδόν καθόλου	adv	\N	\N	2	B1	\N
-102109	μετά βίας	adv	\N	\N	2	B1	\N
-102110	τίτλος ειδήσεων	n	\N	\N	2	B1	ο
-102111	θέρμανση	n	\N	\N	2	B1	η
-102112	βαριά	adv	\N	\N	2	B1	\N
-102113	ελικόπτερο	n	\N	\N	2	B1	το
-102114	επισημαίνω	v	\N	\N	2	B1	\N
-102115	τονίζω	v	\N	\N	2	B1	\N
-102116	εξαιρετικά	adv	\N	\N	2	B1	\N
-102117	πολύ	adv	\N	\N	2	B1	\N
-102118	προσλαμβάνω	v	\N	\N	2	B1	\N
-102119	νοικιάζω	v	\N	\N	2	B1	\N
-102120	υπαινιγμός	n	\N	\N	2	B1	ο
-102121	υπαινίσσομαι	v	\N	\N	2	B1	\N
-102122	ιστορικός	adj	\N	\N	2	B1	\N
-102123	ειλικρινής	adj	\N	\N	2	B1	\N
-102124	μέλι	n	\N	\N	2	B1	το
-102125	φρικτός	adj	\N	\N	2	B1	\N
-102126	τρόμος	n	\N	\N	2	B1	ο
-102127	οικοδεσπότης	n	\N	\N	2	B1	ο
-102128	φιλοξενώ	v	\N	\N	2	B1	\N
-102129	ωστόσο	adv	\N	\N	2	B1	\N
-102130	κυνηγώ	v	\N	\N	2	B1	\N
-102131	τυφώνας	n	\N	\N	2	B1	ο
-102132	αμαθής	adj	\N	\N	2	B1	\N
-102133	αγνοώ	v	\N	\N	2	B1	\N
-102134	παράνομος	adj	\N	\N	2	B1	\N
-102135	φαντάζομαι	v	\N	\N	2	B1	\N
-102136	φανταστικός	adj	\N	\N	2	B1	\N
-102137	άμεσος	adj	\N	\N	2	B1	\N
-102138	μετανάστης	n	\N	\N	2	B1	ο
-102139	αντίκτυπος	n	\N	\N	2	B1	ο
-102140	επίδραση	n	\N	\N	2	B1	η
-102141	εισαγωγή	n	\N	\N	2	B1	η
-102142	εισάγω	v	\N	\N	2	B1	\N
-102143	σπουδαιότητα	n	\N	\N	2	B1	η
-102144	εντύπωση	n	\N	\N	2	B1	η
-102145	εντυπωσιακός	adj	\N	\N	2	B1	\N
-102146	βελτιώνω	v	\N	\N	2	B1	\N
-102147	βελτίωση	n	\N	\N	2	B1	η
-102148	απίστευτα	adv	\N	\N	2	B1	\N
-102149	πράγματι	adv	\N	\N	2	B1	\N
-102150	υποδεικνύω	v	\N	\N	2	B1	\N
-102151	έμμεσος	adj	\N	\N	2	B1	\N
-102152	εσωτερικού χώρου	adj	\N	\N	2	B1	\N
-102153	μέσα	adv	\N	\N	2	B1	\N
-102154	σε εσωτερικό χώρο	adv	\N	\N	2	B1	\N
-102155	βρέφος	n	\N	\N	2	B1	το
-102156	επιρροή	n	\N	\N	2	B1	η
-102157	επηρεάζω	v	\N	\N	2	B1	\N
-102158	συστατικό	n	\N	\N	2	B1	το
-102159	τραυματίζω	v	\N	\N	2	B1	\N
-102160	τραυματισμένος	adj	\N	\N	2	B1	\N
-102161	αθώος	adj	\N	\N	2	B1	\N
-102162	νοημοσύνη	n	\N	\N	2	B1	η
-102163	ευφυΐα	n	\N	\N	2	B1	η
-102164	σκοπεύω	v	\N	\N	2	B1	\N
-102165	πρόθεση	n	\N	\N	2	B1	η
-102166	επενδύω	v	\N	\N	2	B1	\N
-102167	ερευνώ	v	\N	\N	2	B1	\N
-102168	ανακρίνω	v	\N	\N	2	B1	\N
-102169	αναμεμειγμένος	adj	\N	\N	2	B1	\N
-102170	σίδερο	n	\N	\N	2	B1	το
-102171	σιδερώνω	v	\N	\N	2	B1	\N
-102172	ζήτημα	n	\N	\N	2	B1	το
-102173	θέμα	n	\N	\N	2	B1	το
-102174	πληροφορική	n	\N	\N	2	B1	η
-102175	περιοδικό	n	\N	\N	2	B1	το
-102176	ημερολόγιο	n	\N	\N	2	B1	το
-102177	δικαστής	n	\N	\N	2	B1	ο
-102178	κρίνω	v	\N	\N	2	B1	\N
-102179	πρόθυμος	adj	\N	\N	2	B1	\N
-102180	ένθερμος	adj	\N	\N	2	B1	\N
-102181	βασικός	adj	\N	\N	2	B1	\N
-102182	κλειδί	adj	\N	\N	2	B1	\N
-102183	πληκτρολόγιο	n	\N	\N	2	B1	το
-102184	κλοτσάω	v	\N	\N	2	B1	\N
-102185	φόνος	n	\N	\N	2	B1	ο
-102186	ευγενικός	adj	\N	\N	2	B1	\N
-102187	καλόκαρδος	adj	\N	\N	2	B1	\N
-102188	βασίλειο	n	\N	\N	2	B1	το
-102189	ετικέτα	n	\N	\N	2	B1	η
-102190	βάζω ετικέτα	v	\N	\N	2	B1	\N
-102191	εργαστήριο	n	\N	\N	2	B1	το
-102192	έλλειψη	n	\N	\N	2	B1	η
-102193	στερούμαι	v	\N	\N	2	B1	\N
-102194	τελευταίος	adj	\N	\N	2	B1	\N
-102195	πρόσφατος	adj	\N	\N	2	B1	\N
-102196	ακουμπώ	v	\N	\N	2	B1	\N
-102197	στρώνω	v	\N	\N	2	B1	\N
-102198	στρώμα	n	\N	\N	2	B1	το
-102199	επίπεδο	n	\N	\N	2	B1	το
-102200	προβάδισμα	n	\N	\N	2	B1	το
-102201	κορυφαίος	adj	\N	\N	2	B1	\N
-102202	φύλλο	n	\N	\N	2	B1	το
-102203	δέρμα	n	\N	\N	2	B1	το
-102204	δερμάτινος	adj	\N	\N	2	B1	\N
-102205	νόμιμος	adj	\N	\N	2	B1	\N
-102206	ελεύθερος χρόνος	n	\N	\N	2	B1	ο
-102207	μήκος	n	\N	\N	2	B1	το
-102208	ισοπεδώνω	v	\N	\N	2	B1	\N
-102209	λέω ψέματα	v	\N	\N	2	B1	\N
-102210	κείτομαι	v	\N	\N	2	B1	\N
-102211	όριο	n	\N	\N	2	B1	το
-102212	περιορίζω	v	\N	\N	2	B1	\N
-102213	χείλος	n	\N	\N	2	B1	το
-102214	υγρό	n	\N	\N	2	B1	το
-102215	λογοτεχνία	n	\N	\N	2	B1	η
-102216	διαβίωση	n	\N	\N	2	B1	η
-102217	ζωντανός	adj	\N	\N	2	B1	\N
-102218	εντοπίζω	v	\N	\N	2	B1	\N
-102219	τοποθετώ	v	\N	\N	2	B1	\N
-102220	βρίσκεται	adj	\N	\N	2	B1	\N
-102221	τοποθεσία	n	\N	\N	2	B1	η
-102222	κορμός	n	\N	\N	2	B1	ο
-102223	μόνος	adj	\N	\N	2	B1	\N
-102224	μοναχικός	adj	\N	\N	2	B1	\N
-102225	απώλεια	n	\N	\N	2	B1	η
-102226	πολυτέλεια	n	\N	\N	2	B1	η
-102227	τρελός	adj	\N	\N	2	B1	\N
-102228	μαγεία	n	\N	\N	2	B1	η
-102229	κυρίως	adv	\N	\N	2	B1	\N
-102230	εμπορικό κέντρο	n	\N	\N	2	B1	το
-102231	διοίκηση	n	\N	\N	2	B1	η
-102232	διαχείριση	n	\N	\N	2	B1	η
-102233	μάρκετινγκ	n	\N	\N	2	B1	το
-102234	γάμος	n	\N	\N	2	B1	ο
-102235	υλικό	n	\N	\N	2	B1	το
-102236	εν τω μεταξύ	adv	\N	\N	2	B1	\N
-102237	μέτρο	n	\N	\N	2	B1	το
-102238	μετράω	v	\N	\N	2	B1	\N
-102239	μεσαίος	adj	\N	\N	2	B1	\N
-102240	ψυχικός	adj	\N	\N	2	B1	\N
-102241	ακαταστασία	n	\N	\N	2	B1	η
-102242	μπέρδεμα	n	\N	\N	2	B1	το
-102243	ήπιος	adj	\N	\N	2	B1	\N
-102244	ελαφρύς	adj	\N	\N	2	B1	\N
-102245	μύλος	n	\N	\N	2	B1	ο
-102246	ορυχείο	n	\N	\N	2	B1	το
-102247	ανακατεύω	v	\N	\N	2	B1	\N
-102248	αναμιγνύω	v	\N	\N	2	B1	\N
-102249	μίγμα	n	\N	\N	2	B1	το
-102250	μοντέλο	n	\N	\N	2	B1	το
-102251	διάθεση	n	\N	\N	2	B1	η
-102252	κέφι	n	\N	\N	2	B1	το
-102253	λάσπη	n	\N	\N	2	B1	η
-102254	φόνος	n	\N	\N	2	B1	ο
-102255	δολοφονία	n	\N	\N	2	B1	η
-102256	δολοφονώ	v	\N	\N	2	B1	\N
-102257	μυς	n	\N	\N	2	B1	ο
-102258	μυστήριο	n	\N	\N	2	B1	το
-102259	νύχι	n	\N	\N	2	B1	το
-102260	καρφί	n	\N	\N	2	B1	το
-102261	αφήγηση	n	\N	\N	2	B1	η
-102262	έθνος	n	\N	\N	2	B1	το
-102263	ντόπιος	adj	\N	\N	2	B1	\N
-102264	ιθαγενής	n	\N	\N	2	B1	ο
-102265	φυσικά	adv	\N	\N	2	B1	\N
-102266	αναγκαστικά	adv	\N	\N	2	B1	\N
-102267	βελόνα	n	\N	\N	2	B1	η
-102268	αρνητικός	adj	\N	\N	2	B1	\N
-102269	γειτονιά	n	\N	\N	2	B1	η
-102270	ούτε	conj	\N	\N	2	B1	\N
-102271	δίκτυ	n	\N	\N	2	B1	το
-102272	δίχτυ	n	\N	\N	2	B1	το
-102273	κανονικός	adj	\N	\N	2	B1	\N
-102274	βόρειος	adj	\N	\N	2	B1	\N
-102275	σημειώνω	v	\N	\N	2	B1	\N
-102276	πυρηνικός	adj	\N	\N	2	B1	\N
-102277	προφανής	adj	\N	\N	2	B1	\N
-102278	προφανώς	adv	\N	\N	2	B1	\N
-102279	περίσταση	n	\N	\N	2	B1	η
-102280	συμβαίνω	v	\N	\N	2	B1	\N
-102281	παράξενος	adj	\N	\N	2	B1	\N
-102282	μονός	adj	\N	\N	2	B1	\N
-102283	επίσημος	adj	\N	\N	2	B1	\N
-102284	παλιομοδίτικος	adj	\N	\N	2	B1	\N
-102285	μόλις	conj	\N	\N	2	B1	\N
-102286	άποψη	n	\N	\N	2	B1	η
-102287	γνώμη	n	\N	\N	2	B1	η
-102288	εγχείρηση	n	\N	\N	2	B1	η
-102289	λειτουργία	n	\N	\N	2	B1	η
-102290	ευκαιρία	n	\N	\N	2	B1	η
-102291	οργανωμένος	adj	\N	\N	2	B1	\N
-102292	διοργανωτής	n	\N	\N	2	B1	ο
-102293	πρωτότυπος	adj	\N	\N	2	B1	\N
-102294	αρχικός	adj	\N	\N	2	B1	\N
-102295	αρχικά	adv	\N	\N	2	B1	\N
-102296	πρέπει	v	\N	\N	2	B1	\N
-102297	δικός μας	pron	\N	\N	2	B1	\N
-102298	εξωτερικός	adj	\N	\N	2	B1	\N
-102299	έξω	adv	\N	\N	2	B1	\N
-102300	πακέτο	n	\N	\N	2	B1	το
-102301	σημειωματάριο	n	\N	\N	2	B1	το
-102302	επίθεμα	n	\N	\N	2	B1	το
-102303	επώδυνος	adj	\N	\N	2	B1	\N
-102304	χλωμός	adj	\N	\N	2	B1	\N
-102305	τηγάνι	n	\N	\N	2	B1	το
-102306	συμμετέχω	v	\N	\N	2	B1	\N
-102307	ιδιαίτερα	adv	\N	\N	2	B1	\N
-102308	πάθος	n	\N	\N	2	B1	το
-102309	μονοπάτι	n	\N	\N	2	B1	το
-102310	πληρωμή	n	\N	\N	2	B1	η
-102311	ειρηνικός	adj	\N	\N	2	B1	\N
-102312	ήσυχος	adj	\N	\N	2	B1	\N
-102313	ποσοστό	n	\N	\N	2	B1	το
-102314	τέλεια	adv	\N	\N	2	B1	\N
-102315	παράσταση	n	\N	\N	2	B1	η
-102316	επίδοση	n	\N	\N	2	B1	η
-102317	προσωπικά	adv	\N	\N	2	B1	\N
-102318	απαισιόδοξος	adj	\N	\N	2	B1	\N
-102319	πείθω	v	\N	\N	2	B1	\N
-102320	φωτογράφος	n	\N	\N	2	B1	ο
-102321	φωτογραφία	n	\N	\N	2	B1	η
-102322	πινέζα	n	\N	\N	2	B1	η
-102323	καρφίτσα	n	\N	\N	2	B1	η
-102324	καρφιτσώνω	v	\N	\N	2	B1	\N
-102325	σωλήνας	n	\N	\N	2	B1	ο
-102326	πίπα	n	\N	\N	2	B1	η
-102327	σχεδιασμός	n	\N	\N	2	B1	ο
-102328	προγραμματισμός	n	\N	\N	2	B1	ο
-102329	ευχάριστος	adj	\N	\N	2	B1	\N
-102330	ευχαρίστηση	n	\N	\N	2	B1	η
-102331	απόλαυση	n	\N	\N	2	B1	η
-102332	άφθονος	pron	\N	\N	2	B1	\N
-102333	μπόλικος	pron	\N	\N	2	B1	\N
-102334	πλοκή	n	\N	\N	2	B1	η
-102335	σχέδιο	n	\N	\N	2	B1	το
-102336	συν	prep	\N	\N	2	B1	\N
-102337	επιπλέον	conj	\N	\N	2	B1	\N
-102338	ποίημα	n	\N	\N	2	B1	το
-102339	ποιητής	n	\N	\N	2	B1	ο
-102340	ποίηση	n	\N	\N	2	B1	η
-102341	δείχνω	v	\N	\N	2	B1	\N
-102342	σημαδεύω	v	\N	\N	2	B1	\N
-102343	δηλητήριο	n	\N	\N	2	B1	το
-102344	δηλητηριάζω	v	\N	\N	2	B1	\N
-102345	δηλητηριώδης	adj	\N	\N	2	B1	\N
-102346	πολιτική	n	\N	\N	2	B1	η
-102347	τακτική	n	\N	\N	2	B1	η
-102348	πολιτικός	adj	\N	\N	2	B1	\N
-102349	πολιτικός	n	\N	\N	2	B1	ο
-102350	πολιτική επιστήμη	n	\N	\N	2	B1	η
-102351	λιμάνι	n	\N	\N	2	B1	το
-102352	πορτρέτο	n	\N	\N	2	B1	το
-102353	θέση	n	\N	\N	2	B1	η
-102354	τοποθεσία	n	\N	\N	2	B1	η
-102355	θετικός	adj	\N	\N	2	B1	\N
-102356	πιθανώς	adv	\N	\N	2	B1	\N
-102357	ίσως	adv	\N	\N	2	B1	\N
-102358	γλάστρα	n	\N	\N	2	B1	η
-102359	κατσαρόλα	n	\N	\N	2	B1	η
-102360	ρίχνω	v	\N	\N	2	B1	\N
-102361	φτώχεια	n	\N	\N	2	B1	η
-102362	σκόνη	n	\N	\N	2	B1	η
-102363	πούδρα	n	\N	\N	2	B1	η
-102364	δύναμη	n	\N	\N	2	B1	η
-102365	ισχύς	n	\N	\N	2	B1	η
-102366	ισχυρός	adj	\N	\N	2	B1	\N
-102367	δυνατός	adj	\N	\N	2	B1	\N
-102368	πρακτικός	adj	\N	\N	2	B1	\N
-102369	προσεύχομαι	v	\N	\N	2	B1	\N
-102370	προσευχή	n	\N	\N	2	B1	η
-102371	προσόν	n	\N	\N	2	B1	το
-102372	πτυχίο	n	\N	\N	2	B1	το
-102373	πιστοποιημένος	adj	\N	\N	2	B1	\N
-102374	ειδικευμένος	adj	\N	\N	2	B1	\N
-102375	προκρίνομαι	v	\N	\N	2	B1	\N
-102376	παίρνω πτυχίο	v	\N	\N	2	B1	\N
-102377	ουρά	n	\N	\N	2	B1	η
-102378	περιμένω στην ουρά	v	\N	\N	2	B1	\N
-102379	παραιτούμαι	v	\N	\N	2	B1	\N
-102380	σταματώ	v	\N	\N	2	B1	\N
-102381	παράθεση	n	\N	\N	2	B1	η
-102382	απόσπασμα	n	\N	\N	2	B1	το
-102383	παραθέτω	v	\N	\N	2	B1	\N
-102384	αγώνας δρόμου	n	\N	\N	2	B1	ο
-102385	φυλή	n	\N	\N	2	B1	η
-102386	αγώνες	n	\N	\N	2	B1	οι
-102387	ποικιλία	n	\N	\N	2	B1	η
-102388	εύρος	n	\N	\N	2	B1	το
-102389	σπάνιος	adj	\N	\N	2	B1	\N
-102390	σπάνια	adv	\N	\N	2	B1	\N
-102391	αντίδραση	n	\N	\N	2	B1	η
-102392	πραγματικότητα	n	\N	\N	2	B1	η
-102393	απόδειξη	n	\N	\N	2	B1	η
-102394	σύσταση	n	\N	\N	2	B1	η
-102395	αναφορά	n	\N	\N	2	B1	η
-102396	παραπομπή	n	\N	\N	2	B1	η
-102397	αντανακλώ	v	\N	\N	2	B1	\N
-102398	τακτικά	adv	\N	\N	2	B1	\N
-102399	απορρίπτω	v	\N	\N	2	B1	\N
-102400	σχετίζομαι	v	\N	\N	2	B1	\N
-102401	σχετικός	adj	\N	\N	2	B1	\N
-102402	σχέση	n	\N	\N	2	B1	η
-102403	συγγενής	n	\N	\N	2	B1	ο/η
-102404	χαλαρός	adj	\N	\N	2	B1	\N
-102405	χαλαρωτικός	adj	\N	\N	2	B1	\N
-102406	αποδεσμεύω	v	\N	\N	2	B1	\N
-102407	κυκλοφορώ	v	\N	\N	2	B1	\N
-102408	αξιόπιστος	adj	\N	\N	2	B1	\N
-102409	θρησκεία	n	\N	\N	2	B1	η
-102410	θρησκευτικός	adj	\N	\N	2	B1	\N
-102411	παραμένω	v	\N	\N	2	B1	\N
-102412	υπενθυμίζω	v	\N	\N	2	B1	\N
-102413	απομακρυσμένος	adj	\N	\N	2	B1	\N
-102414	ενοίκιο	n	\N	\N	2	B1	το
-102415	νοικιάζω	v	\N	\N	2	B1	\N
-102416	επαναλαμβανόμενος	adj	\N	\N	2	B1	\N
-102417	αντιπροσωπεύω	v	\N	\N	2	B1	\N
-102418	απαιτώ	v	\N	\N	2	B1	\N
-102419	κράτηση	n	\N	\N	2	B1	η
-102420	πόρος	n	\N	\N	2	B1	ο
-102421	σεβασμός	n	\N	\N	2	B1	ο
-102422	σέβομαι	v	\N	\N	2	B1	\N
-102423	απάντηση	n	\N	\N	2	B1	η
-102424	ανταπόκριση	n	\N	\N	2	B1	η
-102425	υπευθυνότητα	n	\N	\N	2	B1	η
-102426	υπεύθυνος	adj	\N	\N	2	B1	\N
-102427	αποτέλεσμα	n	\N	\N	2	B1	το
-102428	συνταξιοδοτούμαι	v	\N	\N	2	B1	\N
-102429	συνταξιούχος	adj	\N	\N	2	B1	\N
-102430	κάνω επανάληψη	v	\N	\N	2	B1	\N
-102431	τουφέκι	n	\N	\N	2	B1	το
-102432	ανεβαίνω	v	\N	\N	2	B1	\N
-102433	αυξάνομαι	v	\N	\N	2	B1	\N
-102434	ρίσκο	n	\N	\N	2	B1	το
-102435	κίνδυνος	n	\N	\N	2	B1	ο
-102436	ρισκάρω	v	\N	\N	2	B1	\N
-102437	ρομπότ	n	\N	\N	2	B1	το
-102438	κυλάω	v	\N	\N	2	B1	\N
-102439	ρομαντικός	adj	\N	\N	2	B1	\N
-102440	σκοινί	n	\N	\N	2	B1	το
-102441	τραχύς	adj	\N	\N	2	B1	\N
-102442	άγριος	adj	\N	\N	2	B1	\N
-102443	σειρά	n	\N	\N	2	B1	η
-102444	γραμμή	n	\N	\N	2	B1	η
-102445	βασιλικός	adj	\N	\N	2	B1	\N
-102446	ράγκμπι	n	\N	\N	2	B1	το
-102447	κυβερνώ	v	\N	\N	2	B1	\N
-102448	ορίζω	v	\N	\N	2	B1	\N
-102449	ασφάλεια	n	\N	\N	2	B1	η
-102450	ναύτης	n	\N	\N	2	B1	ο
-102451	δείγμα	n	\N	\N	2	B1	το
-102452	άμμος	n	\N	\N	2	B1	η
-102453	σαρώνω	v	\N	\N	2	B1	\N
-102454	επιστημονικός	adj	\N	\N	2	B1	\N
-102455	σενάριο	n	\N	\N	2	B1	το
-102456	γλυπτό	n	\N	\N	2	B1	το
-102457	δευτεροβάθμιος	adj	\N	\N	2	B1	\N
-102458	ασφάλεια	n	\N	\N	2	B1	η
-102459	φύλαξη	n	\N	\N	2	B1	η
-102460	σπόρος	n	\N	\N	2	B1	ο
-102461	λογικός	adj	\N	\N	2	B1	\N
-102462	συνετός	adj	\N	\N	2	B1	\N
-102463	χωρίζω	v	\N	\N	2	B1	\N
-102464	διαχωρίζω	v	\N	\N	2	B1	\N
-102465	σοβαρά	adv	\N	\N	2	B1	\N
-102466	υπηρέτης	n	\N	\N	2	B1	ο
-102467	ορίζω	v	\N	\N	2	B1	\N
-102468	ρυθμίζω	v	\N	\N	2	B1	\N
-102469	σετ	n	\N	\N	2	B1	το
-102470	σκηνικό	n	\N	\N	2	B1	το
-102471	περιβάλλον	n	\N	\N	2	B1	το
-102472	φύλο	n	\N	\N	2	B1	το
-102473	σεξουαλικός	adj	\N	\N	2	B1	\N
-102474	κοφτερός	adj	\N	\N	2	B1	\N
-102475	αιχμηρός	adj	\N	\N	2	B1	\N
-102476	ράφι	n	\N	\N	2	B1	το
-102477	κοχύλι	n	\N	\N	2	B1	το
-102478	κέλυφος	n	\N	\N	2	B1	το
-102479	βάρδια	n	\N	\N	2	B1	η
-102480	μετατοπίζω	v	\N	\N	2	B1	\N
-102481	λάμπω	v	\N	\N	2	B1	\N
-102482	γυαλίζω	v	\N	\N	2	B1	\N
-102483	λαμπερός	adj	\N	\N	2	B1	\N
-102484	γυαλιστερός	adj	\N	\N	2	B1	\N
-102485	πυροβολώ	v	\N	\N	2	B1	\N
-102486	τραβάω φωτογραφία	v	\N	\N	2	B1	\N
-102487	σοκ	n	\N	\N	2	B1	το
-102488	σοκάρω	v	\N	\N	2	B1	\N
-102489	βολή	n	\N	\N	2	B1	η
-102490	πυροβολισμός	n	\N	\N	2	B1	ο
-102491	ντροπαλός	adj	\N	\N	2	B1	\N
-102492	θέα	n	\N	\N	2	B1	η
-102493	όραση	n	\N	\N	2	B1	η
-102494	σήμα	n	\N	\N	2	B1	το
-102495	σιωπηλός	adj	\N	\N	2	B1	\N
-102496	βουβός	adj	\N	\N	2	B1	\N
-102497	ανόητος	adj	\N	\N	2	B1	\N
-102498	χαζός	adj	\N	\N	2	B1	\N
-102499	ομοιότητα	n	\N	\N	2	B1	η
-102500	παρόμοια	adv	\N	\N	2	B1	\N
-102501	απλά	adv	\N	\N	2	B1	\N
-102502	από τότε που	conj	\N	\N	2	B1	\N
-102503	εφόσον	conj	\N	\N	2	B1	\N
-102504	βυθίζομαι	v	\N	\N	2	B1	\N
-102505	δεξιότητα	n	\N	\N	2	B1	η
-102506	ικανότητα	n	\N	\N	2	B1	η
-102507	παραλείπω	v	\N	\N	2	B1	\N
-102508	πηδάω	v	\N	\N	2	B1	\N
-102509	βροντάω	v	\N	\N	2	B1	\N
-102510	χαστουκίζω	v	\N	\N	2	B1	\N
-102511	φέτα	n	\N	\N	2	B1	η
-102512	κόβω σε φέτες	v	\N	\N	2	B1	\N
-102513	ελαφρώς	adv	\N	\N	2	B1	\N
-102514	έξυπνος	adj	\N	\N	2	B1	\N
-102515	κομψός	adj	\N	\N	2	B1	\N
-102516	λείος	adj	\N	\N	2	B1	\N
-102517	ομαλός	adj	\N	\N	2	B1	\N
-102518	κοινωνία	n	\N	\N	2	B1	η
-102519	λογισμικό	n	\N	\N	2	B1	το
-102520	έδαφος	n	\N	\N	2	B1	το
-102521	στερεός	adj	\N	\N	2	B1	\N
-102522	συμπαγής	adj	\N	\N	2	B1	\N
-102523	λύνω	v	\N	\N	2	B1	\N
-102524	επιλύω	v	\N	\N	2	B1	\N
-102525	ταξινομώ	v	\N	\N	2	B1	\N
-102526	ξεδιαλέγω	v	\N	\N	2	B1	\N
-102527	νότιος	adj	\N	\N	2	B1	\N
-102528	ανεπιθύμητη αλληλογραφία	n	\N	\N	2	B1	η
-102529	συγκεκριμένα	adv	\N	\N	2	B1	\N
-102530	ειδικά	adv	\N	\N	2	B1	\N
-102531	ταχύτητα	n	\N	\N	2	B1	η
-102532	δαπάνες	n	\N	\N	2	B1	οι
-102533	έξοδα	n	\N	\N	2	B1	τα
-102534	καυτερός	adj	\N	\N	2	B1	\N
-102535	πικάντικος	adj	\N	\N	2	B1	\N
-102536	πνεύμα	n	\N	\N	2	B1	το
-102537	προφορικός	adj	\N	\N	2	B1	\N
-102538	σημάδι	n	\N	\N	2	B1	το
-102539	κηλίδα	n	\N	\N	2	B1	η
-102540	εντοπίζω	v	\N	\N	2	B1	\N
-102541	διαδίδω	v	\N	\N	2	B1	\N
-102542	απλώνω	v	\N	\N	2	B1	\N
-102543	άνοιξη	n	\N	\N	2	B1	η
-102544	ελατήριο	n	\N	\N	2	B1	το
-102545	κατάσκοπος	n	\N	\N	2	B1	ο
-102546	κατασκοπεύω	v	\N	\N	2	B1	\N
-102547	στάδιο	n	\N	\N	2	B1	το
-102548	προσωπικό	n	\N	\N	2	B1	το
-102549	πρότυπο	n	\N	\N	2	B1	το
-102550	επίπεδο	n	\N	\N	2	B1	το
-102551	δηλώνω	v	\N	\N	2	B1	\N
-102552	άγαλμα	n	\N	\N	2	B1	το
-102553	κολλάω	v	\N	\N	2	B1	\N
-102554	μπήγω	v	\N	\N	2	B1	\N
-102555	ξύλο	n	\N	\N	2	B1	το
-102556	ραβδί	n	\N	\N	2	B1	το
-102557	αποθηκεύω	v	\N	\N	2	B1	\N
-102558	ξένος	n	\N	\N	2	B1	ο
-102559	δύναμη	n	\N	\N	2	B1	η
-102560	σπάγγος	n	\N	\N	2	B1	ο
-102561	σθεναρά	adv	\N	\N	2	B1	\N
-102562	έντονα	adv	\N	\N	2	B1	\N
-102563	στούντιο	n	\N	\N	2	B1	το
-102564	πράγματα	n	\N	\N	2	B1	τα
-102565	υλικό	n	\N	\N	2	B1	το
-102566	με επιτυχία	adv	\N	\N	2	B1	\N
-102567	επιτυχημένα	adv	\N	\N	2	B1	\N
-102568	ξαφνικός	adj	\N	\N	2	B1	\N
-102569	αιφνίδιος	adj	\N	\N	2	B1	\N
-102570	υποφέρω	v	\N	\N	2	B1	\N
-102571	πάσχω	v	\N	\N	2	B1	\N
-102572	ταιριάζω	v	\N	\N	2	B1	\N
-102573	πηγαίνω	v	\N	\N	2	B1	\N
-102574	κατάλληλος	adj	\N	\N	2	B1	\N
-102575	επιτυχία	n	\N	\N	2	B1	η
-102576	συνοψίζω	v	\N	\N	2	B1	\N
-102577	περίληψη	n	\N	\N	2	B1	η
-102578	προμήθεια	n	\N	\N	2	B1	η
-102579	απόθεμα	n	\N	\N	2	B1	το
-102580	προμηθεύω	v	\N	\N	2	B1	\N
-102581	παρέχω	v	\N	\N	2	B1	\N
-102582	υποστηρικτής	n	\N	\N	2	B1	ο
-102583	σίγουρα	adv	\N	\N	2	B1	\N
-102584	ασφαλώς	adv	\N	\N	2	B1	\N
-102585	επιφάνεια	n	\N	\N	2	B1	η
-102586	επιβιώνω	v	\N	\N	2	B1	\N
-102587	έρευνα	n	\N	\N	2	B1	η
-102588	δημοσκόπηση	n	\N	\N	2	B1	η
-102589	διακόπτης	n	\N	\N	2	B1	ο
-102590	αλλάζω	v	\N	\N	2	B1	\N
-102591	σπαθί	n	\N	\N	2	B1	το
-102592	σύμπτωμα	n	\N	\N	2	B1	το
-102593	ουρά	n	\N	\N	2	B1	η
-102594	ταλέντο	n	\N	\N	2	B1	το
-102595	ταλαντούχος	adj	\N	\N	2	B1	\N
-102596	ταινία	n	\N	\N	2	B1	η
-102597	φόρος	n	\N	\N	2	B1	ο
-102598	τεχνικός	adj	\N	\N	2	B1	\N
-102599	τεχνική	n	\N	\N	2	B1	η
-102600	τείνω	v	\N	\N	2	B1	\N
-102601	θέμα	n	\N	\N	2	B1	το
-102602	αν και	conj	\N	\N	2	B1	\N
-102603	όμως	adv	\N	\N	2	B1	\N
-102604	λαιμός	n	\N	\N	2	B1	ο
-102605	καθ’ όλη τη διάρκεια	prep	\N	\N	2	B1	\N
-102606	παντού	adv	\N	\N	2	B1	\N
-102607	στενός	adj	\N	\N	2	B1	\N
-102608	σφιχτός	adj	\N	\N	2	B1	\N
-102609	μέχρι	conj	\N	\N	2	B1	\N
-102610	έως	prep	\N	\N	2	B1	\N
-102611	τενεκές	n	\N	\N	2	B1	ο
-102612	κονσέρβα	n	\N	\N	2	B1	η
-102613	λιλιπούτειος	adj	\N	\N	2	B1	\N
-102614	μικροσκοπικός	adj	\N	\N	2	B1	\N
-102615	γλώσσα	n	\N	\N	2	B1	η
-102616	ζήτημα	n	\N	\N	2	B1	το
-102617	συνολικός	adj	\N	\N	2	B1	\N
-102618	σύνολο	n	\N	\N	2	B1	το
-102619	εντελώς	adv	\N	\N	2	B1	\N
-102620	πλήρως	adv	\N	\N	2	B1	\N
-102621	εμπόριο	n	\N	\N	2	B1	το
-102622	εμπορεύομαι	v	\N	\N	2	B1	\N
-102623	τρέιλερ	n	\N	\N	2	B1	το
-102624	μεταφράζω	v	\N	\N	2	B1	\N
-102625	μετάφραση	n	\N	\N	2	B1	η
-102626	συμπεριφέρομαι	v	\N	\N	2	B1	\N
-102627	θεραπεύω	v	\N	\N	2	B1	\N
-102628	θεραπεία	n	\N	\N	2	B1	η
-102629	μεταχείριση	n	\N	\N	2	B1	η
-102630	τάση	n	\N	\N	2	B1	η
-102631	κόλπο	n	\N	\N	2	B1	το
-102632	τεχνάσμα	n	\N	\N	2	B1	το
-102633	αλήθεια	n	\N	\N	2	B1	η
-102634	σωλήνας	n	\N	\N	2	B1	ο
-102635	πληκτρολογώ	v	\N	\N	2	B1	\N
-102636	τυπικά	adv	\N	\N	2	B1	\N
-102637	λάστιχο	n	\N	\N	2	B1	το
-102638	άσχημος	adj	\N	\N	2	B1	\N
-102639	ανίκανος	adj	\N	\N	2	B1	\N
-102640	άβολος	adj	\N	\N	2	B1	\N
-102641	εσώρουχα	n	\N	\N	2	B1	τα
-102642	άνεργος	adj	\N	\N	2	B1	\N
-102643	ανεργία	n	\N	\N	2	B1	η
-102644	άδικος	adj	\N	\N	2	B1	\N
-102645	ένωση	n	\N	\N	2	B1	η
-102646	συνδικάτο	n	\N	\N	2	B1	το
-102647	εκτός αν	conj	\N	\N	2	B1	\N
-102648	σε αντίθεση με	prep	\N	\N	2	B1	\N
-102649	ανόμοιος	adj	\N	\N	2	B1	\N
-102650	απίθανος	adj	\N	\N	2	B1	\N
-102651	περιττός	adj	\N	\N	2	B1	\N
-102652	αχρείαστος	adj	\N	\N	2	B1	\N
-102653	δυσάρεστος	adj	\N	\N	2	B1	\N
-102654	ενημερώνω	v	\N	\N	2	B1	\N
-102655	επικαιροποιώ	v	\N	\N	2	B1	\N
-102656	πάνω σε	prep	\N	\N	2	B1	\N
-102657	αναστατώνω	v	\N	\N	2	B1	\N
-102658	μεταχειρισμένος	adj	\N	\N	2	B1	\N
-102659	πολύτιμος	adj	\N	\N	2	B1	\N
-102660	αξία	n	\N	\N	2	B1	η
-102661	διάφοροι	adj	\N	\N	2	B1	\N
-102662	ποικίλοι	adj	\N	\N	2	B1	\N
-102663	όχημα	n	\N	\N	2	B1	το
-102664	έκδοση	n	\N	\N	2	B1	η
-102665	εκδοχή	n	\N	\N	2	B1	η
-102666	θύμα	n	\N	\N	2	B1	το
-102667	βίαιος	adj	\N	\N	2	B1	\N
-102668	εθελοντής	n	\N	\N	2	B1	ο
-102669	προσφέρω εθελοντικά	v	\N	\N	2	B1	\N
-102670	ψήφος	n	\N	\N	2	B1	η
-102671	ψηφίζω	v	\N	\N	2	B1	\N
-102672	προειδοποιώ	v	\N	\N	2	B1	\N
-102673	προειδοποίηση	n	\N	\N	2	B1	η
-102674	απόβλητα	n	\N	\N	2	B1	τα
-102675	σπατάλη	n	\N	\N	2	B1	η
-102676	σπαταλώ	v	\N	\N	2	B1	\N
-102677	όπλο	n	\N	\N	2	B1	το
-102678	ζυγίζω	v	\N	\N	2	B1	\N
-102679	δυτικός	adj	\N	\N	2	B1	\N
-102680	οτιδήποτε	pron	\N	\N	2	B1	\N
-102681	οποτεδήποτε	conj	\N	\N	2	B1	\N
-102682	αν	conj	\N	\N	2	B1	\N
-102683	καθώς	conj	\N	\N	2	B1	\N
-102684	ενώ	conj	\N	\N	2	B1	\N
-102685	φτερό	n	\N	\N	2	B1	το
-102686	πτέρυγα	n	\N	\N	2	B1	η
-102687	εντός	prep	\N	\N	2	B1	\N
-102688	μέσα σε	prep	\N	\N	2	B1	\N
-102689	αναρωτιέμαι	v	\N	\N	2	B1	\N
-102690	μαλλί	n	\N	\N	2	B1	το
-102691	παγκόσμιος	adj	\N	\N	2	B1	\N
-102692	αξίζει	adj	\N	\N	2	B1	\N
-102693	ρυτίδα	n	\N	\N	2	B1	η
-102694	γραπτός	adj	\N	\N	2	B1	\N
-102695	αυλή	n	\N	\N	2	B1	η
-102696	ουρλιάζω	v	\N	\N	2	B1	\N
-102697	νεολαία	n	\N	\N	2	B1	η
-102698	νιάτα	n	\N	\N	2	B1	τα
-7233	adjective	noun	\N	\N	1	A2	\N
-7234	adverb	noun	\N	\N	1	B1	\N
-7235	advise	verb	\N	\N	1	B1	\N
-7236	aerobics	noun	\N	\N	1	A2	\N
-2576	abandon	v	\N	\N	1	B2	\N
-2577	absent	adj	\N	\N	1	B2	\N
-2578	absolute	adj	\N	\N	1	B2	\N
-2579	absorb	v	\N	\N	1	B2	\N
-2580	abstract	adj	\N	\N	1	B2	\N
-2581	academic	adj	\N	\N	1	B2	\N
-2582	accent	n	\N	\N	1	B2	\N
-2583	acceptable	adj	\N	\N	1	B2	\N
-2584	accidentally	adv	\N	\N	1	B2	\N
-2585	accommodate	v	\N	\N	1	B2	\N
-2586	accompany	v	\N	\N	1	B2	\N
-2587	accomplish	v	\N	\N	1	B2	\N
-2588	account for	v	\N	\N	1	B2	\N
-2589	accountant	n	\N	\N	1	B2	\N
-2590	accuracy	n	\N	\N	1	B2	\N
-2591	accurate	adj	\N	\N	1	B2	\N
-2592	accurately	adv	\N	\N	1	B2	\N
-2593	accuse	v	\N	\N	1	B2	\N
-2594	acknowledge	v	\N	\N	1	B2	\N
-2595	acquire	v	\N	\N	1	B2	\N
-2596	acre	n	\N	\N	1	B2	\N
-2597	activate	v	\N	\N	1	B2	\N
-2598	actual	adj	\N	\N	1	B2	\N
-2599	adapt	v	\N	\N	1	B2	\N
-2600	addiction	n	\N	\N	1	B2	\N
-2601	additional	adj	\N	\N	1	B2	\N
-2602	additionally	adv	\N	\N	1	B2	\N
-2603	address	v	\N	\N	1	B2	\N
-2604	adequate	adj	\N	\N	1	B2	\N
-2605	adequately	adv	\N	\N	1	B2	\N
-2606	adjust	v	\N	\N	1	B2	\N
-2607	administration	n	\N	\N	1	B2	\N
-2608	adopt	v	\N	\N	1	B2	\N
-2609	advance	n	\N	\N	1	B2	\N
-2610	affair	n	\N	\N	1	B2	\N
-2611	affordable	adj	\N	\N	1	B2	\N
-2612	afterwards	adv	\N	\N	1	B2	\N
-2613	agency	n	\N	\N	1	B2	\N
-2614	agenda	n	\N	\N	1	B2	\N
-2615	aggressive	adj	\N	\N	1	B2	\N
-2616	agriculture	n	\N	\N	1	B2	\N
-2617	aid	n	\N	\N	1	B2	\N
-2618	AIDS	n	\N	\N	1	B2	\N
-2619	aircraft	n	\N	\N	1	B2	\N
-2620	alarm	v	\N	\N	1	B2	\N
-2621	alien	n	\N	\N	1	B2	\N
-2622	alongside	prep	\N	\N	1	B2	\N
-2623	alter	v	\N	\N	1	B2	\N
-2624	altogether	adv	\N	\N	1	B2	\N
-2625	ambulance	n	\N	\N	1	B2	\N
-2626	amusing	adj	\N	\N	1	B2	\N
-2627	analyse	v	\N	\N	1	B2	\N
-2628	analysis	n	\N	\N	1	B2	\N
-2629	analyst	n	\N	\N	1	B2	\N
-2630	ancestor	n	\N	\N	1	B2	\N
-2631	angel	n	\N	\N	1	B2	\N
-2632	anger	n	\N	\N	1	B2	\N
-2633	angle	n	\N	\N	1	B2	\N
-2634	animation	n	\N	\N	1	B2	\N
-2635	anniversary	n	\N	\N	1	B2	\N
-2636	annual	adj	\N	\N	1	B2	\N
-2637	annually	adv	\N	\N	1	B2	\N
-2638	anticipate	v	\N	\N	1	B2	\N
-2639	anxiety	n	\N	\N	1	B2	\N
-2640	anxious	adj	\N	\N	1	B2	\N
-2641	apology	n	\N	\N	1	B2	\N
-2642	apparent	adj	\N	\N	1	B2	\N
-2643	apparently	adv	\N	\N	1	B2	\N
-2644	appeal	n	\N	\N	1	B2	\N
-2645	applicant	n	\N	\N	1	B2	\N
-2646	approach	n	\N	\N	1	B2	\N
-2647	appropriate	adj	\N	\N	1	B2	\N
-2648	appropriately	adv	\N	\N	1	B2	\N
-2649	approval	n	\N	\N	1	B2	\N
-2650	approve	v	\N	\N	1	B2	\N
-2651	arise	v	\N	\N	1	B2	\N
-2652	armed	adj	\N	\N	1	B2	\N
-2653	arms	n	\N	\N	1	B2	\N
-2654	arrow	n	\N	\N	1	B2	\N
-2655	artificial	adj	\N	\N	1	B2	\N
-2656	artistic	adj	\N	\N	1	B2	\N
-2657	artwork	n	\N	\N	1	B2	\N
-2658	ashamed	adj	\N	\N	1	B2	\N
-2659	aspect	n	\N	\N	1	B2	\N
-2660	assess	v	\N	\N	1	B2	\N
-2661	assessment	n	\N	\N	1	B2	\N
-2662	asset	n	\N	\N	1	B2	\N
-2663	assign	v	\N	\N	1	B2	\N
-2664	assistance	n	\N	\N	1	B2	\N
-2665	associate	v	\N	\N	1	B2	\N
-2666	associated	adj	\N	\N	1	B2	\N
-2667	association	n	\N	\N	1	B2	\N
-2668	assume	v	\N	\N	1	B2	\N
-2669	assumption	n	\N	\N	1	B2	\N
-2670	assure	v	\N	\N	1	B2	\N
-2671	astonishing	adj	\N	\N	1	B2	\N
-2672	athletic	adj	\N	\N	1	B2	\N
-2673	attachment	n	\N	\N	1	B2	\N
-2674	attempt	n	\N	\N	1	B2	\N
-2675	audio	adj	\N	\N	1	B2	\N
-2676	awareness	n	\N	\N	1	B2	\N
-2677	awkward	adj	\N	\N	1	B2	\N
-2678	bacteria	n	\N	\N	1	B2	\N
-2679	badge	n	\N	\N	1	B2	\N
-2680	balanced	adj	\N	\N	1	B2	\N
-2681	ballet	n	\N	\N	1	B2	\N
-2682	balloon	n	\N	\N	1	B2	\N
-2683	barely	adv	\N	\N	1	B2	\N
-2684	bargain	n	\N	\N	1	B2	\N
-2685	barrier	n	\N	\N	1	B2	\N
-2686	based on	adj	\N	\N	1	B2	\N
-2687	basement	n	\N	\N	1	B2	\N
-2688	basically	adv	\N	\N	1	B2	\N
-2689	basis	n	\N	\N	1	B2	\N
-2690	basket	n	\N	\N	1	B2	\N
-2691	bat	n	\N	\N	1	B2	\N
-2692	bear	v	\N	\N	1	B2	\N
-2693	beg	v	\N	\N	1	B2	\N
-2694	being	n	\N	\N	1	B2	\N
-2695	beneficial	adj	\N	\N	1	B2	\N
-2696	bent	adj	\N	\N	1	B2	\N
-2697	beside	prep	\N	\N	1	B2	\N
-2698	besides	prep	\N	\N	1	B2	\N
-2699	bet	v	\N	\N	1	B2	\N
-2700	beyond	prep	\N	\N	1	B2	\N
-2701	bias	n	\N	\N	1	B2	\N
-2702	bid	v	\N	\N	1	B2	\N
-2703	biological	adj	\N	\N	1	B2	\N
-2704	bitter	adj	\N	\N	1	B2	\N
-2705	blame	n	\N	\N	1	B2	\N
-2706	blanket	n	\N	\N	1	B2	\N
-2707	blind	adj	\N	\N	1	B2	\N
-2708	bold	adj	\N	\N	1	B2	\N
-2709	bombing	n	\N	\N	1	B2	\N
-2710	bond	n	\N	\N	1	B2	\N
-2711	boost	v	\N	\N	1	B2	\N
-2712	bound	adj	\N	\N	1	B2	\N
-2713	breast	n	\N	\N	1	B2	\N
-2714	brick	n	\N	\N	1	B2	\N
-2715	brief	adj	\N	\N	1	B2	\N
-2716	briefly	adv	\N	\N	1	B2	\N
-2717	broad	adj	\N	\N	1	B2	\N
-2718	broadcast	n	\N	\N	1	B2	\N
-2719	broadcaster	n	\N	\N	1	B2	\N
-2720	broadly	adv	\N	\N	1	B2	\N
-2721	buck	n	\N	\N	1	B2	\N
-2722	budget	n	\N	\N	1	B2	\N
-2723	bug	n	\N	\N	1	B2	\N
-2724	bullet	n	\N	\N	1	B2	\N
-2725	bunch	n	\N	\N	1	B2	\N
-2726	bush	n	\N	\N	1	B2	\N
-2727	but	prep	\N	\N	1	B2	\N
-2728	cabin	n	\N	\N	1	B2	\N
-2729	cable	n	\N	\N	1	B2	\N
-2730	calculate	v	\N	\N	1	B2	\N
-2731	canal	n	\N	\N	1	B2	\N
-2732	cancel	v	\N	\N	1	B2	\N
-2733	cancer	n	\N	\N	1	B2	\N
-2734	candle	n	\N	\N	1	B2	\N
-2735	capable	adj	\N	\N	1	B2	\N
-2736	capacity	n	\N	\N	1	B2	\N
-2737	capture	v	\N	\N	1	B2	\N
-2738	carbon	n	\N	\N	1	B2	\N
-2739	cast	n	\N	\N	1	B2	\N
-2740	casual	adj	\N	\N	1	B2	\N
-2741	catastrophe	n	\N	\N	1	B2	\N
-2742	cave	n	\N	\N	1	B2	\N
-2743	cell	n	\N	\N	1	B2	\N
-2744	certainty	n	\N	\N	1	B2	\N
-2745	certificate	n	\N	\N	1	B2	\N
-2746	chairman	n	\N	\N	1	B2	\N
-2747	challenging	adj	\N	\N	1	B2	\N
-2748	championship	n	\N	\N	1	B2	\N
-2749	characteristic	n	\N	\N	1	B2	\N
-2750	charming	adj	\N	\N	1	B2	\N
-2751	chase	v	\N	\N	1	B2	\N
-2752	cheek	n	\N	\N	1	B2	\N
-2753	cheer	v	\N	\N	1	B2	\N
-2754	chief	adj	\N	\N	1	B2	\N
-2755	chop	v	\N	\N	1	B2	\N
-2756	circuit	n	\N	\N	1	B2	\N
-2757	circumstance	n	\N	\N	1	B2	\N
-2758	cite	v	\N	\N	1	B2	\N
-2759	citizen	n	\N	\N	1	B2	\N
-2760	civil	adj	\N	\N	1	B2	\N
-2761	civilization	n	\N	\N	1	B2	\N
-2762	clarify	v	\N	\N	1	B2	\N
-2763	classic	adj	\N	\N	1	B2	\N
-2764	classify	v	\N	\N	1	B2	\N
-2765	clause	n	\N	\N	1	B2	\N
-2766	cliff	n	\N	\N	1	B2	\N
-2767	clinic	n	\N	\N	1	B2	\N
-2768	clip	n	\N	\N	1	B2	\N
-2769	closely	adv	\N	\N	1	B2	\N
-2770	coincidence	n	\N	\N	1	B2	\N
-2771	collapse	v	\N	\N	1	B2	\N
-2772	collector	n	\N	\N	1	B2	\N
-2773	colony	n	\N	\N	1	B2	\N
-2774	colourful	adj	\N	\N	1	B2	\N
-2775	combination	n	\N	\N	1	B2	\N
-2776	comfort	n	\N	\N	1	B2	\N
-2777	comic	adj	\N	\N	1	B2	\N
-2778	command	n	\N	\N	1	B2	\N
-2779	commander	n	\N	\N	1	B2	\N
-2780	commission	n	\N	\N	1	B2	\N
-2781	commitment	n	\N	\N	1	B2	\N
-2782	committee	n	\N	\N	1	B2	\N
-2783	commonly	adv	\N	\N	1	B2	\N
-2784	comparative	adj	\N	\N	1	B2	\N
-2785	completion	n	\N	\N	1	B2	\N
-2786	complicated	adj	\N	\N	1	B2	\N
-2787	component	n	\N	\N	1	B2	\N
-2788	compose	v	\N	\N	1	B2	\N
-2789	composer	n	\N	\N	1	B2	\N
-2790	compound	n	\N	\N	1	B2	\N
-2791	comprehensive	adj	\N	\N	1	B2	\N
-2792	compulsory	adj	\N	\N	1	B2	\N
-2793	concentration	n	\N	\N	1	B2	\N
-2794	concept	n	\N	\N	1	B2	\N
-2795	concern	n	\N	\N	1	B2	\N
-2796	concerned	adj	\N	\N	1	B2	\N
-2797	conclusion	n	\N	\N	1	B2	\N
-2798	concrete	adj	\N	\N	1	B2	\N
-2799	conduct	v	\N	\N	1	B2	\N
-2800	confess	v	\N	\N	1	B2	\N
-2801	confidence	n	\N	\N	1	B2	\N
-2802	conflict	n	\N	\N	1	B2	\N
-2803	confusing	adj	\N	\N	1	B2	\N
-2804	confusion	n	\N	\N	1	B2	\N
-2805	conscious	adj	\N	\N	1	B2	\N
-2806	consequence	n	\N	\N	1	B2	\N
-2807	consequently	adv	\N	\N	1	B2	\N
-2808	conservation	n	\N	\N	1	B2	\N
-2809	conservative	adj	\N	\N	1	B2	\N
-2810	considerable	adj	\N	\N	1	B2	\N
-2811	considerably	adv	\N	\N	1	B2	\N
-2812	consideration	n	\N	\N	1	B2	\N
-2813	consist of	v	\N	\N	1	B2	\N
-2814	consistent	adj	\N	\N	1	B2	\N
-2815	consistently	adv	\N	\N	1	B2	\N
-2816	conspiracy	n	\N	\N	1	B2	\N
-2817	constant	adj	\N	\N	1	B2	\N
-2818	constantly	adv	\N	\N	1	B2	\N
-2819	construct	v	\N	\N	1	B2	\N
-2820	construction	n	\N	\N	1	B2	\N
-2821	consult	v	\N	\N	1	B2	\N
-2822	consultant	n	\N	\N	1	B2	\N
-2823	consumer	n	\N	\N	1	B2	\N
-2824	consumption	n	\N	\N	1	B2	\N
-2825	contemporary	adj	\N	\N	1	B2	\N
-2826	contest	n	\N	\N	1	B2	\N
-2827	context	n	\N	\N	1	B2	\N
-2828	contract	n	\N	\N	1	B2	\N
-2829	contribute	v	\N	\N	1	B2	\N
-2830	contribution	n	\N	\N	1	B2	\N
-2831	controversial	adj	\N	\N	1	B2	\N
-2832	controversy	n	\N	\N	1	B2	\N
-2833	convenience	n	\N	\N	1	B2	\N
-2834	convention	n	\N	\N	1	B2	\N
-2835	conventional	adj	\N	\N	1	B2	\N
-2836	convert	v	\N	\N	1	B2	\N
-2837	convey	v	\N	\N	1	B2	\N
-2838	convinced	adj	\N	\N	1	B2	\N
-2839	convincing	adj	\N	\N	1	B2	\N
-2840	cope	v	\N	\N	1	B2	\N
-2841	core	n	\N	\N	1	B2	\N
-2842	corporate	adj	\N	\N	1	B2	\N
-2843	corporation	n	\N	\N	1	B2	\N
-2844	corridor	n	\N	\N	1	B2	\N
-2845	council	n	\N	\N	1	B2	\N
-2846	counter	n	\N	\N	1	B2	\N
-2847	county	n	\N	\N	1	B2	\N
-2848	courage	n	\N	\N	1	B2	\N
-2849	coverage	n	\N	\N	1	B2	\N
-2850	cowboy	n	\N	\N	1	B2	\N
-2851	crack	v	\N	\N	1	B2	\N
-2852	crash	n	\N	\N	1	B2	\N
-2853	creation	n	\N	\N	1	B2	\N
-2854	creativity	n	\N	\N	1	B2	\N
-2855	creature	n	\N	\N	1	B2	\N
-2856	crew	n	\N	\N	1	B2	\N
-2857	crisis	n	\N	\N	1	B2	\N
-2858	critic	n	\N	\N	1	B2	\N
-2859	critical	adj	\N	\N	1	B2	\N
-2860	critically	adv	\N	\N	1	B2	\N
-2861	criticism	n	\N	\N	1	B2	\N
-2862	criticise	v	\N	\N	1	B2	\N
-2863	crop	n	\N	\N	1	B2	\N
-2864	crucial	adj	\N	\N	1	B2	\N
-2865	cruise	n	\N	\N	1	B2	\N
-2866	cue	n	\N	\N	1	B2	\N
-2867	cure	n	\N	\N	1	B2	\N
-2868	curious	adj	\N	\N	1	B2	\N
-2869	curriculum	n	\N	\N	1	B2	\N
-2870	curve	n	\N	\N	1	B2	\N
-2871	curved	adj	\N	\N	1	B2	\N
-2872	dairy	n	\N	\N	1	B2	\N
-2873	dare	v	\N	\N	1	B2	\N
-2874	darkness	n	\N	\N	1	B2	\N
-2875	data	n	\N	\N	1	B2	\N
-2876	database	n	\N	\N	1	B2	\N
-2877	deadline	n	\N	\N	1	B2	\N
-2878	deadly	adj	\N	\N	1	B2	\N
-2879	dealer	n	\N	\N	1	B2	\N
-2880	debate	n	\N	\N	1	B2	\N
-2881	debt	n	\N	\N	1	B2	\N
-2882	decent	adj	\N	\N	1	B2	\N
-2883	deck	n	\N	\N	1	B2	\N
-2884	declare	v	\N	\N	1	B2	\N
-2885	decline	n	\N	\N	1	B2	\N
-2886	decoration	n	\N	\N	1	B2	\N
-2887	decrease	v	\N	\N	1	B2	\N
-2888	deeply	adv	\N	\N	1	B2	\N
-2889	defeat	n	\N	\N	1	B2	\N
-2890	defence	n	\N	\N	1	B2	\N
-2891	defend	v	\N	\N	1	B2	\N
-2892	defender	n	\N	\N	1	B2	\N
-2893	define	v	\N	\N	1	B2	\N
-2894	definition	n	\N	\N	1	B2	\N
-2895	delay	n	\N	\N	1	B2	\N
-2896	delete	v	\N	\N	1	B2	\N
-2897	deliberate	adj	\N	\N	1	B2	\N
-2898	deliberately	adv	\N	\N	1	B2	\N
-2899	delight	n	\N	\N	1	B2	\N
-2900	delighted	adj	\N	\N	1	B2	\N
-2901	delivery	n	\N	\N	1	B2	\N
-2902	demand	n	\N	\N	1	B2	\N
-2903	democracy	n	\N	\N	1	B2	\N
-2904	democratic	adj	\N	\N	1	B2	\N
-2905	demonstrate	v	\N	\N	1	B2	\N
-2906	demonstration	n	\N	\N	1	B2	\N
-2907	deny	v	\N	\N	1	B2	\N
-2908	depart	v	\N	\N	1	B2	\N
-2909	dependent	adj	\N	\N	1	B2	\N
-2910	deposit	n	\N	\N	1	B2	\N
-2911	depressed	adj	\N	\N	1	B2	\N
-2912	depressing	adj	\N	\N	1	B2	\N
-2913	depression	n	\N	\N	1	B2	\N
-2914	depth	n	\N	\N	1	B2	\N
-2915	derive	v	\N	\N	1	B2	\N
-2916	deserve	v	\N	\N	1	B2	\N
-2917	desire	n	\N	\N	1	B2	\N
-2918	desperate	adj	\N	\N	1	B2	\N
-2919	desperately	adv	\N	\N	1	B2	\N
-2920	destruction	n	\N	\N	1	B2	\N
-2921	detailed	adj	\N	\N	1	B2	\N
-2922	detect	v	\N	\N	1	B2	\N
-2923	determine	v	\N	\N	1	B2	\N
-2924	determination	n	\N	\N	1	B2	\N
-2925	devil	n	\N	\N	1	B2	\N
-2926	devote	v	\N	\N	1	B2	\N
-2927	differ	v	\N	\N	1	B2	\N
-2928	dig	v	\N	\N	1	B2	\N
-2929	dime	n	\N	\N	1	B2	\N
-2930	disability	n	\N	\N	1	B2	\N
-2931	disabled	adj	\N	\N	1	B2	\N
-2932	disagreement	n	\N	\N	1	B2	\N
-2933	disappoint	v	\N	\N	1	B2	\N
-2934	disappointment	n	\N	\N	1	B2	\N
-2935	disc	n	\N	\N	1	B2	\N
-2936	discipline	n	\N	\N	1	B2	\N
-2937	discourage	v	\N	\N	1	B2	\N
-2938	dishonest	adj	\N	\N	1	B2	\N
-2939	dismiss	v	\N	\N	1	B2	\N
-2940	disorder	n	\N	\N	1	B2	\N
-2941	display	n	\N	\N	1	B2	\N
-2942	distant	adj	\N	\N	1	B2	\N
-2943	distinct	adj	\N	\N	1	B2	\N
-2944	distinguish	v	\N	\N	1	B2	\N
-2945	distract	v	\N	\N	1	B2	\N
-2946	distribute	v	\N	\N	1	B2	\N
-2947	distribution	n	\N	\N	1	B2	\N
-2948	district	n	\N	\N	1	B2	\N
-2949	disturb	v	\N	\N	1	B2	\N
-2950	dive	v	\N	\N	1	B2	\N
-2951	diverse	adj	\N	\N	1	B2	\N
-2952	diversity	n	\N	\N	1	B2	\N
-2953	division	n	\N	\N	1	B2	\N
-2954	divorce	n	\N	\N	1	B2	\N
-2955	document	n	\N	\N	1	B2	\N
-2956	domestic	adj	\N	\N	1	B2	\N
-2957	dominant	adj	\N	\N	1	B2	\N
-2958	dominate	v	\N	\N	1	B2	\N
-2959	donation	n	\N	\N	1	B2	\N
-2960	dot	n	\N	\N	1	B2	\N
-2961	downwards	adv	\N	\N	1	B2	\N
-2962	dozen	n	\N	\N	1	B2	\N
-2963	draft	n	\N	\N	1	B2	\N
-2964	drag	v	\N	\N	1	B2	\N
-2965	dramatic	adj	\N	\N	1	B2	\N
-2966	dramatically	adv	\N	\N	1	B2	\N
-2967	drought	n	\N	\N	1	B2	\N
-2968	dull	adj	\N	\N	1	B2	\N
-2969	dump	v	\N	\N	1	B2	\N
-2970	duration	n	\N	\N	1	B2	\N
-2971	dynamic	adj	\N	\N	1	B2	\N
-2972	eager	adj	\N	\N	1	B2	\N
-2973	economics	n	\N	\N	1	B2	\N
-2974	economist	n	\N	\N	1	B2	\N
-2975	edit	v	\N	\N	1	B2	\N
-2976	edition	n	\N	\N	1	B2	\N
-2977	editorial	n	\N	\N	1	B2	\N
-2978	efficient	adj	\N	\N	1	B2	\N
-2979	efficiently	adv	\N	\N	1	B2	\N
-2980	elbow	n	\N	\N	1	B2	\N
-2981	elderly	adj	\N	\N	1	B2	\N
-2982	elect	v	\N	\N	1	B2	\N
-2983	element	n	\N	\N	1	B2	\N
-2984	electronics	n	\N	\N	1	B2	\N
-2985	elegant	adj	\N	\N	1	B2	\N
-2986	elementary	adj	\N	\N	1	B2	\N
-2987	eliminate	v	\N	\N	1	B2	\N
-2988	elsewhere	adv	\N	\N	1	B2	\N
-2989	embrace	v	\N	\N	1	B2	\N
-2990	emerge	v	\N	\N	1	B2	\N
-2991	emission	n	\N	\N	1	B2	\N
-2992	emotional	adj	\N	\N	1	B2	\N
-2993	emotionally	adv	\N	\N	1	B2	\N
-2994	emphasis	n	\N	\N	1	B2	\N
-2995	emphasise	v	\N	\N	1	B2	\N
-2996	empire	n	\N	\N	1	B2	\N
-2997	enable	v	\N	\N	1	B2	\N
-2998	encounter	v	\N	\N	1	B2	\N
-2999	engage	v	\N	\N	1	B2	\N
-3000	enhance	v	\N	\N	1	B2	\N
-3001	enjoyable	adj	\N	\N	1	B2	\N
-3002	enquiry	n	\N	\N	1	B2	\N
-3003	ensure	v	\N	\N	1	B2	\N
-3004	entertaining	adj	\N	\N	1	B2	\N
-3005	enthusiasm	n	\N	\N	1	B2	\N
-3006	enthusiastic	adj	\N	\N	1	B2	\N
-3007	entire	adj	\N	\N	1	B2	\N
-3008	entirely	adv	\N	\N	1	B2	\N
-3009	entrepreneur	n	\N	\N	1	B2	\N
-3010	envelope	n	\N	\N	1	B2	\N
-3011	equip	v	\N	\N	1	B2	\N
-3012	equivalent	adj	\N	\N	1	B2	\N
-3013	era	n	\N	\N	1	B2	\N
-3014	erupt	v	\N	\N	1	B2	\N
-3015	essentially	adv	\N	\N	1	B2	\N
-3016	establish	v	\N	\N	1	B2	\N
-3017	estate	n	\N	\N	1	B2	\N
-3018	estimate	n	\N	\N	1	B2	\N
-3019	ethic	n	\N	\N	1	B2	\N
-3020	ethical	adj	\N	\N	1	B2	\N
-3021	ethnic	adj	\N	\N	1	B2	\N
-3022	evaluate	v	\N	\N	1	B2	\N
-3023	evaluation	n	\N	\N	1	B2	\N
-3024	even	adv	\N	\N	1	B2	\N
-3025	evidence	n	\N	\N	1	B2	\N
-3026	evident	adj	\N	\N	1	B2	\N
-3027	evil	adj	\N	\N	1	B2	\N
-3028	evolution	n	\N	\N	1	B2	\N
-3029	evolve	v	\N	\N	1	B2	\N
-3030	examination	n	\N	\N	1	B2	\N
-3031	exceed	v	\N	\N	1	B2	\N
-3032	exception	n	\N	\N	1	B2	\N
-3033	excessive	adj	\N	\N	1	B2	\N
-3034	exclude	v	\N	\N	1	B2	\N
-3035	excuse	n	\N	\N	1	B2	\N
-3036	executive	n	\N	\N	1	B2	\N
-3037	existence	n	\N	\N	1	B2	\N
-3038	exotic	adj	\N	\N	1	B2	\N
-3039	expansion	n	\N	\N	1	B2	\N
-3040	expectation	n	\N	\N	1	B2	\N
-3041	expense	n	\N	\N	1	B2	\N
-3042	expertise	n	\N	\N	1	B2	\N
-3043	exploit	v	\N	\N	1	B2	\N
-3044	exploration	n	\N	\N	1	B2	\N
-3045	expose	v	\N	\N	1	B2	\N
-3046	exposure	n	\N	\N	1	B2	\N
-3047	extend	v	\N	\N	1	B2	\N
-3048	extension	n	\N	\N	1	B2	\N
-3049	extensive	adj	\N	\N	1	B2	\N
-3050	extensively	adv	\N	\N	1	B2	\N
-3051	extent	n	\N	\N	1	B2	\N
-3052	external	adj	\N	\N	1	B2	\N
-3053	extract	n	\N	\N	1	B2	\N
-3054	extraordinary	adj	\N	\N	1	B2	\N
-3055	fabric	n	\N	\N	1	B2	\N
-3056	fabulous	adj	\N	\N	1	B2	\N
-3057	facility	n	\N	\N	1	B2	\N
-3058	factor	n	\N	\N	1	B2	\N
-3059	faculty	n	\N	\N	1	B2	\N
-3060	failed	adj	\N	\N	1	B2	\N
-3061	failure	n	\N	\N	1	B2	\N
-3062	faith	n	\N	\N	1	B2	\N
-3063	fake	adj	\N	\N	1	B2	\N
-3064	fame	n	\N	\N	1	B2	\N
-3065	fantasy	n	\N	\N	1	B2	\N
-3066	fare	n	\N	\N	1	B2	\N
-3067	fault	n	\N	\N	1	B2	\N
-3068	favour	n	\N	\N	1	B2	\N
-3069	feather	n	\N	\N	1	B2	\N
-3070	fee	n	\N	\N	1	B2	\N
-3071	feedback	n	\N	\N	1	B2	\N
-3072	fellow	adj	\N	\N	1	B2	\N
-3073	finance	n	\N	\N	1	B2	\N
-3074	finding	n	\N	\N	1	B2	\N
-3075	firefighter	n	\N	\N	1	B2	\N
-3076	firework	n	\N	\N	1	B2	\N
-3077	firm	n	\N	\N	1	B2	\N
-3078	firmly	adv	\N	\N	1	B2	\N
-3079	flame	n	\N	\N	1	B2	\N
-3080	flash	v	\N	\N	1	B2	\N
-3081	flavour	n	\N	\N	1	B2	\N
-3082	flexible	adj	\N	\N	1	B2	\N
-3083	float	v	\N	\N	1	B2	\N
-3084	folding	adj	\N	\N	1	B2	\N
-3085	fond	adj	\N	\N	1	B2	\N
-3086	fool	n	\N	\N	1	B2	\N
-3087	forbid	v	\N	\N	1	B2	\N
-3088	forecast	n	\N	\N	1	B2	\N
-3089	forgive	v	\N	\N	1	B2	\N
-3090	format	n	\N	\N	1	B2	\N
-3091	formation	n	\N	\N	1	B2	\N
-3092	former	adj	\N	\N	1	B2	\N
-3093	formerly	adv	\N	\N	1	B2	\N
-3094	fortunate	adj	\N	\N	1	B2	\N
-3095	fortune	n	\N	\N	1	B2	\N
-3096	forum	n	\N	\N	1	B2	\N
-3097	found	v	\N	\N	1	B2	\N
-3098	foundation	n	\N	\N	1	B2	\N
-3099	founder	n	\N	\N	1	B2	\N
-3100	fraction	n	\N	\N	1	B2	\N
-3101	fragment	n	\N	\N	1	B2	\N
-3102	framework	n	\N	\N	1	B2	\N
-3103	fraud	n	\N	\N	1	B2	\N
-3104	freedom	n	\N	\N	1	B2	\N
-3105	freely	adv	\N	\N	1	B2	\N
-3106	frequency	n	\N	\N	1	B2	\N
-3107	frequent	adj	\N	\N	1	B2	\N
-3108	frustrated	adj	\N	\N	1	B2	\N
-3109	fulfil	v	\N	\N	1	B2	\N
-3110	full-time	adj	\N	\N	1	B2	\N
-3111	fully	adv	\N	\N	1	B2	\N
-3112	fund	n	\N	\N	1	B2	\N
-3113	fundamental	adj	\N	\N	1	B2	\N
-3114	fundamentally	adv	\N	\N	1	B2	\N
-3115	funding	n	\N	\N	1	B2	\N
-3116	funeral	n	\N	\N	1	B2	\N
-3117	furious	adj	\N	\N	1	B2	\N
-3118	furthermore	adv	\N	\N	1	B2	\N
-3119	gain	v	\N	\N	1	B2	\N
-3120	gallon	n	\N	\N	1	B2	\N
-3121	gaming	n	\N	\N	1	B2	\N
-3122	gang	n	\N	\N	1	B2	\N
-3123	gay	adj	\N	\N	1	B2	\N
-3124	gender	n	\N	\N	1	B2	\N
-3125	gene	n	\N	\N	1	B2	\N
-3126	generate	v	\N	\N	1	B2	\N
-3127	genetic	adj	\N	\N	1	B2	\N
-3128	genius	n	\N	\N	1	B2	\N
-3129	genre	n	\N	\N	1	B2	\N
-3130	genuine	adj	\N	\N	1	B2	\N
-3131	genuinely	adv	\N	\N	1	B2	\N
-3132	gesture	n	\N	\N	1	B2	\N
-3133	globalization	n	\N	\N	1	B2	\N
-3134	globe	n	\N	\N	1	B2	\N
-3135	golden	adj	\N	\N	1	B2	\N
-3136	goodness	n	\N	\N	1	B2	\N
-3137	gorgeous	adj	\N	\N	1	B2	\N
-3138	govern	v	\N	\N	1	B2	\N
-3139	grab	v	\N	\N	1	B2	\N
-3140	gradually	adv	\N	\N	1	B2	\N
-3141	grand	adj	\N	\N	1	B2	\N
-3142	grant	n	\N	\N	1	B2	\N
-3143	graphic	adj	\N	\N	1	B2	\N
-3144	graphics	n	\N	\N	1	B2	\N
-3145	grave	n	\N	\N	1	B2	\N
-3146	greatly	adv	\N	\N	1	B2	\N
-3147	greenhouse	n	\N	\N	1	B2	\N
-3148	guarantee	v	\N	\N	1	B2	\N
-3149	guideline	n	\N	\N	1	B2	\N
-3150	habitat	n	\N	\N	1	B2	\N
-3151	handle	v	\N	\N	1	B2	\N
-3152	harbour	n	\N	\N	1	B2	\N
-3153	harm	n	\N	\N	1	B2	\N
-3154	harmful	adj	\N	\N	1	B2	\N
-3155	headquarters	n	\N	\N	1	B2	\N
-3157	healthcare	n	\N	\N	1	B2	\N
-3158	hearing	n	\N	\N	1	B2	\N
-3159	heaven	n	\N	\N	1	B2	\N
-3160	heel	n	\N	\N	1	B2	\N
-3161	hell	n	\N	\N	1	B2	\N
-3162	helmet	n	\N	\N	1	B2	\N
-3163	herb	n	\N	\N	1	B2	\N
-3164	hesitate	v	\N	\N	1	B2	\N
-3165	hidden	adj	\N	\N	1	B2	\N
-3166	hilarious	adj	\N	\N	1	B2	\N
-3167	hip	n	\N	\N	1	B2	\N
-3168	historian	n	\N	\N	1	B2	\N
-3169	hollow	adj	\N	\N	1	B2	\N
-3170	holy	adj	\N	\N	1	B2	\N
-3171	homeless	adj	\N	\N	1	B2	\N
-3172	honesty	n	\N	\N	1	B2	\N
-3173	honour	n	\N	\N	1	B2	\N
-3174	hook	n	\N	\N	1	B2	\N
-3175	hopefully	adv	\N	\N	1	B2	\N
-3176	household	n	\N	\N	1	B2	\N
-3177	housing	n	\N	\N	1	B2	\N
-3178	humorous	adj	\N	\N	1	B2	\N
-3179	humour	n	\N	\N	1	B2	\N
-3180	hunger	n	\N	\N	1	B2	\N
-3181	hunting	n	\N	\N	1	B2	\N
-3182	icon	n	\N	\N	1	B2	\N
-3183	ID	n	\N	\N	1	B2	\N
-3184	ideal	adj	\N	\N	1	B2	\N
-3185	identical	adj	\N	\N	1	B2	\N
-3186	identity	n	\N	\N	1	B2	\N
-3187	illusion	n	\N	\N	1	B2	\N
-3188	illustrate	v	\N	\N	1	B2	\N
-3189	illustration	n	\N	\N	1	B2	\N
-3190	imagination	n	\N	\N	1	B2	\N
-3191	immigration	n	\N	\N	1	B2	\N
-3192	immune	adj	\N	\N	1	B2	\N
-3193	impatient	adj	\N	\N	1	B2	\N
-3194	implement	v	\N	\N	1	B2	\N
-3195	implication	n	\N	\N	1	B2	\N
-3196	imply	v	\N	\N	1	B2	\N
-3197	impose	v	\N	\N	1	B2	\N
-3198	impress	v	\N	\N	1	B2	\N
-3199	impressed	adj	\N	\N	1	B2	\N
-3200	incentive	n	\N	\N	1	B2	\N
-3201	inch	n	\N	\N	1	B2	\N
-3202	incident	n	\N	\N	1	B2	\N
-3203	income	n	\N	\N	1	B2	\N
-3204	incorporate	v	\N	\N	1	B2	\N
-3205	incorrect	adj	\N	\N	1	B2	\N
-3206	increasingly	adv	\N	\N	1	B2	\N
-3207	independence	n	\N	\N	1	B2	\N
-3208	index	n	\N	\N	1	B2	\N
-3209	indication	n	\N	\N	1	B2	\N
-3210	industrial	adj	\N	\N	1	B2	\N
-3211	inevitable	adj	\N	\N	1	B2	\N
-3212	inevitably	adv	\N	\N	1	B2	\N
-3213	infection	n	\N	\N	1	B2	\N
-3214	infer	v	\N	\N	1	B2	\N
-3215	inflation	n	\N	\N	1	B2	\N
-3216	info	n	\N	\N	1	B2	\N
-3217	inform	v	\N	\N	1	B2	\N
-3218	inhabitant	n	\N	\N	1	B2	\N
-3219	inherit	v	\N	\N	1	B2	\N
-3220	initial	adj	\N	\N	1	B2	\N
-3221	initially	adv	\N	\N	1	B2	\N
-3222	initiative	n	\N	\N	1	B2	\N
-3223	ink	n	\N	\N	1	B2	\N
-3224	inner	adj	\N	\N	1	B2	\N
-3225	innovation	n	\N	\N	1	B2	\N
-3226	innovative	adj	\N	\N	1	B2	\N
-3227	input	n	\N	\N	1	B2	\N
-3228	insert	v	\N	\N	1	B2	\N
-3229	insight	n	\N	\N	1	B2	\N
-3230	insist	v	\N	\N	1	B2	\N
-3231	inspector	n	\N	\N	1	B2	\N
-3232	inspire	v	\N	\N	1	B2	\N
-3233	install	v	\N	\N	1	B2	\N
-3234	installation	n	\N	\N	1	B2	\N
-3235	instance	n	\N	\N	1	B2	\N
-3236	instant	adj	\N	\N	1	B2	\N
-3237	instantly	adv	\N	\N	1	B2	\N
-3238	institute	n	\N	\N	1	B2	\N
-3239	institution	n	\N	\N	1	B2	\N
-3240	insurance	n	\N	\N	1	B2	\N
-3241	integrate	v	\N	\N	1	B2	\N
-3242	intellectual	adj	\N	\N	1	B2	\N
-3243	intended	adj	\N	\N	1	B2	\N
-3244	intense	adj	\N	\N	1	B2	\N
-3245	interact	v	\N	\N	1	B2	\N
-3246	interaction	n	\N	\N	1	B2	\N
-3247	internal	adj	\N	\N	1	B2	\N
-3248	interpret	v	\N	\N	1	B2	\N
-3249	interpretation	n	\N	\N	1	B2	\N
-3250	interrupt	v	\N	\N	1	B2	\N
-3251	interval	n	\N	\N	1	B2	\N
-3252	invade	v	\N	\N	1	B2	\N
-3253	invasion	n	\N	\N	1	B2	\N
-3254	investigation	n	\N	\N	1	B2	\N
-3255	investment	n	\N	\N	1	B2	\N
-3256	investor	n	\N	\N	1	B2	\N
-3257	isolate	v	\N	\N	1	B2	\N
-3258	isolated	adj	\N	\N	1	B2	\N
-3259	issue	v	\N	\N	1	B2	\N
-3260	jail	n	\N	\N	1	B2	\N
-3261	jet	n	\N	\N	1	B2	\N
-3262	joint	n	\N	\N	1	B2	\N
-3263	journalism	n	\N	\N	1	B2	\N
-3264	joy	n	\N	\N	1	B2	\N
-3265	judgement	n	\N	\N	1	B2	\N
-3266	junior	adj	\N	\N	1	B2	\N
-3267	jury	n	\N	\N	1	B2	\N
-3268	justice	n	\N	\N	1	B2	\N
-3269	justify	v	\N	\N	1	B2	\N
-3270	kidnap	v	\N	\N	1	B2	\N
-3271	kidney	n	\N	\N	1	B2	\N
-3272	kindergarten	n	\N	\N	1	B2	\N
-3273	kit	n	\N	\N	1	B2	\N
-3274	labour	n	\N	\N	1	B2	\N
-3275	ladder	n	\N	\N	1	B2	\N
-3276	landing	n	\N	\N	1	B2	\N
-3277	landscape	n	\N	\N	1	B2	\N
-3278	lane	n	\N	\N	1	B2	\N
-3279	largely	adv	\N	\N	1	B2	\N
-3280	laser	n	\N	\N	1	B2	\N
-3281	lately	adv	\N	\N	1	B2	\N
-3282	launch	v	\N	\N	1	B2	\N
-3283	leadership	n	\N	\N	1	B2	\N
-3284	league	n	\N	\N	1	B2	\N
-3285	lean	v	\N	\N	1	B2	\N
-3286	legend	n	\N	\N	1	B2	\N
-3287	lens	n	\N	\N	1	B2	\N
-3288	licence	n	\N	\N	1	B2	\N
-3289	lifetime	n	\N	\N	1	B2	\N
-3290	lighting	n	\N	\N	1	B2	\N
-3291	likewise	adv	\N	\N	1	B2	\N
-3292	limitation	n	\N	\N	1	B2	\N
-3293	limited	adj	\N	\N	1	B2	\N
-3294	literally	adv	\N	\N	1	B2	\N
-3295	literary	adj	\N	\N	1	B2	\N
-3296	litter	n	\N	\N	1	B2	\N
-3297	lively	adj	\N	\N	1	B2	\N
-3298	liver	n	\N	\N	1	B2	\N
-3299	load	n	\N	\N	1	B2	\N
-3300	loan	n	\N	\N	1	B2	\N
-3301	logical	adj	\N	\N	1	B2	\N
-3302	logo	n	\N	\N	1	B2	\N
-3303	long-term	adj	\N	\N	1	B2	\N
-3304	loose	adj	\N	\N	1	B2	\N
-3305	lord	n	\N	\N	1	B2	\N
-3306	lottery	n	\N	\N	1	B2	\N
-3307	lower	v	\N	\N	1	B2	\N
-3308	loyal	adj	\N	\N	1	B2	\N
-3309	lung	n	\N	\N	1	B2	\N
-3310	lyric	n	\N	\N	1	B2	\N
-3311	magnificent	adj	\N	\N	1	B2	\N
-3312	maintain	v	\N	\N	1	B2	\N
-3313	majority	n	\N	\N	1	B2	\N
-3314	makeup	n	\N	\N	1	B2	\N
-3315	making	n	\N	\N	1	B2	\N
-3316	manufacture	v	\N	\N	1	B2	\N
-3317	manufacturing	n	\N	\N	1	B2	\N
-3318	marathon	n	\N	\N	1	B2	\N
-3319	margin	n	\N	\N	1	B2	\N
-3320	marker	n	\N	\N	1	B2	\N
-3321	martial	adj	\N	\N	1	B2	\N
-3322	mass	n	\N	\N	1	B2	\N
-3323	massive	adj	\N	\N	1	B2	\N
-3324	master	n	\N	\N	1	B2	\N
-3325	matching	adj	\N	\N	1	B2	\N
-3326	mate	n	\N	\N	1	B2	\N
-3327	maximum	n	\N	\N	1	B2	\N
-3328	means	n	\N	\N	1	B2	\N
-3329	measurement	n	\N	\N	1	B2	\N
-3330	mechanic	n	\N	\N	1	B2	\N
-3331	mechanical	adj	\N	\N	1	B2	\N
-3332	mechanism	n	\N	\N	1	B2	\N
-3333	medal	n	\N	\N	1	B2	\N
-3334	medication	n	\N	\N	1	B2	\N
-3335	medium	n	\N	\N	1	B2	\N
-3336	melt	v	\N	\N	1	B2	\N
-3337	membership	n	\N	\N	1	B2	\N
-3338	memorable	adj	\N	\N	1	B2	\N
-3339	metaphor	n	\N	\N	1	B2	\N
-3340	method	n	\N	\N	1	B2	\N
-3341	military	adj	\N	\N	1	B2	\N
-3342	miner	n	\N	\N	1	B2	\N
-3343	mineral	n	\N	\N	1	B2	\N
-3344	minimum	n	\N	\N	1	B2	\N
-3345	minister	n	\N	\N	1	B2	\N
-3346	minor	adj	\N	\N	1	B2	\N
-3347	minority	n	\N	\N	1	B2	\N
-3348	miserable	adj	\N	\N	1	B2	\N
-3349	mission	n	\N	\N	1	B2	\N
-3350	mistaken	adj	\N	\N	1	B2	\N
-3351	mixed	adj	\N	\N	1	B2	\N
-3352	mode	n	\N	\N	1	B2	\N
-3353	modest	adj	\N	\N	1	B2	\N
-3354	modify	v	\N	\N	1	B2	\N
-3355	monitor	n	\N	\N	1	B2	\N
-3356	monster	n	\N	\N	1	B2	\N
-3357	monthly	adj	\N	\N	1	B2	\N
-3358	monument	n	\N	\N	1	B2	\N
-3359	moral	adj	\N	\N	1	B2	\N
-3360	moreover	adv	\N	\N	1	B2	\N
-3361	mortgage	n	\N	\N	1	B2	\N
-3362	mosque	n	\N	\N	1	B2	\N
-3363	mosquito	n	\N	\N	1	B2	\N
-3364	motion	n	\N	\N	1	B2	\N
-3365	motivate	v	\N	\N	1	B2	\N
-3366	motivation	n	\N	\N	1	B2	\N
-3367	motor	n	\N	\N	1	B2	\N
-3368	mount	v	\N	\N	1	B2	\N
-3369	moving	adj	\N	\N	1	B2	\N
-3370	multiple	adj	\N	\N	1	B2	\N
-3371	multiply	v	\N	\N	1	B2	\N
-3372	mysterious	adj	\N	\N	1	B2	\N
-3373	myth	n	\N	\N	1	B2	\N
-3374	naked	adj	\N	\N	1	B2	\N
-3375	nasty	adj	\N	\N	1	B2	\N
-3376	navigation	n	\N	\N	1	B2	\N
-3377	nearby	adj	\N	\N	1	B2	\N
-3378	neat	adj	\N	\N	1	B2	\N
-3379	necessity	n	\N	\N	1	B2	\N
-3380	negative	adj	\N	\N	1	B2	\N
-3381	negotiate	v	\N	\N	1	B2	\N
-3382	negotiation	n	\N	\N	1	B2	\N
-3383	nerve	n	\N	\N	1	B2	\N
-3384	neutral	adj	\N	\N	1	B2	\N
-3385	nevertheless	adv	\N	\N	1	B2	\N
-3386	newly	adv	\N	\N	1	B2	\N
-3387	nickel	n	\N	\N	1	B2	\N
-3388	nightmare	n	\N	\N	1	B2	\N
-3389	nostalgia	n	\N	\N	1	B2	\N
-3390	notebook	n	\N	\N	1	B2	\N
-3391	notion	n	\N	\N	1	B2	\N
-3392	novelist	n	\N	\N	1	B2	\N
-3393	nowadays	adv	\N	\N	1	B2	\N
-3394	numerous	adj	\N	\N	1	B2	\N
-3395	nursing	n	\N	\N	1	B2	\N
-3396	nutrition	n	\N	\N	1	B2	\N
-3397	obesity	n	\N	\N	1	B2	\N
-3398	obey	v	\N	\N	1	B2	\N
-3399	object	n	\N	\N	1	B2	\N
-3400	objective	n	\N	\N	1	B2	\N
-3401	obligatory	adj	\N	\N	1	B2	\N
-3402	obligation	n	\N	\N	1	B2	\N
-3403	observation	n	\N	\N	1	B2	\N
-3404	observe	v	\N	\N	1	B2	\N
-3405	observer	n	\N	\N	1	B2	\N
-3406	obstacle	n	\N	\N	1	B2	\N
-3407	obtain	v	\N	\N	1	B2	\N
-3408	occasionally	adv	\N	\N	1	B2	\N
-3409	occupation	n	\N	\N	1	B2	\N
-3410	occupy	v	\N	\N	1	B2	\N
-3411	offence	n	\N	\N	1	B2	\N
-3412	offend	v	\N	\N	1	B2	\N
-3413	offender	n	\N	\N	1	B2	\N
-3414	offensive	adj	\N	\N	1	B2	\N
-3415	ongoing	adj	\N	\N	1	B2	\N
-3416	onwards	adv	\N	\N	1	B2	\N
-3417	opening	n	\N	\N	1	B2	\N
-3418	openly	adv	\N	\N	1	B2	\N
-3419	opera	n	\N	\N	1	B2	\N
-3420	operate	v	\N	\N	1	B2	\N
-3421	operator	n	\N	\N	1	B2	\N
-3422	opponent	n	\N	\N	1	B2	\N
-3423	oppose	v	\N	\N	1	B2	\N
-3424	opposed	adj	\N	\N	1	B2	\N
-3425	opposition	n	\N	\N	1	B2	\N
-3426	optical	adj	\N	\N	1	B2	\N
-3427	optimistic	adj	\N	\N	1	B2	\N
-3428	orchestra	n	\N	\N	1	B2	\N
-3429	organ	n	\N	\N	1	B2	\N
-3430	organic	adj	\N	\N	1	B2	\N
-3431	origin	n	\N	\N	1	B2	\N
-3432	otherwise	adv	\N	\N	1	B2	\N
-3433	outcome	n	\N	\N	1	B2	\N
-3434	outer	adj	\N	\N	1	B2	\N
-3435	outfit	n	\N	\N	1	B2	\N
-3436	outline	n	\N	\N	1	B2	\N
-3437	output	n	\N	\N	1	B2	\N
-3438	outstanding	adj	\N	\N	1	B2	\N
-3439	overall	adj	\N	\N	1	B2	\N
-3440	overcome	v	\N	\N	1	B2	\N
-3441	overnight	adv	\N	\N	1	B2	\N
-3442	overseas	adv	\N	\N	1	B2	\N
-3443	owe	v	\N	\N	1	B2	\N
-3444	ownership	n	\N	\N	1	B2	\N
-3445	oxygen	n	\N	\N	1	B2	\N
-3446	pace	n	\N	\N	1	B2	\N
-3447	packet	n	\N	\N	1	B2	\N
-3448	palm	n	\N	\N	1	B2	\N
-3449	panel	n	\N	\N	1	B2	\N
-3450	panic	n	\N	\N	1	B2	\N
-3451	parade	n	\N	\N	1	B2	\N
-3452	parallel	adj	\N	\N	1	B2	\N
-3453	parliament	n	\N	\N	1	B2	\N
-3454	part-time	adj	\N	\N	1	B2	\N
-3455	participant	n	\N	\N	1	B2	\N
-3456	participation	n	\N	\N	1	B2	\N
-3457	partly	adv	\N	\N	1	B2	\N
-3458	partnership	n	\N	\N	1	B2	\N
-3459	passage	n	\N	\N	1	B2	\N
-3460	passionate	adj	\N	\N	1	B2	\N
-3461	password	n	\N	\N	1	B2	\N
-3462	patch	n	\N	\N	1	B2	\N
-3463	patience	n	\N	\N	1	B2	\N
-3464	pause	n	\N	\N	1	B2	\N
-3465	peer	n	\N	\N	1	B2	\N
-3466	penalty	n	\N	\N	1	B2	\N
-3467	pension	n	\N	\N	1	B2	\N
-3468	perceive	v	\N	\N	1	B2	\N
-3469	perception	n	\N	\N	1	B2	\N
-3470	permanent	adj	\N	\N	1	B2	\N
-3471	permanently	adv	\N	\N	1	B2	\N
-3472	permit	n	\N	\N	1	B2	\N
-3473	perspective	n	\N	\N	1	B2	\N
-3474	pharmacy	n	\N	\N	1	B2	\N
-3475	phase	n	\N	\N	1	B2	\N
-3476	phenomenon	n	\N	\N	1	B2	\N
-3477	philosophy	n	\N	\N	1	B2	\N
-3478	physician	n	\N	\N	1	B2	\N
-3479	pile	n	\N	\N	1	B2	\N
-3480	pill	n	\N	\N	1	B2	\N
-3481	pitch	n	\N	\N	1	B2	\N
-3482	pity	n	\N	\N	1	B2	\N
-3483	placement	n	\N	\N	1	B2	\N
-3484	plain	adj	\N	\N	1	B2	\N
-3485	plus	prep	\N	\N	1	B2	\N
-3486	pointed	adj	\N	\N	1	B2	\N
-3487	popularity	n	\N	\N	1	B2	\N
-3488	portion	n	\N	\N	1	B2	\N
-3489	pose	n	\N	\N	1	B2	\N
-3490	positive	adj	\N	\N	1	B2	\N
-3491	possess	v	\N	\N	1	B2	\N
-3492	potential	adj	\N	\N	1	B2	\N
-3493	potentially	adv	\N	\N	1	B2	\N
-3494	praise	v	\N	\N	1	B2	\N
-3495	precious	adj	\N	\N	1	B2	\N
-3496	precise	adj	\N	\N	1	B2	\N
-3497	precisely	adv	\N	\N	1	B2	\N
-3498	predictable	adj	\N	\N	1	B2	\N
-3499	preference	n	\N	\N	1	B2	\N
-3500	pregnant	adj	\N	\N	1	B2	\N
-3501	preparation	n	\N	\N	1	B2	\N
-3502	presence	n	\N	\N	1	B2	\N
-3503	preserve	v	\N	\N	1	B2	\N
-3504	presidential	adj	\N	\N	1	B2	\N
-3505	pride	n	\N	\N	1	B2	\N
-3506	primarily	adv	\N	\N	1	B2	\N
-3507	prime	adj	\N	\N	1	B2	\N
-3508	principal	adj	\N	\N	1	B2	\N
-3509	principle	n	\N	\N	1	B2	\N
-3510	prior	adj	\N	\N	1	B2	\N
-3511	priority	n	\N	\N	1	B2	\N
-3512	privacy	n	\N	\N	1	B2	\N
-3513	probability	n	\N	\N	1	B2	\N
-3514	probable	adj	\N	\N	1	B2	\N
-3515	procedure	n	\N	\N	1	B2	\N
-3516	proceed	v	\N	\N	1	B2	\N
-3517	professional	adj	\N	\N	1	B2	\N
-3518	programming	n	\N	\N	1	B2	\N
-3519	progressive	adj	\N	\N	1	B2	\N
-3520	prohibit	v	\N	\N	1	B2	\N
-3521	promising	adj	\N	\N	1	B2	\N
-3522	promotion	n	\N	\N	1	B2	\N
-3523	prompt	v	\N	\N	1	B2	\N
-3524	proof	n	\N	\N	1	B2	\N
-3525	proportion	n	\N	\N	1	B2	\N
-3526	proportion	n	\N	\N	1	B2	\N
-3527	proposal	n	\N	\N	1	B2	\N
-3528	propose	v	\N	\N	1	B2	\N
-3529	prospect	n	\N	\N	1	B2	\N
-3530	protection	n	\N	\N	1	B2	\N
-3531	protein	n	\N	\N	1	B2	\N
-3532	protester	n	\N	\N	1	B2	\N
-3533	proven	adj	\N	\N	1	B2	\N
-3534	psychological	adj	\N	\N	1	B2	\N
-3535	psychologist	n	\N	\N	1	B2	\N
-3536	psychology	n	\N	\N	1	B2	\N
-3537	publication	n	\N	\N	1	B2	\N
-3538	publicity	n	\N	\N	1	B2	\N
-3539	publishing	n	\N	\N	1	B2	\N
-3540	punk	n	\N	\N	1	B2	\N
-3541	pupil	n	\N	\N	1	B2	\N
-3542	purchase	n	\N	\N	1	B2	\N
-3543	pure	adj	\N	\N	1	B2	\N
-3544	purely	adv	\N	\N	1	B2	\N
-3545	pursue	v	\N	\N	1	B2	\N
-3546	pursuit	n	\N	\N	1	B2	\N
-3547	puzzle	n	\N	\N	1	B2	\N
-3548	question	v	\N	\N	1	B2	\N
-3549	questionnaire	n	\N	\N	1	B2	\N
-3550	racial	adj	\N	\N	1	B2	\N
-3551	racism	n	\N	\N	1	B2	\N
-3552	racist	adj	\N	\N	1	B2	\N
-3553	radar	n	\N	\N	1	B2	\N
-3554	radiation	n	\N	\N	1	B2	\N
-3555	rail	n	\N	\N	1	B2	\N
-3556	random	adj	\N	\N	1	B2	\N
-3557	rank	n	\N	\N	1	B2	\N
-3558	rapid	adj	\N	\N	1	B2	\N
-3559	rapidly	adv	\N	\N	1	B2	\N
-3560	raw	adj	\N	\N	1	B2	\N
-3561	realistic	adj	\N	\N	1	B2	\N
-3562	reasonable	adj	\N	\N	1	B2	\N
-3563	reasonably	adv	\N	\N	1	B2	\N
-3564	rebuild	v	\N	\N	1	B2	\N
-3565	recall	v	\N	\N	1	B2	\N
-3566	receiver	n	\N	\N	1	B2	\N
-3567	recession	n	\N	\N	1	B2	\N
-3568	reckon	v	\N	\N	1	B2	\N
-3569	recognition	n	\N	\N	1	B2	\N
-3570	recover	v	\N	\N	1	B2	\N
-3571	recovery	n	\N	\N	1	B2	\N
-3572	recruit	v	\N	\N	1	B2	\N
-3573	reduction	n	\N	\N	1	B2	\N
-3574	referee	n	\N	\N	1	B2	\N
-3575	refugee	n	\N	\N	1	B2	\N
-3576	regard	v	\N	\N	1	B2	\N
-3577	regional	adj	\N	\N	1	B2	\N
-3578	register	v	\N	\N	1	B2	\N
-3579	registration	n	\N	\N	1	B2	\N
-3580	regret	v	\N	\N	1	B2	\N
-3581	regulate	v	\N	\N	1	B2	\N
-3582	regulation	n	\N	\N	1	B2	\N
-3583	reinforce	v	\N	\N	1	B2	\N
-3584	relatively	adv	\N	\N	1	B2	\N
-3585	relevant	adj	\N	\N	1	B2	\N
-3586	relief	n	\N	\N	1	B2	\N
-3587	relieve	v	\N	\N	1	B2	\N
-3588	relieved	adj	\N	\N	1	B2	\N
-3589	rely on	v	\N	\N	1	B2	\N
-3590	remark	n	\N	\N	1	B2	\N
-3591	remarkable	adj	\N	\N	1	B2	\N
-3592	remarkably	adv	\N	\N	1	B2	\N
-3593	reporting	n	\N	\N	1	B2	\N
-3594	representative	n	\N	\N	1	B2	\N
-3595	reputation	n	\N	\N	1	B2	\N
-3596	requirement	n	\N	\N	1	B2	\N
-3597	rescue	v	\N	\N	1	B2	\N
-3598	research	n	\N	\N	1	B2	\N
-3599	reserve	v	\N	\N	1	B2	\N
-3600	resident	n	\N	\N	1	B2	\N
-3601	resign	v	\N	\N	1	B2	\N
-3602	resist	v	\N	\N	1	B2	\N
-3603	resolution	n	\N	\N	1	B2	\N
-3604	resolve	v	\N	\N	1	B2	\N
-3605	resort	n	\N	\N	1	B2	\N
-3606	restore	v	\N	\N	1	B2	\N
-3607	restrict	v	\N	\N	1	B2	\N
-3608	restriction	n	\N	\N	1	B2	\N
-3609	résumé	n	\N	\N	1	B2	\N
-3610	retail	n	\N	\N	1	B2	\N
-3611	retain	v	\N	\N	1	B2	\N
-3612	retirement	n	\N	\N	1	B2	\N
-3613	reveal	v	\N	\N	1	B2	\N
-3614	revenue	n	\N	\N	1	B2	\N
-3615	revision	n	\N	\N	1	B2	\N
-3616	revolution	n	\N	\N	1	B2	\N
-3617	reward	n	\N	\N	1	B2	\N
-3618	rhythm	n	\N	\N	1	B2	\N
-3619	rid	adj	\N	\N	1	B2	\N
-3620	ridiculous	adj	\N	\N	1	B2	\N
-3621	risky	adj	\N	\N	1	B2	\N
-3622	rival	n	\N	\N	1	B2	\N
-3623	rob	v	\N	\N	1	B2	\N
-3624	robbery	n	\N	\N	1	B2	\N
-3625	rocket	n	\N	\N	1	B2	\N
-3626	romance	n	\N	\N	1	B2	\N
-3627	root	n	\N	\N	1	B2	\N
-3628	rose	n	\N	\N	1	B2	\N
-3629	roughly	adv	\N	\N	1	B2	\N
-3630	rub	v	\N	\N	1	B2	\N
-3631	rubber	n	\N	\N	1	B2	\N
-3632	ruin	v	\N	\N	1	B2	\N
-3633	rural	adj	\N	\N	1	B2	\N
-3634	rush	v	\N	\N	1	B2	\N
-3635	satellite	n	\N	\N	1	B2	\N
-3636	satisfaction	n	\N	\N	1	B2	\N
-3637	satisfied	adj	\N	\N	1	B2	\N
-3638	satisfy	v	\N	\N	1	B2	\N
-3639	saving	n	\N	\N	1	B2	\N
-3640	scale	n	\N	\N	1	B2	\N
-3641	scandal	n	\N	\N	1	B2	\N
-3642	scare	v	\N	\N	1	B2	\N
-3643	scholar	n	\N	\N	1	B2	\N
-3644	scholarship	n	\N	\N	1	B2	\N
-3645	scratch	v	\N	\N	1	B2	\N
-3646	scream	v	\N	\N	1	B2	\N
-3647	screening	n	\N	\N	1	B2	\N
-3648	sector	n	\N	\N	1	B2	\N
-3649	secure	v	\N	\N	1	B2	\N
-3650	seek	v	\N	\N	1	B2	\N
-3651	seeker	n	\N	\N	1	B2	\N
-3652	select	v	\N	\N	1	B2	\N
-3653	selection	n	\N	\N	1	B2	\N
-3654	self	n	\N	\N	1	B2	\N
-3655	seminar	n	\N	\N	1	B2	\N
-3656	senior	adj	\N	\N	1	B2	\N
-3657	sensitive	adj	\N	\N	1	B2	\N
-3658	sequence	n	\N	\N	1	B2	\N
-3659	session	n	\N	\N	1	B2	\N
-3660	settle	v	\N	\N	1	B2	\N
-3661	settler	n	\N	\N	1	B2	\N
-3662	severe	adj	\N	\N	1	B2	\N
-3663	severely	adv	\N	\N	1	B2	\N
-3664	sexy	adj	\N	\N	1	B2	\N
-3665	shade	n	\N	\N	1	B2	\N
-3666	shadow	n	\N	\N	1	B2	\N
-3667	shallow	adj	\N	\N	1	B2	\N
-3668	shame	n	\N	\N	1	B2	\N
-3669	shaped	adj	\N	\N	1	B2	\N
-3670	shelter	n	\N	\N	1	B2	\N
-3671	shooting	n	\N	\N	1	B2	\N
-3672	shore	n	\N	\N	1	B2	\N
-3673	short-term	adj	\N	\N	1	B2	\N
-3674	shortage	n	\N	\N	1	B2	\N
-3675	shortly	adv	\N	\N	1	B2	\N
-3676	sibling	n	\N	\N	1	B2	\N
-3677	sidewalk	n	\N	\N	1	B2	\N
-3678	signature	n	\N	\N	1	B2	\N
-3679	significance	n	\N	\N	1	B2	\N
-3680	significant	adj	\N	\N	1	B2	\N
-3681	significantly	adv	\N	\N	1	B2	\N
-3682	silence	n	\N	\N	1	B2	\N
-3683	silk	n	\N	\N	1	B2	\N
-3684	sincere	adj	\N	\N	1	B2	\N
-3685	skilled	adj	\N	\N	1	B2	\N
-3686	skull	n	\N	\N	1	B2	\N
-3687	slave	n	\N	\N	1	B2	\N
-3688	slide	v	\N	\N	1	B2	\N
-3689	slight	adj	\N	\N	1	B2	\N
-3690	slip	v	\N	\N	1	B2	\N
-3691	slogan	n	\N	\N	1	B2	\N
-3692	slope	n	\N	\N	1	B2	\N
-3693	so-called	adj	\N	\N	1	B2	\N
-3694	solar	adj	\N	\N	1	B2	\N
-3695	somehow	adv	\N	\N	1	B2	\N
-3696	sometime	adv	\N	\N	1	B2	\N
-3697	somewhat	adv	\N	\N	1	B2	\N
-3698	sophisticated	adj	\N	\N	1	B2	\N
-3699	soul	n	\N	\N	1	B2	\N
-3700	source	n	\N	\N	1	B2	\N
-3701	spare	adj	\N	\N	1	B2	\N
-3702	specialise	v	\N	\N	1	B2	\N
-3703	specialist	n	\N	\N	1	B2	\N
-3704	species	n	\N	\N	1	B2	\N
-3705	specify	v	\N	\N	1	B2	\N
-3706	spectacular	adj	\N	\N	1	B2	\N
-3707	spectator	n	\N	\N	1	B2	\N
-3708	speculate	v	\N	\N	1	B2	\N
-3709	speculation	n	\N	\N	1	B2	\N
-3710	spice	n	\N	\N	1	B2	\N
-3711	spill	v	\N	\N	1	B2	\N
-3712	spiritual	adj	\N	\N	1	B2	\N
-3713	in spite of	prep	\N	\N	1	B2	\N
-3714	split	v	\N	\N	1	B2	\N
-3715	spoil	v	\N	\N	1	B2	\N
-3716	spokesman	n	\N	\N	1	B2	\N
-3717	spokesperson	n	\N	\N	1	B2	\N
-3718	spokeswoman	n	\N	\N	1	B2	\N
-3719	sponsor	n	\N	\N	1	B2	\N
-3720	sponsorship	n	\N	\N	1	B2	\N
-3721	stable	adj	\N	\N	1	B2	\N
-3722	stall	n	\N	\N	1	B2	\N
-3723	stance	n	\N	\N	1	B2	\N
-3724	stare	v	\N	\N	1	B2	\N
-3725	starve	v	\N	\N	1	B2	\N
-3726	statistic	n	\N	\N	1	B2	\N
-3727	status	n	\N	\N	1	B2	\N
-3728	steadily	adv	\N	\N	1	B2	\N
-3729	steady	adj	\N	\N	1	B2	\N
-3730	steam	n	\N	\N	1	B2	\N
-3731	steel	n	\N	\N	1	B2	\N
-3732	steep	adj	\N	\N	1	B2	\N
-3733	sticky	adj	\N	\N	1	B2	\N
-3734	stiff	adj	\N	\N	1	B2	\N
-3735	stimulate	v	\N	\N	1	B2	\N
-3736	stock	n	\N	\N	1	B2	\N
-3737	stream	n	\N	\N	1	B2	\N
-3738	strengthen	v	\N	\N	1	B2	\N
-3739	stretch	v	\N	\N	1	B2	\N
-3740	strict	adj	\N	\N	1	B2	\N
-3741	strictly	adv	\N	\N	1	B2	\N
-3742	strike	n	\N	\N	1	B2	\N
-3743	striking	adj	\N	\N	1	B2	\N
-3744	stroke	n	\N	\N	1	B2	\N
-3745	struggle	v	\N	\N	1	B2	\N
-3746	stunning	adj	\N	\N	1	B2	\N
-3747	submit	v	\N	\N	1	B2	\N
-3748	substance	n	\N	\N	1	B2	\N
-3749	suburb	n	\N	\N	1	B2	\N
-3750	suffering	n	\N	\N	1	B2	\N
-3751	sufficient	adj	\N	\N	1	B2	\N
-3752	sufficiently	adv	\N	\N	1	B2	\N
-3753	sum	n	\N	\N	1	B2	\N
-3754	super	adj	\N	\N	1	B2	\N
-3755	surgeon	n	\N	\N	1	B2	\N
-3756	surgery	n	\N	\N	1	B2	\N
-3757	surround	v	\N	\N	1	B2	\N
-3758	surrounding	adj	\N	\N	1	B2	\N
-3759	survival	n	\N	\N	1	B2	\N
-3760	survivor	n	\N	\N	1	B2	\N
-3761	suspect	n	\N	\N	1	B2	\N
-3762	suspend	v	\N	\N	1	B2	\N
-3763	sustainability	n	\N	\N	1	B2	\N
-3764	sustainable	adj	\N	\N	1	B2	\N
-3765	swallow	v	\N	\N	1	B2	\N
-3766	swear	v	\N	\N	1	B2	\N
-3767	sweep	v	\N	\N	1	B2	\N
-3768	symbol	n	\N	\N	1	B2	\N
-3769	symbolise	v	\N	\N	1	B2	\N
-3770	sympathetic	adj	\N	\N	1	B2	\N
-3771	sympathy	n	\N	\N	1	B2	\N
-3772	tag	n	\N	\N	1	B2	\N
-3773	tale	n	\N	\N	1	B2	\N
-3774	tank	n	\N	\N	1	B2	\N
-3775	tap	n	\N	\N	1	B2	\N
-3776	tear	n	\N	\N	1	B2	\N
-3777	technological	adj	\N	\N	1	B2	\N
-3778	teen	n	\N	\N	1	B2	\N
-3779	temple	n	\N	\N	1	B2	\N
-3780	temporarily	adv	\N	\N	1	B2	\N
-3781	temporary	adj	\N	\N	1	B2	\N
-3782	tendency	n	\N	\N	1	B2	\N
-3783	tension	n	\N	\N	1	B2	\N
-3784	terminal	n	\N	\N	1	B2	\N
-3785	terms	n	\N	\N	1	B2	\N
-3786	terribly	adv	\N	\N	1	B2	\N
-3787	terrify	v	\N	\N	1	B2	\N
-3788	territory	n	\N	\N	1	B2	\N
-3789	terror	n	\N	\N	1	B2	\N
-3790	terrorism	n	\N	\N	1	B2	\N
-3791	terrorist	n	\N	\N	1	B2	\N
-3792	testing	n	\N	\N	1	B2	\N
-3793	textbook	n	\N	\N	1	B2	\N
-3794	theft	n	\N	\N	1	B2	\N
-3795	therapist	n	\N	\N	1	B2	\N
-3796	therapy	n	\N	\N	1	B2	\N
-3797	theory	n	\N	\N	1	B2	\N
-3798	therefore	adv	\N	\N	1	B2	\N
-3799	thorough	adj	\N	\N	1	B2	\N
-3800	thoroughly	adv	\N	\N	1	B2	\N
-3801	threat	n	\N	\N	1	B2	\N
-3802	threaten	v	\N	\N	1	B2	\N
-3803	thumb	n	\N	\N	1	B2	\N
-3804	thus	adv	\N	\N	1	B2	\N
-3805	timing	n	\N	\N	1	B2	\N
-3806	tissue	n	\N	\N	1	B2	\N
-3807	tone	n	\N	\N	1	B2	\N
-3808	tough	adj	\N	\N	1	B2	\N
-3809	tournament	n	\N	\N	1	B2	\N
-3810	toxic	adj	\N	\N	1	B2	\N
-3813	trading	n	\N	\N	1	B2	\N
-3814	tragedy	n	\N	\N	1	B2	\N
-3815	tragic	adj	\N	\N	1	B2	\N
-3816	trait	n	\N	\N	1	B2	\N
-3817	transfer	n	\N	\N	1	B2	\N
-3818	transform	v	\N	\N	1	B2	\N
-3819	transition	n	\N	\N	1	B2	\N
-3820	transmit	v	\N	\N	1	B2	\N
-3821	trap	n	\N	\N	1	B2	\N
-3822	treasure	n	\N	\N	1	B2	\N
-3823	trial	n	\N	\N	1	B2	\N
-3824	tribe	n	\N	\N	1	B2	\N
-3825	trillion	num	\N	\N	1	B2	\N
-3826	troop	n	\N	\N	1	B2	\N
-3827	tropical	adj	\N	\N	1	B2	\N
-3828	truly	adv	\N	\N	1	B2	\N
-3829	trust	n	\N	\N	1	B2	\N
-3830	tsunami	n	\N	\N	1	B2	\N
-3831	tune	n	\N	\N	1	B2	\N
-3832	tunnel	n	\N	\N	1	B2	\N
-3833	ultimate	adj	\N	\N	1	B2	\N
-3834	ultimately	adv	\N	\N	1	B2	\N
-3835	unacceptable	adj	\N	\N	1	B2	\N
-3836	uncertainty	n	\N	\N	1	B2	\N
-3837	unconscious	adj	\N	\N	1	B2	\N
-3838	undergo	v	\N	\N	1	B2	\N
-3839	undertake	v	\N	\N	1	B2	\N
-3840	unexpected	adj	\N	\N	1	B2	\N
-3841	unfold	v	\N	\N	1	B2	\N
-3842	unfortunate	adj	\N	\N	1	B2	\N
-3843	unique	adj	\N	\N	1	B2	\N
-3844	unite	v	\N	\N	1	B2	\N
-3845	unity	n	\N	\N	1	B2	\N
-3846	universal	adj	\N	\N	1	B2	\N
-3847	universe	n	\N	\N	1	B2	\N
-3848	unknown	adj	\N	\N	1	B2	\N
-3849	upper	adj	\N	\N	1	B2	\N
-3850	upwards	adv	\N	\N	1	B2	\N
-3851	urban	adj	\N	\N	1	B2	\N
-3852	urge	v	\N	\N	1	B2	\N
-3853	urgent	adj	\N	\N	1	B2	\N
-3854	usage	n	\N	\N	1	B2	\N
-3855	useless	adj	\N	\N	1	B2	\N
-3856	valid	adj	\N	\N	1	B2	\N
-3857	variation	n	\N	\N	1	B2	\N
-3858	vary	v	\N	\N	1	B2	\N
-3859	vast	adj	\N	\N	1	B2	\N
-3860	venue	n	\N	\N	1	B2	\N
-3861	vertical	adj	\N	\N	1	B2	\N
-3862	via	prep	\N	\N	1	B2	\N
-3863	victory	n	\N	\N	1	B2	\N
-3864	victorious	adj	\N	\N	1	B2	\N
-3865	viewpoint	n	\N	\N	1	B2	\N
-3866	violence	n	\N	\N	1	B2	\N
-3867	virtual	adj	\N	\N	1	B2	\N
-3868	visa	n	\N	\N	1	B2	\N
-3869	visible	adj	\N	\N	1	B2	\N
-3870	vision	n	\N	\N	1	B2	\N
-3871	visual	adj	\N	\N	1	B2	\N
-3872	vital	adj	\N	\N	1	B2	\N
-3873	vitamin	n	\N	\N	1	B2	\N
-3874	volume	n	\N	\N	1	B2	\N
-3875	voluntarily	adv	\N	\N	1	B2	\N
-3876	voluntary	adj	\N	\N	1	B2	\N
-3877	voting	n	\N	\N	1	B2	\N
-3878	wage	n	\N	\N	1	B2	\N
-3879	wander	v	\N	\N	1	B2	\N
-3880	warming	n	\N	\N	1	B2	\N
-3881	weakness	n	\N	\N	1	B2	\N
-3882	wealth	n	\N	\N	1	B2	\N
-3883	wealthy	adj	\N	\N	1	B2	\N
-3884	weekly	adj	\N	\N	1	B2	\N
-3885	weird	adj	\N	\N	1	B2	\N
-3886	welfare	n	\N	\N	1	B2	\N
-3887	wheat	n	\N	\N	1	B2	\N
-3888	whereas	conj	\N	\N	1	B2	\N
-3889	wherever	conj	\N	\N	1	B2	\N
-3890	whisper	v	\N	\N	1	B2	\N
-3891	whoever	pron	\N	\N	1	B2	\N
-3892	whom	pron	\N	\N	1	B2	\N
-3893	widely	adv	\N	\N	1	B2	\N
-3894	widespread	adj	\N	\N	1	B2	\N
-3895	widow	n	\N	\N	1	B2	\N
-3896	wildlife	n	\N	\N	1	B2	\N
-3897	willing	adj	\N	\N	1	B2	\N
-3898	wire	n	\N	\N	1	B2	\N
-3899	wisdom	n	\N	\N	1	B2	\N
-3900	wise	adj	\N	\N	1	B2	\N
-3901	withdraw	v	\N	\N	1	B2	\N
-3902	witness	n	\N	\N	1	B2	\N
-3903	wolf	n	\N	\N	1	B2	\N
-3904	workforce	n	\N	\N	1	B2	\N
-3905	workplace	n	\N	\N	1	B2	\N
-3906	workshop	n	\N	\N	1	B2	\N
-3907	worm	n	\N	\N	1	B2	\N
-3908	wound	n	\N	\N	1	B2	\N
-3909	wrap	v	\N	\N	1	B2	\N
-3910	wrist	n	\N	\N	1	B2	\N
-3911	zone	n	\N	\N	1	B2	\N
-3912	yield	v	\N	\N	1	B2	\N
-3913	abolish	v	\N	\N	1	C1	\N
-3914	abortion	n	\N	\N	1	C1	\N
-3915	absence	n	\N	\N	1	C1	\N
-3916	absurd	adj	\N	\N	1	C1	\N
-3917	abuse	n	\N	\N	1	C1	\N
-3918	academy	n	\N	\N	1	C1	\N
-3919	accelerate	v	\N	\N	1	C1	\N
-3920	acceptance	n	\N	\N	1	C1	\N
-3921	accessible	adj	\N	\N	1	C1	\N
-3922	accomplishment	n	\N	\N	1	C1	\N
-3923	accordingly	adv	\N	\N	1	C1	\N
-3924	accountability	n	\N	\N	1	C1	\N
-3925	accountable	adj	\N	\N	1	C1	\N
-3926	accumulate	v	\N	\N	1	C1	\N
-3927	accumulation	n	\N	\N	1	C1	\N
-3928	accusation	n	\N	\N	1	C1	\N
-3929	accused	n	\N	\N	1	C1	\N
-3930	acid	n	\N	\N	1	C1	\N
-3931	acquisition	n	\N	\N	1	C1	\N
-3932	activation	n	\N	\N	1	C1	\N
-3933	activist	n	\N	\N	1	C1	\N
-3934	acute	adj	\N	\N	1	C1	\N
-3935	adaptation	n	\N	\N	1	C1	\N
-3936	adhere	v	\N	\N	1	C1	\N
-3937	adjacent	adj	\N	\N	1	C1	\N
-3938	adjustment	n	\N	\N	1	C1	\N
-3939	administer	v	\N	\N	1	C1	\N
-3940	administrative	adj	\N	\N	1	C1	\N
-3941	administrator	n	\N	\N	1	C1	\N
-3942	admission	n	\N	\N	1	C1	\N
-3943	adolescent	n	\N	\N	1	C1	\N
-3944	adoption	n	\N	\N	1	C1	\N
-3945	adverse	adj	\N	\N	1	C1	\N
-3946	advocate	n	\N	\N	1	C1	\N
-3947	aesthetic	adj	\N	\N	1	C1	\N
-3948	affection	n	\N	\N	1	C1	\N
-3949	aftermath	n	\N	\N	1	C1	\N
-3950	aggression	n	\N	\N	1	C1	\N
-3951	agricultural	adj	\N	\N	1	C1	\N
-3952	aide	n	\N	\N	1	C1	\N
-3953	alert	v	\N	\N	1	C1	\N
-3954	align	v	\N	\N	1	C1	\N
-3955	alignment	n	\N	\N	1	C1	\N
-3956	alike	adj	\N	\N	1	C1	\N
-3957	allegation	n	\N	\N	1	C1	\N
-3958	allege	v	\N	\N	1	C1	\N
-3959	allegedly	adv	\N	\N	1	C1	\N
-3960	alliance	n	\N	\N	1	C1	\N
-3961	allocate	v	\N	\N	1	C1	\N
-3962	allocation	n	\N	\N	1	C1	\N
-3963	allowance	n	\N	\N	1	C1	\N
-3964	ally	n	\N	\N	1	C1	\N
-3965	aluminium	n	\N	\N	1	C1	\N
-3966	amateur	n	\N	\N	1	C1	\N
-3967	ambassador	n	\N	\N	1	C1	\N
-3968	amend	v	\N	\N	1	C1	\N
-3969	amendment	n	\N	\N	1	C1	\N
-3970	amid	prep	\N	\N	1	C1	\N
-3971	analogy	n	\N	\N	1	C1	\N
-3972	anchor	n	\N	\N	1	C1	\N
-3973	anonymous	adj	\N	\N	1	C1	\N
-3974	apparel	n	\N	\N	1	C1	\N
-3975	appealing	adj	\N	\N	1	C1	\N
-3976	appetite	n	\N	\N	1	C1	\N
-3977	applaud	v	\N	\N	1	C1	\N
-3978	applicable	adj	\N	\N	1	C1	\N
-3979	appoint	v	\N	\N	1	C1	\N
-3980	appreciation	n	\N	\N	1	C1	\N
-3981	arbitrary	adj	\N	\N	1	C1	\N
-3982	architectural	adj	\N	\N	1	C1	\N
-3983	archive	n	\N	\N	1	C1	\N
-3984	arena	n	\N	\N	1	C1	\N
-3985	arm	v	\N	\N	1	C1	\N
-3986	array	n	\N	\N	1	C1	\N
-3987	articulate	v	\N	\N	1	C1	\N
-3988	ash	n	\N	\N	1	C1	\N
-3989	aspiration	n	\N	\N	1	C1	\N
-3990	aspire	v	\N	\N	1	C1	\N
-3991	assassination	n	\N	\N	1	C1	\N
-3992	assault	n	\N	\N	1	C1	\N
-3993	assemble	v	\N	\N	1	C1	\N
-3994	assembly	n	\N	\N	1	C1	\N
-3995	assert	v	\N	\N	1	C1	\N
-3996	assertion	n	\N	\N	1	C1	\N
-3997	assurance	n	\N	\N	1	C1	\N
-3998	asylum	n	\N	\N	1	C1	\N
-3999	atrocity	n	\N	\N	1	C1	\N
-4000	attain	v	\N	\N	1	C1	\N
-4001	attendance	n	\N	\N	1	C1	\N
-4002	attribute	n	\N	\N	1	C1	\N
-4003	auction	n	\N	\N	1	C1	\N
-4004	audit	n	\N	\N	1	C1	\N
-4005	authentic	adj	\N	\N	1	C1	\N
-4006	authorise	v	\N	\N	1	C1	\N
-4007	auto	n	\N	\N	1	C1	\N
-4008	autonomy	n	\N	\N	1	C1	\N
-4009	availability	n	\N	\N	1	C1	\N
-4010	await	v	\N	\N	1	C1	\N
-4011	backdrop	n	\N	\N	1	C1	\N
-4012	backing	n	\N	\N	1	C1	\N
-4013	backup	n	\N	\N	1	C1	\N
-4014	bail	n	\N	\N	1	C1	\N
-4015	ballot	n	\N	\N	1	C1	\N
-4016	bankruptcy	n	\N	\N	1	C1	\N
-4017	banner	n	\N	\N	1	C1	\N
-4018	bare	adj	\N	\N	1	C1	\N
-4019	barrel	n	\N	\N	1	C1	\N
-4020	battlefield	n	\N	\N	1	C1	\N
-4021	bay	n	\N	\N	1	C1	\N
-4022	beam	n	\N	\N	1	C1	\N
-4023	beast	n	\N	\N	1	C1	\N
-4024	behalf	n	\N	\N	1	C1	\N
-4025	behavioural	adj	\N	\N	1	C1	\N
-4026	beloved	adj	\N	\N	1	C1	\N
-4027	bench	n	\N	\N	1	C1	\N
-4028	benchmark	n	\N	\N	1	C1	\N
-4029	beneath	prep	\N	\N	1	C1	\N
-4030	beneficiary	n	\N	\N	1	C1	\N
-6731	siege	n	\N	\N	1	C2	\N
-4031	betray	v	\N	\N	1	C1	\N
-4032	betrayal	n	\N	\N	1	C1	\N
-4033	beverage	n	\N	\N	1	C1	\N
-4034	bind	v	\N	\N	1	C1	\N
-4035	biography	n	\N	\N	1	C1	\N
-4036	bishop	n	\N	\N	1	C1	\N
-4037	bizarre	adj	\N	\N	1	C1	\N
-4038	blade	n	\N	\N	1	C1	\N
-4039	blast	n	\N	\N	1	C1	\N
-4040	bleed	v	\N	\N	1	C1	\N
-4041	blend	n	\N	\N	1	C1	\N
-4042	bless	v	\N	\N	1	C1	\N
-4043	blessing	n	\N	\N	1	C1	\N
-4044	boast	v	\N	\N	1	C1	\N
-4045	bonus	n	\N	\N	1	C1	\N
-4046	boom	n	\N	\N	1	C1	\N
-4047	bounce	v	\N	\N	1	C1	\N
-4048	boundary	n	\N	\N	1	C1	\N
-4049	bow	v	\N	\N	1	C1	\N
-4050	breach	n	\N	\N	1	C1	\N
-4051	breakdown	n	\N	\N	1	C1	\N
-4052	breakthrough	n	\N	\N	1	C1	\N
-4053	breed	v	\N	\N	1	C1	\N
-4054	broadband	n	\N	\N	1	C1	\N
-4055	browser	n	\N	\N	1	C1	\N
-4056	brutal	adj	\N	\N	1	C1	\N
-4057	buffer	n	\N	\N	1	C1	\N
-4058	bulk	n	\N	\N	1	C1	\N
-4059	burden	n	\N	\N	1	C1	\N
-4060	bureaucracy	n	\N	\N	1	C1	\N
-4061	burial	n	\N	\N	1	C1	\N
-4062	cabinet	n	\N	\N	1	C1	\N
-4063	calculation	n	\N	\N	1	C1	\N
-4064	canvas	n	\N	\N	1	C1	\N
-4065	capability	n	\N	\N	1	C1	\N
-4066	capitalism	n	\N	\N	1	C1	\N
-4067	capitalist	n	\N	\N	1	C1	\N
-4068	cargo	n	\N	\N	1	C1	\N
-4069	carriage	n	\N	\N	1	C1	\N
-4070	carve	v	\N	\N	1	C1	\N
-4071	casualty	n	\N	\N	1	C1	\N
-4072	catalogue	n	\N	\N	1	C1	\N
-4073	cater	v	\N	\N	1	C1	\N
-4074	cattle	n	\N	\N	1	C1	\N
-4075	caution	n	\N	\N	1	C1	\N
-4076	cautious	adj	\N	\N	1	C1	\N
-4077	cease	v	\N	\N	1	C1	\N
-4078	cemetery	n	\N	\N	1	C1	\N
-4079	chamber	n	\N	\N	1	C1	\N
-4080	chaos	n	\N	\N	1	C1	\N
-4081	characterise	v	\N	\N	1	C1	\N
-4082	charm	n	\N	\N	1	C1	\N
-4083	charter	n	\N	\N	1	C1	\N
-4084	choir	n	\N	\N	1	C1	\N
-4085	chronic	adj	\N	\N	1	C1	\N
-4086	chunk	n	\N	\N	1	C1	\N
-4087	circulate	v	\N	\N	1	C1	\N
-4088	circulation	n	\N	\N	1	C1	\N
-4089	citizenship	n	\N	\N	1	C1	\N
-4090	civic	adj	\N	\N	1	C1	\N
-4091	civilian	n	\N	\N	1	C1	\N
-4092	clarity	n	\N	\N	1	C1	\N
-4093	clash	n	\N	\N	1	C1	\N
-4094	classification	n	\N	\N	1	C1	\N
-4095	cling	v	\N	\N	1	C1	\N
-4096	clinical	adj	\N	\N	1	C1	\N
-4097	closure	n	\N	\N	1	C1	\N
-4098	cluster	n	\N	\N	1	C1	\N
-4099	coalition	n	\N	\N	1	C1	\N
-4100	coastal	adj	\N	\N	1	C1	\N
-4101	cocktail	n	\N	\N	1	C1	\N
-4102	cognitive	adj	\N	\N	1	C1	\N
-4103	coincide	v	\N	\N	1	C1	\N
-4104	collaborate	v	\N	\N	1	C1	\N
-4105	collaboration	n	\N	\N	1	C1	\N
-4106	collective	adj	\N	\N	1	C1	\N
-4107	collision	n	\N	\N	1	C1	\N
-4108	colonial	adj	\N	\N	1	C1	\N
-4109	columnist	n	\N	\N	1	C1	\N
-4110	combat	n	\N	\N	1	C1	\N
-4111	commence	v	\N	\N	1	C1	\N
-4112	commentary	n	\N	\N	1	C1	\N
-4113	commentator	n	\N	\N	1	C1	\N
-4114	commerce	n	\N	\N	1	C1	\N
-4115	commissioner	n	\N	\N	1	C1	\N
-4116	commodity	n	\N	\N	1	C1	\N
-4117	communist	n	\N	\N	1	C1	\N
-4118	companion	n	\N	\N	1	C1	\N
-4119	comparable	adj	\N	\N	1	C1	\N
-4120	compassion	n	\N	\N	1	C1	\N
-4121	compel	v	\N	\N	1	C1	\N
-4122	compelling	adj	\N	\N	1	C1	\N
-4123	compensate	v	\N	\N	1	C1	\N
-4124	compensation	n	\N	\N	1	C1	\N
-4125	competence	n	\N	\N	1	C1	\N
-4126	competent	adj	\N	\N	1	C1	\N
-4127	compile	v	\N	\N	1	C1	\N
-4128	complement	n	\N	\N	1	C1	\N
-4129	complexity	n	\N	\N	1	C1	\N
-4130	compliance	n	\N	\N	1	C1	\N
-4131	complication	n	\N	\N	1	C1	\N
-4132	comply	v	\N	\N	1	C1	\N
-4133	composition	n	\N	\N	1	C1	\N
-4134	comprise	v	\N	\N	1	C1	\N
-4135	compromise	n	\N	\N	1	C1	\N
-4136	compute	v	\N	\N	1	C1	\N
-4137	conceal	v	\N	\N	1	C1	\N
-4138	concede	v	\N	\N	1	C1	\N
-4139	conceive	v	\N	\N	1	C1	\N
-4140	conception	n	\N	\N	1	C1	\N
-4141	concession	n	\N	\N	1	C1	\N
-4142	condemn	v	\N	\N	1	C1	\N
-4143	confer	v	\N	\N	1	C1	\N
-4144	confession	n	\N	\N	1	C1	\N
-4145	configuration	n	\N	\N	1	C1	\N
-4146	confine	v	\N	\N	1	C1	\N
-4147	confirmation	n	\N	\N	1	C1	\N
-4148	confront	v	\N	\N	1	C1	\N
-4149	confrontation	n	\N	\N	1	C1	\N
-4150	congratulate	v	\N	\N	1	C1	\N
-4151	congregation	n	\N	\N	1	C1	\N
-4152	congressional	adj	\N	\N	1	C1	\N
-4153	conquer	v	\N	\N	1	C1	\N
-4154	conscience	n	\N	\N	1	C1	\N
-4155	consciously	adv	\N	\N	1	C1	\N
-4156	consciousness	n	\N	\N	1	C1	\N
-4157	consecutive	adj	\N	\N	1	C1	\N
-4158	consensus	n	\N	\N	1	C1	\N
-4159	consent	n	\N	\N	1	C1	\N
-4160	conserve	v	\N	\N	1	C1	\N
-4161	consistency	n	\N	\N	1	C1	\N
-4162	consolidate	v	\N	\N	1	C1	\N
-4163	consolidation	n	\N	\N	1	C1	\N
-4164	constitute	v	\N	\N	1	C1	\N
-4165	constitution	n	\N	\N	1	C1	\N
-4166	constitutional	adj	\N	\N	1	C1	\N
-4167	constraint	n	\N	\N	1	C1	\N
-4168	consultation	n	\N	\N	1	C1	\N
-4169	contemplate	v	\N	\N	1	C1	\N
-4170	contempt	n	\N	\N	1	C1	\N
-4171	contend	v	\N	\N	1	C1	\N
-4172	contender	n	\N	\N	1	C1	\N
-4173	content	adj	\N	\N	1	C1	\N
-4174	contention	n	\N	\N	1	C1	\N
-4175	continually	adv	\N	\N	1	C1	\N
-4176	contractor	n	\N	\N	1	C1	\N
-4177	contradiction	n	\N	\N	1	C1	\N
-4178	contrary	adj	\N	\N	1	C1	\N
-4179	contributor	n	\N	\N	1	C1	\N
-4180	conversion	n	\N	\N	1	C1	\N
-4181	convict	n	\N	\N	1	C1	\N
-4182	conviction	n	\N	\N	1	C1	\N
-4183	cooperate	v	\N	\N	1	C1	\N
-4184	cooperative	adj	\N	\N	1	C1	\N
-4185	coordinate	v	\N	\N	1	C1	\N
-4186	coordination	n	\N	\N	1	C1	\N
-4187	coordinator	n	\N	\N	1	C1	\N
-4188	copyright	n	\N	\N	1	C1	\N
-4189	correction	n	\N	\N	1	C1	\N
-4190	correlate	v	\N	\N	1	C1	\N
-4191	correlation	n	\N	\N	1	C1	\N
-4192	correspond	v	\N	\N	1	C1	\N
-4193	correspondence	n	\N	\N	1	C1	\N
-4194	correspondent	n	\N	\N	1	C1	\N
-4195	corresponding	adj	\N	\N	1	C1	\N
-4196	correspondingly	adv	\N	\N	1	C1	\N
-4197	corrupt	adj	\N	\N	1	C1	\N
-4198	corruption	n	\N	\N	1	C1	\N
-4199	costly	adj	\N	\N	1	C1	\N
-4200	councillor	n	\N	\N	1	C1	\N
-4201	counselling	n	\N	\N	1	C1	\N
-4202	counsellor	n	\N	\N	1	C1	\N
-4203	counter	v	\N	\N	1	C1	\N
-4204	counterpart	n	\N	\N	1	C1	\N
-4205	countless	adj	\N	\N	1	C1	\N
-4206	coup	n	\N	\N	1	C1	\N
-4207	courtesy	n	\N	\N	1	C1	\N
-4208	craft	n	\N	\N	1	C1	\N
-4209	crawl	v	\N	\N	1	C1	\N
-4210	creator	n	\N	\N	1	C1	\N
-4211	credibility	n	\N	\N	1	C1	\N
-4212	credible	adj	\N	\N	1	C1	\N
-4213	creep	v	\N	\N	1	C1	\N
-4214	criterion	n	\N	\N	1	C1	\N
-4215	critique	n	\N	\N	1	C1	\N
-4216	crown	n	\N	\N	1	C1	\N
-4217	crude	adj	\N	\N	1	C1	\N
-4218	crush	v	\N	\N	1	C1	\N
-4219	crystal	n	\N	\N	1	C1	\N
-4220	cult	n	\N	\N	1	C1	\N
-4221	cultivate	v	\N	\N	1	C1	\N
-4222	curiosity	n	\N	\N	1	C1	\N
-4223	custody	n	\N	\N	1	C1	\N
-4224	cutting	n	\N	\N	1	C1	\N
-4225	cynical	adj	\N	\N	1	C1	\N
-4226	dam	n	\N	\N	1	C1	\N
-4227	damaging	adj	\N	\N	1	C1	\N
-4228	dawn	n	\N	\N	1	C1	\N
-4229	debris	n	\N	\N	1	C1	\N
-4230	debut	n	\N	\N	1	C1	\N
-4231	decision-making	n	\N	\N	1	C1	\N
-4232	decisive	adj	\N	\N	1	C1	\N
-4233	declaration	n	\N	\N	1	C1	\N
-4234	dedicated	adj	\N	\N	1	C1	\N
-4235	dedication	n	\N	\N	1	C1	\N
-4236	deed	n	\N	\N	1	C1	\N
-4237	deem	v	\N	\N	1	C1	\N
-4238	default	n	\N	\N	1	C1	\N
-4239	defect	n	\N	\N	1	C1	\N
-4240	defensive	adj	\N	\N	1	C1	\N
-4241	deficiency	n	\N	\N	1	C1	\N
-4242	deficit	n	\N	\N	1	C1	\N
-4243	definitive	adj	\N	\N	1	C1	\N
-4244	defy	v	\N	\N	1	C1	\N
-4245	delegate	n	\N	\N	1	C1	\N
-4246	delegation	n	\N	\N	1	C1	\N
-4247	delicate	adj	\N	\N	1	C1	\N
-4249	denial	n	\N	\N	1	C1	\N
-4250	denounce	v	\N	\N	1	C1	\N
-4251	dense	adj	\N	\N	1	C1	\N
-4252	density	n	\N	\N	1	C1	\N
-4253	dependence	n	\N	\N	1	C1	\N
-4254	depict	v	\N	\N	1	C1	\N
-4255	deploy	v	\N	\N	1	C1	\N
-4256	deployment	n	\N	\N	1	C1	\N
-4257	deprive	v	\N	\N	1	C1	\N
-4258	deputy	n	\N	\N	1	C1	\N
-4259	descend	v	\N	\N	1	C1	\N
-4260	descent	n	\N	\N	1	C1	\N
-4261	designate	v	\N	\N	1	C1	\N
-4262	desirable	adj	\N	\N	1	C1	\N
-4263	destructive	adj	\N	\N	1	C1	\N
-4264	detain	v	\N	\N	1	C1	\N
-4265	detection	n	\N	\N	1	C1	\N
-4266	detention	n	\N	\N	1	C1	\N
-4267	deteriorate	v	\N	\N	1	C1	\N
-4268	devastate	v	\N	\N	1	C1	\N
-4269	devise	v	\N	\N	1	C1	\N
-4270	diagnose	v	\N	\N	1	C1	\N
-4271	diagnosis	n	\N	\N	1	C1	\N
-4272	dictate	v	\N	\N	1	C1	\N
-4273	dictator	n	\N	\N	1	C1	\N
-4274	differentiate	v	\N	\N	1	C1	\N
-4275	dignity	n	\N	\N	1	C1	\N
-4276	dilemma	n	\N	\N	1	C1	\N
-4277	dimension	n	\N	\N	1	C1	\N
-4278	diminish	v	\N	\N	1	C1	\N
-4279	dip	v	\N	\N	1	C1	\N
-4280	diplomat	n	\N	\N	1	C1	\N
-4281	diplomatic	adj	\N	\N	1	C1	\N
-4282	directory	n	\N	\N	1	C1	\N
-4283	disastrous	adj	\N	\N	1	C1	\N
-4284	discard	v	\N	\N	1	C1	\N
-4285	discharge	v	\N	\N	1	C1	\N
-4286	disclose	v	\N	\N	1	C1	\N
-4287	disclosure	n	\N	\N	1	C1	\N
-4288	discourse	n	\N	\N	1	C1	\N
-4289	discretion	n	\N	\N	1	C1	\N
-4290	discrimination	n	\N	\N	1	C1	\N
-4291	disregard	v	\N	\N	1	C1	\N
-4292	dismissal	n	\N	\N	1	C1	\N
-4293	displace	v	\N	\N	1	C1	\N
-4294	disposal	n	\N	\N	1	C1	\N
-4295	dispose of	v	\N	\N	1	C1	\N
-4296	dispute	n	\N	\N	1	C1	\N
-4297	disrupt	v	\N	\N	1	C1	\N
-4298	disruption	n	\N	\N	1	C1	\N
-4299	dissolve	v	\N	\N	1	C1	\N
-4300	distinction	n	\N	\N	1	C1	\N
-4301	distinctive	adj	\N	\N	1	C1	\N
-4302	distort	v	\N	\N	1	C1	\N
-4303	distress	n	\N	\N	1	C1	\N
-4304	disturbing	adj	\N	\N	1	C1	\N
-4305	divert	v	\N	\N	1	C1	\N
-4306	divine	adj	\N	\N	1	C1	\N
-4307	doctrine	n	\N	\N	1	C1	\N
-4308	documentation	n	\N	\N	1	C1	\N
-4309	domain	n	\N	\N	1	C1	\N
-4310	dominance	n	\N	\N	1	C1	\N
-4311	donor	n	\N	\N	1	C1	\N
-4312	dose	n	\N	\N	1	C1	\N
-4313	drawback	n	\N	\N	1	C1	\N
-4314	drain	v	\N	\N	1	C1	\N
-4315	drift	v	\N	\N	1	C1	\N
-4316	drown	v	\N	\N	1	C1	\N
-4317	dual	adj	\N	\N	1	C1	\N
-4318	dub	v	\N	\N	1	C1	\N
-4319	dumb	adj	\N	\N	1	C1	\N
-4320	duo	n	\N	\N	1	C1	\N
-4321	earnings	n	\N	\N	1	C1	\N
-4322	ease	n	\N	\N	1	C1	\N
-4323	echo	n	\N	\N	1	C1	\N
-4324	ecological	adj	\N	\N	1	C1	\N
-4325	educator	n	\N	\N	1	C1	\N
-4326	effectiveness	n	\N	\N	1	C1	\N
-4327	efficiency	n	\N	\N	1	C1	\N
-4328	ego	n	\N	\N	1	C1	\N
-4329	elaborate	adj	\N	\N	1	C1	\N
-4330	electoral	adj	\N	\N	1	C1	\N
-4331	elevate	v	\N	\N	1	C1	\N
-4332	eligible	adj	\N	\N	1	C1	\N
-4333	elite	n	\N	\N	1	C1	\N
-4334	embark	v	\N	\N	1	C1	\N
-4335	embarrassment	n	\N	\N	1	C1	\N
-4336	embassy	n	\N	\N	1	C1	\N
-4337	embed	v	\N	\N	1	C1	\N
-4338	embody	v	\N	\N	1	C1	\N
-4339	emergence	n	\N	\N	1	C1	\N
-4340	empirical	adj	\N	\N	1	C1	\N
-4341	empower	v	\N	\N	1	C1	\N
-4342	enact	v	\N	\N	1	C1	\N
-4343	encompass	v	\N	\N	1	C1	\N
-4344	encouragement	n	\N	\N	1	C1	\N
-4345	encouraging	adj	\N	\N	1	C1	\N
-4346	endeavour	n	\N	\N	1	C1	\N
-4347	endless	adj	\N	\N	1	C1	\N
-4348	endorse	v	\N	\N	1	C1	\N
-4349	endorsement	n	\N	\N	1	C1	\N
-4350	endure	v	\N	\N	1	C1	\N
-4351	enforce	v	\N	\N	1	C1	\N
-4352	enforcement	n	\N	\N	1	C1	\N
-4353	engagement	n	\N	\N	1	C1	\N
-4354	engaging	adj	\N	\N	1	C1	\N
-4355	enrich	v	\N	\N	1	C1	\N
-4356	enrol	v	\N	\N	1	C1	\N
-7163	wager	v	\N	\N	1	C2	\N
-4357	enterprise	n	\N	\N	1	C1	\N
-4358	enthusiast	n	\N	\N	1	C1	\N
-4359	entitle	v	\N	\N	1	C1	\N
-4360	entity	n	\N	\N	1	C1	\N
-4361	epidemic	n	\N	\N	1	C1	\N
-4362	equality	n	\N	\N	1	C1	\N
-4363	equation	n	\N	\N	1	C1	\N
-4364	erect	v	\N	\N	1	C1	\N
-4365	escalate	v	\N	\N	1	C1	\N
-4366	escort	n	\N	\N	1	C1	\N
-4367	essence	n	\N	\N	1	C1	\N
-4368	establishment	n	\N	\N	1	C1	\N
-4369	eternal	adj	\N	\N	1	C1	\N
-4370	evacuate	v	\N	\N	1	C1	\N
-4371	evoke	v	\N	\N	1	C1	\N
-4372	evolutionary	adj	\N	\N	1	C1	\N
-4373	exaggerate	v	\N	\N	1	C1	\N
-4374	excellence	n	\N	\N	1	C1	\N
-4375	exceptional	adj	\N	\N	1	C1	\N
-4376	excess	n	\N	\N	1	C1	\N
-4377	exclusion	n	\N	\N	1	C1	\N
-4378	exclusive	adj	\N	\N	1	C1	\N
-4379	exclusively	adv	\N	\N	1	C1	\N
-4380	execute	v	\N	\N	1	C1	\N
-4381	execution	n	\N	\N	1	C1	\N
-4382	exert	v	\N	\N	1	C1	\N
-4383	exile	n	\N	\N	1	C1	\N
-4384	expenditure	n	\N	\N	1	C1	\N
-4385	experimental	adj	\N	\N	1	C1	\N
-4386	expire	v	\N	\N	1	C1	\N
-4387	explicit	adj	\N	\N	1	C1	\N
-4388	explicitly	adv	\N	\N	1	C1	\N
-4389	exploitation	n	\N	\N	1	C1	\N
-4390	explosive	n	\N	\N	1	C1	\N
-4391	extremist	n	\N	\N	1	C1	\N
-4392	facilitate	v	\N	\N	1	C1	\N
-4393	faction	n	\N	\N	1	C1	\N
-4394	fade	v	\N	\N	1	C1	\N
-4395	fairness	n	\N	\N	1	C1	\N
-4396	fatal	adj	\N	\N	1	C1	\N
-4397	fate	n	\N	\N	1	C1	\N
-4398	favourable	adj	\N	\N	1	C1	\N
-4399	feat	n	\N	\N	1	C1	\N
-4400	felony	n	\N	\N	1	C1	\N
-4401	feminist	n	\N	\N	1	C1	\N
-4402	fibre	n	\N	\N	1	C1	\N
-4403	fierce	adj	\N	\N	1	C1	\N
-4404	filmmaker	n	\N	\N	1	C1	\N
-4405	filter	n	\N	\N	1	C1	\N
-4406	firearm	n	\N	\N	1	C1	\N
-4407	fiscal	adj	\N	\N	1	C1	\N
-4408	flaw	n	\N	\N	1	C1	\N
-4409	flawed	adj	\N	\N	1	C1	\N
-4410	flee	v	\N	\N	1	C1	\N
-4411	fleet	n	\N	\N	1	C1	\N
-4412	flesh	n	\N	\N	1	C1	\N
-4413	flexibility	n	\N	\N	1	C1	\N
-4414	flourish	v	\N	\N	1	C1	\N
-4415	fluid	n	\N	\N	1	C1	\N
-4416	footage	n	\N	\N	1	C1	\N
-4417	foresee	v	\N	\N	1	C1	\N
-4418	foreigner	n	\N	\N	1	C1	\N
-4419	forge	v	\N	\N	1	C1	\N
-4420	formula	n	\N	\N	1	C1	\N
-4421	formulate	v	\N	\N	1	C1	\N
-4422	forth	adv	\N	\N	1	C1	\N
-4423	forthcoming	adj	\N	\N	1	C1	\N
-4424	foster	v	\N	\N	1	C1	\N
-4425	fragile	adj	\N	\N	1	C1	\N
-4426	franchise	n	\N	\N	1	C1	\N
-4427	frankly	adv	\N	\N	1	C1	\N
-4428	fraudulent	adj	\N	\N	1	C1	\N
-4429	frustrating	adj	\N	\N	1	C1	\N
-4430	frustration	n	\N	\N	1	C1	\N
-4431	functional	adj	\N	\N	1	C1	\N
-4432	fundraising	n	\N	\N	1	C1	\N
-4433	gambling	n	\N	\N	1	C1	\N
-4434	gathering	n	\N	\N	1	C1	\N
-4435	gaze	v	\N	\N	1	C1	\N
-4436	gear	n	\N	\N	1	C1	\N
-4437	generic	adj	\N	\N	1	C1	\N
-4438	genocide	n	\N	\N	1	C1	\N
-4439	glance	v	\N	\N	1	C1	\N
-4440	glimpse	n	\N	\N	1	C1	\N
-4441	glorious	adj	\N	\N	1	C1	\N
-4442	glory	n	\N	\N	1	C1	\N
-4443	governance	n	\N	\N	1	C1	\N
-4444	grace	n	\N	\N	1	C1	\N
-4445	grasp	v	\N	\N	1	C1	\N
-4446	grave	adj	\N	\N	1	C1	\N
-4447	gravity	n	\N	\N	1	C1	\N
-4448	grid	n	\N	\N	1	C1	\N
-4449	grief	n	\N	\N	1	C1	\N
-4450	grin	v	\N	\N	1	C1	\N
-4451	grind	v	\N	\N	1	C1	\N
-4452	grip	n	\N	\N	1	C1	\N
-4453	gross	adj	\N	\N	1	C1	\N
-4454	guerrilla	n	\N	\N	1	C1	\N
-4455	guidance	n	\N	\N	1	C1	\N
-4456	guilt	n	\N	\N	1	C1	\N
-4457	gut	n	\N	\N	1	C1	\N
-4458	hail	v	\N	\N	1	C1	\N
-4459	halfway	adv	\N	\N	1	C1	\N
-4460	halt	v	\N	\N	1	C1	\N
-4461	handful	n	\N	\N	1	C1	\N
-4462	handling	n	\N	\N	1	C1	\N
-4463	handy	adj	\N	\N	1	C1	\N
-4464	harassment	n	\N	\N	1	C1	\N
-4465	hardware	n	\N	\N	1	C1	\N
-4466	harmony	n	\N	\N	1	C1	\N
-4467	harsh	adj	\N	\N	1	C1	\N
-4468	harvest	n	\N	\N	1	C1	\N
-4469	hatred	n	\N	\N	1	C1	\N
-4470	haunt	v	\N	\N	1	C1	\N
-4471	hazard	n	\N	\N	1	C1	\N
-4472	hence	adv	\N	\N	1	C1	\N
-4473	heighten	v	\N	\N	1	C1	\N
-4474	heritage	n	\N	\N	1	C1	\N
-4475	hierarchy	n	\N	\N	1	C1	\N
-4476	high-profile	adj	\N	\N	1	C1	\N
-4477	homeland	n	\N	\N	1	C1	\N
-4478	hopeful	adj	\N	\N	1	C1	\N
-4479	horizon	n	\N	\N	1	C1	\N
-4480	hostage	n	\N	\N	1	C1	\N
-4481	hostile	adj	\N	\N	1	C1	\N
-4482	hostility	n	\N	\N	1	C1	\N
-4483	humanitarian	adj	\N	\N	1	C1	\N
-4484	humanity	n	\N	\N	1	C1	\N
-4485	humble	adj	\N	\N	1	C1	\N
-4486	hydrogen	n	\N	\N	1	C1	\N
-4487	hypothesis	n	\N	\N	1	C1	\N
-4488	identification	n	\N	\N	1	C1	\N
-4489	ideological	adj	\N	\N	1	C1	\N
-4490	ideology	n	\N	\N	1	C1	\N
-4491	ignorance	n	\N	\N	1	C1	\N
-4492	imagery	n	\N	\N	1	C1	\N
-4493	immense	adj	\N	\N	1	C1	\N
-4494	imminent	adj	\N	\N	1	C1	\N
-4495	implementation	n	\N	\N	1	C1	\N
-4496	imprison	v	\N	\N	1	C1	\N
-4497	inability	n	\N	\N	1	C1	\N
-4498	inadequate	adj	\N	\N	1	C1	\N
-4499	inappropriate	adj	\N	\N	1	C1	\N
-4500	incarcerate	v	\N	\N	1	C1	\N
-4501	incarceration	n	\N	\N	1	C1	\N
-4502	incidence	n	\N	\N	1	C1	\N
-4503	inclined	adj	\N	\N	1	C1	\N
-4504	inclusion	n	\N	\N	1	C1	\N
-4505	incur	v	\N	\N	1	C1	\N
-4506	indicator	n	\N	\N	1	C1	\N
-4507	indictment	n	\N	\N	1	C1	\N
-4508	indigenous	adj	\N	\N	1	C1	\N
-4509	induce	v	\N	\N	1	C1	\N
-4510	indulge	v	\N	\N	1	C1	\N
-4511	inequality	n	\N	\N	1	C1	\N
-4512	infamous	adj	\N	\N	1	C1	\N
-4513	infect	v	\N	\N	1	C1	\N
-4514	inflict	v	\N	\N	1	C1	\N
-4515	influential	adj	\N	\N	1	C1	\N
-4516	infrastructure	n	\N	\N	1	C1	\N
-4517	inherent	adj	\N	\N	1	C1	\N
-4518	inhibit	v	\N	\N	1	C1	\N
-4519	initiate	v	\N	\N	1	C1	\N
-4520	inject	v	\N	\N	1	C1	\N
-4521	injection	n	\N	\N	1	C1	\N
-4522	injustice	n	\N	\N	1	C1	\N
-4523	inmate	n	\N	\N	1	C1	\N
-4524	inquire	v	\N	\N	1	C1	\N
-4525	insertion	n	\N	\N	1	C1	\N
-4526	insider	n	\N	\N	1	C1	\N
-4527	inspect	v	\N	\N	1	C1	\N
-4528	inspection	n	\N	\N	1	C1	\N
-4529	inspiration	n	\N	\N	1	C1	\N
-4530	instinct	n	\N	\N	1	C1	\N
-4531	institutional	adj	\N	\N	1	C1	\N
-4532	instruct	v	\N	\N	1	C1	\N
-4533	instrumental	adj	\N	\N	1	C1	\N
-4534	insufficient	adj	\N	\N	1	C1	\N
-4535	insult	n	\N	\N	1	C1	\N
-4536	intact	adj	\N	\N	1	C1	\N
-4537	intake	n	\N	\N	1	C1	\N
-4538	integral	adj	\N	\N	1	C1	\N
-4539	integrated	adj	\N	\N	1	C1	\N
-4540	integration	n	\N	\N	1	C1	\N
-4541	integrity	n	\N	\N	1	C1	\N
-4542	intensify	v	\N	\N	1	C1	\N
-4543	intensity	n	\N	\N	1	C1	\N
-4544	intensive	adj	\N	\N	1	C1	\N
-4545	intent	n	\N	\N	1	C1	\N
-4546	interactive	adj	\N	\N	1	C1	\N
-4547	interface	n	\N	\N	1	C1	\N
-4548	interfere	v	\N	\N	1	C1	\N
-4549	interference	n	\N	\N	1	C1	\N
-4550	interim	adj	\N	\N	1	C1	\N
-4551	interior	n	\N	\N	1	C1	\N
-4552	intermediate	adj	\N	\N	1	C1	\N
-4553	intersection	n	\N	\N	1	C1	\N
-4554	intervene	v	\N	\N	1	C1	\N
-4555	intervention	n	\N	\N	1	C1	\N
-4556	intimate	adj	\N	\N	1	C1	\N
-4557	intriguing	adj	\N	\N	1	C1	\N
-4558	inventory	n	\N	\N	1	C1	\N
-4559	investigator	n	\N	\N	1	C1	\N
-4560	invisible	adj	\N	\N	1	C1	\N
-4561	invoke	v	\N	\N	1	C1	\N
-4562	involvement	n	\N	\N	1	C1	\N
-4563	ironic	adj	\N	\N	1	C1	\N
-4564	ironically	adv	\N	\N	1	C1	\N
-4565	irony	n	\N	\N	1	C1	\N
-4566	irrelevant	adj	\N	\N	1	C1	\N
-4567	isolation	n	\N	\N	1	C1	\N
-4568	judicial	adj	\N	\N	1	C1	\N
-4569	jurisdiction	n	\N	\N	1	C1	\N
-4570	just	adj	\N	\N	1	C1	\N
-4571	justification	n	\N	\N	1	C1	\N
-4572	landlord	n	\N	\N	1	C1	\N
-4573	landmark	n	\N	\N	1	C1	\N
-4574	lap	n	\N	\N	1	C1	\N
-4575	large-scale	adj	\N	\N	1	C1	\N
-4576	latter	adj	\N	\N	1	C1	\N
-4577	lawmaker	n	\N	\N	1	C1	\N
-4578	lawn	n	\N	\N	1	C1	\N
-4579	lawsuit	n	\N	\N	1	C1	\N
-4580	layout	n	\N	\N	1	C1	\N
-4581	leak	n	\N	\N	1	C1	\N
-4582	leap	v	\N	\N	1	C1	\N
-4583	legacy	n	\N	\N	1	C1	\N
-4584	legendary	adj	\N	\N	1	C1	\N
-4585	legislation	n	\N	\N	1	C1	\N
-4586	legislative	adj	\N	\N	1	C1	\N
-4587	legislature	n	\N	\N	1	C1	\N
-4588	legitimate	adj	\N	\N	1	C1	\N
-4589	lengthy	adj	\N	\N	1	C1	\N
-4590	lesbian	adj	\N	\N	1	C1	\N
-4591	lesser	adj	\N	\N	1	C1	\N
-4592	lethal	adj	\N	\N	1	C1	\N
-4593	liable	adj	\N	\N	1	C1	\N
-4594	liability	n	\N	\N	1	C1	\N
-4595	liberal	adj	\N	\N	1	C1	\N
-4596	liberation	n	\N	\N	1	C1	\N
-4597	liberty	n	\N	\N	1	C1	\N
-4598	lifelong	adj	\N	\N	1	C1	\N
-4599	likelihood	n	\N	\N	1	C1	\N
-4600	limb	n	\N	\N	1	C1	\N
-4601	linear	adj	\N	\N	1	C1	\N
-4602	line-up	n	\N	\N	1	C1	\N
-4603	linger	v	\N	\N	1	C1	\N
-4604	listing	n	\N	\N	1	C1	\N
-4605	literacy	n	\N	\N	1	C1	\N
-4606	lobby	n	\N	\N	1	C1	\N
-4607	logic	n	\N	\N	1	C1	\N
-4608	long-standing	adj	\N	\N	1	C1	\N
-4609	long-time	adj	\N	\N	1	C1	\N
-4610	loom	v	\N	\N	1	C1	\N
-4611	loop	n	\N	\N	1	C1	\N
-4612	loyalty	n	\N	\N	1	C1	\N
-4613	machinery	n	\N	\N	1	C1	\N
-4614	magical	adj	\N	\N	1	C1	\N
-4615	magnetic	adj	\N	\N	1	C1	\N
-4616	magnitude	n	\N	\N	1	C1	\N
-4617	mainland	n	\N	\N	1	C1	\N
-4618	mainstream	n	\N	\N	1	C1	\N
-4619	maintenance	n	\N	\N	1	C1	\N
-4620	mandate	n	\N	\N	1	C1	\N
-4621	mandatory	adj	\N	\N	1	C1	\N
-4622	manifest	v	\N	\N	1	C1	\N
-4623	manipulate	v	\N	\N	1	C1	\N
-4624	manipulation	n	\N	\N	1	C1	\N
-4625	manuscript	n	\N	\N	1	C1	\N
-4626	march	n	\N	\N	1	C1	\N
-4627	marginal	adj	\N	\N	1	C1	\N
-4628	marine	adj	\N	\N	1	C1	\N
-4629	marketplace	n	\N	\N	1	C1	\N
-4630	massacre	n	\N	\N	1	C1	\N
-4631	mathematical	adj	\N	\N	1	C1	\N
-4632	mature	adj	\N	\N	1	C1	\N
-4633	maximise	v	\N	\N	1	C1	\N
-4634	meaningful	adj	\N	\N	1	C1	\N
-4635	meantime	n	\N	\N	1	C1	\N
-4636	medieval	adj	\N	\N	1	C1	\N
-4637	meditation	n	\N	\N	1	C1	\N
-4638	melody	n	\N	\N	1	C1	\N
-4639	memo	n	\N	\N	1	C1	\N
-4640	memoir	n	\N	\N	1	C1	\N
-4641	memorial	n	\N	\N	1	C1	\N
-4642	mentor	n	\N	\N	1	C1	\N
-4643	merchant	n	\N	\N	1	C1	\N
-4644	mercy	n	\N	\N	1	C1	\N
-4645	mere	adj	\N	\N	1	C1	\N
-4646	merely	adv	\N	\N	1	C1	\N
-4647	merge	v	\N	\N	1	C1	\N
-4648	merger	n	\N	\N	1	C1	\N
-4649	merit	n	\N	\N	1	C1	\N
-4650	in the midst of	prep	\N	\N	1	C1	\N
-4651	migration	n	\N	\N	1	C1	\N
-4652	militant	n	\N	\N	1	C1	\N
-4653	militia	n	\N	\N	1	C1	\N
-4654	minimal	adj	\N	\N	1	C1	\N
-4655	minimise	v	\N	\N	1	C1	\N
-4656	mining	n	\N	\N	1	C1	\N
-4657	ministry	n	\N	\N	1	C1	\N
-4658	minute	adj	\N	\N	1	C1	\N
-4659	miracle	n	\N	\N	1	C1	\N
-4660	misery	n	\N	\N	1	C1	\N
-4661	misleading	adj	\N	\N	1	C1	\N
-4662	mismanagement	n	\N	\N	1	C1	\N
-4663	missile	n	\N	\N	1	C1	\N
-4664	mob	n	\N	\N	1	C1	\N
-4665	mobility	n	\N	\N	1	C1	\N
-4666	mobilise	v	\N	\N	1	C1	\N
-4667	moderate	adj	\N	\N	1	C1	\N
-4668	modification	n	\N	\N	1	C1	\N
-4669	module	n	\N	\N	1	C1	\N
-4670	momentum	n	\N	\N	1	C1	\N
-4671	monk	n	\N	\N	1	C1	\N
-4672	monopoly	n	\N	\N	1	C1	\N
-4673	morality	n	\N	\N	1	C1	\N
-4674	motive	n	\N	\N	1	C1	\N
-4675	municipal	adj	\N	\N	1	C1	\N
-4676	mutual	adj	\N	\N	1	C1	\N
-4677	naive	adj	\N	\N	1	C1	\N
-4678	namely	adv	\N	\N	1	C1	\N
-4679	nationwide	adj	\N	\N	1	C1	\N
-4680	naval	adj	\N	\N	1	C1	\N
-4681	neglect	v	\N	\N	1	C1	\N
-4682	neighbouring	adj	\N	\N	1	C1	\N
-4683	newsletter	n	\N	\N	1	C1	\N
-4684	niche	n	\N	\N	1	C1	\N
-4685	noble	adj	\N	\N	1	C1	\N
-4686	nod	v	\N	\N	1	C1	\N
-4687	nominate	v	\N	\N	1	C1	\N
-4688	nomination	n	\N	\N	1	C1	\N
-4689	nominee	n	\N	\N	1	C1	\N
-4690	nonetheless	adv	\N	\N	1	C1	\N
-4691	non-profit	adj	\N	\N	1	C1	\N
-4692	nonsense	n	\N	\N	1	C1	\N
-4693	norm	n	\N	\N	1	C1	\N
-4694	notable	adj	\N	\N	1	C1	\N
-4695	notably	adv	\N	\N	1	C1	\N
-4696	notify	v	\N	\N	1	C1	\N
-4697	notorious	adj	\N	\N	1	C1	\N
-4698	nursery	n	\N	\N	1	C1	\N
-4699	objection	n	\N	\N	1	C1	\N
-4700	oblige	v	\N	\N	1	C1	\N
-4701	obsess	v	\N	\N	1	C1	\N
-4702	obsession	n	\N	\N	1	C1	\N
-4703	occasional	adj	\N	\N	1	C1	\N
-4704	occurrence	n	\N	\N	1	C1	\N
-4705	odds	n	\N	\N	1	C1	\N
-4706	offering	n	\N	\N	1	C1	\N
-4707	offspring	n	\N	\N	1	C1	\N
-4708	operational	adj	\N	\N	1	C1	\N
-4709	opt	v	\N	\N	1	C1	\N
-4710	optimism	n	\N	\N	1	C1	\N
-4711	oral	adj	\N	\N	1	C1	\N
-4712	organisational	adj	\N	\N	1	C1	\N
-4713	orientation	n	\N	\N	1	C1	\N
-4714	originate	v	\N	\N	1	C1	\N
-4715	outbreak	n	\N	\N	1	C1	\N
-4716	outing	n	\N	\N	1	C1	\N
-4717	outlet	n	\N	\N	1	C1	\N
-4718	outlook	n	\N	\N	1	C1	\N
-4719	outrage	n	\N	\N	1	C1	\N
-4720	outsider	n	\N	\N	1	C1	\N
-4721	overlook	v	\N	\N	1	C1	\N
-4722	overly	adv	\N	\N	1	C1	\N
-4723	oversee	v	\N	\N	1	C1	\N
-4724	overturn	v	\N	\N	1	C1	\N
-4725	overwhelm	v	\N	\N	1	C1	\N
-4726	overwhelming	adj	\N	\N	1	C1	\N
-4727	parameter	n	\N	\N	1	C1	\N
-4728	parental	adj	\N	\N	1	C1	\N
-4729	partial	adj	\N	\N	1	C1	\N
-4730	partially	adv	\N	\N	1	C1	\N
-4731	passing	n	\N	\N	1	C1	\N
-4732	passive	adj	\N	\N	1	C1	\N
-4733	pastor	n	\N	\N	1	C1	\N
-4734	patent	n	\N	\N	1	C1	\N
-4735	pathway	n	\N	\N	1	C1	\N
-4736	patrol	n	\N	\N	1	C1	\N
-4737	patron	n	\N	\N	1	C1	\N
-4738	peak	n	\N	\N	1	C1	\N
-4739	peasant	n	\N	\N	1	C1	\N
-4740	peculiar	adj	\N	\N	1	C1	\N
-4741	persist	v	\N	\N	1	C1	\N
-4742	persistent	adj	\N	\N	1	C1	\N
-4743	personnel	n	\N	\N	1	C1	\N
-4744	petition	n	\N	\N	1	C1	\N
-4745	philosopher	n	\N	\N	1	C1	\N
-4746	philosophical	adj	\N	\N	1	C1	\N
-4747	pioneer	n	\N	\N	1	C1	\N
-4748	pipeline	n	\N	\N	1	C1	\N
-4749	pit	n	\N	\N	1	C1	\N
-4750	plausible	adj	\N	\N	1	C1	\N
-4751	plea	n	\N	\N	1	C1	\N
-4752	plead	v	\N	\N	1	C1	\N
-4753	pledge	n	\N	\N	1	C1	\N
-4754	plunge	n	\N	\N	1	C1	\N
-4755	pole	n	\N	\N	1	C1	\N
-4756	poll	n	\N	\N	1	C1	\N
-4757	portfolio	n	\N	\N	1	C1	\N
-4758	portray	v	\N	\N	1	C1	\N
-4759	postpone	v	\N	\N	1	C1	\N
-4760	post-war	adj	\N	\N	1	C1	\N
-4761	practitioner	n	\N	\N	1	C1	\N
-4762	preach	v	\N	\N	1	C1	\N
-4763	precede	v	\N	\N	1	C1	\N
-4764	precedent	n	\N	\N	1	C1	\N
-4765	precision	n	\N	\N	1	C1	\N
-4766	predator	n	\N	\N	1	C1	\N
-4767	predecessor	n	\N	\N	1	C1	\N
-4768	predominantly	adv	\N	\N	1	C1	\N
-4769	pregnancy	n	\N	\N	1	C1	\N
-4770	prejudice	n	\N	\N	1	C1	\N
-4771	preliminary	adj	\N	\N	1	C1	\N
-4772	premier	n	\N	\N	1	C1	\N
-4773	premise	n	\N	\N	1	C1	\N
-4774	premium	n	\N	\N	1	C1	\N
-4775	prescribe	v	\N	\N	1	C1	\N
-4776	prescription	n	\N	\N	1	C1	\N
-4777	presently	adv	\N	\N	1	C1	\N
-4778	preservation	n	\N	\N	1	C1	\N
-4779	preside	v	\N	\N	1	C1	\N
-4780	presidency	n	\N	\N	1	C1	\N
-4781	prestigious	adj	\N	\N	1	C1	\N
-4782	presumably	adv	\N	\N	1	C1	\N
-4783	presume	v	\N	\N	1	C1	\N
-4784	prevail	v	\N	\N	1	C1	\N
-4785	prevalence	n	\N	\N	1	C1	\N
-4786	prevention	n	\N	\N	1	C1	\N
-4787	prey	n	\N	\N	1	C1	\N
-4788	privatization	n	\N	\N	1	C1	\N
-4789	privilege	n	\N	\N	1	C1	\N
-4790	probe	n	\N	\N	1	C1	\N
-4791	problematic	adj	\N	\N	1	C1	\N
-4792	proceeding	n	\N	\N	1	C1	\N
-4793	proceeds	n	\N	\N	1	C1	\N
-4794	processing	n	\N	\N	1	C1	\N
-4795	processor	n	\N	\N	1	C1	\N
-4796	proclaim	v	\N	\N	1	C1	\N
-4797	productive	adj	\N	\N	1	C1	\N
-4798	productivity	n	\N	\N	1	C1	\N
-4799	profitable	adj	\N	\N	1	C1	\N
-4800	profound	adj	\N	\N	1	C1	\N
-4801	projection	n	\N	\N	1	C1	\N
-4802	prominent	adj	\N	\N	1	C1	\N
-4803	pronounced	adj	\N	\N	1	C1	\N
-4804	propaganda	n	\N	\N	1	C1	\N
-4805	proposition	n	\N	\N	1	C1	\N
-4806	prosecute	v	\N	\N	1	C1	\N
-4807	prosecution	n	\N	\N	1	C1	\N
-4808	prosecutor	n	\N	\N	1	C1	\N
-4809	prospective	adj	\N	\N	1	C1	\N
-4810	prosperity	n	\N	\N	1	C1	\N
-4811	protective	adj	\N	\N	1	C1	\N
-4812	protocol	n	\N	\N	1	C1	\N
-4813	province	n	\N	\N	1	C1	\N
-4814	provincial	adj	\N	\N	1	C1	\N
-4815	provision	n	\N	\N	1	C1	\N
-4816	provoke	v	\N	\N	1	C1	\N
-4817	psychiatric	adj	\N	\N	1	C1	\N
-4818	pulse	n	\N	\N	1	C1	\N
-4819	query	n	\N	\N	1	C1	\N
-4820	quest	n	\N	\N	1	C1	\N
-4821	quota	n	\N	\N	1	C1	\N
-4822	radical	adj	\N	\N	1	C1	\N
-4823	rage	n	\N	\N	1	C1	\N
-4824	raid	n	\N	\N	1	C1	\N
-4825	rally	n	\N	\N	1	C1	\N
-4826	ranking	n	\N	\N	1	C1	\N
-4827	rape	n	\N	\N	1	C1	\N
-4828	ratio	n	\N	\N	1	C1	\N
-4829	rational	adj	\N	\N	1	C1	\N
-4830	ray	n	\N	\N	1	C1	\N
-4831	readily	adv	\N	\N	1	C1	\N
-4832	realization	n	\N	\N	1	C1	\N
-4833	realm	n	\N	\N	1	C1	\N
-4834	rear	n	\N	\N	1	C1	\N
-4835	reasoning	n	\N	\N	1	C1	\N
-4836	reassure	v	\N	\N	1	C1	\N
-4837	rebel	n	\N	\N	1	C1	\N
-4838	rebellion	n	\N	\N	1	C1	\N
-4839	recipient	n	\N	\N	1	C1	\N
-4840	reconstruction	n	\N	\N	1	C1	\N
-4841	recount	v	\N	\N	1	C1	\N
-4842	recruitment	n	\N	\N	1	C1	\N
-4843	referendum	n	\N	\N	1	C1	\N
-4844	reflection	n	\N	\N	1	C1	\N
-4845	reform	n	\N	\N	1	C1	\N
-4846	refuge	n	\N	\N	1	C1	\N
-4847	refusal	n	\N	\N	1	C1	\N
-4848	regain	v	\N	\N	1	C1	\N
-4849	regardless	adv	\N	\N	1	C1	\N
-4850	regime	n	\N	\N	1	C1	\N
-4851	regulator	n	\N	\N	1	C1	\N
-4852	regulatory	adj	\N	\N	1	C1	\N
-4853	rehabilitation	n	\N	\N	1	C1	\N
-4854	reign	n	\N	\N	1	C1	\N
-4855	rejection	n	\N	\N	1	C1	\N
-4856	relevance	n	\N	\N	1	C1	\N
-4857	reliability	n	\N	\N	1	C1	\N
-4858	reluctant	adj	\N	\N	1	C1	\N
-4859	remainder	n	\N	\N	1	C1	\N
-4860	remains	n	\N	\N	1	C1	\N
-4861	remedy	n	\N	\N	1	C1	\N
-4862	reminder	n	\N	\N	1	C1	\N
-4863	removal	n	\N	\N	1	C1	\N
-4864	render	v	\N	\N	1	C1	\N
-4865	renew	v	\N	\N	1	C1	\N
-4866	renowned	adj	\N	\N	1	C1	\N
-4867	rental	n	\N	\N	1	C1	\N
-4868	replacement	n	\N	\N	1	C1	\N
-4869	reportedly	adv	\N	\N	1	C1	\N
-4870	representation	n	\N	\N	1	C1	\N
-4871	reproduce	v	\N	\N	1	C1	\N
-4872	reproduction	n	\N	\N	1	C1	\N
-4873	republic	n	\N	\N	1	C1	\N
-4874	resemble	v	\N	\N	1	C1	\N
-4875	reside	v	\N	\N	1	C1	\N
-4876	residence	n	\N	\N	1	C1	\N
-4877	residential	adj	\N	\N	1	C1	\N
-4878	residue	n	\N	\N	1	C1	\N
-4879	resignation	n	\N	\N	1	C1	\N
-4880	resistance	n	\N	\N	1	C1	\N
-4881	respective	adj	\N	\N	1	C1	\N
-4882	respectively	adv	\N	\N	1	C1	\N
-4883	restoration	n	\N	\N	1	C1	\N
-4884	restraint	n	\N	\N	1	C1	\N
-4885	resume	v	\N	\N	1	C1	\N
-4886	retreat	n	\N	\N	1	C1	\N
-4887	retrieve	v	\N	\N	1	C1	\N
-4888	revelation	n	\N	\N	1	C1	\N
-4889	revenge	n	\N	\N	1	C1	\N
-4890	reverse	v	\N	\N	1	C1	\N
-4891	revival	n	\N	\N	1	C1	\N
-4892	revive	v	\N	\N	1	C1	\N
-4893	revolutionary	adj	\N	\N	1	C1	\N
-4894	rhetoric	n	\N	\N	1	C1	\N
-4895	riot	n	\N	\N	1	C1	\N
-4896	rip	v	\N	\N	1	C1	\N
-4897	ritual	n	\N	\N	1	C1	\N
-4898	robust	adj	\N	\N	1	C1	\N
-4899	rod	n	\N	\N	1	C1	\N
-4900	rookie	n	\N	\N	1	C1	\N
-4901	roster	n	\N	\N	1	C1	\N
-4902	rotate	v	\N	\N	1	C1	\N
-4903	rotation	n	\N	\N	1	C1	\N
-4904	ruling	n	\N	\N	1	C1	\N
-4905	rumour	n	\N	\N	1	C1	\N
-4906	sacred	adj	\N	\N	1	C1	\N
-4907	sacrifice	n	\N	\N	1	C1	\N
-4908	saint	n	\N	\N	1	C1	\N
-4909	sake	n	\N	\N	1	C1	\N
-4910	sanction	n	\N	\N	1	C1	\N
-4911	saviour	n	\N	\N	1	C1	\N
-4912	scenario	n	\N	\N	1	C1	\N
-4913	scattered	adj	\N	\N	1	C1	\N
-4914	scope	n	\N	\N	1	C1	\N
-4915	screw	n	\N	\N	1	C1	\N
-4916	scrutiny	n	\N	\N	1	C1	\N
-4917	seal	n	\N	\N	1	C1	\N
-4918	secondly	adv	\N	\N	1	C1	\N
-4919	secular	adj	\N	\N	1	C1	\N
-4920	seemingly	adv	\N	\N	1	C1	\N
-4921	segment	n	\N	\N	1	C1	\N
-4922	seize	v	\N	\N	1	C1	\N
-4923	seldom	adv	\N	\N	1	C1	\N
-4924	selective	adj	\N	\N	1	C1	\N
-4925	sensation	n	\N	\N	1	C1	\N
-4926	sensitivity	n	\N	\N	1	C1	\N
-4927	sentiment	n	\N	\N	1	C1	\N
-4928	separation	n	\N	\N	1	C1	\N
-4929	serial	adj	\N	\N	1	C1	\N
-4930	settlement	n	\N	\N	1	C1	\N
-4931	setup	n	\N	\N	1	C1	\N
-4932	sexuality	n	\N	\N	1	C1	\N
-4933	shareholder	n	\N	\N	1	C1	\N
-4934	shatter	v	\N	\N	1	C1	\N
-4935	shed	v	\N	\N	1	C1	\N
-4936	sheer	adj	\N	\N	1	C1	\N
-4937	shipping	n	\N	\N	1	C1	\N
-4938	shrink	v	\N	\N	1	C1	\N
-4939	shrug	v	\N	\N	1	C1	\N
-4940	sigh	v	\N	\N	1	C1	\N
-4941	simulate	v	\N	\N	1	C1	\N
-4942	simulation	n	\N	\N	1	C1	\N
-4943	simultaneously	adv	\N	\N	1	C1	\N
-4944	sin	n	\N	\N	1	C1	\N
-4945	situated	adj	\N	\N	1	C1	\N
-4946	sceptical	adj	\N	\N	1	C1	\N
-4947	sketch	n	\N	\N	1	C1	\N
-4948	slash	n	\N	\N	1	C1	\N
-4949	slavery	n	\N	\N	1	C1	\N
-4950	slot	n	\N	\N	1	C1	\N
-4951	smash	v	\N	\N	1	C1	\N
-4952	snap	v	\N	\N	1	C1	\N
-4953	soak	v	\N	\N	1	C1	\N
-4954	soar	v	\N	\N	1	C1	\N
-4955	socialist	adj	\N	\N	1	C1	\N
-4956	sole	adj	\N	\N	1	C1	\N
-4957	solely	adv	\N	\N	1	C1	\N
-4958	solidarity	n	\N	\N	1	C1	\N
-4959	solo	n	\N	\N	1	C1	\N
-4960	sovereignty	n	\N	\N	1	C1	\N
-4961	span	n	\N	\N	1	C1	\N
-4962	spark	n	\N	\N	1	C1	\N
-4963	specialised	adj	\N	\N	1	C1	\N
-4964	specification	n	\N	\N	1	C1	\N
-4965	specimen	n	\N	\N	1	C1	\N
-4966	spectacle	n	\N	\N	1	C1	\N
-4967	spectrum	n	\N	\N	1	C1	\N
-4968	sphere	n	\N	\N	1	C1	\N
-4969	spin	v	\N	\N	1	C1	\N
-4970	spine	n	\N	\N	1	C1	\N
-4971	spotlight	n	\N	\N	1	C1	\N
-4972	spouse	n	\N	\N	1	C1	\N
-4973	squad	n	\N	\N	1	C1	\N
-4974	squeeze	v	\N	\N	1	C1	\N
-4975	stab	v	\N	\N	1	C1	\N
-4976	stability	n	\N	\N	1	C1	\N
-4977	stabilise	v	\N	\N	1	C1	\N
-4978	stake	n	\N	\N	1	C1	\N
-4979	standing	n	\N	\N	1	C1	\N
-4980	stark	adj	\N	\N	1	C1	\N
-4981	statistical	adj	\N	\N	1	C1	\N
-4982	steer	v	\N	\N	1	C1	\N
-4983	stem from	v	\N	\N	1	C1	\N
-4984	stereotype	n	\N	\N	1	C1	\N
-4985	stimulus	n	\N	\N	1	C1	\N
-4986	stir	v	\N	\N	1	C1	\N
-4987	storage	n	\N	\N	1	C1	\N
-4988	straightforward	adj	\N	\N	1	C1	\N
-4989	strain	n	\N	\N	1	C1	\N
-4990	strand	n	\N	\N	1	C1	\N
-4991	strategic	adj	\N	\N	1	C1	\N
-4992	strip	n	\N	\N	1	C1	\N
-4993	strive	v	\N	\N	1	C1	\N
-4994	structural	adj	\N	\N	1	C1	\N
-4995	stumble	v	\N	\N	1	C1	\N
-4996	stun	v	\N	\N	1	C1	\N
-4997	submission	n	\N	\N	1	C1	\N
-4998	subscriber	n	\N	\N	1	C1	\N
-4999	subscription	n	\N	\N	1	C1	\N
-5000	subsequent	adj	\N	\N	1	C1	\N
-5001	subsequently	adv	\N	\N	1	C1	\N
-5002	subsidy	n	\N	\N	1	C1	\N
-5003	substantial	adj	\N	\N	1	C1	\N
-5004	substantially	adv	\N	\N	1	C1	\N
-5005	substitute	n	\N	\N	1	C1	\N
-5006	substitution	n	\N	\N	1	C1	\N
-5007	subtle	adj	\N	\N	1	C1	\N
-5008	suburban	adj	\N	\N	1	C1	\N
-5009	succession	n	\N	\N	1	C1	\N
-5010	successive	adj	\N	\N	1	C1	\N
-5011	successor	n	\N	\N	1	C1	\N
-5012	suck	v	\N	\N	1	C1	\N
-5013	sue	v	\N	\N	1	C1	\N
-5014	suicide	n	\N	\N	1	C1	\N
-5015	suite	n	\N	\N	1	C1	\N
-5016	summit	n	\N	\N	1	C1	\N
-5017	superb	adj	\N	\N	1	C1	\N
-5018	superintendent	n	\N	\N	1	C1	\N
-5019	superior	adj	\N	\N	1	C1	\N
-5020	supervise	v	\N	\N	1	C1	\N
-5021	supervision	n	\N	\N	1	C1	\N
-5022	supervisor	n	\N	\N	1	C1	\N
-5023	supplement	n	\N	\N	1	C1	\N
-5024	supportive	adj	\N	\N	1	C1	\N
-5025	supposedly	adv	\N	\N	1	C1	\N
-5026	suppress	v	\N	\N	1	C1	\N
-5027	supreme	adj	\N	\N	1	C1	\N
-5028	surge	n	\N	\N	1	C1	\N
-5029	surgical	adj	\N	\N	1	C1	\N
-5030	surplus	n	\N	\N	1	C1	\N
-5031	surrender	v	\N	\N	1	C1	\N
-5032	surveillance	n	\N	\N	1	C1	\N
-5033	suspension	n	\N	\N	1	C1	\N
-5034	suspicion	n	\N	\N	1	C1	\N
-5035	suspicious	adj	\N	\N	1	C1	\N
-5036	sustain	v	\N	\N	1	C1	\N
-5037	symbolic	adj	\N	\N	1	C1	\N
-5038	syndrome	n	\N	\N	1	C1	\N
-5039	synthesis	n	\N	\N	1	C1	\N
-5040	systematic	adj	\N	\N	1	C1	\N
-5041	tackle	v	\N	\N	1	C1	\N
-5042	tactic	n	\N	\N	1	C1	\N
-5043	tactical	adj	\N	\N	1	C1	\N
-5044	taxpayer	n	\N	\N	1	C1	\N
-5045	tempt	v	\N	\N	1	C1	\N
-5046	tenant	n	\N	\N	1	C1	\N
-5047	tender	adj	\N	\N	1	C1	\N
-5048	tenure	n	\N	\N	1	C1	\N
-5049	terminate	v	\N	\N	1	C1	\N
-5050	terrain	n	\N	\N	1	C1	\N
-5051	terrific	adj	\N	\N	1	C1	\N
-5052	testify	v	\N	\N	1	C1	\N
-5053	testimony	n	\N	\N	1	C1	\N
-5054	texture	n	\N	\N	1	C1	\N
-5055	thankfully	adv	\N	\N	1	C1	\N
-5056	theatrical	adj	\N	\N	1	C1	\N
-5057	theology	n	\N	\N	1	C1	\N
-5058	theoretical	adj	\N	\N	1	C1	\N
-5059	thereafter	adv	\N	\N	1	C1	\N
-5060	thereby	adv	\N	\N	1	C1	\N
-5061	thesis	n	\N	\N	1	C1	\N
-5062	thoughtful	adj	\N	\N	1	C1	\N
-5063	thread	n	\N	\N	1	C1	\N
-5064	threshold	n	\N	\N	1	C1	\N
-5065	thrilled	adj	\N	\N	1	C1	\N
-5066	thrive	v	\N	\N	1	C1	\N
-5067	tide	n	\N	\N	1	C1	\N
-5068	tighten	v	\N	\N	1	C1	\N
-5069	timber	n	\N	\N	1	C1	\N
-5070	timely	adj	\N	\N	1	C1	\N
-5071	tobacco	n	\N	\N	1	C1	\N
-5072	tolerance	n	\N	\N	1	C1	\N
-5073	tolerate	v	\N	\N	1	C1	\N
-5074	toll	n	\N	\N	1	C1	\N
-5075	torture	n	\N	\N	1	C1	\N
-5076	toss	v	\N	\N	1	C1	\N
-5077	trademark	n	\N	\N	1	C1	\N
-5078	trail	n	\N	\N	1	C1	\N
-5079	traitor	n	\N	\N	1	C1	\N
-5080	transaction	n	\N	\N	1	C1	\N
-5081	transcript	n	\N	\N	1	C1	\N
-5082	transformation	n	\N	\N	1	C1	\N
-5083	transit	n	\N	\N	1	C1	\N
-5084	transmission	n	\N	\N	1	C1	\N
-5085	transparency	n	\N	\N	1	C1	\N
-5086	transparent	adj	\N	\N	1	C1	\N
-5087	trauma	n	\N	\N	1	C1	\N
-5088	treaty	n	\N	\N	1	C1	\N
-5089	tremendous	adj	\N	\N	1	C1	\N
-5090	tribal	adj	\N	\N	1	C1	\N
-5091	tribute	n	\N	\N	1	C1	\N
-5092	trigger	n	\N	\N	1	C1	\N
-5093	trio	n	\N	\N	1	C1	\N
-5094	triumph	n	\N	\N	1	C1	\N
-5095	trophy	n	\N	\N	1	C1	\N
-5096	troubled	adj	\N	\N	1	C1	\N
-5097	trustee	n	\N	\N	1	C1	\N
-5098	tuition	n	\N	\N	1	C1	\N
-5099	tumour	n	\N	\N	1	C1	\N
-5100	turnout	n	\N	\N	1	C1	\N
-5101	turnover	n	\N	\N	1	C1	\N
-5102	twist	v	\N	\N	1	C1	\N
-5103	unconstitutional	adj	\N	\N	1	C1	\N
-5104	undergraduate	n	\N	\N	1	C1	\N
-5105	underlying	adj	\N	\N	1	C1	\N
-5106	undermine	v	\N	\N	1	C1	\N
-5107	undoubtedly	adv	\N	\N	1	C1	\N
-5108	unify	v	\N	\N	1	C1	\N
-5109	unprecedented	adj	\N	\N	1	C1	\N
-5110	unveil	v	\N	\N	1	C1	\N
-5111	upcoming	adj	\N	\N	1	C1	\N
-5112	upgrade	v	\N	\N	1	C1	\N
-5113	uphold	v	\N	\N	1	C1	\N
-5114	utility	n	\N	\N	1	C1	\N
-5115	utilise	v	\N	\N	1	C1	\N
-5116	utterly	adv	\N	\N	1	C1	\N
-5117	vacuum	n	\N	\N	1	C1	\N
-5118	vague	adj	\N	\N	1	C1	\N
-5119	validity	n	\N	\N	1	C1	\N
-5120	vanish	v	\N	\N	1	C1	\N
-5121	variable	n	\N	\N	1	C1	\N
-5122	varied	adj	\N	\N	1	C1	\N
-5123	vein	n	\N	\N	1	C1	\N
-5124	venture	n	\N	\N	1	C1	\N
-5125	verbal	adj	\N	\N	1	C1	\N
-5126	verdict	n	\N	\N	1	C1	\N
-5127	verify	v	\N	\N	1	C1	\N
-5128	verse	n	\N	\N	1	C1	\N
-5129	versus	prep	\N	\N	1	C1	\N
-5130	vessel	n	\N	\N	1	C1	\N
-5131	veteran	n	\N	\N	1	C1	\N
-5132	viable	adj	\N	\N	1	C1	\N
-5133	vibrant	adj	\N	\N	1	C1	\N
-5134	vice	n	\N	\N	1	C1	\N
-5135	vicious	adj	\N	\N	1	C1	\N
-5136	violate	v	\N	\N	1	C1	\N
-5137	violation	n	\N	\N	1	C1	\N
-5138	virtue	n	\N	\N	1	C1	\N
-5139	vocal	adj	\N	\N	1	C1	\N
-5140	vow	v	\N	\N	1	C1	\N
-5141	vulnerability	n	\N	\N	1	C1	\N
-5142	vulnerable	adj	\N	\N	1	C1	\N
-5143	ward	n	\N	\N	1	C1	\N
-5144	warehouse	n	\N	\N	1	C1	\N
-5145	warfare	n	\N	\N	1	C1	\N
-5146	warrant	n	\N	\N	1	C1	\N
-5147	warrior	n	\N	\N	1	C1	\N
-5148	weaken	v	\N	\N	1	C1	\N
-5149	weave	v	\N	\N	1	C1	\N
-5150	weed	n	\N	\N	1	C1	\N
-5151	well	n	\N	\N	1	C1	\N
-5152	well-being	n	\N	\N	1	C1	\N
-5153	whatsoever	adv	\N	\N	1	C1	\N
-5154	whip	v	\N	\N	1	C1	\N
-5155	wholly	adv	\N	\N	1	C1	\N
-5156	widen	v	\N	\N	1	C1	\N
-5157	width	n	\N	\N	1	C1	\N
-5158	willingness	n	\N	\N	1	C1	\N
-5159	wipe	v	\N	\N	1	C1	\N
-5160	wit	n	\N	\N	1	C1	\N
-5161	withdrawal	n	\N	\N	1	C1	\N
-5162	workout	n	\N	\N	1	C1	\N
-5163	worship	n	\N	\N	1	C1	\N
-5164	worthwhile	adj	\N	\N	1	C1	\N
-5165	worthy	adj	\N	\N	1	C1	\N
-5166	wrongdoing	n	\N	\N	1	C1	\N
-5167	yield	v	\N	\N	1	C1	\N
-5168	abate	v	\N	\N	1	C2	\N
-5169	abdicate	v	\N	\N	1	C2	\N
-5170	aberration	n	\N	\N	1	C2	\N
-5171	abet	v	\N	\N	1	C2	\N
-5172	abeyance	n	\N	\N	1	C2	\N
-5173	abhor	v	\N	\N	1	C2	\N
-5174	abiding	adj	\N	\N	1	C2	\N
-5175	abject	adj	\N	\N	1	C2	\N
-5176	abjure	v	\N	\N	1	C2	\N
-5177	abrogated	v	\N	\N	1	C2	\N
-5178	abrogation	n	\N	\N	1	C2	\N
-5179	abscond	v	\N	\N	1	C2	\N
-5180	absolve	v	\N	\N	1	C2	\N
-5181	abstain	v	\N	\N	1	C2	\N
-5182	abstention	n	\N	\N	1	C2	\N
-5183	abstinence	n	\N	\N	1	C2	\N
-5184	abstruse	adj	\N	\N	1	C2	\N
-5185	abyss	n	\N	\N	1	C2	\N
-5186	accede	v	\N	\N	1	C2	\N
-5187	accentuate	v	\N	\N	1	C2	\N
-5188	accession	n	\N	\N	1	C2	\N
-5189	acclaimed	adj	\N	\N	1	C2	\N
-5190	acclamation	n	\N	\N	1	C2	\N
-5191	accolade	n	\N	\N	1	C2	\N
-5192	accomplice	n	\N	\N	1	C2	\N
-5193	accost	v	\N	\N	1	C2	\N
-5194	accredit	v	\N	\N	1	C2	\N
-5195	accreditation	n	\N	\N	1	C2	\N
-5196	accrue	v	\N	\N	1	C2	\N
-5197	acerbic	adj	\N	\N	1	C2	\N
-5198	acquiesce	v	\N	\N	1	C2	\N
-5199	acquiescence	n	\N	\N	1	C2	\N
-5200	acquit	v	\N	\N	1	C2	\N
-5201	acrimonious	adj	\N	\N	1	C2	\N
-5202	acrimony	n	\N	\N	1	C2	\N
-5203	acuity	n	\N	\N	1	C2	\N
-5204	acumen	n	\N	\N	1	C2	\N
-5205	adage	n	\N	\N	1	C2	\N
-5206	adamant	adj	\N	\N	1	C2	\N
-5207	adherence	n	\N	\N	1	C2	\N
-5208	adherent	n	\N	\N	1	C2	\N
-5209	adjuration	n	\N	\N	1	C2	\N
-5210	admittance	n	\N	\N	1	C2	\N
-5211	admonish	v	\N	\N	1	C2	\N
-5212	adroit	adj	\N	\N	1	C2	\N
-5213	adulation	n	\N	\N	1	C2	\N
-5214	advent	n	\N	\N	1	C2	\N
-5215	adversary	n	\N	\N	1	C2	\N
-5216	adversity	n	\N	\N	1	C2	\N
-5217	aegis	n	\N	\N	1	C2	\N
-5218	affable	adj	\N	\N	1	C2	\N
-5219	affectation	n	\N	\N	1	C2	\N
-5220	affidavit	n	\N	\N	1	C2	\N
-5221	affinity	n	\N	\N	1	C2	\N
-5222	affliction	n	\N	\N	1	C2	\N
-5223	alacrity	n	\N	\N	1	C2	\N
-5224	albeit	conj	\N	\N	1	C2	\N
-5225	alchemy	n	\N	\N	1	C2	\N
-5226	allegiance	n	\N	\N	1	C2	\N
-5227	allegory	n	\N	\N	1	C2	\N
-5228	alleviate	v	\N	\N	1	C2	\N
-5229	allude	v	\N	\N	1	C2	\N
-5230	allusion	n	\N	\N	1	C2	\N
-5231	aloof	adj	\N	\N	1	C2	\N
-5232	altercation	n	\N	\N	1	C2	\N
-5233	altruistic	adj	\N	\N	1	C2	\N
-5234	amalgamation	n	\N	\N	1	C2	\N
-5235	ambiguity	n	\N	\N	1	C2	\N
-5236	ambivalent	adj	\N	\N	1	C2	\N
-5237	ambrosial	adj	\N	\N	1	C2	\N
-5238	ameliorate	v	\N	\N	1	C2	\N
-5239	amenable	adj	\N	\N	1	C2	\N
-5240	anachronism	n	\N	\N	1	C2	\N
-5241	anachronistic	adj	\N	\N	1	C2	\N
-5242	analogous	adj	\N	\N	1	C2	\N
-5243	anarchy	n	\N	\N	1	C2	\N
-5244	anathema	n	\N	\N	1	C2	\N
-5245	anecdote	n	\N	\N	1	C2	\N
-5246	anguish	n	\N	\N	1	C2	\N
-5247	animosity	n	\N	\N	1	C2	\N
-5248	annihilation	n	\N	\N	1	C2	\N
-5249	annum	n	\N	\N	1	C2	\N
-5250	anomaly	n	\N	\N	1	C2	\N
-5251	antagonise	v	\N	\N	1	C2	\N
-5252	antecedent	n	\N	\N	1	C2	\N
-5253	antidote	n	\N	\N	1	C2	\N
-5254	antipathy	n	\N	\N	1	C2	\N
-5255	antiquated	adj	\N	\N	1	C2	\N
-5256	antiquity	n	\N	\N	1	C2	\N
-5257	antithesis	n	\N	\N	1	C2	\N
-5258	apathetic	adj	\N	\N	1	C2	\N
-5259	aperture	n	\N	\N	1	C2	\N
-5260	apex	n	\N	\N	1	C2	\N
-5261	aplomb	n	\N	\N	1	C2	\N
-5262	apostle	n	\N	\N	1	C2	\N
-5263	apparatus	n	\N	\N	1	C2	\N
-5264	apparition	n	\N	\N	1	C2	\N
-5265	appease	v	\N	\N	1	C2	\N
-5266	appellation	n	\N	\N	1	C2	\N
-5267	apprehension	n	\N	\N	1	C2	\N
-5268	apprehensive	adj	\N	\N	1	C2	\N
-5269	aptitude	n	\N	\N	1	C2	\N
-5270	arbiter	n	\N	\N	1	C2	\N
-5271	arcane	adj	\N	\N	1	C2	\N
-5272	archetype	n	\N	\N	1	C2	\N
-5273	archipelago	n	\N	\N	1	C2	\N
-5274	ardour	n	\N	\N	1	C2	\N
-5275	arduous	adj	\N	\N	1	C2	\N
-5276	arguably	adv	\N	\N	1	C2	\N
-5277	armistice	n	\N	\N	1	C2	\N
-5278	arrogance	n	\N	\N	1	C2	\N
-5279	artifice	n	\N	\N	1	C2	\N
-5280	artisan	n	\N	\N	1	C2	\N
-5281	ascendancy	n	\N	\N	1	C2	\N
-5282	ascertain	v	\N	\N	1	C2	\N
-5283	aspersion	n	\N	\N	1	C2	\N
-5284	assiduous	adj	\N	\N	1	C2	\N
-5285	assuage	v	\N	\N	1	C2	\N
-5286	astute	adj	\N	\N	1	C2	\N
-5287	atone	v	\N	\N	1	C2	\N
-5288	attrition	n	\N	\N	1	C2	\N
-5289	audacity	n	\N	\N	1	C2	\N
-5290	augment	v	\N	\N	1	C2	\N
-5291	auspicious	adj	\N	\N	1	C2	\N
-5292	austere	adj	\N	\N	1	C2	\N
-5293	autocracy	n	\N	\N	1	C2	\N
-5294	autocrat	n	\N	\N	1	C2	\N
-5295	avarice	n	\N	\N	1	C2	\N
-5296	aversion	n	\N	\N	1	C2	\N
-5297	axiom	n	\N	\N	1	C2	\N
-5298	axiomatic	adj	\N	\N	1	C2	\N
-5299	backlash	n	\N	\N	1	C2	\N
-5300	baleful	adj	\N	\N	1	C2	\N
-5301	balk	v	\N	\N	1	C2	\N
-5302	ballast	n	\N	\N	1	C2	\N
-5303	balm	n	\N	\N	1	C2	\N
-5304	banal	adj	\N	\N	1	C2	\N
-5305	bane	n	\N	\N	1	C2	\N
-5306	barrage	n	\N	\N	1	C2	\N
-5307	bastion	n	\N	\N	1	C2	\N
-5308	bear up	phr v	\N	\N	1	C2	\N
-5309	bedlam	n	\N	\N	1	C2	\N
-5310	beguile	v	\N	\N	1	C2	\N
-5311	behemoth	n	\N	\N	1	C2	\N
-5312	beleaguer	v	\N	\N	1	C2	\N
-5313	belie	v	\N	\N	1	C2	\N
-5314	bellicose	adj	\N	\N	1	C2	\N
-5315	belligerent	adj	\N	\N	1	C2	\N
-5316	bellwether	n	\N	\N	1	C2	\N
-5317	bemoan	v	\N	\N	1	C2	\N
-5318	benefactor	n	\N	\N	1	C2	\N
-5319	benevolence	n	\N	\N	1	C2	\N
-5320	benevolent	adj	\N	\N	1	C2	\N
-5321	bequeath	v	\N	\N	1	C2	\N
-5322	bequest	n	\N	\N	1	C2	\N
-5323	berate	v	\N	\N	1	C2	\N
-5324	bereavement	n	\N	\N	1	C2	\N
-5325	bereft	adj	\N	\N	1	C2	\N
-5326	beseech	v	\N	\N	1	C2	\N
-5327	beset	v	\N	\N	1	C2	\N
-5328	besotted	adj	\N	\N	1	C2	\N
-5329	bestow	v	\N	\N	1	C2	\N
-5330	bewitching	adj	\N	\N	1	C2	\N
-5331	bigotry	n	\N	\N	1	C2	\N
-5332	bilateral	adj	\N	\N	1	C2	\N
-5333	billow	v	\N	\N	1	C2	\N
-5334	bite the bullet	idiom	\N	\N	1	C2	\N
-5335	blasphemy	n	\N	\N	1	C2	\N
-5336	blithe	adj	\N	\N	1	C2	\N
-5337	boisterous	adj	\N	\N	1	C2	\N
-5338	bombastic	adj	\N	\N	1	C2	\N
-5339	boon	n	\N	\N	1	C2	\N
-5340	boorish	adj	\N	\N	1	C2	\N
-5341	bounty	n	\N	\N	1	C2	\N
-5342	bourgeoisie	n	\N	\N	1	C2	\N
-5343	brandish	v	\N	\N	1	C2	\N
-5344	bravado	n	\N	\N	1	C2	\N
-5345	bravura	n	\N	\N	1	C2	\N
-5346	brevity	n	\N	\N	1	C2	\N
-5347	brinkmanship	n	\N	\N	1	C2	\N
-5348	brusque	adj	\N	\N	1	C2	\N
-5349	bulwark	n	\N	\N	1	C2	\N
-5350	burgeon	v	\N	\N	1	C2	\N
-5351	buttress	v	\N	\N	1	C2	\N
-5352	byword	n	\N	\N	1	C2	\N
-5353	cabal	n	\N	\N	1	C2	\N
-5354	cache	n	\N	\N	1	C2	\N
-5355	cacophony	n	\N	\N	1	C2	\N
-5356	cadence	n	\N	\N	1	C2	\N
-5357	cajole	v	\N	\N	1	C2	\N
-5358	calibre	n	\N	\N	1	C2	\N
-5359	callous	adj	\N	\N	1	C2	\N
-5360	camaraderie	n	\N	\N	1	C2	\N
-5361	candour	n	\N	\N	1	C2	\N
-5362	cantankerous	adj	\N	\N	1	C2	\N
-5363	capitulate	v	\N	\N	1	C2	\N
-5364	capricious	adj	\N	\N	1	C2	\N
-5365	cardinal	adj	\N	\N	1	C2	\N
-5366	cartography	n	\N	\N	1	C2	\N
-5367	caste	n	\N	\N	1	C2	\N
-5368	castigate	v	\N	\N	1	C2	\N
-5369	cataclysm	n	\N	\N	1	C2	\N
-5370	catharsis	n	\N	\N	1	C2	\N
-5371	caustic	adj	\N	\N	1	C2	\N
-5372	cavalcade	n	\N	\N	1	C2	\N
-5373	caveat	n	\N	\N	1	C2	\N
-5374	censure	n	\N	\N	1	C2	\N
-5375	cessation	n	\N	\N	1	C2	\N
-5376	chagrin	n	\N	\N	1	C2	\N
-5377	charlatan	n	\N	\N	1	C2	\N
-5378	chasm	n	\N	\N	1	C2	\N
-5379	chastise	v	\N	\N	1	C2	\N
-5380	chattel	n	\N	\N	1	C2	\N
-5381	chicanery	n	\N	\N	1	C2	\N
-5382	chide	v	\N	\N	1	C2	\N
-5383	chronology	n	\N	\N	1	C2	\N
-5384	churlish	adj	\N	\N	1	C2	\N
-5385	circumspect	adj	\N	\N	1	C2	\N
-5386	circumvent	v	\N	\N	1	C2	\N
-5387	citadel	n	\N	\N	1	C2	\N
-5388	clandestine	adj	\N	\N	1	C2	\N
-5389	cleave	v	\N	\N	1	C2	\N
-5390	clemency	n	\N	\N	1	C2	\N
-5391	clique	n	\N	\N	1	C2	\N
-5392	cloister	n	\N	\N	1	C2	\N
-5393	cloistered	adj	\N	\N	1	C2	\N
-5394	clout	n	\N	\N	1	C2	\N
-5395	coalesce	v	\N	\N	1	C2	\N
-5396	coerce	v	\N	\N	1	C2	\N
-5397	coercion	n	\N	\N	1	C2	\N
-5398	cogent	adj	\N	\N	1	C2	\N
-5399	cohesion	n	\N	\N	1	C2	\N
-5400	collude	v	\N	\N	1	C2	\N
-5401	collusion	n	\N	\N	1	C2	\N
-5402	colossal	adj	\N	\N	1	C2	\N
-5403	colossus	n	\N	\N	1	C2	\N
-5404	commensurate	adj	\N	\N	1	C2	\N
-5405	commiserate	v	\N	\N	1	C2	\N
-5406	compatriot	n	\N	\N	1	C2	\N
-5407	complacency	n	\N	\N	1	C2	\N
-5408	complacent	adj	\N	\N	1	C2	\N
-5409	complementary	adj	\N	\N	1	C2	\N
-5410	complicity	n	\N	\N	1	C2	\N
-5411	compulsion	n	\N	\N	1	C2	\N
-5412	concatenation	n	\N	\N	1	C2	\N
-5413	conciliatory	adj	\N	\N	1	C2	\N
-5414	conclave	n	\N	\N	1	C2	\N
-5415	concordance	n	\N	\N	1	C2	\N
-5416	condescension	n	\N	\N	1	C2	\N
-5417	condone	v	\N	\N	1	C2	\N
-5418	confiscate	v	\N	\N	1	C2	\N
-5419	conflagration	n	\N	\N	1	C2	\N
-5420	confluence	n	\N	\N	1	C2	\N
-5421	confound	v	\N	\N	1	C2	\N
-5422	conjecture	n	\N	\N	1	C2	\N
-5423	conjure	v	\N	\N	1	C2	\N
-5424	connive	v	\N	\N	1	C2	\N
-5425	connoisseur	n	\N	\N	1	C2	\N
-5426	connotation	n	\N	\N	1	C2	\N
-5427	conquest	n	\N	\N	1	C2	\N
-5428	consecration	n	\N	\N	1	C2	\N
-5429	consortium	n	\N	\N	1	C2	\N
-5430	consternation	n	\N	\N	1	C2	\N
-5431	construe	v	\N	\N	1	C2	\N
-5432	consummation	n	\N	\N	1	C2	\N
-5433	contagion	n	\N	\N	1	C2	\N
-5434	contemptible	adj	\N	\N	1	C2	\N
-5435	contingency	n	\N	\N	1	C2	\N
-5436	continuum	n	\N	\N	1	C2	\N
-5437	contravene	v	\N	\N	1	C2	\N
-5438	contrition	n	\N	\N	1	C2	\N
-5439	conundrum	n	\N	\N	1	C2	\N
-5440	convene	v	\N	\N	1	C2	\N
-5441	convergence	n	\N	\N	1	C2	\N
-5442	convivial	adj	\N	\N	1	C2	\N
-5443	convoluted	adj	\N	\N	1	C2	\N
-5444	copious	adj	\N	\N	1	C2	\N
-5445	coquettish	adj	\N	\N	1	C2	\N
-5446	cordial	adj	\N	\N	1	C2	\N
-5447	cornucopia	n	\N	\N	1	C2	\N
-5448	corollary	n	\N	\N	1	C2	\N
-5449	corroborate	v	\N	\N	1	C2	\N
-5450	cortege	n	\N	\N	1	C2	\N
-5451	cosmology	n	\N	\N	1	C2	\N
-5452	cosmos	n	\N	\N	1	C2	\N
-5453	countenance	v	\N	\N	1	C2	\N
-5454	covet	v	\N	\N	1	C2	\N
-5455	craven	adj	\N	\N	1	C2	\N
-5456	credulous	adj	\N	\N	1	C2	\N
-5457	creed	n	\N	\N	1	C2	\N
-5458	crevasse	n	\N	\N	1	C2	\N
-5459	crucible	n	\N	\N	1	C2	\N
-5460	crux	n	\N	\N	1	C2	\N
-5461	crypt	n	\N	\N	1	C2	\N
-5462	culminate	v	\N	\N	1	C2	\N
-5463	culpable	adj	\N	\N	1	C2	\N
-5464	culprit	n	\N	\N	1	C2	\N
-5465	cunning	adj	\N	\N	1	C2	\N
-5466	cupidity	n	\N	\N	1	C2	\N
-5467	curmudgeon	n	\N	\N	1	C2	\N
-5468	cursory	adj	\N	\N	1	C2	\N
-5469	curtail	v	\N	\N	1	C2	\N
-5470	daft	adj	\N	\N	1	C2	\N
-5471	dalliance	n	\N	\N	1	C2	\N
-5472	daunting	adj	\N	\N	1	C2	\N
-5473	dawdle	v	\N	\N	1	C2	\N
-5474	dearth	n	\N	\N	1	C2	\N
-5475	debacle	n	\N	\N	1	C2	\N
-5476	debilitate	v	\N	\N	1	C2	\N
-5477	debonair	adj	\N	\N	1	C2	\N
-5478	debunk	v	\N	\N	1	C2	\N
-5479	decadence	n	\N	\N	1	C2	\N
-5480	deceitful	adj	\N	\N	1	C2	\N
-5481	decimate	v	\N	\N	1	C2	\N
-5482	decorous	adj	\N	\N	1	C2	\N
-5483	decorum	n	\N	\N	1	C2	\N
-5484	decree	n	\N	\N	1	C2	\N
-5485	decrepit	adj	\N	\N	1	C2	\N
-5486	decry	v	\N	\N	1	C2	\N
-5487	defamation	n	\N	\N	1	C2	\N
-5488	deference	n	\N	\N	1	C2	\N
-5489	deflate	v	\N	\N	1	C2	\N
-5490	defunct	adj	\N	\N	1	C2	\N
-5491	dehort	v	\N	\N	1	C2	\N
-5492	deign	v	\N	\N	1	C2	\N
-5493	deity	n	\N	\N	1	C2	\N
-5494	deleterious	adj	\N	\N	1	C2	\N
-5495	deliberation	n	\N	\N	1	C2	\N
-5496	delineate	v	\N	\N	1	C2	\N
-5497	delineation	n	\N	\N	1	C2	\N
-5498	delirium	n	\N	\N	1	C2	\N
-5499	deliverance	n	\N	\N	1	C2	\N
-5500	deluge	n	\N	\N	1	C2	\N
-5501	demagogue	n	\N	\N	1	C2	\N
-5502	demarcation	n	\N	\N	1	C2	\N
-5503	demean	v	\N	\N	1	C2	\N
-5504	demeanour	n	\N	\N	1	C2	\N
-5505	demise	n	\N	\N	1	C2	\N
-5506	demur	v	\N	\N	1	C2	\N
-5507	demure	adj	\N	\N	1	C2	\N
-5508	denigrate	v	\N	\N	1	C2	\N
-5509	denouement	n	\N	\N	1	C2	\N
-5510	deplete	v	\N	\N	1	C2	\N
-5511	deplorable	adj	\N	\N	1	C2	\N
-5512	deplore	v	\N	\N	1	C2	\N
-5513	depravity	n	\N	\N	1	C2	\N
-5514	derelict	adj	\N	\N	1	C2	\N
-5515	deride	v	\N	\N	1	C2	\N
-5516	derisive	adj	\N	\N	1	C2	\N
-5517	derogatory	adj	\N	\N	1	C2	\N
-5518	desecrate	v	\N	\N	1	C2	\N
-5519	desolation	n	\N	\N	1	C2	\N
-5520	despondency	n	\N	\N	1	C2	\N
-5521	despondent	adj	\N	\N	1	C2	\N
-5522	destitute	adj	\N	\N	1	C2	\N
-5523	desultory	adj	\N	\N	1	C2	\N
-5524	detachment	n	\N	\N	1	C2	\N
-5525	deter	v	\N	\N	1	C2	\N
-5526	detestable	adj	\N	\N	1	C2	\N
-5527	detriment	n	\N	\N	1	C2	\N
-5528	detrimental	adj	\N	\N	1	C2	\N
-5529	deviation	n	\N	\N	1	C2	\N
-5530	devious	adj	\N	\N	1	C2	\N
-5531	devoid	adj	\N	\N	1	C2	\N
-5532	dexterity	n	\N	\N	1	C2	\N
-5533	dexterous	adj	\N	\N	1	C2	\N
-5534	dialectic	n	\N	\N	1	C2	\N
-5535	diaphanous	adj	\N	\N	1	C2	\N
-5536	diaspora	n	\N	\N	1	C2	\N
-5537	diatribe	n	\N	\N	1	C2	\N
-5538	dichotomy	n	\N	\N	1	C2	\N
-5539	didactic	adj	\N	\N	1	C2	\N
-5540	diffident	adj	\N	\N	1	C2	\N
-5541	dilatory	adj	\N	\N	1	C2	\N
-5542	diligence	n	\N	\N	1	C2	\N
-5543	diligently	adv	\N	\N	1	C2	\N
-5544	diminution	n	\N	\N	1	C2	\N
-5545	dingy	adj	\N	\N	1	C2	\N
-5546	dirge	n	\N	\N	1	C2	\N
-5547	disaffection	n	\N	\N	1	C2	\N
-5548	discern	v	\N	\N	1	C2	\N
-5549	discernment	n	\N	\N	1	C2	\N
-5550	disciple	n	\N	\N	1	C2	\N
-5551	discord	n	\N	\N	1	C2	\N
-5552	discordant	adj	\N	\N	1	C2	\N
-5553	discrepancy	n	\N	\N	1	C2	\N
-5554	disdain	n	\N	\N	1	C2	\N
-5555	dishevelled	adj	\N	\N	1	C2	\N
-5556	disillusionment	n	\N	\N	1	C2	\N
-5557	disingenuous	adj	\N	\N	1	C2	\N
-5558	disinterested	adj	\N	\N	1	C2	\N
-5559	disjointed	adj	\N	\N	1	C2	\N
-5560	dismay	n	\N	\N	1	C2	\N
-5561	disparage	v	\N	\N	1	C2	\N
-5562	disparate	adj	\N	\N	1	C2	\N
-5563	disparity	n	\N	\N	1	C2	\N
-5564	dispassionate	adj	\N	\N	1	C2	\N
-5565	dispel	v	\N	\N	1	C2	\N
-5566	dispensation	n	\N	\N	1	C2	\N
-5567	dispense	v	\N	\N	1	C2	\N
-5568	disposition	n	\N	\N	1	C2	\N
-5569	disrepute	n	\N	\N	1	C2	\N
-5570	disseminate	v	\N	\N	1	C2	\N
-5571	dissension	n	\N	\N	1	C2	\N
-5572	dissent	n	\N	\N	1	C2	\N
-5573	dissertation	n	\N	\N	1	C2	\N
-5574	dissident	n	\N	\N	1	C2	\N
-5575	dissipate	v	\N	\N	1	C2	\N
-5576	dissolution	n	\N	\N	1	C2	\N
-5577	dissonance	n	\N	\N	1	C2	\N
-5578	divination	n	\N	\N	1	C2	\N
-5579	divulge	v	\N	\N	1	C2	\N
-5580	dogged	adj	\N	\N	1	C2	\N
-5581	dogma	n	\N	\N	1	C2	\N
-5582	dogmatic	adj	\N	\N	1	C2	\N
-5583	doldrums	n	\N	\N	1	C2	\N
-5584	domicile	n	\N	\N	1	C2	\N
-5585	dominion	n	\N	\N	1	C2	\N
-5586	dormant	adj	\N	\N	1	C2	\N
-5587	dossier	n	\N	\N	1	C2	\N
-5588	dotage	n	\N	\N	1	C2	\N
-5589	drudgery	n	\N	\N	1	C2	\N
-5590	dubious	adj	\N	\N	1	C2	\N
-5591	duplicity	n	\N	\N	1	C2	\N
-5592	duress	n	\N	\N	1	C2	\N
-5593	dwindle	v	\N	\N	1	C2	\N
-5594	dynasty	n	\N	\N	1	C2	\N
-5595	ebullience	n	\N	\N	1	C2	\N
-5596	ebullient	adj	\N	\N	1	C2	\N
-5597	eccentric	adj	\N	\N	1	C2	\N
-5598	echelon	n	\N	\N	1	C2	\N
-5599	eclectic	adj	\N	\N	1	C2	\N
-5600	edict	n	\N	\N	1	C2	\N
-5601	edification	n	\N	\N	1	C2	\N
-5602	edifice	n	\N	\N	1	C2	\N
-5603	efficacious	adj	\N	\N	1	C2	\N
-5604	effigy	n	\N	\N	1	C2	\N
-5605	effrontery	n	\N	\N	1	C2	\N
-5606	effusion	n	\N	\N	1	C2	\N
-5607	effusive	adj	\N	\N	1	C2	\N
-5608	egregious	adj	\N	\N	1	C2	\N
-5609	elated	adj	\N	\N	1	C2	\N
-5610	elation	n	\N	\N	1	C2	\N
-5611	elicit	v	\N	\N	1	C2	\N
-5612	eloquent	adj	\N	\N	1	C2	\N
-5613	elucidate	v	\N	\N	1	C2	\N
-5614	elusive	adj	\N	\N	1	C2	\N
-5615	emaciated	adj	\N	\N	1	C2	\N
-5616	emanate	v	\N	\N	1	C2	\N
-5617	emancipate	v	\N	\N	1	C2	\N
-5618	emancipation	n	\N	\N	1	C2	\N
-5619	embargo	n	\N	\N	1	C2	\N
-5620	embellish	v	\N	\N	1	C2	\N
-5621	embezzle	v	\N	\N	1	C2	\N
-5622	emblem	n	\N	\N	1	C2	\N
-5623	embroil	v	\N	\N	1	C2	\N
-5624	emissary	n	\N	\N	1	C2	\N
-5625	emulate	v	\N	\N	1	C2	\N
-5626	enclave	n	\N	\N	1	C2	\N
-5627	encroach	v	\N	\N	1	C2	\N
-5628	endemic	adj	\N	\N	1	C2	\N
-5629	endow	v	\N	\N	1	C2	\N
-5630	enervate	v	\N	\N	1	C2	\N
-5631	engender	v	\N	\N	1	C2	\N
-5632	enigma	n	\N	\N	1	C2	\N
-5633	enigmatic	adj	\N	\N	1	C2	\N
-5634	enmity	n	\N	\N	1	C2	\N
-5635	ennui	n	\N	\N	1	C2	\N
-5636	enormity	n	\N	\N	1	C2	\N
-5637	ensue	v	\N	\N	1	C2	\N
-5638	entail	v	\N	\N	1	C2	\N
-5639	enthrall	v	\N	\N	1	C2	\N
-5640	enticing	adj	\N	\N	1	C2	\N
-5641	entourage	n	\N	\N	1	C2	\N
-5642	entreat	v	\N	\N	1	C2	\N
-5643	entrenchment	n	\N	\N	1	C2	\N
-5644	entropy	n	\N	\N	1	C2	\N
-5645	enumerate	v	\N	\N	1	C2	\N
-5646	envoy	n	\N	\N	1	C2	\N
-5647	ephemeral	adj	\N	\N	1	C2	\N
-5648	epicentre	n	\N	\N	1	C2	\N
-5649	epicure	n	\N	\N	1	C2	\N
-5650	epigram	n	\N	\N	1	C2	\N
-5651	epilogue	n	\N	\N	1	C2	\N
-5652	epiphany	n	\N	\N	1	C2	\N
-5653	epitaph	n	\N	\N	1	C2	\N
-5654	epitome	n	\N	\N	1	C2	\N
-5655	epitomise	v	\N	\N	1	C2	\N
-5656	epoch	n	\N	\N	1	C2	\N
-5657	equanimity	n	\N	\N	1	C2	\N
-5658	equilibrium	n	\N	\N	1	C2	\N
-5659	equivocal	adj	\N	\N	1	C2	\N
-5660	eradicate	v	\N	\N	1	C2	\N
-5661	erotic	adj	\N	\N	1	C2	\N
-5662	err	v	\N	\N	1	C2	\N
-5663	erstwhile	adj	\N	\N	1	C2	\N
-5664	erudite	adj	\N	\N	1	C2	\N
-5665	erudition	n	\N	\N	1	C2	\N
-5666	escapade	n	\N	\N	1	C2	\N
-5667	escarpment	n	\N	\N	1	C2	\N
-5668	eschew	v	\N	\N	1	C2	\N
-5669	esoteric	adj	\N	\N	1	C2	\N
-5670	espouse	v	\N	\N	1	C2	\N
-5671	esteem	n	\N	\N	1	C2	\N
-5672	ethereal	adj	\N	\N	1	C2	\N
-5673	ethos	n	\N	\N	1	C2	\N
-5674	etymology	n	\N	\N	1	C2	\N
-5675	eulogy	n	\N	\N	1	C2	\N
-5676	euphemism	n	\N	\N	1	C2	\N
-5677	euphoria	n	\N	\N	1	C2	\N
-5678	evanescent	adj	\N	\N	1	C2	\N
-5679	exacerbate	v	\N	\N	1	C2	\N
-5680	exacting	adj	\N	\N	1	C2	\N
-5681	exalt	v	\N	\N	1	C2	\N
-5682	exaltation	n	\N	\N	1	C2	\N
-5683	exchequer	n	\N	\N	1	C2	\N
-5684	excoriate	v	\N	\N	1	C2	\N
-5685	excruciating	adj	\N	\N	1	C2	\N
-5686	execrable	adj	\N	\N	1	C2	\N
-5687	exemplify	v	\N	\N	1	C2	\N
-5688	exhort	v	\N	\N	1	C2	\N
-5689	exhortation	n	\N	\N	1	C2	\N
-5690	exigency	n	\N	\N	1	C2	\N
-5691	exigent	adj	\N	\N	1	C2	\N
-5692	exodus	n	\N	\N	1	C2	\N
-5693	exonerate	v	\N	\N	1	C2	\N
-5694	exorbitant	adj	\N	\N	1	C2	\N
-5695	expatriate	n	\N	\N	1	C2	\N
-5696	expediency	n	\N	\N	1	C2	\N
-5697	expedient	adj	\N	\N	1	C2	\N
-5698	expedite	v	\N	\N	1	C2	\N
-5699	exponent	n	\N	\N	1	C2	\N
-5700	exposition	n	\N	\N	1	C2	\N
-5701	expound	v	\N	\N	1	C2	\N
-5702	expunge	v	\N	\N	1	C2	\N
-5703	exquisite	adj	\N	\N	1	C2	\N
-5704	extol	v	\N	\N	1	C2	\N
-5705	extraneous	adj	\N	\N	1	C2	\N
-5706	extricate	v	\N	\N	1	C2	\N
-5707	exuberant	adj	\N	\N	1	C2	\N
-5708	exude	v	\N	\N	1	C2	\N
-5709	exultation	n	\N	\N	1	C2	\N
-5710	fabricate	v	\N	\N	1	C2	\N
-5711	fabrication	n	\N	\N	1	C2	\N
-5712	facet	n	\N	\N	1	C2	\N
-5713	facetious	adj	\N	\N	1	C2	\N
-5714	facile	adj	\N	\N	1	C2	\N
-5715	facsimile	n	\N	\N	1	C2	\N
-5716	fallacious	adj	\N	\N	1	C2	\N
-5717	fallacy	n	\N	\N	1	C2	\N
-5718	fallibility	n	\N	\N	1	C2	\N
-5719	famine	n	\N	\N	1	C2	\N
-5720	fanaticism	n	\N	\N	1	C2	\N
-5721	farce	n	\N	\N	1	C2	\N
-5722	farcical	adj	\N	\N	1	C2	\N
-5723	fastidious	adj	\N	\N	1	C2	\N
-5724	fatalism	n	\N	\N	1	C2	\N
-5725	fathom	v	\N	\N	1	C2	\N
-5726	fatuous	adj	\N	\N	1	C2	\N
-5727	fauna	n	\N	\N	1	C2	\N
-5728	fawn over	phr v	\N	\N	1	C2	\N
-5729	façade	n	\N	\N	1	C2	\N
-5730	feckless	adj	\N	\N	1	C2	\N
-5731	feign	v	\N	\N	1	C2	\N
-5732	feisty	adj	\N	\N	1	C2	\N
-5733	fermentation	n	\N	\N	1	C2	\N
-5734	ferocious	adj	\N	\N	1	C2	\N
-5735	ferret out	phr v	\N	\N	1	C2	\N
-5736	fervent	adj	\N	\N	1	C2	\N
-5737	fervid	adj	\N	\N	1	C2	\N
-5738	fervour	n	\N	\N	1	C2	\N
-5739	fetish	n	\N	\N	1	C2	\N
-5740	feud	n	\N	\N	1	C2	\N
-5741	fiasco	n	\N	\N	1	C2	\N
-5742	fickle	adj	\N	\N	1	C2	\N
-5743	fidelity	n	\N	\N	1	C2	\N
-5744	figment	n	\N	\N	1	C2	\N
-5745	figurehead	n	\N	\N	1	C2	\N
-5746	filibuster	n	\N	\N	1	C2	\N
-5747	finesse	n	\N	\N	1	C2	\N
-5748	fissure	n	\N	\N	1	C2	\N
-5749	flagrant	adj	\N	\N	1	C2	\N
-5750	flaunt	v	\N	\N	1	C2	\N
-5751	fleeting	adj	\N	\N	1	C2	\N
-5752	flimsy	adj	\N	\N	1	C2	\N
-5753	flora	n	\N	\N	1	C2	\N
-5754	flotsam	n	\N	\N	1	C2	\N
-5755	flout	v	\N	\N	1	C2	\N
-5756	flux	n	\N	\N	1	C2	\N
-5757	fodder	n	\N	\N	1	C2	\N
-5758	foible	n	\N	\N	1	C2	\N
-5759	folly	n	\N	\N	1	C2	\N
-5760	foment	v	\N	\N	1	C2	\N
-5761	foolhardiness	n	\N	\N	1	C2	\N
-5763	forbearance	n	\N	\N	1	C2	\N
-5764	forerunner	n	\N	\N	1	C2	\N
-5765	forestall	v	\N	\N	1	C2	\N
-5766	forfeiture	n	\N	\N	1	C2	\N
-5767	forgo	v	\N	\N	1	C2	\N
-5768	forlorn	adj	\N	\N	1	C2	\N
-5769	formidable	adj	\N	\N	1	C2	\N
-5770	forsake	v	\N	\N	1	C2	\N
-5771	forte	n	\N	\N	1	C2	\N
-5772	fortitude	n	\N	\N	1	C2	\N
-5773	fortuitous	adj	\N	\N	1	C2	\N
-5774	founder	v	\N	\N	1	C2	\N
-5775	fractious	adj	\N	\N	1	C2	\N
-5776	fraught	adj	\N	\N	1	C2	\N
-5777	fray	n	\N	\N	1	C2	\N
-5778	frenetic	adj	\N	\N	1	C2	\N
-5779	frenzy	n	\N	\N	1	C2	\N
-5780	freshman	n	\N	\N	1	C2	\N
-5781	fretful	adj	\N	\N	1	C2	\N
-5782	frivolous	adj	\N	\N	1	C2	\N
-5783	frugal	adj	\N	\N	1	C2	\N
-5784	fruition	n	\N	\N	1	C2	\N
-5785	fulcrum	n	\N	\N	1	C2	\N
-5786	fulsome	adj	\N	\N	1	C2	\N
-5787	furor	n	\N	\N	1	C2	\N
-5788	furtive	adj	\N	\N	1	C2	\N
-5789	futile	adj	\N	\N	1	C2	\N
-5790	futility	n	\N	\N	1	C2	\N
-5791	gaffe	n	\N	\N	1	C2	\N
-5792	galvanise	v	\N	\N	1	C2	\N
-5793	gambit	n	\N	\N	1	C2	\N
-5794	garish	adj	\N	\N	1	C2	\N
-5795	garner	v	\N	\N	1	C2	\N
-5796	garrison	n	\N	\N	1	C2	\N
-5797	garrulous	adj	\N	\N	1	C2	\N
-5798	gauche	adj	\N	\N	1	C2	\N
-5799	gauntlet	n	\N	\N	1	C2	\N
-5800	genealogy	n	\N	\N	1	C2	\N
-5801	genesis	n	\N	\N	1	C2	\N
-5802	genial	adj	\N	\N	1	C2	\N
-5803	genuflect	v	\N	\N	1	C2	\N
-5804	germane	adj	\N	\N	1	C2	\N
-5805	gestation	n	\N	\N	1	C2	\N
-5806	gingerly	adv	\N	\N	1	C2	\N
-5807	gist	n	\N	\N	1	C2	\N
-5808	glean	v	\N	\N	1	C2	\N
-5809	glib	adj	\N	\N	1	C2	\N
-5810	glossary	n	\N	\N	1	C2	\N
-5811	gluttony	n	\N	\N	1	C2	\N
-5812	grandeur	n	\N	\N	1	C2	\N
-5813	gratification	n	\N	\N	1	C2	\N
-5814	gratuitous	adj	\N	\N	1	C2	\N
-5815	gravitas	n	\N	\N	1	C2	\N
-5816	gregarious	adj	\N	\N	1	C2	\N
-5817	grievance	n	\N	\N	1	C2	\N
-5818	grovel	v	\N	\N	1	C2	\N
-5819	gruelling	adj	\N	\N	1	C2	\N
-5820	guile	n	\N	\N	1	C2	\N
-5821	gullible	adj	\N	\N	1	C2	\N
-5822	hackneyed	adj	\N	\N	1	C2	\N
-5823	halcyon	n	\N	\N	1	C2	\N
-5824	hallmark	n	\N	\N	1	C2	\N
-5825	halo	n	\N	\N	1	C2	\N
-5826	hamper	v	\N	\N	1	C2	\N
-5827	haphazard	adj	\N	\N	1	C2	\N
-5828	hapless	adj	\N	\N	1	C2	\N
-5829	harangue	n	\N	\N	1	C2	\N
-5830	harbinger	n	\N	\N	1	C2	\N
-5831	harness	v	\N	\N	1	C2	\N
-5832	hasten	v	\N	\N	1	C2	\N
-5833	haughty	adj	\N	\N	1	C2	\N
-5834	havoc	n	\N	\N	1	C2	\N
-5835	hearsay	n	\N	\N	1	C2	\N
-5836	hedonistic	adj	\N	\N	1	C2	\N
-5837	heed	v	\N	\N	1	C2	\N
-5838	hegemony	n	\N	\N	1	C2	\N
-5839	heinous	adj	\N	\N	1	C2	\N
-5840	heirloom	n	\N	\N	1	C2	\N
-5841	henceforth	adv	\N	\N	1	C2	\N
-5842	henchman	n	\N	\N	1	C2	\N
-5843	herald	v	\N	\N	1	C2	\N
-5844	herbivore	n	\N	\N	1	C2	\N
-5845	heresy	n	\N	\N	1	C2	\N
-5846	heretical	adj	\N	\N	1	C2	\N
-5847	hiatus	n	\N	\N	1	C2	\N
-5848	hindrance	n	\N	\N	1	C2	\N
-5849	hinterland	n	\N	\N	1	C2	\N
-5850	histrionic	adj	\N	\N	1	C2	\N
-5851	hitherto	adv	\N	\N	1	C2	\N
-5852	hoard	v	\N	\N	1	C2	\N
-5853	holocaust	n	\N	\N	1	C2	\N
-5854	homage	n	\N	\N	1	C2	\N
-5855	homogeneous	adj	\N	\N	1	C2	\N
-5856	hone	v	\N	\N	1	C2	\N
-5857	horoscope	n	\N	\N	1	C2	\N
-5858	hospice	n	\N	\N	1	C2	\N
-5859	hubris	n	\N	\N	1	C2	\N
-5860	hybrid	n	\N	\N	1	C2	\N
-5861	hyperbole	n	\N	\N	1	C2	\N
-5862	hypocrisy	n	\N	\N	1	C2	\N
-5863	hypothetical	adj	\N	\N	1	C2	\N
-5864	hysteria	n	\N	\N	1	C2	\N
-5865	iconoclasm	n	\N	\N	1	C2	\N
-5866	iconoclast	n	\N	\N	1	C2	\N
-5867	ideologue	n	\N	\N	1	C2	\N
-5868	idiosyncrasy	n	\N	\N	1	C2	\N
-5869	idiosyncratic	adj	\N	\N	1	C2	\N
-5870	idyllic	adj	\N	\N	1	C2	\N
-5871	ignominious	adj	\N	\N	1	C2	\N
-5872	ignominy	n	\N	\N	1	C2	\N
-5873	ill-advised	adj	\N	\N	1	C2	\N
-5874	illicit	adj	\N	\N	1	C2	\N
-5875	imbue	v	\N	\N	1	C2	\N
-5876	immaculate	adj	\N	\N	1	C2	\N
-5877	immeasurably	adv	\N	\N	1	C2	\N
-5878	immensity	n	\N	\N	1	C2	\N
-5879	immortal	adj	\N	\N	1	C2	\N
-5880	immutable	adj	\N	\N	1	C2	\N
-5881	impair	v	\N	\N	1	C2	\N
-5882	impartial	adj	\N	\N	1	C2	\N
-5883	impasse	n	\N	\N	1	C2	\N
-5884	impassive	adj	\N	\N	1	C2	\N
-5885	impeachment	n	\N	\N	1	C2	\N
-5886	impeccable	adj	\N	\N	1	C2	\N
-5887	impede	v	\N	\N	1	C2	\N
-5888	impediment	n	\N	\N	1	C2	\N
-5889	imperative	adj	\N	\N	1	C2	\N
-5890	imperceptibly	adv	\N	\N	1	C2	\N
-5891	imperialism	n	\N	\N	1	C2	\N
-5892	imperil	v	\N	\N	1	C2	\N
-5893	imperious	adj	\N	\N	1	C2	\N
-5894	impertinent	adj	\N	\N	1	C2	\N
-5895	imperturbable	adj	\N	\N	1	C2	\N
-5896	impervious	adj	\N	\N	1	C2	\N
-5897	impetuous	adj	\N	\N	1	C2	\N
-5898	impetus	n	\N	\N	1	C2	\N
-5899	implacable	adj	\N	\N	1	C2	\N
-5900	implausible	adj	\N	\N	1	C2	\N
-5901	impracticable	adj	\N	\N	1	C2	\N
-5902	impregnable	adj	\N	\N	1	C2	\N
-5903	impromptu	adj	\N	\N	1	C2	\N
-5904	impropriety	n	\N	\N	1	C2	\N
-5905	impudence	n	\N	\N	1	C2	\N
-5906	impugn	v	\N	\N	1	C2	\N
-5907	impunity	n	\N	\N	1	C2	\N
-5908	inadequacy	n	\N	\N	1	C2	\N
-5909	inadvertent	adj	\N	\N	1	C2	\N
-5910	inane	adj	\N	\N	1	C2	\N
-5911	inaugurate	v	\N	\N	1	C2	\N
-5912	incarnation	n	\N	\N	1	C2	\N
-5913	incendiary	adj	\N	\N	1	C2	\N
-5914	incense	v	\N	\N	1	C2	\N
-5915	inception	n	\N	\N	1	C2	\N
-5916	incessant	adj	\N	\N	1	C2	\N
-5917	incisive	adj	\N	\N	1	C2	\N
-5918	incite	v	\N	\N	1	C2	\N
-5919	inclement	adj	\N	\N	1	C2	\N
-5920	inclination	n	\N	\N	1	C2	\N
-5921	inclusive	adj	\N	\N	1	C2	\N
-5922	incomprehensible	adj	\N	\N	1	C2	\N
-5923	inconceivable	adj	\N	\N	1	C2	\N
-5924	incongruity	n	\N	\N	1	C2	\N
-5925	incongruous	adj	\N	\N	1	C2	\N
-5926	incontrovertible	adj	\N	\N	1	C2	\N
-5927	incorrigible	adj	\N	\N	1	C2	\N
-5928	incredulity	n	\N	\N	1	C2	\N
-5929	incredulous	adj	\N	\N	1	C2	\N
-5930	incumbency	n	\N	\N	1	C2	\N
-5931	incumbent	n	\N	\N	1	C2	\N
-5932	incursion	n	\N	\N	1	C2	\N
-5933	indefatigable	adj	\N	\N	1	C2	\N
-5934	indelible	adj	\N	\N	1	C2	\N
-5935	indemnify	v	\N	\N	1	C2	\N
-5936	indifference	n	\N	\N	1	C2	\N
-5937	indifferent	adj	\N	\N	1	C2	\N
-5938	indignant	adj	\N	\N	1	C2	\N
-5939	indignation	n	\N	\N	1	C2	\N
-5940	indiscretion	n	\N	\N	1	C2	\N
-5941	indoctrination	n	\N	\N	1	C2	\N
-5942	indolent	adj	\N	\N	1	C2	\N
-5943	indomitable	adj	\N	\N	1	C2	\N
-5944	inducement	n	\N	\N	1	C2	\N
-5945	induction	n	\N	\N	1	C2	\N
-5946	indulgent	adj	\N	\N	1	C2	\N
-5947	industrious	adj	\N	\N	1	C2	\N
-5948	ineffable	adj	\N	\N	1	C2	\N
-5949	inept	adj	\N	\N	1	C2	\N
-5950	ineptitude	n	\N	\N	1	C2	\N
-5951	inequity	n	\N	\N	1	C2	\N
-5952	inertia	n	\N	\N	1	C2	\N
-5953	inexhaustible	adj	\N	\N	1	C2	\N
-5954	inexorable	adj	\N	\N	1	C2	\N
-5955	infallible	adj	\N	\N	1	C2	\N
-5956	infamy	n	\N	\N	1	C2	\N
-5957	infatuation	n	\N	\N	1	C2	\N
-5958	inferno	n	\N	\N	1	C2	\N
-5959	infirmary	n	\N	\N	1	C2	\N
-5960	inflammatory	adj	\N	\N	1	C2	\N
-5961	influx	n	\N	\N	1	C2	\N
-5962	infraction	n	\N	\N	1	C2	\N
-5963	ingenious	adj	\N	\N	1	C2	\N
-5964	ingenuity	n	\N	\N	1	C2	\N
-5965	ingenuous	adj	\N	\N	1	C2	\N
-5966	ingrained	adj	\N	\N	1	C2	\N
-5967	inhospitable	adj	\N	\N	1	C2	\N
-5968	inhumanity	n	\N	\N	1	C2	\N
-5969	inimical	adj	\N	\N	1	C2	\N
-5970	iniquitous	adj	\N	\N	1	C2	\N
-5971	injunction	n	\N	\N	1	C2	\N
-5972	inkling	n	\N	\N	1	C2	\N
-5973	innocuous	adj	\N	\N	1	C2	\N
-5974	innuendo	n	\N	\N	1	C2	\N
-5975	innumerable	adj	\N	\N	1	C2	\N
-5976	inquisition	n	\N	\N	1	C2	\N
-5977	insatiable	adj	\N	\N	1	C2	\N
-5978	inscrutable	adj	\N	\N	1	C2	\N
-5979	insidious	adj	\N	\N	1	C2	\N
-5980	insipid	adj	\N	\N	1	C2	\N
-5981	insolent	adj	\N	\N	1	C2	\N
-5982	insoluble	adj	\N	\N	1	C2	\N
-5983	insouciant	adj	\N	\N	1	C2	\N
-5984	instigate	v	\N	\N	1	C2	\N
-5985	insurgency	n	\N	\N	1	C2	\N
-5986	insurmountable	adj	\N	\N	1	C2	\N
-5987	insurrection	n	\N	\N	1	C2	\N
-5988	intelligentsia	n	\N	\N	1	C2	\N
-5989	inter alia	adv	\N	\N	1	C2	\N
-5990	interlude	n	\N	\N	1	C2	\N
-5991	intermittently	adv	\N	\N	1	C2	\N
-5992	internecine	adj	\N	\N	1	C2	\N
-5993	intimation	n	\N	\N	1	C2	\N
-5994	intimidation	n	\N	\N	1	C2	\N
-5995	intransigence	n	\N	\N	1	C2	\N
-5996	intransigent	adj	\N	\N	1	C2	\N
-5997	intrepid	adj	\N	\N	1	C2	\N
-5998	intrinsic	adj	\N	\N	1	C2	\N
-5999	introspection	n	\N	\N	1	C2	\N
-6000	intrusive	adj	\N	\N	1	C2	\N
-6001	intuition	n	\N	\N	1	C2	\N
-6002	inundate	v	\N	\N	1	C2	\N
-6003	invasive	adj	\N	\N	1	C2	\N
-6004	invective	n	\N	\N	1	C2	\N
-6005	inveterate	adj	\N	\N	1	C2	\N
-6006	invidious	adj	\N	\N	1	C2	\N
-6007	invocation	n	\N	\N	1	C2	\N
-6008	iota	n	\N	\N	1	C2	\N
-6009	irascible	adj	\N	\N	1	C2	\N
-6010	ire	n	\N	\N	1	C2	\N
-6011	irk	v	\N	\N	1	C2	\N
-6012	irreproachable	adj	\N	\N	1	C2	\N
-6013	irreverent	adj	\N	\N	1	C2	\N
-6014	itinerant	adj	\N	\N	1	C2	\N
-6015	itinerary	n	\N	\N	1	C2	\N
-6016	jaded	adj	\N	\N	1	C2	\N
-6017	jamboree	n	\N	\N	1	C2	\N
-6018	jargon	n	\N	\N	1	C2	\N
-6019	jaundiced	adj	\N	\N	1	C2	\N
-6020	jaunt	n	\N	\N	1	C2	\N
-6021	jeopardise	v	\N	\N	1	C2	\N
-6022	jingoism	n	\N	\N	1	C2	\N
-6023	jocular	adj	\N	\N	1	C2	\N
-6024	jocularity	n	\N	\N	1	C2	\N
-6025	journeyman	n	\N	\N	1	C2	\N
-6026	joust	n	\N	\N	1	C2	\N
-6027	jubilation	n	\N	\N	1	C2	\N
-6028	jubilee	n	\N	\N	1	C2	\N
-6029	judicious	adj	\N	\N	1	C2	\N
-6030	juggernaut	n	\N	\N	1	C2	\N
-6031	juncture	n	\N	\N	1	C2	\N
-6032	jurisprudence	n	\N	\N	1	C2	\N
-6033	jurist	n	\N	\N	1	C2	\N
-6034	juxtapose	v	\N	\N	1	C2	\N
-6035	juxtaposition	n	\N	\N	1	C2	\N
-6036	kaleidoscope	n	\N	\N	1	C2	\N
-6037	ken	n	\N	\N	1	C2	\N
-6038	kernel	n	\N	\N	1	C2	\N
-6039	keynote	n	\N	\N	1	C2	\N
-6040	kindle	v	\N	\N	1	C2	\N
-6041	kindred	n	\N	\N	1	C2	\N
-6042	kinship	n	\N	\N	1	C2	\N
-6043	knoll	n	\N	\N	1	C2	\N
-6044	kudos	n	\N	\N	1	C2	\N
-6045	labyrinth	n	\N	\N	1	C2	\N
-6046	lackadaisical	adj	\N	\N	1	C2	\N
-6047	lacklustre	adj	\N	\N	1	C2	\N
-6048	laconic	adj	\N	\N	1	C2	\N
-6049	laggard	n	\N	\N	1	C2	\N
-6050	lambaste	v	\N	\N	1	C2	\N
-6051	lament	v	\N	\N	1	C2	\N
-6052	lamentable	adj	\N	\N	1	C2	\N
-6053	lampoon	n	\N	\N	1	C2	\N
-6054	languid	adj	\N	\N	1	C2	\N
-6055	languish	v	\N	\N	1	C2	\N
-6056	lapse	n	\N	\N	1	C2	\N
-6057	larceny	n	\N	\N	1	C2	\N
-6058	largesse	n	\N	\N	1	C2	\N
-6059	latent	adj	\N	\N	1	C2	\N
-6060	latitude	n	\N	\N	1	C2	\N
-6061	laud	v	\N	\N	1	C2	\N
-6062	laudable	adj	\N	\N	1	C2	\N
-6063	laureate	n	\N	\N	1	C2	\N
-6064	lectern	n	\N	\N	1	C2	\N
-6065	leery of	adj	\N	\N	1	C2	\N
-6066	leeway	n	\N	\N	1	C2	\N
-6067	lenient	adj	\N	\N	1	C2	\N
-6068	lethargic	adj	\N	\N	1	C2	\N
-6069	lethargy	n	\N	\N	1	C2	\N
-6070	level-headed	adj	\N	\N	1	C2	\N
-6071	levity	n	\N	\N	1	C2	\N
-6072	levy	v	\N	\N	1	C2	\N
-6073	lexicon	n	\N	\N	1	C2	\N
-6074	liaison	n	\N	\N	1	C2	\N
-6075	licentious	adj	\N	\N	1	C2	\N
-6076	limbo	n	\N	\N	1	C2	\N
-6077	lineage	n	\N	\N	1	C2	\N
-6078	linguist	n	\N	\N	1	C2	\N
-6079	liquidate	v	\N	\N	1	C2	\N
-6080	liquidation	n	\N	\N	1	C2	\N
-6081	litany	n	\N	\N	1	C2	\N
-6082	litigant	n	\N	\N	1	C2	\N
-6083	litigious	adj	\N	\N	1	C2	\N
-6084	liturgy	n	\N	\N	1	C2	\N
-6085	loathe	v	\N	\N	1	C2	\N
-6086	longevity	n	\N	\N	1	C2	\N
-6087	loophole	n	\N	\N	1	C2	\N
-6088	loquacious	adj	\N	\N	1	C2	\N
-6089	lore	n	\N	\N	1	C2	\N
-6090	lout	n	\N	\N	1	C2	\N
-6091	lucid	adj	\N	\N	1	C2	\N
-6092	ludicrous	adj	\N	\N	1	C2	\N
-6093	lugubrious	adj	\N	\N	1	C2	\N
-6094	lukewarm	adj	\N	\N	1	C2	\N
-6095	luminary	n	\N	\N	1	C2	\N
-6096	luminous	adj	\N	\N	1	C2	\N
-6097	lustre	n	\N	\N	1	C2	\N
-6098	luxuriant	adj	\N	\N	1	C2	\N
-6099	machination	n	\N	\N	1	C2	\N
-6100	machismo	n	\N	\N	1	C2	\N
-6101	macrocosm	n	\N	\N	1	C2	\N
-6102	madcap	adj	\N	\N	1	C2	\N
-6103	maelstrom	n	\N	\N	1	C2	\N
-6104	maestro	n	\N	\N	1	C2	\N
-6105	magnanimous	adj	\N	\N	1	C2	\N
-6106	magnate	n	\N	\N	1	C2	\N
-6107	mainstay	n	\N	\N	1	C2	\N
-6108	malady	n	\N	\N	1	C2	\N
-6109	malaise	n	\N	\N	1	C2	\N
-6110	malcontent	n	\N	\N	1	C2	\N
-6111	malevolent	adj	\N	\N	1	C2	\N
-6112	malfeasance	n	\N	\N	1	C2	\N
-6113	malice	n	\N	\N	1	C2	\N
-6114	malign	v	\N	\N	1	C2	\N
-6115	malleable	adj	\N	\N	1	C2	\N
-6116	malodorous	adj	\N	\N	1	C2	\N
-6117	manifestation	n	\N	\N	1	C2	\N
-6118	mannerism	n	\N	\N	1	C2	\N
-6119	manor	n	\N	\N	1	C2	\N
-6120	mantle	n	\N	\N	1	C2	\N
-6121	marauder	n	\N	\N	1	C2	\N
-6122	marquee	n	\N	\N	1	C2	\N
-6123	martyrdom	n	\N	\N	1	C2	\N
-6124	masochism	n	\N	\N	1	C2	\N
-6125	masquerade	n	\N	\N	1	C2	\N
-6126	materialism	n	\N	\N	1	C2	\N
-6127	matriarch	n	\N	\N	1	C2	\N
-6128	maudlin	adj	\N	\N	1	C2	\N
-6129	maverick	n	\N	\N	1	C2	\N
-6130	maxim	n	\N	\N	1	C2	\N
-6131	mayhem	n	\N	\N	1	C2	\N
-6132	meagre	adj	\N	\N	1	C2	\N
-6133	mediator	n	\N	\N	1	C2	\N
-6134	mediocrity	n	\N	\N	1	C2	\N
-6135	megalomania	n	\N	\N	1	C2	\N
-6136	melancholy	n	\N	\N	1	C2	\N
-6137	melee	n	\N	\N	1	C2	\N
-6138	memento	n	\N	\N	1	C2	\N
-6139	memorabilia	n	\N	\N	1	C2	\N
-6140	menacing	adj	\N	\N	1	C2	\N
-6141	mendacious	adj	\N	\N	1	C2	\N
-6142	mercenary	n	\N	\N	1	C2	\N
-6143	meritocracy	n	\N	\N	1	C2	\N
-6144	messiah	n	\N	\N	1	C2	\N
-6145	metamorphosis	n	\N	\N	1	C2	\N
-6146	methodology	n	\N	\N	1	C2	\N
-6147	meticulous	adj	\N	\N	1	C2	\N
-6148	mettle	n	\N	\N	1	C2	\N
-6149	microcosm	n	\N	\N	1	C2	\N
-6150	minion	n	\N	\N	1	C2	\N
-6151	minutiae	n	\N	\N	1	C2	\N
-6152	mirage	n	\N	\N	1	C2	\N
-6153	mire	n	\N	\N	1	C2	\N
-6154	misanthrope	n	\N	\N	1	C2	\N
-6155	mischievous	adj	\N	\N	1	C2	\N
-6156	misgiving	n	\N	\N	1	C2	\N
-6157	mishap	n	\N	\N	1	C2	\N
-6158	misnomer	n	\N	\N	1	C2	\N
-6159	misogyny	n	\N	\N	1	C2	\N
-6160	mitigate	v	\N	\N	1	C2	\N
-6161	modicum	n	\N	\N	1	C2	\N
-6162	mogul	n	\N	\N	1	C2	\N
-6163	mollify	v	\N	\N	1	C2	\N
-6164	moniker	n	\N	\N	1	C2	\N
-6165	monolith	n	\N	\N	1	C2	\N
-6166	monologue	n	\N	\N	1	C2	\N
-6167	montage	n	\N	\N	1	C2	\N
-6168	moratorium	n	\N	\N	1	C2	\N
-6169	mordant	adj	\N	\N	1	C2	\N
-6170	morgue	n	\N	\N	1	C2	\N
-6171	moribund	adj	\N	\N	1	C2	\N
-6172	morose	adj	\N	\N	1	C2	\N
-6173	mortal	adj	\N	\N	1	C2	\N
-6174	mortifying	adj	\N	\N	1	C2	\N
-6175	mosaic	n	\N	\N	1	C2	\N
-6176	muffle	v	\N	\N	1	C2	\N
-6177	multitude	n	\N	\N	1	C2	\N
-6178	mundane	adj	\N	\N	1	C2	\N
-6179	munificent	adj	\N	\N	1	C2	\N
-6180	munition	n	\N	\N	1	C2	\N
-6181	mural	n	\N	\N	1	C2	\N
-6182	mutable	adj	\N	\N	1	C2	\N
-6183	myopic	adj	\N	\N	1	C2	\N
-6184	myriad	n	\N	\N	1	C2	\N
-6185	mystique	n	\N	\N	1	C2	\N
-6186	nadir	n	\N	\N	1	C2	\N
-6187	nag	v	\N	\N	1	C2	\N
-6188	naivety	n	\N	\N	1	C2	\N
-6189	namesake	n	\N	\N	1	C2	\N
-6190	narcissism	n	\N	\N	1	C2	\N
-6191	nascent	adj	\N	\N	1	C2	\N
-6192	nebulous	adj	\N	\N	1	C2	\N
-6193	nefarious	adj	\N	\N	1	C2	\N
-6194	negligence	n	\N	\N	1	C2	\N
-6195	nemesis	n	\N	\N	1	C2	\N
-6196	neophyte	n	\N	\N	1	C2	\N
-6197	nepotism	n	\N	\N	1	C2	\N
-6198	nexus	n	\N	\N	1	C2	\N
-6199	nihilism	n	\N	\N	1	C2	\N
-6200	nirvana	n	\N	\N	1	C2	\N
-6201	nomenclature	n	\N	\N	1	C2	\N
-6202	nonchalance	n	\N	\N	1	C2	\N
-6203	nonchalant	adj	\N	\N	1	C2	\N
-6204	nonentity	n	\N	\N	1	C2	\N
-6205	notoriety	n	\N	\N	1	C2	\N
-6206	novice	n	\N	\N	1	C2	\N
-6207	noxious	adj	\N	\N	1	C2	\N
-6208	nuance	n	\N	\N	1	C2	\N
-6209	oaf	n	\N	\N	1	C2	\N
-6210	oasis	n	\N	\N	1	C2	\N
-6211	obdurate	adj	\N	\N	1	C2	\N
-6212	obfuscate	v	\N	\N	1	C2	\N
-6213	obfuscation	n	\N	\N	1	C2	\N
-6214	obituary	n	\N	\N	1	C2	\N
-6215	obliterate	v	\N	\N	1	C2	\N
-6216	oblivion	n	\N	\N	1	C2	\N
-6217	obscenity	n	\N	\N	1	C2	\N
-6218	obscure	adj	\N	\N	1	C2	\N
-6219	obscurity	n	\N	\N	1	C2	\N
-6220	obsequious	adj	\N	\N	1	C2	\N
-6221	observance	n	\N	\N	1	C2	\N
-6222	obsolescence	n	\N	\N	1	C2	\N
-6223	obsolete	adj	\N	\N	1	C2	\N
-6224	obstinate	adj	\N	\N	1	C2	\N
-6225	obstreperous	adj	\N	\N	1	C2	\N
-6226	obtuse	adj	\N	\N	1	C2	\N
-6227	obviate	v	\N	\N	1	C2	\N
-6228	ode	n	\N	\N	1	C2	\N
-6229	odyssey	n	\N	\N	1	C2	\N
-6230	officious	adj	\N	\N	1	C2	\N
-6231	oligarchy	n	\N	\N	1	C2	\N
-6232	omen	n	\N	\N	1	C2	\N
-6233	ominous	adj	\N	\N	1	C2	\N
-6234	omission	n	\N	\N	1	C2	\N
-6235	omnipotence	n	\N	\N	1	C2	\N
-6236	omniscience	n	\N	\N	1	C2	\N
-6237	onerous	adj	\N	\N	1	C2	\N
-6238	onset	n	\N	\N	1	C2	\N
-6239	onslaught	n	\N	\N	1	C2	\N
-6240	onus	n	\N	\N	1	C2	\N
-6241	opacity	n	\N	\N	1	C2	\N
-6242	opaque	adj	\N	\N	1	C2	\N
-6243	opportunistic	adj	\N	\N	1	C2	\N
-6244	opulence	n	\N	\N	1	C2	\N
-6245	opulent	adj	\N	\N	1	C2	\N
-6246	oracle	n	\N	\N	1	C2	\N
-6247	orator	n	\N	\N	1	C2	\N
-6248	oratory	n	\N	\N	1	C2	\N
-6249	ordeal	n	\N	\N	1	C2	\N
-6250	ordinance	n	\N	\N	1	C2	\N
-6251	ornate	adj	\N	\N	1	C2	\N
-6252	orthodoxy	n	\N	\N	1	C2	\N
-6253	oscillation	n	\N	\N	1	C2	\N
-6254	ostensible	adj	\N	\N	1	C2	\N
-6255	ostentation	n	\N	\N	1	C2	\N
-6256	ostentatious	adj	\N	\N	1	C2	\N
-6257	ostracise	v	\N	\N	1	C2	\N
-6258	ostracism	n	\N	\N	1	C2	\N
-6259	oust	v	\N	\N	1	C2	\N
-6260	outweigh	v	\N	\N	1	C2	\N
-6261	ovation	n	\N	\N	1	C2	\N
-6262	oversight	n	\N	\N	1	C2	\N
-6263	overweening	adj	\N	\N	1	C2	\N
-6264	oxymoron	n	\N	\N	1	C2	\N
-6265	pacifism	n	\N	\N	1	C2	\N
-6266	pacify	v	\N	\N	1	C2	\N
-6267	pageant	n	\N	\N	1	C2	\N
-6268	pageantry	n	\N	\N	1	C2	\N
-6269	painstaking	adj	\N	\N	1	C2	\N
-6270	palatable	adj	\N	\N	1	C2	\N
-6271	palatial	adj	\N	\N	1	C2	\N
-6272	pallbearer	n	\N	\N	1	C2	\N
-6273	palliate	v	\N	\N	1	C2	\N
-6274	pallid	adj	\N	\N	1	C2	\N
-6275	pallor	n	\N	\N	1	C2	\N
-6276	palpable	adj	\N	\N	1	C2	\N
-6277	palpitation	n	\N	\N	1	C2	\N
-6278	paltry	adj	\N	\N	1	C2	\N
-6279	pamper	v	\N	\N	1	C2	\N
-6280	panacea	n	\N	\N	1	C2	\N
-6281	panache	n	\N	\N	1	C2	\N
-6282	pandemonium	n	\N	\N	1	C2	\N
-6283	pang	n	\N	\N	1	C2	\N
-6284	panorama	n	\N	\N	1	C2	\N
-6285	parable	n	\N	\N	1	C2	\N
-6286	paradigm	n	\N	\N	1	C2	\N
-6287	paradox	n	\N	\N	1	C2	\N
-6288	paragon	n	\N	\N	1	C2	\N
-6289	paramount	adj	\N	\N	1	C2	\N
-6290	paraphernalia	n	\N	\N	1	C2	\N
-6291	pariah	n	\N	\N	1	C2	\N
-6292	parity	n	\N	\N	1	C2	\N
-6293	parlance	n	\N	\N	1	C2	\N
-6294	parochial	adj	\N	\N	1	C2	\N
-6295	parody	n	\N	\N	1	C2	\N
-6296	parsimonious	adj	\N	\N	1	C2	\N
-6297	parsimony	n	\N	\N	1	C2	\N
-6298	partisan	adj	\N	\N	1	C2	\N
-6299	partisanship	n	\N	\N	1	C2	\N
-6300	patently	adv	\N	\N	1	C2	\N
-6301	pathos	n	\N	\N	1	C2	\N
-6302	patriarch	n	\N	\N	1	C2	\N
-6303	patronage	n	\N	\N	1	C2	\N
-6304	paucity	n	\N	\N	1	C2	\N
-6305	pavilion	n	\N	\N	1	C2	\N
-6306	pedagogy	n	\N	\N	1	C2	\N
-6307	pedant	n	\N	\N	1	C2	\N
-6308	pedantic	adj	\N	\N	1	C2	\N
-6309	pedantry	n	\N	\N	1	C2	\N
-6310	pedestal	n	\N	\N	1	C2	\N
-6311	pedigree	n	\N	\N	1	C2	\N
-6312	peevish	adj	\N	\N	1	C2	\N
-6313	pejorative	adj	\N	\N	1	C2	\N
-6314	penchant	n	\N	\N	1	C2	\N
-6315	pending	adj	\N	\N	1	C2	\N
-6316	penitence	n	\N	\N	1	C2	\N
-6317	penitent	adj	\N	\N	1	C2	\N
-6318	pennant	n	\N	\N	1	C2	\N
-6319	pensive	adj	\N	\N	1	C2	\N
-6320	penury	n	\N	\N	1	C2	\N
-6321	peremptory	adj	\N	\N	1	C2	\N
-6322	perennial	adj	\N	\N	1	C2	\N
-6323	perfidious	adj	\N	\N	1	C2	\N
-6324	perfunctory	adj	\N	\N	1	C2	\N
-6325	peril	n	\N	\N	1	C2	\N
-6326	perilous	adj	\N	\N	1	C2	\N
-6327	perimeter	n	\N	\N	1	C2	\N
-6328	periphery	n	\N	\N	1	C2	\N
-6329	perjurer	n	\N	\N	1	C2	\N
-6330	perjury	n	\N	\N	1	C2	\N
-6331	permanence	n	\N	\N	1	C2	\N
-6332	permeate	v	\N	\N	1	C2	\N
-6333	permutation	n	\N	\N	1	C2	\N
-6334	pernicious	adj	\N	\N	1	C2	\N
-6335	perpetrator	n	\N	\N	1	C2	\N
-6336	perpetual	adj	\N	\N	1	C2	\N
-6337	perpetuate	v	\N	\N	1	C2	\N
-6338	perplexity	n	\N	\N	1	C2	\N
-6339	persecute	v	\N	\N	1	C2	\N
-6340	perseverance	n	\N	\N	1	C2	\N
-6341	perspicacious	adj	\N	\N	1	C2	\N
-6342	perturbed	adj	\N	\N	1	C2	\N
-6343	peruse	v	\N	\N	1	C2	\N
-6344	pervade	v	\N	\N	1	C2	\N
-6345	pervasive	adj	\N	\N	1	C2	\N
-6346	pervert	v	\N	\N	1	C2	\N
-6347	pessimism	n	\N	\N	1	C2	\N
-6348	petulant	adj	\N	\N	1	C2	\N
-6349	philanthropic	adj	\N	\N	1	C2	\N
-6350	philanthropist	n	\N	\N	1	C2	\N
-6351	philistine	n	\N	\N	1	C2	\N
-6352	phlegmatic	adj	\N	\N	1	C2	\N
-6353	phoenix	n	\N	\N	1	C2	\N
-6354	piety	n	\N	\N	1	C2	\N
-6355	pillage	v	\N	\N	1	C2	\N
-6356	pinnacle	n	\N	\N	1	C2	\N
-6357	pioneering	adj	\N	\N	1	C2	\N
-6358	pious	adj	\N	\N	1	C2	\N
-6359	pique	n	\N	\N	1	C2	\N
-6360	piracy	n	\N	\N	1	C2	\N
-6361	pitfall	n	\N	\N	1	C2	\N
-6362	pithy	adj	\N	\N	1	C2	\N
-6363	pittance	n	\N	\N	1	C2	\N
-6364	placate	v	\N	\N	1	C2	\N
-6365	placebo	n	\N	\N	1	C2	\N
-6366	placid	adj	\N	\N	1	C2	\N
-6367	plagiarism	n	\N	\N	1	C2	\N
-6368	plaintiff	n	\N	\N	1	C2	\N
-6369	plasticity	n	\N	\N	1	C2	\N
-6370	platitude	n	\N	\N	1	C2	\N
-6371	playwright	n	\N	\N	1	C2	\N
-6372	plebiscite	n	\N	\N	1	C2	\N
-6373	plethora	n	\N	\N	1	C2	\N
-6374	plight	n	\N	\N	1	C2	\N
-6375	ploy	n	\N	\N	1	C2	\N
-6376	plunder	v	\N	\N	1	C2	\N
-6377	podium	n	\N	\N	1	C2	\N
-6378	poignancy	n	\N	\N	1	C2	\N
-6379	poignant	adj	\N	\N	1	C2	\N
-6380	poise	n	\N	\N	1	C2	\N
-6381	polemic	n	\N	\N	1	C2	\N
-6382	polyglot	n	\N	\N	1	C2	\N
-6383	pomp	n	\N	\N	1	C2	\N
-6384	pompous	adj	\N	\N	1	C2	\N
-6385	ponder	v	\N	\N	1	C2	\N
-6386	ponderous	adj	\N	\N	1	C2	\N
-6387	pontificate	v	\N	\N	1	C2	\N
-6388	populace	n	\N	\N	1	C2	\N
-6389	populism	n	\N	\N	1	C2	\N
-6390	portend	v	\N	\N	1	C2	\N
-6391	portent	n	\N	\N	1	C2	\N
-6392	portentous	adj	\N	\N	1	C2	\N
-6393	posterity	n	\N	\N	1	C2	\N
-6394	posthumous	adj	\N	\N	1	C2	\N
-6395	postmortem	n	\N	\N	1	C2	\N
-6396	postulate	v	\N	\N	1	C2	\N
-6397	pragmatism	n	\N	\N	1	C2	\N
-6398	pragmatist	n	\N	\N	1	C2	\N
-6399	preamble	n	\N	\N	1	C2	\N
-6400	precarious	adj	\N	\N	1	C2	\N
-6401	precedence	n	\N	\N	1	C2	\N
-6402	precipice	n	\N	\N	1	C2	\N
-6403	precipitate	v	\N	\N	1	C2	\N
-6404	precipitous	adj	\N	\N	1	C2	\N
-6405	preclude	v	\N	\N	1	C2	\N
-6406	precocious	adj	\N	\N	1	C2	\N
-6407	precursor	n	\N	\N	1	C2	\N
-6408	predilection	n	\N	\N	1	C2	\N
-6409	predominance	n	\N	\N	1	C2	\N
-6410	preeminent	adj	\N	\N	1	C2	\N
-6411	preempt	v	\N	\N	1	C2	\N
-6412	prelude	n	\N	\N	1	C2	\N
-6413	premonition	n	\N	\N	1	C2	\N
-6414	preponderance	n	\N	\N	1	C2	\N
-6415	preposterous	adj	\N	\N	1	C2	\N
-6416	prerequisite	n	\N	\N	1	C2	\N
-6417	prerogative	n	\N	\N	1	C2	\N
-6418	presumption	n	\N	\N	1	C2	\N
-6419	presumptuous	adj	\N	\N	1	C2	\N
-6420	pretence	n	\N	\N	1	C2	\N
-6421	pretender	n	\N	\N	1	C2	\N
-6422	pretentious	adj	\N	\N	1	C2	\N
-6423	pretext	n	\N	\N	1	C2	\N
-6424	prevalent	adj	\N	\N	1	C2	\N
-6425	prevaricate	v	\N	\N	1	C2	\N
-6426	primacy	n	\N	\N	1	C2	\N
-6427	primeval	adj	\N	\N	1	C2	\N
-6428	pristine	adj	\N	\N	1	C2	\N
-6429	privation	n	\N	\N	1	C2	\N
-6430	probity	n	\N	\N	1	C2	\N
-6431	proclamation	n	\N	\N	1	C2	\N
-6432	proclivity	n	\N	\N	1	C2	\N
-6433	procrastinate	v	\N	\N	1	C2	\N
-6434	procure	v	\N	\N	1	C2	\N
-6435	procurement	n	\N	\N	1	C2	\N
-6436	prodigal	adj	\N	\N	1	C2	\N
-6437	prodigious	adj	\N	\N	1	C2	\N
-6438	prodigy	n	\N	\N	1	C2	\N
-6439	profane	adj	\N	\N	1	C2	\N
-6440	profanity	n	\N	\N	1	C2	\N
-6441	profess	v	\N	\N	1	C2	\N
-6442	proffer	v	\N	\N	1	C2	\N
-6443	proficiency	n	\N	\N	1	C2	\N
-6444	profligate	adj	\N	\N	1	C2	\N
-6445	profusion	n	\N	\N	1	C2	\N
-6446	progeny	n	\N	\N	1	C2	\N
-6447	prognosis	n	\N	\N	1	C2	\N
-6448	prohibitive	adj	\N	\N	1	C2	\N
-6449	proliferation	n	\N	\N	1	C2	\N
-6450	prolific	adj	\N	\N	1	C2	\N
-6451	prologue	n	\N	\N	1	C2	\N
-6452	promiscuity	n	\N	\N	1	C2	\N
-6453	propagandist	n	\N	\N	1	C2	\N
-6454	propensity	n	\N	\N	1	C2	\N
-6455	prophecy	n	\N	\N	1	C2	\N
-6456	propitious	adj	\N	\N	1	C2	\N
-6457	proponent	n	\N	\N	1	C2	\N
-6458	proprietor	n	\N	\N	1	C2	\N
-6459	propriety	n	\N	\N	1	C2	\N
-6460	prosaic	adj	\N	\N	1	C2	\N
-6461	proscribe	v	\N	\N	1	C2	\N
-6462	protagonist	n	\N	\N	1	C2	\N
-6463	prototype	n	\N	\N	1	C2	\N
-6464	protract	v	\N	\N	1	C2	\N
-6465	protégé	n	\N	\N	1	C2	\N
-6466	provenance	n	\N	\N	1	C2	\N
-6467	proverb	n	\N	\N	1	C2	\N
-6468	providence	n	\N	\N	1	C2	\N
-6469	proviso	n	\N	\N	1	C2	\N
-6470	prowess	n	\N	\N	1	C2	\N
-6471	proximity	n	\N	\N	1	C2	\N
-6472	proxy	n	\N	\N	1	C2	\N
-6473	prudence	n	\N	\N	1	C2	\N
-6474	prudent	adj	\N	\N	1	C2	\N
-6475	pseudonym	n	\N	\N	1	C2	\N
-6476	psyche	n	\N	\N	1	C2	\N
-6477	puerile	adj	\N	\N	1	C2	\N
-6478	pugnacious	adj	\N	\N	1	C2	\N
-6479	pulpit	n	\N	\N	1	C2	\N
-6480	punctilious	adj	\N	\N	1	C2	\N
-6481	pundit	n	\N	\N	1	C2	\N
-6482	pungency	n	\N	\N	1	C2	\N
-6483	pungent	adj	\N	\N	1	C2	\N
-6484	purge	n	\N	\N	1	C2	\N
-6485	purist	n	\N	\N	1	C2	\N
-6486	purport	v	\N	\N	1	C2	\N
-6487	purveyor	n	\N	\N	1	C2	\N
-6488	pusillanimous	adj	\N	\N	1	C2	\N
-6489	quack	n	\N	\N	1	C2	\N
-6490	quadrant	n	\N	\N	1	C2	\N
-6491	quagmire	n	\N	\N	1	C2	\N
-6492	quaint	adj	\N	\N	1	C2	\N
-6493	qualm	n	\N	\N	1	C2	\N
-6494	quandary	n	\N	\N	1	C2	\N
-6495	quarantine	n	\N	\N	1	C2	\N
-6496	quarry	n	\N	\N	1	C2	\N
-6497	quartet	n	\N	\N	1	C2	\N
-6498	quash	v	\N	\N	1	C2	\N
-6499	quaver	n	\N	\N	1	C2	\N
-6500	quell	v	\N	\N	1	C2	\N
-6501	querulous	adj	\N	\N	1	C2	\N
-6502	quibble	n	\N	\N	1	C2	\N
-6503	quicksand	n	\N	\N	1	C2	\N
-6504	quiescent	adj	\N	\N	1	C2	\N
-6505	quintessence	n	\N	\N	1	C2	\N
-6506	quintessential	adj	\N	\N	1	C2	\N
-6507	quintet	n	\N	\N	1	C2	\N
-6508	quip	n	\N	\N	1	C2	\N
-6509	quiver	n	\N	\N	1	C2	\N
-6510	quixotic	adj	\N	\N	1	C2	\N
-6511	quorum	n	\N	\N	1	C2	\N
-6512	rabble	n	\N	\N	1	C2	\N
-6513	radiance	n	\N	\N	1	C2	\N
-6514	radicalism	n	\N	\N	1	C2	\N
-6515	rambunctious	adj	\N	\N	1	C2	\N
-6516	ramification	n	\N	\N	1	C2	\N
-6517	rancour	n	\N	\N	1	C2	\N
-6518	ransom	n	\N	\N	1	C2	\N
-6519	rapacious	adj	\N	\N	1	C2	\N
-6520	rapacity	n	\N	\N	1	C2	\N
-6521	rapport	n	\N	\N	1	C2	\N
-6522	rapture	n	\N	\N	1	C2	\N
-6523	rascal	n	\N	\N	1	C2	\N
-6524	rashness	n	\N	\N	1	C2	\N
-6525	ratification	n	\N	\N	1	C2	\N
-6526	ratify	v	\N	\N	1	C2	\N
-6527	rationale	n	\N	\N	1	C2	\N
-6528	rationalism	n	\N	\N	1	C2	\N
-6529	raucous	adj	\N	\N	1	C2	\N
-6530	ravage	n	\N	\N	1	C2	\N
-6531	ravine	n	\N	\N	1	C2	\N
-6532	rebuff	v	\N	\N	1	C2	\N
-6533	rebuke	v	\N	\N	1	C2	\N
-6534	rebuttal	n	\N	\N	1	C2	\N
-6535	recalcitrance	n	\N	\N	1	C2	\N
-6536	recalcitrant	adj	\N	\N	1	C2	\N
-6537	recant	v	\N	\N	1	C2	\N
-6538	recidivism	n	\N	\N	1	C2	\N
-6539	reciprocal	adj	\N	\N	1	C2	\N
-6540	reciprocate	v	\N	\N	1	C2	\N
-6541	reciprocity	n	\N	\N	1	C2	\N
-6542	recklessness	n	\N	\N	1	C2	\N
-6543	reclamation	n	\N	\N	1	C2	\N
-6544	recluse	n	\N	\N	1	C2	\N
-6545	reclusive	adj	\N	\N	1	C2	\N
-6546	reconcile	v	\N	\N	1	C2	\N
-6547	recondite	adj	\N	\N	1	C2	\N
-6548	reconnaissance	n	\N	\N	1	C2	\N
-6549	recourse	n	\N	\N	1	C2	\N
-6550	recrimination	n	\N	\N	1	C2	\N
-6551	rectification	n	\N	\N	1	C2	\N
-6552	rectify	v	\N	\N	1	C2	\N
-6553	rectitude	n	\N	\N	1	C2	\N
-6554	redeem	v	\N	\N	1	C2	\N
-6555	redemption	n	\N	\N	1	C2	\N
-6556	redress	n	\N	\N	1	C2	\N
-6557	refinery	n	\N	\N	1	C2	\N
-6558	reformation	n	\N	\N	1	C2	\N
-6559	refractory	adj	\N	\N	1	C2	\N
-6560	refutation	n	\N	\N	1	C2	\N
-6561	refute	v	\N	\N	1	C2	\N
-6562	regent	n	\N	\N	1	C2	\N
-6563	registrar	n	\N	\N	1	C2	\N
-6564	regression	n	\N	\N	1	C2	\N
-6565	reimbursement	n	\N	\N	1	C2	\N
-6566	reincarnation	n	\N	\N	1	C2	\N
-6567	reiteration	n	\N	\N	1	C2	\N
-6568	relegate	v	\N	\N	1	C2	\N
-6569	relegation	n	\N	\N	1	C2	\N
-6570	relic	n	\N	\N	1	C2	\N
-6571	relinquish	v	\N	\N	1	C2	\N
-6572	relish	v	\N	\N	1	C2	\N
-6573	reluctance	n	\N	\N	1	C2	\N
-6574	remembrance	n	\N	\N	1	C2	\N
-6575	reminiscent	adj	\N	\N	1	C2	\N
-6576	remiss	adj	\N	\N	1	C2	\N
-6577	remission	n	\N	\N	1	C2	\N
-6578	remit	v	\N	\N	1	C2	\N
-6579	remnant	n	\N	\N	1	C2	\N
-6580	remorse	n	\N	\N	1	C2	\N
-6581	remuneration	n	\N	\N	1	C2	\N
-6582	renaissance	n	\N	\N	1	C2	\N
-6583	rendition	n	\N	\N	1	C2	\N
-6584	renegade	n	\N	\N	1	C2	\N
-6585	renege	v	\N	\N	1	C2	\N
-6586	renounce	v	\N	\N	1	C2	\N
-6587	renown	n	\N	\N	1	C2	\N
-6588	reparation	n	\N	\N	1	C2	\N
-6589	repatriation	n	\N	\N	1	C2	\N
-6590	repeal	v	\N	\N	1	C2	\N
-6591	repentance	n	\N	\N	1	C2	\N
-6592	repercussion	n	\N	\N	1	C2	\N
-6593	repertoire	n	\N	\N	1	C2	\N
-6594	replenish	v	\N	\N	1	C2	\N
-6595	replete	adj	\N	\N	1	C2	\N
-6596	repository	n	\N	\N	1	C2	\N
-6597	reprehensible	adj	\N	\N	1	C2	\N
-6598	repression	n	\N	\N	1	C2	\N
-6599	reprieve	n	\N	\N	1	C2	\N
-6600	reprimand	n	\N	\N	1	C2	\N
-6601	reprisal	n	\N	\N	1	C2	\N
-6602	reproach	v	\N	\N	1	C2	\N
-6603	repudiate	v	\N	\N	1	C2	\N
-6604	repudiation	n	\N	\N	1	C2	\N
-6605	repugnance	n	\N	\N	1	C2	\N
-6606	repugnant	adj	\N	\N	1	C2	\N
-6607	repute	n	\N	\N	1	C2	\N
-6608	requisite	n	\N	\N	1	C2	\N
-6609	requisition	n	\N	\N	1	C2	\N
-6610	rescind	v	\N	\N	1	C2	\N
-6611	residual	adj	\N	\N	1	C2	\N
-6612	resilience	n	\N	\N	1	C2	\N
-6613	resilient	adj	\N	\N	1	C2	\N
-6614	resolute	adj	\N	\N	1	C2	\N
-6615	resolutely	adv	\N	\N	1	C2	\N
-6616	resonance	n	\N	\N	1	C2	\N
-6617	respite	n	\N	\N	1	C2	\N
-6618	resplendent	adj	\N	\N	1	C2	\N
-6619	restitution	n	\N	\N	1	C2	\N
-6620	restive	adj	\N	\N	1	C2	\N
-6621	resurgence	n	\N	\N	1	C2	\N
-6622	resurrection	n	\N	\N	1	C2	\N
-6623	retaliate	v	\N	\N	1	C2	\N
-6624	reticence	n	\N	\N	1	C2	\N
-6625	reticent	adj	\N	\N	1	C2	\N
-6626	retort	n	\N	\N	1	C2	\N
-6627	retract	v	\N	\N	1	C2	\N
-6628	retraction	n	\N	\N	1	C2	\N
-6629	retribution	n	\N	\N	1	C2	\N
-6630	retrospection	n	\N	\N	1	C2	\N
-6631	revelry	n	\N	\N	1	C2	\N
-6632	reverberation	n	\N	\N	1	C2	\N
-6633	revere	v	\N	\N	1	C2	\N
-6634	reverent	adj	\N	\N	1	C2	\N
-6635	reverential	adj	\N	\N	1	C2	\N
-6636	reverie	n	\N	\N	1	C2	\N
-6637	revisionism	n	\N	\N	1	C2	\N
-6638	revocation	n	\N	\N	1	C2	\N
-6639	revoke	v	\N	\N	1	C2	\N
-6640	rift	n	\N	\N	1	C2	\N
-6641	righteousness	n	\N	\N	1	C2	\N
-6642	rigmarole	n	\N	\N	1	C2	\N
-6643	rigorous	adj	\N	\N	1	C2	\N
-6644	rigour	n	\N	\N	1	C2	\N
-6645	ringleader	n	\N	\N	1	C2	\N
-6646	rite	n	\N	\N	1	C2	\N
-6647	rogue	n	\N	\N	1	C2	\N
-6648	rostrum	n	\N	\N	1	C2	\N
-6649	rout	n	\N	\N	1	C2	\N
-6650	rubric	n	\N	\N	1	C2	\N
-6651	ruckus	n	\N	\N	1	C2	\N
-6652	rudiment	n	\N	\N	1	C2	\N
-6653	ruination	n	\N	\N	1	C2	\N
-6654	ruminate	v	\N	\N	1	C2	\N
-6655	rumination	n	\N	\N	1	C2	\N
-6656	rupture	v	\N	\N	1	C2	\N
-6657	ruse	n	\N	\N	1	C2	\N
-6658	sabotage	n	\N	\N	1	C2	\N
-6659	saboteur	n	\N	\N	1	C2	\N
-6660	sacrilege	n	\N	\N	1	C2	\N
-6661	sacrosanct	adj	\N	\N	1	C2	\N
-6662	safeguard	v	\N	\N	1	C2	\N
-6663	saga	n	\N	\N	1	C2	\N
-6664	sagacious	adj	\N	\N	1	C2	\N
-6665	sage	n	\N	\N	1	C2	\N
-6666	sainthood	n	\N	\N	1	C2	\N
-6667	salacious	adj	\N	\N	1	C2	\N
-6668	salient	adj	\N	\N	1	C2	\N
-6669	salubrious	adj	\N	\N	1	C2	\N
-6670	salutation	n	\N	\N	1	C2	\N
-6671	salvation	n	\N	\N	1	C2	\N
-6672	sanctimonious	adj	\N	\N	1	C2	\N
-6673	sanctity	n	\N	\N	1	C2	\N
-6674	sanctuary	n	\N	\N	1	C2	\N
-6675	sanguine	adj	\N	\N	1	C2	\N
-6676	sarcasm	n	\N	\N	1	C2	\N
-6677	sardonic	adj	\N	\N	1	C2	\N
-6678	satiate	v	\N	\N	1	C2	\N
-6679	satire	n	\N	\N	1	C2	\N
-6680	satirist	n	\N	\N	1	C2	\N
-6681	savagery	n	\N	\N	1	C2	\N
-6682	savant	n	\N	\N	1	C2	\N
-6683	scaffold	n	\N	\N	1	C2	\N
-6684	scapegoat	n	\N	\N	1	C2	\N
-6685	scarcity	n	\N	\N	1	C2	\N
-6686	scathing	adj	\N	\N	1	C2	\N
-6687	schism	n	\N	\N	1	C2	\N
-6688	scion	n	\N	\N	1	C2	\N
-6689	scorn	v	\N	\N	1	C2	\N
-6690	scoundrel	n	\N	\N	1	C2	\N
-6691	scourge	n	\N	\N	1	C2	\N
-6692	scruple	n	\N	\N	1	C2	\N
-6693	scrupulous	adj	\N	\N	1	C2	\N
-6694	scrutinise	v	\N	\N	1	C2	\N
-6695	scurrilous	adj	\N	\N	1	C2	\N
-6696	secession	n	\N	\N	1	C2	\N
-6697	seclusion	n	\N	\N	1	C2	\N
-6698	secretariat	n	\N	\N	1	C2	\N
-6699	sedentary	adj	\N	\N	1	C2	\N
-6700	sediment	n	\N	\N	1	C2	\N
-6701	seditious	adj	\N	\N	1	C2	\N
-6702	sedulous	adj	\N	\N	1	C2	\N
-6703	seer	n	\N	\N	1	C2	\N
-6704	segregation	n	\N	\N	1	C2	\N
-6705	seizure	n	\N	\N	1	C2	\N
-6706	semantics	n	\N	\N	1	C2	\N
-6707	semblance	n	\N	\N	1	C2	\N
-6708	seminal	adj	\N	\N	1	C2	\N
-6709	senility	n	\N	\N	1	C2	\N
-6710	sequel	n	\N	\N	1	C2	\N
-6711	sequestration	n	\N	\N	1	C2	\N
-6712	serendipitous	adj	\N	\N	1	C2	\N
-6713	serenity	n	\N	\N	1	C2	\N
-6714	serfdom	n	\N	\N	1	C2	\N
-6715	servile	adj	\N	\N	1	C2	\N
-6716	servility	n	\N	\N	1	C2	\N
-6717	servitude	n	\N	\N	1	C2	\N
-6718	severance	n	\N	\N	1	C2	\N
-6719	severity	n	\N	\N	1	C2	\N
-6720	shackle	n	\N	\N	1	C2	\N
-6721	shambles	n	\N	\N	1	C2	\N
-6722	shard	n	\N	\N	1	C2	\N
-6723	sheen	n	\N	\N	1	C2	\N
-6724	shirk	v	\N	\N	1	C2	\N
-6725	shoddy	adj	\N	\N	1	C2	\N
-6726	shrewdness	n	\N	\N	1	C2	\N
-6727	shrine	n	\N	\N	1	C2	\N
-6728	shroud	n	\N	\N	1	C2	\N
-6729	shrouded	adj	\N	\N	1	C2	\N
-6732	silhouette	n	\N	\N	1	C2	\N
-6733	simile	n	\N	\N	1	C2	\N
-6734	simpleton	n	\N	\N	1	C2	\N
-6735	sinecure	n	\N	\N	1	C2	\N
-6736	singular	adj	\N	\N	1	C2	\N
-6737	singularity	n	\N	\N	1	C2	\N
-6738	siren	n	\N	\N	1	C2	\N
-6739	skirmish	n	\N	\N	1	C2	\N
-6740	skullduggery	n	\N	\N	1	C2	\N
-6741	slander	n	\N	\N	1	C2	\N
-6742	sloth	n	\N	\N	1	C2	\N
-6743	slumber	n	\N	\N	1	C2	\N
-6744	smattering	n	\N	\N	1	C2	\N
-6745	snare	n	\N	\N	1	C2	\N
-6746	snooty	adj	\N	\N	1	C2	\N
-6747	snub	n	\N	\N	1	C2	\N
-6748	sobriety	n	\N	\N	1	C2	\N
-6749	sojourn	n	\N	\N	1	C2	\N
-6750	solace	n	\N	\N	1	C2	\N
-6751	solemn	adj	\N	\N	1	C2	\N
-6752	solemnity	n	\N	\N	1	C2	\N
-6753	solicitor	n	\N	\N	1	C2	\N
-6754	solicitous	adj	\N	\N	1	C2	\N
-6755	soliloquy	n	\N	\N	1	C2	\N
-6756	solitary	adj	\N	\N	1	C2	\N
-6757	solitude	n	\N	\N	1	C2	\N
-6758	solstice	n	\N	\N	1	C2	\N
-6759	sombre	adj	\N	\N	1	C2	\N
-6760	sophistry	n	\N	\N	1	C2	\N
-6761	sophomore	n	\N	\N	1	C2	\N
-6762	sordid	adj	\N	\N	1	C2	\N
-6763	sovereign	n	\N	\N	1	C2	\N
-6764	sow	v	\N	\N	1	C2	\N
-6765	spasm	n	\N	\N	1	C2	\N
-6766	spate	n	\N	\N	1	C2	\N
-6767	spawn	v	\N	\N	1	C2	\N
-6768	specious	adj	\N	\N	1	C2	\N
-6769	spectre	n	\N	\N	1	C2	\N
-6770	speculator	n	\N	\N	1	C2	\N
-6771	spinster	n	\N	\N	1	C2	\N
-6772	splendour	n	\N	\N	1	C2	\N
-6773	spontaneity	n	\N	\N	1	C2	\N
-6774	sprawl	n	\N	\N	1	C2	\N
-6775	spur	n	\N	\N	1	C2	\N
-6776	spurious	adj	\N	\N	1	C2	\N
-6777	spurn	v	\N	\N	1	C2	\N
-6778	squadron	n	\N	\N	1	C2	\N
-6779	squalid	adj	\N	\N	1	C2	\N
-6780	squalor	n	\N	\N	1	C2	\N
-6781	squander	v	\N	\N	1	C2	\N
-6782	stagnant	adj	\N	\N	1	C2	\N
-6783	staid	adj	\N	\N	1	C2	\N
-6784	stalemate	n	\N	\N	1	C2	\N
-6785	stalwart	n	\N	\N	1	C2	\N
-6786	stamina	n	\N	\N	1	C2	\N
-6787	stampede	n	\N	\N	1	C2	\N
-6788	standoff	n	\N	\N	1	C2	\N
-6789	standstill	n	\N	\N	1	C2	\N
-6790	stanza	n	\N	\N	1	C2	\N
-6791	stasis	n	\N	\N	1	C2	\N
-6792	stately	adj	\N	\N	1	C2	\N
-6793	statesmanship	n	\N	\N	1	C2	\N
-6794	statute	n	\N	\N	1	C2	\N
-6795	staunch	adj	\N	\N	1	C2	\N
-6796	steadfastness	n	\N	\N	1	C2	\N
-6797	stealth	n	\N	\N	1	C2	\N
-6798	stench	n	\N	\N	1	C2	\N
-6799	steward	n	\N	\N	1	C2	\N
-6800	stewardship	n	\N	\N	1	C2	\N
-6801	stickler	n	\N	\N	1	C2	\N
-6802	stifle	v	\N	\N	1	C2	\N
-6803	stigma	n	\N	\N	1	C2	\N
-6804	stint	n	\N	\N	1	C2	\N
-6805	stipulate	v	\N	\N	1	C2	\N
-6806	stoic	adj	\N	\N	1	C2	\N
-6807	stoicism	n	\N	\N	1	C2	\N
-6808	stolid	adj	\N	\N	1	C2	\N
-6809	stopgap	n	\N	\N	1	C2	\N
-6810	stowaway	n	\N	\N	1	C2	\N
-6811	stratagem	n	\N	\N	1	C2	\N
-6812	strategist	n	\N	\N	1	C2	\N
-6813	stratification	n	\N	\N	1	C2	\N
-6814	stratum	n	\N	\N	1	C2	\N
-6815	stricture	n	\N	\N	1	C2	\N
-6816	strident	adj	\N	\N	1	C2	\N
-6817	strife	n	\N	\N	1	C2	\N
-6818	stringency	n	\N	\N	1	C2	\N
-6819	stringent	adj	\N	\N	1	C2	\N
-6820	stronghold	n	\N	\N	1	C2	\N
-6821	stupor	n	\N	\N	1	C2	\N
-6822	subconscious	n	\N	\N	1	C2	\N
-6823	subdue	v	\N	\N	1	C2	\N
-6824	subjugate	v	\N	\N	1	C2	\N
-6825	sublime	adj	\N	\N	1	C2	\N
-6826	subordinate	adj	\N	\N	1	C2	\N
-6827	subordination	n	\N	\N	1	C2	\N
-6828	subpoena	n	\N	\N	1	C2	\N
-6829	subservience	n	\N	\N	1	C2	\N
-6830	subsistence	n	\N	\N	1	C2	\N
-6831	substantiate	v	\N	\N	1	C2	\N
-6832	substantiation	n	\N	\N	1	C2	\N
-6833	subterfuge	n	\N	\N	1	C2	\N
-6834	subtlety	n	\N	\N	1	C2	\N
-6835	subversion	n	\N	\N	1	C2	\N
-6836	subversive	adj	\N	\N	1	C2	\N
-6837	subvert	v	\N	\N	1	C2	\N
-6838	succinct	adj	\N	\N	1	C2	\N
-6839	succumb	v	\N	\N	1	C2	\N
-6840	sufficiency	n	\N	\N	1	C2	\N
-6841	suffrage	n	\N	\N	1	C2	\N
-6842	suffragette	n	\N	\N	1	C2	\N
-6843	sullen	adj	\N	\N	1	C2	\N
-6844	summation	n	\N	\N	1	C2	\N
-6845	summons	n	\N	\N	1	C2	\N
-6846	sumptuous	adj	\N	\N	1	C2	\N
-6847	superficial	adj	\N	\N	1	C2	\N
-6848	superfluous	adj	\N	\N	1	C2	\N
-6849	supersede	v	\N	\N	1	C2	\N
-6850	superstition	n	\N	\N	1	C2	\N
-6851	supine	adj	\N	\N	1	C2	\N
-6852	supplant	v	\N	\N	1	C2	\N
-6853	supple	adj	\N	\N	1	C2	\N
-6854	supremacist	n	\N	\N	1	C2	\N
-6855	supremacy	n	\N	\N	1	C2	\N
-6856	surfeit	n	\N	\N	1	C2	\N
-6857	surmise	v	\N	\N	1	C2	\N
-6858	surmount	v	\N	\N	1	C2	\N
-6859	surpass	v	\N	\N	1	C2	\N
-6860	surreptitious	adj	\N	\N	1	C2	\N
-6861	surrogate	n	\N	\N	1	C2	\N
-6862	susceptibility	n	\N	\N	1	C2	\N
-6863	susceptible	adj	\N	\N	1	C2	\N
-6864	sustenance	n	\N	\N	1	C2	\N
-6865	swathe	n	\N	\N	1	C2	\N
-6866	swindle	n	\N	\N	1	C2	\N
-6867	sycophancy	n	\N	\N	1	C2	\N
-6868	sycophant	n	\N	\N	1	C2	\N
-6869	sycophantic	adj	\N	\N	1	C2	\N
-6870	syllabus	n	\N	\N	1	C2	\N
-6871	symbiosis	n	\N	\N	1	C2	\N
-6872	symbolism	n	\N	\N	1	C2	\N
-6873	symposium	n	\N	\N	1	C2	\N
-6874	syndicate	n	\N	\N	1	C2	\N
-6875	synergy	n	\N	\N	1	C2	\N
-6876	synopsis	n	\N	\N	1	C2	\N
-6877	tableau	n	\N	\N	1	C2	\N
-6878	tabloid	n	\N	\N	1	C2	\N
-6879	taboo	n	\N	\N	1	C2	\N
-6880	tacit	adj	\N	\N	1	C2	\N
-6881	taciturn	adj	\N	\N	1	C2	\N
-6882	tact	n	\N	\N	1	C2	\N
-6883	tactician	n	\N	\N	1	C2	\N
-6884	taint	n	\N	\N	1	C2	\N
-6885	talisman	n	\N	\N	1	C2	\N
-6886	tangential	adj	\N	\N	1	C2	\N
-6887	tangible	adj	\N	\N	1	C2	\N
-6888	tantamount	adj	\N	\N	1	C2	\N
-6889	tantrum	n	\N	\N	1	C2	\N
-6890	tariff	n	\N	\N	1	C2	\N
-6891	tarnish	v	\N	\N	1	C2	\N
-6892	taskmaster	n	\N	\N	1	C2	\N
-6893	tawdry	adj	\N	\N	1	C2	\N
-6894	tedious	adj	\N	\N	1	C2	\N
-6895	tedium	n	\N	\N	1	C2	\N
-6896	telepathy	n	\N	\N	1	C2	\N
-6897	temerity	n	\N	\N	1	C2	\N
-6898	temperament	n	\N	\N	1	C2	\N
-6899	temperance	n	\N	\N	1	C2	\N
-6900	tempestuous	adj	\N	\N	1	C2	\N
-6901	tempo	n	\N	\N	1	C2	\N
-6902	temporal	adj	\N	\N	1	C2	\N
-6903	tenacious	adj	\N	\N	1	C2	\N
-6904	tenacity	n	\N	\N	1	C2	\N
-6905	tenet	n	\N	\N	1	C2	\N
-6906	tenor	n	\N	\N	1	C2	\N
-6907	tentative	adj	\N	\N	1	C2	\N
-6908	tenuous	adj	\N	\N	1	C2	\N
-6909	termination	n	\N	\N	1	C2	\N
-6910	terminology	n	\N	\N	1	C2	\N
-6911	terminus	n	\N	\N	1	C2	\N
-6912	terse	adj	\N	\N	1	C2	\N
-6913	testament	n	\N	\N	1	C2	\N
-6914	testimonial	n	\N	\N	1	C2	\N
-6915	tether	n	\N	\N	1	C2	\N
-6916	theatricality	n	\N	\N	1	C2	\N
-6917	theologian	n	\N	\N	1	C2	\N
-6918	theorem	n	\N	\N	1	C2	\N
-6919	thesaurus	n	\N	\N	1	C2	\N
-6920	thicket	n	\N	\N	1	C2	\N
-6921	th thoroughfare	n	\N	\N	1	C2	\N
-6922	thrall	n	\N	\N	1	C2	\N
-6923	thrift	n	\N	\N	1	C2	\N
-6924	throwback	n	\N	\N	1	C2	\N
-6925	thwart	v	\N	\N	1	C2	\N
-6926	timbre	n	\N	\N	1	C2	\N
-6927	timidity	n	\N	\N	1	C2	\N
-6928	timorous	adj	\N	\N	1	C2	\N
-6929	tipster	n	\N	\N	1	C2	\N
-6930	tirade	n	\N	\N	1	C2	\N
-6931	titan	n	\N	\N	1	C2	\N
-6932	tithe	n	\N	\N	1	C2	\N
-6933	token	n	\N	\N	1	C2	\N
-6934	tokenism	n	\N	\N	1	C2	\N
-6935	tombstone	n	\N	\N	1	C2	\N
-6936	tome	n	\N	\N	1	C2	\N
-6937	tonnage	n	\N	\N	1	C2	\N
-6938	topography	n	\N	\N	1	C2	\N
-6939	torment	n	\N	\N	1	C2	\N
-6940	tornado	n	\N	\N	1	C2	\N
-6941	torpid	adj	\N	\N	1	C2	\N
-6942	torpor	n	\N	\N	1	C2	\N
-6943	torque	n	\N	\N	1	C2	\N
-6944	torrent	n	\N	\N	1	C2	\N
-6945	torrid	adj	\N	\N	1	C2	\N
-6946	tortuous	adj	\N	\N	1	C2	\N
-6947	totalitarian	adj	\N	\N	1	C2	\N
-6948	touchstone	n	\N	\N	1	C2	\N
-6949	tourniquet	n	\N	\N	1	C2	\N
-6950	toxicity	n	\N	\N	1	C2	\N
-6951	tract	n	\N	\N	1	C2	\N
-6952	tractable	adj	\N	\N	1	C2	\N
-6953	tradesman	n	\N	\N	1	C2	\N
-6954	traditionalism	n	\N	\N	1	C2	\N
-6955	trafficker	n	\N	\N	1	C2	\N
-6956	trailblazer	n	\N	\N	1	C2	\N
-6957	trajectory	n	\N	\N	1	C2	\N
-6958	trance	n	\N	\N	1	C2	\N
-6959	tranquil	adj	\N	\N	1	C2	\N
-6960	tranquillity	n	\N	\N	1	C2	\N
-6961	transcend	v	\N	\N	1	C2	\N
-6962	transcendence	n	\N	\N	1	C2	\N
-6963	transcribe	v	\N	\N	1	C2	\N
-6964	transgress	v	\N	\N	1	C2	\N
-6965	transgression	n	\N	\N	1	C2	\N
-6966	transient	adj	\N	\N	1	C2	\N
-6967	translucent	adj	\N	\N	1	C2	\N
-6968	travesty	n	\N	\N	1	C2	\N
-6969	treacherous	adj	\N	\N	1	C2	\N
-6970	treachery	n	\N	\N	1	C2	\N
-6971	treason	n	\N	\N	1	C2	\N
-6972	treatise	n	\N	\N	1	C2	\N
-6973	tremor	n	\N	\N	1	C2	\N
-6974	trenchant	adj	\N	\N	1	C2	\N
-6975	trepidation	n	\N	\N	1	C2	\N
-6976	tribalism	n	\N	\N	1	C2	\N
-6977	tribulation	n	\N	\N	1	C2	\N
-6978	tribunal	n	\N	\N	1	C2	\N
-6979	tribune	n	\N	\N	1	C2	\N
-6980	tributary	n	\N	\N	1	C2	\N
-6981	trickery	n	\N	\N	1	C2	\N
-6982	trickster	n	\N	\N	1	C2	\N
-6983	trifle	n	\N	\N	1	C2	\N
-6984	trilogy	n	\N	\N	1	C2	\N
-6985	trinket	n	\N	\N	1	C2	\N
-6986	trite	adj	\N	\N	1	C2	\N
-6987	troupe	n	\N	\N	1	C2	\N
-6988	truculent	adj	\N	\N	1	C2	\N
-6989	trudge	n	\N	\N	1	C2	\N
-6990	truism	n	\N	\N	1	C2	\N
-6991	truncate	v	\N	\N	1	C2	\N
-6992	trusteeship	n	\N	\N	1	C2	\N
-6993	tumult	n	\N	\N	1	C2	\N
-6994	tumultuous	adj	\N	\N	1	C2	\N
-6995	tundra	n	\N	\N	1	C2	\N
-6996	turbulence	n	\N	\N	1	C2	\N
-6997	turbulent	adj	\N	\N	1	C2	\N
-6998	turmoil	n	\N	\N	1	C2	\N
-6999	turncoat	n	\N	\N	1	C2	\N
-7000	turpitude	n	\N	\N	1	C2	\N
-7001	tutelage	n	\N	\N	1	C2	\N
-7002	twilight	n	\N	\N	1	C2	\N
-7003	tycoon	n	\N	\N	1	C2	\N
-7004	typhoon	n	\N	\N	1	C2	\N
-7005	tyranny	n	\N	\N	1	C2	\N
-7006	tyrant	n	\N	\N	1	C2	\N
-7007	ubiquitous	adj	\N	\N	1	C2	\N
-7008	ubiquity	n	\N	\N	1	C2	\N
-7009	ultimatum	n	\N	\N	1	C2	\N
-7010	umbrage	n	\N	\N	1	C2	\N
-7011	umpire	n	\N	\N	1	C2	\N
-7012	unanimity	n	\N	\N	1	C2	\N
-7013	unanimous	adj	\N	\N	1	C2	\N
-7014	unctuous	adj	\N	\N	1	C2	\N
-7015	undaunted	adj	\N	\N	1	C2	\N
-7016	undercurrent	n	\N	\N	1	C2	\N
-7017	underdog	n	\N	\N	1	C2	\N
-7018	underling	n	\N	\N	1	C2	\N
-7019	underpinning	n	\N	\N	1	C2	\N
-7020	understatement	n	\N	\N	1	C2	\N
-7021	understudy	n	\N	\N	1	C2	\N
-7022	undertaker	n	\N	\N	1	C2	\N
-7023	undertaking	n	\N	\N	1	C2	\N
-7024	undertone	n	\N	\N	1	C2	\N
-7025	underworld	n	\N	\N	1	C2	\N
-7026	underwriter	n	\N	\N	1	C2	\N
-7027	undoing	n	\N	\N	1	C2	\N
-7028	unease	n	\N	\N	1	C2	\N
-7029	unenviable	adj	\N	\N	1	C2	\N
-7030	unequivocal	adj	\N	\N	1	C2	\N
-7031	unfathomable	adj	\N	\N	1	C2	\N
-7032	unification	n	\N	\N	1	C2	\N
-7033	uniformity	n	\N	\N	1	C2	\N
-7034	unison	n	\N	\N	1	C2	\N
-7035	universality	n	\N	\N	1	C2	\N
-7036	unpalatable	adj	\N	\N	1	C2	\N
-7037	unpretentious	adj	\N	\N	1	C2	\N
-7038	unremitting	adj	\N	\N	1	C2	\N
-7039	unrivalled	adj	\N	\N	1	C2	\N
-7040	unruly	adj	\N	\N	1	C2	\N
-7041	unsullied	adj	\N	\N	1	C2	\N
-7042	untenable	adj	\N	\N	1	C2	\N
-7043	unthinkable	adj	\N	\N	1	C2	\N
-7044	untrodden	adj	\N	\N	1	C2	\N
-7045	unwieldy	adj	\N	\N	1	C2	\N
-7046	unwitting	adj	\N	\N	1	C2	\N
-7047	upbraid	v	\N	\N	1	C2	\N
-7048	upheaval	n	\N	\N	1	C2	\N
-7049	upkeep	n	\N	\N	1	C2	\N
-7050	uprising	n	\N	\N	1	C2	\N
-7051	uproar	n	\N	\N	1	C2	\N
-7052	uproarious	adj	\N	\N	1	C2	\N
-7053	upshot	n	\N	\N	1	C2	\N
-7054	upsurge	n	\N	\N	1	C2	\N
-7055	upturn	n	\N	\N	1	C2	\N
-7056	urbane	adj	\N	\N	1	C2	\N
-7057	urgency	n	\N	\N	1	C2	\N
-7058	usher	n	\N	\N	1	C2	\N
-7059	usurp	v	\N	\N	1	C2	\N
-7060	usurpation	n	\N	\N	1	C2	\N
-7061	utensil	n	\N	\N	1	C2	\N
-7062	utilitarianism	n	\N	\N	1	C2	\N
-7063	utmost	adj	\N	\N	1	C2	\N
-7064	utopia	n	\N	\N	1	C2	\N
-7065	utopianism	n	\N	\N	1	C2	\N
-7066	utterance	n	\N	\N	1	C2	\N
-7067	vacancy	n	\N	\N	1	C2	\N
-7068	vacillate	v	\N	\N	1	C2	\N
-7069	vacillation	n	\N	\N	1	C2	\N
-7070	vacuous	adj	\N	\N	1	C2	\N
-7071	vagary	n	\N	\N	1	C2	\N
-7072	vagrant	n	\N	\N	1	C2	\N
-7073	vain	adj	\N	\N	1	C2	\N
-7074	validate	v	\N	\N	1	C2	\N
-7075	valour	n	\N	\N	1	C2	\N
-7076	valuation	n	\N	\N	1	C2	\N
-7077	vandal	n	\N	\N	1	C2	\N
-7078	vandalism	n	\N	\N	1	C2	\N
-7079	vanguard	n	\N	\N	1	C2	\N
-7080	vanity	n	\N	\N	1	C2	\N
-7081	vanquish	v	\N	\N	1	C2	\N
-7082	vanquished	adj	\N	\N	1	C2	\N
-7083	vapid	adj	\N	\N	1	C2	\N
-7084	variance	n	\N	\N	1	C2	\N
-7085	variegated	adj	\N	\N	1	C2	\N
-7086	vastness	n	\N	\N	1	C2	\N
-7087	vault	n	\N	\N	1	C2	\N
-7088	vehemence	n	\N	\N	1	C2	\N
-7089	vehemently	adv	\N	\N	1	C2	\N
-7090	velocity	n	\N	\N	1	C2	\N
-7091	velvet	n	\N	\N	1	C2	\N
-7092	venal	adj	\N	\N	1	C2	\N
-7093	vendetta	n	\N	\N	1	C2	\N
-7094	veneer	n	\N	\N	1	C2	\N
-7095	venerable	adj	\N	\N	1	C2	\N
-7096	veneration	n	\N	\N	1	C2	\N
-7097	vengeance	n	\N	\N	1	C2	\N
-7098	venom	n	\N	\N	1	C2	\N
-7099	vent	n	\N	\N	1	C2	\N
-7100	veracity	n	\N	\N	1	C2	\N
-7101	verbatim	adv	\N	\N	1	C2	\N
-7102	verbose	adj	\N	\N	1	C2	\N
-7103	verdant	adj	\N	\N	1	C2	\N
-7104	verge	n	\N	\N	1	C2	\N
-7105	verification	n	\N	\N	1	C2	\N
-7106	verisimilitude	n	\N	\N	1	C2	\N
-7107	vermin	n	\N	\N	1	C2	\N
-7108	vernacular	n	\N	\N	1	C2	\N
-7109	versatility	n	\N	\N	1	C2	\N
-7110	vertex	n	\N	\N	1	C2	\N
-7111	vertigo	n	\N	\N	1	C2	\N
-7112	verve	n	\N	\N	1	C2	\N
-7113	vestige	n	\N	\N	1	C2	\N
-7114	veto	n	\N	\N	1	C2	\N
-7115	vexation	n	\N	\N	1	C2	\N
-7116	vexatious	adj	\N	\N	1	C2	\N
-7117	viability	n	\N	\N	1	C2	\N
-7118	vicarious	adj	\N	\N	1	C2	\N
-7119	vicinity	n	\N	\N	1	C2	\N
-7120	vicissitude	n	\N	\N	1	C2	\N
-7121	victor	n	\N	\N	1	C2	\N
-7122	vigil	n	\N	\N	1	C2	\N
-7123	vigilance	n	\N	\N	1	C2	\N
-7124	vigilante	n	\N	\N	1	C2	\N
-7125	vigour	n	\N	\N	1	C2	\N
-7126	vile	adj	\N	\N	1	C2	\N
-7127	vilification	n	\N	\N	1	C2	\N
-7128	vilify	v	\N	\N	1	C2	\N
-7129	villain	n	\N	\N	1	C2	\N
-7130	villainy	n	\N	\N	1	C2	\N
-7131	vindicate	v	\N	\N	1	C2	\N
-7132	vindication	n	\N	\N	1	C2	\N
-7133	vindictive	adj	\N	\N	1	C2	\N
-7134	vindictiveness	n	\N	\N	1	C2	\N
-7135	vintage	n	\N	\N	1	C2	\N
-7136	viper	n	\N	\N	1	C2	\N
-7137	virtuosity	n	\N	\N	1	C2	\N
-7138	virtuoso	n	\N	\N	1	C2	\N
-7139	virulence	n	\N	\N	1	C2	\N
-7140	virulent	adj	\N	\N	1	C2	\N
-7141	visage	n	\N	\N	1	C2	\N
-7142	visceral	adj	\N	\N	1	C2	\N
-7143	visionary	n	\N	\N	1	C2	\N
-7144	vista	n	\N	\N	1	C2	\N
-7145	vitality	n	\N	\N	1	C2	\N
-7146	vitriolic	adj	\N	\N	1	C2	\N
-7147	vituperate	v	\N	\N	1	C2	\N
-7148	vivacious	adj	\N	\N	1	C2	\N
-7149	vivacity	n	\N	\N	1	C2	\N
-7150	vocation	n	\N	\N	1	C2	\N
-7151	vociferous	adj	\N	\N	1	C2	\N
-7152	vogue	n	\N	\N	1	C2	\N
-7153	void	n	\N	\N	1	C2	\N
-7154	volatile	adj	\N	\N	1	C2	\N
-7155	volatility	n	\N	\N	1	C2	\N
-7156	volition	n	\N	\N	1	C2	\N
-7157	volley	n	\N	\N	1	C2	\N
-7158	voracious	adj	\N	\N	1	C2	\N
-7159	vortex	n	\N	\N	1	C2	\N
-7160	voucher	n	\N	\N	1	C2	\N
-7161	voyeur	n	\N	\N	1	C2	\N
-7162	vulgarity	n	\N	\N	1	C2	\N
-7164	waiver	n	\N	\N	1	C2	\N
-7165	walkout	n	\N	\N	1	C2	\N
-7166	wane	v	\N	\N	1	C2	\N
-7167	wanton	adj	\N	\N	1	C2	\N
-7168	wantonness	n	\N	\N	1	C2	\N
-7169	warden	n	\N	\N	1	C2	\N
-7170	warlord	n	\N	\N	1	C2	\N
-7171	warranty	n	\N	\N	1	C2	\N
-7172	wasteland	n	\N	\N	1	C2	\N
-7173	watchdog	n	\N	\N	1	C2	\N
-7174	watchword	n	\N	\N	1	C2	\N
-7175	watershed	n	\N	\N	1	C2	\N
-7176	waver	v	\N	\N	1	C2	\N
-7177	wayward	adj	\N	\N	1	C2	\N
-7178	waywardness	n	\N	\N	1	C2	\N
-7179	weaponry	n	\N	\N	1	C2	\N
-7180	weariness	n	\N	\N	1	C2	\N
-7181	wedlock	n	\N	\N	1	C2	\N
-7182	wharf	n	\N	\N	1	C2	\N
-7183	wheedling	adj	\N	\N	1	C2	\N
-7184	whereby	adv	\N	\N	1	C2	\N
-7185	wherewithal	n	\N	\N	1	C2	\N
-7186	whim	n	\N	\N	1	C2	\N
-7187	whimsical	adj	\N	\N	1	C2	\N
-7188	whimsy	n	\N	\N	1	C2	\N
-7189	whirlpool	n	\N	\N	1	C2	\N
-7190	whirlwind	n	\N	\N	1	C2	\N
-7191	whistleblower	n	\N	\N	1	C2	\N
-7192	whitewash	n	\N	\N	1	C2	\N
-7193	wickedness	n	\N	\N	1	C2	\N
-7194	wield	v	\N	\N	1	C2	\N
-7195	wilderness	n	\N	\N	1	C2	\N
-7196	wildfire	n	\N	\N	1	C2	\N
-7197	willfulness	n	\N	\N	1	C2	\N
-7198	windfall	n	\N	\N	1	C2	\N
-7199	wisp	n	\N	\N	1	C2	\N
-7200	wistful	adj	\N	\N	1	C2	\N
-7201	wistfulness	n	\N	\N	1	C2	\N
-7202	witchcraft	n	\N	\N	1	C2	\N
-7203	withstand	v	\N	\N	1	C2	\N
-7204	witticism	n	\N	\N	1	C2	\N
-7205	wizardry	n	\N	\N	1	C2	\N
-7206	wizened	adj	\N	\N	1	C2	\N
-7207	woe	n	\N	\N	1	C2	\N
-7208	wordiness	n	\N	\N	1	C2	\N
-7209	workmanship	n	\N	\N	1	C2	\N
-7210	wrath	n	\N	\N	1	C2	\N
-7211	wreckage	n	\N	\N	1	C2	\N
-7212	wretched	adj	\N	\N	1	C2	\N
-7213	wrongdoer	n	\N	\N	1	C2	\N
-7214	wry	adj	\N	\N	1	C2	\N
-7215	xenophobe	n	\N	\N	1	C2	\N
-7216	xenophobia	n	\N	\N	1	C2	\N
-7217	yardstick	n	\N	\N	1	C2	\N
-7218	yarn	n	\N	\N	1	C2	\N
-7219	yearning	n	\N	\N	1	C2	\N
-7220	yoke	n	\N	\N	1	C2	\N
-7221	yokel	n	\N	\N	1	C2	\N
-7222	youngster	n	\N	\N	1	C2	\N
-7223	zeal	n	\N	\N	1	C2	\N
-7224	zealot	n	\N	\N	1	C2	\N
-7225	zealotry	n	\N	\N	1	C2	\N
-7226	zealous	adj	\N	\N	1	C2	\N
-7227	zeitgeist	n	\N	\N	1	C2	\N
-7228	zenith	n	\N	\N	1	C2	\N
-7229	zest	n	\N	\N	1	C2	\N
-7230	zigzag	n	\N	\N	1	C2	\N
-7231	zodiac	n	\N	\N	1	C2	\N
-7232	zoology	n	\N	\N	1	C2	\N
-0	a	letter	\N	\N	1	N	\N
-1	b	letter	\N	\N	1	N	\N
-2	c	letter	\N	\N	1	N	\N
-3	d	letter	\N	\N	1	N	\N
-4	e	letter	\N	\N	1	N	\N
-5	f	letter	\N	\N	1	N	\N
-6	g	letter	\N	\N	1	N	\N
-7	h	letter	\N	\N	1	N	\N
-8	i	letter	\N	\N	1	N	\N
-9	j	letter	\N	\N	1	N	\N
-10	k	letter	\N	\N	1	N	\N
-11	l	letter	\N	\N	1	N	\N
-12	m	letter	\N	\N	1	N	\N
-13	n	letter	\N	\N	1	N	\N
-14	o	letter	\N	\N	1	N	\N
-15	p	letter	\N	\N	1	N	\N
-16	q	letter	\N	\N	1	N	\N
-17	r	letter	\N	\N	1	N	\N
-18	s	letter	\N	\N	1	N	\N
-19	t	letter	\N	\N	1	N	\N
-20	u	letter	\N	\N	1	N	\N
-21	v	letter	\N	\N	1	N	\N
-22	w	letter	\N	\N	1	N	\N
-23	x	letter	\N	\N	1	N	\N
-24	y	letter	\N	\N	1	N	\N
-25	z	letter	\N	\N	1	N	\N
-7237	affix	noun	\N	\N	1	B2	\N
-7238	afraid of s.th	adjective	\N	\N	1	A1	\N
-7239	airplane	noun	\N	\N	1	A1	\N
-7240	a little	adverb	\N	\N	1	A1	\N
-7241	armchair	noun	\N	\N	1	A1	\N
-7242	around s.th	preposition	\N	\N	1	A1	\N
-7243	at the beginning	phrase	\N	\N	1	A2	\N
-7244	at the end of	phrase	\N	\N	1	A2	\N
-7245	backpack	noun	\N	\N	1	A1	\N
-7246	bad-tempred	adjective	\N	\N	1	B1	\N
-7247	bazaar	noun	\N	\N	1	A2	\N
-7248	be able to	verb	\N	\N	1	A2	\N
-7249	beauty salon	noun	\N	\N	1	A2	\N
-7250	be bad for	phrase	\N	\N	1	A2	\N
-7251	be born	verb	\N	\N	1	A1	\N
-7252	be changed	verb	\N	\N	1	B1	\N
-7253	be different	phrase	\N	\N	1	A1	\N
-7254	bedroll	noun	\N	\N	1	B1	\N
-7255	be late	phrase	\N	\N	1	A1	\N
-7256	bell pepper	noun	\N	\N	1	A2	\N
-7257	be located	verb	\N	\N	1	B1	\N
-7258	belong to s.b.	verb	\N	\N	1	A2	\N
-7259	be placed	verb	\N	\N	1	B1	\N
-7260	be put	verb	\N	\N	1	A2	\N
-7261	be related to	phrase	\N	\N	1	B1	\N
-7262	be there	phrase	\N	\N	1	A1	\N
-7263	be used	verb	\N	\N	1	A2	\N
-7264	be windy	phrase	\N	\N	1	A1	\N
-7265	bike	noun	\N	\N	1	A1	\N
-7266	biking	noun	\N	\N	1	A1	\N
-7267	bird	noun	\N	\N	1	A1	\N
-7268	birthday	noun	\N	\N	1	A1	\N
-7269	black	adjective	\N	\N	1	A1	\N
-7270	blouse	noun	\N	\N	1	A2	\N
-7271	blue	adjective	\N	\N	1	A1	\N
-7272	body building	noun	\N	\N	1	A2	\N
-7273	booklet	noun	\N	\N	1	B1	\N
-7274	book store	noun	\N	\N	1	A1	\N
-7275	boot	noun	\N	\N	1	A1	\N
-7276	boot chukka	noun	\N	\N	1	B2	\N
-7277	boring	adjective	\N	\N	1	A1	\N
-7278	bottle	noun	\N	\N	1	A1	\N
-7279	box	noun	\N	\N	1	A1	\N
-7280	boy	noun	\N	\N	1	A1	\N
-7281	bread	noun	\N	\N	1	A1	\N
-7282	brother	noun	\N	\N	1	A1	\N
-7283	brown	adjective	\N	\N	1	A1	\N
-7284	brunette	noun	\N	\N	1	B1	\N
-7285	building	noun	\N	\N	1	A1	\N
-7286	bulb	noun	\N	\N	1	A2	\N
-7287	bus	noun	\N	\N	1	A1	\N
-7288	business card	noun	\N	\N	1	B1	\N
-7289	butter	noun	\N	\N	1	A1	\N
-7290	buy	verb	\N	\N	1	A1	\N
-7291	by the way	adverb	\N	\N	1	A2	\N
-7292	cable-car	noun	\N	\N	1	B1	\N
-7293	café	noun	\N	\N	1	A1	\N
-7294	cage	noun	\N	\N	1	A2	\N
-7295	calender	noun	\N	\N	1	A1	\N
-7296	capital	noun	\N	\N	1	A2	\N
-7297	cardboard	noun	\N	\N	1	B1	\N
-7298	carpentry	noun	\N	\N	1	B1	\N
-7299	cast a shadow on s.th	verb	\N	\N	1	B2	\N
-7300	cellphone	noun	\N	\N	1	A1	\N
-7301	cherry	noun	\N	\N	1	A1	\N
-7302	circle s.th	verb	\N	\N	1	A2	\N
-7303	clap	verb	\N	\N	1	A2	\N
-7304	classmate	noun	\N	\N	1	A1	\N
-7305	cloudy	adjective	\N	\N	1	A1	\N
-7306	coffeeshop	noun	\N	\N	1	A1	\N
-7307	color	noun	\N	\N	1	A1	\N
-7308	come and go	verb	\N	\N	1	A2	\N
-7309	come in	verb	\N	\N	1	A1	\N
-7310	come over	verb	\N	\N	1	A2	\N
-7311	communicate with	verb	\N	\N	1	B1	\N
-7312	comparative adjective	noun	\N	\N	1	A2	\N
-7313	comprehension	noun	\N	\N	1	B1	\N
-7314	counting	noun	\N	\N	1	A1	\N
-7315	crossing	noun	\N	\N	1	A2	\N
-7316	crossroads	noun	\N	\N	1	A2	\N
-7317	crowded	adjective	\N	\N	1	A2	\N
-7318	cube	noun	\N	\N	1	B1	\N
-7319	curly	adjective	\N	\N	1	A2	\N
-7320	customer	noun	\N	\N	1	A2	\N
-7321	cut	verb	\N	\N	1	A1	\N
-7322	cylindrical	adjective	\N	\N	1	B2	\N
-7323	demonstrative pronoun	noun	\N	\N	1	B1	\N
-7324	descriptive compound	noun	\N	\N	1	C1	\N
-7325	dim	adjective	\N	\N	1	B1	\N
-7326	dish/platter	noun	\N	\N	1	A2	\N
-7327	divide into	verb	\N	\N	1	B1	\N
-7328	doll	noun	\N	\N	1	A1	\N
-7329	dormitory	noun	\N	\N	1	B1	\N
-7330	dotted	adjective	\N	\N	1	A2	\N
-7331	drawer	noun	\N	\N	1	A2	\N
-7332	drive s.th out	verb	\N	\N	1	B2	\N
-7333	dulcimer	noun	\N	\N	1	B2	\N
-7334	duster	noun	\N	\N	1	A2	\N
-7335	dusting	noun	\N	\N	1	A2	\N
-7336	each other	pronoun	\N	\N	1	A2	\N
-7337	edible	adjective	\N	\N	1	B2	\N
-7338	education consultant	noun	\N	\N	1	B2	\N
-7339	elementary school	noun	\N	\N	1	A1	\N
-7340	evening meal	noun	\N	\N	1	A1	\N
-7341	excuse-me!	phrase	\N	\N	1	A1	\N
-7342	fair-haired	adjective	\N	\N	1	B1	\N
-7343	familiarity	noun	\N	\N	1	B2	\N
-7344	family name	noun	\N	\N	1	A1	\N
-7345	far away	adverb	\N	\N	1	A2	\N
-7346	far from	preposition	\N	\N	1	A2	\N
-7347	fatigue	noun	\N	\N	1	B2	\N
-7348	fill in	verb	\N	\N	1	A1	\N
-7349	five hundred	number	\N	\N	1	A1	\N
-7350	footboard	noun	\N	\N	1	B2	\N
-7351	footstool	noun	\N	\N	1	B1	\N
-7352	fried eggs	noun	\N	\N	1	A1	\N
-7353	fruit seller	noun	\N	\N	1	A2	\N
-7354	fruit shop	noun	\N	\N	1	A1	\N
-7355	garbage	noun	\N	\N	1	A2	\N
-7356	get lost	verb	\N	\N	1	A2	\N
-7357	get off s.th	verb	\N	\N	1	A2	\N
-7358	get on s.th	verb	\N	\N	1	A2	\N
-7359	get ready	verb	\N	\N	1	A2	\N
-7360	give time	phrase	\N	\N	1	B1	\N
-7361	glasses	noun	\N	\N	1	A1	\N
-7362	gloves	noun	\N	\N	1	A1	\N
-7363	go mount climbing	verb	\N	\N	1	A2	\N
-7364	good....	adjective	\N	\N	1	A1	\N
-7365	go out	verb	\N	\N	1	A1	\N
-7366	gram	noun	\N	\N	1	A2	\N
-7367	grandchild	noun	\N	\N	1	A2	\N
-7368	gray	adjective	\N	\N	1	A1	\N
-7369	greeting	noun	\N	\N	1	A1	\N
-7370	grouping	noun	\N	\N	1	B1	\N
-7371	guinness	noun	\N	\N	1	B1	\N
-7372	gum	noun	\N	\N	1	A2	\N
-7373	hair dresser	noun	\N	\N	1	A2	\N
-7374	hair dressing	noun	\N	\N	1	B1	\N
-7375	hairdryer	noun	\N	\N	1	A2	\N
-7376	hairstyle	noun	\N	\N	1	A2	\N
-7377	handicapped	adjective	\N	\N	1	B1	\N
-7378	harm s.th or s.b	verb	\N	\N	1	B1	\N
-7379	have breakfast	verb	\N	\N	1	A1	\N
-7380	have dinner	verb	\N	\N	1	A1	\N
-7381	have time	phrase	\N	\N	1	A1	\N
-7382	heat up	verb	\N	\N	1	A2	\N
-7383	here you are	phrase	\N	\N	1	A1	\N
-7384	he/she	pronoun	\N	\N	1	A1	\N
-7385	highschool	noun	\N	\N	1	A2	\N
-7386	hive	noun	\N	\N	1	B1	\N
-7387	hot and humid	adjective	\N	\N	1	B1	\N
-7388	household chores	noun	\N	\N	1	A2	\N
-7389	housekeeping	noun	\N	\N	1	B1	\N
-7390	housewife	noun	\N	\N	1	A1	\N
-7391	how much	phrase	\N	\N	1	A1	\N
-7392	ice-cream	noun	\N	\N	1	A1	\N
-7393	imitate	verb	\N	\N	1	B1	\N
-7394	imitation	noun	\N	\N	1	B2	\N
-7395	impretive verb	noun	\N	\N	1	B1	\N
-7396	in a hurry	phrase	\N	\N	1	A2	\N
-7397	infinitive	noun	\N	\N	1	B2	\N
-7398	intelligence test	noun	\N	\N	1	B1	\N
-7399	intonation	noun	\N	\N	1	B2	\N
-7400	islands	noun	\N	\N	1	A2	\N
-7401	join all	verb	\N	\N	1	B1	\N
-7402	kilo	noun	\N	\N	1	A1	\N
-7403	kilometer	noun	\N	\N	1	A2	\N
-7404	kitchen cabinet	noun	\N	\N	1	A2	\N
-7405	kiwi	noun	\N	\N	1	A1	\N
-7406	laugh at	verb	\N	\N	1	A2	\N
-7407	little boy	noun	\N	\N	1	A1	\N
-7408	look after	verb	\N	\N	1	A2	\N
-7409	look at	verb	\N	\N	1	A1	\N
-7410	looking after	noun	\N	\N	1	A2	\N
-7411	lotion	noun	\N	\N	1	B1	\N
-7412	low	adjective	\N	\N	1	A2	\N
-7413	manteau	noun	\N	\N	1	B1	\N
-7414	members	noun	\N	\N	1	A2	\N
-7415	(men's) coat	noun	\N	\N	1	A1	\N
-7416	meter	noun	\N	\N	1	A2	\N
-7417	middle-east	noun	\N	\N	1	B1	\N
-7418	mom	noun	\N	\N	1	A1	\N
-7419	money purse	noun	\N	\N	1	A2	\N
-7420	most of the time	adverb	\N	\N	1	A2	\N
-7421	mother tongue	noun	\N	\N	1	B1	\N
-7422	mr.	noun	\N	\N	1	A1	\N
-7423	myna	noun	\N	\N	1	B2	\N
-7424	nap	noun	\N	\N	1	A2	\N
-7425	nationality	noun	\N	\N	1	A2	\N
-7426	navy blue	adjective	\N	\N	1	A2	\N
-7427	negative imperative	noun	\N	\N	1	B2	\N
-7428	neighbor	noun	\N	\N	1	A2	\N
-7429	nephew	noun	\N	\N	1	A2	\N
-7430	niece	noun	\N	\N	1	A2	\N
-7431	nominative compound	noun	\N	\N	1	C1	\N
-7432	noun \\ name	noun	\N	\N	1	A1	\N
-7433	nowruz	noun	\N	\N	1	A2	\N
-7434	numbers	noun	\N	\N	1	A1	\N
-7435	nurse	noun	\N	\N	1	A1	\N
-7436	only child	noun	\N	\N	1	A2	\N
-7437	ophthalmology	noun	\N	\N	1	C1	\N
-7438	ordinal	adjective	\N	\N	1	B1	\N
-7439	other than	preposition	\N	\N	1	B1	\N
-7440	outside of s.th	preposition	\N	\N	1	A2	\N
-7441	overcoat	noun	\N	\N	1	B1	\N
-7442	pairs	noun	\N	\N	1	A1	\N
-7443	parents	noun	\N	\N	1	A1	\N
-7444	parking lot	noun	\N	\N	1	A1	\N
-7445	part/section	noun	\N	\N	1	A2	\N
-7446	pay for s.th	verb	\N	\N	1	A2	\N
-7447	pencilcase	noun	\N	\N	1	A1	\N
-7448	penguin	noun	\N	\N	1	A1	\N
-7449	persian language	noun	\N	\N	1	A1	\N
-7450	personal belongings	noun	\N	\N	1	B1	\N
-7451	personal ending	noun	\N	\N	1	B2	\N
-7452	picnic	noun	\N	\N	1	A1	\N
-7453	pictures	noun	\N	\N	1	A1	\N
-7454	pilates	noun	\N	\N	1	A2	\N
-7455	pineapple	noun	\N	\N	1	A1	\N
-7456	ping-pong	noun	\N	\N	1	A1	\N
-7457	pizza	noun	\N	\N	1	A1	\N
-7458	pleased to meet you!	phrase	\N	\N	1	A1	\N
-7459	plural	adjective	\N	\N	1	A2	\N
-7460	polluted	adjective	\N	\N	1	B1	\N
-7461	populated	adjective	\N	\N	1	B1	\N
-7462	populous	adjective	\N	\N	1	B2	\N
-7463	possessive	adjective	\N	\N	1	A2	\N
-7464	preposition	noun	\N	\N	1	A2	\N
-7465	previous	adjective	\N	\N	1	B1	\N
-7466	pronunciation	noun	\N	\N	1	B1	\N
-7467	properly	adverb	\N	\N	1	B1	\N
-7468	protecting	verb	\N	\N	1	B1	\N
-7469	provide	verb	\N	\N	1	B1	\N
-7470	public place	noun	\N	\N	1	A2	\N
-7471	quarter	noun	\N	\N	1	A2	\N
-7472	question word	noun	\N	\N	1	A1	\N
-7473	rail way	noun	\N	\N	1	A2	\N
-7474	rain	noun	\N	\N	1	A1	\N
-7475	rain	verb	\N	\N	1	A1	\N
-7476	read	verb	\N	\N	1	A1	\N
-7477	reading	noun	\N	\N	1	A1	\N
-7478	really	adverb	\N	\N	1	A2	\N
-7479	red	adjective	\N	\N	1	A1	\N
-7480	remain	verb	\N	\N	1	B1	\N
-7481	repairer	noun	\N	\N	1	B1	\N
-7482	repairman	noun	\N	\N	1	A2	\N
-7483	repeat	verb	\N	\N	1	A1	\N
-7484	research institution	noun	\N	\N	1	B2	\N
-7485	residents	noun	\N	\N	1	B1	\N
-7486	respond	verb	\N	\N	1	B1	\N
-7487	restaurant	noun	\N	\N	1	A1	\N
-7488	return	verb	\N	\N	1	A2	\N
-7489	riddle	noun	\N	\N	1	B1	\N
-7490	right	adjective	\N	\N	1	A1	\N
-7491	room	noun	\N	\N	1	A1	\N
-7492	rule	noun	\N	\N	1	B1	\N
-7493	ruler	noun	\N	\N	1	A1	\N
-7494	sales clerk	noun	\N	\N	1	A2	\N
-7495	saturday	noun	\N	\N	1	A1	\N
-7496	sauna	noun	\N	\N	1	B1	\N
-7497	say	verb	\N	\N	1	A1	\N
-7498	scales	noun	\N	\N	1	B1	\N
-7499	scarf	noun	\N	\N	1	A1	\N
-7500	scarf (men & women)	noun	\N	\N	1	A1	\N
-7501	school	noun	\N	\N	1	A1	\N
-7502	sea	noun	\N	\N	1	A1	\N
-7503	security guard	noun	\N	\N	1	A2	\N
-7504	see	verb	\N	\N	1	A1	\N
-7505	sentence	noun	\N	\N	1	A1	\N
-7506	set (an alarm)	verb	\N	\N	1	A2	\N
-7507	seven	number	\N	\N	1	A1	\N
-7508	shawl (women)	noun	\N	\N	1	A2	\N
-7509	shirt	noun	\N	\N	1	A1	\N
-7510	shoe	noun	\N	\N	1	A1	\N
-7511	shop	noun	\N	\N	1	A1	\N
-7512	shopping	noun	\N	\N	1	A1	\N
-7513	shop window	noun	\N	\N	1	A2	\N
-7514	short	adjective	\N	\N	1	A1	\N
-7515	shower	noun	\N	\N	1	A1	\N
-7516	sing	verb	\N	\N	1	A1	\N
-7517	singer	noun	\N	\N	1	A2	\N
-7518	sister	noun	\N	\N	1	A1	\N
-7519	sit	verb	\N	\N	1	A1	\N
-7520	situation	noun	\N	\N	1	B1	\N
-7521	six	number	\N	\N	1	A1	\N
-7522	skirt	noun	\N	\N	1	A1	\N
-7523	sleep	verb	\N	\N	1	A1	\N
-7524	sleep	noun	\N	\N	1	A1	\N
-7525	slow	adjective	\N	\N	1	A1	\N
-7526	small	adjective	\N	\N	1	A1	\N
-7527	sneakers	noun	\N	\N	1	A1	\N
-7528	socks	noun	\N	\N	1	A1	\N
-7529	some times	adverb	\N	\N	1	A1	\N
-7530	sore throat	noun	\N	\N	1	A2	\N
-7531	souvenir	noun	\N	\N	1	B1	\N
-7532	specially	adverb	\N	\N	1	B1	\N
-7533	spoken language	noun	\N	\N	1	B1	\N
-7534	sponge	noun	\N	\N	1	A2	\N
-7535	sportsman	noun	\N	\N	1	A1	\N
-7536	stay alive	verb	\N	\N	1	B1	\N
-7537	stay at home	verb	\N	\N	1	A1	\N
-7538	stove	noun	\N	\N	1	A2	\N
-7539	studying	noun	\N	\N	1	A1	\N
-7540	subject pronoun	noun	\N	\N	1	B1	\N
-7541	subway	noun	\N	\N	1	A1	\N
-7542	sun cap	noun	\N	\N	1	A1	\N
-7543	sunglasses	noun	\N	\N	1	A1	\N
-7544	sun hat	noun	\N	\N	1	A1	\N
-7545	sunny	adjective	\N	\N	1	A1	\N
-7546	sunrise	noun	\N	\N	1	A2	\N
-7547	sunset	noun	\N	\N	1	A2	\N
-7548	superlative adjective	noun	\N	\N	1	A2	\N
-7549	surfing the net	noun	\N	\N	1	A2	\N
-7550	surf the net	verb	\N	\N	1	A2	\N
-7551	tailoring	noun	\N	\N	1	B1	\N
-7552	take a shower	verb	\N	\N	1	A1	\N
-7553	take part	verb	\N	\N	1	B1	\N
-7554	take time	verb	\N	\N	1	A2	\N
-7555	talk to s.o	verb	\N	\N	1	A1	\N
-7556	tense	noun	\N	\N	1	B1	\N
-7557	thanks!	phrase	\N	\N	1	A1	\N
-7558	thanks god!	phrase	\N	\N	1	A1	\N
-7559	thank you	phrase	\N	\N	1	A1	\N
-7560	thank you!	phrase	\N	\N	1	A1	\N
-7561	theater	noun	\N	\N	1	A2	\N
-7562	the eighth month	noun	\N	\N	1	B1	\N
-7563	the eleventh month	noun	\N	\N	1	B1	\N
-7564	the fifth month	noun	\N	\N	1	B1	\N
-7565	the first month	noun	\N	\N	1	B1	\N
-7566	the following	adjective	\N	\N	1	B1	\N
-7567	the fourth month	noun	\N	\N	1	B1	\N
-7568	the last month	noun	\N	\N	1	B1	\N
-7569	the ninth month	noun	\N	\N	1	B1	\N
-7570	the other	pronoun	\N	\N	1	A2	\N
-7571	these	pronoun	\N	\N	1	A1	\N
-7572	the second month	noun	\N	\N	1	B1	\N
-7573	the seventh month	noun	\N	\N	1	B1	\N
-7574	the sixth month	noun	\N	\N	1	B1	\N
-7575	the tenth month	noun	\N	\N	1	B1	\N
-7576	the third	adjective	\N	\N	1	A1	\N
-7577	the third month	noun	\N	\N	1	B1	\N
-7578	things	noun	\N	\N	1	A1	\N
-7579	throw s.th away	verb	\N	\N	1	A2	\N
-7580	tidy up	verb	\N	\N	1	A2	\N
-7581	time-consuming	adjective	\N	\N	1	B2	\N
-7582	tiring	adjective	\N	\N	1	A2	\N
-7583	(to be) worried	adjective	\N	\N	1	A2	\N
-7584	toman	noun	\N	\N	1	A1	\N
-7585	tools	noun	\N	\N	1	A2	\N
-7586	toothbrush	noun	\N	\N	1	A1	\N
-7587	toothpaste	noun	\N	\N	1	A1	\N
-7588	translator	noun	\N	\N	1	A2	\N
-7589	transportation	noun	\N	\N	1	B1	\N
-7590	traveler	noun	\N	\N	1	A2	\N
-7591	triangle	noun	\N	\N	1	A2	\N
-7592	underline s.th	verb	\N	\N	1	A1	\N
-7593	university student	noun	\N	\N	1	A2	\N
-7594	untidy	adjective	\N	\N	1	A2	\N
-7595	vacuum cleaner	noun	\N	\N	1	A2	\N
-7596	vase	noun	\N	\N	1	A2	\N
-7597	verb	noun	\N	\N	1	A1	\N
-7598	villa	noun	\N	\N	1	B1	\N
-7599	wake up	verb	\N	\N	1	A1	\N
-7600	wardrobe	noun	\N	\N	1	A2	\N
-7601	wheelchair	noun	\N	\N	1	A2	\N
-7602	which one	phrase	\N	\N	1	A1	\N
-7603	white skinned	adjective	\N	\N	1	B1	\N
-7604	wordmaking	noun	\N	\N	1	B2	\N
-7605	yoga	noun	\N	\N	1	A2	\N
-7606	yoghurt	noun	\N	\N	1	A1	\N
-7607	you're welcome	phrase	\N	\N	1	A1	\N
-7608	proper	adjective	\N	\N	1	B1	\N
-7609	instruments	noun	\N	\N	1	A2	\N
-7610	things	noun	\N	\N	1	A1	\N
-7611	transportation	noun	\N	\N	1	B1	\N
-200000	الف	letter	\N	\N	3	N	\N
-200001	ب	letter	\N	\N	3	N	\N
-200002	پ	letter	\N	\N	3	N	\N
-200003	ت	letter	\N	\N	3	N	\N
-200004	ث	letter	\N	\N	3	N	\N
-200005	ج	letter	\N	\N	3	N	\N
-200006	چ	letter	\N	\N	3	N	\N
-200007	ح	letter	\N	\N	3	N	\N
-200008	خ	letter	\N	\N	3	N	\N
-200009	د	letter	\N	\N	3	N	\N
-200010	ذ	letter	\N	\N	3	N	\N
-200011	ر	letter	\N	\N	3	N	\N
-200012	ز	letter	\N	\N	3	N	\N
-200013	ژ	letter	\N	\N	3	N	\N
-200014	س	letter	\N	\N	3	N	\N
-200015	ش	letter	\N	\N	3	N	\N
-200016	ص	letter	\N	\N	3	N	\N
-200017	ض	letter	\N	\N	3	N	\N
-200018	ط	letter	\N	\N	3	N	\N
-200019	ظ	letter	\N	\N	3	N	\N
-200020	ع	letter	\N	\N	3	N	\N
-200021	غ	letter	\N	\N	3	N	\N
-200022	ف	letter	\N	\N	3	N	\N
-200023	ق	letter	\N	\N	3	N	\N
-200024	ک	letter	\N	\N	3	N	\N
-200025	گ	letter	\N	\N	3	N	\N
-200026	ل	letter	\N	\N	3	N	\N
-200027	م	letter	\N	\N	3	N	\N
-200028	ن	letter	\N	\N	3	N	\N
-200029	و	letter	\N	\N	3	N	\N
-200030	ه	letter	\N	\N	3	N	\N
-200031	ی	letter	\N	\N	3	N	\N
-200400	اِبتِدا	noun	\N	\N	3	AB	\N
-200401	اِبتِدایِ	preposition	\N	\N	3	AB	\N
-200402	آب	noun	\N	\N	3	AB	\N
-200403	آبان	noun	\N	\N	3	AB	\N
-200404	آب‌میوه	noun	\N	\N	3	AB	\N
-200405	آب‌وهوا	noun	\N	\N	3	AB	\N
-200406	آبی	adjective	\N	\N	3	AB	\N
-200407	آخَر	adjective	\N	\N	3	AB	\N
-200408	آداس	noun	\N	\N	3	AB	\N
-200409	آدرِس	noun	\N	\N	3	AB	\N
-200410	آذَر	noun	\N	\N	3	AB	\N
-200411	آرایِشگاه	noun	\N	\N	3	AB	\N
-200412	آرایِشگَر	noun	\N	\N	3	AB	\N
-200413	آرایِشگَری	noun	\N	\N	3	AB	\N
-200414	آره	adverb	\N	\N	3	AB	\N
-200415	آزمایش	noun	\N	\N	3	AB	\N
-200416	آزمون	noun	\N	\N	3	AB	\N
-200417	آژانس	noun	\N	\N	3	AB	\N
-200418	آسیب زَدَن به	verb	\N	\N	3	AB	\N
-200419	آشپَزخانه	noun	\N	\N	3	AB	\N
-200420	آشپَزی کَردَن	verb	\N	\N	3	AB	\N
-200421	آشنایی	noun	\N	\N	3	AB	\N
-200422	آشیانه	noun	\N	\N	3	AB	\N
-200423	آفتاب	noun	\N	\N	3	AB	\N
-200424	آفتابی	adjective	\N	\N	3	AB	\N
-200425	آقا	noun	\N	\N	3	AB	\N
-200426	آلبوم	noun	\N	\N	3	AB	\N
-200427	آلوده	adjective	\N	\N	3	AB	\N
-200428	آماده شُدَن	verb	\N	\N	3	AB	\N
-200429	آمَدَن	verb	\N	\N	3	AB	\N
-200430	آن	pronoun	\N	\N	3	AB	\N
-200431	آناناس	noun	\N	\N	3	AB	\N
-200432	آنها	pronoun	\N	\N	3	AB	\N
-200433	آوازخواندَن	verb	\N	\N	3	AB	\N
-200434	آوریل	noun	\N	\N	3	AB	\N
-200435	آهِسته	adverb	\N	\N	3	AB	\N
-200436	آهن	noun	\N	\N	3	AB	\N
-200437	آهنگ	noun	\N	\N	3	AB	\N
-200438	آینه	noun	\N	\N	3	AB	\N
-200439	اَبر	noun	\N	\N	3	AB	\N
-200440	اَبری	adjective	\N	\N	3	AB	\N
-200441	اِتاق	noun	\N	\N	3	AB	\N
-200442	اُتو	noun	\N	\N	3	AB	\N
-200443	اُتوبوس	noun	\N	\N	3	AB	\N
-200444	اُتو کَردَن	verb	\N	\N	3	AB	\N
-200445	اُجاق گاز	noun	\N	\N	3	AB	\N
-200446	اِجتِماعی	adjective	\N	\N	3	AB	\N
-200447	اِحتِرام	noun	\N	\N	3	AB	\N
-200448	اَحوال‌پُرسی	noun	\N	\N	3	AB	\N
-200449	اِداره	noun	\N	\N	3	AB	\N
-200450	اِدامه	noun	\N	\N	3	AB	\N
-200451	اِدامه دادَن	verb	\N	\N	3	AB	\N
-200452	اَدَبیّات	noun	\N	\N	3	AB	\N
-200453	اِرتِباط بَرقَرار کَردَن	verb	\N	\N	3	AB	\N
-200454	اُردیبِهِشت	noun	\N	\N	3	AB	\N
-200455	اَرزان	adjective	\N	\N	3	AB	\N
-200456	اَز آشنایی‌تون خوشوَقتَم	phrase	\N	\N	3	AB	\N
-200457	اَز چیزی ترسیدَن	verb	\N	\N	3	AB	\N
-200458	اَساسی	adjective	\N	\N	3	AB	\N
-200459	اَسباب‌بازی	noun	\N	\N	3	AB	\N
-200460	اُستاد	noun	\N	\N	3	AB	\N
-200461	اُستان	noun	\N	\N	3	AB	\N
-200462	اِستَخر	noun	\N	\N	3	AB	\N
-200463	اِستِراحَت کَردَن	verb	\N	\N	3	AB	\N
-200464	اِستِفاده	noun	\N	\N	3	AB	\N
-200465	اِستِفاده شُدَن	verb	\N	\N	3	AB	\N
-200466	اِستِمراری	adjective	\N	\N	3	AB	\N
-200467	استوانه‌ای	adjective	\N	\N	3	AB	\N
-200468	اِسفَند	noun	\N	\N	3	AB	\N
-200469	اِسکاج	noun	\N	\N	3	AB	\N
-200470	اِسکی	noun	\N	\N	3	AB	\N
-200471	اِسم	noun	\N	\N	3	AB	\N
-200472	اِشتِباه	noun	\N	\N	3	AB	\N
-200473	اَشک	noun	\N	\N	3	AB	\N
-200474	اَشیاء	noun	\N	\N	3	AB	\N
-200475	اِضافه کَردَن	verb	\N	\N	3	AB	\N
-200476	اَطرافِ	preposition	\N	\N	3	AB	\N
-200477	اِطّلاعات	noun	\N	\N	3	AB	\N
-200478	اَعداد	noun	\N	\N	3	AB	\N
-200479	اَعضا	noun	\N	\N	3	AB	\N
-200480	اَغلَب	adverb	\N	\N	3	AB	\N
-200481	اَفراد	noun	\N	\N	3	AB	\N
-200482	اُکتُبر	noun	\N	\N	3	AB	\N
-200483	اَگَر	conjunction	\N	\N	3	AB	\N
-200484	اَلان	adverb	\N	\N	3	AB	\N
-200485	اَلگو	noun	\N	\N	3	AB	\N
-200486	اَمّا	conjunction	\N	\N	3	AB	\N
-200487	اِمتِحان	noun	\N	\N	3	AB	\N
-200488	اِمتیاز	noun	\N	\N	3	AB	\N
-200489	اِمروز	noun	\N	\N	3	AB	\N
-200490	اَمن	adjective	\N	\N	3	AB	\N
-200491	اِنتِخاب کَردَن	verb	\N	\N	3	AB	\N
-200492	اِنتِهایِ	preposition	\N	\N	3	AB	\N
-200493	اَنجام‌دادَن	verb	\N	\N	3	AB	\N
-200494	اَندازه‌گیری	noun	\N	\N	3	AB	\N
-200495	اِنسان	noun	\N	\N	3	AB	\N
-200496	اِنشا	noun	\N	\N	3	AB	\N
-200497	او	pronoun	\N	\N	3	AB	\N
-200498	اَوَّل	adjective	\N	\N	3	AB	\N
-200499	اَهلی	adjective	\N	\N	3	AB	\N
-200500	ایروبیک	noun	\N	\N	3	AB	\N
-200501	ایستگاه	noun	\N	\N	3	AB	\N
-200502	ایشان	pronoun	\N	\N	3	AB	\N
-200503	ایمِنی	noun	\N	\N	3	AB	\N
-200504	ایمِیل	noun	\N	\N	3	AB	\N
-200505	این	pronoun	\N	\N	3	AB	\N
-200506	اینتِرنِت	noun	\N	\N	3	AB	\N
-200507	اینجا	adverb	\N	\N	3	AB	\N
-200508	اینها	pronoun	\N	\N	3	AB	\N
-200509	با هَم	adverb	\N	\N	3	AB	\N
-200510	باد	noun	\N	\N	3	AB	\N
-200511	باد آمَدَن	verb	\N	\N	3	AB	\N
-200512	بار	noun	\N	\N	3	AB	\N
-200513	باران	noun	\N	\N	3	AB	\N
-200514	باران آمَدَن	verb	\N	\N	3	AB	\N
-200515	بازار	noun	\N	\N	3	AB	\N
-200516	بازی	noun	\N	\N	3	AB	\N
-200517	باشگاه	noun	\N	\N	3	AB	\N
-200518	باعَجَله	adverb	\N	\N	3	AB	\N
-200519	باغ	noun	\N	\N	3	AB	\N
-200520	باقی ماندَن	verb	\N	\N	3	AB	\N
-200521	بالایِ	preposition	\N	\N	3	AB	\N
-200522	بالِغ	adjective	\N	\N	3	AB	\N
-200523	بانِک	noun	\N	\N	3	AB	\N
-200524	باهوش	adjective	\N	\N	3	AB	\N
-200525	بَبخشید!	phrase	\N	\N	3	AB	\N
-200526	بَچّگی	noun	\N	\N	3	AB	\N
-200527	بَچّه	noun	\N	\N	3	AB	\N
-200528	بَخش	noun	\N	\N	3	AB	\N
-200529	بَد اَخلاق	adjective	\N	\N	3	AB	\N
-200530	بَدَن‌سازی	noun	\N	\N	3	AB	\N
-200531	بِدون	preposition	\N	\N	3	AB	\N
-200532	بَرادَر	noun	\N	\N	3	AB	\N
-200533	بَرادَرزاده	noun	\N	\N	3	AB	\N
-200534	بَراساسِ	preposition	\N	\N	3	AB	\N
-200535	بَررِسی کَردَن	verb	\N	\N	3	AB	\N
-200536	بُرِس	noun	\N	\N	3	AB	\N
-200537	بُرش دادَن	verb	\N	\N	3	AB	\N
-200538	بَرف	noun	\N	\N	3	AB	\N
-200539	بَرف آمَدَن	verb	\N	\N	3	AB	\N
-200540	بَرق	noun	\N	\N	3	AB	\N
-200541	بَرگَشتَن	verb	\N	\N	3	AB	\N
-200542	بَرگه	noun	\N	\N	3	AB	\N
-200543	بَرنامه	noun	\N	\N	3	AB	\N
-200544	بُزُرگ	adjective	\N	\N	3	AB	\N
-200545	بُزُرگ کَردَن	verb	\N	\N	3	AB	\N
-200546	بَستَنی	noun	\N	\N	3	AB	\N
-200547	بَسته	noun	\N	\N	3	AB	\N
-200548	بُشقاب	noun	\N	\N	3	AB	\N
-200549	شُستَن	verb	\N	\N	3	AB	\N
-200550	بُطری	noun	\N	\N	3	AB	\N
-200551	بَعد	adverb	\N	\N	3	AB	\N
-200552	بَعد اَز	preposition	\N	\N	3	AB	\N
-200553	بَعد اَظُهر	noun	\N	\N	3	AB	\N
-200554	بَعضی	adjective	\N	\N	3	AB	\N
-200555	بَعضی وَقتها	adverb	\N	\N	3	AB	\N
-200556	بَفَرمایید	phrase	\N	\N	3	AB	\N
-200557	بُلَند	adjective	\N	\N	3	AB	\N
-200558	بُلَند شُدَن	verb	\N	\N	3	AB	\N
-200559	بُلوز	noun	\N	\N	3	AB	\N
-200560	بَله	adverb	\N	\N	3	AB	\N
-200561	بلیط	noun	\N	\N	3	AB	\N
-200562	بَند (پارارگراف)	noun	\N	\N	3	AB	\N
-200563	بَنَفش	adjective	\N	\N	3	AB	\N
-200564	بودَن	verb	\N	\N	3	AB	\N
-200565	بور	adjective	\N	\N	3	AB	\N
-200566	به پیکنیک رَفتَن	verb	\N	\N	3	AB	\N
-200567	به خِیر	phrase	\N	\N	3	AB	\N
-200568	به سَمتِ	preposition	\N	\N	3	AB	\N
-200569	به کوه رَفتَن	verb	\N	\N	3	AB	\N
-200570	بَهار	noun	\N	\N	3	AB	\N
-200571	به دُرُستی	adverb	\N	\N	3	AB	\N
-200572	به دُنیا آمَدَن	verb	\N	\N	3	AB	\N
-200573	بَهمَن	noun	\N	\N	3	AB	\N
-200574	به نُدرَت	adverb	\N	\N	3	AB	\N
-200575	بی‌اَدَب	adjective	\N	\N	3	AB	\N
-200576	بیان کَردَن	verb	\N	\N	3	AB	\N
-200577	بیدار شُدَن	verb	\N	\N	3	AB	\N
-200578	بیرونِ	preposition	\N	\N	3	AB	\N
-200579	بیرون آمَدَن	verb	\N	\N	3	AB	\N
-200580	بیرون رَفتَن	verb	\N	\N	3	AB	\N
-200581	بیرون کَردَن	verb	\N	\N	3	AB	\N
-200582	بیست	number	\N	\N	3	AB	\N
-200583	بیشتَر	adjective	\N	\N	3	AB	\N
-200584	بیشتَرِ اوقات	adverb	\N	\N	3	AB	\N
-200585	بیمارِستان	noun	\N	\N	3	AB	\N
-200586	بیمه	noun	\N	\N	3	AB	\N
-200587	بَینِ	preposition	\N	\N	3	AB	\N
-200588	پَر	noun	\N	\N	3	AB	\N
-200589	پُر	adjective	\N	\N	3	AB	\N
-200590	پُر کَردَن	verb	\N	\N	3	AB	\N
-200591	پارچه	noun	\N	\N	3	AB	\N
-200592	پارک	noun	\N	\N	3	AB	\N
-200593	پارک کَردَن	verb	\N	\N	3	AB	\N
-200594	پارکینگ	noun	\N	\N	3	AB	\N
-200595	پاساژ	noun	\N	\N	3	AB	\N
-200596	پاسُخ	noun	\N	\N	3	AB	\N
-200597	پاسُخ دادَن	verb	\N	\N	3	AB	\N
-200598	پالتو	noun	\N	\N	3	AB	\N
-200599	پانزده	number	\N	\N	3	AB	\N
-200600	پانصَد	number	\N	\N	3	AB	\N
-200601	پایتَخت	noun	\N	\N	3	AB	\N
-200602	پاییز	noun	\N	\N	3	AB	\N
-200603	پِدَر	noun	\N	\N	3	AB	\N
-200604	پِدَربُزُرگ	noun	\N	\N	3	AB	\N
-200605	پَدیده	noun	\N	\N	3	AB	\N
-200606	پُرتِقال	noun	\N	\N	3	AB	\N
-200607	پُرجمعیت	adjective	\N	\N	3	AB	\N
-200608	پَرْده	noun	\N	\N	3	AB	\N
-200609	پَرَستار	noun	\N	\N	3	AB	\N
-200610	پُرسِش	noun	\N	\N	3	AB	\N
-200611	پُرسِش‌واژه	noun	\N	\N	3	AB	\N
-200612	پُرسیدَن	verb	\N	\N	3	AB	\N
-200613	پُرطَرَفدار	adjective	\N	\N	3	AB	\N
-200614	پَرَنده	noun	\N	\N	3	AB	\N
-200615	پُرنور	adjective	\N	\N	3	AB	\N
-200616	پِزِشک	noun	\N	\N	3	AB	\N
-200617	پِسَر	noun	\N	\N	3	AB	\N
-200618	پِسَر (فرزند)	noun	\N	\N	3	AB	\N
-200619	پِسَرچّه	noun	\N	\N	3	AB	\N
-200620	پُشتِ	preposition	\N	\N	3	AB	\N
-200621	پُشتِ‌بام	noun	\N	\N	3	AB	\N
-200622	پِلاک	noun	\N	\N	3	AB	\N
-200623	پلیس	noun	\N	\N	3	AB	\N
-200624	پَنج	number	\N	\N	3	AB	\N
-200625	پَنجاه	number	\N	\N	3	AB	\N
-200626	پَنجِره	noun	\N	\N	3	AB	\N
-200627	پَنج‌شَنبه	noun	\N	\N	3	AB	\N
-200628	پَنجُم	adjective	\N	\N	3	AB	\N
-200629	پَنگوئن	noun	\N	\N	3	AB	\N
-200630	پَنیر	noun	\N	\N	3	AB	\N
-200631	پوتین	noun	\N	\N	3	AB	\N
-200632	پوست	noun	\N	\N	3	AB	\N
-200633	پوشاک	noun	\N	\N	3	AB	\N
-200634	پوشیدَن	verb	\N	\N	3	AB	\N
-200635	پول	noun	\N	\N	3	AB	\N
-200636	پَهْن	adjective	\N	\N	3	AB	\N
-200637	پیاده‌رَفتَن	verb	\N	\N	3	AB	\N
-200638	پیاده‌شُدَن اَز	verb	\N	\N	3	AB	\N
-200639	پیاز	noun	\N	\N	3	AB	\N
-200640	پیانو	noun	\N	\N	3	AB	\N
-200641	پیتزا	noun	\N	\N	3	AB	\N
-200642	پیچیدَن	verb	\N	\N	3	AB	\N
-200643	پیدا کَردَن	verb	\N	\N	3	AB	\N
-200644	پیر	adjective	\N	\N	3	AB	\N
-200645	پیراهَن	noun	\N	\N	3	AB	\N
-200646	پیش اَز	preposition	\N	\N	3	AB	\N
-200647	پیشخِدمَت	noun	\N	\N	3	AB	\N
-200648	پیلاتِس	noun	\N	\N	3	AB	\N
-200649	پینگ‌پُنگ	noun	\N	\N	3	AB	\N
-200650	پِیوَسته	adjective	\N	\N	3	AB	\N
-200651	تِئاتر	noun	\N	\N	3	AB	\N
-200652	تابِستان	noun	\N	\N	3	AB	\N
-200653	تابلو	noun	\N	\N	3	AB	\N
-200654	تاجِر	noun	\N	\N	3	AB	\N
-200655	تاریخ	noun	\N	\N	3	AB	\N
-200656	تاریک	adjective	\N	\N	3	AB	\N
-200657	تاکسی	noun	\N	\N	3	AB	\N
-200658	تَبدیل	noun	\N	\N	3	AB	\N
-200659	تَبدیل شُدَن	verb	\N	\N	3	AB	\N
-200660	تَبدیل کَردَن	verb	\N	\N	3	AB	\N
-200661	تَجرُبه	noun	\N	\N	3	AB	\N
-200662	تَختِخواب	noun	\N	\N	3	AB	\N
-200663	تَخته	noun	\N	\N	3	AB	\N
-200664	تُخمِ‌مُرغ	noun	\N	\N	3	AB	\N
-200665	تَدریس کَردَن	verb	\N	\N	3	AB	\N
-200666	ترازو	noun	\N	\N	3	AB	\N
-200667	ترافیک	noun	\N	\N	3	AB	\N
-200668	تَرتیبی (عَدَد)	adjective	\N	\N	3	AB	\N
-200669	تَرکیب اِضافی	noun	\N	\N	3	AB	\N
-200670	تَرکیب وَصفی	noun	\N	\N	3	AB	\N
-200671	تِستِ هوش	noun	\N	\N	3	AB	\N
-200672	تَشَکُّر! مِرسی!	phrase	\N	\N	3	AB	\N
-200673	تَصاویر	noun	\N	\N	3	AB	\N
-200674	تَصویر	noun	\N	\N	3	AB	\N
-200675	تِعداد	noun	\N	\N	3	AB	\N
-200676	تَعطیل	adjective	\N	\N	3	AB	\N
-200677	تَعلیم‌دادَن	verb	\N	\N	3	AB	\N
-200678	تَعمیرکار	noun	\N	\N	3	AB	\N
-200679	تَعین کَردَن	verb	\N	\N	3	AB	\N
-200680	تَفاوُت	noun	\N	\N	3	AB	\N
-200681	تَفاوُت داشتَن	verb	\N	\N	3	AB	\N
-200682	تَقدیم کَردَن	verb	\N	\N	3	AB	\N
-200683	تَقسیم شُدَن	verb	\N	\N	3	AB	\N
-200684	تَقلید	noun	\N	\N	3	AB	\N
-200685	تَقلید کَردَن	verb	\N	\N	3	AB	\N
-200686	تَقویم	noun	\N	\N	3	AB	\N
-200687	تِکرار کَردَن	verb	\N	\N	3	AB	\N
-200688	تَک‌فَرزَند	noun	\N	\N	3	AB	\N
-200689	تَکلیف	noun	\N	\N	3	AB	\N
-200690	تِکنیک	noun	\N	\N	3	AB	\N
-200691	تِکّه	noun	\N	\N	3	AB	\N
-200692	تَلَفُّظ	noun	\N	\N	3	AB	\N
-200693	تِلِفُن	noun	\N	\N	3	AB	\N
-200694	تِلِکابین	noun	\N	\N	3	AB	\N
-200695	تِلِویزیون	noun	\N	\N	3	AB	\N
-200696	تماشا کَردَن	verb	\N	\N	3	AB	\N
-200697	تَمرین	noun	\N	\N	3	AB	\N
-200698	تَمـیز	adjective	\N	\N	3	AB	\N
-200699	تَمـیز کَردَن	verb	\N	\N	3	AB	\N
-200700	تَنها	adjective	\N	\N	3	AB	\N
-200701	تَنها / فَقَط	adverb	\N	\N	3	AB	\N
-200702	تُو	pronoun	\N	\N	3	AB	\N
-200703	تَوانایی	noun	\N	\N	3	AB	\N
-200704	تَوانِستَن	verb	\N	\N	3	AB	\N
-200705	توپ	noun	\N	\N	3	AB	\N
-200706	تَوَجُّه	noun	\N	\N	3	AB	\N
-200707	توسی	adjective	\N	\N	3	AB	\N
-200708	تَوصیف	noun	\N	\N	3	AB	\N
-200709	تَوصیف کَردَن	verb	\N	\N	3	AB	\N
-200710	تَوصیه کَردَن	verb	\N	\N	3	AB	\N
-200711	طوفان (توفان)	noun	\N	\N	3	AB	\N
-200712	تَوَلُّد	noun	\N	\N	3	AB	\N
-200713	تُومان	noun	\N	\N	3	AB	\N
-200714	تویِ	preposition	\N	\N	3	AB	\N
-200715	تَهیِه کَردَن	verb	\N	\N	3	AB	\N
-200716	تیر	noun	\N	\N	3	AB	\N
-200717	تی‌شِرت	noun	\N	\N	3	AB	\N
-200718	ثانیِه	noun	\N	\N	3	AB	\N
-200719	جاروبرقی	noun	\N	\N	3	AB	\N
-200720	جاروکِشیدَن	verb	\N	\N	3	AB	\N
-200721	جالِب	adjective	\N	\N	3	AB	\N
-200722	جامِدادی	noun	\N	\N	3	AB	\N
-200723	جاندار	adjective	\N	\N	3	AB	\N
-200724	جایِ خالی	noun	\N	\N	3	AB	\N
-200725	جُدا	adjective	\N	\N	3	AB	\N
-200726	جِدّاً	adverb	\N	\N	3	AB	\N
-200727	جُدا کَردَن	verb	\N	\N	3	AB	\N
-200728	جَدول	noun	\N	\N	3	AB	\N
-200729	جَدید	adjective	\N	\N	3	AB	\N
-200730	جَزایِر	noun	\N	\N	3	AB	\N
-200731	جِسم	noun	\N	\N	3	AB	\N
-200732	جَعبه	noun	\N	\N	3	AB	\N
-200733	جُفت	noun	\N	\N	3	AB	\N
-200734	جِلویِ	preposition	\N	\N	3	AB	\N
-200735	جَمع	noun	\N	\N	3	AB	\N
-200736	جَمع کَردَن	verb	\N	\N	3	AB	\N
-200737	جَمع‌بَستَن	verb	\N	\N	3	AB	\N
-200738	جُمعِه	noun	\N	\N	3	AB	\N
-200739	جَمعیَّت	noun	\N	\N	3	AB	\N
-200740	جُملِه	noun	\N	\N	3	AB	\N
-200741	جَنگَل	noun	\N	\N	3	AB	\N
-200742	جَنوب	noun	\N	\N	3	AB	\N
-200743	جَواب	noun	\N	\N	3	AB	\N
-200744	جَوان	adjective	\N	\N	3	AB	\N
-200745	جوجه	noun	\N	\N	3	AB	\N
-200746	جوراب	noun	\N	\N	3	AB	\N
-200747	جَهان	noun	\N	\N	3	AB	\N
-200748	جَهانی	adjective	\N	\N	3	AB	\N
-200749	جِهَت	noun	\N	\N	3	AB	\N
-200750	جِیب	noun	\N	\N	3	AB	\N
-200751	جین	noun	\N	\N	3	AB	\N
-200752	چادُرزَدَن	verb	\N	\N	3	AB	\N
-200753	چاق	adjective	\N	\N	3	AB	\N
-200754	چای	noun	\N	\N	3	AB	\N
-200755	چَتر	noun	\N	\N	3	AB	\N
-200756	چِراغ	noun	\N	\N	3	AB	\N
-200757	چُرت‌زَدَن	verb	\N	\N	3	AB	\N
-200758	چَشم	noun	\N	\N	3	AB	\N
-200759	چَشم‌پِزِشکی	noun	\N	\N	3	AB	\N
-200760	چِطور	adverb	\N	\N	3	AB	\N
-200761	چِقَدر	adverb	\N	\N	3	AB	\N
-200762	چِک‌کَردَن	verb	\N	\N	3	AB	\N
-200763	چِگونه	adverb	\N	\N	3	AB	\N
-200764	چوب	noun	\N	\N	3	AB	\N
-200765	چوبی	adjective	\N	\N	3	AB	\N
-200766	چه/ چی	pronoun	\N	\N	3	AB	\N
-200767	چَهار	number	\N	\N	3	AB	\N
-200768	چَهارراه	noun	\N	\N	3	AB	\N
-200769	چَهارشَنبِه	noun	\N	\N	3	AB	\N
-200770	چَهارُم	adjective	\N	\N	3	AB	\N
-200771	چیدَن	verb	\N	\N	3	AB	\N
-200772	چیز	noun	\N	\N	3	AB	\N
-200773	حالا	adverb	\N	\N	3	AB	\N
-200774	حَتماً	adverb	\N	\N	3	AB	\N
-200775	حَدس	noun	\N	\N	3	AB	\N
-200776	حَدس‌زَدَن	verb	\N	\N	3	AB	\N
-200777	حُدود	adverb	\N	\N	3	AB	\N
-200778	حَرف	noun	\N	\N	3	AB	\N
-200779	حَرفِ اِضافه	noun	\N	\N	3	AB	\N
-200780	حَرف‌زَدَن با	verb	\N	\N	3	AB	\N
-200781	حِسابدار	noun	\N	\N	3	AB	\N
-200782	حَسّاس	adjective	\N	\N	3	AB	\N
-200783	حَشَره	noun	\N	\N	3	AB	\N
-200784	حُکومت	noun	\N	\N	3	AB	\N
-200785	حَمّام	noun	\N	\N	3	AB	\N
-200786	حوله	noun	\N	\N	3	AB	\N
-200787	حَیاط	noun	\N	\N	3	AB	\N
-200788	خارِج	noun	\N	\N	3	AB	\N
-200789	خارِجی	adjective	\N	\N	3	AB	\N
-200790	خاص	adjective	\N	\N	3	AB	\N
-200791	خاله	noun	\N	\N	3	AB	\N
-200792	خالی	adjective	\N	\N	3	AB	\N
-200793	خانُم	noun	\N	\N	3	AB	\N
-200794	خانِوادِگی	adjective	\N	\N	3	AB	\N
-200795	خانِواده	noun	\N	\N	3	AB	\N
-200796	خانه	noun	\N	\N	3	AB	\N
-200797	خانه‌دار	noun	\N	\N	3	AB	\N
-200798	خانه‌داری	noun	\N	\N	3	AB	\N
-200799	خاورمیانِه	noun	\N	\N	3	AB	\N
-200800	خُب	adverb	\N	\N	3	AB	\N
-200801	خَبَرنگار	noun	\N	\N	3	AB	\N
-200802	خُدا رو شُکر	phrase	\N	\N	3	AB	\N
-200803	خُداحافظ	phrase	\N	\N	3	AB	\N
-200804	خُرداد	noun	\N	\N	3	AB	\N
-200805	خَرید	noun	\N	\N	3	AB	\N
-200806	خَریدار	noun	\N	\N	3	AB	\N
-200807	خَرید کَردَن	verb	\N	\N	3	AB	\N
-200808	خَریدَن	verb	\N	\N	3	AB	\N
-200809	خَستِگی	noun	\N	\N	3	AB	\N
-200810	خَسته	adjective	\N	\N	3	AB	\N
-200811	خَسته‌کُننده	adjective	\N	\N	3	AB	\N
-200812	خَط	noun	\N	\N	3	AB	\N
-200813	خَط کِشیدَن	verb	\N	\N	3	AB	\N
-200814	خَطَرناک	adjective	\N	\N	3	AB	\N
-200815	خَط‌کِش	noun	\N	\N	3	AB	\N
-200816	خَلَبان	noun	\N	\N	3	AB	\N
-200817	خَلوَت	adjective	\N	\N	3	AB	\N
-200818	خَمیردَندان	noun	\N	\N	3	AB	\N
-200819	خَنیدَن به	verb	\N	\N	3	AB	\N
-200820	خُنَک	adjective	\N	\N	3	AB	\N
-200821	خواب	noun	\N	\N	3	AB	\N
-200822	خوابگاه	noun	\N	\N	3	AB	\N
-200823	خوابیدَن	verb	\N	\N	3	AB	\N
-200824	خواستَن	verb	\N	\N	3	AB	\N
-200825	خواستَن (درخواست)	verb	\N	\N	3	AB	\N
-200826	خواندَن	verb	\N	\N	3	AB	\N
-200827	خواننده	noun	\N	\N	3	AB	\N
-200828	خواهر	noun	\N	\N	3	AB	\N
-200829	خواهِش می‌کُنم	phrase	\N	\N	3	AB	\N
-200830	خوب (صِفَت)	adjective	\N	\N	3	AB	\N
-200831	خوب (قِید)	adverb	\N	\N	3	AB	\N
-200832	خود	pronoun	\N	\N	3	AB	\N
-200833	خودرو	noun	\N	\N	3	AB	\N
-200834	خودکار	noun	\N	\N	3	AB	\N
-200835	خوراکی	noun	\N	\N	3	AB	\N
-200836	خورشید	noun	\N	\N	3	AB	\N
-200837	خورشیدی	adjective	\N	\N	3	AB	\N
-200838	خوش آمَدید!	phrase	\N	\N	3	AB	\N
-200839	خوشحال	adjective	\N	\N	3	AB	\N
-200840	خوشمزه	adjective	\N	\N	3	AB	\N
-200841	خیابان	noun	\N	\N	3	AB	\N
-200842	خیاطی	noun	\N	\N	3	AB	\N
-200843	دَر	noun	\N	\N	3	AB	\N
-200844	دَه	number	\N	\N	3	AB	\N
-200845	داخِل	noun	\N	\N	3	AB	\N
-200846	دادَن	verb	\N	\N	3	AB	\N
-200847	داشتَن	verb	\N	\N	3	AB	\N
-200848	دامَن	noun	\N	\N	3	AB	\N
-200849	دانِستَن	verb	\N	\N	3	AB	\N
-200850	دانش‌آموز	noun	\N	\N	3	AB	\N
-200851	دانشجو	noun	\N	\N	3	AB	\N
-200852	دانشکده	noun	\N	\N	3	AB	\N
-200853	دانشگاه	noun	\N	\N	3	AB	\N
-200854	دایی	noun	\N	\N	3	AB	\N
-200855	دبیرستان	noun	\N	\N	3	AB	\N
-200856	دُختَر	noun	\N	\N	3	AB	\N
-200857	دُختَر (فرزند)	noun	\N	\N	3	AB	\N
-200858	در پایانِ ...	preposition	\N	\N	3	AB	\N
-200859	در خانه ماندَن	verb	\N	\N	3	AB	\N
-200860	در موردِ	preposition	\N	\N	3	AB	\N
-200861	دَرآمَد	noun	\N	\N	3	AB	\N
-200862	دَرباره	preposition	\N	\N	3	AB	\N
-200863	دَرخت	noun	\N	\N	3	AB	\N
-200864	دَرس	noun	\N	\N	3	AB	\N
-200865	دُرُست	adjective	\N	\N	3	AB	\N
-200866	دُرُست کَردَن	verb	\N	\N	3	AB	\N
-200867	دَرس خواندَن	verb	\N	\N	3	AB	\N
-200868	دَرس دادَن	verb	\N	\N	3	AB	\N
-200869	دَرکِ مَطلَب	noun	\N	\N	3	AB	\N
-200870	دَرون	preposition	\N	\N	3	AB	\N
-200871	دَریا	noun	\N	\N	3	AB	\N
-200872	دَست	noun	\N	\N	3	AB	\N
-200873	دَست زَدَن به	verb	\N	\N	3	AB	\N
-200874	دَست زَدَن برای	verb	\N	\N	3	AB	\N
-200875	دَستکِش	noun	\N	\N	3	AB	\N
-200876	دَستمال	noun	\N	\N	3	AB	\N
-200877	دَسته	noun	\N	\N	3	AB	\N
-200878	دَسته‌بَندی	noun	\N	\N	3	AB	\N
-200879	دَشت	noun	\N	\N	3	AB	\N
-200880	دَفتَر	noun	\N	\N	3	AB	\N
-200881	دَفتَرچه	noun	\N	\N	3	AB	\N
-200882	دَفتَرِ کار	noun	\N	\N	3	AB	\N
-200883	دقیقاً	adverb	\N	\N	3	AB	\N
-200884	دقیقه	noun	\N	\N	3	AB	\N
-200885	دُکتُر	noun	\N	\N	3	AB	\N
-200886	دُنیا	noun	\N	\N	3	AB	\N
-200887	دو	number	\N	\N	3	AB	\N
-200888	دوباره	adverb	\N	\N	3	AB	\N
-200889	دوچَرخه	noun	\N	\N	3	AB	\N
-200890	دوچَرخه‌سَواری	noun	\N	\N	3	AB	\N
-200891	دور اَز	preposition	\N	\N	3	AB	\N
-200892	دور اَنداختَن	verb	\N	\N	3	AB	\N
-200893	دور ریختَن	verb	\N	\N	3	AB	\N
-200894	دورِ چیزی خَط کِشیدَن	verb	\N	\N	3	AB	\N
-200895	دوست	noun	\N	\N	3	AB	\N
-200896	دوستانه	adjective	\N	\N	3	AB	\N
-200897	دوست داشتَن	verb	\N	\N	3	AB	\N
-200898	دوش	noun	\N	\N	3	AB	\N
-200899	دوش گِرِفتَن	verb	\N	\N	3	AB	\N
-200900	دوشَنبه	noun	\N	\N	3	AB	\N
-200901	دوقُلو	noun	\N	\N	3	AB	\N
-200902	دُوُم	adjective	\N	\N	3	AB	\N
-200903	دونَفره	adjective	\N	\N	3	AB	\N
-200904	دوییدَن	verb	\N	\N	3	AB	\N
-200905	دی	noun	\N	\N	3	AB	\N
-200906	دیدَن	verb	\N	\N	3	AB	\N
-200907	دیر رَسیدَن	verb	\N	\N	3	AB	\N
-200908	دیس	noun	\N	\N	3	AB	\N
-200909	دیگر	adjective	\N	\N	3	AB	\N
-200910	دیگری	pronoun	\N	\N	3	AB	\N
-200911	دیوار	noun	\N	\N	3	AB	\N
-200912	ذَخیره کَردَن	verb	\N	\N	3	AB	\N
-200913	راحَت	adjective	\N	\N	3	AB	\N
-200914	راستی	adverb	\N	\N	3	AB	\N
-200915	راضی	adjective	\N	\N	3	AB	\N
-200916	رانَندگی	noun	\N	\N	3	AB	\N
-200917	رانَندگی کَردَن	verb	\N	\N	3	AB	\N
-200918	راننده	noun	\N	\N	3	AB	\N
-200919	راه‌آهَن	noun	\N	\N	3	AB	\N
-200920	راهنما	noun	\N	\N	3	AB	\N
-200921	رُبع	noun	\N	\N	3	AB	\N
-200922	رَختِخواب	noun	\N	\N	3	AB	\N
-200923	رِستوران	noun	\N	\N	3	AB	\N
-200924	رَسمی	adjective	\N	\N	3	AB	\N
-200925	رَسیدَن	verb	\N	\N	3	AB	\N
-200926	رِشته	noun	\N	\N	3	AB	\N
-200927	رَفتَن	verb	\N	\N	3	AB	\N
-200928	رَفت‌وآمَد	noun	\N	\N	3	AB	\N
-200929	رِکورد	noun	\N	\N	3	AB	\N
-200930	رَنگ	noun	\N	\N	3	AB	\N
-200931	روان‌شِناسی	noun	\N	\N	3	AB	\N
-200932	روبه‌رویِ	preposition	\N	\N	3	AB	\N
-200933	روز	noun	\N	\N	3	AB	\N
-200934	روزانه	adjective	\N	\N	3	AB	\N
-200935	روزنامه	noun	\N	\N	3	AB	\N
-200936	روستا	noun	\N	\N	3	AB	\N
-200937	روسَری	noun	\N	\N	3	AB	\N
-200938	روشَن	adjective	\N	\N	3	AB	\N
-200939	رویِ	preposition	\N	\N	3	AB	\N
-200940	رویداد	noun	\N	\N	3	AB	\N
-200941	ریاضی	noun	\N	\N	3	AB	\N
-200942	ریشه	noun	\N	\N	3	AB	\N
-200943	زُباله	noun	\N	\N	3	AB	\N
-200944	زَبان	noun	\N	\N	3	AB	\N
-200945	زَبانِ فارسی	noun	\N	\N	3	AB	\N
-200946	زَبانِ گُفتار	noun	\N	\N	3	AB	\N
-200947	زَبانِ مادری	noun	\N	\N	3	AB	\N
-200948	زِبِر	adjective	\N	\N	3	AB	\N
-200949	زَرد	adjective	\N	\N	3	AB	\N
-200950	زِشت	adjective	\N	\N	3	AB	\N
-200951	زَمان	noun	\N	\N	3	AB	\N
-200952	زِمِستان	noun	\N	\N	3	AB	\N
-200953	زَمـین	noun	\N	\N	3	AB	\N
-200954	زَن	noun	\N	\N	3	AB	\N
-200955	زَنبورِعَسَل	noun	\N	\N	3	AB	\N
-200956	زِندگی	noun	\N	\N	3	AB	\N
-200957	زِندگی کَردَن	verb	\N	\N	3	AB	\N
-200958	زِنده مـاندَن	verb	\N	\N	3	AB	\N
-200959	زَنگ زَدَن	verb	\N	\N	3	AB	\N
-200960	زَنگ (ساعَت)	noun	\N	\N	3	AB	\N
-200961	زود (صِفَت)	adjective	\N	\N	3	AB	\N
-200962	زود (قِید)	adverb	\N	\N	3	AB	\N
-200963	زیبا	adjective	\N	\N	3	AB	\N
-200964	زیر	preposition	\N	\N	3	AB	\N
-200965	زیرپایی	noun	\N	\N	3	AB	\N
-200966	زیرِچیزی‌خَط کِشیدَن	verb	\N	\N	3	AB	\N
-200967	زیستگاه	noun	\N	\N	3	AB	\N
-200968	ژاکِت	noun	\N	\N	3	AB	\N
-200969	سُؤال	noun	\N	\N	3	AB	\N
-200970	ساخْتِمان	noun	\N	\N	3	AB	\N
-200971	ساخْتَن	verb	\N	\N	3	AB	\N
-200972	ساعَت	noun	\N	\N	3	AB	\N
-200973	ساعَت دیواری	noun	\N	\N	3	AB	\N
-200974	ساعَت مُچی	noun	\N	\N	3	AB	\N
-200975	ساکِنان	noun	\N	\N	3	AB	\N
-200976	سال	noun	\N	\N	3	AB	\N
-200977	سالُنِ وَرزِشی	noun	\N	\N	3	AB	\N
-200978	سایز	noun	\N	\N	3	AB	\N
-200979	سایه	noun	\N	\N	3	AB	\N
-200980	سایه‌اَنداخْتَن رویِ	verb	\N	\N	3	AB	\N
-200981	سَبز	adjective	\N	\N	3	AB	\N
-200982	سَبزه	noun	\N	\N	3	AB	\N
-200983	سَبزی	noun	\N	\N	3	AB	\N
-200984	سَبُک	adjective	\N	\N	3	AB	\N
-200985	سِپَس	adverb	\N	\N	3	AB	\N
-200986	سُتون	noun	\N	\N	3	AB	\N
-200987	سَخت	adjective	\N	\N	3	AB	\N
-200988	سَرد	adjective	\N	\N	3	AB	\N
-200989	سَرزِنده	adjective	\N	\N	3	AB	\N
-200990	سَرگَرمی	noun	\N	\N	3	AB	\N
-200991	سُرمِه‌ای	adjective	\N	\N	3	AB	\N
-200992	سَر‌وصِدا	noun	\N	\N	3	AB	\N
-200993	سِرویس	noun	\N	\N	3	AB	\N
-200994	سَریع	adjective	\N	\N	3	AB	\N
-200995	سِشوار	noun	\N	\N	3	AB	\N
-200996	سَطْل	noun	\N	\N	3	AB	\N
-200997	سَفَر	noun	\N	\N	3	AB	\N
-200998	سَفید	adjective	\N	\N	3	AB	\N
-200999	سَفید‌پوسْت	adjective	\N	\N	3	AB	\N
-201000	سِکّه	noun	\N	\N	3	AB	\N
-201001	سَلام	noun	\N	\N	3	AB	\N
-201002	سَلامَت	noun	\N	\N	3	AB	\N
-201003	سِن	noun	\N	\N	3	AB	\N
-201004	سَنتور	noun	\N	\N	3	AB	\N
-201005	سَنگین	adjective	\N	\N	3	AB	\N
-201006	سَوارشُدَن	verb	\N	\N	3	AB	\N
-201007	سوپ	noun	\N	\N	3	AB	\N
-201008	سوپِرمارکِت	noun	\N	\N	3	AB	\N
-201009	سوراخ	noun	\N	\N	3	AB	\N
-201010	سوغاتی	noun	\N	\N	3	AB	\N
-201011	سِوُّم	adjective	\N	\N	3	AB	\N
-201012	سونا	noun	\N	\N	3	AB	\N
-201013	سه	number	\N	\N	3	AB	\N
-201014	سه‌شَنبه	noun	\N	\N	3	AB	\N
-201015	سیاه	adjective	\N	\N	3	AB	\N
-201016	سیب	noun	\N	\N	3	AB	\N
-201017	سیب‌زَمـینی	noun	\N	\N	3	AB	\N
-201018	سی‌دی	noun	\N	\N	3	AB	\N
-201019	سیگارکِشیدَن	verb	\N	\N	3	AB	\N
-201020	سینِما	noun	\N	\N	3	AB	\N
-201021	شَدید	adjective	\N	\N	3	AB	\N
-201022	شاد	adjective	\N	\N	3	AB	\N
-201023	شاگِرد(وَردَسْت)	noun	\N	\N	3	AB	\N
-201024	شال	noun	\N	\N	3	AB	\N
-201025	شالِ گَردَن	noun	\N	\N	3	AB	\N
-201026	شام	noun	\N	\N	3	AB	\N
-201027	شام‌خوردَن	verb	\N	\N	3	AB	\N
-201028	شَب	noun	\N	\N	3	AB	\N
-201029	شَبَکه	noun	\N	\N	3	AB	\N
-201030	شَبیه	adjective	\N	\N	3	AB	\N
-201031	شُدَن	verb	\N	\N	3	AB	\N
-201032	شَرجی	adjective	\N	\N	3	AB	\N
-201033	شَرق	noun	\N	\N	3	AB	\N
-201034	شِرکَت	noun	\N	\N	3	AB	\N
-201035	شِرکَت کَردَن	verb	\N	\N	3	AB	\N
-201036	شُروع	noun	\N	\N	3	AB	\N
-201037	شُروع‌شُدَن	verb	\N	\N	3	AB	\N
-201038	شُستَشو	noun	\N	\N	3	AB	\N
-201039	شُستَن	verb	\N	\N	3	AB	\N
-201040	شِش	number	\N	\N	3	AB	\N
-201041	شِعر	noun	\N	\N	3	AB	\N
-201042	شُغل	noun	\N	\N	3	AB	\N
-201043	شِکَر	noun	\N	\N	3	AB	\N
-201044	شِکل	noun	\N	\N	3	AB	\N
-201045	شُکُلات	noun	\N	\N	3	AB	\N
-201046	شَلْوار	noun	\N	\N	3	AB	\N
-201047	شُلوغ	adjective	\N	\N	3	AB	\N
-201048	شُما	pronoun	\N	\N	3	AB	\N
-201049	شُمارِش	noun	\N	\N	3	AB	\N
-201050	شُماره	noun	\N	\N	3	AB	\N
-201051	شُمال	noun	\N	\N	3	AB	\N
-201052	شِمُردَن	verb	\N	\N	3	AB	\N
-201053	شَمسی	adjective	\N	\N	3	AB	\N
-201054	شَن	noun	\N	\N	3	AB	\N
-201055	شِناخْتَن	verb	\N	\N	3	AB	\N
-201056	شِناسه	noun	\N	\N	3	AB	\N
-201057	شَنبه	noun	\N	\N	3	AB	\N
-201058	شِنیدَن	verb	\N	\N	3	AB	\N
-201059	شوهَر	noun	\N	\N	3	AB	\N
-201060	شَهْر	noun	\N	\N	3	AB	\N
-201061	شَهْریوَر	noun	\N	\N	3	AB	\N
-201062	شیر(نوشیدنی)	noun	\N	\N	3	AB	\N
-201063	شیمیایی	adjective	\N	\N	3	AB	\N
-201064	صاف	adjective	\N	\N	3	AB	\N
-201065	صُبْح	noun	\N	\N	3	AB	\N
-201066	صُبْحانه‌خوردَن	verb	\N	\N	3	AB	\N
-201067	صَبْرکَردَن	verb	\N	\N	3	AB	\N
-201068	صُحْبَت	noun	\N	\N	3	AB	\N
-201069	صُحْبَت کَردَن	verb	\N	\N	3	AB	\N
-201070	صَد	number	\N	\N	3	AB	\N
-201071	صِدا	noun	\N	\N	3	AB	\N
-201072	صِفَت	noun	\N	\N	3	AB	\N
-201073	صِفَتِ بَرتَر	noun	\N	\N	3	AB	\N
-201074	صِفَتِ بَرتَرین	noun	\N	\N	3	AB	\N
-201075	صَفْحه	noun	\N	\N	3	AB	\N
-201076	صَنْدَلی	noun	\N	\N	3	AB	\N
-201077	صورَت	noun	\N	\N	3	AB	\N
-201078	صورَتی	adjective	\N	\N	3	AB	\N
-201079	ضَرَر داشتَن بَرایِ	verb	\N	\N	3	AB	\N
-201080	ضَعیف(نورِضَعیف)	adjective	\N	\N	3	AB	\N
-201081	ضَمیرِاِشاره	noun	\N	\N	3	AB	\N
-201082	ضَمیرِفاعِلی	noun	\N	\N	3	AB	\N
-201083	طِبْقِ	preposition	\N	\N	3	AB	\N
-201084	طَبَقه	noun	\N	\N	3	AB	\N
-201085	طَبیعَت	noun	\N	\N	3	AB	\N
-201086	طُلوع	noun	\N	\N	3	AB	\N
-201087	طول	noun	\N	\N	3	AB	\N
-201088	ظَرف	noun	\N	\N	3	AB	\N
-201089	ظُهْر	noun	\N	\N	3	AB	\N
-201090	عادَت	noun	\N	\N	3	AB	\N
-201091	عِبارَت	noun	\N	\N	3	AB	\N
-201092	عُبور	noun	\N	\N	3	AB	\N
-201093	عَجَله	noun	\N	\N	3	AB	\N
-201094	عَدَد	noun	\N	\N	3	AB	\N
-201095	عَرْض	noun	\N	\N	3	AB	\N
-201096	عَروسَک	noun	\N	\N	3	AB	\N
-201097	عَروسی	noun	\N	\N	3	AB	\N
-201098	عِشْق	noun	\N	\N	3	AB	\N
-201099	عَصَبانی	adjective	\N	\N	3	AB	\N
-201100	عَصْرانه	noun	\N	\N	3	AB	\N
-201101	عُضْو	noun	\N	\N	3	AB	\N
-201102	عَکْس	noun	\N	\N	3	AB	\N
-201103	عَلاقه	noun	\N	\N	3	AB	\N
-201104	علاقه‌مَنْد	adjective	\N	\N	3	AB	\N
-201105	عَلامَت	noun	\N	\N	3	AB	\N
-201106	عَلامَت‌زَدَن	verb	\N	\N	3	AB	\N
-201107	عُمْر کَردَن	verb	\N	\N	3	AB	\N
-201108	عَمـو	noun	\N	\N	3	AB	\N
-201109	عَمّه	noun	\N	\N	3	AB	\N
-201110	عُنْوان	noun	\N	\N	3	AB	\N
-201111	عِینَک	noun	\N	\N	3	AB	\N
-201112	عِینَکِ آفتابی	noun	\N	\N	3	AB	\N
-201113	غِذا	noun	\N	\N	3	AB	\N
-201114	غَرْب	noun	\N	\N	3	AB	\N
-201115	غُروب	noun	\N	\N	3	AB	\N
-201116	غَریبه	noun	\N	\N	3	AB	\N
-201117	غِیر اَز	preposition	\N	\N	3	AB	\N
-201118	فِر(مویِ فِر)	noun	\N	\N	3	AB	\N
-201119	فَراغَت	noun	\N	\N	3	AB	\N
-201120	فَرد	noun	\N	\N	3	AB	\N
-201121	فَردا	noun	\N	\N	3	AB	\N
-201122	فَرْزَنْد	noun	\N	\N	3	AB	\N
-201123	فَرْش	noun	\N	\N	3	AB	\N
-201124	فُرصَت	noun	\N	\N	3	AB	\N
-201125	فَرْض کَردَن	verb	\N	\N	3	AB	\N
-201126	فَرْق	noun	\N	\N	3	AB	\N
-201127	فُروخْتَن	verb	\N	\N	3	AB	\N
-201128	فُرودگاه	noun	\N	\N	3	AB	\N
-201129	فَرْوَرْدین	noun	\N	\N	3	AB	\N
-201130	فُروشگاه	noun	\N	\N	3	AB	\N
-201131	فُروشَنْده	noun	\N	\N	3	AB	\N
-201132	فَرْهَنْگ	noun	\N	\N	3	AB	\N
-201133	فَصْل	noun	\N	\N	3	AB	\N
-201134	فَعالیَّت	noun	\N	\N	3	AB	\N
-201135	فِعْل	noun	\N	\N	3	AB	\N
-201136	فِعْلِ اَمْر	noun	\N	\N	3	AB	\N
-201137	فَقَط	adverb	\N	\N	3	AB	\N
-201138	فِکْر کَردَن	verb	\N	\N	3	AB	\N
-201139	فِلفِل	noun	\N	\N	3	AB	\N
-201140	فِلفِل‌دُلمه‌ای	noun	\N	\N	3	AB	\N
-201141	فِنجان	noun	\N	\N	3	AB	\N
-201142	فوریه	noun	\N	\N	3	AB	\N
-201143	فِهْرِست کَردَن	verb	\N	\N	3	AB	\N
-201144	فیزیک	noun	\N	\N	3	AB	\N
-201145	قارِه	noun	\N	\N	3	AB	\N
-201146	قاضی	noun	\N	\N	3	AB	\N
-201147	قاعدِه	noun	\N	\N	3	AB	\N
-201148	قَبْل	adjective	\N	\N	3	AB	\N
-201149	قَبْل اَز	preposition	\N	\N	3	AB	\N
-201150	قَد	noun	\N	\N	3	AB	\N
-201151	قَدبُلَند	adjective	\N	\N	3	AB	\N
-201152	قَدکوتاه	adjective	\N	\N	3	AB	\N
-201153	قَدَم	noun	\N	\N	3	AB	\N
-201154	قَدَم‌زَدَن	verb	\N	\N	3	AB	\N
-201155	قَدیمـی	adjective	\N	\N	3	AB	\N
-201156	قَرار دادَن	verb	\N	\N	3	AB	\N
-201157	قَرار داشتَن	verb	\N	\N	3	AB	\N
-201158	قَرار گِرِفتَن	verb	\N	\N	3	AB	\N
-201159	قِرمِز	adjective	\N	\N	3	AB	\N
-201160	قِطار	noun	\N	\N	3	AB	\N
-201161	قَفَس	noun	\N	\N	3	AB	\N
-201162	قَفَسه	noun	\N	\N	3	AB	\N
-201163	قَول‌دادَن	verb	\N	\N	3	AB	\N
-201164	قَهوه	noun	\N	\N	3	AB	\N
-201165	قهوه‌ای	adjective	\N	\N	3	AB	\N
-201166	قِید	noun	\N	\N	3	AB	\N
-201167	قیمَت	noun	\N	\N	3	AB	\N
-201168	کَرِه	noun	\N	\N	3	AB	\N
-201169	کِرِم	noun	\N	\N	3	AB	\N
-201170	کِرْم	noun	\N	\N	3	AB	\N
-201171	کِشو	noun	\N	\N	3	AB	\N
-201172	کابینِت	noun	\N	\N	3	AB	\N
-201173	کار	noun	\N	\N	3	AB	\N
-201174	کارت	noun	\N	\N	3	AB	\N
-201175	کارتِ ویزیت	noun	\N	\N	3	AB	\N
-201176	کارخانه	noun	\N	\N	3	AB	\N
-201177	کارشِناس	noun	\N	\N	3	AB	\N
-201178	کارکَردَن	verb	\N	\N	3	AB	\N
-201179	کارگَر	noun	\N	\N	3	AB	\N
-201180	کارمَنْد	noun	\N	\N	3	AB	\N
-201181	کارهایِ خانه	noun	\N	\N	3	AB	\N
-201182	کافه	noun	\N	\N	3	AB	\N
-201183	کافی شاپ	noun	\N	\N	3	AB	\N
-201184	کامپیوتر	noun	\N	\N	3	AB	\N
-201185	کامِل	adjective	\N	\N	3	AB	\N
-201186	کامِل کَردَن	verb	\N	\N	3	AB	\N
-201187	کُت	noun	\N	\N	3	AB	\N
-201188	کِتاب	noun	\N	\N	3	AB	\N
-201189	کِتاب‌فُروشی	noun	\N	\N	3	AB	\N
-201190	کَتانی	noun	\N	\N	3	AB	\N
-201191	کَثیف	adjective	\N	\N	3	AB	\N
-201192	کُجا	adverb	\N	\N	3	AB	\N
-201193	کُد	noun	\N	\N	3	AB	\N
-201194	کُدام/که	pronoun	\N	\N	3	AB	\N
-201195	کُدام‌یِک	pronoun	\N	\N	3	AB	\N
-201196	کِشتی	noun	\N	\N	3	AB	\N
-201197	کَشْف	noun	\N	\N	3	AB	\N
-201198	کِشوَر	noun	\N	\N	3	AB	\N
-201199	کَفْش	noun	\N	\N	3	AB	\N
-201200	کِلاس	noun	\N	\N	3	AB	\N
-201201	کُلاه	noun	\N	\N	3	AB	\N
-201202	کُلاهِ آفتابی	noun	\N	\N	3	AB	\N
-201203	کِلید	noun	\N	\N	3	AB	\N
-201204	کَم	adjective	\N	\N	3	AB	\N
-201205	کُمُد	noun	\N	\N	3	AB	\N
-201206	کَمَربَند	noun	\N	\N	3	AB	\N
-201207	کُمُک	noun	\N	\N	3	AB	\N
-201208	کَمـی	adverb	\N	\N	3	AB	\N
-201209	کِنار	preposition	\N	\N	3	AB	\N
-201210	کَندو	noun	\N	\N	3	AB	\N
-201211	کوتاه	adjective	\N	\N	3	AB	\N
-201212	کوچَک	adjective	\N	\N	3	AB	\N
-201213	کودَک	noun	\N	\N	3	AB	\N
-201214	کوک‌کَردَن(ساعَت)	verb	\N	\N	3	AB	\N
-201215	کوله‌پُشتی	noun	\N	\N	3	AB	\N
-201216	کَویر	noun	\N	\N	3	AB	\N
-201217	کُهنه	adjective	\N	\N	3	AB	\N
-201218	کیف	noun	\N	\N	3	AB	\N
-201219	کیفِ پول	noun	\N	\N	3	AB	\N
-201220	کِیک	noun	\N	\N	3	AB	\N
-201221	کیلو	noun	\N	\N	3	AB	\N
-201222	کیلومِتر	noun	\N	\N	3	AB	\N
-201223	کیوی	noun	\N	\N	3	AB	\N
-201224	گَرْم	adjective	\N	\N	3	AB	\N
-201225	گُل	noun	\N	\N	3	AB	\N
-201226	گَرَم	noun	\N	\N	3	AB	\N
-201227	گُذَرگاه	noun	\N	\N	3	AB	\N
-201228	گِران	adjective	\N	\N	3	AB	\N
-201229	گَرد و غُبار	noun	\N	\N	3	AB	\N
-201230	گَردگیری	noun	\N	\N	3	AB	\N
-201231	گَردگیری کَردَن	verb	\N	\N	3	AB	\N
-201232	گَردَن	noun	\N	\N	3	AB	\N
-201233	گِرِفتَن	verb	\N	\N	3	AB	\N
-201234	گَرْم کَردَن	verb	\N	\N	3	AB	\N
-201235	گُروه	noun	\N	\N	3	AB	\N
-201236	گُزینه	noun	\N	\N	3	AB	\N
-201237	گُفتاری	adjective	\N	\N	3	AB	\N
-201238	گُفتُگو	noun	\N	\N	3	AB	\N
-201239	گُفتُگوکَردَن	verb	\N	\N	3	AB	\N
-201240	گُفتَن	verb	\N	\N	3	AB	\N
-201241	گُلدان	noun	\N	\N	3	AB	\N
-201242	گَلودَرد	noun	\N	\N	3	AB	\N
-201243	گُم‌شُدَن	verb	\N	\N	3	AB	\N
-201244	گوجه‌فَرَنگی	noun	\N	\N	3	AB	\N
-201245	گوش	noun	\N	\N	3	AB	\N
-201246	گوش‌دادَن	verb	\N	\N	3	AB	\N
-201247	گوش‌کَردَن	verb	\N	\N	3	AB	\N
-201248	گوشی	noun	\N	\N	3	AB	\N
-201249	گیتار	noun	\N	\N	3	AB	\N
-201250	گیج	adjective	\N	\N	3	AB	\N
-201251	گیلاس	noun	\N	\N	3	AB	\N
-201252	گینِس	noun	\N	\N	3	AB	\N
-201253	لاغَر	adjective	\N	\N	3	AB	\N
-201254	لامپ	noun	\N	\N	3	AB	\N
-201255	لانه	noun	\N	\N	3	AB	\N
-201256	لِباس	noun	\N	\N	3	AB	\N
-201257	لَبَنیات	noun	\N	\N	3	AB	\N
-201258	لَپ‌تاپ	noun	\N	\N	3	AB	\N
-201259	لُطْفاً	adverb	\N	\N	3	AB	\N
-201260	لیوان	noun	\N	\N	3	AB	\N
-201261	مُؤدَبانه	adverb	\N	\N	3	AB	\N
-201262	مُؤسَسۀ‌تَحقـیقاتی	noun	\N	\N	3	AB	\N
-201263	مادَر	noun	\N	\N	3	AB	\N
-201264	مادَربُزُرگ	noun	\N	\N	3	AB	\N
-201265	مادّه	noun	\N	\N	3	AB	\N
-201266	ماژیک	noun	\N	\N	3	AB	\N
-201267	ماست	noun	\N	\N	3	AB	\N
-201268	ماشین	noun	\N	\N	3	AB	\N
-201269	مالِ کِسی بودَن	verb	\N	\N	3	AB	\N
-201270	مالِکیَّت	noun	\N	\N	3	AB	\N
-201271	مالیدَن	verb	\N	\N	3	AB	\N
-201272	مامان	noun	\N	\N	3	AB	\N
-201273	مانتو	noun	\N	\N	3	AB	\N
-201274	مانندِ	preposition	\N	\N	3	AB	\N
-201275	ماه	noun	\N	\N	3	AB	\N
-201276	مبل	noun	\N	\N	3	AB	\N
-201277	متأهل	adjective	\N	\N	3	AB	\N
-201278	متر	noun	\N	\N	3	AB	\N
-201279	مترجم	noun	\N	\N	3	AB	\N
-201280	مترو	noun	\N	\N	3	AB	\N
-201281	متشکرم	phrase	\N	\N	3	AB	\N
-201282	متن	noun	\N	\N	3	AB	\N
-201283	متنفر بودن	verb	\N	\N	3	AB	\N
-201284	مثال	noun	\N	\N	3	AB	\N
-201285	مثبت	adjective	\N	\N	3	AB	\N
-201286	مثل	preposition	\N	\N	3	AB	\N
-201287	مثلث	noun	\N	\N	3	AB	\N
-201288	مجرد	adjective	\N	\N	3	AB	\N
-201289	مجری	noun	\N	\N	3	AB	\N
-201290	محافظت	noun	\N	\N	3	AB	\N
-201291	محل کار	noun	\N	\N	3	AB	\N
-201292	مختلف	adjective	\N	\N	3	AB	\N
-201293	مخصوصاً	adverb	\N	\N	3	AB	\N
-201294	مدرسه	noun	\N	\N	3	AB	\N
-201295	مدرسه ابتدایی	noun	\N	\N	3	AB	\N
-201296	مدرک	noun	\N	\N	3	AB	\N
-201297	مدل (مدل مو)	noun	\N	\N	3	AB	\N
-201298	مدیر	noun	\N	\N	3	AB	\N
-201299	مراقبت	noun	\N	\N	3	AB	\N
-201300	مربوط	adjective	\N	\N	3	AB	\N
-201301	مربی	noun	\N	\N	3	AB	\N
-201302	مرتب	adjective	\N	\N	3	AB	\N
-201303	مرتب کردن	verb	\N	\N	3	AB	\N
-201304	مرحله	noun	\N	\N	3	AB	\N
-201305	مرد	noun	\N	\N	3	AB	\N
-201306	مرداد	noun	\N	\N	3	AB	\N
-201307	مرغ مینا	noun	\N	\N	3	AB	\N
-201308	مسابقه	noun	\N	\N	3	AB	\N
-201309	مسافر	noun	\N	\N	3	AB	\N
-201310	مسافرت	noun	\N	\N	3	AB	\N
-201311	مسافرت رفتن	verb	\N	\N	3	AB	\N
-201312	مستقیم	adjective	\N	\N	3	AB	\N
-201313	مستند	noun	\N	\N	3	AB	\N
-201314	مسجد	noun	\N	\N	3	AB	\N
-201315	مسواک	noun	\N	\N	3	AB	\N
-201316	مسیر	noun	\N	\N	3	AB	\N
-201317	مشاور تحصیلی	noun	\N	\N	3	AB	\N
-201318	مشتری	noun	\N	\N	3	AB	\N
-201319	مشخص کردن	verb	\N	\N	3	AB	\N
-201320	مشکی	adjective	\N	\N	3	AB	\N
-201321	مشهور	adjective	\N	\N	3	AB	\N
-201322	مصدر	noun	\N	\N	3	AB	\N
-201323	مضر	adjective	\N	\N	3	AB	\N
-201324	مطالعه	noun	\N	\N	3	AB	\N
-201325	مطالعه کردن	verb	\N	\N	3	AB	\N
-201326	مطب	noun	\N	\N	3	AB	\N
-201327	معتدل	adjective	\N	\N	3	AB	\N
-201328	معرفی	noun	\N	\N	3	AB	\N
-201329	معرفی کردن	verb	\N	\N	3	AB	\N
-201330	معروف	adjective	\N	\N	3	AB	\N
-201331	معلم	noun	\N	\N	3	AB	\N
-201332	معلول	adjective	\N	\N	3	AB	\N
-201333	معما	noun	\N	\N	3	AB	\N
-201334	معمولاً	adverb	\N	\N	3	AB	\N
-201335	معمولی	adjective	\N	\N	3	AB	\N
-201336	مغازه	noun	\N	\N	3	AB	\N
-201337	مفرد	adjective	\N	\N	3	AB	\N
-201338	مفصل	adjective	\N	\N	3	AB	\N
-201339	مفید	adjective	\N	\N	3	AB	\N
-201340	مقاله	noun	\N	\N	3	AB	\N
-201341	مقایسه	noun	\N	\N	3	AB	\N
-201342	مقایسه کردن	verb	\N	\N	3	AB	\N
-201343	مقصد	noun	\N	\N	3	AB	\N
-201344	مقوایی	adjective	\N	\N	3	AB	\N
-201345	مکالمه	noun	\N	\N	3	AB	\N
-201346	مکان	noun	\N	\N	3	AB	\N
-201347	مکان عمومی	noun	\N	\N	3	AB	\N
-201348	مکعب	noun	\N	\N	3	AB	\N
-201349	ملکی	adjective	\N	\N	3	AB	\N
-201350	ملی	adjective	\N	\N	3	AB	\N
-201351	ملیت	noun	\N	\N	3	AB	\N
-201352	ممنون!	phrase	\N	\N	3	AB	\N
-201353	من	pronoun	\N	\N	3	AB	\N
-201354	مناسب	adjective	\N	\N	3	AB	\N
-201355	منزل	noun	\N	\N	3	AB	\N
-201356	منشی	noun	\N	\N	3	AB	\N
-201357	منفی	adjective	\N	\N	3	AB	\N
-201358	مو	noun	\N	\N	3	AB	\N
-201359	مواد	noun	\N	\N	3	AB	\N
-201360	موبایل (تلفن همراه)	noun	\N	\N	3	AB	\N
-201361	موجود	noun	\N	\N	3	AB	\N
-201362	موز	noun	\N	\N	3	AB	\N
-201363	موسیقی	noun	\N	\N	3	AB	\N
-201364	موضوع	noun	\N	\N	3	AB	\N
-201365	موقع	noun	\N	\N	3	AB	\N
-201366	موقعیت	noun	\N	\N	3	AB	\N
-201367	مهر	noun	\N	\N	3	AB	\N
-201368	مهربان	adjective	\N	\N	3	AB	\N
-201369	مهم	adjective	\N	\N	3	AB	\N
-201370	مهمان	noun	\N	\N	3	AB	\N
-201371	مهمانی	noun	\N	\N	3	AB	\N
-201372	مهندس	noun	\N	\N	3	AB	\N
-201373	میدان	noun	\N	\N	3	AB	\N
-201374	میز	noun	\N	\N	3	AB	\N
-201375	میزبان	noun	\N	\N	3	AB	\N
-201376	میز تحریر	noun	\N	\N	3	AB	\N
-201377	میلیون	number	\N	\N	3	AB	\N
-201378	میوه	noun	\N	\N	3	AB	\N
-201379	میوه فروش	noun	\N	\N	3	AB	\N
-201380	میوه فروشی	noun	\N	\N	3	AB	\N
-201381	نابغه	noun	\N	\N	3	AB	\N
-201382	نابینا	adjective	\N	\N	3	AB	\N
-201383	نادرست	adjective	\N	\N	3	AB	\N
-201384	نارنجی	adjective	\N	\N	3	AB	\N
-201385	نام	noun	\N	\N	3	AB	\N
-201386	نام خانوادگی	noun	\N	\N	3	AB	\N
-201387	نامرتب	adjective	\N	\N	3	AB	\N
-201388	نان	noun	\N	\N	3	AB	\N
-201389	ناهار	noun	\N	\N	3	AB	\N
-201390	نبش	noun	\N	\N	3	AB	\N
-201391	نجاری	noun	\N	\N	3	AB	\N
-201392	نرم	adjective	\N	\N	3	AB	\N
-201393	نرمال	adjective	\N	\N	3	AB	\N
-201394	نزدیک	adjective	\N	\N	3	AB	\N
-201395	نزدیک شدن	verb	\N	\N	3	AB	\N
-201396	نسبت	noun	\N	\N	3	AB	\N
-201397	نسبت داشتن با	verb	\N	\N	3	AB	\N
-201398	نشانه	noun	\N	\N	3	AB	\N
-201399	نشانی	noun	\N	\N	3	AB	\N
-201400	نشستن	verb	\N	\N	3	AB	\N
-201401	نظر	noun	\N	\N	3	AB	\N
-201402	نفت	noun	\N	\N	3	AB	\N
-201403	نفر	noun	\N	\N	3	AB	\N
-201404	نقشه	noun	\N	\N	3	AB	\N
-201405	نقطه	noun	\N	\N	3	AB	\N
-201406	نقطه چین	noun	\N	\N	3	AB	\N
-201407	نگاه کردن	verb	\N	\N	3	AB	\N
-201408	نگران (بودن)	verb	\N	\N	3	AB	\N
-201409	نگهبان	noun	\N	\N	3	AB	\N
-201410	نگهبانی	noun	\N	\N	3	AB	\N
-201411	نگهبانی دادن	verb	\N	\N	3	AB	\N
-201412	نگهداری کردن	verb	\N	\N	3	AB	\N
-201413	نماد	noun	\N	\N	3	AB	\N
-201414	نمره	noun	\N	\N	3	AB	\N
-201415	نمونه	noun	\N	\N	3	AB	\N
-201416	نوبت	noun	\N	\N	3	AB	\N
-201417	نور	noun	\N	\N	3	AB	\N
-201418	نوروز	noun	\N	\N	3	AB	\N
-201419	نوشابه	noun	\N	\N	3	AB	\N
-201420	نوشتاری	adjective	\N	\N	3	AB	\N
-201421	نوشتن	verb	\N	\N	3	AB	\N
-201422	نوشیدنی	noun	\N	\N	3	AB	\N
-201423	نوه	noun	\N	\N	3	AB	\N
-201424	نویسنده	noun	\N	\N	3	AB	\N
-201425	نه	number	\N	\N	3	AB	\N
-201426	نهایی	adjective	\N	\N	3	AB	\N
-201427	نهی	noun	\N	\N	3	AB	\N
-201428	نیاز	noun	\N	\N	3	AB	\N
-201429	نیم	noun	\N	\N	3	AB	\N
-201430	نیمرو	noun	\N	\N	3	AB	\N
-201431	نیمه شب	noun	\N	\N	3	AB	\N
-201432	وارد کردن	verb	\N	\N	3	AB	\N
-201433	واژه	noun	\N	\N	3	AB	\N
-201434	واژه سازی	noun	\N	\N	3	AB	\N
-201435	والدین	noun	\N	\N	3	AB	\N
-201436	وبگردی	noun	\N	\N	3	AB	\N
-201437	وبگردی کردن	verb	\N	\N	3	AB	\N
-201438	وجود داشتن	verb	\N	\N	3	AB	\N
-201439	وحشی	adjective	\N	\N	3	AB	\N
-201440	ورزش	noun	\N	\N	3	AB	\N
-201441	ورزشکار	noun	\N	\N	3	AB	\N
-201442	ورزش کردن	verb	\N	\N	3	AB	\N
-201443	وزن	noun	\N	\N	3	AB	\N
-201444	وسایل	noun	\N	\N	3	AB	\N
-201445	وسایل شخصی	noun	\N	\N	3	AB	\N
-201446	وسط	noun	\N	\N	3	AB	\N
-201447	وسیله	noun	\N	\N	3	AB	\N
-201448	وسیله نقلیه	noun	\N	\N	3	AB	\N
-201449	وصل کردن	verb	\N	\N	3	AB	\N
-201450	وقت	noun	\N	\N	3	AB	\N
-201451	وقت دادن	verb	\N	\N	3	AB	\N
-201452	وقت داشتن	verb	\N	\N	3	AB	\N
-201453	وقت گرفتن	verb	\N	\N	3	AB	\N
-201454	وقت گیر	adjective	\N	\N	3	AB	\N
-201455	وقتی	conjunction	\N	\N	3	AB	\N
-201456	وکیل	noun	\N	\N	3	AB	\N
-201457	ولی	conjunction	\N	\N	3	AB	\N
-201458	ویترین	noun	\N	\N	3	AB	\N
-201459	ویژگی	noun	\N	\N	3	AB	\N
-201460	ویلا	noun	\N	\N	3	AB	\N
-201461	ویلچر	noun	\N	\N	3	AB	\N
-201462	هتل	noun	\N	\N	3	AB	\N
-201463	هرگز	adverb	\N	\N	3	AB	\N
-201464	هزار	number	\N	\N	3	AB	\N
-201465	هشت	number	\N	\N	3	AB	\N
-201466	هفت	number	\N	\N	3	AB	\N
-201467	هفتگی	adjective	\N	\N	3	AB	\N
-201468	هفته	noun	\N	\N	3	AB	\N
-201469	همچنین	adverb	\N	\N	3	AB	\N
-201470	همدیگر	pronoun	\N	\N	3	AB	\N
-201471	همسایه	noun	\N	\N	3	AB	\N
-201472	همسر	noun	\N	\N	3	AB	\N
-201473	همکار	noun	\N	\N	3	AB	\N
-201474	هم کلاسی	noun	\N	\N	3	AB	\N
-201475	همه	pronoun	\N	\N	3	AB	\N
-201476	همه چیز	noun	\N	\N	3	AB	\N
-201477	همیشه	adverb	\N	\N	3	AB	\N
-201478	همین طور	adverb	\N	\N	3	AB	\N
-201479	هنر	noun	\N	\N	3	AB	\N
-201480	هوا	noun	\N	\N	3	AB	\N
-201481	هواپیما	noun	\N	\N	3	AB	\N
-201482	هویج	noun	\N	\N	3	AB	\N
-201483	هیچ کس	pronoun	\N	\N	3	AB	\N
-201484	هیچ وقت	adverb	\N	\N	3	AB	\N
-201485	یاد گرفتن	verb	\N	\N	3	AB	\N
-201486	یادگیری	noun	\N	\N	3	AB	\N
-201487	یک/یکی	number	\N	\N	3	AB	\N
-201488	یکشنبه	noun	\N	\N	3	AB	\N
-201489	یوگا	noun	\N	\N	3	AB	\N
-201490	یک	det	\N	\N	3	A1	\N
-201491	یک	det	\N	\N	3	A1	\N
-201492	درباره	prep	\N	\N	3	A1	\N
-201493	بالای	prep	\N	\N	3	A1	\N
-201494	آن طرف	prep	\N	\N	3	A1	\N
-201495	عمل	n	\N	\N	3	A1	\N
-201496	فعالیت	n	\N	\N	3	A1	\N
-201497	بازیگر	n	\N	\N	3	A1	\N
-201498	بازیگر زن	n	\N	\N	3	A1	\N
-201499	اضافه کردن	v	\N	\N	3	A1	\N
-201500	آدرس	n	\N	\N	3	A1	\N
-201501	بزرگسال	n	\N	\N	3	A1	\N
-201502	ترسیده	adj	\N	\N	3	A1	\N
-201503	بعد از	prep	\N	\N	3	A1	\N
-201504	بعد از ظهر	n	\N	\N	3	A1	\N
-201505	دوباره	adv	\N	\N	3	A1	\N
-201506	سن	n	\N	\N	3	A1	\N
-201507	پیش	adv	\N	\N	3	A1	\N
-201508	هوا	n	\N	\N	3	A1	\N
-201509	فرودگاه	n	\N	\N	3	A1	\N
-201510	همه	det	\N	\N	3	A1	\N
-201511	خوب است	adj	\N	\N	3	A1	\N
-201512	همچنین	adv	\N	\N	3	A1	\N
-201513	همیشه	adv	\N	\N	3	A1	\N
-201514	شگفت‌انگیز	adj	\N	\N	3	A1	\N
-201515	و	conj	\N	\N	3	A1	\N
-201516	عصبانی	adj	\N	\N	3	A1	\N
-201517	حیوان	n	\N	\N	3	A1	\N
-201518	دیگری	det	\N	\N	3	A1	\N
-201519	جواب	n	\N	\N	3	A1	\N
-201520	هر	det	\N	\N	3	A1	\N
-201521	هر کسی	pron	\N	\N	3	A1	\N
-201522	هر چیزی	pron	\N	\N	3	A1	\N
-201523	آپارتمان	n	\N	\N	3	A1	\N
-201524	سیب	n	\N	\N	3	A1	\N
-201525	آوریل	n	\N	\N	3	A1	\N
-201526	منطقه	n	\N	\N	3	A1	\N
-201527	بازو	n	\N	\N	3	A1	\N
-201528	اطراف	prep	\N	\N	3	A1	\N
-201529	رسیدن	v	\N	\N	3	A1	\N
-201530	هنر	n	\N	\N	3	A1	\N
-201531	مقاله	n	\N	\N	3	A1	\N
-201532	هنرمند	n	\N	\N	3	A1	\N
-201533	مثل	prep	\N	\N	3	A1	\N
-201534	پرسیدن	v	\N	\N	3	A1	\N
-201535	در	prep	\N	\N	3	A1	\N
-201536	اوت	n	\N	\N	3	A1	\N
-201537	عمه	n	\N	\N	3	A1	\N
-201538	پاییز	n	\N	\N	3	A1	\N
-201539	دور	adv	\N	\N	3	A1	\N
-201540	نوزاد	n	\N	\N	3	A1	\N
-201541	پشت	adv	\N	\N	3	A1	\N
-201542	بد	adj	\N	\N	3	A1	\N
-201543	کیف	n	\N	\N	3	A1	\N
-201544	توپ	n	\N	\N	3	A1	\N
-201545	موز	n	\N	\N	3	A1	\N
-201546	گروه موسیقی	n	\N	\N	3	A1	\N
-201547	بانک	n	\N	\N	3	A1	\N
-201548	بار	n	\N	\N	3	A1	\N
-201549	حمام	n	\N	\N	3	A1	\N
-201550	دستشویی	n	\N	\N	3	A1	\N
-201551	بودن	v	\N	\N	3	A1	\N
-201552	ساحل	n	\N	\N	3	A1	\N
-201553	زیبا	adj	\N	\N	3	A1	\N
-201554	چون	conj	\N	\N	3	A1	\N
-201555	شدن	v	\N	\N	3	A1	\N
-201556	تخت	n	\N	\N	3	A1	\N
-201557	اتاق خواب	n	\N	\N	3	A1	\N
-201558	آبجو	n	\N	\N	3	A1	\N
-201559	قبل از	prep	\N	\N	3	A1	\N
-201560	شروع کردن	v	\N	\N	3	A1	\N
-201561	ابتدا	n	\N	\N	3	A1	\N
-201562	پشت سر	prep	\N	\N	3	A1	\N
-201563	باور کردن	v	\N	\N	3	A1	\N
-201564	زیر	prep	\N	\N	3	A1	\N
-201565	بهترین	adj	\N	\N	3	A1	\N
-201566	بهتر	adj	\N	\N	3	A1	\N
-201567	بین	prep	\N	\N	3	A1	\N
-201568	دوچرخه	n	\N	\N	3	A1	\N
-201569	بزرگ	adj	\N	\N	3	A1	\N
-201570	کافه	n	\N	\N	3	A1	\N
-201571	کیک	n	\N	\N	3	A1	\N
-201572	زنگ زدن	v	\N	\N	3	A1	\N
-201573	دوربین	n	\N	\N	3	A1	\N
-201574	توانستن	v	\N	\N	3	A1	\N
-201575	ماشین	n	\N	\N	3	A1	\N
-201576	کارت	n	\N	\N	3	A1	\N
-201577	هویج	n	\N	\N	3	A1	\N
-201578	حمل کردن	v	\N	\N	3	A1	\N
-201579	گربه	n	\N	\N	3	A1	\N
-201580	سی‌دی	n	\N	\N	3	A1	\N
-201581	سنت	n	\N	\N	3	A1	\N
-201582	مرکز	n	\N	\N	3	A1	\N
-201583	صندلی	n	\N	\N	3	A1	\N
-201584	تغییر دادن	v	\N	\N	3	A1	\N
-201585	نمودار	n	\N	\N	3	A1	\N
-201586	ارزان	adj	\N	\N	3	A1	\N
-201587	بررسی کردن	v	\N	\N	3	A1	\N
-201588	پنیر	n	\N	\N	3	A1	\N
-201589	مرغ	n	\N	\N	3	A1	\N
-201590	بچه	n	\N	\N	3	A1	\N
-201591	شکلات	n	\N	\N	3	A1	\N
-201592	انتخاب کردن	v	\N	\N	3	A1	\N
-201593	سینما	n	\N	\N	3	A1	\N
-201594	شهر	n	\N	\N	3	A1	\N
-201595	کلاس	n	\N	\N	3	A1	\N
-201596	کلاس درس	n	\N	\N	3	A1	\N
-201597	تمیز	adj	\N	\N	3	A1	\N
-201598	بالا رفتن	v	\N	\N	3	A1	\N
-201599	ساعت	n	\N	\N	3	A1	\N
-201600	بستن	v	\N	\N	3	A1	\N
-201601	لباس	n	\N	\N	3	A1	\N
-201602	باشگاه	n	\N	\N	3	A1	\N
-201603	کت	n	\N	\N	3	A1	\N
-201604	قهوه	n	\N	\N	3	A1	\N
-201605	سرد	adj	\N	\N	3	A1	\N
-201606	دانشکده	n	\N	\N	3	A1	\N
-201607	رنگ	n	\N	\N	3	A1	\N
-201608	آمدن	v	\N	\N	3	A1	\N
-201609	شرکت	n	\N	\N	3	A1	\N
-201610	تکمیل کردن	v	\N	\N	3	A1	\N
-201611	کامپیوتر	n	\N	\N	3	A1	\N
-201612	کنسرت	n	\N	\N	3	A1	\N
-201613	آشپزی کردن	v	\N	\N	3	A1	\N
-201614	آشپزی	n	\N	\N	3	A1	\N
-201615	خنک	adj	\N	\N	3	A1	\N
-201616	درست	adj	\N	\N	3	A1	\N
-201617	قیمت داشتن	v	\N	\N	3	A1	\N
-201618	می‌توانست	v	\N	\N	3	A1	\N
-201619	کشور	n	\N	\N	3	A1	\N
-201620	دوره	n	\N	\N	3	A1	\N
-201621	پسرعمو	n	\N	\N	3	A1	\N
-201622	گاو	n	\N	\N	3	A1	\N
-201623	خامه	n	\N	\N	3	A1	\N
-201624	فنجان	n	\N	\N	3	A1	\N
-201625	بابا	n	\N	\N	3	A1	\N
-201626	روزانه	adj	\N	\N	3	A1	\N
-201627	رقصیدن	v	\N	\N	3	A1	\N
-201628	رقصنده	n	\N	\N	3	A1	\N
-201629	رقص	n	\N	\N	3	A1	\N
-201630	خطرناک	adj	\N	\N	3	A1	\N
-201631	تاریک	adj	\N	\N	3	A1	\N
-201632	تاریخ	n	\N	\N	3	A1	\N
-201633	دختر	n	\N	\N	3	A1	\N
-201634	روز	n	\N	\N	3	A1	\N
-201635	عزیز	adj	\N	\N	3	A1	\N
-201636	دسامبر	n	\N	\N	3	A1	\N
-201637	تصمیم گرفتن	v	\N	\N	3	A1	\N
-201638	خوشمزه	adj	\N	\N	3	A1	\N
-201639	میز	n	\N	\N	3	A1	\N
-201640	جزئیات	n	\N	\N	3	A1	\N
-201641	گفتگو	n	\N	\N	3	A1	\N
-201642	فرهنگ لغت	n	\N	\N	3	A1	\N
-201643	مردن	v	\N	\N	3	A1	\N
-201644	رژیم غذایی	n	\N	\N	3	A1	\N
-201645	متفاوت	adj	\N	\N	3	A1	\N
-201646	دشوار	adj	\N	\N	3	A1	\N
-201647	شام	n	\N	\N	3	A1	\N
-201648	کثیف	adj	\N	\N	3	A1	\N
-201649	ظرف	n	\N	\N	3	A1	\N
-201650	انجام دادن	v	\N	\N	3	A1	\N
-201651	دکتر	n	\N	\N	3	A1	\N
-201652	سگ	n	\N	\N	3	A1	\N
-201653	دلار	n	\N	\N	3	A1	\N
-201654	در	n	\N	\N	3	A1	\N
-201655	پایین	adv	\N	\N	3	A1	\N
-201656	طبقه پایین	adv	\N	\N	3	A1	\N
-201657	کشیدن	v	\N	\N	3	A1	\N
-201658	لباس	n	\N	\N	3	A1	\N
-201659	نوشیدن	v	\N	\N	3	A1	\N
-201660	رانندگی کردن	v	\N	\N	3	A1	\N
-201661	راننده	n	\N	\N	3	A1	\N
-201662	رانندگی	n	\N	\N	3	A1	\N
-201663	در طول	prep	\N	\N	3	A1	\N
-201664	دی‌وی‌دی	n	\N	\N	3	A1	\N
-201665	هر	det	\N	\N	3	A1	\N
-201666	گوش	n	\N	\N	3	A1	\N
-201667	زود	adj	\N	\N	3	A1	\N
-201668	شرق	n	\N	\N	3	A1	\N
-201669	آسان	adj	\N	\N	3	A1	\N
-201670	خوردن	v	\N	\N	3	A1	\N
-201671	تخم مرغ	n	\N	\N	3	A1	\N
-201672	هشت	num	\N	\N	3	A1	\N
-201673	هجده	num	\N	\N	3	A1	\N
-201674	هشتاد	num	\N	\N	3	A1	\N
-201675	فیل	n	\N	\N	3	A1	\N
-201676	یازده	num	\N	\N	3	A1	\N
-201677	دیگر	adv	\N	\N	3	A1	\N
-201678	ایمیل	n	\N	\N	3	A1	\N
-201679	پایان	n	\N	\N	3	A1	\N
-201680	لذت بردن	v	\N	\N	3	A1	\N
-201681	کافی	det	\N	\N	3	A1	\N
-201682	یورو	n	\N	\N	3	A1	\N
-201683	حتی	adv	\N	\N	3	A1	\N
-201684	عصر	n	\N	\N	3	A1	\N
-201685	تا به حال	adv	\N	\N	3	A1	\N
-201686	هر	det	\N	\N	3	A1	\N
-201687	همه کس	pron	\N	\N	3	A1	\N
-201688	همه	pron	\N	\N	3	A1	\N
-201689	همه چیز	pron	\N	\N	3	A1	\N
-201690	امتحان	n	\N	\N	3	A1	\N
-201691	مثال	n	\N	\N	3	A1	\N
-201692	هیجان‌زده	adj	\N	\N	3	A1	\N
-201693	هیجان‌انگیز	adj	\N	\N	3	A1	\N
-201694	تمرین	n	\N	\N	3	A1	\N
-201695	گران	adj	\N	\N	3	A1	\N
-201696	توضیح دادن	v	\N	\N	3	A1	\N
-201697	اضافه	adj	\N	\N	3	A1	\N
-201698	چشم	n	\N	\N	3	A1	\N
-201699	صورت	n	\N	\N	3	A1	\N
-201700	افتادن	v	\N	\N	3	A1	\N
-201701	غلط	adj	\N	\N	3	A1	\N
-201702	خانواده	n	\N	\N	3	A1	\N
-201703	مشهور	adj	\N	\N	3	A1	\N
-201704	فوق‌العاده	adj	\N	\N	3	A1	\N
-201705	دور	adv	\N	\N	3	A1	\N
-201706	مزرعه	n	\N	\N	3	A1	\N
-201707	کشاورز	n	\N	\N	3	A1	\N
-201708	سریع	adj	\N	\N	3	A1	\N
-201709	چاق	adj	\N	\N	3	A1	\N
-201710	پدر	n	\N	\N	3	A1	\N
-201711	مورد علاقه	adj	\N	\N	3	A1	\N
-201712	فوریه	n	\N	\N	3	A1	\N
-201713	احساس کردن	v	\N	\N	3	A1	\N
-201714	جشنواره	n	\N	\N	3	A1	\N
-201715	چند	det	\N	\N	3	A1	\N
-201716	پانزده	num	\N	\N	3	A1	\N
-201717	پنجم	num	\N	\N	3	A1	\N
-201718	پنجاه	num	\N	\N	3	A1	\N
-201719	پر کردن	v	\N	\N	3	A1	\N
-201720	فیلم	n	\N	\N	3	A1	\N
-201721	نهایی	adj	\N	\N	3	A1	\N
-201722	پیدا کردن	v	\N	\N	3	A1	\N
-201723	خوب	adj	\N	\N	3	A1	\N
-201724	تمام کردن	v	\N	\N	3	A1	\N
-201725	آتش	n	\N	\N	3	A1	\N
-201726	اول	num	\N	\N	3	A1	\N
-201727	ماهی	n	\N	\N	3	A1	\N
-201728	پنج	num	\N	\N	3	A1	\N
-201729	درست کردن	v	\N	\N	3	A1	\N
-201730	آپارتمان	n	\N	\N	3	A1	\N
-201731	پرواز	n	\N	\N	3	A1	\N
-201732	کف	n	\N	\N	3	A1	\N
-201733	گل	n	\N	\N	3	A1	\N
-201734	پرواز کردن	v	\N	\N	3	A1	\N
-201735	دنبال کردن	v	\N	\N	3	A1	\N
-201736	غذا	n	\N	\N	3	A1	\N
-201737	پا	n	\N	\N	3	A1	\N
-201738	فوتبال	n	\N	\N	3	A1	\N
-201739	برای	prep	\N	\N	3	A1	\N
-201740	فراموش کردن	v	\N	\N	3	A1	\N
-201741	فرم	n	\N	\N	3	A1	\N
-201742	چهل	num	\N	\N	3	A1	\N
-201743	چهار	num	\N	\N	3	A1	\N
-201744	چهارده	num	\N	\N	3	A1	\N
-201745	چهارم	num	\N	\N	3	A1	\N
-201746	رایگان	adj	\N	\N	3	A1	\N
-201747	جمعه	n	\N	\N	3	A1	\N
-201748	دوست	n	\N	\N	3	A1	\N
-201749	دوستانه	adj	\N	\N	3	A1	\N
-201750	از	prep	\N	\N	3	A1	\N
-201751	جلو	n	\N	\N	3	A1	\N
-201752	میوه	n	\N	\N	3	A1	\N
-201753	پر	adj	\N	\N	3	A1	\N
-201754	سرگرمی	n	\N	\N	3	A1	\N
-201755	خنده‌دار	adj	\N	\N	3	A1	\N
-201756	آینده	n	\N	\N	3	A1	\N
-201757	بازی	n	\N	\N	3	A1	\N
-201758	باغ	n	\N	\N	3	A1	\N
-201759	جغرافیا	n	\N	\N	3	A1	\N
-201760	گرفتن	v	\N	\N	3	A1	\N
-201761	دختر	n	\N	\N	3	A1	\N
-201762	دوست دختر	n	\N	\N	3	A1	\N
-201763	دادن	v	\N	\N	3	A1	\N
-201764	لیوان	n	\N	\N	3	A1	\N
-201765	رفتن	v	\N	\N	3	A1	\N
-201766	خوب	adj	\N	\N	3	A1	\N
-201767	خداحافظ	interj	\N	\N	3	A1	\N
-201768	پدربزرگ	n	\N	\N	3	A1	\N
-201769	مادربزرگ	n	\N	\N	3	A1	\N
-201770	پدر یا مادربزرگ	n	\N	\N	3	A1	\N
-201771	عالی	adj	\N	\N	3	A1	\N
-201772	سبز	adj	\N	\N	3	A1	\N
-201773	خاکستری	adj	\N	\N	3	A1	\N
-201774	گروه	n	\N	\N	3	A1	\N
-201775	رشد کردن	v	\N	\N	3	A1	\N
-201776	حدس زدن	v	\N	\N	3	A1	\N
-201777	گیتار	n	\N	\N	3	A1	\N
-201778	باشگاه	n	\N	\N	3	A1	\N
-201779	مو	n	\N	\N	3	A1	\N
-201780	نصف	n	\N	\N	3	A1	\N
-201781	دست	n	\N	\N	3	A1	\N
-201782	اتفاق افتادن	v	\N	\N	3	A1	\N
-201783	خوشحال	adj	\N	\N	3	A1	\N
-201784	سخت	adj	\N	\N	3	A1	\N
-201785	کلاه	n	\N	\N	3	A1	\N
-201786	متنفر بودن	v	\N	\N	3	A1	\N
-201787	داشتن	v	\N	\N	3	A1	\N
-201788	باید	v	\N	\N	3	A1	\N
-201789	او	pron	\N	\N	3	A1	\N
-201790	سر	n	\N	\N	3	A1	\N
-201791	سلامت	n	\N	\N	3	A1	\N
-201792	سالم	adj	\N	\N	3	A1	\N
-201793	شنیدن	v	\N	\N	3	A1	\N
-201794	سلام	interj	\N	\N	3	A1	\N
-201795	کمک کردن	v	\N	\N	3	A1	\N
-201796	او را	pron	\N	\N	3	A1	\N
-201797	اینجا	adv	\N	\N	3	A1	\N
-201798	هی	interj	\N	\N	3	A1	\N
-201799	سلام	interj	\N	\N	3	A1	\N
-201800	بلند	adj	\N	\N	3	A1	\N
-201801	به او	pron	\N	\N	3	A1	\N
-201802	مال او	det	\N	\N	3	A1	\N
-201803	تاریخ	n	\N	\N	3	A1	\N
-201804	سرگرمی	n	\N	\N	3	A1	\N
-201805	تعطیلات	n	\N	\N	3	A1	\N
-201806	خانه	n	\N	\N	3	A1	\N
-201807	تکلیف	n	\N	\N	3	A1	\N
-201808	امیدوار بودن	v	\N	\N	3	A1	\N
-201809	اسب	n	\N	\N	3	A1	\N
-201810	بیمارستان	n	\N	\N	3	A1	\N
-201811	گرم	adj	\N	\N	3	A1	\N
-201812	هتل	n	\N	\N	3	A1	\N
-201813	ساعت	n	\N	\N	3	A1	\N
-201814	خانه	n	\N	\N	3	A1	\N
-201815	چطور	adv	\N	\N	3	A1	\N
-201816	صد	num	\N	\N	3	A1	\N
-201817	گرسنه	adj	\N	\N	3	A1	\N
-201818	شوهر	n	\N	\N	3	A1	\N
-201819	من	pron	\N	\N	3	A1	\N
-201820	یخ	n	\N	\N	3	A1	\N
-201821	بستنی	n	\N	\N	3	A1	\N
-201822	ایده	n	\N	\N	3	A1	\N
-201823	اگر	conj	\N	\N	3	A1	\N
-201824	مهم	adj	\N	\N	3	A1	\N
-201825	در	prep	\N	\N	3	A1	\N
-201826	شامل بودن	v	\N	\N	3	A1	\N
-201827	اطلاعات	n	\N	\N	3	A1	\N
-201828	علاقه	n	\N	\N	3	A1	\N
-201829	علاقه‌مند	adj	\N	\N	3	A1	\N
-201830	جالب	adj	\N	\N	3	A1	\N
-201831	اینترنت	n	\N	\N	3	A1	\N
-201832	مصاحبه	n	\N	\N	3	A1	\N
-201833	داخل	prep	\N	\N	3	A1	\N
-201834	معرفی کردن	v	\N	\N	3	A1	\N
-201835	جزیره	n	\N	\N	3	A1	\N
-201836	آن	pron	\N	\N	3	A1	\N
-201837	مال آن	det	\N	\N	3	A1	\N
-201838	ژاکت	n	\N	\N	3	A1	\N
-201839	ژانویه	n	\N	\N	3	A1	\N
-201840	شلوار جین	n	\N	\N	3	A1	\N
-201841	شغل	n	\N	\N	3	A1	\N
-201842	پیوستن	v	\N	\N	3	A1	\N
-201843	سفر	n	\N	\N	3	A1	\N
-201844	آب میوه	n	\N	\N	3	A1	\N
-201845	نگه داشتن	v	\N	\N	3	A1	\N
-201846	کلید	n	\N	\N	3	A1	\N
-201847	کیلومتر	n	\N	\N	3	A1	\N
-201848	نوع	n	\N	\N	3	A1	\N
-201849	آشپزخانه	n	\N	\N	3	A1	\N
-201850	دانستن	v	\N	\N	3	A1	\N
-201851	زمین	n	\N	\N	3	A1	\N
-201852	زبان	n	\N	\N	3	A1	\N
-201853	بزرگ	adj	\N	\N	3	A1	\N
-201854	آخر	adj	\N	\N	3	A1	\N
-201855	دیر	adj	\N	\N	3	A1	\N
-201856	بعداً	adv	\N	\N	3	A1	\N
-201857	خندیدن	v	\N	\N	3	A1	\N
-201858	یاد گرفتن	v	\N	\N	3	A1	\N
-201859	رفتن	v	\N	\N	3	A1	\N
-201860	چپ	adj	\N	\N	3	A1	\N
-201861	پا	n	\N	\N	3	A1	\N
-201862	درس	n	\N	\N	3	A1	\N
-201863	اجازه دادن	v	\N	\N	3	A1	\N
-201864	نامه	n	\N	\N	3	A1	\N
-201865	کتابخانه	n	\N	\N	3	A1	\N
-201866	دروغ گفتن	v	\N	\N	3	A1	\N
-201867	زندگی	n	\N	\N	3	A1	\N
-201868	نور	n	\N	\N	3	A1	\N
-201869	دوست داشتن	v	\N	\N	3	A1	\N
-201870	خط	n	\N	\N	3	A1	\N
-201871	شیر	n	\N	\N	3	A1	\N
-201872	لیست	n	\N	\N	3	A1	\N
-201873	گوش دادن	v	\N	\N	3	A1	\N
-201874	کوچک	adj	\N	\N	3	A1	\N
-201875	زندگی کردن	v	\N	\N	3	A1	\N
-201876	طولانی	adj	\N	\N	3	A1	\N
-201877	نگاه کردن	v	\N	\N	3	A1	\N
-201878	گم کردن	v	\N	\N	3	A1	\N
-201879	زیاد	n	\N	\N	3	A1	\N
-201880	عاشق بودن	v	\N	\N	3	A1	\N
-201881	ناهار	n	\N	\N	3	A1	\N
-201882	ماشین	n	\N	\N	3	A1	\N
-201883	مجله	n	\N	\N	3	A1	\N
-201884	اصلی	adj	\N	\N	3	A1	\N
-201885	ساختن	v	\N	\N	3	A1	\N
-201886	مرد	n	\N	\N	3	A1	\N
-201887	خیلی	det	\N	\N	3	A1	\N
-201888	نقشه	n	\N	\N	3	A1	\N
-201889	مارس	n	\N	\N	3	A1	\N
-201890	بازار	n	\N	\N	3	A1	\N
-201891	متاهل	adj	\N	\N	3	A1	\N
-201892	مسابقه	n	\N	\N	3	A1	\N
-201893	مه	n	\N	\N	3	A1	\N
-201894	شاید	adv	\N	\N	3	A1	\N
-201895	من را	pron	\N	\N	3	A1	\N
-201896	وعده غذایی	n	\N	\N	3	A1	\N
-201897	معنی داشتن	v	\N	\N	3	A1	\N
-201898	معنی	n	\N	\N	3	A1	\N
-201899	گوشت	n	\N	\N	3	A1	\N
-201900	ملاقات کردن	v	\N	\N	3	A1	\N
-201901	جلسه	n	\N	\N	3	A1	\N
-201902	عضو	n	\N	\N	3	A1	\N
-201903	منو	n	\N	\N	3	A1	\N
-201904	پیام	n	\N	\N	3	A1	\N
-201905	متر	n	\N	\N	3	A1	\N
-201906	نیمه شب	n	\N	\N	3	A1	\N
-201907	مایل	n	\N	\N	3	A1	\N
-201908	شیر	n	\N	\N	3	A1	\N
-201909	میلیون	num	\N	\N	3	A1	\N
-201910	دقیقه	n	\N	\N	3	A1	\N
-201911	دلتنگ شدن	v	\N	\N	3	A1	\N
-201912	اشتباه	n	\N	\N	3	A1	\N
-201913	مدل	n	\N	\N	3	A1	\N
-201914	مدرن	adj	\N	\N	3	A1	\N
-201915	لحظه	n	\N	\N	3	A1	\N
-201916	دوشنبه	n	\N	\N	3	A1	\N
-201917	پول	n	\N	\N	3	A1	\N
-201918	ماه	n	\N	\N	3	A1	\N
-201919	بیشتر	det	\N	\N	3	A1	\N
-201920	صبح	n	\N	\N	3	A1	\N
-201921	بیشترین	det	\N	\N	3	A1	\N
-201922	مادر	n	\N	\N	3	A1	\N
-201923	کوه	n	\N	\N	3	A1	\N
-201924	موش	n	\N	\N	3	A1	\N
-201925	دهان	n	\N	\N	3	A1	\N
-201926	حرکت کردن	v	\N	\N	3	A1	\N
-201927	فیلم	n	\N	\N	3	A1	\N
-201928	خیلی	det	\N	\N	3	A1	\N
-201929	مامان	n	\N	\N	3	A1	\N
-201930	موزه	n	\N	\N	3	A1	\N
-201931	موسیقی	n	\N	\N	3	A1	\N
-201932	باید	v	\N	\N	3	A1	\N
-201933	مال من	det	\N	\N	3	A1	\N
-201934	نام	n	\N	\N	3	A1	\N
-201935	نزدیک	prep	\N	\N	3	A1	\N
-201936	نیاز داشتن	v	\N	\N	3	A1	\N
-201937	همسایه	n	\N	\N	3	A1	\N
-201938	هرگز	adv	\N	\N	3	A1	\N
-201939	جدید	adj	\N	\N	3	A1	\N
-201940	اخبار	n	\N	\N	3	A1	\N
-201941	روزنامه	n	\N	\N	3	A1	\N
-201942	بعدی	adj	\N	\N	3	A1	\N
-201943	کنار	prep	\N	\N	3	A1	\N
-201944	خوب	adj	\N	\N	3	A1	\N
-201945	شب	n	\N	\N	3	A1	\N
-201946	نه	num	\N	\N	3	A1	\N
-201947	نوزده	num	\N	\N	3	A1	\N
-201948	نود	num	\N	\N	3	A1	\N
-201949	نه	det	\N	\N	3	A1	\N
-201950	هیچ کس	pron	\N	\N	3	A1	\N
-201951	هیچ کس	pron	\N	\N	3	A1	\N
-201952	ظهر	n	\N	\N	3	A1	\N
-201953	شمال	n	\N	\N	3	A1	\N
-201954	بینی	n	\N	\N	3	A1	\N
-201955	نه	adv	\N	\N	3	A1	\N
-201956	یادداشت	n	\N	\N	3	A1	\N
-201957	هیچ چیز	pron	\N	\N	3	A1	\N
-201958	نوامبر	n	\N	\N	3	A1	\N
-201959	الان	adv	\N	\N	3	A1	\N
-201960	شماره	n	\N	\N	3	A1	\N
-201961	ساعت	adv	\N	\N	3	A1	\N
-201962	اکتبر	n	\N	\N	3	A1	\N
-201963	از	prep	\N	\N	3	A1	\N
-201964	خاموش	adv	\N	\N	3	A1	\N
-201965	دفتر	n	\N	\N	3	A1	\N
-201966	اغلب	adv	\N	\N	3	A1	\N
-201967	اوه	interj	\N	\N	3	A1	\N
-201968	باشه	adj	\N	\N	3	A1	\N
-201969	پیر	adj	\N	\N	3	A1	\N
-201970	روی	prep	\N	\N	3	A1	\N
-201971	یک بار	adv	\N	\N	3	A1	\N
-201972	یک	num	\N	\N	3	A1	\N
-201973	پیاز	n	\N	\N	3	A1	\N
-201974	آنلاین	adj	\N	\N	3	A1	\N
-201975	فقط	adv	\N	\N	3	A1	\N
-201976	باز کردن	v	\N	\N	3	A1	\N
-201977	روبرو	adj	\N	\N	3	A1	\N
-201978	یا	conj	\N	\N	3	A1	\N
-201979	پرتقال	n	\N	\N	3	A1	\N
-201980	سفارش دادن	v	\N	\N	3	A1	\N
-201981	دیگر	adj	\N	\N	3	A1	\N
-201982	مال ما	det	\N	\N	3	A1	\N
-201983	بیرون	adv	\N	\N	3	A1	\N
-201984	بیرون	adv	\N	\N	3	A1	\N
-201985	بالای	prep	\N	\N	3	A1	\N
-201986	داشتن	v	\N	\N	3	A1	\N
-201987	صفحه	n	\N	\N	3	A1	\N
-201988	رنگ آمیزی کردن	v	\N	\N	3	A1	\N
-201989	نقاشی	n	\N	\N	3	A1	\N
-201990	جفت	n	\N	\N	3	A1	\N
-201991	کاغذ	n	\N	\N	3	A1	\N
-201992	پاراگراف	n	\N	\N	3	A1	\N
-201993	والدین	n	\N	\N	3	A1	\N
-201994	پارک	n	\N	\N	3	A1	\N
-201995	قسمت	n	\N	\N	3	A1	\N
-201996	شریک	n	\N	\N	3	A1	\N
-201997	مهمانی	n	\N	\N	3	A1	\N
-201998	پاسپورت	n	\N	\N	3	A1	\N
-201999	گذشته	adj	\N	\N	3	A1	\N
-202000	پرداخت کردن	v	\N	\N	3	A1	\N
-202001	خودکار	n	\N	\N	3	A1	\N
-202002	مداد	n	\N	\N	3	A1	\N
-202003	مردم	n	\N	\N	3	A1	\N
-202004	فلفل	n	\N	\N	3	A1	\N
-202005	کامل	adj	\N	\N	3	A1	\N
-202006	دوره	n	\N	\N	3	A1	\N
-202007	شخص	n	\N	\N	3	A1	\N
-202008	شخصی	adj	\N	\N	3	A1	\N
-202009	تلفن	n	\N	\N	3	A1	\N
-202010	عکس	n	\N	\N	3	A1	\N
-202011	عکس	n	\N	\N	3	A1	\N
-202012	عبارت	n	\N	\N	3	A1	\N
-202013	پیانو	n	\N	\N	3	A1	\N
-202014	تصویر	n	\N	\N	3	A1	\N
-202015	تکه	n	\N	\N	3	A1	\N
-202016	خوک	n	\N	\N	3	A1	\N
-202017	صورتی	adj	\N	\N	3	A1	\N
-202018	مکان	n	\N	\N	3	A1	\N
-202019	برنامه	n	\N	\N	3	A1	\N
-202020	هواپیما	n	\N	\N	3	A1	\N
-202021	گیاه	n	\N	\N	3	A1	\N
-202022	بازی کردن	v	\N	\N	3	A1	\N
-202023	بازیکن	n	\N	\N	3	A1	\N
-202024	لطفاً	interj	\N	\N	3	A1	\N
-202025	نقطه	n	\N	\N	3	A1	\N
-202026	پلیس	n	\N	\N	3	A1	\N
-202027	پلیس	n	\N	\N	3	A1	\N
-202028	استخر	n	\N	\N	3	A1	\N
-202029	فقیر	adj	\N	\N	3	A1	\N
-202030	پاپ	n	\N	\N	3	A1	\N
-202031	محبوب	adj	\N	\N	3	A1	\N
-202032	ممکن	adj	\N	\N	3	A1	\N
-202033	پست	n	\N	\N	3	A1	\N
-202034	سیب زمینی	n	\N	\N	3	A1	\N
-202035	پوند	n	\N	\N	3	A1	\N
-202036	تمرین	n	\N	\N	3	A1	\N
-202037	تمرین کردن	v	\N	\N	3	A1	\N
-202038	هدیه	n	\N	\N	3	A1	\N
-202039	قشنگ	adj	\N	\N	3	A1	\N
-202040	قیمت	n	\N	\N	3	A1	\N
-202041	مشکل	n	\N	\N	3	A1	\N
-202042	برنامه	n	\N	\N	3	A1	\N
-202043	پروژه	n	\N	\N	3	A1	\N
-202044	بنفش	adj	\N	\N	3	A1	\N
-202045	گذاشتن	v	\N	\N	3	A1	\N
-202046	مار	n	\N	\N	3	A1	\N
-202047	برف	n	\N	\N	3	A1	\N
-202048	پس	conj	\N	\N	3	A1	\N
-202049	کمی	det	\N	\N	3	A1	\N
-202050	یک نفر	pron	\N	\N	3	A1	\N
-202051	کسی	pron	\N	\N	3	A1	\N
-202052	چیزی	pron	\N	\N	3	A1	\N
-202053	گاهی	adv	\N	\N	3	A1	\N
-202054	پسر	n	\N	\N	3	A1	\N
-202055	آهنگ	n	\N	\N	3	A1	\N
-202056	به زودی	adv	\N	\N	3	A1	\N
-202057	متاسف	adj	\N	\N	3	A1	\N
-202058	صدا	n	\N	\N	3	A1	\N
-202059	سوپ	n	\N	\N	3	A1	\N
-202060	جنوب	n	\N	\N	3	A1	\N
-202061	فضا	n	\N	\N	3	A1	\N
-202062	صحبت کردن	v	\N	\N	3	A1	\N
-202063	خاص	adj	\N	\N	3	A1	\N
-202064	هجی کردن	v	\N	\N	3	A1	\N
-202065	هجی	n	\N	\N	3	A1	\N
-202066	خرج کردن	v	\N	\N	3	A1	\N
-202067	ورزش	n	\N	\N	3	A1	\N
-202068	بهار	n	\N	\N	3	A1	\N
-202069	ایستادن	v	\N	\N	3	A1	\N
-202070	شروع کردن	v	\N	\N	3	A1	\N
-202071	ایستگاه	n	\N	\N	3	A1	\N
-202072	متوقف کردن	v	\N	\N	3	A1	\N
-202073	داستان	n	\N	\N	3	A1	\N
-202074	خیابان	n	\N	\N	3	A1	\N
-202075	قوی	adj	\N	\N	3	A1	\N
-202076	دانش آموز	n	\N	\N	3	A1	\N
-202077	درس خواندن	v	\N	\N	3	A1	\N
-202078	سبک	n	\N	\N	3	A1	\N
-202079	موضوع	n	\N	\N	3	A1	\N
-202080	شکر	n	\N	\N	3	A1	\N
-202081	تابستان	n	\N	\N	3	A1	\N
-202082	خورشید	n	\N	\N	3	A1	\N
-202083	یکشنبه	n	\N	\N	3	A1	\N
-202084	سوپرمارکت	n	\N	\N	3	A1	\N
-202085	مطمئن	adj	\N	\N	3	A1	\N
-202086	ژاکت	n	\N	\N	3	A1	\N
-202087	شنا کردن	v	\N	\N	3	A1	\N
-202088	شنا	n	\N	\N	3	A1	\N
-202089	میز	n	\N	\N	3	A1	\N
-202090	گرفتن	v	\N	\N	3	A1	\N
-202091	صحبت کردن	v	\N	\N	3	A1	\N
-202092	بلند قد	adj	\N	\N	3	A1	\N
-202093	تاکسی	n	\N	\N	3	A1	\N
-202094	چای	n	\N	\N	3	A1	\N
-202095	تدریس کردن	v	\N	\N	3	A1	\N
-202096	معلم	n	\N	\N	3	A1	\N
-202097	تیم	n	\N	\N	3	A1	\N
-202098	نوجوان	n	\N	\N	3	A1	\N
-202099	تلفن	n	\N	\N	3	A1	\N
-202100	تلویزیون	n	\N	\N	3	A1	\N
-202101	گفتن	v	\N	\N	3	A1	\N
-202102	ده	num	\N	\N	3	A1	\N
-202103	تنیس	n	\N	\N	3	A1	\N
-202104	وحشتناک	adj	\N	\N	3	A1	\N
-202105	آزمون	n	\N	\N	3	A1	\N
-202106	متن	n	\N	\N	3	A1	\N
-202107	از	conj	\N	\N	3	A1	\N
-202108	تشکر کردن	v	\N	\N	3	A1	\N
-202109	ممنون	interj	\N	\N	3	A1	\N
-202110	آن	det	\N	\N	3	A1	\N
-202111	ـ	det	\N	\N	3	A1	\N
-202112	تئاتر	n	\N	\N	3	A1	\N
-202113	مال آنها	det	\N	\N	3	A1	\N
-202114	آنها را	pron	\N	\N	3	A1	\N
-202115	سپس	adv	\N	\N	3	A1	\N
-202116	آنجا	adv	\N	\N	3	A1	\N
-202117	آنها	pron	\N	\N	3	A1	\N
-202118	چیز	n	\N	\N	3	A1	\N
-202119	فکر کردن	v	\N	\N	3	A1	\N
-202120	سوم	num	\N	\N	3	A1	\N
-202121	تشنه	adj	\N	\N	3	A1	\N
-202122	سیزده	num	\N	\N	3	A1	\N
-202123	سی	num	\N	\N	3	A1	\N
-202124	این	det	\N	\N	3	A1	\N
-202125	هزار	num	\N	\N	3	A1	\N
-202126	سه	num	\N	\N	3	A1	\N
-202127	از طریق	prep	\N	\N	3	A1	\N
-202128	پنجشنبه	n	\N	\N	3	A1	\N
-202129	بلیط	n	\N	\N	3	A1	\N
-202130	زمان	n	\N	\N	3	A1	\N
-202131	خسته	adj	\N	\N	3	A1	\N
-202132	عنوان	n	\N	\N	3	A1	\N
-202133	به	prep	\N	\N	3	A1	\N
-202134	امروز	adv	\N	\N	3	A1	\N
-202135	با هم	adv	\N	\N	3	A1	\N
-202136	توالت	n	\N	\N	3	A1	\N
-202137	گوجه فرنگی	n	\N	\N	3	A1	\N
-202138	فردا	adv	\N	\N	3	A1	\N
-202139	امشب	adv	\N	\N	3	A1	\N
-202140	هم	adv	\N	\N	3	A1	\N
-202141	بالا	n	\N	\N	3	A1	\N
-202142	دندان	n	\N	\N	3	A1	\N
-202143	توریست	n	\N	\N	3	A1	\N
-202144	شهر کوچک	n	\N	\N	3	A1	\N
-202145	ترافیک	n	\N	\N	3	A1	\N
-202146	قطار	n	\N	\N	3	A1	\N
-202147	سفر کردن	v	\N	\N	3	A1	\N
-202148	درخت	n	\N	\N	3	A1	\N
-202149	سفر	n	\N	\N	3	A1	\N
-202150	شلوار	n	\N	\N	3	A1	\N
-202151	درست	adj	\N	\N	3	A1	\N
-202152	تلاش کردن	v	\N	\N	3	A1	\N
-202153	تی‌شرت	n	\N	\N	3	A1	\N
-202154	سه‌شنبه	n	\N	\N	3	A1	\N
-202155	چرخیدن	v	\N	\N	3	A1	\N
-202156	تلویزیون	n	\N	\N	3	A1	\N
-202157	دوازده	num	\N	\N	3	A1	\N
-202158	بیست	num	\N	\N	3	A1	\N
-202159	دو بار	adv	\N	\N	3	A1	\N
-202160	دو	num	\N	\N	3	A1	\N
-202161	نوع	n	\N	\N	3	A1	\N
-202162	چتر	n	\N	\N	3	A1	\N
-202163	عمو	n	\N	\N	3	A1	\N
-202164	زیر	prep	\N	\N	3	A1	\N
-202165	فهمیدن	v	\N	\N	3	A1	\N
-202166	دانشگاه	n	\N	\N	3	A1	\N
-202167	تا	conj	\N	\N	3	A1	\N
-202168	بالا	adv	\N	\N	3	A1	\N
-202169	طبقه بالا	adv	\N	\N	3	A1	\N
-202170	ما را	pron	\N	\N	3	A1	\N
-202171	استفاده کردن	v	\N	\N	3	A1	\N
-202172	معمولاً	adv	\N	\N	3	A1	\N
-202173	تعطیلات	n	\N	\N	3	A1	\N
-202174	سبزیجات	n	\N	\N	3	A1	\N
-202175	خیلی	adv	\N	\N	3	A1	\N
-202176	ویدئو	n	\N	\N	3	A1	\N
-202177	روستا	n	\N	\N	3	A1	\N
-202178	بازدید کردن	v	\N	\N	3	A1	\N
-202179	بازدیدکننده	n	\N	\N	3	A1	\N
-202180	صبر کردن	v	\N	\N	3	A1	\N
-202181	گارسون	n	\N	\N	3	A1	\N
-202182	بیدار شدن	v	\N	\N	3	A1	\N
-202183	پیاده روی کردن	v	\N	\N	3	A1	\N
-202184	دیوار	n	\N	\N	3	A1	\N
-202185	خواستن	v	\N	\N	3	A1	\N
-202186	گرم	adj	\N	\N	3	A1	\N
-202187	شستن	v	\N	\N	3	A1	\N
-202188	تماشا کردن	v	\N	\N	3	A1	\N
-202189	آب	n	\N	\N	3	A1	\N
-202190	راه	n	\N	\N	3	A1	\N
-202191	ما	pron	\N	\N	3	A1	\N
-202192	پوشیدن	v	\N	\N	3	A1	\N
-202193	آب و هوا	n	\N	\N	3	A1	\N
-202194	وب‌سایت	n	\N	\N	3	A1	\N
-202195	چهارشنبه	n	\N	\N	3	A1	\N
-202196	هفته	n	\N	\N	3	A1	\N
-202197	آخر هفته	n	\N	\N	3	A1	\N
-202198	خوش آمدید	interj	\N	\N	3	A1	\N
-202199	خوب	adv	\N	\N	3	A1	\N
-202200	غرب	n	\N	\N	3	A1	\N
-202201	چه	pron	\N	\N	3	A1	\N
-202202	چه وقت	adv	\N	\N	3	A1	\N
-202203	کجا	adv	\N	\N	3	A1	\N
-202204	کدام	pron	\N	\N	3	A1	\N
-202205	سفید	adj	\N	\N	3	A1	\N
-202206	که	pron	\N	\N	3	A1	\N
-202207	چرا	adv	\N	\N	3	A1	\N
-202208	همسر	n	\N	\N	3	A1	\N
-202209	خواهد	v	\N	\N	3	A1	\N
-202210	برنده شدن	v	\N	\N	3	A1	\N
-202211	پنجره	n	\N	\N	3	A1	\N
-202212	شراب	n	\N	\N	3	A1	\N
-202213	زمستان	n	\N	\N	3	A1	\N
-202214	با	prep	\N	\N	3	A1	\N
-202215	بدون	prep	\N	\N	3	A1	\N
-202216	زن	n	\N	\N	3	A1	\N
-202217	شگفت‌انگیز	adj	\N	\N	3	A1	\N
-202218	کلمه	n	\N	\N	3	A1	\N
-202219	کار	n	\N	\N	3	A1	\N
-202220	کارگر	n	\N	\N	3	A1	\N
-202221	جهان	n	\N	\N	3	A1	\N
-202222	می‌خواست	v	\N	\N	3	A1	\N
-202223	نوشتن	v	\N	\N	3	A1	\N
-202224	نویسنده	n	\N	\N	3	A1	\N
-202225	نوشتن	n	\N	\N	3	A1	\N
-202226	اشتباه	adj	\N	\N	3	A1	\N
-202227	آره	interj	\N	\N	3	A1	\N
-202228	سال	n	\N	\N	3	A1	\N
-202229	زرد	adj	\N	\N	3	A1	\N
-202230	بله	interj	\N	\N	3	A1	\N
-202231	دیروز	adv	\N	\N	3	A1	\N
-202232	تو	pron	\N	\N	3	A1	\N
-202233	جوان	adj	\N	\N	3	A1	\N
-202234	مال تو	det	\N	\N	3	A1	\N
-202235	خودت	pron	\N	\N	3	A1	\N
-202236	او	pron	\N	\N	3	A1	\N
-202237	مال من	pron	\N	\N	3	A1	\N
-202238	مال تو	pron	\N	\N	3	A1	\N
-202239	مال او	pron	\N	\N	3	A1	\N
-202240	مال ما	pron	\N	\N	3	A1	\N
-202241	مال آنها	pron	\N	\N	3	A1	\N
-202242	هستم	v	\N	\N	3	A1	\N
-202243	است	v	\N	\N	3	A1	\N
-202244	هستند	v	\N	\N	3	A1	\N
-202245	بود	v	\N	\N	3	A1	\N
-202246	بودند	v	\N	\N	3	A1	\N
-202247	بوده	v	\N	\N	3	A1	\N
-202248	بودن	v	\N	\N	3	A1	\N
-202249	دارد	v	\N	\N	3	A1	\N
-202250	داشت	v	\N	\N	3	A1	\N
-202251	خواهم	v	\N	\N	3	A1	\N
-202252	ممکن است	v	\N	\N	3	A1	\N
-202253	شاید	v	\N	\N	3	A1	\N
-202254	من هستم	contr	\N	\N	3	A1	\N
-202255	تو هستی	contr	\N	\N	3	A1	\N
-202256	او هست	contr	\N	\N	3	A1	\N
-202257	او هست	contr	\N	\N	3	A1	\N
-202258	آن هست	contr	\N	\N	3	A1	\N
-202259	ما هستیم	contr	\N	\N	3	A1	\N
-202260	آنها هستند	contr	\N	\N	3	A1	\N
-202261	من داشتم	contr	\N	\N	3	A1	\N
-202262	تو داشتی	contr	\N	\N	3	A1	\N
-202263	ما داشتیم	contr	\N	\N	3	A1	\N
-202264	آنها داشتند	contr	\N	\N	3	A1	\N
-202265	من خواهم	contr	\N	\N	3	A1	\N
-202266	تو خواهی	contr	\N	\N	3	A1	\N
-202267	او خواهد	contr	\N	\N	3	A1	\N
-202268	او خواهد	contr	\N	\N	3	A1	\N
-202269	ما خواهیم	contr	\N	\N	3	A1	\N
-202270	آنها خواهند	contr	\N	\N	3	A1	\N
-202271	نمی‌کنم	contr	\N	\N	3	A1	\N
-202272	نمی‌کند	contr	\N	\N	3	A1	\N
-202273	نکرد	contr	\N	\N	3	A1	\N
-202274	نمی‌توانم	contr	\N	\N	3	A1	\N
-202275	نمی‌توانست	contr	\N	\N	3	A1	\N
-202276	نخواهم	contr	\N	\N	3	A1	\N
-202277	نباید	contr	\N	\N	3	A1	\N
-202278	نمی‌خواست	contr	\N	\N	3	A1	\N
-202279	نیست	contr	\N	\N	3	A1	\N
-202280	نیستند	contr	\N	\N	3	A1	\N
-202281	نبود	contr	\N	\N	3	A1	\N
-202282	نبودند	contr	\N	\N	3	A1	\N
-202283	نداشتم	contr	\N	\N	3	A1	\N
-202284	ندارد	contr	\N	\N	3	A1	\N
-202285	نداشت	contr	\N	\N	3	A1	\N
-202286	کنار	prep	\N	\N	3	A1	\N
-202287	جلوی	prep	\N	\N	3	A1	\N
-202288	روی	prep	\N	\N	3	A1	\N
-202289	در حالی که	conj	\N	\N	3	A1	\N
-202290	فقط	adv	\N	\N	3	A1	\N
+COPY public.words (id, written_form, part_of_speech, image_url, audio_url, language_id, level, article, normalized_text) FROM stdin;
+26	a	det	\N	\N	1	A1	\N	\N
+27	an	det	\N	\N	1	A1	\N	\N
+28	about	prep	\N	\N	1	A1	\N	\N
+29	above	prep	\N	\N	1	A1	\N	\N
+30	across	prep	\N	\N	1	A1	\N	\N
+31	action	n	\N	\N	1	A1	\N	\N
+32	activity	n	\N	\N	1	A1	\N	\N
+33	actor	n	\N	\N	1	A1	\N	\N
+34	actress	n	\N	\N	1	A1	\N	\N
+35	add	v	\N	\N	1	A1	\N	\N
+36	address	n	\N	\N	1	A1	\N	\N
+37	adult	n	\N	\N	1	A1	\N	\N
+38	afraid	adj	\N	\N	1	A1	\N	\N
+39	after	prep	\N	\N	1	A1	\N	\N
+40	afternoon	n	\N	\N	1	A1	\N	\N
+41	again	adv	\N	\N	1	A1	\N	\N
+42	age	n	\N	\N	1	A1	\N	\N
+43	ago	adv	\N	\N	1	A1	\N	\N
+44	air	n	\N	\N	1	A1	\N	\N
+45	airport	n	\N	\N	1	A1	\N	\N
+46	all	det	\N	\N	1	A1	\N	\N
+47	all right	adj	\N	\N	1	A1	\N	\N
+48	also	adv	\N	\N	1	A1	\N	\N
+49	always	adv	\N	\N	1	A1	\N	\N
+50	amazing	adj	\N	\N	1	A1	\N	\N
+51	and	conj	\N	\N	1	A1	\N	\N
+52	angry	adj	\N	\N	1	A1	\N	\N
+53	animal	n	\N	\N	1	A1	\N	\N
+54	another	det	\N	\N	1	A1	\N	\N
+55	answer	n	\N	\N	1	A1	\N	\N
+56	any	det	\N	\N	1	A1	\N	\N
+57	anyone	pron	\N	\N	1	A1	\N	\N
+58	anything	pron	\N	\N	1	A1	\N	\N
+59	apartment	n	\N	\N	1	A1	\N	\N
+60	apple	n	\N	\N	1	A1	\N	\N
+61	April	n	\N	\N	1	A1	\N	\N
+62	area	n	\N	\N	1	A1	\N	\N
+63	arm	n	\N	\N	1	A1	\N	\N
+64	around	prep	\N	\N	1	A1	\N	\N
+65	arrive	v	\N	\N	1	A1	\N	\N
+66	art	n	\N	\N	1	A1	\N	\N
+67	article	n	\N	\N	1	A1	\N	\N
+68	artist	n	\N	\N	1	A1	\N	\N
+69	as	prep	\N	\N	1	A1	\N	\N
+70	ask	v	\N	\N	1	A1	\N	\N
+71	at	prep	\N	\N	1	A1	\N	\N
+72	August	n	\N	\N	1	A1	\N	\N
+73	aunt	n	\N	\N	1	A1	\N	\N
+74	autumn	n	\N	\N	1	A1	\N	\N
+75	away	adv	\N	\N	1	A1	\N	\N
+76	baby	n	\N	\N	1	A1	\N	\N
+77	back	adv	\N	\N	1	A1	\N	\N
+78	bad	adj	\N	\N	1	A1	\N	\N
+79	bag	n	\N	\N	1	A1	\N	\N
+80	ball	n	\N	\N	1	A1	\N	\N
+81	banana	n	\N	\N	1	A1	\N	\N
+82	band	n	\N	\N	1	A1	\N	\N
+83	bank	n	\N	\N	1	A1	\N	\N
+84	bar	n	\N	\N	1	A1	\N	\N
+85	bath	n	\N	\N	1	A1	\N	\N
+86	bathroom	n	\N	\N	1	A1	\N	\N
+87	be	v	\N	\N	1	A1	\N	\N
+88	beach	n	\N	\N	1	A1	\N	\N
+89	beautiful	adj	\N	\N	1	A1	\N	\N
+90	because	conj	\N	\N	1	A1	\N	\N
+91	become	v	\N	\N	1	A1	\N	\N
+92	bed	n	\N	\N	1	A1	\N	\N
+93	bedroom	n	\N	\N	1	A1	\N	\N
+94	beer	n	\N	\N	1	A1	\N	\N
+95	before	prep	\N	\N	1	A1	\N	\N
+96	begin	v	\N	\N	1	A1	\N	\N
+97	beginning	n	\N	\N	1	A1	\N	\N
+98	behind	prep	\N	\N	1	A1	\N	\N
+99	believe	v	\N	\N	1	A1	\N	\N
+100	below	prep	\N	\N	1	A1	\N	\N
+101	best	adj	\N	\N	1	A1	\N	\N
+102	better	adj	\N	\N	1	A1	\N	\N
+103	between	prep	\N	\N	1	A1	\N	\N
+104	bicycle	n	\N	\N	1	A1	\N	\N
+105	big	adj	\N	\N	1	A1	\N	\N
+106	cafe	n	\N	\N	1	A1	\N	\N
+107	cake	n	\N	\N	1	A1	\N	\N
+108	call	v	\N	\N	1	A1	\N	\N
+109	camera	n	\N	\N	1	A1	\N	\N
+110	can	v	\N	\N	1	A1	\N	\N
+111	car	n	\N	\N	1	A1	\N	\N
+112	card	n	\N	\N	1	A1	\N	\N
+113	carrot	n	\N	\N	1	A1	\N	\N
+114	carry	v	\N	\N	1	A1	\N	\N
+115	cat	n	\N	\N	1	A1	\N	\N
+116	CD	n	\N	\N	1	A1	\N	\N
+117	cent	n	\N	\N	1	A1	\N	\N
+118	centre	n	\N	\N	1	A1	\N	\N
+119	chair	n	\N	\N	1	A1	\N	\N
+120	change	v	\N	\N	1	A1	\N	\N
+121	chart	n	\N	\N	1	A1	\N	\N
+122	cheap	adj	\N	\N	1	A1	\N	\N
+123	check	v	\N	\N	1	A1	\N	\N
+124	cheese	n	\N	\N	1	A1	\N	\N
+125	chicken	n	\N	\N	1	A1	\N	\N
+126	child	n	\N	\N	1	A1	\N	\N
+127	chocolate	n	\N	\N	1	A1	\N	\N
+128	choose	v	\N	\N	1	A1	\N	\N
+129	cinema	n	\N	\N	1	A1	\N	\N
+130	city	n	\N	\N	1	A1	\N	\N
+131	class	n	\N	\N	1	A1	\N	\N
+132	classroom	n	\N	\N	1	A1	\N	\N
+133	clean	adj	\N	\N	1	A1	\N	\N
+134	climb	v	\N	\N	1	A1	\N	\N
+135	clock	n	\N	\N	1	A1	\N	\N
+136	close	v	\N	\N	1	A1	\N	\N
+137	clothes	n	\N	\N	1	A1	\N	\N
+138	club	n	\N	\N	1	A1	\N	\N
+139	coat	n	\N	\N	1	A1	\N	\N
+140	coffee	n	\N	\N	1	A1	\N	\N
+141	cold	adj	\N	\N	1	A1	\N	\N
+142	college	n	\N	\N	1	A1	\N	\N
+143	colour	n	\N	\N	1	A1	\N	\N
+144	come	v	\N	\N	1	A1	\N	\N
+145	company	n	\N	\N	1	A1	\N	\N
+146	complete	v	\N	\N	1	A1	\N	\N
+147	computer	n	\N	\N	1	A1	\N	\N
+148	concert	n	\N	\N	1	A1	\N	\N
+149	cook	v	\N	\N	1	A1	\N	\N
+150	cooking	n	\N	\N	1	A1	\N	\N
+151	cool	adj	\N	\N	1	A1	\N	\N
+152	correct	adj	\N	\N	1	A1	\N	\N
+153	cost	v	\N	\N	1	A1	\N	\N
+154	could	v	\N	\N	1	A1	\N	\N
+155	country	n	\N	\N	1	A1	\N	\N
+156	course	n	\N	\N	1	A1	\N	\N
+157	cousin	n	\N	\N	1	A1	\N	\N
+158	cow	n	\N	\N	1	A1	\N	\N
+159	cream	n	\N	\N	1	A1	\N	\N
+160	cup	n	\N	\N	1	A1	\N	\N
+161	dad	n	\N	\N	1	A1	\N	\N
+162	daily	adj	\N	\N	1	A1	\N	\N
+163	dance	v	\N	\N	1	A1	\N	\N
+164	dancer	n	\N	\N	1	A1	\N	\N
+165	dancing	n	\N	\N	1	A1	\N	\N
+166	dangerous	adj	\N	\N	1	A1	\N	\N
+167	dark	adj	\N	\N	1	A1	\N	\N
+168	date	n	\N	\N	1	A1	\N	\N
+169	daughter	n	\N	\N	1	A1	\N	\N
+170	day	n	\N	\N	1	A1	\N	\N
+171	dear	adj	\N	\N	1	A1	\N	\N
+172	December	n	\N	\N	1	A1	\N	\N
+173	decide	v	\N	\N	1	A1	\N	\N
+174	delicious	adj	\N	\N	1	A1	\N	\N
+175	desk	n	\N	\N	1	A1	\N	\N
+176	detail	n	\N	\N	1	A1	\N	\N
+177	dialogue	n	\N	\N	1	A1	\N	\N
+178	dictionary	n	\N	\N	1	A1	\N	\N
+179	die	v	\N	\N	1	A1	\N	\N
+180	diet	n	\N	\N	1	A1	\N	\N
+181	different	adj	\N	\N	1	A1	\N	\N
+182	difficult	adj	\N	\N	1	A1	\N	\N
+183	dinner	n	\N	\N	1	A1	\N	\N
+184	dirty	adj	\N	\N	1	A1	\N	\N
+185	dish	n	\N	\N	1	A1	\N	\N
+186	do	v	\N	\N	1	A1	\N	\N
+187	doctor	n	\N	\N	1	A1	\N	\N
+188	dog	n	\N	\N	1	A1	\N	\N
+189	dollar	n	\N	\N	1	A1	\N	\N
+190	door	n	\N	\N	1	A1	\N	\N
+191	down	adv	\N	\N	1	A1	\N	\N
+192	downstairs	adv	\N	\N	1	A1	\N	\N
+193	draw	v	\N	\N	1	A1	\N	\N
+194	dress	n	\N	\N	1	A1	\N	\N
+195	drink	v	\N	\N	1	A1	\N	\N
+196	drive	v	\N	\N	1	A1	\N	\N
+197	driver	n	\N	\N	1	A1	\N	\N
+198	driving	n	\N	\N	1	A1	\N	\N
+199	during	prep	\N	\N	1	A1	\N	\N
+200	DVD	n	\N	\N	1	A1	\N	\N
+201	each	det	\N	\N	1	A1	\N	\N
+202	ear	n	\N	\N	1	A1	\N	\N
+203	early	adj	\N	\N	1	A1	\N	\N
+204	east	n	\N	\N	1	A1	\N	\N
+205	easy	adj	\N	\N	1	A1	\N	\N
+206	eat	v	\N	\N	1	A1	\N	\N
+207	egg	n	\N	\N	1	A1	\N	\N
+208	eight	num	\N	\N	1	A1	\N	\N
+209	eighteen	num	\N	\N	1	A1	\N	\N
+210	eighty	num	\N	\N	1	A1	\N	\N
+211	elephant	n	\N	\N	1	A1	\N	\N
+212	eleven	num	\N	\N	1	A1	\N	\N
+213	else	adv	\N	\N	1	A1	\N	\N
+214	email	n	\N	\N	1	A1	\N	\N
+215	end	n	\N	\N	1	A1	\N	\N
+216	enjoy	v	\N	\N	1	A1	\N	\N
+217	enough	det	\N	\N	1	A1	\N	\N
+218	euro	n	\N	\N	1	A1	\N	\N
+219	even	adv	\N	\N	1	A1	\N	\N
+220	evening	n	\N	\N	1	A1	\N	\N
+221	ever	adv	\N	\N	1	A1	\N	\N
+222	every	det	\N	\N	1	A1	\N	\N
+223	everybody	pron	\N	\N	1	A1	\N	\N
+224	everyone	pron	\N	\N	1	A1	\N	\N
+225	everything	pron	\N	\N	1	A1	\N	\N
+226	exam	n	\N	\N	1	A1	\N	\N
+227	example	n	\N	\N	1	A1	\N	\N
+228	excited	adj	\N	\N	1	A1	\N	\N
+229	exciting	adj	\N	\N	1	A1	\N	\N
+230	exercise	n	\N	\N	1	A1	\N	\N
+231	expensive	adj	\N	\N	1	A1	\N	\N
+232	explain	v	\N	\N	1	A1	\N	\N
+233	extra	adj	\N	\N	1	A1	\N	\N
+234	eye	n	\N	\N	1	A1	\N	\N
+235	face	n	\N	\N	1	A1	\N	\N
+236	fall	v	\N	\N	1	A1	\N	\N
+237	false	adj	\N	\N	1	A1	\N	\N
+238	family	n	\N	\N	1	A1	\N	\N
+239	famous	adj	\N	\N	1	A1	\N	\N
+240	fantastic	adj	\N	\N	1	A1	\N	\N
+241	far	adv	\N	\N	1	A1	\N	\N
+242	farm	n	\N	\N	1	A1	\N	\N
+243	farmer	n	\N	\N	1	A1	\N	\N
+244	fast	adj	\N	\N	1	A1	\N	\N
+245	fat	adj	\N	\N	1	A1	\N	\N
+246	father	n	\N	\N	1	A1	\N	\N
+247	favourite	adj	\N	\N	1	A1	\N	\N
+248	February	n	\N	\N	1	A1	\N	\N
+249	feel	v	\N	\N	1	A1	\N	\N
+250	festival	n	\N	\N	1	A1	\N	\N
+251	few	det	\N	\N	1	A1	\N	\N
+252	fifteen	num	\N	\N	1	A1	\N	\N
+253	fifth	num	\N	\N	1	A1	\N	\N
+254	fifty	num	\N	\N	1	A1	\N	\N
+255	fill	v	\N	\N	1	A1	\N	\N
+256	film	n	\N	\N	1	A1	\N	\N
+257	final	adj	\N	\N	1	A1	\N	\N
+258	find	v	\N	\N	1	A1	\N	\N
+259	fine	adj	\N	\N	1	A1	\N	\N
+260	finish	v	\N	\N	1	A1	\N	\N
+261	fire	n	\N	\N	1	A1	\N	\N
+262	first	num	\N	\N	1	A1	\N	\N
+263	fish	n	\N	\N	1	A1	\N	\N
+264	five	num	\N	\N	1	A1	\N	\N
+265	fix	v	\N	\N	1	A1	\N	\N
+266	flat	n	\N	\N	1	A1	\N	\N
+267	flight	n	\N	\N	1	A1	\N	\N
+268	floor	n	\N	\N	1	A1	\N	\N
+269	flower	n	\N	\N	1	A1	\N	\N
+270	fly	v	\N	\N	1	A1	\N	\N
+271	follow	v	\N	\N	1	A1	\N	\N
+272	food	n	\N	\N	1	A1	\N	\N
+273	foot	n	\N	\N	1	A1	\N	\N
+274	football	n	\N	\N	1	A1	\N	\N
+275	for	prep	\N	\N	1	A1	\N	\N
+276	forget	v	\N	\N	1	A1	\N	\N
+277	form	n	\N	\N	1	A1	\N	\N
+278	forty	num	\N	\N	1	A1	\N	\N
+279	four	num	\N	\N	1	A1	\N	\N
+280	fourteen	num	\N	\N	1	A1	\N	\N
+281	fourth	num	\N	\N	1	A1	\N	\N
+282	free	adj	\N	\N	1	A1	\N	\N
+283	Friday	n	\N	\N	1	A1	\N	\N
+284	friend	n	\N	\N	1	A1	\N	\N
+285	friendly	adj	\N	\N	1	A1	\N	\N
+286	from	prep	\N	\N	1	A1	\N	\N
+287	front	n	\N	\N	1	A1	\N	\N
+288	fruit	n	\N	\N	1	A1	\N	\N
+289	full	adj	\N	\N	1	A1	\N	\N
+290	fun	n	\N	\N	1	A1	\N	\N
+291	funny	adj	\N	\N	1	A1	\N	\N
+292	future	n	\N	\N	1	A1	\N	\N
+293	game	n	\N	\N	1	A1	\N	\N
+294	garden	n	\N	\N	1	A1	\N	\N
+295	geography	n	\N	\N	1	A1	\N	\N
+296	get	v	\N	\N	1	A1	\N	\N
+297	girl	n	\N	\N	1	A1	\N	\N
+298	girlfriend	n	\N	\N	1	A1	\N	\N
+299	give	v	\N	\N	1	A1	\N	\N
+300	glass	n	\N	\N	1	A1	\N	\N
+301	go	v	\N	\N	1	A1	\N	\N
+302	good	adj	\N	\N	1	A1	\N	\N
+303	goodbye	interj	\N	\N	1	A1	\N	\N
+304	grandfather	n	\N	\N	1	A1	\N	\N
+305	grandmother	n	\N	\N	1	A1	\N	\N
+306	grandparent	n	\N	\N	1	A1	\N	\N
+307	great	adj	\N	\N	1	A1	\N	\N
+308	green	adj	\N	\N	1	A1	\N	\N
+309	grey	adj	\N	\N	1	A1	\N	\N
+310	group	n	\N	\N	1	A1	\N	\N
+311	grow	v	\N	\N	1	A1	\N	\N
+312	guess	v	\N	\N	1	A1	\N	\N
+313	guitar	n	\N	\N	1	A1	\N	\N
+314	gym	n	\N	\N	1	A1	\N	\N
+315	hair	n	\N	\N	1	A1	\N	\N
+316	half	n	\N	\N	1	A1	\N	\N
+317	hand	n	\N	\N	1	A1	\N	\N
+318	happen	v	\N	\N	1	A1	\N	\N
+319	happy	adj	\N	\N	1	A1	\N	\N
+320	hard	adj	\N	\N	1	A1	\N	\N
+321	hat	n	\N	\N	1	A1	\N	\N
+322	hate	v	\N	\N	1	A1	\N	\N
+323	have	v	\N	\N	1	A1	\N	\N
+324	have to	v	\N	\N	1	A1	\N	\N
+325	he	pron	\N	\N	1	A1	\N	\N
+326	head	n	\N	\N	1	A1	\N	\N
+327	health	n	\N	\N	1	A1	\N	\N
+328	healthy	adj	\N	\N	1	A1	\N	\N
+329	hear	v	\N	\N	1	A1	\N	\N
+330	hello	interj	\N	\N	1	A1	\N	\N
+331	help	v	\N	\N	1	A1	\N	\N
+332	her	pron	\N	\N	1	A1	\N	\N
+333	here	adv	\N	\N	1	A1	\N	\N
+334	hey	interj	\N	\N	1	A1	\N	\N
+335	hi	interj	\N	\N	1	A1	\N	\N
+336	high	adj	\N	\N	1	A1	\N	\N
+337	him	pron	\N	\N	1	A1	\N	\N
+338	his	det	\N	\N	1	A1	\N	\N
+339	history	n	\N	\N	1	A1	\N	\N
+340	hobby	n	\N	\N	1	A1	\N	\N
+341	holiday	n	\N	\N	1	A1	\N	\N
+342	home	n	\N	\N	1	A1	\N	\N
+343	homework	n	\N	\N	1	A1	\N	\N
+344	hope	v	\N	\N	1	A1	\N	\N
+345	horse	n	\N	\N	1	A1	\N	\N
+346	hospital	n	\N	\N	1	A1	\N	\N
+347	hot	adj	\N	\N	1	A1	\N	\N
+348	hotel	n	\N	\N	1	A1	\N	\N
+349	hour	n	\N	\N	1	A1	\N	\N
+350	house	n	\N	\N	1	A1	\N	\N
+351	how	adv	\N	\N	1	A1	\N	\N
+352	hundred	num	\N	\N	1	A1	\N	\N
+353	hungry	adj	\N	\N	1	A1	\N	\N
+354	husband	n	\N	\N	1	A1	\N	\N
+355	I	pron	\N	\N	1	A1	\N	\N
+356	ice	n	\N	\N	1	A1	\N	\N
+357	ice cream	n	\N	\N	1	A1	\N	\N
+358	idea	n	\N	\N	1	A1	\N	\N
+359	if	conj	\N	\N	1	A1	\N	\N
+360	important	adj	\N	\N	1	A1	\N	\N
+361	in	prep	\N	\N	1	A1	\N	\N
+362	include	v	\N	\N	1	A1	\N	\N
+363	information	n	\N	\N	1	A1	\N	\N
+364	interest	n	\N	\N	1	A1	\N	\N
+365	interested	adj	\N	\N	1	A1	\N	\N
+366	interesting	adj	\N	\N	1	A1	\N	\N
+367	internet	n	\N	\N	1	A1	\N	\N
+368	interview	n	\N	\N	1	A1	\N	\N
+369	into	prep	\N	\N	1	A1	\N	\N
+370	introduce	v	\N	\N	1	A1	\N	\N
+371	island	n	\N	\N	1	A1	\N	\N
+372	it	pron	\N	\N	1	A1	\N	\N
+373	its	det	\N	\N	1	A1	\N	\N
+374	jacket	n	\N	\N	1	A1	\N	\N
+375	January	n	\N	\N	1	A1	\N	\N
+376	jeans	n	\N	\N	1	A1	\N	\N
+377	job	n	\N	\N	1	A1	\N	\N
+378	join	v	\N	\N	1	A1	\N	\N
+379	journey	n	\N	\N	1	A1	\N	\N
+380	juice	n	\N	\N	1	A1	\N	\N
+381	keep	v	\N	\N	1	A1	\N	\N
+382	key	n	\N	\N	1	A1	\N	\N
+383	kilometre	n	\N	\N	1	A1	\N	\N
+384	kind	n	\N	\N	1	A1	\N	\N
+385	kitchen	n	\N	\N	1	A1	\N	\N
+386	know	v	\N	\N	1	A1	\N	\N
+387	land	n	\N	\N	1	A1	\N	\N
+388	language	n	\N	\N	1	A1	\N	\N
+389	large	adj	\N	\N	1	A1	\N	\N
+390	last	adj	\N	\N	1	A1	\N	\N
+391	late	adj	\N	\N	1	A1	\N	\N
+392	later	adv	\N	\N	1	A1	\N	\N
+393	laugh	v	\N	\N	1	A1	\N	\N
+394	learn	v	\N	\N	1	A1	\N	\N
+395	leave	v	\N	\N	1	A1	\N	\N
+396	left	adj	\N	\N	1	A1	\N	\N
+397	leg	n	\N	\N	1	A1	\N	\N
+398	lesson	n	\N	\N	1	A1	\N	\N
+399	let	v	\N	\N	1	A1	\N	\N
+400	letter	n	\N	\N	1	A1	\N	\N
+401	library	n	\N	\N	1	A1	\N	\N
+402	lie	v	\N	\N	1	A1	\N	\N
+403	life	n	\N	\N	1	A1	\N	\N
+404	light	n	\N	\N	1	A1	\N	\N
+405	like	prep	\N	\N	1	A1	\N	\N
+406	like	v	\N	\N	1	A1	\N	\N
+407	line	n	\N	\N	1	A1	\N	\N
+408	lion	n	\N	\N	1	A1	\N	\N
+409	list	n	\N	\N	1	A1	\N	\N
+410	listen	v	\N	\N	1	A1	\N	\N
+411	little	adj	\N	\N	1	A1	\N	\N
+412	live	v	\N	\N	1	A1	\N	\N
+413	long	adj	\N	\N	1	A1	\N	\N
+414	look	v	\N	\N	1	A1	\N	\N
+415	lose	v	\N	\N	1	A1	\N	\N
+416	lot	n	\N	\N	1	A1	\N	\N
+417	love	v	\N	\N	1	A1	\N	\N
+418	lunch	n	\N	\N	1	A1	\N	\N
+419	machine	n	\N	\N	1	A1	\N	\N
+420	magazine	n	\N	\N	1	A1	\N	\N
+421	main	adj	\N	\N	1	A1	\N	\N
+422	make	v	\N	\N	1	A1	\N	\N
+423	man	n	\N	\N	1	A1	\N	\N
+424	many	det	\N	\N	1	A1	\N	\N
+425	map	n	\N	\N	1	A1	\N	\N
+426	March	n	\N	\N	1	A1	\N	\N
+427	market	n	\N	\N	1	A1	\N	\N
+428	married	adj	\N	\N	1	A1	\N	\N
+429	match	n	\N	\N	1	A1	\N	\N
+430	May	n	\N	\N	1	A1	\N	\N
+431	maybe	adv	\N	\N	1	A1	\N	\N
+432	me	pron	\N	\N	1	A1	\N	\N
+433	meal	n	\N	\N	1	A1	\N	\N
+434	mean	v	\N	\N	1	A1	\N	\N
+435	meaning	n	\N	\N	1	A1	\N	\N
+436	meat	n	\N	\N	1	A1	\N	\N
+437	meet	v	\N	\N	1	A1	\N	\N
+438	meeting	n	\N	\N	1	A1	\N	\N
+439	member	n	\N	\N	1	A1	\N	\N
+440	menu	n	\N	\N	1	A1	\N	\N
+441	message	n	\N	\N	1	A1	\N	\N
+442	metre	n	\N	\N	1	A1	\N	\N
+443	midnight	n	\N	\N	1	A1	\N	\N
+444	mile	n	\N	\N	1	A1	\N	\N
+445	milk	n	\N	\N	1	A1	\N	\N
+446	million	num	\N	\N	1	A1	\N	\N
+447	minute	n	\N	\N	1	A1	\N	\N
+448	miss	v	\N	\N	1	A1	\N	\N
+449	mistake	n	\N	\N	1	A1	\N	\N
+450	model	n	\N	\N	1	A1	\N	\N
+451	modern	adj	\N	\N	1	A1	\N	\N
+452	moment	n	\N	\N	1	A1	\N	\N
+453	Monday	n	\N	\N	1	A1	\N	\N
+454	money	n	\N	\N	1	A1	\N	\N
+455	month	n	\N	\N	1	A1	\N	\N
+456	more	det	\N	\N	1	A1	\N	\N
+457	morning	n	\N	\N	1	A1	\N	\N
+458	most	det	\N	\N	1	A1	\N	\N
+459	mother	n	\N	\N	1	A1	\N	\N
+460	mountain	n	\N	\N	1	A1	\N	\N
+461	mouse	n	\N	\N	1	A1	\N	\N
+462	mouth	n	\N	\N	1	A1	\N	\N
+463	move	v	\N	\N	1	A1	\N	\N
+464	movie	n	\N	\N	1	A1	\N	\N
+465	much	det	\N	\N	1	A1	\N	\N
+466	mum	n	\N	\N	1	A1	\N	\N
+467	museum	n	\N	\N	1	A1	\N	\N
+468	music	n	\N	\N	1	A1	\N	\N
+469	must	v	\N	\N	1	A1	\N	\N
+470	my	det	\N	\N	1	A1	\N	\N
+471	name	n	\N	\N	1	A1	\N	\N
+472	near	prep	\N	\N	1	A1	\N	\N
+473	need	v	\N	\N	1	A1	\N	\N
+474	neighbour	n	\N	\N	1	A1	\N	\N
+475	never	adv	\N	\N	1	A1	\N	\N
+476	new	adj	\N	\N	1	A1	\N	\N
+477	news	n	\N	\N	1	A1	\N	\N
+478	newspaper	n	\N	\N	1	A1	\N	\N
+479	next	adj	\N	\N	1	A1	\N	\N
+480	next to	prep	\N	\N	1	A1	\N	\N
+481	nice	adj	\N	\N	1	A1	\N	\N
+482	night	n	\N	\N	1	A1	\N	\N
+483	nine	num	\N	\N	1	A1	\N	\N
+484	nineteen	num	\N	\N	1	A1	\N	\N
+485	ninety	num	\N	\N	1	A1	\N	\N
+486	no	det	\N	\N	1	A1	\N	\N
+487	no one	pron	\N	\N	1	A1	\N	\N
+488	nobody	pron	\N	\N	1	A1	\N	\N
+489	noon	n	\N	\N	1	A1	\N	\N
+490	north	n	\N	\N	1	A1	\N	\N
+491	nose	n	\N	\N	1	A1	\N	\N
+492	not	adv	\N	\N	1	A1	\N	\N
+493	note	n	\N	\N	1	A1	\N	\N
+494	nothing	pron	\N	\N	1	A1	\N	\N
+495	November	n	\N	\N	1	A1	\N	\N
+496	now	adv	\N	\N	1	A1	\N	\N
+497	number	n	\N	\N	1	A1	\N	\N
+498	o'clock	adv	\N	\N	1	A1	\N	\N
+499	October	n	\N	\N	1	A1	\N	\N
+500	of	prep	\N	\N	1	A1	\N	\N
+501	off	adv	\N	\N	1	A1	\N	\N
+502	office	n	\N	\N	1	A1	\N	\N
+503	often	adv	\N	\N	1	A1	\N	\N
+504	oh	interj	\N	\N	1	A1	\N	\N
+505	OK	adj	\N	\N	1	A1	\N	\N
+506	old	adj	\N	\N	1	A1	\N	\N
+507	on	prep	\N	\N	1	A1	\N	\N
+508	once	adv	\N	\N	1	A1	\N	\N
+509	one	num	\N	\N	1	A1	\N	\N
+510	onion	n	\N	\N	1	A1	\N	\N
+511	online	adj	\N	\N	1	A1	\N	\N
+512	only	adv	\N	\N	1	A1	\N	\N
+513	open	v	\N	\N	1	A1	\N	\N
+514	opposite	adj	\N	\N	1	A1	\N	\N
+515	or	conj	\N	\N	1	A1	\N	\N
+516	orange	n	\N	\N	1	A1	\N	\N
+517	order	v	\N	\N	1	A1	\N	\N
+518	other	adj	\N	\N	1	A1	\N	\N
+519	our	det	\N	\N	1	A1	\N	\N
+520	out	adv	\N	\N	1	A1	\N	\N
+521	outside	adv	\N	\N	1	A1	\N	\N
+522	over	prep	\N	\N	1	A1	\N	\N
+523	own	v	\N	\N	1	A1	\N	\N
+524	page	n	\N	\N	1	A1	\N	\N
+525	paint	v	\N	\N	1	A1	\N	\N
+526	painting	n	\N	\N	1	A1	\N	\N
+527	pair	n	\N	\N	1	A1	\N	\N
+528	paper	n	\N	\N	1	A1	\N	\N
+529	paragraph	n	\N	\N	1	A1	\N	\N
+530	parent	n	\N	\N	1	A1	\N	\N
+531	park	n	\N	\N	1	A1	\N	\N
+532	part	n	\N	\N	1	A1	\N	\N
+533	partner	n	\N	\N	1	A1	\N	\N
+534	party	n	\N	\N	1	A1	\N	\N
+535	passport	n	\N	\N	1	A1	\N	\N
+536	past	adj	\N	\N	1	A1	\N	\N
+537	pay	v	\N	\N	1	A1	\N	\N
+538	pen	n	\N	\N	1	A1	\N	\N
+539	pencil	n	\N	\N	1	A1	\N	\N
+540	people	n	\N	\N	1	A1	\N	\N
+541	pepper	n	\N	\N	1	A1	\N	\N
+542	perfect	adj	\N	\N	1	A1	\N	\N
+543	period	n	\N	\N	1	A1	\N	\N
+544	person	n	\N	\N	1	A1	\N	\N
+545	personal	adj	\N	\N	1	A1	\N	\N
+546	phone	n	\N	\N	1	A1	\N	\N
+547	photo	n	\N	\N	1	A1	\N	\N
+548	photograph	n	\N	\N	1	A1	\N	\N
+549	phrase	n	\N	\N	1	A1	\N	\N
+550	piano	n	\N	\N	1	A1	\N	\N
+551	picture	n	\N	\N	1	A1	\N	\N
+552	piece	n	\N	\N	1	A1	\N	\N
+553	pig	n	\N	\N	1	A1	\N	\N
+554	pink	adj	\N	\N	1	A1	\N	\N
+555	place	n	\N	\N	1	A1	\N	\N
+556	plan	n	\N	\N	1	A1	\N	\N
+557	plane	n	\N	\N	1	A1	\N	\N
+558	plant	n	\N	\N	1	A1	\N	\N
+559	play	v	\N	\N	1	A1	\N	\N
+560	player	n	\N	\N	1	A1	\N	\N
+561	please	interj	\N	\N	1	A1	\N	\N
+562	point	n	\N	\N	1	A1	\N	\N
+563	police	n	\N	\N	1	A1	\N	\N
+564	policeman	n	\N	\N	1	A1	\N	\N
+565	pool	n	\N	\N	1	A1	\N	\N
+566	poor	adj	\N	\N	1	A1	\N	\N
+567	pop	n	\N	\N	1	A1	\N	\N
+568	popular	adj	\N	\N	1	A1	\N	\N
+569	possible	adj	\N	\N	1	A1	\N	\N
+570	post	n	\N	\N	1	A1	\N	\N
+571	potato	n	\N	\N	1	A1	\N	\N
+572	pound	n	\N	\N	1	A1	\N	\N
+573	practice	n	\N	\N	1	A1	\N	\N
+574	practise	v	\N	\N	1	A1	\N	\N
+575	present	n	\N	\N	1	A1	\N	\N
+576	pretty	adj	\N	\N	1	A1	\N	\N
+577	price	n	\N	\N	1	A1	\N	\N
+578	problem	n	\N	\N	1	A1	\N	\N
+579	programme	n	\N	\N	1	A1	\N	\N
+580	project	n	\N	\N	1	A1	\N	\N
+581	purple	adj	\N	\N	1	A1	\N	\N
+582	put	v	\N	\N	1	A1	\N	\N
+583	snake	n	\N	\N	1	A1	\N	\N
+584	snow	n	\N	\N	1	A1	\N	\N
+585	so	conj	\N	\N	1	A1	\N	\N
+586	some	det	\N	\N	1	A1	\N	\N
+1587	side	n	\N	\N	1	A2	\N	\N
+587	somebody	pron	\N	\N	1	A1	\N	\N
+588	someone	pron	\N	\N	1	A1	\N	\N
+589	something	pron	\N	\N	1	A1	\N	\N
+590	sometimes	adv	\N	\N	1	A1	\N	\N
+591	son	n	\N	\N	1	A1	\N	\N
+592	song	n	\N	\N	1	A1	\N	\N
+593	soon	adv	\N	\N	1	A1	\N	\N
+594	sorry	adj	\N	\N	1	A1	\N	\N
+595	sound	n	\N	\N	1	A1	\N	\N
+596	soup	n	\N	\N	1	A1	\N	\N
+597	south	n	\N	\N	1	A1	\N	\N
+598	space	n	\N	\N	1	A1	\N	\N
+599	speak	v	\N	\N	1	A1	\N	\N
+600	special	adj	\N	\N	1	A1	\N	\N
+601	spell	v	\N	\N	1	A1	\N	\N
+602	spelling	n	\N	\N	1	A1	\N	\N
+603	spend	v	\N	\N	1	A1	\N	\N
+604	sport	n	\N	\N	1	A1	\N	\N
+605	spring	n	\N	\N	1	A1	\N	\N
+606	stand	v	\N	\N	1	A1	\N	\N
+607	start	v	\N	\N	1	A1	\N	\N
+608	station	n	\N	\N	1	A1	\N	\N
+609	stop	v	\N	\N	1	A1	\N	\N
+610	story	n	\N	\N	1	A1	\N	\N
+611	street	n	\N	\N	1	A1	\N	\N
+612	strong	adj	\N	\N	1	A1	\N	\N
+613	student	n	\N	\N	1	A1	\N	\N
+614	study	v	\N	\N	1	A1	\N	\N
+615	style	n	\N	\N	1	A1	\N	\N
+616	subject	n	\N	\N	1	A1	\N	\N
+617	sugar	n	\N	\N	1	A1	\N	\N
+618	summer	n	\N	\N	1	A1	\N	\N
+619	sun	n	\N	\N	1	A1	\N	\N
+620	Sunday	n	\N	\N	1	A1	\N	\N
+621	supermarket	n	\N	\N	1	A1	\N	\N
+622	sure	adj	\N	\N	1	A1	\N	\N
+623	sweater	n	\N	\N	1	A1	\N	\N
+624	swim	v	\N	\N	1	A1	\N	\N
+625	swimming	n	\N	\N	1	A1	\N	\N
+626	table	n	\N	\N	1	A1	\N	\N
+627	take	v	\N	\N	1	A1	\N	\N
+628	talk	v	\N	\N	1	A1	\N	\N
+629	tall	adj	\N	\N	1	A1	\N	\N
+630	taxi	n	\N	\N	1	A1	\N	\N
+631	tea	n	\N	\N	1	A1	\N	\N
+632	teach	v	\N	\N	1	A1	\N	\N
+633	teacher	n	\N	\N	1	A1	\N	\N
+634	team	n	\N	\N	1	A1	\N	\N
+635	teenager	n	\N	\N	1	A1	\N	\N
+636	telephone	n	\N	\N	1	A1	\N	\N
+637	television	n	\N	\N	1	A1	\N	\N
+638	tell	v	\N	\N	1	A1	\N	\N
+639	ten	num	\N	\N	1	A1	\N	\N
+640	tennis	n	\N	\N	1	A1	\N	\N
+641	terrible	adj	\N	\N	1	A1	\N	\N
+642	test	n	\N	\N	1	A1	\N	\N
+643	text	n	\N	\N	1	A1	\N	\N
+644	than	conj	\N	\N	1	A1	\N	\N
+645	thank	v	\N	\N	1	A1	\N	\N
+646	thanks	interj	\N	\N	1	A1	\N	\N
+647	that	det	\N	\N	1	A1	\N	\N
+648	the	det	\N	\N	1	A1	\N	\N
+649	theatre	n	\N	\N	1	A1	\N	\N
+650	their	det	\N	\N	1	A1	\N	\N
+651	them	pron	\N	\N	1	A1	\N	\N
+652	then	adv	\N	\N	1	A1	\N	\N
+653	there	adv	\N	\N	1	A1	\N	\N
+654	they	pron	\N	\N	1	A1	\N	\N
+655	thing	n	\N	\N	1	A1	\N	\N
+656	think	v	\N	\N	1	A1	\N	\N
+657	third	num	\N	\N	1	A1	\N	\N
+658	thirsty	adj	\N	\N	1	A1	\N	\N
+659	thirteen	num	\N	\N	1	A1	\N	\N
+660	thirty	num	\N	\N	1	A1	\N	\N
+661	this	det	\N	\N	1	A1	\N	\N
+662	thousand	num	\N	\N	1	A1	\N	\N
+663	three	num	\N	\N	1	A1	\N	\N
+664	through	prep	\N	\N	1	A1	\N	\N
+665	Thursday	n	\N	\N	1	A1	\N	\N
+666	ticket	n	\N	\N	1	A1	\N	\N
+667	time	n	\N	\N	1	A1	\N	\N
+668	tired	adj	\N	\N	1	A1	\N	\N
+669	title	n	\N	\N	1	A1	\N	\N
+670	to	prep	\N	\N	1	A1	\N	\N
+671	today	adv	\N	\N	1	A1	\N	\N
+672	together	adv	\N	\N	1	A1	\N	\N
+673	toilet	n	\N	\N	1	A1	\N	\N
+674	tomato	n	\N	\N	1	A1	\N	\N
+675	tomorrow	adv	\N	\N	1	A1	\N	\N
+676	tonight	adv	\N	\N	1	A1	\N	\N
+677	too	adv	\N	\N	1	A1	\N	\N
+678	top	n	\N	\N	1	A1	\N	\N
+679	tooth	n	\N	\N	1	A1	\N	\N
+680	tourist	n	\N	\N	1	A1	\N	\N
+681	town	n	\N	\N	1	A1	\N	\N
+682	traffic	n	\N	\N	1	A1	\N	\N
+683	train	n	\N	\N	1	A1	\N	\N
+684	travel	v	\N	\N	1	A1	\N	\N
+685	tree	n	\N	\N	1	A1	\N	\N
+686	trip	n	\N	\N	1	A1	\N	\N
+687	trousers	n	\N	\N	1	A1	\N	\N
+688	true	adj	\N	\N	1	A1	\N	\N
+689	try	v	\N	\N	1	A1	\N	\N
+690	T-shirt	n	\N	\N	1	A1	\N	\N
+691	Tuesday	n	\N	\N	1	A1	\N	\N
+692	turn	v	\N	\N	1	A1	\N	\N
+693	TV	n	\N	\N	1	A1	\N	\N
+694	twelve	num	\N	\N	1	A1	\N	\N
+695	twenty	num	\N	\N	1	A1	\N	\N
+696	twice	adv	\N	\N	1	A1	\N	\N
+697	two	num	\N	\N	1	A1	\N	\N
+698	type	n	\N	\N	1	A1	\N	\N
+699	umbrella	n	\N	\N	1	A1	\N	\N
+700	uncle	n	\N	\N	1	A1	\N	\N
+701	under	prep	\N	\N	1	A1	\N	\N
+702	understand	v	\N	\N	1	A1	\N	\N
+703	university	n	\N	\N	1	A1	\N	\N
+704	until	conj	\N	\N	1	A1	\N	\N
+705	up	adv	\N	\N	1	A1	\N	\N
+706	upstairs	adv	\N	\N	1	A1	\N	\N
+707	us	pron	\N	\N	1	A1	\N	\N
+708	use	v	\N	\N	1	A1	\N	\N
+709	usually	adv	\N	\N	1	A1	\N	\N
+710	vacation	n	\N	\N	1	A1	\N	\N
+711	vegetable	n	\N	\N	1	A1	\N	\N
+712	very	adv	\N	\N	1	A1	\N	\N
+713	video	n	\N	\N	1	A1	\N	\N
+714	village	n	\N	\N	1	A1	\N	\N
+715	visit	v	\N	\N	1	A1	\N	\N
+716	visitor	n	\N	\N	1	A1	\N	\N
+717	wait	v	\N	\N	1	A1	\N	\N
+718	waiter	n	\N	\N	1	A1	\N	\N
+719	wake	v	\N	\N	1	A1	\N	\N
+720	walk	v	\N	\N	1	A1	\N	\N
+721	wall	n	\N	\N	1	A1	\N	\N
+722	want	v	\N	\N	1	A1	\N	\N
+723	warm	adj	\N	\N	1	A1	\N	\N
+724	wash	v	\N	\N	1	A1	\N	\N
+725	watch	v	\N	\N	1	A1	\N	\N
+726	water	n	\N	\N	1	A1	\N	\N
+727	way	n	\N	\N	1	A1	\N	\N
+728	we	pron	\N	\N	1	A1	\N	\N
+729	wear	v	\N	\N	1	A1	\N	\N
+730	weather	n	\N	\N	1	A1	\N	\N
+731	website	n	\N	\N	1	A1	\N	\N
+732	Wednesday	n	\N	\N	1	A1	\N	\N
+733	week	n	\N	\N	1	A1	\N	\N
+734	weekend	n	\N	\N	1	A1	\N	\N
+735	welcome	interj	\N	\N	1	A1	\N	\N
+736	well	adv	\N	\N	1	A1	\N	\N
+737	west	n	\N	\N	1	A1	\N	\N
+738	what	pron	\N	\N	1	A1	\N	\N
+739	when	adv	\N	\N	1	A1	\N	\N
+740	where	adv	\N	\N	1	A1	\N	\N
+741	which	pron	\N	\N	1	A1	\N	\N
+742	white	adj	\N	\N	1	A1	\N	\N
+743	who	pron	\N	\N	1	A1	\N	\N
+744	why	adv	\N	\N	1	A1	\N	\N
+745	wife	n	\N	\N	1	A1	\N	\N
+746	will	v	\N	\N	1	A1	\N	\N
+747	win	v	\N	\N	1	A1	\N	\N
+748	window	n	\N	\N	1	A1	\N	\N
+749	wine	n	\N	\N	1	A1	\N	\N
+750	winter	n	\N	\N	1	A1	\N	\N
+751	with	prep	\N	\N	1	A1	\N	\N
+752	without	prep	\N	\N	1	A1	\N	\N
+753	woman	n	\N	\N	1	A1	\N	\N
+754	wonderful	adj	\N	\N	1	A1	\N	\N
+755	word	n	\N	\N	1	A1	\N	\N
+756	work	n	\N	\N	1	A1	\N	\N
+757	work	v	\N	\N	1	A1	\N	\N
+758	worker	n	\N	\N	1	A1	\N	\N
+759	world	n	\N	\N	1	A1	\N	\N
+760	would	v	\N	\N	1	A1	\N	\N
+761	write	v	\N	\N	1	A1	\N	\N
+762	writer	n	\N	\N	1	A1	\N	\N
+763	writing	n	\N	\N	1	A1	\N	\N
+764	wrong	adj	\N	\N	1	A1	\N	\N
+765	yeah	interj	\N	\N	1	A1	\N	\N
+766	year	n	\N	\N	1	A1	\N	\N
+767	yellow	adj	\N	\N	1	A1	\N	\N
+768	yes	interj	\N	\N	1	A1	\N	\N
+769	yesterday	adv	\N	\N	1	A1	\N	\N
+770	you	pron	\N	\N	1	A1	\N	\N
+771	young	adj	\N	\N	1	A1	\N	\N
+772	your	det	\N	\N	1	A1	\N	\N
+773	yourself	pron	\N	\N	1	A1	\N	\N
+774	I	pron	\N	\N	1	A1	\N	\N
+775	you	pron	\N	\N	1	A1	\N	\N
+776	he	pron	\N	\N	1	A1	\N	\N
+777	she	pron	\N	\N	1	A1	\N	\N
+778	it	pron	\N	\N	1	A1	\N	\N
+779	we	pron	\N	\N	1	A1	\N	\N
+780	they	pron	\N	\N	1	A1	\N	\N
+781	me	pron	\N	\N	1	A1	\N	\N
+782	him	pron	\N	\N	1	A1	\N	\N
+783	her	pron	\N	\N	1	A1	\N	\N
+784	us	pron	\N	\N	1	A1	\N	\N
+785	them	pron	\N	\N	1	A1	\N	\N
+786	my	det	\N	\N	1	A1	\N	\N
+787	your	det	\N	\N	1	A1	\N	\N
+788	his	det	\N	\N	1	A1	\N	\N
+789	its	det	\N	\N	1	A1	\N	\N
+790	our	det	\N	\N	1	A1	\N	\N
+791	their	det	\N	\N	1	A1	\N	\N
+792	mine	pron	\N	\N	1	A1	\N	\N
+793	yours	pron	\N	\N	1	A1	\N	\N
+794	hers	pron	\N	\N	1	A1	\N	\N
+795	ours	pron	\N	\N	1	A1	\N	\N
+796	theirs	pron	\N	\N	1	A1	\N	\N
+797	am	v	\N	\N	1	A1	\N	\N
+798	is	v	\N	\N	1	A1	\N	\N
+799	are	v	\N	\N	1	A1	\N	\N
+800	was	v	\N	\N	1	A1	\N	\N
+801	were	v	\N	\N	1	A1	\N	\N
+802	be	v	\N	\N	1	A1	\N	\N
+803	been	v	\N	\N	1	A1	\N	\N
+804	being	v	\N	\N	1	A1	\N	\N
+805	have	v	\N	\N	1	A1	\N	\N
+806	has	v	\N	\N	1	A1	\N	\N
+807	had	v	\N	\N	1	A1	\N	\N
+808	shall	v	\N	\N	1	A1	\N	\N
+809	may	v	\N	\N	1	A1	\N	\N
+810	might	v	\N	\N	1	A1	\N	\N
+811	I'm	contr	\N	\N	1	A1	\N	\N
+812	you're	contr	\N	\N	1	A1	\N	\N
+813	he's	contr	\N	\N	1	A1	\N	\N
+814	she's	contr	\N	\N	1	A1	\N	\N
+815	it's	contr	\N	\N	1	A1	\N	\N
+816	we're	contr	\N	\N	1	A1	\N	\N
+817	they're	contr	\N	\N	1	A1	\N	\N
+818	I've	contr	\N	\N	1	A1	\N	\N
+819	you've	contr	\N	\N	1	A1	\N	\N
+820	we've	contr	\N	\N	1	A1	\N	\N
+821	they've	contr	\N	\N	1	A1	\N	\N
+822	I'll	contr	\N	\N	1	A1	\N	\N
+823	you'll	contr	\N	\N	1	A1	\N	\N
+824	he'll	contr	\N	\N	1	A1	\N	\N
+825	she'll	contr	\N	\N	1	A1	\N	\N
+826	we'll	contr	\N	\N	1	A1	\N	\N
+827	they'll	contr	\N	\N	1	A1	\N	\N
+828	don't	contr	\N	\N	1	A1	\N	\N
+829	doesn't	contr	\N	\N	1	A1	\N	\N
+830	didn't	contr	\N	\N	1	A1	\N	\N
+831	can't	contr	\N	\N	1	A1	\N	\N
+832	couldn't	contr	\N	\N	1	A1	\N	\N
+833	won't	contr	\N	\N	1	A1	\N	\N
+834	shouldn't	contr	\N	\N	1	A1	\N	\N
+835	wouldn't	contr	\N	\N	1	A1	\N	\N
+836	isn't	contr	\N	\N	1	A1	\N	\N
+837	aren't	contr	\N	\N	1	A1	\N	\N
+838	wasn't	contr	\N	\N	1	A1	\N	\N
+839	weren't	contr	\N	\N	1	A1	\N	\N
+840	haven't	contr	\N	\N	1	A1	\N	\N
+841	hasn't	contr	\N	\N	1	A1	\N	\N
+842	hadn't	contr	\N	\N	1	A1	\N	\N
+843	beside	prep	\N	\N	1	A1	\N	\N
+844	in front of	prep	\N	\N	1	A1	\N	\N
+845	into	prep	\N	\N	1	A1	\N	\N
+846	onto	prep	\N	\N	1	A1	\N	\N
+847	of	prep	\N	\N	1	A1	\N	\N
+848	while	conj	\N	\N	1	A1	\N	\N
+849	until	conj	\N	\N	1	A1	\N	\N
+850	the	det	\N	\N	1	A1	\N	\N
+851	now	adv	\N	\N	1	A1	\N	\N
+852	also	adv	\N	\N	1	A1	\N	\N
+853	just	adv	\N	\N	1	A1	\N	\N
+854	even	adv	\N	\N	1	A1	\N	\N
+855	ability	n	\N	\N	1	A2	\N	\N
+856	able	adj	\N	\N	1	A2	\N	\N
+857	abroad	adv	\N	\N	1	A2	\N	\N
+858	accept	v	\N	\N	1	A2	\N	\N
+859	accident	n	\N	\N	1	A2	\N	\N
+860	achieve	v	\N	\N	1	A2	\N	\N
+861	act	v	\N	\N	1	A2	\N	\N
+862	active	adj	\N	\N	1	A2	\N	\N
+863	actually	adv	\N	\N	1	A2	\N	\N
+864	advantage	n	\N	\N	1	A2	\N	\N
+865	adventure	n	\N	\N	1	A2	\N	\N
+866	advertise	v	\N	\N	1	A2	\N	\N
+867	advertisement	n	\N	\N	1	A2	\N	\N
+868	advertising	n	\N	\N	1	A2	\N	\N
+869	advice	n	\N	\N	1	A2	\N	\N
+870	affect	v	\N	\N	1	A2	\N	\N
+871	after	prep	\N	\N	1	A2	\N	\N
+872	against	prep	\N	\N	1	A2	\N	\N
+873	agree	v	\N	\N	1	A2	\N	\N
+874	ah	interj	\N	\N	1	A2	\N	\N
+875	airline	n	\N	\N	1	A2	\N	\N
+876	alive	adj	\N	\N	1	A2	\N	\N
+877	all	det	\N	\N	1	A2	\N	\N
+878	allow	v	\N	\N	1	A2	\N	\N
+879	almost	adv	\N	\N	1	A2	\N	\N
+880	alone	adj	\N	\N	1	A2	\N	\N
+881	along	prep	\N	\N	1	A2	\N	\N
+882	already	adv	\N	\N	1	A2	\N	\N
+883	although	conj	\N	\N	1	A2	\N	\N
+884	among	prep	\N	\N	1	A2	\N	\N
+885	amount	n	\N	\N	1	A2	\N	\N
+886	ancient	adj	\N	\N	1	A2	\N	\N
+887	ankle	n	\N	\N	1	A2	\N	\N
+888	any	det	\N	\N	1	A2	\N	\N
+889	anybody	pron	\N	\N	1	A2	\N	\N
+890	any more	adv	\N	\N	1	A2	\N	\N
+891	anyway	adv	\N	\N	1	A2	\N	\N
+892	anywhere	adv	\N	\N	1	A2	\N	\N
+893	app	n	\N	\N	1	A2	\N	\N
+894	appear	v	\N	\N	1	A2	\N	\N
+895	appearance	n	\N	\N	1	A2	\N	\N
+896	apply	v	\N	\N	1	A2	\N	\N
+897	architect	n	\N	\N	1	A2	\N	\N
+898	architecture	n	\N	\N	1	A2	\N	\N
+899	argue	v	\N	\N	1	A2	\N	\N
+900	argument	n	\N	\N	1	A2	\N	\N
+901	army	n	\N	\N	1	A2	\N	\N
+902	arrange	v	\N	\N	1	A2	\N	\N
+903	arrangement	n	\N	\N	1	A2	\N	\N
+904	as	prep	\N	\N	1	A2	\N	\N
+905	asleep	adj	\N	\N	1	A2	\N	\N
+906	assistant	n	\N	\N	1	A2	\N	\N
+907	athlete	n	\N	\N	1	A2	\N	\N
+908	attack	n	\N	\N	1	A2	\N	\N
+909	attack	v	\N	\N	1	A2	\N	\N
+910	attend	v	\N	\N	1	A2	\N	\N
+911	attention	n	\N	\N	1	A2	\N	\N
+912	attractive	adj	\N	\N	1	A2	\N	\N
+913	audience	n	\N	\N	1	A2	\N	\N
+914	author	n	\N	\N	1	A2	\N	\N
+915	available	adj	\N	\N	1	A2	\N	\N
+916	average	n	\N	\N	1	A2	\N	\N
+917	average	adj	\N	\N	1	A2	\N	\N
+918	avoid	v	\N	\N	1	A2	\N	\N
+919	award	n	\N	\N	1	A2	\N	\N
+920	awful	adj	\N	\N	1	A2	\N	\N
+921	background	n	\N	\N	1	A2	\N	\N
+922	badly	adv	\N	\N	1	A2	\N	\N
+923	baseball	n	\N	\N	1	A2	\N	\N
+924	basketball	n	\N	\N	1	A2	\N	\N
+925	bass	n	\N	\N	1	A2	\N	\N
+926	bean	n	\N	\N	1	A2	\N	\N
+927	bear	n	\N	\N	1	A2	\N	\N
+928	beat	v	\N	\N	1	A2	\N	\N
+929	beef	n	\N	\N	1	A2	\N	\N
+930	before	prep	\N	\N	1	A2	\N	\N
+931	behave	v	\N	\N	1	A2	\N	\N
+932	belong	v	\N	\N	1	A2	\N	\N
+933	belt	n	\N	\N	1	A2	\N	\N
+934	benefit	n	\N	\N	1	A2	\N	\N
+935	best	adj	\N	\N	1	A2	\N	\N
+936	best	adv	\N	\N	1	A2	\N	\N
+937	better	adj	\N	\N	1	A2	\N	\N
+938	better	adv	\N	\N	1	A2	\N	\N
+939	between	prep	\N	\N	1	A2	\N	\N
+940	billion	num	\N	\N	1	A2	\N	\N
+941	bin	n	\N	\N	1	A2	\N	\N
+942	biology	n	\N	\N	1	A2	\N	\N
+943	birth	n	\N	\N	1	A2	\N	\N
+944	biscuit	n	\N	\N	1	A2	\N	\N
+945	bit	n	\N	\N	1	A2	\N	\N
+946	blank	adj	\N	\N	1	A2	\N	\N
+947	blood	n	\N	\N	1	A2	\N	\N
+948	blow	v	\N	\N	1	A2	\N	\N
+949	board	n	\N	\N	1	A2	\N	\N
+950	boil	v	\N	\N	1	A2	\N	\N
+951	bone	n	\N	\N	1	A2	\N	\N
+952	book	v	\N	\N	1	A2	\N	\N
+953	borrow	v	\N	\N	1	A2	\N	\N
+954	boss	n	\N	\N	1	A2	\N	\N
+955	bottom	n	\N	\N	1	A2	\N	\N
+956	bottom	adj	\N	\N	1	A2	\N	\N
+957	bowl	n	\N	\N	1	A2	\N	\N
+958	brain	n	\N	\N	1	A2	\N	\N
+959	bridge	n	\N	\N	1	A2	\N	\N
+960	bright	adj	\N	\N	1	A2	\N	\N
+961	brilliant	adj	\N	\N	1	A2	\N	\N
+962	broken	adj	\N	\N	1	A2	\N	\N
+963	brush	n	\N	\N	1	A2	\N	\N
+964	brush	v	\N	\N	1	A2	\N	\N
+965	buddy	n	\N	\N	1	A2	\N	\N
+966	burn	v	\N	\N	1	A2	\N	\N
+967	businessman	n	\N	\N	1	A2	\N	\N
+968	button	n	\N	\N	1	A2	\N	\N
+969	camp	n	\N	\N	1	A2	\N	\N
+970	camp	v	\N	\N	1	A2	\N	\N
+971	camping	n	\N	\N	1	A2	\N	\N
+972	can	n	\N	\N	1	A2	\N	\N
+973	care	n	\N	\N	1	A2	\N	\N
+974	care	v	\N	\N	1	A2	\N	\N
+975	careful	adj	\N	\N	1	A2	\N	\N
+976	carefully	adv	\N	\N	1	A2	\N	\N
+977	carpet	n	\N	\N	1	A2	\N	\N
+978	cartoon	n	\N	\N	1	A2	\N	\N
+979	case	n	\N	\N	1	A2	\N	\N
+980	cash	n	\N	\N	1	A2	\N	\N
+981	casino	n	\N	\N	1	A2	\N	\N
+982	castle	n	\N	\N	1	A2	\N	\N
+983	catch	v	\N	\N	1	A2	\N	\N
+984	cause	v	\N	\N	1	A2	\N	\N
+985	cause	n	\N	\N	1	A2	\N	\N
+986	celebrate	v	\N	\N	1	A2	\N	\N
+987	celebrity	n	\N	\N	1	A2	\N	\N
+988	certain	adj	\N	\N	1	A2	\N	\N
+989	certainly	adv	\N	\N	1	A2	\N	\N
+990	chance	n	\N	\N	1	A2	\N	\N
+991	character	n	\N	\N	1	A2	\N	\N
+992	charity	n	\N	\N	1	A2	\N	\N
+993	chat	n	\N	\N	1	A2	\N	\N
+994	chat	v	\N	\N	1	A2	\N	\N
+995	chef	n	\N	\N	1	A2	\N	\N
+996	chemistry	n	\N	\N	1	A2	\N	\N
+997	chip	n	\N	\N	1	A2	\N	\N
+998	choice	n	\N	\N	1	A2	\N	\N
+999	church	n	\N	\N	1	A2	\N	\N
+1000	cigarette	n	\N	\N	1	A2	\N	\N
+1001	circle	n	\N	\N	1	A2	\N	\N
+1002	classical	adj	\N	\N	1	A2	\N	\N
+1003	clear	adj	\N	\N	1	A2	\N	\N
+1004	clearly	adv	\N	\N	1	A2	\N	\N
+1005	clever	adj	\N	\N	1	A2	\N	\N
+1006	climate	n	\N	\N	1	A2	\N	\N
+1007	close	adj	\N	\N	1	A2	\N	\N
+1008	close	adv	\N	\N	1	A2	\N	\N
+1009	closed	adj	\N	\N	1	A2	\N	\N
+1010	clothing	n	\N	\N	1	A2	\N	\N
+1011	cloud	n	\N	\N	1	A2	\N	\N
+1012	coach	n	\N	\N	1	A2	\N	\N
+1013	coast	n	\N	\N	1	A2	\N	\N
+1014	code	n	\N	\N	1	A2	\N	\N
+1015	coin	n	\N	\N	1	A2	\N	\N
+1016	colleague	n	\N	\N	1	A2	\N	\N
+1017	collect	v	\N	\N	1	A2	\N	\N
+1018	column	n	\N	\N	1	A2	\N	\N
+1019	comedy	n	\N	\N	1	A2	\N	\N
+1020	comfortable	adj	\N	\N	1	A2	\N	\N
+1021	common	adj	\N	\N	1	A2	\N	\N
+1022	comment	n	\N	\N	1	A2	\N	\N
+1023	communicate	v	\N	\N	1	A2	\N	\N
+1024	community	n	\N	\N	1	A2	\N	\N
+1025	compare	v	\N	\N	1	A2	\N	\N
+1026	compete	v	\N	\N	1	A2	\N	\N
+1027	competition	n	\N	\N	1	A2	\N	\N
+1028	complain	v	\N	\N	1	A2	\N	\N
+1029	completely	adv	\N	\N	1	A2	\N	\N
+1030	condition	n	\N	\N	1	A2	\N	\N
+1031	conference	n	\N	\N	1	A2	\N	\N
+1032	connect	v	\N	\N	1	A2	\N	\N
+1033	connected	adj	\N	\N	1	A2	\N	\N
+1034	consider	v	\N	\N	1	A2	\N	\N
+1035	contain	v	\N	\N	1	A2	\N	\N
+1036	continent	n	\N	\N	1	A2	\N	\N
+1037	continue	v	\N	\N	1	A2	\N	\N
+1038	conversation	n	\N	\N	1	A2	\N	\N
+1039	control	n	\N	\N	1	A2	\N	\N
+1040	control	v	\N	\N	1	A2	\N	\N
+1041	cook	n	\N	\N	1	A2	\N	\N
+1042	cooker	n	\N	\N	1	A2	\N	\N
+1043	copy	n	\N	\N	1	A2	\N	\N
+1044	copy	v	\N	\N	1	A2	\N	\N
+1045	corner	n	\N	\N	1	A2	\N	\N
+1046	correctly	adv	\N	\N	1	A2	\N	\N
+1047	count	v	\N	\N	1	A2	\N	\N
+1048	couple	n	\N	\N	1	A2	\N	\N
+1049	crazy	adj	\N	\N	1	A2	\N	\N
+1050	creative	adj	\N	\N	1	A2	\N	\N
+1051	crime	n	\N	\N	1	A2	\N	\N
+1052	criminal	n	\N	\N	1	A2	\N	\N
+1053	criminal	adj	\N	\N	1	A2	\N	\N
+1054	daily	adj	\N	\N	1	A2	\N	\N
+1055	daily	adv	\N	\N	1	A2	\N	\N
+1056	danger	n	\N	\N	1	A2	\N	\N
+1057	dark	adj	\N	\N	1	A2	\N	\N
+1058	dark	n	\N	\N	1	A2	\N	\N
+1059	dead	adj	\N	\N	1	A2	\N	\N
+1060	deal with	v	\N	\N	1	A2	\N	\N
+1061	death	n	\N	\N	1	A2	\N	\N
+1062	decision	n	\N	\N	1	A2	\N	\N
+1063	deep	adj	\N	\N	1	A2	\N	\N
+1064	definitely	adv	\N	\N	1	A2	\N	\N
+1065	degree	n	\N	\N	1	A2	\N	\N
+1066	dentist	n	\N	\N	1	A2	\N	\N
+1067	department	n	\N	\N	1	A2	\N	\N
+1068	depend	v	\N	\N	1	A2	\N	\N
+1069	describe	v	\N	\N	1	A2	\N	\N
+1070	description	n	\N	\N	1	A2	\N	\N
+1071	desert	n	\N	\N	1	A2	\N	\N
+1072	design	n	\N	\N	1	A2	\N	\N
+1073	design	v	\N	\N	1	A2	\N	\N
+1074	designer	n	\N	\N	1	A2	\N	\N
+1075	destroy	v	\N	\N	1	A2	\N	\N
+1076	detective	n	\N	\N	1	A2	\N	\N
+1077	develop	v	\N	\N	1	A2	\N	\N
+1078	device	n	\N	\N	1	A2	\N	\N
+1079	diary	n	\N	\N	1	A2	\N	\N
+1080	difference	n	\N	\N	1	A2	\N	\N
+1081	differently	adv	\N	\N	1	A2	\N	\N
+1082	digital	adj	\N	\N	1	A2	\N	\N
+1083	direct	adj	\N	\N	1	A2	\N	\N
+1084	direct	v	\N	\N	1	A2	\N	\N
+1085	direction	n	\N	\N	1	A2	\N	\N
+1086	director	n	\N	\N	1	A2	\N	\N
+1087	disagree	v	\N	\N	1	A2	\N	\N
+1088	disappear	v	\N	\N	1	A2	\N	\N
+1089	disaster	n	\N	\N	1	A2	\N	\N
+1090	discover	v	\N	\N	1	A2	\N	\N
+1091	discovery	n	\N	\N	1	A2	\N	\N
+1092	discussion	n	\N	\N	1	A2	\N	\N
+1093	disease	n	\N	\N	1	A2	\N	\N
+1094	distance	n	\N	\N	1	A2	\N	\N
+1095	divorced	adj	\N	\N	1	A2	\N	\N
+1096	document	n	\N	\N	1	A2	\N	\N
+1097	double	adj	\N	\N	1	A2	\N	\N
+1098	double	det	\N	\N	1	A2	\N	\N
+1099	double	v	\N	\N	1	A2	\N	\N
+1100	download	v	\N	\N	1	A2	\N	\N
+1101	downstairs	adv	\N	\N	1	A2	\N	\N
+1102	downstairs	adj	\N	\N	1	A2	\N	\N
+1103	drama	n	\N	\N	1	A2	\N	\N
+1104	dream	n	\N	\N	1	A2	\N	\N
+1105	dream	v	\N	\N	1	A2	\N	\N
+1106	drive	n	\N	\N	1	A2	\N	\N
+1107	driving	n	\N	\N	1	A2	\N	\N
+1108	drop	v	\N	\N	1	A2	\N	\N
+1109	drug	n	\N	\N	1	A2	\N	\N
+1110	dry	adj	\N	\N	1	A2	\N	\N
+1111	dry	v	\N	\N	1	A2	\N	\N
+1112	earn	v	\N	\N	1	A2	\N	\N
+1113	earth	n	\N	\N	1	A2	\N	\N
+1114	easily	adv	\N	\N	1	A2	\N	\N
+1115	education	n	\N	\N	1	A2	\N	\N
+1116	either	det	\N	\N	1	A2	\N	\N
+1117	either	pron	\N	\N	1	A2	\N	\N
+1118	either	adv	\N	\N	1	A2	\N	\N
+1119	electric	adj	\N	\N	1	A2	\N	\N
+1120	electrical	adj	\N	\N	1	A2	\N	\N
+1121	electricity	n	\N	\N	1	A2	\N	\N
+1122	electronic	adj	\N	\N	1	A2	\N	\N
+1123	employ	v	\N	\N	1	A2	\N	\N
+1124	employee	n	\N	\N	1	A2	\N	\N
+1125	employer	n	\N	\N	1	A2	\N	\N
+1126	empty	adj	\N	\N	1	A2	\N	\N
+1127	ending	n	\N	\N	1	A2	\N	\N
+1128	energy	n	\N	\N	1	A2	\N	\N
+1129	engine	n	\N	\N	1	A2	\N	\N
+1130	engineer	n	\N	\N	1	A2	\N	\N
+1131	enormous	adj	\N	\N	1	A2	\N	\N
+1132	enter	v	\N	\N	1	A2	\N	\N
+1133	equipment	n	\N	\N	1	A2	\N	\N
+1134	error	n	\N	\N	1	A2	\N	\N
+1135	especially	adv	\N	\N	1	A2	\N	\N
+1136	essay	n	\N	\N	1	A2	\N	\N
+1137	everyday	adj	\N	\N	1	A2	\N	\N
+1138	everywhere	adv	\N	\N	1	A2	\N	\N
+1139	exact	adj	\N	\N	1	A2	\N	\N
+1140	exactly	adv	\N	\N	1	A2	\N	\N
+1141	excellent	adj	\N	\N	1	A2	\N	\N
+1142	except	prep	\N	\N	1	A2	\N	\N
+1143	except	conj	\N	\N	1	A2	\N	\N
+1144	exist	v	\N	\N	1	A2	\N	\N
+1145	expect	v	\N	\N	1	A2	\N	\N
+1146	experience	n	\N	\N	1	A2	\N	\N
+1147	experiment	n	\N	\N	1	A2	\N	\N
+1148	expert	n	\N	\N	1	A2	\N	\N
+1149	expert	adj	\N	\N	1	A2	\N	\N
+1150	explanation	n	\N	\N	1	A2	\N	\N
+1151	express	v	\N	\N	1	A2	\N	\N
+1152	expression	n	\N	\N	1	A2	\N	\N
+1153	extreme	adj	\N	\N	1	A2	\N	\N
+1154	extremely	adv	\N	\N	1	A2	\N	\N
+1155	factory	n	\N	\N	1	A2	\N	\N
+1156	fail	v	\N	\N	1	A2	\N	\N
+1157	fair	adj	\N	\N	1	A2	\N	\N
+1158	fan	n	\N	\N	1	A2	\N	\N
+1159	farming	n	\N	\N	1	A2	\N	\N
+1160	fashion	n	\N	\N	1	A2	\N	\N
+1161	fat	adj	\N	\N	1	A2	\N	\N
+1162	fat	n	\N	\N	1	A2	\N	\N
+1163	fear	n	\N	\N	1	A2	\N	\N
+1164	feeling	n	\N	\N	1	A2	\N	\N
+1165	female	adj	\N	\N	1	A2	\N	\N
+1166	female	n	\N	\N	1	A2	\N	\N
+1167	fiction	n	\N	\N	1	A2	\N	\N
+1168	field	n	\N	\N	1	A2	\N	\N
+1169	fight	n	\N	\N	1	A2	\N	\N
+1170	fight	v	\N	\N	1	A2	\N	\N
+1171	figure	n	\N	\N	1	A2	\N	\N
+1172	film	n	\N	\N	1	A2	\N	\N
+1173	film	v	\N	\N	1	A2	\N	\N
+1174	finally	adv	\N	\N	1	A2	\N	\N
+1175	finger	n	\N	\N	1	A2	\N	\N
+1176	first	adj	\N	\N	1	A2	\N	\N
+1177	first	adv	\N	\N	1	A2	\N	\N
+1178	firstly	adv	\N	\N	1	A2	\N	\N
+1179	fish	v	\N	\N	1	A2	\N	\N
+1180	fishing	n	\N	\N	1	A2	\N	\N
+1181	fit	adj	\N	\N	1	A2	\N	\N
+1182	flag	n	\N	\N	1	A2	\N	\N
+1183	flat	adj	\N	\N	1	A2	\N	\N
+1184	flu	n	\N	\N	1	A2	\N	\N
+1185	flying	adj	\N	\N	1	A2	\N	\N
+1186	focus	v	\N	\N	1	A2	\N	\N
+1187	following	adj	\N	\N	1	A2	\N	\N
+1188	foreign	adj	\N	\N	1	A2	\N	\N
+1189	forest	n	\N	\N	1	A2	\N	\N
+1190	fork	n	\N	\N	1	A2	\N	\N
+1191	formal	adj	\N	\N	1	A2	\N	\N
+1192	fortunately	adv	\N	\N	1	A2	\N	\N
+1193	forward	adv	\N	\N	1	A2	\N	\N
+1194	fresh	adj	\N	\N	1	A2	\N	\N
+1195	fridge	n	\N	\N	1	A2	\N	\N
+1196	furniture	n	\N	\N	1	A2	\N	\N
+1197	further	adv	\N	\N	1	A2	\N	\N
+1198	gallery	n	\N	\N	1	A2	\N	\N
+1199	gap	n	\N	\N	1	A2	\N	\N
+1200	gas	n	\N	\N	1	A2	\N	\N
+1201	gate	n	\N	\N	1	A2	\N	\N
+1202	general	adj	\N	\N	1	A2	\N	\N
+1203	gift	n	\N	\N	1	A2	\N	\N
+1204	goal	n	\N	\N	1	A2	\N	\N
+1205	god	n	\N	\N	1	A2	\N	\N
+1206	gold	n	\N	\N	1	A2	\N	\N
+1207	gold	adj	\N	\N	1	A2	\N	\N
+1208	golf	n	\N	\N	1	A2	\N	\N
+1209	grass	n	\N	\N	1	A2	\N	\N
+1210	greet	v	\N	\N	1	A2	\N	\N
+1211	ground	n	\N	\N	1	A2	\N	\N
+1212	guest	n	\N	\N	1	A2	\N	\N
+1213	guide	n	\N	\N	1	A2	\N	\N
+1214	guide	v	\N	\N	1	A2	\N	\N
+1215	habit	n	\N	\N	1	A2	\N	\N
+1216	half	n	\N	\N	1	A2	\N	\N
+1217	half	det	\N	\N	1	A2	\N	\N
+1218	hall	n	\N	\N	1	A2	\N	\N
+1219	happily	adv	\N	\N	1	A2	\N	\N
+1220	headache	n	\N	\N	1	A2	\N	\N
+1221	heart	n	\N	\N	1	A2	\N	\N
+1222	heat	n	\N	\N	1	A2	\N	\N
+1223	heavy	adj	\N	\N	1	A2	\N	\N
+1224	height	n	\N	\N	1	A2	\N	\N
+1225	helpful	adj	\N	\N	1	A2	\N	\N
+1226	hero	n	\N	\N	1	A2	\N	\N
+1227	hers	pron	\N	\N	1	A2	\N	\N
+1228	herself	pron	\N	\N	1	A2	\N	\N
+1229	hide	v	\N	\N	1	A2	\N	\N
+1230	high	adj	\N	\N	1	A2	\N	\N
+1231	high	adv	\N	\N	1	A2	\N	\N
+1232	hill	n	\N	\N	1	A2	\N	\N
+1233	himself	pron	\N	\N	1	A2	\N	\N
+1234	his	det	\N	\N	1	A2	\N	\N
+1235	his	pron	\N	\N	1	A2	\N	\N
+1236	hit	n	\N	\N	1	A2	\N	\N
+1237	hit	v	\N	\N	1	A2	\N	\N
+1238	hockey	n	\N	\N	1	A2	\N	\N
+1239	hold	v	\N	\N	1	A2	\N	\N
+1240	hole	n	\N	\N	1	A2	\N	\N
+1241	hope	n	\N	\N	1	A2	\N	\N
+1242	huge	adj	\N	\N	1	A2	\N	\N
+1243	human	n	\N	\N	1	A2	\N	\N
+1244	human	adj	\N	\N	1	A2	\N	\N
+1245	hurry	v	\N	\N	1	A2	\N	\N
+1246	hurry	n	\N	\N	1	A2	\N	\N
+1247	hurt	v	\N	\N	1	A2	\N	\N
+1248	ideal	adj	\N	\N	1	A2	\N	\N
+1249	idiot	n	\N	\N	1	A2	\N	\N
+1250	ill	adj	\N	\N	1	A2	\N	\N
+1251	illness	n	\N	\N	1	A2	\N	\N
+1252	image	n	\N	\N	1	A2	\N	\N
+1253	immediately	adv	\N	\N	1	A2	\N	\N
+1254	impossible	adj	\N	\N	1	A2	\N	\N
+1255	included	adj	\N	\N	1	A2	\N	\N
+1256	including	prep	\N	\N	1	A2	\N	\N
+1257	increase	v	\N	\N	1	A2	\N	\N
+1258	incredible	adj	\N	\N	1	A2	\N	\N
+1259	independent	adj	\N	\N	1	A2	\N	\N
+1260	individual	n	\N	\N	1	A2	\N	\N
+1261	individual	adj	\N	\N	1	A2	\N	\N
+1262	industry	n	\N	\N	1	A2	\N	\N
+1263	informal	adj	\N	\N	1	A2	\N	\N
+1264	injury	n	\N	\N	1	A2	\N	\N
+1265	ink	n	\N	\N	1	A2	\N	\N
+1266	insect	n	\N	\N	1	A2	\N	\N
+1267	inside	adv	\N	\N	1	A2	\N	\N
+1268	inside	prep	\N	\N	1	A2	\N	\N
+1269	instruction	n	\N	\N	1	A2	\N	\N
+1270	instructor	n	\N	\N	1	A2	\N	\N
+1271	instrument	n	\N	\N	1	A2	\N	\N
+1272	intelligent	adj	\N	\N	1	A2	\N	\N
+1273	international	adj	\N	\N	1	A2	\N	\N
+1274	introduction	n	\N	\N	1	A2	\N	\N
+1275	invent	v	\N	\N	1	A2	\N	\N
+1276	invention	n	\N	\N	1	A2	\N	\N
+1277	jam	n	\N	\N	1	A2	\N	\N
+1278	jazz	n	\N	\N	1	A2	\N	\N
+1279	jewellery	n	\N	\N	1	A2	\N	\N
+1280	joke	n	\N	\N	1	A2	\N	\N
+1281	journalist	n	\N	\N	1	A2	\N	\N
+1282	jump	v	\N	\N	1	A2	\N	\N
+1283	kid	n	\N	\N	1	A2	\N	\N
+1284	kill	v	\N	\N	1	A2	\N	\N
+1285	king	n	\N	\N	1	A2	\N	\N
+1286	kiss	v	\N	\N	1	A2	\N	\N
+1287	kiss	n	\N	\N	1	A2	\N	\N
+1288	knee	n	\N	\N	1	A2	\N	\N
+1289	knife	n	\N	\N	1	A2	\N	\N
+1290	knock	v	\N	\N	1	A2	\N	\N
+1291	knowledge	n	\N	\N	1	A2	\N	\N
+1292	lab	n	\N	\N	1	A2	\N	\N
+1293	lady	n	\N	\N	1	A2	\N	\N
+1294	lake	n	\N	\N	1	A2	\N	\N
+1295	lamp	n	\N	\N	1	A2	\N	\N
+1296	land	n	\N	\N	1	A2	\N	\N
+1297	land	v	\N	\N	1	A2	\N	\N
+1298	laptop	n	\N	\N	1	A2	\N	\N
+1299	last	adj	\N	\N	1	A2	\N	\N
+1300	last	adv	\N	\N	1	A2	\N	\N
+1301	laughter	n	\N	\N	1	A2	\N	\N
+1302	law	n	\N	\N	1	A2	\N	\N
+1303	lawyer	n	\N	\N	1	A2	\N	\N
+1304	lazy	adj	\N	\N	1	A2	\N	\N
+1305	lead	v	\N	\N	1	A2	\N	\N
+1306	lead	n	\N	\N	1	A2	\N	\N
+1307	leader	n	\N	\N	1	A2	\N	\N
+1308	learning	n	\N	\N	1	A2	\N	\N
+1309	least	det	\N	\N	1	A2	\N	\N
+1310	least	pron	\N	\N	1	A2	\N	\N
+1311	least	adv	\N	\N	1	A2	\N	\N
+1312	lecture	n	\N	\N	1	A2	\N	\N
+1313	lemon	n	\N	\N	1	A2	\N	\N
+1314	lend	v	\N	\N	1	A2	\N	\N
+1315	less	det	\N	\N	1	A2	\N	\N
+1316	less	pron	\N	\N	1	A2	\N	\N
+1317	less	adv	\N	\N	1	A2	\N	\N
+1318	level	n	\N	\N	1	A2	\N	\N
+1319	lifestyle	n	\N	\N	1	A2	\N	\N
+1320	lift	n	\N	\N	1	A2	\N	\N
+1321	lift	v	\N	\N	1	A2	\N	\N
+1322	light	adj	\N	\N	1	A2	\N	\N
+1323	likely	adj	\N	\N	1	A2	\N	\N
+1324	link	n	\N	\N	1	A2	\N	\N
+1325	link	v	\N	\N	1	A2	\N	\N
+1326	mail	n	\N	\N	1	A2	\N	\N
+1327	mail	v	\N	\N	1	A2	\N	\N
+1328	major	adj	\N	\N	1	A2	\N	\N
+1329	male	adj	\N	\N	1	A2	\N	\N
+1330	male	n	\N	\N	1	A2	\N	\N
+1331	manage	v	\N	\N	1	A2	\N	\N
+1332	manager	n	\N	\N	1	A2	\N	\N
+1333	manner	n	\N	\N	1	A2	\N	\N
+1334	mark	n	\N	\N	1	A2	\N	\N
+1335	mark	v	\N	\N	1	A2	\N	\N
+1336	marry	v	\N	\N	1	A2	\N	\N
+1337	mask	n	\N	\N	1	A2	\N	\N
+1338	material	n	\N	\N	1	A2	\N	\N
+1339	mathematics	n	\N	\N	1	A2	\N	\N
+1340	maths	n	\N	\N	1	A2	\N	\N
+1341	matter	n	\N	\N	1	A2	\N	\N
+1342	matter	v	\N	\N	1	A2	\N	\N
+1343	may	v	\N	\N	1	A2	\N	\N
+1344	media	n	\N	\N	1	A2	\N	\N
+1345	medical	adj	\N	\N	1	A2	\N	\N
+1346	medicine	n	\N	\N	1	A2	\N	\N
+1347	memory	n	\N	\N	1	A2	\N	\N
+1348	mention	v	\N	\N	1	A2	\N	\N
+1349	metal	n	\N	\N	1	A2	\N	\N
+1350	middle	n	\N	\N	1	A2	\N	\N
+1351	middle	adj	\N	\N	1	A2	\N	\N
+1352	might	v	\N	\N	1	A2	\N	\N
+1353	mind	n	\N	\N	1	A2	\N	\N
+1354	mind	v	\N	\N	1	A2	\N	\N
+1355	mine	pron	\N	\N	1	A2	\N	\N
+1356	mirror	n	\N	\N	1	A2	\N	\N
+1357	missing	adj	\N	\N	1	A2	\N	\N
+1358	mobile	adj	\N	\N	1	A2	\N	\N
+1359	monkey	n	\N	\N	1	A2	\N	\N
+1360	moon	n	\N	\N	1	A2	\N	\N
+1361	mostly	adv	\N	\N	1	A2	\N	\N
+1362	motorcycle	n	\N	\N	1	A2	\N	\N
+1363	movement	n	\N	\N	1	A2	\N	\N
+1364	musical	adj	\N	\N	1	A2	\N	\N
+1365	musical	n	\N	\N	1	A2	\N	\N
+1366	musician	n	\N	\N	1	A2	\N	\N
+1367	myself	pron	\N	\N	1	A2	\N	\N
+1368	narrow	adj	\N	\N	1	A2	\N	\N
+1369	national	adj	\N	\N	1	A2	\N	\N
+1370	natural	adj	\N	\N	1	A2	\N	\N
+1371	nature	n	\N	\N	1	A2	\N	\N
+1372	nearly	adv	\N	\N	1	A2	\N	\N
+1373	necessary	adj	\N	\N	1	A2	\N	\N
+1374	neck	n	\N	\N	1	A2	\N	\N
+1375	need	n	\N	\N	1	A2	\N	\N
+1376	neither	det	\N	\N	1	A2	\N	\N
+1377	neither	pron	\N	\N	1	A2	\N	\N
+1378	nervous	adj	\N	\N	1	A2	\N	\N
+1379	nest	n	\N	\N	1	A2	\N	\N
+1380	net	n	\N	\N	1	A2	\N	\N
+1381	network	n	\N	\N	1	A2	\N	\N
+1382	noise	n	\N	\N	1	A2	\N	\N
+1383	noisy	adj	\N	\N	1	A2	\N	\N
+1384	none	pron	\N	\N	1	A2	\N	\N
+1385	normal	adj	\N	\N	1	A2	\N	\N
+1386	normally	adv	\N	\N	1	A2	\N	\N
+1387	notice	n	\N	\N	1	A2	\N	\N
+1388	notice	v	\N	\N	1	A2	\N	\N
+1389	novel	n	\N	\N	1	A2	\N	\N
+1390	nowhere	adv	\N	\N	1	A2	\N	\N
+1391	ocean	n	\N	\N	1	A2	\N	\N
+1392	offer	n	\N	\N	1	A2	\N	\N
+1393	offer	v	\N	\N	1	A2	\N	\N
+1394	officer	n	\N	\N	1	A2	\N	\N
+1395	oil	n	\N	\N	1	A2	\N	\N
+1396	onto	prep	\N	\N	1	A2	\N	\N
+1397	option	n	\N	\N	1	A2	\N	\N
+1398	ordinary	adj	\N	\N	1	A2	\N	\N
+1399	organisation	n	\N	\N	1	A2	\N	\N
+1400	organise	v	\N	\N	1	A2	\N	\N
+1401	original	adj	\N	\N	1	A2	\N	\N
+1402	original	n	\N	\N	1	A2	\N	\N
+1403	ourselves	pron	\N	\N	1	A2	\N	\N
+1404	outside	adv	\N	\N	1	A2	\N	\N
+1405	outside	prep	\N	\N	1	A2	\N	\N
+1406	outside	adj	\N	\N	1	A2	\N	\N
+1407	outside	n	\N	\N	1	A2	\N	\N
+1408	oven	n	\N	\N	1	A2	\N	\N
+1409	owner	n	\N	\N	1	A2	\N	\N
+1410	pack	n	\N	\N	1	A2	\N	\N
+1411	pack	v	\N	\N	1	A2	\N	\N
+1412	pain	n	\N	\N	1	A2	\N	\N
+1413	painter	n	\N	\N	1	A2	\N	\N
+1414	palace	n	\N	\N	1	A2	\N	\N
+1415	pants	n	\N	\N	1	A2	\N	\N
+1416	parking	n	\N	\N	1	A2	\N	\N
+1417	particular	adj	\N	\N	1	A2	\N	\N
+1418	pass	v	\N	\N	1	A2	\N	\N
+1419	passenger	n	\N	\N	1	A2	\N	\N
+1420	past	adj	\N	\N	1	A2	\N	\N
+1421	past	n	\N	\N	1	A2	\N	\N
+1422	past	prep	\N	\N	1	A2	\N	\N
+1423	patient	n	\N	\N	1	A2	\N	\N
+1424	pattern	n	\N	\N	1	A2	\N	\N
+1425	peace	n	\N	\N	1	A2	\N	\N
+1426	penny	n	\N	\N	1	A2	\N	\N
+1427	per	prep	\N	\N	1	A2	\N	\N
+1428	per cent	n	\N	\N	1	A2	\N	\N
+1429	perform	v	\N	\N	1	A2	\N	\N
+1430	perhaps	adv	\N	\N	1	A2	\N	\N
+1431	permission	n	\N	\N	1	A2	\N	\N
+1432	personality	n	\N	\N	1	A2	\N	\N
+1433	pet	n	\N	\N	1	A2	\N	\N
+1434	petrol	n	\N	\N	1	A2	\N	\N
+1435	photograph	v	\N	\N	1	A2	\N	\N
+1436	physical	adj	\N	\N	1	A2	\N	\N
+1437	physics	n	\N	\N	1	A2	\N	\N
+1438	pick	v	\N	\N	1	A2	\N	\N
+1439	pilot	n	\N	\N	1	A2	\N	\N
+1440	pirate	n	\N	\N	1	A2	\N	\N
+1441	planet	n	\N	\N	1	A2	\N	\N
+1442	plant	v	\N	\N	1	A2	\N	\N
+1443	plastic	n	\N	\N	1	A2	\N	\N
+1444	plastic	adj	\N	\N	1	A2	\N	\N
+1445	plate	n	\N	\N	1	A2	\N	\N
+1446	platform	n	\N	\N	1	A2	\N	\N
+1447	pleased	adj	\N	\N	1	A2	\N	\N
+1448	plug	n	\N	\N	1	A2	\N	\N
+1449	pocket	n	\N	\N	1	A2	\N	\N
+1450	polite	adj	\N	\N	1	A2	\N	\N
+1451	pollution	n	\N	\N	1	A2	\N	\N
+1452	pond	n	\N	\N	1	A2	\N	\N
+1453	pop	n	\N	\N	1	A2	\N	\N
+1454	pop	v	\N	\N	1	A2	\N	\N
+1455	population	n	\N	\N	1	A2	\N	\N
+1456	position	n	\N	\N	1	A2	\N	\N
+1457	possession	n	\N	\N	1	A2	\N	\N
+1458	possibility	n	\N	\N	1	A2	\N	\N
+1459	poster	n	\N	\N	1	A2	\N	\N
+1460	power	n	\N	\N	1	A2	\N	\N
+1461	predict	v	\N	\N	1	A2	\N	\N
+1462	prefer	v	\N	\N	1	A2	\N	\N
+1463	prepare	v	\N	\N	1	A2	\N	\N
+1464	present	n	\N	\N	1	A2	\N	\N
+1465	present	adj	\N	\N	1	A2	\N	\N
+1466	president	n	\N	\N	1	A2	\N	\N
+1467	prevent	v	\N	\N	1	A2	\N	\N
+1468	print	v	\N	\N	1	A2	\N	\N
+1469	printer	n	\N	\N	1	A2	\N	\N
+1470	prison	n	\N	\N	1	A2	\N	\N
+1471	prize	n	\N	\N	1	A2	\N	\N
+1472	professional	adj	\N	\N	1	A2	\N	\N
+1473	professional	n	\N	\N	1	A2	\N	\N
+1474	professor	n	\N	\N	1	A2	\N	\N
+1475	profile	n	\N	\N	1	A2	\N	\N
+1476	program	n	\N	\N	1	A2	\N	\N
+1477	progress	n	\N	\N	1	A2	\N	\N
+1478	promise	n	\N	\N	1	A2	\N	\N
+1479	promise	v	\N	\N	1	A2	\N	\N
+1480	pronounce	v	\N	\N	1	A2	\N	\N
+1481	protect	v	\N	\N	1	A2	\N	\N
+1482	pub	n	\N	\N	1	A2	\N	\N
+1483	public	adj	\N	\N	1	A2	\N	\N
+1484	public	n	\N	\N	1	A2	\N	\N
+1485	publish	v	\N	\N	1	A2	\N	\N
+1486	pull	v	\N	\N	1	A2	\N	\N
+1487	push	v	\N	\N	1	A2	\N	\N
+1488	quality	n	\N	\N	1	A2	\N	\N
+1489	quantity	n	\N	\N	1	A2	\N	\N
+1490	queen	n	\N	\N	1	A2	\N	\N
+1491	quietly	adv	\N	\N	1	A2	\N	\N
+1492	race	n	\N	\N	1	A2	\N	\N
+1493	railway	n	\N	\N	1	A2	\N	\N
+1494	raise	v	\N	\N	1	A2	\N	\N
+1495	rat	n	\N	\N	1	A2	\N	\N
+1496	rate	n	\N	\N	1	A2	\N	\N
+1497	rather	adv	\N	\N	1	A2	\N	\N
+1498	reach	v	\N	\N	1	A2	\N	\N
+1499	react	v	\N	\N	1	A2	\N	\N
+1500	realise	v	\N	\N	1	A2	\N	\N
+1501	receive	v	\N	\N	1	A2	\N	\N
+1502	recent	adj	\N	\N	1	A2	\N	\N
+1503	recently	adv	\N	\N	1	A2	\N	\N
+1504	reception	n	\N	\N	1	A2	\N	\N
+1505	recipe	n	\N	\N	1	A2	\N	\N
+1506	recognise	v	\N	\N	1	A2	\N	\N
+1507	recommend	v	\N	\N	1	A2	\N	\N
+1508	record	n	\N	\N	1	A2	\N	\N
+1509	record	v	\N	\N	1	A2	\N	\N
+1510	recording	n	\N	\N	1	A2	\N	\N
+1511	recycle	v	\N	\N	1	A2	\N	\N
+1512	reduce	v	\N	\N	1	A2	\N	\N
+1513	refer	v	\N	\N	1	A2	\N	\N
+1514	refuse	v	\N	\N	1	A2	\N	\N
+1515	region	n	\N	\N	1	A2	\N	\N
+1516	regular	adj	\N	\N	1	A2	\N	\N
+1517	relationship	n	\N	\N	1	A2	\N	\N
+1518	remove	v	\N	\N	1	A2	\N	\N
+1519	repair	v	\N	\N	1	A2	\N	\N
+1520	replace	v	\N	\N	1	A2	\N	\N
+1521	reply	n	\N	\N	1	A2	\N	\N
+1522	reply	v	\N	\N	1	A2	\N	\N
+1523	report	v	\N	\N	1	A2	\N	\N
+1524	reporter	n	\N	\N	1	A2	\N	\N
+1525	request	n	\N	\N	1	A2	\N	\N
+1526	request	v	\N	\N	1	A2	\N	\N
+1527	researcher	n	\N	\N	1	A2	\N	\N
+1528	rest	n	\N	\N	1	A2	\N	\N
+1529	rest	v	\N	\N	1	A2	\N	\N
+1530	review	n	\N	\N	1	A2	\N	\N
+1531	review	v	\N	\N	1	A2	\N	\N
+1532	ride	n	\N	\N	1	A2	\N	\N
+1533	ring	n	\N	\N	1	A2	\N	\N
+1534	ring	v	\N	\N	1	A2	\N	\N
+1535	rock	n	\N	\N	1	A2	\N	\N
+1536	role	n	\N	\N	1	A2	\N	\N
+1537	roof	n	\N	\N	1	A2	\N	\N
+1538	round	adj	\N	\N	1	A2	\N	\N
+1539	round	prep	\N	\N	1	A2	\N	\N
+1540	routine	n	\N	\N	1	A2	\N	\N
+1541	rubbish	n	\N	\N	1	A2	\N	\N
+1542	rude	adj	\N	\N	1	A2	\N	\N
+1543	run	n	\N	\N	1	A2	\N	\N
+1544	runner	n	\N	\N	1	A2	\N	\N
+1545	sadly	adv	\N	\N	1	A2	\N	\N
+1546	safe	adj	\N	\N	1	A2	\N	\N
+1547	sail	n	\N	\N	1	A2	\N	\N
+1548	sail	v	\N	\N	1	A2	\N	\N
+1549	sailing	n	\N	\N	1	A2	\N	\N
+1550	salary	n	\N	\N	1	A2	\N	\N
+1551	sale	n	\N	\N	1	A2	\N	\N
+1552	sauce	n	\N	\N	1	A2	\N	\N
+1553	save	v	\N	\N	1	A2	\N	\N
+1554	scared	adj	\N	\N	1	A2	\N	\N
+1555	scary	adj	\N	\N	1	A2	\N	\N
+1556	scene	n	\N	\N	1	A2	\N	\N
+1557	schedule	n	\N	\N	1	A2	\N	\N
+1558	score	n	\N	\N	1	A2	\N	\N
+1559	score	v	\N	\N	1	A2	\N	\N
+1560	screen	n	\N	\N	1	A2	\N	\N
+1561	search	v	\N	\N	1	A2	\N	\N
+1562	season	n	\N	\N	1	A2	\N	\N
+1563	seat	n	\N	\N	1	A2	\N	\N
+1564	second	adj	\N	\N	1	A2	\N	\N
+1565	second	adv	\N	\N	1	A2	\N	\N
+1566	secret	n	\N	\N	1	A2	\N	\N
+1567	secret	adj	\N	\N	1	A2	\N	\N
+1568	secretary	n	\N	\N	1	A2	\N	\N
+1569	seem	v	\N	\N	1	A2	\N	\N
+1570	sell	v	\N	\N	1	A2	\N	\N
+1571	sense	n	\N	\N	1	A2	\N	\N
+1572	separate	adj	\N	\N	1	A2	\N	\N
+1573	series	n	\N	\N	1	A2	\N	\N
+1574	serious	adj	\N	\N	1	A2	\N	\N
+1575	serve	v	\N	\N	1	A2	\N	\N
+1576	service	n	\N	\N	1	A2	\N	\N
+1577	several	det	\N	\N	1	A2	\N	\N
+1578	shake	v	\N	\N	1	A2	\N	\N
+1579	shall	v	\N	\N	1	A2	\N	\N
+1580	share	v	\N	\N	1	A2	\N	\N
+1581	shape	n	\N	\N	1	A2	\N	\N
+1582	sheet	n	\N	\N	1	A2	\N	\N
+1583	ship	n	\N	\N	1	A2	\N	\N
+1584	shoulder	n	\N	\N	1	A2	\N	\N
+1585	shout	v	\N	\N	1	A2	\N	\N
+1586	shut	v	\N	\N	1	A2	\N	\N
+1588	sign	n	\N	\N	1	A2	\N	\N
+1589	silver	n	\N	\N	1	A2	\N	\N
+1590	silver	adj	\N	\N	1	A2	\N	\N
+1591	similar	adj	\N	\N	1	A2	\N	\N
+1592	simple	adj	\N	\N	1	A2	\N	\N
+1593	since	prep	\N	\N	1	A2	\N	\N
+1594	since	conj	\N	\N	1	A2	\N	\N
+1595	singing	n	\N	\N	1	A2	\N	\N
+1596	single	adj	\N	\N	1	A2	\N	\N
+1597	sir	n	\N	\N	1	A2	\N	\N
+1598	site	n	\N	\N	1	A2	\N	\N
+1599	size	n	\N	\N	1	A2	\N	\N
+1600	ski	n	\N	\N	1	A2	\N	\N
+1601	ski	v	\N	\N	1	A2	\N	\N
+1602	skiing	n	\N	\N	1	A2	\N	\N
+1603	skin	n	\N	\N	1	A2	\N	\N
+1604	sky	n	\N	\N	1	A2	\N	\N
+1605	slowly	adv	\N	\N	1	A2	\N	\N
+1606	smartphone	n	\N	\N	1	A2	\N	\N
+1607	smell	n	\N	\N	1	A2	\N	\N
+1608	smell	v	\N	\N	1	A2	\N	\N
+1609	smile	n	\N	\N	1	A2	\N	\N
+1610	smile	v	\N	\N	1	A2	\N	\N
+1611	smoke	n	\N	\N	1	A2	\N	\N
+1612	smoke	v	\N	\N	1	A2	\N	\N
+1613	smoking	n	\N	\N	1	A2	\N	\N
+1614	soap	n	\N	\N	1	A2	\N	\N
+1615	soccer	n	\N	\N	1	A2	\N	\N
+1616	social	adj	\N	\N	1	A2	\N	\N
+1617	sock	n	\N	\N	1	A2	\N	\N
+1618	soft	adj	\N	\N	1	A2	\N	\N
+1619	soldier	n	\N	\N	1	A2	\N	\N
+1620	solution	n	\N	\N	1	A2	\N	\N
+1621	somewhere	adv	\N	\N	1	A2	\N	\N
+1622	sort	n	\N	\N	1	A2	\N	\N
+1623	speaker	n	\N	\N	1	A2	\N	\N
+1624	specific	adj	\N	\N	1	A2	\N	\N
+1625	speech	n	\N	\N	1	A2	\N	\N
+1626	speed	n	\N	\N	1	A2	\N	\N
+1627	spider	n	\N	\N	1	A2	\N	\N
+1628	spoon	n	\N	\N	1	A2	\N	\N
+1629	square	n	\N	\N	1	A2	\N	\N
+1630	square	adj	\N	\N	1	A2	\N	\N
+1631	stage	n	\N	\N	1	A2	\N	\N
+1632	stair	n	\N	\N	1	A2	\N	\N
+1633	stamp	n	\N	\N	1	A2	\N	\N
+1634	star	n	\N	\N	1	A2	\N	\N
+1635	state	n	\N	\N	1	A2	\N	\N
+1636	statement	n	\N	\N	1	A2	\N	\N
+1637	stay	v	\N	\N	1	A2	\N	\N
+1638	steal	v	\N	\N	1	A2	\N	\N
+1639	step	n	\N	\N	1	A2	\N	\N
+1640	step	v	\N	\N	1	A2	\N	\N
+1641	still	adv	\N	\N	1	A2	\N	\N
+1642	stomach	n	\N	\N	1	A2	\N	\N
+1643	stone	n	\N	\N	1	A2	\N	\N
+1644	store	n	\N	\N	1	A2	\N	\N
+1645	storm	n	\N	\N	1	A2	\N	\N
+1646	straight	adj	\N	\N	1	A2	\N	\N
+1647	straight	adv	\N	\N	1	A2	\N	\N
+1648	strange	adj	\N	\N	1	A2	\N	\N
+1649	stress	n	\N	\N	1	A2	\N	\N
+1650	stupid	adj	\N	\N	1	A2	\N	\N
+1651	succeed	v	\N	\N	1	A2	\N	\N
+1652	successful	adj	\N	\N	1	A2	\N	\N
+1653	such	det	\N	\N	1	A2	\N	\N
+1654	suddenly	adv	\N	\N	1	A2	\N	\N
+1655	suggest	v	\N	\N	1	A2	\N	\N
+1656	suggestion	n	\N	\N	1	A2	\N	\N
+1657	suit	n	\N	\N	1	A2	\N	\N
+1658	support	n	\N	\N	1	A2	\N	\N
+1659	support	v	\N	\N	1	A2	\N	\N
+1660	suppose	v	\N	\N	1	A2	\N	\N
+1661	surprise	n	\N	\N	1	A2	\N	\N
+1662	surprise	v	\N	\N	1	A2	\N	\N
+1663	surprised	adj	\N	\N	1	A2	\N	\N
+1664	surprising	adj	\N	\N	1	A2	\N	\N
+1665	sweet	adj	\N	\N	1	A2	\N	\N
+1666	swing	n	\N	\N	1	A2	\N	\N
+1667	swing	v	\N	\N	1	A2	\N	\N
+1668	tablet	n	\N	\N	1	A2	\N	\N
+1669	talk	n	\N	\N	1	A2	\N	\N
+1670	target	n	\N	\N	1	A2	\N	\N
+1671	task	n	\N	\N	1	A2	\N	\N
+1672	taste	n	\N	\N	1	A2	\N	\N
+1673	taste	v	\N	\N	1	A2	\N	\N
+1674	teaching	n	\N	\N	1	A2	\N	\N
+1675	technology	n	\N	\N	1	A2	\N	\N
+1676	teenage	adj	\N	\N	1	A2	\N	\N
+1677	temperature	n	\N	\N	1	A2	\N	\N
+1678	tent	n	\N	\N	1	A2	\N	\N
+1679	term	n	\N	\N	1	A2	\N	\N
+1680	text	v	\N	\N	1	A2	\N	\N
+1681	themselves	pron	\N	\N	1	A2	\N	\N
+1682	thick	adj	\N	\N	1	A2	\N	\N
+1683	thief	n	\N	\N	1	A2	\N	\N
+1684	thin	adj	\N	\N	1	A2	\N	\N
+1685	tidy	adj	\N	\N	1	A2	\N	\N
+1686	tidy	v	\N	\N	1	A2	\N	\N
+1687	tie	n	\N	\N	1	A2	\N	\N
+1688	tie	v	\N	\N	1	A2	\N	\N
+1689	tip	n	\N	\N	1	A2	\N	\N
+1690	toe	n	\N	\N	1	A2	\N	\N
+1691	tool	n	\N	\N	1	A2	\N	\N
+1692	top	n	\N	\N	1	A2	\N	\N
+1693	top	adj	\N	\N	1	A2	\N	\N
+1694	total	adj	\N	\N	1	A2	\N	\N
+1695	touch	v	\N	\N	1	A2	\N	\N
+1696	tour	n	\N	\N	1	A2	\N	\N
+1697	tourism	n	\N	\N	1	A2	\N	\N
+1698	towards	prep	\N	\N	1	A2	\N	\N
+1699	towel	n	\N	\N	1	A2	\N	\N
+1700	tower	n	\N	\N	1	A2	\N	\N
+1701	toy	n	\N	\N	1	A2	\N	\N
+1702	track	n	\N	\N	1	A2	\N	\N
+1703	tradition	n	\N	\N	1	A2	\N	\N
+1704	traditional	adj	\N	\N	1	A2	\N	\N
+1705	trainers	n	\N	\N	1	A2	\N	\N
+1706	training	n	\N	\N	1	A2	\N	\N
+1707	transport	n	\N	\N	1	A2	\N	\N
+1708	traveller	n	\N	\N	1	A2	\N	\N
+1709	trouble	n	\N	\N	1	A2	\N	\N
+1710	truck	n	\N	\N	1	A2	\N	\N
+1711	twin	n	\N	\N	1	A2	\N	\N
+1712	typical	adj	\N	\N	1	A2	\N	\N
+1713	underground	adj	\N	\N	1	A2	\N	\N
+1714	underground	adv	\N	\N	1	A2	\N	\N
+1715	understanding	n	\N	\N	1	A2	\N	\N
+1716	unfortunately	adv	\N	\N	1	A2	\N	\N
+1717	unhappy	adj	\N	\N	1	A2	\N	\N
+1718	uniform	n	\N	\N	1	A2	\N	\N
+1719	unit	n	\N	\N	1	A2	\N	\N
+1720	united	adj	\N	\N	1	A2	\N	\N
+1721	unusual	adj	\N	\N	1	A2	\N	\N
+1722	upset	adj	\N	\N	1	A2	\N	\N
+1723	upstairs	adv	\N	\N	1	A2	\N	\N
+1724	upstairs	adj	\N	\N	1	A2	\N	\N
+1725	use	n	\N	\N	1	A2	\N	\N
+1726	used to	v	\N	\N	1	A2	\N	\N
+1727	useful	adj	\N	\N	1	A2	\N	\N
+1728	user	n	\N	\N	1	A2	\N	\N
+1729	usual	adj	\N	\N	1	A2	\N	\N
+1730	valley	n	\N	\N	1	A2	\N	\N
+1731	van	n	\N	\N	1	A2	\N	\N
+1732	variety	n	\N	\N	1	A2	\N	\N
+1733	view	n	\N	\N	1	A2	\N	\N
+1734	virus	n	\N	\N	1	A2	\N	\N
+1735	voice	n	\N	\N	1	A2	\N	\N
+1736	war	n	\N	\N	1	A2	\N	\N
+1737	washing	n	\N	\N	1	A2	\N	\N
+1738	wave	n	\N	\N	1	A2	\N	\N
+1739	wave	v	\N	\N	1	A2	\N	\N
+1740	weak	adj	\N	\N	1	A2	\N	\N
+1741	web	n	\N	\N	1	A2	\N	\N
+1742	wedding	n	\N	\N	1	A2	\N	\N
+1743	weight	n	\N	\N	1	A2	\N	\N
+1744	welcome	n	\N	\N	1	A2	\N	\N
+1745	welcome	adj	\N	\N	1	A2	\N	\N
+1746	welcome	v	\N	\N	1	A2	\N	\N
+1747	wet	adj	\N	\N	1	A2	\N	\N
+1748	wheel	n	\N	\N	1	A2	\N	\N
+1749	while	conj	\N	\N	1	A2	\N	\N
+1750	whole	adj	\N	\N	1	A2	\N	\N
+1751	whose	det	\N	\N	1	A2	\N	\N
+1752	whose	pron	\N	\N	1	A2	\N	\N
+1753	wide	adj	\N	\N	1	A2	\N	\N
+1754	wild	adj	\N	\N	1	A2	\N	\N
+1755	wind	n	\N	\N	1	A2	\N	\N
+1756	winner	n	\N	\N	1	A2	\N	\N
+1757	wish	n	\N	\N	1	A2	\N	\N
+1758	wish	v	\N	\N	1	A2	\N	\N
+1759	wood	n	\N	\N	1	A2	\N	\N
+1760	wooden	adj	\N	\N	1	A2	\N	\N
+1761	working	adj	\N	\N	1	A2	\N	\N
+1762	worried	adj	\N	\N	1	A2	\N	\N
+1763	worry	v	\N	\N	1	A2	\N	\N
+1764	worry	n	\N	\N	1	A2	\N	\N
+1765	worse	adj	\N	\N	1	A2	\N	\N
+1766	worse	adv	\N	\N	1	A2	\N	\N
+1767	worst	adj	\N	\N	1	A2	\N	\N
+1768	worst	adv	\N	\N	1	A2	\N	\N
+1769	wow	interj	\N	\N	1	A2	\N	\N
+1770	yet	adv	\N	\N	1	A2	\N	\N
+1771	yours	pron	\N	\N	1	A2	\N	\N
+1772	zero	num	\N	\N	1	A2	\N	\N
+1773	absolutely	adv	\N	\N	1	B1	\N	\N
+1774	academic	adj	\N	\N	1	B1	\N	\N
+1775	access	n	\N	\N	1	B1	\N	\N
+1776	to access	v	\N	\N	1	B1	\N	\N
+1777	accommodation	n	\N	\N	1	B1	\N	\N
+1778	account	n	\N	\N	1	B1	\N	\N
+1779	according to	prep	\N	\N	1	B1	\N	\N
+1780	achievement	n	\N	\N	1	B1	\N	\N
+1781	ad	n	\N	\N	1	B1	\N	\N
+1782	addition	n	\N	\N	1	B1	\N	\N
+1783	to admire	v	\N	\N	1	B1	\N	\N
+1784	to admit	v	\N	\N	1	B1	\N	\N
+1785	advanced	adj	\N	\N	1	B1	\N	\N
+1786	to advise	v	\N	\N	1	B1	\N	\N
+1787	to afford	v	\N	\N	1	B1	\N	\N
+1788	aged	adj	\N	\N	1	B1	\N	\N
+1789	agent	n	\N	\N	1	B1	\N	\N
+1790	agreement	n	\N	\N	1	B1	\N	\N
+1791	ahead	adv	\N	\N	1	B1	\N	\N
+1792	aim	n	\N	\N	1	B1	\N	\N
+1793	to aim	v	\N	\N	1	B1	\N	\N
+1794	alarm	n	\N	\N	1	B1	\N	\N
+1795	album	n	\N	\N	1	B1	\N	\N
+1796	alcohol	n	\N	\N	1	B1	\N	\N
+1797	alcoholic	adj	\N	\N	1	B1	\N	\N
+1798	alcoholic	n	\N	\N	1	B1	\N	\N
+1799	alternative	adj	\N	\N	1	B1	\N	\N
+1800	alternative	n	\N	\N	1	B1	\N	\N
+1801	amazed	adj	\N	\N	1	B1	\N	\N
+1802	ambition	n	\N	\N	1	B1	\N	\N
+1803	ambitious	adj	\N	\N	1	B1	\N	\N
+1804	to announce	v	\N	\N	1	B1	\N	\N
+1805	announcement	n	\N	\N	1	B1	\N	\N
+1806	to annoy	v	\N	\N	1	B1	\N	\N
+1807	annoyed	adj	\N	\N	1	B1	\N	\N
+1808	annoying	adj	\N	\N	1	B1	\N	\N
+1809	apart	adv	\N	\N	1	B1	\N	\N
+1810	to apologise	v	\N	\N	1	B1	\N	\N
+1811	application	n	\N	\N	1	B1	\N	\N
+1812	appointment	n	\N	\N	1	B1	\N	\N
+1813	to appreciate	v	\N	\N	1	B1	\N	\N
+1814	approximately	adv	\N	\N	1	B1	\N	\N
+1815	to arrest	v	\N	\N	1	B1	\N	\N
+1816	arrival	n	\N	\N	1	B1	\N	\N
+1817	assignment	n	\N	\N	1	B1	\N	\N
+1818	to assist	v	\N	\N	1	B1	\N	\N
+1819	atmosphere	n	\N	\N	1	B1	\N	\N
+1820	to attach	v	\N	\N	1	B1	\N	\N
+1821	attitude	n	\N	\N	1	B1	\N	\N
+1822	to attract	v	\N	\N	1	B1	\N	\N
+1823	attraction	n	\N	\N	1	B1	\N	\N
+1824	authority	n	\N	\N	1	B1	\N	\N
+1825	average	adj	\N	\N	1	B1	\N	\N
+1826	average	n	\N	\N	1	B1	\N	\N
+1827	award	n	\N	\N	1	B1	\N	\N
+1828	to award	v	\N	\N	1	B1	\N	\N
+1829	aware	adj	\N	\N	1	B1	\N	\N
+1830	backwards	adv	\N	\N	1	B1	\N	\N
+1831	to bake	v	\N	\N	1	B1	\N	\N
+1832	balance	n	\N	\N	1	B1	\N	\N
+1833	to balance	v	\N	\N	1	B1	\N	\N
+1834	ban	n	\N	\N	1	B1	\N	\N
+1835	to ban	v	\N	\N	1	B1	\N	\N
+1836	bank	n	\N	\N	1	B1	\N	\N
+1837	base	n	\N	\N	1	B1	\N	\N
+1838	to base	v	\N	\N	1	B1	\N	\N
+1839	basic	adj	\N	\N	1	B1	\N	\N
+1840	battery	n	\N	\N	1	B1	\N	\N
+1841	battle	n	\N	\N	1	B1	\N	\N
+1842	beauty	n	\N	\N	1	B1	\N	\N
+1843	bee	n	\N	\N	1	B1	\N	\N
+1844	behaviour	n	\N	\N	1	B1	\N	\N
+1845	belief	n	\N	\N	1	B1	\N	\N
+1846	bell	n	\N	\N	1	B1	\N	\N
+1847	to bend	v	\N	\N	1	B1	\N	\N
+1848	to benefit	v	\N	\N	1	B1	\N	\N
+1849	to bite	v	\N	\N	1	B1	\N	\N
+1850	block	n	\N	\N	1	B1	\N	\N
+1851	to block	v	\N	\N	1	B1	\N	\N
+1852	to board	v	\N	\N	1	B1	\N	\N
+1853	bomb	n	\N	\N	1	B1	\N	\N
+1854	to bomb	v	\N	\N	1	B1	\N	\N
+1855	booking	n	\N	\N	1	B1	\N	\N
+1856	border	n	\N	\N	1	B1	\N	\N
+1857	to bother	v	\N	\N	1	B1	\N	\N
+1858	branch	n	\N	\N	1	B1	\N	\N
+1859	brand	n	\N	\N	1	B1	\N	\N
+1860	brave	adj	\N	\N	1	B1	\N	\N
+1861	breath	n	\N	\N	1	B1	\N	\N
+1862	to breathe	v	\N	\N	1	B1	\N	\N
+1863	breathing	n	\N	\N	1	B1	\N	\N
+1864	bride	n	\N	\N	1	B1	\N	\N
+1865	bubble	n	\N	\N	1	B1	\N	\N
+1866	to burst	v	\N	\N	1	B1	\N	\N
+1867	to bury	v	\N	\N	1	B1	\N	\N
+1868	calm	adj	\N	\N	1	B1	\N	\N
+1869	campaign	n	\N	\N	1	B1	\N	\N
+1870	campus	n	\N	\N	1	B1	\N	\N
+1871	candidate	n	\N	\N	1	B1	\N	\N
+1872	cap	n	\N	\N	1	B1	\N	\N
+1873	captain	n	\N	\N	1	B1	\N	\N
+1874	career	n	\N	\N	1	B1	\N	\N
+1875	careless	adj	\N	\N	1	B1	\N	\N
+1876	category	n	\N	\N	1	B1	\N	\N
+1877	ceiling	n	\N	\N	1	B1	\N	\N
+1878	celebration	n	\N	\N	1	B1	\N	\N
+1879	central	adj	\N	\N	1	B1	\N	\N
+1880	century	n	\N	\N	1	B1	\N	\N
+1881	ceremony	n	\N	\N	1	B1	\N	\N
+1882	chain	n	\N	\N	1	B1	\N	\N
+1883	challenge	n	\N	\N	1	B1	\N	\N
+1884	to challenge	v	\N	\N	1	B1	\N	\N
+1885	champion	n	\N	\N	1	B1	\N	\N
+1886	channel	n	\N	\N	1	B1	\N	\N
+1887	chapter	n	\N	\N	1	B1	\N	\N
+1888	charge	n	\N	\N	1	B1	\N	\N
+1889	to charge	v	\N	\N	1	B1	\N	\N
+1890	to cheat	v	\N	\N	1	B1	\N	\N
+1891	cheerful	adj	\N	\N	1	B1	\N	\N
+1892	chemical	n	\N	\N	1	B1	\N	\N
+1893	chemical	adj	\N	\N	1	B1	\N	\N
+1894	chest	n	\N	\N	1	B1	\N	\N
+1895	childhood	n	\N	\N	1	B1	\N	\N
+1896	claim	n	\N	\N	1	B1	\N	\N
+1897	to claim	v	\N	\N	1	B1	\N	\N
+1898	click	n	\N	\N	1	B1	\N	\N
+1899	to click	v	\N	\N	1	B1	\N	\N
+1900	client	n	\N	\N	1	B1	\N	\N
+1901	close	adj	\N	\N	1	B1	\N	\N
+1902	cloth	n	\N	\N	1	B1	\N	\N
+1903	clue	n	\N	\N	1	B1	\N	\N
+1904	coach	n	\N	\N	1	B1	\N	\N
+1905	coal	n	\N	\N	1	B1	\N	\N
+1906	collection	n	\N	\N	1	B1	\N	\N
+1907	coloured	adj	\N	\N	1	B1	\N	\N
+1908	to combine	v	\N	\N	1	B1	\N	\N
+1909	to comment	v	\N	\N	1	B1	\N	\N
+1910	commercial	adj	\N	\N	1	B1	\N	\N
+1911	commercial	n	\N	\N	1	B1	\N	\N
+1912	to commit	v	\N	\N	1	B1	\N	\N
+1913	communication	n	\N	\N	1	B1	\N	\N
+1914	comparison	n	\N	\N	1	B1	\N	\N
+1915	competitor	n	\N	\N	1	B1	\N	\N
+1916	competitive	adj	\N	\N	1	B1	\N	\N
+1917	complaint	n	\N	\N	1	B1	\N	\N
+1918	complex	adj	\N	\N	1	B1	\N	\N
+1919	to concentrate	v	\N	\N	1	B1	\N	\N
+1920	to conclude	v	\N	\N	1	B1	\N	\N
+1921	confident	adj	\N	\N	1	B1	\N	\N
+1922	to confirm	v	\N	\N	1	B1	\N	\N
+1923	to confuse	v	\N	\N	1	B1	\N	\N
+1924	confused	adj	\N	\N	1	B1	\N	\N
+1925	connection	n	\N	\N	1	B1	\N	\N
+1926	to contact	v	\N	\N	1	B1	\N	\N
+1927	contact	n	\N	\N	1	B1	\N	\N
+1928	container	n	\N	\N	1	B1	\N	\N
+1929	content	n	\N	\N	1	B1	\N	\N
+1930	continuous	adj	\N	\N	1	B1	\N	\N
+1931	contrast	n	\N	\N	1	B1	\N	\N
+1932	to contrast	v	\N	\N	1	B1	\N	\N
+1933	convenient	adj	\N	\N	1	B1	\N	\N
+1934	to convince	v	\N	\N	1	B1	\N	\N
+1935	copper	n	\N	\N	1	B1	\N	\N
+1936	costume	n	\N	\N	1	B1	\N	\N
+1937	cottage	n	\N	\N	1	B1	\N	\N
+1938	cotton	n	\N	\N	1	B1	\N	\N
+1939	countryside	n	\N	\N	1	B1	\N	\N
+1940	court	n	\N	\N	1	B1	\N	\N
+1941	cover	n	\N	\N	1	B1	\N	\N
+1942	to cover	v	\N	\N	1	B1	\N	\N
+1943	covered	adj	\N	\N	1	B1	\N	\N
+1944	to create	v	\N	\N	1	B1	\N	\N
+1945	credit	n	\N	\N	1	B1	\N	\N
+1946	cruel	adj	\N	\N	1	B1	\N	\N
+1947	cultural	adj	\N	\N	1	B1	\N	\N
+1948	culture	n	\N	\N	1	B1	\N	\N
+1949	currency	n	\N	\N	1	B1	\N	\N
+1950	current	adj	\N	\N	1	B1	\N	\N
+1951	currently	adv	\N	\N	1	B1	\N	\N
+1952	curtain	n	\N	\N	1	B1	\N	\N
+1953	custom	n	\N	\N	1	B1	\N	\N
+1954	damage	n	\N	\N	1	B1	\N	\N
+1955	to damage	v	\N	\N	1	B1	\N	\N
+1956	to deal	v	\N	\N	1	B1	\N	\N
+1957	decade	n	\N	\N	1	B1	\N	\N
+1958	to decorate	v	\N	\N	1	B1	\N	\N
+1959	definite	adj	\N	\N	1	B1	\N	\N
+1960	to deliver	v	\N	\N	1	B1	\N	\N
+1961	departure	n	\N	\N	1	B1	\N	\N
+1962	desktop	n	\N	\N	1	B1	\N	\N
+1963	despite	prep	\N	\N	1	B1	\N	\N
+1964	destination	n	\N	\N	1	B1	\N	\N
+1965	determined	adj	\N	\N	1	B1	\N	\N
+1966	development	n	\N	\N	1	B1	\N	\N
+1967	diagram	n	\N	\N	1	B1	\N	\N
+1968	diamond	n	\N	\N	1	B1	\N	\N
+1969	difficulty	n	\N	\N	1	B1	\N	\N
+1970	direct	adj	\N	\N	1	B1	\N	\N
+1971	directly	adv	\N	\N	1	B1	\N	\N
+1972	dirt	n	\N	\N	1	B1	\N	\N
+1973	disadvantage	n	\N	\N	1	B1	\N	\N
+1974	disappointed	adj	\N	\N	1	B1	\N	\N
+1975	disappointing	adj	\N	\N	1	B1	\N	\N
+1976	discount	n	\N	\N	1	B1	\N	\N
+1977	to discuss	v	\N	\N	1	B1	\N	\N
+1978	to dislike	v	\N	\N	1	B1	\N	\N
+1979	to divide	v	\N	\N	1	B1	\N	\N
+1980	documentary	n	\N	\N	1	B1	\N	\N
+1981	to donate	v	\N	\N	1	B1	\N	\N
+1982	doubt	n	\N	\N	1	B1	\N	\N
+1983	to doubt	v	\N	\N	1	B1	\N	\N
+1984	dressed	adj	\N	\N	1	B1	\N	\N
+1985	drunk	adj	\N	\N	1	B1	\N	\N
+1986	due	adj	\N	\N	1	B1	\N	\N
+1987	dust	n	\N	\N	1	B1	\N	\N
+1988	duty	n	\N	\N	1	B1	\N	\N
+1989	earthquake	n	\N	\N	1	B1	\N	\N
+1990	eastern	adj	\N	\N	1	B1	\N	\N
+1991	economic	adj	\N	\N	1	B1	\N	\N
+1992	economy	n	\N	\N	1	B1	\N	\N
+1993	edge	n	\N	\N	1	B1	\N	\N
+1994	editor	n	\N	\N	1	B1	\N	\N
+1995	to educate	v	\N	\N	1	B1	\N	\N
+1996	educated	adj	\N	\N	1	B1	\N	\N
+1997	educational	adj	\N	\N	1	B1	\N	\N
+1998	effect	n	\N	\N	1	B1	\N	\N
+1999	effective	adj	\N	\N	1	B1	\N	\N
+2000	effectively	adv	\N	\N	1	B1	\N	\N
+2001	effort	n	\N	\N	1	B1	\N	\N
+2002	election	n	\N	\N	1	B1	\N	\N
+2003	embarrassed	adj	\N	\N	1	B1	\N	\N
+2004	embarrassing	adj	\N	\N	1	B1	\N	\N
+2005	emergency	n	\N	\N	1	B1	\N	\N
+2006	emotion	n	\N	\N	1	B1	\N	\N
+2007	employment	n	\N	\N	1	B1	\N	\N
+2008	to encourage	v	\N	\N	1	B1	\N	\N
+2009	enemy	n	\N	\N	1	B1	\N	\N
+2010	engaged	adj	\N	\N	1	B1	\N	\N
+2011	engineering	n	\N	\N	1	B1	\N	\N
+2012	to entertain	v	\N	\N	1	B1	\N	\N
+2013	entertainment	n	\N	\N	1	B1	\N	\N
+2014	entrance	n	\N	\N	1	B1	\N	\N
+2015	entry	n	\N	\N	1	B1	\N	\N
+2016	environment	n	\N	\N	1	B1	\N	\N
+2017	environmental	adj	\N	\N	1	B1	\N	\N
+2018	episode	n	\N	\N	1	B1	\N	\N
+2019	equal	adj	\N	\N	1	B1	\N	\N
+2020	equally	adv	\N	\N	1	B1	\N	\N
+2021	to escape	v	\N	\N	1	B1	\N	\N
+2022	essential	adj	\N	\N	1	B1	\N	\N
+2023	event	n	\N	\N	1	B1	\N	\N
+2024	eventually	adv	\N	\N	1	B1	\N	\N
+2025	to examine	v	\N	\N	1	B1	\N	\N
+2026	exchange	n	\N	\N	1	B1	\N	\N
+2027	to exchange	v	\N	\N	1	B1	\N	\N
+2028	excitement	n	\N	\N	1	B1	\N	\N
+2029	exhibition	n	\N	\N	1	B1	\N	\N
+2030	to expand	v	\N	\N	1	B1	\N	\N
+2031	expected	adj	\N	\N	1	B1	\N	\N
+2032	expedition	n	\N	\N	1	B1	\N	\N
+2033	experienced	adj	\N	\N	1	B1	\N	\N
+2034	to explode	v	\N	\N	1	B1	\N	\N
+2035	to explore	v	\N	\N	1	B1	\N	\N
+2036	explosion	n	\N	\N	1	B1	\N	\N
+2037	export	n	\N	\N	1	B1	\N	\N
+2038	to export	v	\N	\N	1	B1	\N	\N
+2039	to face	v	\N	\N	1	B1	\N	\N
+2040	fact	n	\N	\N	1	B1	\N	\N
+2041	fairly	adv	\N	\N	1	B1	\N	\N
+2042	familiar	adj	\N	\N	1	B1	\N	\N
+2043	to fancy	v	\N	\N	1	B1	\N	\N
+2044	fascinating	adj	\N	\N	1	B1	\N	\N
+2045	fashionable	adj	\N	\N	1	B1	\N	\N
+2046	to fasten	v	\N	\N	1	B1	\N	\N
+2047	favour	n	\N	\N	1	B1	\N	\N
+2048	fear	n	\N	\N	1	B1	\N	\N
+2049	to fear	v	\N	\N	1	B1	\N	\N
+2050	feature	n	\N	\N	1	B1	\N	\N
+2051	to feature	v	\N	\N	1	B1	\N	\N
+2052	to feed	v	\N	\N	1	B1	\N	\N
+2053	fence	n	\N	\N	1	B1	\N	\N
+2054	fighting	n	\N	\N	1	B1	\N	\N
+2055	figure	n	\N	\N	1	B1	\N	\N
+2056	file	n	\N	\N	1	B1	\N	\N
+2057	to file	v	\N	\N	1	B1	\N	\N
+2058	financial	adj	\N	\N	1	B1	\N	\N
+2059	fine	n	\N	\N	1	B1	\N	\N
+2060	fitness	n	\N	\N	1	B1	\N	\N
+2061	fixed	adj	\N	\N	1	B1	\N	\N
+2062	flash	n	\N	\N	1	B1	\N	\N
+2063	flood	n	\N	\N	1	B1	\N	\N
+2064	to flood	v	\N	\N	1	B1	\N	\N
+2065	flour	n	\N	\N	1	B1	\N	\N
+2066	flow	n	\N	\N	1	B1	\N	\N
+2067	to flow	v	\N	\N	1	B1	\N	\N
+2068	to fold	v	\N	\N	1	B1	\N	\N
+2069	folk	n	\N	\N	1	B1	\N	\N
+2070	following	adj	\N	\N	1	B1	\N	\N
+2071	force	n	\N	\N	1	B1	\N	\N
+2072	to force	v	\N	\N	1	B1	\N	\N
+2073	forever	adv	\N	\N	1	B1	\N	\N
+2074	frame	n	\N	\N	1	B1	\N	\N
+2075	to freeze	v	\N	\N	1	B1	\N	\N
+2076	frequently	adv	\N	\N	1	B1	\N	\N
+2077	friendship	n	\N	\N	1	B1	\N	\N
+2078	to frighten	v	\N	\N	1	B1	\N	\N
+2079	frightened	adj	\N	\N	1	B1	\N	\N
+2080	frightening	adj	\N	\N	1	B1	\N	\N
+2081	frozen	adj	\N	\N	1	B1	\N	\N
+2082	to fry	v	\N	\N	1	B1	\N	\N
+2083	fuel	n	\N	\N	1	B1	\N	\N
+2084	function	n	\N	\N	1	B1	\N	\N
+2085	to function	v	\N	\N	1	B1	\N	\N
+2086	fur	n	\N	\N	1	B1	\N	\N
+2087	further	adv	\N	\N	1	B1	\N	\N
+2088	garage	n	\N	\N	1	B1	\N	\N
+2089	to gather	v	\N	\N	1	B1	\N	\N
+2090	generally	adv	\N	\N	1	B1	\N	\N
+2091	generation	n	\N	\N	1	B1	\N	\N
+2092	generous	adj	\N	\N	1	B1	\N	\N
+2093	gentle	adj	\N	\N	1	B1	\N	\N
+2094	gentleman	n	\N	\N	1	B1	\N	\N
+2095	ghost	n	\N	\N	1	B1	\N	\N
+2096	giant	n	\N	\N	1	B1	\N	\N
+2097	giant	adj	\N	\N	1	B1	\N	\N
+2098	gig	n	\N	\N	1	B1	\N	\N
+2099	glad	adj	\N	\N	1	B1	\N	\N
+2100	global	adj	\N	\N	1	B1	\N	\N
+2101	glove	n	\N	\N	1	B1	\N	\N
+2102	goods	n	\N	\N	1	B1	\N	\N
+2103	grade	n	\N	\N	1	B1	\N	\N
+2104	to graduate	v	\N	\N	1	B1	\N	\N
+2105	grain	n	\N	\N	1	B1	\N	\N
+2106	grateful	adj	\N	\N	1	B1	\N	\N
+2107	growth	n	\N	\N	1	B1	\N	\N
+2108	guard	n	\N	\N	1	B1	\N	\N
+2109	to guard	v	\N	\N	1	B1	\N	\N
+2110	guilty	adj	\N	\N	1	B1	\N	\N
+2111	to hang	v	\N	\N	1	B1	\N	\N
+2112	happiness	n	\N	\N	1	B1	\N	\N
+2113	hardly	adv	\N	\N	1	B1	\N	\N
+2114	headline	n	\N	\N	1	B1	\N	\N
+2115	heating	n	\N	\N	1	B1	\N	\N
+2116	heavily	adv	\N	\N	1	B1	\N	\N
+2117	helicopter	n	\N	\N	1	B1	\N	\N
+2118	to highlight	v	\N	\N	1	B1	\N	\N
+2119	highly	adv	\N	\N	1	B1	\N	\N
+2120	to hire	v	\N	\N	1	B1	\N	\N
+2121	hint	n	\N	\N	1	B1	\N	\N
+2122	to hint	v	\N	\N	1	B1	\N	\N
+2123	historic	adj	\N	\N	1	B1	\N	\N
+2124	historical	adj	\N	\N	1	B1	\N	\N
+2125	honest	adj	\N	\N	1	B1	\N	\N
+2126	honey	n	\N	\N	1	B1	\N	\N
+2127	horrible	adj	\N	\N	1	B1	\N	\N
+2128	horror	n	\N	\N	1	B1	\N	\N
+2129	host	n	\N	\N	1	B1	\N	\N
+2130	to host	v	\N	\N	1	B1	\N	\N
+2131	however	adv	\N	\N	1	B1	\N	\N
+2132	to hunt	v	\N	\N	1	B1	\N	\N
+2133	hurricane	n	\N	\N	1	B1	\N	\N
+2134	ignorant	adj	\N	\N	1	B1	\N	\N
+2135	to ignore	v	\N	\N	1	B1	\N	\N
+2136	illegal	adj	\N	\N	1	B1	\N	\N
+2137	to imagine	v	\N	\N	1	B1	\N	\N
+2138	imaginary	adj	\N	\N	1	B1	\N	\N
+2139	immediate	adj	\N	\N	1	B1	\N	\N
+2140	immigrant	n	\N	\N	1	B1	\N	\N
+2141	impact	n	\N	\N	1	B1	\N	\N
+2142	import	n	\N	\N	1	B1	\N	\N
+2143	to import	v	\N	\N	1	B1	\N	\N
+2144	importance	n	\N	\N	1	B1	\N	\N
+2145	impression	n	\N	\N	1	B1	\N	\N
+2146	impressive	adj	\N	\N	1	B1	\N	\N
+2147	to improve	v	\N	\N	1	B1	\N	\N
+2148	improvement	n	\N	\N	1	B1	\N	\N
+2149	incredibly	adv	\N	\N	1	B1	\N	\N
+2150	indeed	adv	\N	\N	1	B1	\N	\N
+2151	to indicate	v	\N	\N	1	B1	\N	\N
+2152	indirect	adj	\N	\N	1	B1	\N	\N
+2153	indoor	adj	\N	\N	1	B1	\N	\N
+2154	indoors	adv	\N	\N	1	B1	\N	\N
+2155	infant	n	\N	\N	1	B1	\N	\N
+2156	influence	n	\N	\N	1	B1	\N	\N
+2157	to influence	v	\N	\N	1	B1	\N	\N
+2158	ingredient	n	\N	\N	1	B1	\N	\N
+2159	to injure	v	\N	\N	1	B1	\N	\N
+2160	injured	adj	\N	\N	1	B1	\N	\N
+2161	innocent	adj	\N	\N	1	B1	\N	\N
+2162	intelligence	n	\N	\N	1	B1	\N	\N
+2163	to intend	v	\N	\N	1	B1	\N	\N
+2164	intention	n	\N	\N	1	B1	\N	\N
+2165	to invest	v	\N	\N	1	B1	\N	\N
+2166	to investigate	v	\N	\N	1	B1	\N	\N
+2167	involved	adj	\N	\N	1	B1	\N	\N
+2168	iron	n	\N	\N	1	B1	\N	\N
+2169	to iron	v	\N	\N	1	B1	\N	\N
+2170	issue	n	\N	\N	1	B1	\N	\N
+2171	IT	n	\N	\N	1	B1	\N	\N
+2172	journal	n	\N	\N	1	B1	\N	\N
+2173	judge	n	\N	\N	1	B1	\N	\N
+2174	to judge	v	\N	\N	1	B1	\N	\N
+2175	keen	adj	\N	\N	1	B1	\N	\N
+2176	key	adj	\N	\N	1	B1	\N	\N
+2177	keyboard	n	\N	\N	1	B1	\N	\N
+2178	to kick	v	\N	\N	1	B1	\N	\N
+2179	killing	n	\N	\N	1	B1	\N	\N
+2180	kind	adj	\N	\N	1	B1	\N	\N
+2181	kingdom	n	\N	\N	1	B1	\N	\N
+2182	label	n	\N	\N	1	B1	\N	\N
+2183	to label	v	\N	\N	1	B1	\N	\N
+2184	laboratory	n	\N	\N	1	B1	\N	\N
+2185	lack	n	\N	\N	1	B1	\N	\N
+2186	to lack	v	\N	\N	1	B1	\N	\N
+2187	latest	adj	\N	\N	1	B1	\N	\N
+2188	to lay	v	\N	\N	1	B1	\N	\N
+2189	layer	n	\N	\N	1	B1	\N	\N
+2190	lead	n	\N	\N	1	B1	\N	\N
+2191	leading	adj	\N	\N	1	B1	\N	\N
+2192	leaf	n	\N	\N	1	B1	\N	\N
+2193	leather	n	\N	\N	1	B1	\N	\N
+2194	legal	adj	\N	\N	1	B1	\N	\N
+2195	leisure	n	\N	\N	1	B1	\N	\N
+2196	length	n	\N	\N	1	B1	\N	\N
+2197	level	n	\N	\N	1	B1	\N	\N
+2198	to level	v	\N	\N	1	B1	\N	\N
+2199	to lie	v	\N	\N	1	B1	\N	\N
+2200	limit	n	\N	\N	1	B1	\N	\N
+2201	to limit	v	\N	\N	1	B1	\N	\N
+2202	lip	n	\N	\N	1	B1	\N	\N
+2203	liquid	n	\N	\N	1	B1	\N	\N
+2204	literature	n	\N	\N	1	B1	\N	\N
+2205	living	n	\N	\N	1	B1	\N	\N
+2206	living	adj	\N	\N	1	B1	\N	\N
+2207	to locate	v	\N	\N	1	B1	\N	\N
+2208	located	adj	\N	\N	1	B1	\N	\N
+2209	location	n	\N	\N	1	B1	\N	\N
+2210	log	n	\N	\N	1	B1	\N	\N
+2211	lonely	adj	\N	\N	1	B1	\N	\N
+2212	loss	n	\N	\N	1	B1	\N	\N
+2213	luxury	n	\N	\N	1	B1	\N	\N
+2214	mad	adj	\N	\N	1	B1	\N	\N
+2215	magic	n	\N	\N	1	B1	\N	\N
+2216	mainly	adv	\N	\N	1	B1	\N	\N
+2217	mall	n	\N	\N	1	B1	\N	\N
+2218	management	n	\N	\N	1	B1	\N	\N
+2219	marketing	n	\N	\N	1	B1	\N	\N
+2220	marriage	n	\N	\N	1	B1	\N	\N
+2221	material	n	\N	\N	1	B1	\N	\N
+2222	meanwhile	adv	\N	\N	1	B1	\N	\N
+2223	measure	n	\N	\N	1	B1	\N	\N
+2224	to measure	v	\N	\N	1	B1	\N	\N
+2225	medium	adj	\N	\N	1	B1	\N	\N
+2226	mental	adj	\N	\N	1	B1	\N	\N
+2227	mess	n	\N	\N	1	B1	\N	\N
+2228	mild	adj	\N	\N	1	B1	\N	\N
+2229	mill	n	\N	\N	1	B1	\N	\N
+2230	mine	n	\N	\N	1	B1	\N	\N
+2231	to mix	v	\N	\N	1	B1	\N	\N
+2232	mixture	n	\N	\N	1	B1	\N	\N
+2233	model	n	\N	\N	1	B1	\N	\N
+2234	mood	n	\N	\N	1	B1	\N	\N
+2235	mud	n	\N	\N	1	B1	\N	\N
+2236	murder	n	\N	\N	1	B1	\N	\N
+2237	to murder	v	\N	\N	1	B1	\N	\N
+2238	muscle	n	\N	\N	1	B1	\N	\N
+2239	mystery	n	\N	\N	1	B1	\N	\N
+2240	nail	n	\N	\N	1	B1	\N	\N
+2241	narrative	n	\N	\N	1	B1	\N	\N
+2242	nation	n	\N	\N	1	B1	\N	\N
+2243	native	adj / n	\N	\N	1	B1	\N	\N
+2244	naturally	adv	\N	\N	1	B1	\N	\N
+2245	necessarily	adv	\N	\N	1	B1	\N	\N
+2246	needle	n	\N	\N	1	B1	\N	\N
+2247	negative	adj	\N	\N	1	B1	\N	\N
+2248	neighbourhood	n	\N	\N	1	B1	\N	\N
+2249	neither	conj / det / pron	\N	\N	1	B1	\N	\N
+2250	net	n	\N	\N	1	B1	\N	\N
+2251	nor	conj	\N	\N	1	B1	\N	\N
+2252	normal	adj / n	\N	\N	1	B1	\N	\N
+2253	northern	adj	\N	\N	1	B1	\N	\N
+2254	to note	v	\N	\N	1	B1	\N	\N
+2255	nuclear	adj	\N	\N	1	B1	\N	\N
+2256	obvious	adj	\N	\N	1	B1	\N	\N
+2257	obviously	adv	\N	\N	1	B1	\N	\N
+2258	occasion	n	\N	\N	1	B1	\N	\N
+2259	to occur	v	\N	\N	1	B1	\N	\N
+2260	odd	adj	\N	\N	1	B1	\N	\N
+2261	official	adj	\N	\N	1	B1	\N	\N
+2262	old-fashioned	adj	\N	\N	1	B1	\N	\N
+2263	once	conj	\N	\N	1	B1	\N	\N
+2264	opinion	n	\N	\N	1	B1	\N	\N
+2265	operation	n	\N	\N	1	B1	\N	\N
+2266	opportunity	n	\N	\N	1	B1	\N	\N
+2267	organised	adj	\N	\N	1	B1	\N	\N
+2268	organiser	n	\N	\N	1	B1	\N	\N
+2269	original	adj	\N	\N	1	B1	\N	\N
+2270	originally	adv	\N	\N	1	B1	\N	\N
+2271	ought to	v	\N	\N	1	B1	\N	\N
+2272	ours	pron	\N	\N	1	B1	\N	\N
+2273	outdoor	adj	\N	\N	1	B1	\N	\N
+2274	outdoors	adv	\N	\N	1	B1	\N	\N
+2275	package	n	\N	\N	1	B1	\N	\N
+2276	pad	n	\N	\N	1	B1	\N	\N
+2277	painful	adj	\N	\N	1	B1	\N	\N
+2278	pale	adj	\N	\N	1	B1	\N	\N
+2279	pan	n	\N	\N	1	B1	\N	\N
+2280	to participate	v	\N	\N	1	B1	\N	\N
+2281	particularly	adv	\N	\N	1	B1	\N	\N
+2282	passion	n	\N	\N	1	B1	\N	\N
+2283	path	n	\N	\N	1	B1	\N	\N
+2284	payment	n	\N	\N	1	B1	\N	\N
+2285	peaceful	adj	\N	\N	1	B1	\N	\N
+2286	percentage	n	\N	\N	1	B1	\N	\N
+2287	perfectly	adv	\N	\N	1	B1	\N	\N
+2288	performance	n	\N	\N	1	B1	\N	\N
+2289	personally	adv	\N	\N	1	B1	\N	\N
+2290	pessimistic	adj	\N	\N	1	B1	\N	\N
+2291	to persuade	v	\N	\N	1	B1	\N	\N
+2292	photographer	n	\N	\N	1	B1	\N	\N
+2293	photography	n	\N	\N	1	B1	\N	\N
+2294	pin	n	\N	\N	1	B1	\N	\N
+2295	to pin	v	\N	\N	1	B1	\N	\N
+2296	pipe	n	\N	\N	1	B1	\N	\N
+2297	planning	n	\N	\N	1	B1	\N	\N
+2298	pleasant	adj	\N	\N	1	B1	\N	\N
+2299	pleasure	n	\N	\N	1	B1	\N	\N
+2300	plenty	pron	\N	\N	1	B1	\N	\N
+2301	plot	n	\N	\N	1	B1	\N	\N
+2302	plus	prep / conj	\N	\N	1	B1	\N	\N
+2303	poem	n	\N	\N	1	B1	\N	\N
+2304	poet	n	\N	\N	1	B1	\N	\N
+2305	poetry	n	\N	\N	1	B1	\N	\N
+2306	to point	v	\N	\N	1	B1	\N	\N
+2307	poison	n	\N	\N	1	B1	\N	\N
+2308	to poison	v	\N	\N	1	B1	\N	\N
+2309	poisonous	adj	\N	\N	1	B1	\N	\N
+2310	policy	n	\N	\N	1	B1	\N	\N
+2311	political	adj	\N	\N	1	B1	\N	\N
+2312	politician	n	\N	\N	1	B1	\N	\N
+2313	politics	n	\N	\N	1	B1	\N	\N
+2314	port	n	\N	\N	1	B1	\N	\N
+2315	portrait	n	\N	\N	1	B1	\N	\N
+2316	position	n	\N	\N	1	B1	\N	\N
+2317	positive	adj	\N	\N	1	B1	\N	\N
+2318	possibly	adv	\N	\N	1	B1	\N	\N
+2319	pot	n	\N	\N	1	B1	\N	\N
+2320	to pour	v	\N	\N	1	B1	\N	\N
+2321	poverty	n	\N	\N	1	B1	\N	\N
+2322	powder	n	\N	\N	1	B1	\N	\N
+2323	power	n	\N	\N	1	B1	\N	\N
+2324	powerful	adj	\N	\N	1	B1	\N	\N
+2325	practical	adj	\N	\N	1	B1	\N	\N
+2326	to pray	v	\N	\N	1	B1	\N	\N
+2327	prayer	n	\N	\N	1	B1	\N	\N
+2328	qualification	n	\N	\N	1	B1	\N	\N
+2329	qualified	adj	\N	\N	1	B1	\N	\N
+2330	to qualify	v	\N	\N	1	B1	\N	\N
+2331	queue	n	\N	\N	1	B1	\N	\N
+2332	to queue	v	\N	\N	1	B1	\N	\N
+2333	to quit	v	\N	\N	1	B1	\N	\N
+2334	quotation	n	\N	\N	1	B1	\N	\N
+2335	quote	n	\N	\N	1	B1	\N	\N
+2336	to quote	v	\N	\N	1	B1	\N	\N
+2337	race	n	\N	\N	1	B1	\N	\N
+2338	racing	n	\N	\N	1	B1	\N	\N
+2339	range	n	\N	\N	1	B1	\N	\N
+2340	rare	adj	\N	\N	1	B1	\N	\N
+2341	rarely	adv	\N	\N	1	B1	\N	\N
+2342	reaction	n	\N	\N	1	B1	\N	\N
+2343	reality	n	\N	\N	1	B1	\N	\N
+2344	receipt	n	\N	\N	1	B1	\N	\N
+2345	recommendation	n	\N	\N	1	B1	\N	\N
+2346	reference	n	\N	\N	1	B1	\N	\N
+2347	to reflect	v	\N	\N	1	B1	\N	\N
+2348	regularly	adv	\N	\N	1	B1	\N	\N
+2349	to reject	v	\N	\N	1	B1	\N	\N
+2350	to relate	v	\N	\N	1	B1	\N	\N
+2351	related	adj	\N	\N	1	B1	\N	\N
+2352	relation	n	\N	\N	1	B1	\N	\N
+2353	relative	n	\N	\N	1	B1	\N	\N
+2354	relaxed	adj	\N	\N	1	B1	\N	\N
+2355	relaxing	adj	\N	\N	1	B1	\N	\N
+2356	to release	v	\N	\N	1	B1	\N	\N
+2357	reliable	adj	\N	\N	1	B1	\N	\N
+2358	religion	n	\N	\N	1	B1	\N	\N
+2359	religious	adj	\N	\N	1	B1	\N	\N
+2360	to remain	v	\N	\N	1	B1	\N	\N
+2361	to remind	v	\N	\N	1	B1	\N	\N
+2362	remote	adj	\N	\N	1	B1	\N	\N
+2363	rent	n	\N	\N	1	B1	\N	\N
+2364	to rent	v	\N	\N	1	B1	\N	\N
+2365	repeated	adj	\N	\N	1	B1	\N	\N
+2366	to represent	v	\N	\N	1	B1	\N	\N
+2367	to require	v	\N	\N	1	B1	\N	\N
+2368	reservation	n	\N	\N	1	B1	\N	\N
+2369	resource	n	\N	\N	1	B1	\N	\N
+2370	respect	n	\N	\N	1	B1	\N	\N
+2371	to respect	v	\N	\N	1	B1	\N	\N
+2372	response	n	\N	\N	1	B1	\N	\N
+2373	responsibility	n	\N	\N	1	B1	\N	\N
+2374	responsible	adj	\N	\N	1	B1	\N	\N
+2375	result	n	\N	\N	1	B1	\N	\N
+2376	to retire	v	\N	\N	1	B1	\N	\N
+2377	retired	adj	\N	\N	1	B1	\N	\N
+2378	to revise	v	\N	\N	1	B1	\N	\N
+2379	rifle	n	\N	\N	1	B1	\N	\N
+2380	to rise	v	\N	\N	1	B1	\N	\N
+2381	risk	n	\N	\N	1	B1	\N	\N
+2382	to risk	v	\N	\N	1	B1	\N	\N
+2383	robot	n	\N	\N	1	B1	\N	\N
+2384	to roll	v	\N	\N	1	B1	\N	\N
+2385	romantic	adj	\N	\N	1	B1	\N	\N
+2386	rope	n	\N	\N	1	B1	\N	\N
+2387	rough	adj	\N	\N	1	B1	\N	\N
+2388	row	n	\N	\N	1	B1	\N	\N
+2389	royal	adj	\N	\N	1	B1	\N	\N
+2390	rugby	n	\N	\N	1	B1	\N	\N
+2391	to rule	v	\N	\N	1	B1	\N	\N
+2392	safety	n	\N	\N	1	B1	\N	\N
+2393	sailor	n	\N	\N	1	B1	\N	\N
+2394	sample	n	\N	\N	1	B1	\N	\N
+2395	sand	n	\N	\N	1	B1	\N	\N
+2396	to scan	v	\N	\N	1	B1	\N	\N
+2397	scientific	adj	\N	\N	1	B1	\N	\N
+2398	script	n	\N	\N	1	B1	\N	\N
+2399	sculpture	n	\N	\N	1	B1	\N	\N
+2400	secondary	adj	\N	\N	1	B1	\N	\N
+2401	security	n	\N	\N	1	B1	\N	\N
+2402	seed	n	\N	\N	1	B1	\N	\N
+2403	sensible	adj	\N	\N	1	B1	\N	\N
+2404	to separate	v	\N	\N	1	B1	\N	\N
+2405	seriously	adv	\N	\N	1	B1	\N	\N
+2406	servant	n	\N	\N	1	B1	\N	\N
+2407	to set	v	\N	\N	1	B1	\N	\N
+2408	set	n	\N	\N	1	B1	\N	\N
+2409	setting	n	\N	\N	1	B1	\N	\N
+2410	sex	n	\N	\N	1	B1	\N	\N
+2411	sexual	adj	\N	\N	1	B1	\N	\N
+2412	sharp	adj	\N	\N	1	B1	\N	\N
+2413	shelf	n	\N	\N	1	B1	\N	\N
+2414	shell	n	\N	\N	1	B1	\N	\N
+2415	shift	n	\N	\N	1	B1	\N	\N
+2416	to shift	v	\N	\N	1	B1	\N	\N
+2417	to shine	v	\N	\N	1	B1	\N	\N
+2418	shiny	adj	\N	\N	1	B1	\N	\N
+2419	to shoot	v	\N	\N	1	B1	\N	\N
+2420	shock	n	\N	\N	1	B1	\N	\N
+2421	to shock	v	\N	\N	1	B1	\N	\N
+2422	shot	n	\N	\N	1	B1	\N	\N
+2423	shy	adj	\N	\N	1	B1	\N	\N
+2424	sight	n	\N	\N	1	B1	\N	\N
+2425	signal	n	\N	\N	1	B1	\N	\N
+2426	silent	adj	\N	\N	1	B1	\N	\N
+2427	silly	adj	\N	\N	1	B1	\N	\N
+2428	similarity	n	\N	\N	1	B1	\N	\N
+2429	similarly	adv	\N	\N	1	B1	\N	\N
+2430	simply	adv	\N	\N	1	B1	\N	\N
+2431	since	conj	\N	\N	1	B1	\N	\N
+2432	to sink	v	\N	\N	1	B1	\N	\N
+2433	skill	n	\N	\N	1	B1	\N	\N
+2434	to skip	v	\N	\N	1	B1	\N	\N
+2435	to slam	v	\N	\N	1	B1	\N	\N
+2436	to slap	v	\N	\N	1	B1	\N	\N
+2437	slice	n	\N	\N	1	B1	\N	\N
+2438	to slice	v	\N	\N	1	B1	\N	\N
+2439	slightly	adv	\N	\N	1	B1	\N	\N
+2440	smart	adj	\N	\N	1	B1	\N	\N
+2441	smooth	adj	\N	\N	1	B1	\N	\N
+2442	society	n	\N	\N	1	B1	\N	\N
+2443	software	n	\N	\N	1	B1	\N	\N
+2444	soil	n	\N	\N	1	B1	\N	\N
+2445	solid	adj	\N	\N	1	B1	\N	\N
+2446	to solve	v	\N	\N	1	B1	\N	\N
+2447	to sort	v	\N	\N	1	B1	\N	\N
+2448	southern	adj	\N	\N	1	B1	\N	\N
+2449	spam	n	\N	\N	1	B1	\N	\N
+2450	specifically	adv	\N	\N	1	B1	\N	\N
+2451	speed	n	\N	\N	1	B1	\N	\N
+2452	spending	n	\N	\N	1	B1	\N	\N
+2453	spicy	adj	\N	\N	1	B1	\N	\N
+2454	spirit	n	\N	\N	1	B1	\N	\N
+2455	spoken	adj	\N	\N	1	B1	\N	\N
+2456	spot	n	\N	\N	1	B1	\N	\N
+2457	to spot	v	\N	\N	1	B1	\N	\N
+2458	to spread	v	\N	\N	1	B1	\N	\N
+2459	spring	n	\N	\N	1	B1	\N	\N
+2460	spy	n	\N	\N	1	B1	\N	\N
+2461	to spy	v	\N	\N	1	B1	\N	\N
+2462	stadium	n	\N	\N	1	B1	\N	\N
+2463	staff	n	\N	\N	1	B1	\N	\N
+2464	standard	n	\N	\N	1	B1	\N	\N
+2465	standard	adj	\N	\N	1	B1	\N	\N
+2466	to state	v	\N	\N	1	B1	\N	\N
+2467	statue	n	\N	\N	1	B1	\N	\N
+2468	to stick	v	\N	\N	1	B1	\N	\N
+2469	stick	n	\N	\N	1	B1	\N	\N
+2470	to store	v	\N	\N	1	B1	\N	\N
+2471	stranger	n	\N	\N	1	B1	\N	\N
+2472	strength	n	\N	\N	1	B1	\N	\N
+2473	string	n	\N	\N	1	B1	\N	\N
+2474	strongly	adv	\N	\N	1	B1	\N	\N
+2475	studio	n	\N	\N	1	B1	\N	\N
+2476	stuff	n	\N	\N	1	B1	\N	\N
+2477	successfully	adv	\N	\N	1	B1	\N	\N
+2478	sudden	adj	\N	\N	1	B1	\N	\N
+2479	to suffer	v	\N	\N	1	B1	\N	\N
+2480	to suit	v	\N	\N	1	B1	\N	\N
+2481	suitable	adj	\N	\N	1	B1	\N	\N
+2482	success	n	\N	\N	1	B1	\N	\N
+2483	to summarise	v	\N	\N	1	B1	\N	\N
+2484	summary	n	\N	\N	1	B1	\N	\N
+2485	supply	n	\N	\N	1	B1	\N	\N
+2486	to supply	v	\N	\N	1	B1	\N	\N
+2487	supporter	n	\N	\N	1	B1	\N	\N
+2488	surely	adv	\N	\N	1	B1	\N	\N
+2489	surface	n	\N	\N	1	B1	\N	\N
+2490	to survive	v	\N	\N	1	B1	\N	\N
+2491	survey	n	\N	\N	1	B1	\N	\N
+2492	switch	n	\N	\N	1	B1	\N	\N
+2493	to switch	v	\N	\N	1	B1	\N	\N
+2494	sword	n	\N	\N	1	B1	\N	\N
+2495	symptom	n	\N	\N	1	B1	\N	\N
+2496	tail	n	\N	\N	1	B1	\N	\N
+2497	talent	n	\N	\N	1	B1	\N	\N
+2498	talented	adj	\N	\N	1	B1	\N	\N
+2499	tape	n	\N	\N	1	B1	\N	\N
+2500	tax	n	\N	\N	1	B1	\N	\N
+2501	technical	adj	\N	\N	1	B1	\N	\N
+2502	technique	n	\N	\N	1	B1	\N	\N
+2503	to tend	v	\N	\N	1	B1	\N	\N
+2504	theme	n	\N	\N	1	B1	\N	\N
+2505	though	adv / conj	\N	\N	1	B1	\N	\N
+2506	throat	n	\N	\N	1	B1	\N	\N
+2507	throughout	prep / adv	\N	\N	1	B1	\N	\N
+2508	tight	adj	\N	\N	1	B1	\N	\N
+2509	till	conj / prep	\N	\N	1	B1	\N	\N
+2510	tin	n	\N	\N	1	B1	\N	\N
+2511	tiny	adj	\N	\N	1	B1	\N	\N
+2512	tongue	n	\N	\N	1	B1	\N	\N
+2513	topic	n	\N	\N	1	B1	\N	\N
+2514	total	adj / n	\N	\N	1	B1	\N	\N
+2515	totally	adv	\N	\N	1	B1	\N	\N
+2516	trade	n / v	\N	\N	1	B1	\N	\N
+2517	trailer	n	\N	\N	1	B1	\N	\N
+2518	to translate	v	\N	\N	1	B1	\N	\N
+2519	translation	n	\N	\N	1	B1	\N	\N
+2520	to treat	v	\N	\N	1	B1	\N	\N
+2521	treatment	n	\N	\N	1	B1	\N	\N
+2522	trend	n	\N	\N	1	B1	\N	\N
+2523	trick	n / v	\N	\N	1	B1	\N	\N
+2524	truth	n	\N	\N	1	B1	\N	\N
+2525	tube	n	\N	\N	1	B1	\N	\N
+2526	to type	v	\N	\N	1	B1	\N	\N
+2527	typically	adv	\N	\N	1	B1	\N	\N
+2528	tyre	n	\N	\N	1	B1	\N	\N
+2529	ugly	adj	\N	\N	1	B1	\N	\N
+2530	unable	adj	\N	\N	1	B1	\N	\N
+2531	uncomfortable	adj	\N	\N	1	B1	\N	\N
+2532	underwear	n	\N	\N	1	B1	\N	\N
+2533	unemployed	adj	\N	\N	1	B1	\N	\N
+2534	unemployment	n	\N	\N	1	B1	\N	\N
+2535	unfair	adj	\N	\N	1	B1	\N	\N
+2536	union	n	\N	\N	1	B1	\N	\N
+2537	unless	conj	\N	\N	1	B1	\N	\N
+2538	unlike	prep	\N	\N	1	B1	\N	\N
+2539	unlikely	adj	\N	\N	1	B1	\N	\N
+2540	unnecessary	adj	\N	\N	1	B1	\N	\N
+2541	unpleasant	adj	\N	\N	1	B1	\N	\N
+2542	to update	v	\N	\N	1	B1	\N	\N
+2543	upon	prep	\N	\N	1	B1	\N	\N
+2544	to upset	v	\N	\N	1	B1	\N	\N
+2545	used	adj	\N	\N	1	B1	\N	\N
+2546	valuable	adj	\N	\N	1	B1	\N	\N
+2547	value	n	\N	\N	1	B1	\N	\N
+2548	various	adj	\N	\N	1	B1	\N	\N
+2549	vehicle	n	\N	\N	1	B1	\N	\N
+2550	version	n	\N	\N	1	B1	\N	\N
+2551	victim	n	\N	\N	1	B1	\N	\N
+2552	violent	adj	\N	\N	1	B1	\N	\N
+2553	volunteer	n / v	\N	\N	1	B1	\N	\N
+2554	vote	n / v	\N	\N	1	B1	\N	\N
+2555	warn	v	\N	\N	1	B1	\N	\N
+2556	warning	n	\N	\N	1	B1	\N	\N
+2557	waste	n / v	\N	\N	1	B1	\N	\N
+2558	weapon	n	\N	\N	1	B1	\N	\N
+2559	weigh	v	\N	\N	1	B1	\N	\N
+2560	western	adj	\N	\N	1	B1	\N	\N
+2561	whatever	det / pron	\N	\N	1	B1	\N	\N
+2562	whenever	conj	\N	\N	1	B1	\N	\N
+2563	whether	conj	\N	\N	1	B1	\N	\N
+2564	while	conj	\N	\N	1	B1	\N	\N
+2565	wing	n	\N	\N	1	B1	\N	\N
+2566	within	prep	\N	\N	1	B1	\N	\N
+2567	wonder	v	\N	\N	1	B1	\N	\N
+2568	wool	n	\N	\N	1	B1	\N	\N
+2569	worldwide	adj / adv	\N	\N	1	B1	\N	\N
+2570	worth	adj	\N	\N	1	B1	\N	\N
+2571	wrinkle	n	\N	\N	1	B1	\N	\N
+2572	written	adj	\N	\N	1	B1	\N	\N
+2573	yard	n	\N	\N	1	B1	\N	\N
+2574	yell	v	\N	\N	1	B1	\N	\N
+2575	youth	n	\N	\N	1	B1	\N	\N
+100000	ένας	det	\N	\N	2	A1	ο	\N
+100001	μία	det	\N	\N	2	A1	η	\N
+100002	ένα	det	\N	\N	2	A1	το	\N
+100003	σχετικά με	prep	\N	\N	2	A1	\N	\N
+100004	περίπου	adv	\N	\N	2	A1	\N	\N
+100005	πάνω από	prep	\N	\N	2	A1	\N	\N
+100006	απέναντι	prep	\N	\N	2	A1	\N	\N
+100007	διά μέσου	prep	\N	\N	2	A1	\N	\N
+100008	δράση	n	\N	\N	2	A1	η	\N
+100009	ενέργεια	n	\N	\N	2	A1	η	\N
+100010	δραστηριότητα	n	\N	\N	2	A1	η	\N
+100011	ηθοποιός	n	\N	\N	2	A1	ο/η	\N
+100012	προσθέτω	v	\N	\N	2	A1	\N	\N
+100013	διεύθυνση	n	\N	\N	2	A1	η	\N
+100014	ενήλικας	n	\N	\N	2	A1	ο/η	\N
+100015	φοβισμένος	adj	\N	\N	2	A1	\N	\N
+100016	μετά	prep	\N	\N	2	A1	\N	\N
+100017	απόγευμα	n	\N	\N	2	A1	το	\N
+100018	ξανά	adv	\N	\N	2	A1	\N	\N
+100019	πάλι	adv	\N	\N	2	A1	\N	\N
+100020	ηλικία	n	\N	\N	2	A1	η	\N
+100021	πριν	adv	\N	\N	2	A1	\N	\N
+100022	αέρας	n	\N	\N	2	A1	ο	\N
+100023	αεροδρόμιο	n	\N	\N	2	A1	το	\N
+100024	όλος	det	\N	\N	2	A1	ο	\N
+100025	όλη	det	\N	\N	2	A1	η	\N
+100026	όλο	det	\N	\N	2	A1	το	\N
+100027	εντάξει	adj	\N	\N	2	A1	\N	\N
+100028	επίσης	adv	\N	\N	2	A1	\N	\N
+100029	πάντα	adv	\N	\N	2	A1	\N	\N
+100030	εκπληκτικός	adj	\N	\N	2	A1	\N	\N
+100031	φανταστικός	adj	\N	\N	2	A1	\N	\N
+100032	και	conj	\N	\N	2	A1	\N	\N
+100033	θυμωμένος	adj	\N	\N	2	A1	\N	\N
+100034	ζώο	n	\N	\N	2	A1	το	\N
+100035	άλλος	det	\N	\N	2	A1	ο	\N
+100036	άλλη	det	\N	\N	2	A1	η	\N
+100037	άλλο	det	\N	\N	2	A1	το	\N
+100038	απάντηση	n	\N	\N	2	A1	η	\N
+100039	οποιοσδήποτε	det	\N	\N	2	A1	\N	\N
+100040	κανένας	pron	\N	\N	2	A1	\N	\N
+100041	οποιοσδήποτε	pron	\N	\N	2	A1	\N	\N
+100042	οτιδήποτε	pron	\N	\N	2	A1	\N	\N
+100043	τίποτα	pron	\N	\N	2	A1	\N	\N
+100044	διαμέρισμα	n	\N	\N	2	A1	το	\N
+100045	μήλο	n	\N	\N	2	A1	το	\N
+100046	Απρίλιος	n	\N	\N	2	A1	ο	\N
+100047	περιοχή	n	\N	\N	2	A1	η	\N
+100048	χέρι	n	\N	\N	2	A1	το	\N
+100049	βραχίονας	n	\N	\N	2	A1	ο	\N
+100050	γύρω	prep	\N	\N	2	A1	\N	\N
+100051	φτάνω	v	\N	\N	2	A1	\N	\N
+100052	τέχνη	n	\N	\N	2	A1	η	\N
+100053	άρθρο	n	\N	\N	2	A1	το	\N
+100054	καλλιτέχνης	n	\N	\N	2	A1	ο/η	\N
+100055	ως	prep	\N	\N	2	A1	\N	\N
+100056	σαν	prep	\N	\N	2	A1	\N	\N
+100057	ρωτάω	v	\N	\N	2	A1	\N	\N
+100058	ζητάω	v	\N	\N	2	A1	\N	\N
+100059	σε	prep	\N	\N	2	A1	\N	\N
+100060	στον	prep	\N	\N	2	A1	\N	\N
+100061	στην	prep	\N	\N	2	A1	\N	\N
+100062	στο	prep	\N	\N	2	A1	\N	\N
+100063	Αύγουστος	n	\N	\N	2	A1	ο	\N
+100064	θεία	n	\N	\N	2	A1	η	\N
+100065	φθινόπωρο	n	\N	\N	2	A1	το	\N
+100066	μακριά	adv	\N	\N	2	A1	\N	\N
+100067	μωρό	n	\N	\N	2	A1	το	\N
+100068	πίσω	adv	\N	\N	2	A1	\N	\N
+100069	κακός	adj	\N	\N	2	A1	\N	\N
+100070	τσάντα	n	\N	\N	2	A1	η	\N
+100071	μπάλα	n	\N	\N	2	A1	η	\N
+100072	μπανάνα	n	\N	\N	2	A1	η	\N
+100073	συγκρότημα	n	\N	\N	2	A1	το	\N
+100074	μπάντα	n	\N	\N	2	A1	η	\N
+100075	τράπεζα	n	\N	\N	2	A1	η	\N
+100076	μπαρ	n	\N	\N	2	A1	το	\N
+100077	μπάνιο	n	\N	\N	2	A1	το	\N
+100078	λουτρό	n	\N	\N	2	A1	το	\N
+100079	είμαι	v	\N	\N	2	A1	\N	\N
+100080	παραλία	n	\N	\N	2	A1	η	\N
+100081	όμορφος	adj	\N	\N	2	A1	\N	\N
+100082	επειδή	conj	\N	\N	2	A1	\N	\N
+100083	γίνομαι	v	\N	\N	2	A1	\N	\N
+100084	κρεβάτι	n	\N	\N	2	A1	το	\N
+100085	υπνοδωμάτιο	n	\N	\N	2	A1	το	\N
+100086	μπίρα	n	\N	\N	2	A1	η	\N
+100087	αρχίζω	v	\N	\N	2	A1	\N	\N
+100088	αρχή	n	\N	\N	2	A1	η	\N
+100089	πίσω από	prep	\N	\N	2	A1	\N	\N
+100090	πιστεύω	v	\N	\N	2	A1	\N	\N
+100091	κάτω από	prep	\N	\N	2	A1	\N	\N
+100092	καλύτερος	adj	\N	\N	2	A1	\N	\N
+100093	ανάμεσα σε	prep	\N	\N	2	A1	\N	\N
+100094	ποδήλατο	n	\N	\N	2	A1	το	\N
+100095	μεγάλος	adj	\N	\N	2	A1	\N	\N
+100096	καφετέρια	n	\N	\N	2	A1	η	\N
+100097	κέικ	n	\N	\N	2	A1	το	\N
+100098	τούρτα	n	\N	\N	2	A1	η	\N
+100099	καλώ	v	\N	\N	2	A1	\N	\N
+100100	τηλεφωνώ	v	\N	\N	2	A1	\N	\N
+100101	φωτογραφική μηχανή	n	\N	\N	2	A1	η	\N
+100102	μπορώ	v	\N	\N	2	A1	\N	\N
+100103	αυτοκίνητο	n	\N	\N	2	A1	το	\N
+100104	κάρτα	n	\N	\N	2	A1	η	\N
+100105	καρότο	n	\N	\N	2	A1	το	\N
+100106	κουβαλάω	v	\N	\N	2	A1	\N	\N
+100107	μεταφέρω	v	\N	\N	2	A1	\N	\N
+100108	γάτα	n	\N	\N	2	A1	η	\N
+100109	CD	n	\N	\N	2	A1	το	\N
+100110	σεντ	n	\N	\N	2	A1	το	\N
+100111	κέντρο	n	\N	\N	2	A1	το	\N
+100112	καρέκλα	n	\N	\N	2	A1	η	\N
+100113	αλλάζω	v	\N	\N	2	A1	\N	\N
+100114	πίνακας	n	\N	\N	2	A1	ο	\N
+100115	διάγραμμα	n	\N	\N	2	A1	το	\N
+100116	φθηνός	adj	\N	\N	2	A1	\N	\N
+100117	ελέγχω	v	\N	\N	2	A1	\N	\N
+100118	τυρί	n	\N	\N	2	A1	το	\N
+100119	κοτόπουλο	n	\N	\N	2	A1	το	\N
+100120	παιδί	n	\N	\N	2	A1	το	\N
+100121	σοκολάτα	n	\N	\N	2	A1	η	\N
+100122	επιλέγω	v	\N	\N	2	A1	\N	\N
+100123	διαλέγω	v	\N	\N	2	A1	\N	\N
+100124	κινηματογράφος	n	\N	\N	2	A1	ο	\N
+100125	σινεμά	n	\N	\N	2	A1	το	\N
+100126	πόλη	n	\N	\N	2	A1	η	\N
+100127	τάξη	n	\N	\N	2	A1	η	\N
+100128	αίθουσα	n	\N	\N	2	A1	η	\N
+100129	καθαρός	adj	\N	\N	2	A1	\N	\N
+100130	σκαρφαλώνω	v	\N	\N	2	A1	\N	\N
+100131	ρολόι	n	\N	\N	2	A1	το	\N
+100132	κλείνω	v	\N	\N	2	A1	\N	\N
+100133	ρούχα	n	\N	\N	2	A1	τα	\N
+100134	κλαμπ	n	\N	\N	2	A1	το	\N
+100135	σύλλογος	n	\N	\N	2	A1	ο	\N
+100136	παλτό	n	\N	\N	2	A1	το	\N
+100137	καφές	n	\N	\N	2	A1	ο	\N
+100138	κρύος	adj	\N	\N	2	A1	\N	\N
+100139	κολέγιο	n	\N	\N	2	A1	το	\N
+100140	χρώμα	n	\N	\N	2	A1	το	\N
+100141	έρχομαι	v	\N	\N	2	A1	\N	\N
+100142	εταιρεία	n	\N	\N	2	A1	η	\N
+100143	συμπληρώνω	v	\N	\N	2	A1	\N	\N
+100144	ολοκληρώνω	v	\N	\N	2	A1	\N	\N
+100145	υπολογιστής	n	\N	\N	2	A1	ο	\N
+100146	συναυλία	n	\N	\N	2	A1	η	\N
+100147	μαγειρεύω	v	\N	\N	2	A1	\N	\N
+100148	μαγειρική	n	\N	\N	2	A1	η	\N
+100149	δροσερός	adj	\N	\N	2	A1	\N	\N
+100150	σωστός	adj	\N	\N	2	A1	\N	\N
+100151	κοστίζω	v	\N	\N	2	A1	\N	\N
+100152	θα μπορούσα	v	\N	\N	2	A1	\N	\N
+100153	χώρα	n	\N	\N	2	A1	η	\N
+100154	επαρχία	n	\N	\N	2	A1	η	\N
+100155	μάθημα	n	\N	\N	2	A1	το	\N
+100156	σειρά μαθημάτων	n	\N	\N	2	A1	η	\N
+100157	ξάδερφος	n	\N	\N	2	A1	ο	\N
+100158	ξαδέρφη	n	\N	\N	2	A1	η	\N
+100159	αγελάδα	n	\N	\N	2	A1	η	\N
+100160	κρέμα	n	\N	\N	2	A1	η	\N
+100161	φλιτζάνι	n	\N	\N	2	A1	το	\N
+100162	μπαμπάς	n	\N	\N	2	A1	ο	\N
+100163	καθημερινός	adj	\N	\N	2	A1	\N	\N
+100164	χορεύω	v	\N	\N	2	A1	\N	\N
+100165	χορευτής	n	\N	\N	2	A1	ο	\N
+100166	χορεύτρια	n	\N	\N	2	A1	η	\N
+100167	χορός	n	\N	\N	2	A1	ο	\N
+100168	επικίνδυνος	adj	\N	\N	2	A1	\N	\N
+100169	σκοτεινός	adj	\N	\N	2	A1	\N	\N
+100170	σκούρος	adj	\N	\N	2	A1	\N	\N
+100171	ημερομηνία	n	\N	\N	2	A1	η	\N
+100172	κόρη	n	\N	\N	2	A1	η	\N
+100173	ημέρα	n	\N	\N	2	A1	η	\N
+100174	μέρα	n	\N	\N	2	A1	η	\N
+100175	αγαπητός	adj	\N	\N	2	A1	\N	\N
+100176	Δεκέμβριος	n	\N	\N	2	A1	ο	\N
+100177	αποφασίζω	v	\N	\N	2	A1	\N	\N
+100178	νόστιμος	adj	\N	\N	2	A1	\N	\N
+100179	γραφείο	n	\N	\N	2	A1	το	\N
+100180	λεπτομέρεια	n	\N	\N	2	A1	η	\N
+100181	διάλογος	n	\N	\N	2	A1	ο	\N
+100182	λεξικό	n	\N	\N	2	A1	το	\N
+100183	πεθαίνω	v	\N	\N	2	A1	\N	\N
+100184	δίαιτα	n	\N	\N	2	A1	η	\N
+100185	διατροφή	n	\N	\N	2	A1	η	\N
+100186	διαφορετικός	adj	\N	\N	2	A1	\N	\N
+100187	δύσκολος	adj	\N	\N	2	A1	\N	\N
+100188	βραδινό	n	\N	\N	2	A1	το	\N
+100189	βρώμικος	adj	\N	\N	2	A1	\N	\N
+100190	πιάτο	n	\N	\N	2	A1	το	\N
+100191	κάνω	v	\N	\N	2	A1	\N	\N
+100192	γιατρός	n	\N	\N	2	A1	ο/η	\N
+100193	σκύλος	n	\N	\N	2	A1	ο	\N
+100194	δολάριο	n	\N	\N	2	A1	το	\N
+100195	πόρτα	n	\N	\N	2	A1	η	\N
+100196	κάτω	adv	\N	\N	2	A1	\N	\N
+100197	κάτω όροφος	adv	\N	\N	2	A1	ο	\N
+3156	heal	v	\N	\N	1	B2	\N	\N
+100198	σχεδιάζω	v	\N	\N	2	A1	\N	\N
+100199	ζωγραφίζω	v	\N	\N	2	A1	\N	\N
+100200	φόρεμα	n	\N	\N	2	A1	το	\N
+100201	πίνω	v	\N	\N	2	A1	\N	\N
+100202	οδηγώ	v	\N	\N	2	A1	\N	\N
+100203	οδηγός	n	\N	\N	2	A1	ο/η	\N
+100204	οδήγηση	n	\N	\N	2	A1	η	\N
+100205	κατά τη διάρκεια	prep	\N	\N	2	A1	\N	\N
+100206	DVD	n	\N	\N	2	A1	το	\N
+100207	κάθε	det	\N	\N	2	A1	\N	\N
+100208	αυτί	n	\N	\N	2	A1	το	\N
+100209	νωρίς	adj	\N	\N	2	A1	\N	\N
+100210	ανατολή	n	\N	\N	2	A1	η	\N
+100211	εύκολος	adj	\N	\N	2	A1	\N	\N
+100212	τρώω	v	\N	\N	2	A1	\N	\N
+100213	αυγό	n	\N	\N	2	A1	το	\N
+100214	οκτώ	num	\N	\N	2	A1	\N	\N
+100215	δεκαοκτώ	num	\N	\N	2	A1	\N	\N
+100216	ογδόντα	num	\N	\N	2	A1	\N	\N
+100217	ελέφαντας	n	\N	\N	2	A1	ο	\N
+100218	έντεκα	num	\N	\N	2	A1	\N	\N
+100219	άλλο	adv	\N	\N	2	A1	\N	\N
+100220	email	n	\N	\N	2	A1	το	\N
+100221	τέλος	n	\N	\N	2	A1	το	\N
+100222	απολαμβάνω	v	\N	\N	2	A1	\N	\N
+100223	αρκετός	det	\N	\N	2	A1	\N	\N
+100224	ευρώ	n	\N	\N	2	A1	το	\N
+100225	ακόμα	adv	\N	\N	2	A1	\N	\N
+100226	βράδυ	n	\N	\N	2	A1	το	\N
+100227	ποτέ	adv	\N	\N	2	A1	\N	\N
+100228	οποιοσδήποτε	adv	\N	\N	2	A1	\N	\N
+100229	όλοι	pron	\N	\N	2	A1	οι	\N
+100230	καθένας	pron	\N	\N	2	A1	ο	\N
+100231	τα πάντα	pron	\N	\N	2	A1	\N	\N
+100232	εξέταση	n	\N	\N	2	A1	η	\N
+100233	παράδειγμα	n	\N	\N	2	A1	το	\N
+100234	ενθουσιασμένος	adj	\N	\N	2	A1	\N	\N
+100235	συναρπαστικός	adj	\N	\N	2	A1	\N	\N
+100236	άσκηση	n	\N	\N	2	A1	η	\N
+100237	ακριβός	adj	\N	\N	2	A1	\N	\N
+100238	εξηγώ	v	\N	\N	2	A1	\N	\N
+100239	επιπλέον	adj	\N	\N	2	A1	\N	\N
+100240	μάτι	n	\N	\N	2	A1	το	\N
+100241	πρόσωπο	n	\N	\N	2	A1	το	\N
+100242	πέφτω	v	\N	\N	2	A1	\N	\N
+100243	λάθος	adj	\N	\N	2	A1	\N	\N
+100244	ψεύτικος	adj	\N	\N	2	A1	\N	\N
+100245	οικογένεια	n	\N	\N	2	A1	η	\N
+100246	διάσημος	adj	\N	\N	2	A1	\N	\N
+100247	υπέροχος	adj	\N	\N	2	A1	\N	\N
+100249	φάρμα	n	\N	\N	2	A1	η	\N
+100250	αγρόκτημα	n	\N	\N	2	A1	το	\N
+100251	αγρότης	n	\N	\N	2	A1	ο	\N
+100252	γρήγορος	adj	\N	\N	2	A1	\N	\N
+100253	παχύς	adj	\N	\N	2	A1	\N	\N
+100254	πατέρας	n	\N	\N	2	A1	ο	\N
+100255	αγαπημένος	adj	\N	\N	2	A1	\N	\N
+100256	Φεβρουάριος	n	\N	\N	2	A1	ο	\N
+100257	νιώθω	v	\N	\N	2	A1	\N	\N
+100258	αισθάνομαι	v	\N	\N	2	A1	\N	\N
+100259	φεστιβάλ	n	\N	\N	2	A1	το	\N
+100260	λίγοι	det	\N	\N	2	A1	\N	\N
+100261	μερικοί	det	\N	\N	2	A1	\N	\N
+100262	δέκατος πέμπτος	num	\N	\N	2	A1	ο	\N
+100263	πέμπτος	num	\N	\N	2	A1	ο	\N
+100264	πενήντα	num	\N	\N	2	A1	\N	\N
+100265	γεμίζω	v	\N	\N	2	A1	\N	\N
+100266	ταινία	n	\N	\N	2	A1	η	\N
+100267	φιλμ	n	\N	\N	2	A1	το	\N
+100268	τελικός	adj	\N	\N	2	A1	\N	\N
+100269	βρίσκω	v	\N	\N	2	A1	\N	\N
+100270	καλά	adj	\N	\N	2	A1	\N	\N
+100271	τελειώνω	v	\N	\N	2	A1	\N	\N
+100272	φωτιά	n	\N	\N	2	A1	η	\N
+100273	πρώτος	num	\N	\N	2	A1	ο	\N
+100274	ψάρι	n	\N	\N	2	A1	το	\N
+100275	πέντε	num	\N	\N	2	A1	\N	\N
+100276	φτιάχνω	v	\N	\N	2	A1	\N	\N
+100277	επισκευάζω	v	\N	\N	2	A1	\N	\N
+100278	διαμέρισμα (flat)	n	\N	\N	2	A1	το	\N
+100279	πτήση	n	\N	\N	2	A1	η	\N
+100280	πάτωμα	n	\N	\N	2	A1	το	\N
+100281	όροφος	n	\N	\N	2	A1	ο	\N
+100282	λουλούδι	n	\N	\N	2	A1	το	\N
+100283	πετάω	v	\N	\N	2	A1	\N	\N
+100284	ακολουθώ	v	\N	\N	2	A1	\N	\N
+100285	φαγητό	n	\N	\N	2	A1	το	\N
+100286	πόδι	n	\N	\N	2	A1	το	\N
+100287	ποδόσφαιρο	n	\N	\N	2	A1	το	\N
+100288	για	prep	\N	\N	2	A1	\N	\N
+100289	ξεχνώ	v	\N	\N	2	A1	\N	\N
+100290	φόρμα	n	\N	\N	2	A1	η	\N
+100291	έντυπο	n	\N	\N	2	A1	το	\N
+100292	σαράντα	num	\N	\N	2	A1	\N	\N
+100293	τέσσερα	num	\N	\N	2	A1	\N	\N
+100294	δεκατέσσερα	num	\N	\N	2	A1	\N	\N
+100295	τέταρτος	num	\N	\N	2	A1	ο	\N
+100296	ελεύθερος	adj	\N	\N	2	A1	\N	\N
+100297	δωρεάν	adj	\N	\N	2	A1	\N	\N
+100298	Παρασκευή	n	\N	\N	2	A1	η	\N
+100299	φίλος	n	\N	\N	2	A1	ο	\N
+100300	φίλη	n	\N	\N	2	A1	η	\N
+100301	φιλικός	adj	\N	\N	2	A1	\N	\N
+100302	από	prep	\N	\N	2	A1	\N	\N
+100303	μπροστινό μέρος	n	\N	\N	2	A1	το	\N
+100304	φρούτο	n	\N	\N	2	A1	το	\N
+100305	γεμάτος	adj	\N	\N	2	A1	\N	\N
+100306	διασκέδαση	n	\N	\N	2	A1	η	\N
+100307	αστείος	adj	\N	\N	2	A1	\N	\N
+100308	μέλλον	n	\N	\N	2	A1	το	\N
+100309	παιχνίδι	n	\N	\N	2	A1	το	\N
+100310	κήπος	n	\N	\N	2	A1	ο	\N
+100311	γεωγραφία	n	\N	\N	2	A1	η	\N
+100312	παίρνω	v	\N	\N	2	A1	\N	\N
+100313	κορίτσι	n	\N	\N	2	A1	το	\N
+100314	κοπέλα	n	\N	\N	2	A1	η	\N
+100315	κοπέλα (σχέση)	n	\N	\N	2	A1	η	\N
+100316	δίνω	v	\N	\N	2	A1	\N	\N
+100317	ποτήρι	n	\N	\N	2	A1	το	\N
+100318	γυαλί	n	\N	\N	2	A1	το	\N
+100319	πηγαίνω	v	\N	\N	2	A1	\N	\N
+100320	καλός	adj	\N	\N	2	A1	\N	\N
+100321	αντίο	interj	\N	\N	2	A1	\N	\N
+100322	παππούς	n	\N	\N	2	A1	ο	\N
+100323	γιαγιά	n	\N	\N	2	A1	η	\N
+100324	παππούδες	n	\N	\N	2	A1	οι	\N
+100325	σπουδαίος	adj	\N	\N	2	A1	\N	\N
+100326	πράσινος	adj	\N	\N	2	A1	\N	\N
+100327	γκρι	adj	\N	\N	2	A1	\N	\N
+100328	ομάδα	n	\N	\N	2	A1	η	\N
+100329	μεγαλώνω	v	\N	\N	2	A1	\N	\N
+100330	μαντεύω	v	\N	\N	2	A1	\N	\N
+100331	κιθάρα	n	\N	\N	2	A1	η	\N
+100332	γυμναστήριο	n	\N	\N	2	A1	το	\N
+100333	μαλλιά	n	\N	\N	2	A1	τα	\N
+100334	μισό	n	\N	\N	2	A1	το	\N
+100335	συμβαίνω	v	\N	\N	2	A1	\N	\N
+100336	χαρούμενος	adj	\N	\N	2	A1	\N	\N
+100337	σκληρός	adj	\N	\N	2	A1	\N	\N
+100338	καπέλο	n	\N	\N	2	A1	το	\N
+100339	μισώ	v	\N	\N	2	A1	\N	\N
+100340	έχω	v	\N	\N	2	A1	\N	\N
+100341	πρέπει	v	\N	\N	2	A1	\N	\N
+100342	αυτός	pron	\N	\N	2	A1	ο	\N
+100343	κεφάλι	n	\N	\N	2	A1	το	\N
+100344	υγεία	n	\N	\N	2	A1	η	\N
+100345	υγιής	adj	\N	\N	2	A1	\N	\N
+100346	ακούω	v	\N	\N	2	A1	\N	\N
+100347	γεια	interj	\N	\N	2	A1	\N	\N
+100348	βοηθώ	v	\N	\N	2	A1	\N	\N
+100349	εδώ	adv	\N	\N	2	A1	\N	\N
+100350	ψηλός	adj	\N	\N	2	A1	\N	\N
+100351	ιστορία	n	\N	\N	2	A1	η	\N
+100352	χόμπι	n	\N	\N	2	A1	το	\N
+100353	διακοπές	n	\N	\N	2	A1	οι	\N
+100354	σπίτι	n	\N	\N	2	A1	το	\N
+100355	εργασία για το σπίτι	n	\N	\N	2	A1	η	\N
+100356	ελπίζω	v	\N	\N	2	A1	\N	\N
+100357	άλογο	n	\N	\N	2	A1	το	\N
+100358	νοσοκομείο	n	\N	\N	2	A1	το	\N
+100359	ζεστός	adj	\N	\N	2	A1	\N	\N
+100360	καυτός	adj	\N	\N	2	A1	\N	\N
+100361	ξενοδοχείο	n	\N	\N	2	A1	το	\N
+100362	ώρα	n	\N	\N	2	A1	η	\N
+100363	πεινασμένος	adj	\N	\N	2	A1	\N	\N
+100364	σύζυγος (άνδρας)	n	\N	\N	2	A1	ο	\N
+100365	πάγος	n	\N	\N	2	A1	ο	\N
+100366	παγωτό	n	\N	\N	2	A1	το	\N
+100367	ιδέα	n	\N	\N	2	A1	η	\N
+100368	αν	conj	\N	\N	2	A1	\N	\N
+100369	σημαντικός	adj	\N	\N	2	A1	\N	\N
+100370	περιλαμβάνω	v	\N	\N	2	A1	\N	\N
+100371	πληροφορία	n	\N	\N	2	A1	η	\N
+100372	πληροφορίες	n	\N	\N	2	A1	οι	\N
+100373	ενδιαφέρον	n	\N	\N	2	A1	το	\N
+100374	ενδιαφερόμενος	adj	\N	\N	2	A1	\N	\N
+100375	ενδιαφέρων	adj	\N	\N	2	A1	\N	\N
+100376	διαδίκτυο	n	\N	\N	2	A1	το	\N
+100377	ίντερνετ	n	\N	\N	2	A1	το	\N
+100378	συνέντευξη	n	\N	\N	2	A1	η	\N
+100379	μέσα σε	prep	\N	\N	2	A1	\N	\N
+100380	παρουσιάζω	v	\N	\N	2	A1	\N	\N
+100381	συστήνω	v	\N	\N	2	A1	\N	\N
+100382	νησί	n	\N	\N	2	A1	το	\N
+100383	τζάκετ	n	\N	\N	2	A1	το	\N
+100384	μπουφάν	n	\N	\N	2	A1	το	\N
+100385	Ιανουάριος	n	\N	\N	2	A1	ο	\N
+100386	τζιν	n	\N	\N	2	A1	το	\N
+100387	δουλειά	n	\N	\N	2	A1	η	\N
+100388	επάγγελμα	n	\N	\N	2	A1	το	\N
+100389	συμμετέχω	v	\N	\N	2	A1	\N	\N
+100390	ταξίδι	n	\N	\N	2	A1	το	\N
+100391	διαδρομή	n	\N	\N	2	A1	η	\N
+100392	χυμός	n	\N	\N	2	A1	ο	\N
+100393	κρατάω	v	\N	\N	2	A1	\N	\N
+100394	διατηρώ	v	\N	\N	2	A1	\N	\N
+100395	κλειδί	n	\N	\N	2	A1	το	\N
+100396	χιλιόμετρο	n	\N	\N	2	A1	το	\N
+100397	είδος	n	\N	\N	2	A1	το	\N
+100398	κουζίνα	n	\N	\N	2	A1	η	\N
+100399	ξέρω	v	\N	\N	2	A1	\N	\N
+100400	γνωρίζω	v	\N	\N	2	A1	\N	\N
+100401	ξηρά	n	\N	\N	2	A1	η	\N
+100402	γη	n	\N	\N	2	A1	η	\N
+100403	γλώσσα	n	\N	\N	2	A1	η	\N
+100404	τεράστιος	adj	\N	\N	2	A1	\N	\N
+100405	τελευταίος	adj	\N	\N	2	A1	\N	\N
+100406	αργά	adj	\N	\N	2	A1	\N	\N
+100407	αργότερα	adv	\N	\N	2	A1	\N	\N
+100408	αριστερός	adj	\N	\N	2	A1	\N	\N
+100409	αριστερά	adv	\N	\N	2	A1	\N	\N
+100410	πόδι (κάτω μέρος)	n	\N	\N	2	A1	το	\N
+100411	μάθημα (ενότητα)	n	\N	\N	2	A1	το	\N
+100412	αφήνω	v	\N	\N	2	A1	\N	\N
+100413	επιτρέπω	v	\N	\N	2	A1	\N	\N
+100414	γράμμα	n	\N	\N	2	A1	το	\N
+100415	επιστολή	n	\N	\N	2	A1	η	\N
+100416	βιβλιοθήκη	n	\N	\N	2	A1	η	\N
+100417	λέω ψέματα	v	\N	\N	2	A1	\N	\N
+100418	κείτομαι	v	\N	\N	2	A1	\N	\N
+100419	ζωή	n	\N	\N	2	A1	η	\N
+100420	φως	n	\N	\N	2	A1	το	\N
+100421	γραμμή	n	\N	\N	2	A1	η	\N
+100422	λιοντάρι	n	\N	\N	2	A1	το	\N
+100423	λίστα	n	\N	\N	2	A1	η	\N
+100424	κατάλογος	n	\N	\N	2	A1	ο	\N
+100425	ακούω (προσέχω)	v	\N	\N	2	A1	\N	\N
+100426	μικρός	adj	\N	\N	2	A1	\N	\N
+100427	λίγος	adj	\N	\N	2	A1	\N	\N
+100428	μένω (κατοικώ)	v	\N	\N	2	A1	\N	\N
+100429	μακρύς	adj	\N	\N	2	A1	\N	\N
+100430	κοιτάζω	v	\N	\N	2	A1	\N	\N
+100431	χάνω	v	\N	\N	2	A1	\N	\N
+100432	πολύ	n	\N	\N	2	A1	το	\N
+100433	αγαπώ	v	\N	\N	2	A1	\N	\N
+100434	μεσημεριανό	n	\N	\N	2	A1	το	\N
+100435	μηχανή	n	\N	\N	2	A1	η	\N
+100436	μηχάνημα	n	\N	\N	2	A1	το	\N
+100437	περιοδικό	n	\N	\N	2	A1	το	\N
+100438	κύριος	adj	\N	\N	2	A1	\N	\N
+100439	βασικός	adj	\N	\N	2	A1	\N	\N
+100440	φτιάχνω (δημιουργώ)	v	\N	\N	2	A1	\N	\N
+100441	άνδρας	n	\N	\N	2	A1	ο	\N
+100442	άντρας	n	\N	\N	2	A1	ο	\N
+100443	πολλοί	det	\N	\N	2	A1	\N	\N
+100444	χάρτης	n	\N	\N	2	A1	ο	\N
+100445	Μάρτιος	n	\N	\N	2	A1	ο	\N
+100446	αγορά	n	\N	\N	2	A1	η	\N
+100447	παντρεμένος	adj	\N	\N	2	A1	\N	\N
+100448	αγώνας	n	\N	\N	2	A1	ο	\N
+100449	ταίριασμα	n	\N	\N	2	A1	το	\N
+100450	Μάιος	n	\N	\N	2	A1	ο	\N
+100451	ίσως	adv	\N	\N	2	A1	\N	\N
+100452	γεύμα	n	\N	\N	2	A1	το	\N
+100453	σημαίνω	v	\N	\N	2	A1	\N	\N
+100454	σημασία	n	\N	\N	2	A1	η	\N
+100455	έννοια	n	\N	\N	2	A1	η	\N
+100456	κρέας	n	\N	\N	2	A1	το	\N
+100457	συναντώ	v	\N	\N	2	A1	\N	\N
+100458	συνάντηση	n	\N	\N	2	A1	η	\N
+100459	μέλος	n	\N	\N	2	A1	το	\N
+100460	μενού	n	\N	\N	2	A1	το	\N
+100461	κατάλογος (μενού)	n	\N	\N	2	A1	ο	\N
+100462	μήνυμα	n	\N	\N	2	A1	το	\N
+100463	μέτρο	n	\N	\N	2	A1	το	\N
+100464	μεσάνυχτα	n	\N	\N	2	A1	τα	\N
+100465	μίλι	n	\N	\N	2	A1	το	\N
+100466	γάλα	n	\N	\N	2	A1	το	\N
+100467	εκατομμύριο	num	\N	\N	2	A1	το	\N
+100468	λεπτό (ώρας)	n	\N	\N	2	A1	το	\N
+100469	χάνω (κάτι/κάποιον)	v	\N	\N	2	A1	\N	\N
+100470	μου λείπει	v	\N	\N	2	A1	\N	\N
+100471	λάθος (σφάλμα)	n	\N	\N	2	A1	το	\N
+100472	μοντέλο	n	\N	\N	2	A1	το	\N
+100473	μοντέρνος	adj	\N	\N	2	A1	\N	\N
+100474	σύγχρονος	adj	\N	\N	2	A1	\N	\N
+100475	στιγμή	n	\N	\N	2	A1	η	\N
+100476	Δευτέρα	n	\N	\N	2	A1	η	\N
+100477	χρήματα	n	\N	\N	2	A1	τα	\N
+100478	λεφτά	n	\N	\N	2	A1	τα	\N
+100479	μήνας	n	\N	\N	2	A1	ο	\N
+100480	περισσότερο	det	\N	\N	2	A1	\N	\N
+100481	πρωί	n	\N	\N	2	A1	το	\N
+100482	περισσότερο (συγκριτικός)	det	\N	\N	2	A1	\N	\N
+100483	μητέρα	n	\N	\N	2	A1	η	\N
+100484	μαμά	n	\N	\N	2	A1	η	\N
+100485	βουνό	n	\N	\N	2	A1	το	\N
+100486	ποντίκι	n	\N	\N	2	A1	το	\N
+100487	στόμα	n	\N	\N	2	A1	το	\N
+100488	κουνάω	v	\N	\N	2	A1	\N	\N
+100489	μετακομίζω	v	\N	\N	2	A1	\N	\N
+100490	ταινία (movie)	n	\N	\N	2	A1	η	\N
+100491	πολύ (ποσότητα)	det	\N	\N	2	A1	\N	\N
+100492	μουσείο	n	\N	\N	2	A1	το	\N
+100493	μουσική	n	\N	\N	2	A1	η	\N
+100494	πρέπει (must)	v	\N	\N	2	A1	\N	\N
+100495	όνομα	n	\N	\N	2	A1	το	\N
+100496	κοντά	prep	\N	\N	2	A1	\N	\N
+100497	χρειάζομαι	v	\N	\N	2	A1	\N	\N
+100498	γείτονας	n	\N	\N	2	A1	ο	\N
+100499	νέος	adj	\N	\N	2	A1	\N	\N
+100500	καινούργιος	adj	\N	\N	2	A1	\N	\N
+100501	νέα (news)	n	\N	\N	2	A1	τα	\N
+100502	ειδήσεις	n	\N	\N	2	A1	οι	\N
+100503	εφημερίδα	n	\N	\N	2	A1	η	\N
+100504	επόμενος	adj	\N	\N	2	A1	\N	\N
+100505	δίπλα σε	prep	\N	\N	2	A1	\N	\N
+100506	ωραίος	adj	\N	\N	2	A1	\N	\N
+100507	ευχάριστος	adj	\N	\N	2	A1	\N	\N
+100508	νύχτα	n	\N	\N	2	A1	η	\N
+100509	εννέα	num	\N	\N	2	A1	\N	\N
+100510	δεκαεννέα	num	\N	\N	2	A1	\N	\N
+100511	ενενήντα	num	\N	\N	2	A1	\N	\N
+100512	όχι	det	\N	\N	2	A1	\N	\N
+100513	κανείς (no one)	pron	\N	\N	2	A1	\N	\N
+100514	βορράς	n	\N	\N	2	A1	ο	\N
+100515	μύτη	n	\N	\N	2	A1	η	\N
+100516	σημείωση	n	\N	\N	2	A1	η	\N
+100517	Νοέμβριος	n	\N	\N	2	A1	ο	\N
+100518	τώρα	adv	\N	\N	2	A1	\N	\N
+100519	αριθμός	n	\N	\N	2	A1	ο	\N
+100520	Οκτώβριος	n	\N	\N	2	A1	ο	\N
+100521	του	prep	\N	\N	2	A1	\N	\N
+100522	της	prep	\N	\N	2	A1	\N	\N
+100523	κλειστός	adv	\N	\N	2	A1	\N	\N
+100524	γραφείο (χώρος)	n	\N	\N	2	A1	το	\N
+100525	συχνά	adv	\N	\N	2	A1	\N	\N
+100526	ω!	interj	\N	\N	2	A1	\N	\N
+100527	παλιός	adj	\N	\N	2	A1	\N	\N
+100528	πάνω σε	prep	\N	\N	2	A1	\N	\N
+100529	μία φορά	adv	\N	\N	2	A1	\N	\N
+100530	ένας	num	\N	\N	2	A1	\N	\N
+100531	κρεμμύδι	n	\N	\N	2	A1	το	\N
+100532	διαδικτυακός	adj	\N	\N	2	A1	\N	\N
+100533	μόνο	adv	\N	\N	2	A1	\N	\N
+100534	ανοίγω	v	\N	\N	2	A1	\N	\N
+100535	απέναντι	adj	\N	\N	2	A1	\N	\N
+100536	ή	conj	\N	\N	2	A1	\N	\N
+100537	πορτοκάλι	n	\N	\N	2	A1	το	\N
+100538	παραγγέλνω	v	\N	\N	2	A1	\N	\N
+100539	άλλος	adj	\N	\N	2	A1	\N	\N
+100540	έξω	adv	\N	\N	2	A1	\N	\N
+100541	έξω (υπαίθρια)	adv	\N	\N	2	A1	\N	\N
+100542	πάνω από (λήξη)	prep	\N	\N	2	A1	\N	\N
+100543	κατέχω	v	\N	\N	2	A1	\N	\N
+100544	σελίδα	n	\N	\N	2	A1	η	\N
+100545	βάφω	v	\N	\N	2	A1	\N	\N
+100546	ζωγραφίζω (με χρώμα)	v	\N	\N	2	A1	\N	\N
+100547	πίνακας ζωγραφικής	n	\N	\N	2	A1	ο	\N
+100548	ζευγάρι	n	\N	\N	2	A1	το	\N
+100549	χαρτί	n	\N	\N	2	A1	το	\N
+100550	παράγραφος	n	\N	\N	2	A1	η	\N
+100551	γονέας	n	\N	\N	2	A1	ο	\N
+100552	πάρκο	n	\N	\N	2	A1	το	\N
+100553	μέρος (τμήμα)	n	\N	\N	2	A1	το	\N
+100554	σύντροφος	n	\N	\N	2	A1	ο/η	\N
+100555	πάρτι	n	\N	\N	2	A1	το	\N
+100556	διαβατήριο	n	\N	\N	2	A1	το	\N
+100557	περασμένος	adj	\N	\N	2	A1	\N	\N
+100558	πληρώνω	v	\N	\N	2	A1	\N	\N
+100559	στυλό	n	\N	\N	2	A1	το	\N
+100560	μολύβι	n	\N	\N	2	A1	το	\N
+100561	άνθρωποι	n	\N	\N	2	A1	οι	\N
+100562	κόκκινο πιπέρι	n	\N	\N	2	A1	το	\N
+100563	τέλειος	adj	\N	\N	2	A1	\N	\N
+100564	περίοδος	n	\N	\N	2	A1	η	\N
+100565	άνθρωπος	n	\N	\N	2	A1	ο	\N
+100566	προσωπικός	adj	\N	\N	2	A1	\N	\N
+100567	τηλέφωνο	n	\N	\N	2	A1	το	\N
+100568	φωτογραφία	n	\N	\N	2	A1	η	\N
+100569	φράση	n	\N	\N	2	A1	η	\N
+100570	πιάνο	n	\N	\N	2	A1	το	\N
+100571	εικόνα	n	\N	\N	2	A1	η	\N
+100572	κομμάτι	n	\N	\N	2	A1	το	\N
+100573	γουρούνι	n	\N	\N	2	A1	το	\N
+100574	ροζ	adj	\N	\N	2	A1	\N	\N
+100575	μέρος (τοποθεσία)	n	\N	\N	2	A1	το	\N
+100576	σχέδιο	n	\N	\N	2	A1	το	\N
+100577	αεροπλάνο	n	\N	\N	2	A1	το	\N
+100578	φυτό	n	\N	\N	2	A1	το	\N
+100579	παίζω	v	\N	\N	2	A1	\N	\N
+100580	παίκτης	n	\N	\N	2	A1	ο	\N
+100581	παρακαλώ	interj	\N	\N	2	A1	\N	\N
+100582	σημείο	n	\N	\N	2	A1	το	\N
+100583	βαθμός	n	\N	\N	2	A1	ο	\N
+100584	αστυνομία	n	\N	\N	2	A1	η	\N
+100585	αστυνομικός	n	\N	\N	2	A1	ο	\N
+100586	πισίνα	n	\N	\N	2	A1	η	\N
+100587	φτωχός	adj	\N	\N	2	A1	\N	\N
+100588	ποπ (μουσική)	n	\N	\N	2	A1	η	\N
+100589	δημοφιλής	adj	\N	\N	2	A1	\N	\N
+100590	πιθανός	adj	\N	\N	2	A1	\N	\N
+100591	δημοσίευση	n	\N	\N	2	A1	η	\N
+100592	πατάτα	n	\N	\N	2	A1	η	\N
+100593	λίρα	n	\N	\N	2	A1	η	\N
+100594	εξάσκηση	n	\N	\N	2	A1	η	\N
+100595	εξασκούμαι	v	\N	\N	2	A1	\N	\N
+100596	δώρο	n	\N	\N	2	A1	το	\N
+100597	όμορφος (για κοπέλα/πράγμα)	adj	\N	\N	2	A1	\N	\N
+100598	τιμή	n	\N	\N	2	A1	η	\N
+100599	πρόβλημα	n	\N	\N	2	A1	το	\N
+100600	πρόγραμμα	n	\N	\N	2	A1	το	\N
+100601	έργο	n	\N	\N	2	A1	το	\N
+100602	μωβ	adj	\N	\N	2	A1	\N	\N
+100603	βάζω	v	\N	\N	2	A1	\N	\N
+100604	φίδι	n	\N	\N	2	A1	το	\N
+100605	χιόνι	n	\N	\N	2	A1	το	\N
+100606	λοιπόν	conj	\N	\N	2	A1	\N	\N
+100607	κάποιος	pron	\N	\N	2	A1	ο	\N
+100608	κάποια	pron	\N	\N	2	A1	η	\N
+100609	κάποιο	pron	\N	\N	2	A1	το	\N
+100610	κάτι	pron	\N	\N	2	A1	το	\N
+100611	μερικές φορές	adv	\N	\N	2	A1	\N	\N
+100612	γιος	n	\N	\N	2	A1	ο	\N
+100613	τραγούδι	n	\N	\N	2	A1	το	\N
+100614	σύντομα	adv	\N	\N	2	A1	\N	\N
+100615	συγγνώμη	adj	\N	\N	2	A1	\N	\N
+100616	ήχος	n	\N	\N	2	A1	ο	\N
+100617	σούπα	n	\N	\N	2	A1	η	\N
+100618	νότος	n	\N	\N	2	A1	ο	\N
+100619	διάστημα	n	\N	\N	2	A1	το	\N
+100620	χώρος	n	\N	\N	2	A1	ο	\N
+100621	μιλάω	v	\N	\N	2	A1	\N	\N
+100622	ειδικός	adj	\N	\N	2	A1	\N	\N
+100623	συλλαβίζω	v	\N	\N	2	A1	\N	\N
+100624	ορθογραφία	n	\N	\N	2	A1	η	\N
+100625	ξοδεύω	v	\N	\N	2	A1	\N	\N
+100626	άθλημα	n	\N	\N	2	A1	το	\N
+100627	άνοιξη	n	\N	\N	2	A1	η	\N
+100628	στέκομαι	v	\N	\N	2	A1	\N	\N
+100629	αρχίζω (start)	v	\N	\N	2	A1	\N	\N
+100630	σταθμός	n	\N	\N	2	A1	ο	\N
+100631	σταματάω	v	\N	\N	2	A1	\N	\N
+100632	ιστορία (story)	n	\N	\N	2	A1	η	\N
+100633	δρόμος	n	\N	\N	2	A1	ο	\N
+100634	δυνατός	adj	\N	\N	2	A1	\N	\N
+100635	μαθητής	n	\N	\N	2	A1	ο	\N
+100636	φοιτητής	n	\N	\N	2	A1	ο	\N
+100637	μελετώ	v	\N	\N	2	A1	\N	\N
+100638	στυλ	n	\N	\N	2	A1	το	\N
+100639	θέμα	n	\N	\N	2	A1	το	\N
+100640	ζάχαρη	n	\N	\N	2	A1	η	\N
+100641	καλοκαίρι	n	\N	\N	2	A1	το	\N
+100642	ήλιος	n	\N	\N	2	A1	ο	\N
+100643	Κυριακή	n	\N	\N	2	A1	η	\N
+100644	σουπερμάρκετ	n	\N	\N	2	A1	το	\N
+100645	σίγουρος	adj	\N	\N	2	A1	\N	\N
+100646	πουλόβερ	n	\N	\N	2	A1	το	\N
+100647	κολυμπάω	v	\N	\N	2	A1	\N	\N
+100648	κολύμβηση	n	\N	\N	2	A1	η	\N
+100649	τραπέζι	n	\N	\N	2	A1	το	\N
+100650	παίρνω (take)	v	\N	\N	2	A1	\N	\N
+100651	κουβεντιάζω	v	\N	\N	2	A1	\N	\N
+100652	ταξί	n	\N	\N	2	A1	το	\N
+100653	τσάι	n	\N	\N	2	A1	το	\N
+100654	διδάσκω	v	\N	\N	2	A1	\N	\N
+100655	δάσκαλος	n	\N	\N	2	A1	ο	\N
+100656	δασκάλα	n	\N	\N	2	A1	η	\N
+100657	ομάδα (team)	n	\N	\N	2	A1	η	\N
+100658	έφηβος	n	\N	\N	2	A1	ο	\N
+100659	τηλεφωνώ (v)	v	\N	\N	2	A1	\N	\N
+100660	τηλεόραση	n	\N	\N	2	A1	η	\N
+100661	λέω	v	\N	\N	2	A1	\N	\N
+100662	δέκα	num	\N	\N	2	A1	\N	\N
+100663	τένις	n	\N	\N	2	A1	το	\N
+100664	τρομερός	adj	\N	\N	2	A1	\N	\N
+100665	απαίσιος	adj	\N	\N	2	A1	\N	\N
+100666	τεστ	n	\N	\N	2	A1	το	\N
+100667	κείμενο	n	\N	\N	2	A1	το	\N
+100668	από (than)	conj	\N	\N	2	A1	\N	\N
+100669	ευχαριστώ	v	\N	\N	2	A1	\N	\N
+100670	ευχαριστίες	interj	\N	\N	2	A1	οι	\N
+100671	εκείνο	det	\N	\N	2	A1	το	\N
+100672	θέατρο	n	\N	\N	2	A1	το	\N
+100673	τους (their)	det	\N	\N	2	A1	\N	\N
+100674	αυτούς	pron	\N	\N	2	A1	\N	\N
+100675	τότε	adv	\N	\N	2	A1	\N	\N
+100676	εκεί	adv	\N	\N	2	A1	\N	\N
+100677	αυτοί	pron	\N	\N	2	A1	\N	\N
+100678	πράγμα	n	\N	\N	2	A1	το	\N
+100679	νομίζω	v	\N	\N	2	A1	\N	\N
+100680	σκέφτομαι	v	\N	\N	2	A1	\N	\N
+100681	τρίτος	num	\N	\N	2	A1	ο	\N
+100682	διψασμένος	adj	\N	\N	2	A1	\N	\N
+100683	δεκατρία	num	\N	\N	2	A1	\N	\N
+100684	τριάντα	num	\N	\N	2	A1	\N	\N
+100685	αυτό (this)	det	\N	\N	2	A1	το	\N
+100686	χίλια	num	\N	\N	2	A1	\N	\N
+100687	τρία	num	\N	\N	2	A1	\N	\N
+100688	μέσα από	prep	\N	\N	2	A1	\N	\N
+100689	Πέμπτη	n	\N	\N	2	A1	η	\N
+100690	εισιτήριο	n	\N	\N	2	A1	το	\N
+100691	κουρασμένος	adj	\N	\N	2	A1	\N	\N
+100692	τίτλος	n	\N	\N	2	A1	ο	\N
+100693	σε / προς	prep	\N	\N	2	A1	\N	\N
+100694	σήμερα	adv	\N	\N	2	A1	\N	\N
+100695	μαζί	adv	\N	\N	2	A1	\N	\N
+100696	τουαλέτα	n	\N	\N	2	A1	η	\N
+100697	ντομάτα	n	\N	\N	2	A1	η	\N
+100698	αύριο	adv	\N	\N	2	A1	\N	\N
+100699	απόψε	adv	\N	\N	2	A1	\N	\N
+100700	επίσης (too)	adv	\N	\N	2	A1	\N	\N
+100701	πολύ (too)	adv	\N	\N	2	A1	\N	\N
+100702	κορυφή	n	\N	\N	2	A1	η	\N
+100703	δόντι	n	\N	\N	2	A1	το	\N
+100704	τουρίστας	n	\N	\N	2	A1	ο	\N
+100705	πόλη (town)	n	\N	\N	2	A1	η	\N
+100706	τρένο	n	\N	\N	2	A1	το	\N
+100707	ταξιδεύω	v	\N	\N	2	A1	\N	\N
+100708	δέντρο	n	\N	\N	2	A1	το	\N
+100709	εκδρομή	n	\N	\N	2	A1	η	\N
+100710	παντελόνι	n	\N	\N	2	A1	το	\N
+100711	αληθινός	adj	\N	\N	2	A1	\N	\N
+100712	προσπαθώ	v	\N	\N	2	A1	\N	\N
+100713	δοκιμάζω	v	\N	\N	2	A1	\N	\N
+100714	μπλουζάκι	n	\N	\N	2	A1	το	\N
+100715	Τρίτη	n	\N	\N	2	A1	η	\N
+100716	στρίβω	v	\N	\N	2	A1	\N	\N
+100717	γυρίζω	v	\N	\N	2	A1	\N	\N
+100718	δώδεκα	num	\N	\N	2	A1	\N	\N
+100719	είκοσι	num	\N	\N	2	A1	\N	\N
+100720	δύο φορές	adv	\N	\N	2	A1	\N	\N
+100721	δύο	num	\N	\N	2	A1	\N	\N
+100722	τύπος	n	\N	\N	2	A1	ο	\N
+100723	ομπρέλα	n	\N	\N	2	A1	η	\N
+100724	θείος	n	\N	\N	2	A1	ο	\N
+100725	κάτω από (under)	prep	\N	\N	2	A1	\N	\N
+100726	καταλαβαίνω	v	\N	\N	2	A1	\N	\N
+100727	πανεπιστήμιο	n	\N	\N	2	A1	το	\N
+100728	μέχρι	conj	\N	\N	2	A1	\N	\N
+100729	πάνω (up)	adv	\N	\N	2	A1	\N	\N
+100730	επάνω όροφος	adv	\N	\N	2	A1	ο	\N
+100731	εμάς	pron	\N	\N	2	A1	\N	\N
+100732	χρησιμοποιώ	v	\N	\N	2	A1	\N	\N
+100733	συνήθως	adv	\N	\N	2	A1	\N	\N
+100734	διακοπές (vacation)	n	\N	\N	2	A1	οι	\N
+100735	λαχανικό	n	\N	\N	2	A1	το	\N
+100736	πολύ (very)	adv	\N	\N	2	A1	\N	\N
+100737	βίντεο	n	\N	\N	2	A1	το	\N
+100738	χωριό	n	\N	\N	2	A1	το	\N
+100739	επισκέπτομαι	v	\N	\N	2	A1	\N	\N
+100740	επισκέπτης	n	\N	\N	2	A1	ο	\N
+100741	περιμένω	v	\N	\N	2	A1	\N	\N
+100742	σερβιτόρος	n	\N	\N	2	A1	ο	\N
+100743	ξυπνάω	v	\N	\N	2	A1	\N	\N
+100744	περπατάω	v	\N	\N	2	A1	\N	\N
+100745	τοίχος	n	\N	\N	2	A1	ο	\N
+100746	θέλω	v	\N	\N	2	A1	\N	\N
+100747	ζεστός (warm)	adj	\N	\N	2	A1	\N	\N
+100748	πλένω	v	\N	\N	2	A1	\N	\N
+100749	παρακολουθώ	v	\N	\N	2	A1	\N	\N
+100750	νερό	n	\N	\N	2	A1	το	\N
+100751	τρόπος	n	\N	\N	2	A1	ο	\N
+100752	Τετάρτη	n	\N	\N	2	A1	η	\N
+100753	εβδομάδα	n	\N	\N	2	A1	η	\N
+100754	σαββατοκύριακο	n	\N	\N	2	A1	το	\N
+100755	καλώς ορίσατε	interj	\N	\N	2	A1	\N	\N
+100756	καλά (well)	adv	\N	\N	2	A1	\N	\N
+100757	δύση	n	\N	\N	2	A1	η	\N
+100758	τι	pron	\N	\N	2	A1	\N	\N
+100759	πότε	adv	\N	\N	2	A1	\N	\N
+100760	πού	adv	\N	\N	2	A1	\N	\N
+100761	ποιο	pron	\N	\N	2	A1	το	\N
+100762	λευκό	adj	\N	\N	2	A1	\N	\N
+100763	άσπρο	adj	\N	\N	2	A1	\N	\N
+100764	ποιος	pron	\N	\N	2	A1	ο	\N
+100765	γιατί	adv	\N	\N	2	A1	\N	\N
+100766	σύζυγος (γυναίκα)	n	\N	\N	2	A1	η	\N
+100767	θα	v	\N	\N	2	A1	\N	\N
+100768	κερδίζω	v	\N	\N	2	A1	\N	\N
+100769	παράθυρο	n	\N	\N	2	A1	το	\N
+100770	κρασί	n	\N	\N	2	A1	το	\N
+100771	χειμώνας	n	\N	\N	2	A1	ο	\N
+100772	με	prep	\N	\N	2	A1	\N	\N
+100773	χωρίς	prep	\N	\N	2	A1	\N	\N
+100774	γυναίκα	n	\N	\N	2	A1	η	\N
+100775	υπέροχος (wonderful)	adj	\N	\N	2	A1	\N	\N
+100776	λέξη	n	\N	\N	2	A1	η	\N
+100777	εργασία	n	\N	\N	2	A1	η	\N
+100778	δουλεύω	v	\N	\N	2	A1	\N	\N
+100779	εργάτης	n	\N	\N	2	A1	ο	\N
+100780	κόσμος	n	\N	\N	2	A1	ο	\N
+100781	θα (would)	v	\N	\N	2	A1	\N	\N
+100782	γράφω	v	\N	\N	2	A1	\N	\N
+100783	συγγραφέας	n	\N	\N	2	A1	ο/η	\N
+100784	γράψιμο	n	\N	\N	2	A1	το	\N
+100785	λάθος (wrong)	adj	\N	\N	2	A1	\N	\N
+100786	ναι (yeah)	interj	\N	\N	2	A1	\N	\N
+100787	χρόνος (year)	n	\N	\N	2	A1	ο	\N
+100788	έτος	n	\N	\N	2	A1	το	\N
+100789	κίτρινο	adj	\N	\N	2	A1	\N	\N
+100790	ναι (yes)	interj	\N	\N	2	A1	\N	\N
+100791	χθες	adv	\N	\N	2	A1	\N	\N
+100792	εσύ	pron	\N	\N	2	A1	\N	\N
+100793	νέος (young)	adj	\N	\N	2	A1	\N	\N
+100794	σου	det	\N	\N	2	A1	\N	\N
+100795	τον εαυτό σου	pron	\N	\N	2	A1	\N	\N
+3811	trace	n	\N	\N	1	B2	\N	\N
+100796	εγώ	pron	\N	\N	2	A1	\N	\N
+100797	εσείς	pron	\N	\N	2	A1	\N	\N
+100798	αυτή	pron	\N	\N	2	A1	η	\N
+100799	αυτό (pron)	pron	\N	\N	2	A1	το	\N
+100800	εμείς	pron	\N	\N	2	A1	\N	\N
+100801	εμένα	pron	\N	\N	2	A1	\N	\N
+100802	αυτόν	pron	\N	\N	2	A1	\N	\N
+100803	αυτήν	pron	\N	\N	2	A1	\N	\N
+100804	εμάς (us)	pron	\N	\N	2	A1	\N	\N
+100805	αυτούς (them)	pron	\N	\N	2	A1	\N	\N
+100806	δικός μου	det	\N	\N	2	A1	\N	\N
+100807	δικός σου	det	\N	\N	2	A1	\N	\N
+100808	δικός του	det	\N	\N	2	A1	\N	\N
+100809	δικό του	det	\N	\N	2	A1	\N	\N
+100810	δικός μας	det	\N	\N	2	A1	\N	\N
+100811	δικός τους	det	\N	\N	2	A1	\N	\N
+100812	δικό μου (mine)	pron	\N	\N	2	A1	\N	\N
+100813	δικό σου (yours)	pron	\N	\N	2	A1	\N	\N
+100814	δικό της (hers)	pron	\N	\N	2	A1	\N	\N
+100815	δικό μας (ours)	pron	\N	\N	2	A1	\N	\N
+100816	δικό τους (theirs)	pron	\N	\N	2	A1	\N	\N
+100817	είμαι (am)	v	\N	\N	2	A1	\N	\N
+100818	είναι (is)	v	\N	\N	2	A1	\N	\N
+100819	είναι (are)	v	\N	\N	2	A1	\N	\N
+100820	ήμουν	v	\N	\N	2	A1	\N	\N
+100821	ήταν	v	\N	\N	2	A1	\N	\N
+100822	έχω (have)	v	\N	\N	2	A1	\N	\N
+100823	έχει	v	\N	\N	2	A1	\N	\N
+100824	είχα	v	\N	\N	2	A1	\N	\N
+100825	θα (shall)	v	\N	\N	2	A1	\N	\N
+100826	μπορεί (may)	v	\N	\N	2	A1	\N	\N
+100827	μπορεί να (might)	v	\N	\N	2	A1	\N	\N
+100828	δεν μπορούσα	v	\N	\N	2	A1	\N	\N
+100829	δεν θα	v	\N	\N	2	A1	\N	\N
+100830	δεν θα έπρεπε	v	\N	\N	2	A1	\N	\N
+100831	δεν θα ήθελα	v	\N	\N	2	A1	\N	\N
+100832	δεν είναι (isn't)	v	\N	\N	2	A1	\N	\N
+100833	δεν είναι (aren't)	v	\N	\N	2	A1	\N	\N
+100834	δεν ήταν (wasn't)	v	\N	\N	2	A1	\N	\N
+100835	δεν ήταν (weren't)	v	\N	\N	2	A1	\N	\N
+100836	δεν έχω (haven't)	v	\N	\N	2	A1	\N	\N
+100837	δεν έχει (hasn't)	v	\N	\N	2	A1	\N	\N
+100838	δεν είχα (hadn't)	v	\N	\N	2	A1	\N	\N
+100839	δίπλα	prep	\N	\N	2	A1	\N	\N
+100840	πάνω σε (onto)	prep	\N	\N	2	A1	\N	\N
+100841	ενώ	conj	\N	\N	2	A1	\N	\N
+100842	μόλις	adv	\N	\N	2	A1	\N	\N
+100843	ικανότητα	n	\N	\N	2	A2	η	\N
+100844	ικανός	adj	\N	\N	2	A2	\N	\N
+100845	στο εξωτερικό	adv	\N	\N	2	A2	\N	\N
+100846	αποδέχομαι	v	\N	\N	2	A2	\N	\N
+100847	ατύχημα	n	\N	\N	2	A2	το	\N
+100848	κατορθώνω	v	\N	\N	2	A2	\N	\N
+100849	επιτυγχάνω	v	\N	\N	2	A2	\N	\N
+100850	δρω	v	\N	\N	2	A2	\N	\N
+100851	ενεργός	adj	\N	\N	2	A2	\N	\N
+100852	δραστήριος	adj	\N	\N	2	A2	\N	\N
+100853	στην πραγματικότητα	adv	\N	\N	2	A2	\N	\N
+100854	πλεονέκτημα	n	\N	\N	2	A2	το	\N
+100855	περιπέτεια	n	\N	\N	2	A2	η	\N
+100856	διαφημίζω	v	\N	\N	2	A2	\N	\N
+100857	διαφήμιση	n	\N	\N	2	A2	η	\N
+100858	συμβουλή	n	\N	\N	2	A2	η	\N
+100859	επηρεάζω	v	\N	\N	2	A2	\N	\N
+100860	εναντίον	prep	\N	\N	2	A2	\N	\N
+100861	συμφωνώ	v	\N	\N	2	A2	\N	\N
+100862	α!	interj	\N	\N	2	A2	\N	\N
+100863	αεροπορική εταιρεία	n	\N	\N	2	A2	η	\N
+100864	ζωντανός	adj	\N	\N	2	A2	\N	\N
+100865	επιτρέπω	v	\N	\N	2	A2	\N	\N
+100866	σχεδόν	adv	\N	\N	2	A2	\N	\N
+100867	μόνος	adj	\N	\N	2	A2	\N	\N
+100868	κατά μήκος	prep	\N	\N	2	A2	\N	\N
+100869	ήδη	adv	\N	\N	2	A2	\N	\N
+100870	αν και	conj	\N	\N	2	A2	\N	\N
+100871	μεταξύ	prep	\N	\N	2	A2	\N	\N
+100872	ποσότητα	n	\N	\N	2	A2	η	\N
+100873	ποσό	n	\N	\N	2	A2	το	\N
+100874	αρχαίος	adj	\N	\N	2	A2	\N	\N
+100875	αστράγαλος	n	\N	\N	2	A2	ο	\N
+100876	οποιοσδήποτε	pron	\N	\N	2	A2	\N	\N
+100877	πια	adv	\N	\N	2	A2	\N	\N
+100878	έτσι κι αλλιώς	adv	\N	\N	2	A2	\N	\N
+100879	οπουδήποτε	adv	\N	\N	2	A2	\N	\N
+100880	εφαρμογή	n	\N	\N	2	A2	η	\N
+100881	εμφανίζομαι	v	\N	\N	2	A2	\N	\N
+100882	εμφάνιση	n	\N	\N	2	A2	η	\N
+100883	κάνω αίτηση	v	\N	\N	2	A2	\N	\N
+100884	αρχιτέκτονας	n	\N	\N	2	A2	ο/η	\N
+100885	αρχιτεκτονική	n	\N	\N	2	A2	η	\N
+100886	λογομαχώ	v	\N	\N	2	A2	\N	\N
+100887	επιχείρημα	n	\N	\N	2	A2	το	\N
+100888	στρατός	n	\N	\N	2	A2	ο	\N
+100889	κανονίζω	v	\N	\N	2	A2	\N	\N
+100890	διευθέτηση	n	\N	\N	2	A2	η	\N
+100891	κοιμισμένος	adj	\N	\N	2	A2	\N	\N
+100892	βοηθός	n	\N	\N	2	A2	ο/η	\N
+100893	αθλητής	n	\N	\N	2	A2	ο	\N
+100894	αθλήτρια	n	\N	\N	2	A2	η	\N
+100895	επίθεση	n	\N	\N	2	A2	η	\N
+100896	επιτίθεμαι	v	\N	\N	2	A2	\N	\N
+100897	παρευρίσκομαι	v	\N	\N	2	A2	\N	\N
+100898	προσοχή	n	\N	\N	2	A2	η	\N
+100899	ελκυστικός	adj	\N	\N	2	A2	\N	\N
+100900	κοινό	n	\N	\N	2	A2	το	\N
+100901	ακροατήριο	n	\N	\N	2	A2	το	\N
+100902	συγγραφέας (author)	n	\N	\N	2	A2	ο/η	\N
+100903	διαθέσιμος	adj	\N	\N	2	A2	\N	\N
+100904	μέσος όρος	n	\N	\N	2	A2	ο	\N
+100905	μέσος	adj	\N	\N	2	A2	\N	\N
+100906	αποφεύγω	v	\N	\N	2	A2	\N	\N
+100907	βραβείο	n	\N	\N	2	A2	το	\N
+100908	φόντο	n	\N	\N	2	A2	το	\N
+100909	υπόβαθρο	n	\N	\N	2	A2	το	\N
+100910	άσχημα	adv	\N	\N	2	A2	\N	\N
+100911	μπέιζμπολ	n	\N	\N	2	A2	το	\N
+100912	μπάσκετ	n	\N	\N	2	A2	το	\N
+100913	μπάσο	n	\N	\N	2	A2	το	\N
+100914	φασόλι	n	\N	\N	2	A2	το	\N
+100915	αρκούδα	n	\N	\N	2	A2	η	\N
+100916	νικώ	v	\N	\N	2	A2	\N	\N
+100917	χτυπώ (beat)	v	\N	\N	2	A2	\N	\N
+100918	βοδινό κρέας	n	\N	\N	2	A2	το	\N
+100919	συμπεριφέρομαι	v	\N	\N	2	A2	\N	\N
+100920	ανήκω	v	\N	\N	2	A2	\N	\N
+100921	ζώνη	n	\N	\N	2	A2	η	\N
+100922	όφελος	n	\N	\N	2	A2	το	\N
+100923	ευεργέτημα	n	\N	\N	2	A2	το	\N
+100924	δισεκατομμύριο	num	\N	\N	2	A2	το	\N
+100925	κάδος	n	\N	\N	2	A2	ο	\N
+100926	βιολογία	n	\N	\N	2	A2	η	\N
+100927	γέννηση	n	\N	\N	2	A2	η	\N
+100928	μπισκότο	n	\N	\N	2	A2	το	\N
+100929	κομμάτι (bit)	n	\N	\N	2	A2	το	\N
+100930	κενός	adj	\N	\N	2	A2	\N	\N
+100931	αίμα	n	\N	\N	2	A2	το	\N
+100932	φυσώ	v	\N	\N	2	A2	\N	\N
+100933	σανίδα	n	\N	\N	2	A2	η	\N
+100934	συμβούλιο	n	\N	\N	2	A2	το	\N
+100935	βράζω	v	\N	\N	2	A2	\N	\N
+100936	κόκκαλο	n	\N	\N	2	A2	το	\N
+100937	κλείνω (book)	v	\N	\N	2	A2	\N	\N
+100938	δανείζομαι	v	\N	\N	2	A2	\N	\N
+100939	αφεντικό	n	\N	\N	2	A2	το	\N
+100940	πάτος	n	\N	\N	2	A2	ο	\N
+100941	κάτω μέρος	n	\N	\N	2	A2	το	\N
+100942	μπολ	n	\N	\N	2	A2	το	\N
+100943	εγκέφαλος	n	\N	\N	2	A2	ο	\N
+100944	γέφυρα	n	\N	\N	2	A2	η	\N
+100945	φωτεινός	adj	\N	\N	2	A2	\N	\N
+100946	λαμπρός	adj	\N	\N	2	A2	\N	\N
+100947	εξαιρετικός	adj	\N	\N	2	A2	\N	\N
+100948	σπασμένος	adj	\N	\N	2	A2	\N	\N
+100949	βούρτσα	n	\N	\N	2	A2	η	\N
+100950	βουρτσίζω	v	\N	\N	2	A2	\N	\N
+100951	κολλητός	n	\N	\N	2	A2	ο	\N
+100952	καίω	v	\N	\N	2	A2	\N	\N
+100953	επιχειρηματίας	n	\N	\N	2	A2	ο	\N
+100954	κουμπί	n	\N	\N	2	A2	το	\N
+100955	κατασκήνωση	n	\N	\N	2	A2	η	\N
+100956	κατασκηνώνω	v	\N	\N	2	A2	\N	\N
+100957	φροντίδα	n	\N	\N	2	A2	η	\N
+100958	φροντίζω	v	\N	\N	2	A2	\N	\N
+100959	προσεκτικός	adj	\N	\N	2	A2	\N	\N
+100960	προσεκτικά	adv	\N	\N	2	A2	\N	\N
+100961	χαλί	n	\N	\N	2	A2	το	\N
+100962	κινούμενα σχέδια	n	\N	\N	2	A2	τα	\N
+100963	περίπτωση	n	\N	\N	2	A2	η	\N
+100964	μετρητά	n	\N	\N	2	A2	τα	\N
+100965	καζίνο	n	\N	\N	2	A2	το	\N
+100966	κάστρο	n	\N	\N	2	A2	το	\N
+100967	πιάνω	v	\N	\N	2	A2	\N	\N
+100968	αιτία	n	\N	\N	2	A2	η	\N
+100969	προκαλώ	v	\N	\N	2	A2	\N	\N
+100970	γιορτάζω	v	\N	\N	2	A2	\N	\N
+100971	διασημότητα	n	\N	\N	2	A2	η	\N
+100972	συγκεκριμένος	adj	\N	\N	2	A2	\N	\N
+100973	βέβαιος	adj	\N	\N	2	A2	\N	\N
+100974	σίγουρα	adv	\N	\N	2	A2	\N	\N
+100975	ευκαιρία	n	\N	\N	2	A2	η	\N
+100976	χαρακτήρας	n	\N	\N	2	A2	ο	\N
+100977	φιλανθρωπία	n	\N	\N	2	A2	η	\N
+100978	συνομιλία	n	\N	\N	2	A2	η	\N
+100979	συνομιλώ	v	\N	\N	2	A2	\N	\N
+100980	σεφ	n	\N	\N	2	A2	ο	\N
+100981	χημεία	n	\N	\N	2	A2	η	\N
+100982	πατατάκι	n	\N	\N	2	A2	το	\N
+100983	επιλογή	n	\N	\N	2	A2	η	\N
+100984	εκκλησία	n	\N	\N	2	A2	η	\N
+100985	τσιγάρο	n	\N	\N	2	A2	το	\N
+100986	κύκλος	n	\N	\N	2	A2	ο	\N
+100987	κλασικός	adj	\N	\N	2	A2	\N	\N
+100988	σαφώς	adv	\N	\N	2	A2	\N	\N
+100989	έξυπνος	adj	\N	\N	2	A2	\N	\N
+100990	κλίμα	n	\N	\N	2	A2	το	\N
+100991	σύννεφο	n	\N	\N	2	A2	το	\N
+100992	πούλμαν	n	\N	\N	2	A2	το	\N
+100993	προπονητής	n	\N	\N	2	A2	ο	\N
+100994	ακτή	n	\N	\N	2	A2	η	\N
+100995	παραλία (coast)	n	\N	\N	2	A2	η	\N
+100996	κώδικας	n	\N	\N	2	A2	ο	\N
+100997	κωδικός	n	\N	\N	2	A2	ο	\N
+100998	νόμισμα	n	\N	\N	2	A2	το	\N
+100999	συνάδελφος	n	\N	\N	2	A2	ο/η	\N
+101000	συλλέγω	v	\N	\N	2	A2	\N	\N
+101001	στήλη	n	\N	\N	2	A2	η	\N
+101002	κωμωδία	n	\N	\N	2	A2	η	\N
+101003	άνετος	adj	\N	\N	2	A2	\N	\N
+101004	κοινός	adj	\N	\N	2	A2	\N	\N
+101005	σχόλιο	n	\N	\N	2	A2	το	\N
+101006	επικοινωνώ	v	\N	\N	2	A2	\N	\N
+101007	κοινότητα	n	\N	\N	2	A2	η	\N
+101008	συγκρίνω	v	\N	\N	2	A2	\N	\N
+101009	συναγωνίζομαι	v	\N	\N	2	A2	\N	\N
+101010	διαγωνίζομαι	v	\N	\N	2	A2	\N	\N
+101011	διαγωνισμός	n	\N	\N	2	A2	ο	\N
+101012	παραπονιέμαι	v	\N	\N	2	A2	\N	\N
+101013	εντελώς	adv	\N	\N	2	A2	\N	\N
+101014	κατάσταση	n	\N	\N	2	A2	η	\N
+101015	συνθήκη	n	\N	\N	2	A2	η	\N
+101016	συνέδριο	n	\N	\N	2	A2	το	\N
+101017	συνδέω	v	\N	\N	2	A2	\N	\N
+101018	συνδεδεμένος	adj	\N	\N	2	A2	\N	\N
+101019	εξετάζω (consider)	v	\N	\N	2	A2	\N	\N
+101020	περιέχω	v	\N	\N	2	A2	\N	\N
+101021	ήπειρος	n	\N	\N	2	A2	η	\N
+101022	συζήτηση	n	\N	\N	2	A2	η	\N
+101023	έλεγχος	n	\N	\N	2	A2	ο	\N
+101024	ελέγχω (control)	v	\N	\N	2	A2	\N	\N
+101025	μάγειρας	n	\N	\N	2	A2	ο	\N
+101026	κουζίνα (συσκευή)	n	\N	\N	2	A2	η	\N
+101027	αντίγραφο	n	\N	\N	2	A2	το	\N
+101028	αντιγράφω	v	\N	\N	2	A2	\N	\N
+101029	γωνία	n	\N	\N	2	A2	η	\N
+101030	σωστά	adv	\N	\N	2	A2	\N	\N
+101031	μετρώ	v	\N	\N	2	A2	\N	\N
+101032	ζευγάρι (people)	n	\N	\N	2	A2	το	\N
+101033	τρελός	adj	\N	\N	2	A2	\N	\N
+101034	δημιουργικός	adj	\N	\N	2	A2	\N	\N
+101035	έγκλημα	n	\N	\N	2	A2	το	\N
+101036	εγκληματίας	n	\N	\N	2	A2	ο/η	\N
+101037	εγκληματικός	adj	\N	\N	2	A2	\N	\N
+101038	καθημερινά	adv	\N	\N	2	A2	\N	\N
+101039	κίνδυνος	n	\N	\N	2	A2	ο	\N
+101040	σκοτάδι	n	\N	\N	2	A2	το	\N
+101041	νεκρός	adj	\N	\N	2	A2	\N	\N
+101042	αντιμετωπίζω	v	\N	\N	2	A2	\N	\N
+101043	ασχολούμαι με	v	\N	\N	2	A2	\N	\N
+101044	θάνατος	n	\N	\N	2	A2	ο	\N
+101045	απόφαση	n	\N	\N	2	A2	η	\N
+101046	βαθύς	adj	\N	\N	2	A2	\N	\N
+101047	οπωσδήποτε	adv	\N	\N	2	A2	\N	\N
+101048	βαθμός (πτυχίο)	n	\N	\N	2	A2	ο	\N
+101049	οδοντίατρος	n	\N	\N	2	A2	ο/η	\N
+101050	τμήμα (υπηρεσία)	n	\N	\N	2	A2	το	\N
+101051	εξαρτώμαι	v	\N	\N	2	A2	\N	\N
+101052	περιγράφω	v	\N	\N	2	A2	\N	\N
+101053	περιγραφή	n	\N	\N	2	A2	η	\N
+101054	έρημος	n	\N	\N	2	A2	η	\N
+101055	σχεδιαστής	n	\N	\N	2	A2	ο	\N
+101056	σχεδιάστρια	n	\N	\N	2	A2	η	\N
+101057	καταστρέφω	v	\N	\N	2	A2	\N	\N
+101058	ντετέκτιβ	n	\N	\N	2	A2	ο/η	\N
+101059	αναπτύσσω	v	\N	\N	2	A2	\N	\N
+101060	συσκευή	n	\N	\N	2	A2	η	\N
+101061	ημερολόγιο (diary)	n	\N	\N	2	A2	το	\N
+101062	διαφορά	n	\N	\N	2	A2	η	\N
+101063	διαφορετικά	adv	\N	\N	2	A2	\N	\N
+101064	ψηφιακός	adj	\N	\N	2	A2	\N	\N
+101065	άμεσος	adj	\N	\N	2	A2	\N	\N
+101066	κατευθύνω	v	\N	\N	2	A2	\N	\N
+101067	κατεύθυνση	n	\N	\N	2	A2	η	\N
+101068	διευθυντής	n	\N	\N	2	A2	ο	\N
+101069	διευθύντρια	n	\N	\N	2	A2	η	\N
+101070	διαφωνώ	v	\N	\N	2	A2	\N	\N
+101071	εξαφανίζομαι	v	\N	\N	2	A2	\N	\N
+101072	καταστροφή	n	\N	\N	2	A2	η	\N
+101073	ανακαλύπτω	v	\N	\N	2	A2	\N	\N
+101074	ανακάλυψη	n	\N	\N	2	A2	η	\N
+101075	συζήτηση (group)	n	\N	\N	2	A2	η	\N
+101076	ασθένεια	n	\N	\N	2	A2	η	\N
+101077	νόσος	n	\N	\N	2	A2	η	\N
+101078	απόσταση	n	\N	\N	2	A2	η	\N
+101079	χωρισμένος	adj	\N	\N	2	A2	\N	\N
+101080	έγγραφο	n	\N	\N	2	A2	το	\N
+101081	διπλός	adj	\N	\N	2	A2	\N	\N
+101082	διπλασιάζω	v	\N	\N	2	A2	\N	\N
+101083	κατεβάζω (download)	v	\N	\N	2	A2	\N	\N
+101084	δράμα	n	\N	\N	2	A2	το	\N
+101085	όνειρο	n	\N	\N	2	A2	το	\N
+101086	ονειρεύομαι	v	\N	\N	2	A2	\N	\N
+101087	ρίχνω	v	\N	\N	2	A2	\N	\N
+101088	πέφτω (drop)	v	\N	\N	2	A2	\N	\N
+101089	φάρμακο	n	\N	\N	2	A2	το	\N
+101090	στεγνός	adj	\N	\N	2	A2	\N	\N
+101091	στεγνώνω	v	\N	\N	2	A2	\N	\N
+101092	κερδίζω (χρήματα)	v	\N	\N	2	A2	\N	\N
+101093	γη (πλανήτης)	n	\N	\N	2	A2	η	\N
+101094	εύκολα	adv	\N	\N	2	A2	\N	\N
+101095	εκπαίδευση	n	\N	\N	2	A2	η	\N
+101096	είτε	conj	\N	\N	2	A2	\N	\N
+101097	ηλεκτρικός	adj	\N	\N	2	A2	\N	\N
+101098	ηλεκτρολογικός	adj	\N	\N	2	A2	\N	\N
+101099	ηλεκτρισμός	n	\N	\N	2	A2	ο	\N
+101100	ηλεκτρονικός	adj	\N	\N	2	A2	\N	\N
+101101	προσλαμβάνω	v	\N	\N	2	A2	\N	\N
+101102	υπάλληλος	n	\N	\N	2	A2	ο/η	\N
+101103	εργοδότης	n	\N	\N	2	A2	ο	\N
+101104	άδειος	adj	\N	\N	2	A2	\N	\N
+101105	τέλος (ending)	n	\N	\N	2	A2	το	\N
+101106	ενέργεια (energy)	n	\N	\N	2	A2	η	\N
+101107	μηχανή (engine)	n	\N	\N	2	A2	η	\N
+101108	μηχανικός	n	\N	\N	2	A2	ο/η	\N
+101109	τεράστιος (enormous)	adj	\N	\N	2	A2	\N	\N
+101110	μπαίνω	v	\N	\N	2	A2	\N	\N
+101111	εξοπλισμός	n	\N	\N	2	A2	ο	\N
+101112	λάθος (error)	n	\N	\N	2	A2	το	\N
+101113	ειδικά	adv	\N	\N	2	A2	\N	\N
+101114	έκθεση (essay)	n	\N	\N	2	A2	η	\N
+101115	καθημερινός (everyday)	adj	\N	\N	2	A2	\N	\N
+101116	παντού	adv	\N	\N	2	A2	\N	\N
+101117	ακριβής	adj	\N	\N	2	A2	\N	\N
+101118	ακριβώς	adv	\N	\N	2	A2	\N	\N
+101119	εξαιρετικός (excellent)	adj	\N	\N	2	A2	\N	\N
+101120	εκτός από	prep	\N	\N	2	A2	\N	\N
+101121	υπάρχω	v	\N	\N	2	A2	\N	\N
+101122	περιμένω (expect)	v	\N	\N	2	A2	\N	\N
+101123	εμπειρία	n	\N	\N	2	A2	η	\N
+101124	πείραμα	n	\N	\N	2	A2	το	\N
+101125	ειδικός (expert)	n	\N	\N	2	A2	ο/η	\N
+101126	επεξήγηση	n	\N	\N	2	A2	η	\N
+101127	εκφράζω	v	\N	\N	2	A2	\N	\N
+101128	έκφραση	n	\N	\N	2	A2	η	\N
+101129	ακραίος	adj	\N	\N	2	A2	\N	\N
+101130	εξαιρετικά (extremely)	adv	\N	\N	2	A2	\N	\N
+101131	εργοστάσιο	n	\N	\N	2	A2	το	\N
+101132	δίκαιος	adj	\N	\N	2	A2	\N	\N
+101133	θαυμαστής	n	\N	\N	2	A2	ο	\N
+101134	ανεμιστήρας	n	\N	\N	2	A2	ο	\N
+101135	καλλιέργεια	n	\N	\N	2	A2	η	\N
+101136	μόδα	n	\N	\N	2	A2	η	\N
+101137	φόβος	n	\N	\N	2	A2	ο	\N
+101138	συναίσθημα	n	\N	\N	2	A2	το	\N
+101139	θήλυ	adj	\N	\N	2	A2	\N	\N
+101140	γυναίκα (female)	n	\N	\N	2	A2	η	\N
+101141	μυθοπλασία	n	\N	\N	2	A2	η	\N
+101142	πεδίο	n	\N	\N	2	A2	το	\N
+101143	γήπεδο	n	\N	\N	2	A2	το	\N
+101144	μάχη	n	\N	\N	2	A2	η	\N
+101145	πολεμώ	v	\N	\N	2	A2	\N	\N
+101146	φιγούρα	n	\N	\N	2	A2	η	\N
+101147	σχήμα (figure)	n	\N	\N	2	A2	το	\N
+101148	επιτέλους	adv	\N	\N	2	A2	\N	\N
+101149	δάχτυλο	n	\N	\N	2	A2	το	\N
+101150	πρώτα	adv	\N	\N	2	A2	\N	\N
+101151	ψάρεμα	n	\N	\N	2	A2	το	\N
+101152	ταιριάζω	v	\N	\N	2	A2	\N	\N
+101153	σημαία	n	\N	\N	2	A2	η	\N
+101154	γρίπη	n	\N	\N	2	A2	η	\N
+101155	πετώντας	adj	\N	\N	2	A2	\N	\N
+101156	εστιάζω	v	\N	\N	2	A2	\N	\N
+101157	ακόλουθος	adj	\N	\N	2	A2	\N	\N
+101158	ξένος	adj	\N	\N	2	A2	\N	\N
+101159	δάσος	n	\N	\N	2	A2	το	\N
+101160	πιρούνι	n	\N	\N	2	A2	το	\N
+101161	τυπικός	adj	\N	\N	2	A2	\N	\N
+101162	ευτυχώς	adv	\N	\N	2	A2	\N	\N
+101163	μπροστά	adv	\N	\N	2	A2	\N	\N
+101164	φρέσκος	adj	\N	\N	2	A2	\N	\N
+101165	ψυγείο	n	\N	\N	2	A2	το	\N
+101166	έπιπλα	n	\N	\N	2	A2	τα	\N
+101167	περαιτέρω	adv	\N	\N	2	A2	\N	\N
+101168	γκαλερί	n	\N	\N	2	A2	η	\N
+101169	κενό	n	\N	\N	2	A2	το	\N
+101170	αέριο	n	\N	\N	2	A2	το	\N
+101171	γκάζι	n	\N	\N	2	A2	το	\N
+101172	πύλη	n	\N	\N	2	A2	η	\N
+101173	γενικός	adj	\N	\N	2	A2	\N	\N
+101174	στόχος	n	\N	\N	2	A2	ο	\N
+101175	θεός	n	\N	\N	2	A2	ο	\N
+101176	χρυσός	n	\N	\N	2	A2	ο	\N
+101177	χρυσός (adj)	adj	\N	\N	2	A2	\N	\N
+101178	γκολφ	n	\N	\N	2	A2	το	\N
+101179	γρασίδι	n	\N	\N	2	A2	το	\N
+101180	χαιρετώ	v	\N	\N	2	A2	\N	\N
+101181	έδαφος	n	\N	\N	2	A2	το	\N
+101182	καλεσμένος	n	\N	\N	2	A2	ο	\N
+101183	φιλοξενούμενος	n	\N	\N	2	A2	ο	\N
+101184	οδηγός (guide)	n	\N	\N	2	A2	ο/η	\N
+101185	καθοδηγώ	v	\N	\N	2	A2	\N	\N
+101186	συνήθεια	n	\N	\N	2	A2	η	\N
+101187	αίθουσα (hall)	n	\N	\N	2	A2	η	\N
+101188	ευτυχισμένα	adv	\N	\N	2	A2	\N	\N
+101189	πονοκέφαλος	n	\N	\N	2	A2	ο	\N
+101190	καρδιά	n	\N	\N	2	A2	η	\N
+101191	θερμότητα	n	\N	\N	2	A2	η	\N
+101192	ζέστη	n	\N	\N	2	A2	η	\N
+101193	βαρύς	adj	\N	\N	2	A2	\N	\N
+101194	ύψος	n	\N	\N	2	A2	το	\N
+101195	χρήσιμος	adj	\N	\N	2	A2	\N	\N
+101196	ήρωας	n	\N	\N	2	A2	ο	\N
+101197	δικός της (hers)	pron	\N	\N	2	A2	\N	\N
+101198	η ίδια (herself)	pron	\N	\N	2	A2	\N	\N
+101199	κρύβω	v	\N	\N	2	A2	\N	\N
+101200	κρύβομαι	v	\N	\N	2	A2	\N	\N
+101201	λόφος	n	\N	\N	2	A2	ο	\N
+101202	ο ίδιος (himself)	pron	\N	\N	2	A2	\N	\N
+101203	χτύπημα	n	\N	\N	2	A2	το	\N
+101204	χτυπώ (hit)	v	\N	\N	2	A2	\N	\N
+101205	χόκεϊ	n	\N	\N	2	A2	το	\N
+101206	κρατώ (hold)	v	\N	\N	2	A2	\N	\N
+101207	τρύπα	n	\N	\N	2	A2	η	\N
+101208	ελπίδα	n	\N	\N	2	A2	η	\N
+101209	άνθρωπος (human)	n	\N	\N	2	A2	ο	\N
+101210	ανθρώπινος	adj	\N	\N	2	A2	\N	\N
+101211	βιάζομαι	v	\N	\N	2	A2	\N	\N
+101212	βιασύνη	n	\N	\N	2	A2	η	\N
+101213	πονάω	v	\N	\N	2	A2	\N	\N
+101214	ιδανικός	adj	\N	\N	2	A2	\N	\N
+101215	ηλίθιος	n	\N	\N	2	A2	ο	\N
+101216	άρρωστος	adj	\N	\N	2	A2	\N	\N
+101217	αρρώστια	n	\N	\N	2	A2	η	\N
+101218	αμέσως	adv	\N	\N	2	A2	\N	\N
+101219	αδύνατος (impossible)	adj	\N	\N	2	A2	\N	\N
+101220	συμπεριλαμβανόμενος	adj	\N	\N	2	A2	\N	\N
+101221	αύξηση	n	\N	\N	2	A2	η	\N
+101222	αυξάνω	v	\N	\N	2	A2	\N	\N
+101223	απίστευτος	adj	\N	\N	2	A2	\N	\N
+101224	ανεξάρτητος	adj	\N	\N	2	A2	\N	\N
+101225	άτομο	n	\N	\N	2	A2	το	\N
+101226	ατομικός	adj	\N	\N	2	A2	\N	\N
+101227	βιομηχανία	n	\N	\N	2	A2	η	\N
+101228	ανεπίσημος	adj	\N	\N	2	A2	\N	\N
+101229	τραυματισμός	n	\N	\N	2	A2	ο	\N
+101230	μελάνι	n	\N	\N	2	A2	το	\N
+101231	έντομο	n	\N	\N	2	A2	το	\N
+101232	μέσα	adv	\N	\N	2	A2	\N	\N
+101233	οδηγία	n	\N	\N	2	A2	η	\N
+101234	εκπαιδευτής	n	\N	\N	2	A2	ο	\N
+101235	εκπαιδεύτρια	n	\N	\N	2	A2	η	\N
+101236	όργανο	n	\N	\N	2	A2	το	\N
+101237	έξυπνος (intelligent)	adj	\N	\N	2	A2	\N	\N
+101238	διεθνής	adj	\N	\N	2	A2	\N	\N
+101239	εισαγωγή	n	\N	\N	2	A2	η	\N
+101240	εφευρίσκω	v	\N	\N	2	A2	\N	\N
+101241	εφεύρεση	n	\N	\N	2	A2	η	\N
+101242	μαρμελάδα	n	\N	\N	2	A2	η	\N
+101243	τζάζ	n	\N	\N	2	A2	η	\N
+101244	κόσμημα	n	\N	\N	2	A2	το	\N
+101245	αστείο	n	\N	\N	2	A2	το	\N
+101246	δημοσιογράφος	n	\N	\N	2	A2	ο/η	\N
+101247	άλμα	n	\N	\N	2	A2	το	\N
+101248	πηδάω	v	\N	\N	2	A2	\N	\N
+101249	σκοτώνω	v	\N	\N	2	A2	\N	\N
+101250	βασιλιάς	n	\N	\N	2	A2	ο	\N
+101251	φιλί	n	\N	\N	2	A2	το	\N
+101252	φιλάω	v	\N	\N	2	A2	\N	\N
+101253	γόνατο	n	\N	\N	2	A2	το	\N
+101254	μαχαίρι	n	\N	\N	2	A2	το	\N
+101255	χτυπάω (knock)	v	\N	\N	2	A2	\N	\N
+101256	γνώση	n	\N	\N	2	A2	η	\N
+101257	εργαστήριο	n	\N	\N	2	A2	το	\N
+101258	κυρία	n	\N	\N	2	A2	η	\N
+101259	λίμνη	n	\N	\N	2	A2	η	\N
+101260	λάμπα	n	\N	\N	2	A2	η	\N
+101261	προσγειώνομαι	v	\N	\N	2	A2	\N	\N
+101262	φορητός υπολογιστής	n	\N	\N	2	A2	ο	\N
+101263	γέλιο	n	\N	\N	2	A2	το	\N
+101264	νόμος	n	\N	\N	2	A2	ο	\N
+101265	δικηγόρος	n	\N	\N	2	A2	ο/η	\N
+101266	τεμπέλης	adj	\N	\N	2	A2	\N	\N
+101267	ηγούμαι	v	\N	\N	2	A2	\N	\N
+101268	οδηγώ (lead)	v	\N	\N	2	A2	\N	\N
+101269	μόλυβδος	n	\N	\N	2	A2	ο	\N
+101270	ηγέτης	n	\N	\N	2	A2	ο	\N
+101271	μάθηση	n	\N	\N	2	A2	η	\N
+101272	τουλάχιστον	adv	\N	\N	2	A2	\N	\N
+101273	διάλεξη	n	\N	\N	2	A2	η	\N
+101274	λεμόνι	n	\N	\N	2	A2	το	\N
+101275	δανείζω	v	\N	\N	2	A2	\N	\N
+101276	λιγότερο	adv	\N	\N	2	A2	\N	\N
+101277	επίπεδο	n	\N	\N	2	A2	το	\N
+101278	τρόπος ζωής	n	\N	\N	2	A2	ο	\N
+3812	track	n	\N	\N	1	B2	\N	\N
+101279	ασανσέρ	n	\N	\N	2	A2	το	\N
+101280	σηκώνω	v	\N	\N	2	A2	\N	\N
+101281	πιθανός (likely)	adj	\N	\N	2	A2	\N	\N
+101282	σύνδεσμος	n	\N	\N	2	A2	ο	\N
+101283	συνδέω (link)	v	\N	\N	2	A2	\N	\N
+101284	ταχυδρομείο	n	\N	\N	2	A2	το	\N
+101285	ταχυδρομώ	v	\N	\N	2	A2	\N	\N
+101286	κύριος (major)	adj	\N	\N	2	A2	\N	\N
+101287	σημαντικός (major)	adj	\N	\N	2	A2	\N	\N
+101288	αρσενικό	adj	\N	\N	2	A2	\N	\N
+101289	άνδρας (male)	n	\N	\N	2	A2	ο	\N
+101290	διαχειρίζομαι	v	\N	\N	2	A2	\N	\N
+101291	διευθυντής (manager)	n	\N	\N	2	A2	ο	\N
+101292	τρόπος (manner)	n	\N	\N	2	A2	ο	\N
+101293	σημάδι	n	\N	\N	2	A2	το	\N
+101294	βαθμολογώ	v	\N	\N	2	A2	\N	\N
+101295	παντρεύομαι	v	\N	\N	2	A2	\N	\N
+101296	μάσκα	n	\N	\N	2	A2	η	\N
+101297	υλικό	n	\N	\N	2	A2	το	\N
+101298	μαθηματικά	n	\N	\N	2	A2	τα	\N
+101299	ζήτημα	n	\N	\N	2	A2	το	\N
+101300	πειράζει	v	\N	\N	2	A2	\N	\N
+101301	μέσα ενημέρωσης	n	\N	\N	2	A2	τα	\N
+101302	ιατρικός	adj	\N	\N	2	A2	\N	\N
+101303	φάρμακο (medicine)	n	\N	\N	2	A2	το	\N
+101304	μνήμη	n	\N	\N	2	A2	η	\N
+101305	αναφέρω	v	\N	\N	2	A2	\N	\N
+101306	μέταλλο	n	\N	\N	2	A2	το	\N
+101307	μέση	n	\N	\N	2	A2	η	\N
+101308	μεσαίος	adj	\N	\N	2	A2	\N	\N
+101309	νου	n	\N	\N	2	A2	ο	\N
+101310	μυαλό	n	\N	\N	2	A2	το	\N
+101311	προσέχω (mind)	v	\N	\N	2	A2	\N	\N
+101312	καθρέφτης	n	\N	\N	2	A2	ο	\N
+101313	λείπει	adj	\N	\N	2	A2	\N	\N
+101314	κινητό (τηλέφωνο)	adj	\N	\N	2	A2	\N	\N
+101315	μαϊμού	n	\N	\N	2	A2	η	\N
+101316	φεγγάρι	n	\N	\N	2	A2	το	\N
+101317	κυρίως	adv	\N	\N	2	A2	\N	\N
+101318	μοτοσυκλέτα	n	\N	\N	2	A2	η	\N
+101319	κίνηση (movement)	n	\N	\N	2	A2	η	\N
+101320	μουσικός (adj)	adj	\N	\N	2	A2	\N	\N
+101321	μουσικό έργο	n	\N	\N	2	A2	το	\N
+101322	μουσικός (n)	n	\N	\N	2	A2	ο/η	\N
+101323	ο εαυτός μου	pron	\N	\N	2	A2	\N	\N
+101324	στενός	adj	\N	\N	2	A2	\N	\N
+101325	εθνικός	adj	\N	\N	2	A2	\N	\N
+101326	φυσικός (natural)	adj	\N	\N	2	A2	\N	\N
+101327	φύση	n	\N	\N	2	A2	η	\N
+101328	σχεδόν (nearly)	adv	\N	\N	2	A2	\N	\N
+101329	απαραίτητος	adj	\N	\N	2	A2	\N	\N
+101330	λαιμός	n	\N	\N	2	A2	ο	\N
+101331	ούτε ο ένας ούτε ο άλλος	det	\N	\N	2	A2	\N	\N
+101332	νευρικός	adj	\N	\N	2	A2	\N	\N
+101333	φωλιά	n	\N	\N	2	A2	η	\N
+101334	δίχτυ	n	\N	\N	2	A2	το	\N
+101335	δίκτυο	n	\N	\N	2	A2	το	\N
+101336	θόρυβος	n	\N	\N	2	A2	ο	\N
+101337	θορυβώδης	adj	\N	\N	2	A2	\N	\N
+101338	κανένας (none)	pron	\N	\N	2	A2	\N	\N
+101339	κανονικός	adj	\N	\N	2	A2	\N	\N
+101340	φυσιολογικός	adj	\N	\N	2	A2	\N	\N
+101341	φυσιολογικά	adv	\N	\N	2	A2	\N	\N
+101342	ειδοποίηση	n	\N	\N	2	A2	η	\N
+101343	παρατηρώ	v	\N	\N	2	A2	\N	\N
+101344	μυθιστόρημα	n	\N	\N	2	A2	το	\N
+101345	πουθενά	adv	\N	\N	2	A2	\N	\N
+101346	ωκεανός	n	\N	\N	2	A2	ο	\N
+101347	προσφορά	n	\N	\N	2	A2	η	\N
+101348	προσφέρω	v	\N	\N	2	A2	\N	\N
+101349	αξιωματικός	n	\N	\N	2	A2	ο/η	\N
+101350	λάδι	n	\N	\N	2	A2	το	\N
+101351	πετρέλαιο	n	\N	\N	2	A2	το	\N
+101352	επιλογή (option)	n	\N	\N	2	A2	η	\N
+101353	συνηθισμένος	adj	\N	\N	2	A2	\N	\N
+101354	οργάνωση	n	\N	\N	2	A2	η	\N
+101355	οργανώνω	v	\N	\N	2	A2	\N	\N
+101356	πρωτότυπος	adj	\N	\N	2	A2	\N	\N
+101357	πρωτότυπο	n	\N	\N	2	A2	το	\N
+101358	εμείς οι ίδιοι	pron	\N	\N	2	A2	\N	\N
+101359	εξωτερικός	adj	\N	\N	2	A2	\N	\N
+101360	φούρνος	n	\N	\N	2	A2	ο	\N
+101361	ιδιοκτήτης	n	\N	\N	2	A2	ο	\N
+101362	ιδιοκτήτρια	n	\N	\N	2	A2	η	\N
+101363	πακέτο	n	\N	\N	2	A2	το	\N
+101364	πακετάρω	v	\N	\N	2	A2	\N	\N
+101365	πόνος	n	\N	\N	2	A2	ο	\N
+101366	ζωγράφος	n	\N	\N	2	A2	ο/η	\N
+101367	παλάτι	n	\N	\N	2	A2	το	\N
+101368	παντελόνι (pants)	n	\N	\N	2	A2	το	\N
+101369	παρκάρισμα	n	\N	\N	2	A2	το	\N
+101370	ιδιαίτερος	adj	\N	\N	2	A2	\N	\N
+101371	συγκεκριμένος (particular)	adj	\N	\N	2	A2	\N	\N
+101372	περνώ	v	\N	\N	2	A2	\N	\N
+101373	επιβάτης	n	\N	\N	2	A2	ο	\N
+101374	επιβάτισσα	n	\N	\N	2	A2	η	\N
+101375	παρελθόν	n	\N	\N	2	A2	το	\N
+101376	ασθενής	n	\N	\N	2	A2	ο/η	\N
+101377	μοτίβο	n	\N	\N	2	A2	το	\N
+101378	ειρήνη	n	\N	\N	2	A2	η	\N
+101379	πενάκι	n	\N	\N	2	A2	το	\N
+101380	ανά	prep	\N	\N	2	A2	\N	\N
+101381	τοις εκατό	n	\N	\N	2	A2	το	\N
+101382	παρουσιάζω (perform)	v	\N	\N	2	A2	\N	\N
+101383	εκτελώ	v	\N	\N	2	A2	\N	\N
+101384	ίσως (perhaps)	adv	\N	\N	2	A2	\N	\N
+101385	άδεια	n	\N	\N	2	A2	η	\N
+101386	προσωπικότητα	n	\N	\N	2	A2	η	\N
+101387	κατοικίδιο	n	\N	\N	2	A2	το	\N
+101388	βενζίνη	n	\N	\N	2	A2	η	\N
+101389	φωτογραφίζω	v	\N	\N	2	A2	\N	\N
+101390	σωματικός	adj	\N	\N	2	A2	\N	\N
+101391	φυσικός (physics)	adj	\N	\N	2	A2	\N	\N
+101392	φυσική	n	\N	\N	2	A2	η	\N
+101393	διαλέγω (pick)	v	\N	\N	2	A2	\N	\N
+101394	μαζεύω	v	\N	\N	2	A2	\N	\N
+101395	πιλότος	n	\N	\N	2	A2	ο/η	\N
+101396	πειρατής	n	\N	\N	2	A2	ο	\N
+101397	πειρατίνα	n	\N	\N	2	A2	η	\N
+101398	πλανήτης	n	\N	\N	2	A2	ο	\N
+101399	φυτεύω	v	\N	\N	2	A2	\N	\N
+101400	πλαστικός	adj	\N	\N	2	A2	\N	\N
+101401	πλαστικό	n	\N	\N	2	A2	το	\N
+101402	πιάτο (plate)	n	\N	\N	2	A2	το	\N
+101403	αποβάθρα	n	\N	\N	2	A2	η	\N
+101404	ευχαριστημένος	adj	\N	\N	2	A2	\N	\N
+101405	φις (plug)	n	\N	\N	2	A2	το	\N
+101406	τσέπη	n	\N	\N	2	A2	η	\N
+101407	ευγενικός	adj	\N	\N	2	A2	\N	\N
+101408	ρύπανση	n	\N	\N	2	A2	η	\N
+101409	λιμνούλα	n	\N	\N	2	A2	η	\N
+101410	σκάω (pop)	v	\N	\N	2	A2	\N	\N
+101411	πληθυσμός	n	\N	\N	2	A2	ο	\N
+101412	θέση	n	\N	\N	2	A2	η	\N
+101413	κατοχή	n	\N	\N	2	A2	η	\N
+101414	πιθανότητα	n	\N	\N	2	A2	η	\N
+101415	αφίσα	n	\N	\N	2	A2	η	\N
+101416	δύναμη	n	\N	\N	2	A2	η	\N
+101417	ισχύς	n	\N	\N	2	A2	η	\N
+101418	προβλέπω	v	\N	\N	2	A2	\N	\N
+101419	προτιμώ	v	\N	\N	2	A2	\N	\N
+101420	προετοιμάζω	v	\N	\N	2	A2	\N	\N
+101421	παρόν	n	\N	\N	2	A2	το	\N
+101422	τωρινός	adj	\N	\N	2	A2	\N	\N
+101423	πρόεδρος	n	\N	\N	2	A2	ο/η	\N
+101424	εμποδίζω	v	\N	\N	2	A2	\N	\N
+101425	προλαβαίνω	v	\N	\N	2	A2	\N	\N
+101426	εκτυπώνω	v	\N	\N	2	A2	\N	\N
+101427	εκτυπωτής	n	\N	\N	2	A2	ο	\N
+101428	φυλακή	n	\N	\N	2	A2	η	\N
+101429	έπαθλο	n	\N	\N	2	A2	το	\N
+101430	επαγγελματικός	adj	\N	\N	2	A2	\N	\N
+101431	επαγγελματίας	n	\N	\N	2	A2	ο/η	\N
+101432	καθηγητής (πανεπιστημίου)	n	\N	\N	2	A2	ο	\N
+101433	καθηγήτρια (πανεπιστημίου)	n	\N	\N	2	A2	η	\N
+101434	προφίλ	n	\N	\N	2	A2	το	\N
+101435	πρόγραμμα (it)	n	\N	\N	2	A2	το	\N
+101436	πρόοδος	n	\N	\N	2	A2	η	\N
+101437	υπόσχεση	n	\N	\N	2	A2	η	\N
+101438	υπόσχομαι	v	\N	\N	2	A2	\N	\N
+101439	προφέρω	v	\N	\N	2	A2	\N	\N
+101440	προστατεύω	v	\N	\N	2	A2	\N	\N
+101441	παμπ	n	\N	\N	2	A2	η	\N
+101442	δημόσιος	adj	\N	\N	2	A2	\N	\N
+101443	δημοσιεύω	v	\N	\N	2	A2	\N	\N
+101444	τραβώ	v	\N	\N	2	A2	\N	\N
+101445	σπρώχνω	v	\N	\N	2	A2	\N	\N
+101446	ποιότητα	n	\N	\N	2	A2	η	\N
+101447	ποσότητα (quantity)	n	\N	\N	2	A2	η	\N
+101448	βασίλισσα	n	\N	\N	2	A2	η	\N
+101449	ήσυχα	adv	\N	\N	2	A2	\N	\N
+101450	φυλή (race)	n	\N	\N	2	A2	η	\N
+101451	αγώνας δρόμου	n	\N	\N	2	A2	ο	\N
+101452	σιδηρόδρομος	n	\N	\N	2	A2	ο	\N
+101453	σηκώνω (raise)	v	\N	\N	2	A2	\N	\N
+101454	αρουραίος	n	\N	\N	2	A2	ο	\N
+101455	ρυθμός	n	\N	\N	2	A2	ο	\N
+101456	μάλλον	adv	\N	\N	2	A2	\N	\N
+101457	φτάνω (reach)	v	\N	\N	2	A2	\N	\N
+101458	αντιδρώ	v	\N	\N	2	A2	\N	\N
+101459	συνειδητοποιώ	v	\N	\N	2	A2	\N	\N
+101460	λαμβάνω	v	\N	\N	2	A2	\N	\N
+101461	πρόσφατος	adj	\N	\N	2	A2	\N	\N
+101462	πρόσφατα	adv	\N	\N	2	A2	\N	\N
+101463	υποδοχή	n	\N	\N	2	A2	η	\N
+101464	συνταγή	n	\N	\N	2	A2	η	\N
+101465	αναγνωρίζω	v	\N	\N	2	A2	\N	\N
+101466	συνιστώ	v	\N	\N	2	A2	\N	\N
+101467	δίσκος (record)	n	\N	\N	2	A2	ο	\N
+101468	αρχείο	n	\N	\N	2	A2	το	\N
+101469	καταγράφω	v	\N	\N	2	A2	\N	\N
+4248	demon	n	\N	\N	1	C1	\N	\N
+101470	ηχογραφώ	v	\N	\N	2	A2	\N	\N
+101471	ηχογράφηση	n	\N	\N	2	A2	η	\N
+101472	ανακυκλώνω	v	\N	\N	2	A2	\N	\N
+101473	μειώνω	v	\N	\N	2	A2	\N	\N
+101474	αναφέρομαι	v	\N	\N	2	A2	\N	\N
+101475	αρνούμαι	v	\N	\N	2	A2	\N	\N
+101476	περιοχή (region)	n	\N	\N	2	A2	η	\N
+101477	τακτικός	adj	\N	\N	2	A2	\N	\N
+101478	σχέση	n	\N	\N	2	A2	η	\N
+101479	αφαιρώ	v	\N	\N	2	A2	\N	\N
+101480	αντικαθιστώ	v	\N	\N	2	A2	\N	\N
+101481	απάντηση (reply)	n	\N	\N	2	A2	η	\N
+101482	απαντώ	v	\N	\N	2	A2	\N	\N
+101483	αναφορά	n	\N	\N	2	A2	η	\N
+101484	αναφέρω (report)	v	\N	\N	2	A2	\N	\N
+101485	δημοσιογράφος (reporter)	n	\N	\N	2	A2	ο/η	\N
+101486	αίτημα	n	\N	\N	2	A2	το	\N
+101487	ζητώ (request)	v	\N	\N	2	A2	\N	\N
+101488	ερευνητής	n	\N	\N	2	A2	ο	\N
+101489	ερευνήτρια	n	\N	\N	2	A2	η	\N
+101490	ξεκούραση	n	\N	\N	2	A2	η	\N
+101491	ξεκουράζομαι	v	\N	\N	2	A2	\N	\N
+101492	κριτική	n	\N	\N	2	A2	η	\N
+101493	επανεξετάζω	v	\N	\N	2	A2	\N	\N
+101494	διαδρομή (ride)	n	\N	\N	2	A2	η	\N
+101495	δαχτυλίδι	n	\N	\N	2	A2	το	\N
+101496	κουδουνίζω	v	\N	\N	2	A2	\N	\N
+101497	βράχος	n	\N	\N	2	A2	ο	\N
+101498	ρόλος	n	\N	\N	2	A2	ο	\N
+101499	στέγη	n	\N	\N	2	A2	η	\N
+101500	στρογγυλός	adj	\N	\N	2	A2	\N	\N
+101501	γύρω (round)	prep	\N	\N	2	A2	\N	\N
+101502	ρουτίνα	n	\N	\N	2	A2	η	\N
+101503	σκουπίδια	n	\N	\N	2	A2	τα	\N
+101504	αγενής	adj	\N	\N	2	A2	\N	\N
+101505	τρέξιμο	n	\N	\N	2	A2	το	\N
+101506	δρομέας	n	\N	\N	2	A2	ο/η	\N
+101507	δυστυχώς	adv	\N	\N	2	A2	\N	\N
+101508	ασφαλής	adj	\N	\N	2	A2	\N	\N
+101509	πανί (sail)	n	\N	\N	2	A2	το	\N
+101510	σαλπάρω	v	\N	\N	2	A2	\N	\N
+101511	ιστιοπλοΐα	n	\N	\N	2	A2	η	\N
+101512	μισθός	n	\N	\N	2	A2	ο	\N
+101513	πώληση	n	\N	\N	2	A2	η	\N
+101514	σάλτσα	n	\N	\N	2	A2	η	\N
+101515	σώζω	v	\N	\N	2	A2	\N	\N
+101516	τρομαγμένος	adj	\N	\N	2	A2	\N	\N
+101517	τρομακτικός	adj	\N	\N	2	A2	\N	\N
+101518	σκηνή	n	\N	\N	2	A2	η	\N
+101519	πρόγραμμα (schedule)	n	\N	\N	2	A2	το	\N
+101520	σκορ	n	\N	\N	2	A2	το	\N
+101521	βαθμολογία	n	\N	\N	2	A2	η	\N
+101522	σκοράρω	v	\N	\N	2	A2	\N	\N
+101523	οθόνη	n	\N	\N	2	A2	η	\N
+101524	αναζήτηση	n	\N	\N	2	A2	η	\N
+101525	αναζητώ	v	\N	\N	2	A2	\N	\N
+101526	εποχή	n	\N	\N	2	A2	η	\N
+101527	κάθισμα	n	\N	\N	2	A2	το	\N
+101528	δεύτερος	adj	\N	\N	2	A2	ο	\N
+101529	δεύτερο (χρόνος)	n	\N	\N	2	A2	το	\N
+101530	δεύτερον	adv	\N	\N	2	A2	\N	\N
+101531	μυστικό	n	\N	\N	2	A2	το	\N
+101532	μυστικός	adj	\N	\N	2	A2	\N	\N
+101533	γραμματέας	n	\N	\N	2	A2	ο/η	\N
+101534	φαίνομαι	v	\N	\N	2	A2	\N	\N
+101535	πουλάω	v	\N	\N	2	A2	\N	\N
+101536	αίσθηση	n	\N	\N	2	A2	η	\N
+101537	χωριστός	adj	\N	\N	2	A2	\N	\N
+101538	σειρά	n	\N	\N	2	A2	η	\N
+101539	σοβαρός	adj	\N	\N	2	A2	\N	\N
+101540	σερβίρω	v	\N	\N	2	A2	\N	\N
+101541	εξυπηρέτηση	n	\N	\N	2	A2	η	\N
+101542	αρκετοί	det	\N	\N	2	A2	\N	\N
+101543	κουνώ	v	\N	\N	2	A2	\N	\N
+101544	θα (shall/A2)	v	\N	\N	2	A2	\N	\N
+101545	μοιράζομαι	v	\N	\N	2	A2	\N	\N
+101546	σχήμα	n	\N	\N	2	A2	το	\N
+101547	σεντόνι	n	\N	\N	2	A2	το	\N
+101548	φύλλο (χαρτιού)	n	\N	\N	2	A2	το	\N
+101549	πλοίο	n	\N	\N	2	A2	το	\N
+101550	ώμος	n	\N	\N	2	A2	ο	\N
+101551	φωνάζω	v	\N	\N	2	A2	\N	\N
+101552	κλείνω (shut)	v	\N	\N	2	A2	\N	\N
+101553	πλευρά	n	\N	\N	2	A2	η	\N
+101554	μεριά	n	\N	\N	2	A2	η	\N
+101555	πινακίδα	n	\N	\N	2	A2	η	\N
+101556	σημάδι (sign)	n	\N	\N	2	A2	το	\N
+101557	ασήμι	n	\N	\N	2	A2	το	\N
+101558	ασημένιος	adj	\N	\N	2	A2	\N	\N
+101559	παρόμοιος	adj	\N	\N	2	A2	\N	\N
+101560	απλός	adj	\N	\N	2	A2	\N	\N
+101561	από τότε	prep	\N	\N	2	A2	\N	\N
+101562	εφόσον	conj	\N	\N	2	A2	\N	\N
+101563	τραγούδι (singing)	n	\N	\N	2	A2	το	\N
+101564	μονός	adj	\N	\N	2	A2	\N	\N
+101565	ανύπαντρος	adj	\N	\N	2	A2	\N	\N
+101566	κύριος (sir)	n	\N	\N	2	A2	ο	\N
+5762	foray	n	\N	\N	1	C2	\N	\N
+101567	τοποθεσία	n	\N	\N	2	A2	η	\N
+101568	μέγεθος	n	\N	\N	2	A2	το	\N
+101569	πέδιλο του σκι	n	\N	\N	2	A2	το	\N
+101570	κάνω σκι	v	\N	\N	2	A2	\N	\N
+101571	σκι	n	\N	\N	2	A2	το	\N
+101572	δέρμα	n	\N	\N	2	A2	το	\N
+101573	ουρανός	n	\N	\N	2	A2	ο	\N
+101574	αργά (slowly)	adv	\N	\N	2	A2	\N	\N
+101575	έξυπνο τηλέφωνο	n	\N	\N	2	A2	το	\N
+101576	οσμή	n	\N	\N	2	A2	η	\N
+101577	μυρίζω	v	\N	\N	2	A2	\N	\N
+101578	χαμόγελο	n	\N	\N	2	A2	το	\N
+101579	χαμογελώ	v	\N	\N	2	A2	\N	\N
+101580	καπνός	n	\N	\N	2	A2	ο	\N
+101581	καπνίζω	v	\N	\N	2	A2	\N	\N
+101582	κάπνισμα	n	\N	\N	2	A2	το	\N
+101583	σαπούνι	n	\N	\N	2	A2	το	\N
+101584	κοινωνικός	adj	\N	\N	2	A2	\N	\N
+101585	κάλτσα	n	\N	\N	2	A2	η	\N
+101586	μαλακός	adj	\N	\N	2	A2	\N	\N
+101587	στρατιώτης	n	\N	\N	2	A2	ο	\N
+101588	λύση	n	\N	\N	2	A2	η	\N
+101589	κάπου	adv	\N	\N	2	A2	\N	\N
+101590	είδος (sort)	n	\N	\N	2	A2	το	\N
+101591	ηχείο	n	\N	\N	2	A2	το	\N
+101592	ομιλητής	n	\N	\N	2	A2	ο	\N
+101593	συγκεκριμένος (specific)	adj	\N	\N	2	A2	\N	\N
+101594	ομιλία	n	\N	\N	2	A2	η	\N
+101595	λόγος (speech)	n	\N	\N	2	A2	ο	\N
+101596	ταχύτητα	n	\N	\N	2	A2	η	\N
+101597	αράχνη	n	\N	\N	2	A2	η	\N
+101598	κουτάλι	n	\N	\N	2	A2	το	\N
+101599	τετράγωνο	n	\N	\N	2	A2	το	\N
+101600	τετράγωνος	adj	\N	\N	2	A2	\N	\N
+101601	σκηνή (stage)	n	\N	\N	2	A2	η	\N
+101602	στάδιο (stage)	n	\N	\N	2	A2	το	\N
+101603	σκαλοπάτι	n	\N	\N	2	A2	το	\N
+101604	γραμματόσημο	n	\N	\N	2	A2	το	\N
+101605	αστέρι	n	\N	\N	2	A2	το	\N
+101606	κράτος	n	\N	\N	2	A2	το	\N
+101607	δήλωση	n	\N	\N	2	A2	η	\N
+101608	κλέβω	v	\N	\N	2	A2	\N	\N
+101609	βήμα	n	\N	\N	2	A2	το	\N
+101610	πατάω	v	\N	\N	2	A2	\N	\N
+101611	ακόμα (still)	adv	\N	\N	2	A2	\N	\N
+101612	στομάχι	n	\N	\N	2	A2	το	\N
+101613	πέτρα	n	\N	\N	2	A2	η	\N
+101614	κατάστημα	n	\N	\N	2	A2	το	\N
+101615	καταιγίδα	n	\N	\N	2	A2	η	\N
+101616	ίσιος	adj	\N	\N	2	A2	\N	\N
+101617	κατευθείαν	adv	\N	\N	2	A2	\N	\N
+101618	παράξενος	adj	\N	\N	2	A2	\N	\N
+101619	άγχος	n	\N	\N	2	A2	το	\N
+101620	στρες	n	\N	\N	2	A2	το	\N
+101621	πετυχαίνω (succeed)	v	\N	\N	2	A2	\N	\N
+101622	επιτυχημένος	adj	\N	\N	2	A2	\N	\N
+101623	τέτοιος	det	\N	\N	2	A2	\N	\N
+101624	ξαφνικά	adv	\N	\N	2	A2	\N	\N
+101625	προτείνω	v	\N	\N	2	A2	\N	\N
+101626	πρόταση (suggestion)	n	\N	\N	2	A2	η	\N
+101627	κοστούμι	n	\N	\N	2	A2	το	\N
+101628	υποστήριξη	n	\N	\N	2	A2	η	\N
+101629	υποστηρίζω	v	\N	\N	2	A2	\N	\N
+101630	υποθέτω	v	\N	\N	2	A2	\N	\N
+101631	έκπληξη	n	\N	\N	2	A2	η	\N
+101632	εκπλήσσω	v	\N	\N	2	A2	\N	\N
+101633	ξαφνιασμένος	adj	\N	\N	2	A2	\N	\N
+101634	ξαφνικός	adj	\N	\N	2	A2	\N	\N
+101635	γλυκός	adj	\N	\N	2	A2	\N	\N
+101636	κούνια	n	\N	\N	2	A2	η	\N
+101637	αιωρούμαι	v	\N	\N	2	A2	\N	\N
+101638	ταμπλέτα	n	\N	\N	2	A2	η	\N
+101639	στόχος (target)	n	\N	\N	2	A2	ο	\N
+101640	εργασία (task)	n	\N	\N	2	A2	η	\N
+101641	γεύση	n	\N	\N	2	A2	η	\N
+101642	γεύομαι	v	\N	\N	2	A2	\N	\N
+101643	διδασκαλία	n	\N	\N	2	A2	η	\N
+101644	τεχνολογία	n	\N	\N	2	A2	η	\N
+101645	εφηβικός	adj	\N	\N	2	A2	\N	\N
+101646	θερμοκρασία	n	\N	\N	2	A2	η	\N
+101647	σκηνή (tent)	n	\N	\N	2	A2	η	\N
+101648	όρος (term)	n	\N	\N	2	A2	ο	\N
+101649	στέλνω μήνυμα	v	\N	\N	2	A2	\N	\N
+101650	οι ίδιοι	pron	\N	\N	2	A2	\N	\N
+101651	πυκνός	adj	\N	\N	2	A2	\N	\N
+101652	χοντρός (thick)	adj	\N	\N	2	A2	\N	\N
+101653	κλέφτης	n	\N	\N	2	A2	ο/η	\N
+101654	λεπτός (thin)	adj	\N	\N	2	A2	\N	\N
+101655	τακτοποιημένος	adj	\N	\N	2	A2	\N	\N
+101656	τακτοποιώ	v	\N	\N	2	A2	\N	\N
+101657	γραβάτα	n	\N	\N	2	A2	η	\N
+101658	δένω	v	\N	\N	2	A2	\N	\N
+101659	φιλοδώρημα	n	\N	\N	2	A2	το	\N
+101660	δάχτυλο ποδιού	n	\N	\N	2	A2	το	\N
+101661	εργαλείο	n	\N	\N	2	A2	το	\N
+101662	συνολικός	adj	\N	\N	2	A2	\N	\N
+101663	αγγίζω	v	\N	\N	2	A2	\N	\N
+101664	περιοδεία	n	\N	\N	2	A2	η	\N
+101665	τουρισμός	n	\N	\N	2	A2	ο	\N
+101666	προς	prep	\N	\N	2	A2	\N	\N
+101667	πετσέτα	n	\N	\N	2	A2	η	\N
+101668	πύργος	n	\N	\N	2	A2	ο	\N
+101669	παιχνίδι (toy)	n	\N	\N	2	A2	το	\N
+101670	στίβος	n	\N	\N	2	A2	ο	\N
+101671	παράδοση	n	\N	\N	2	A2	η	\N
+101672	παραδοσιακός	adj	\N	\N	2	A2	\N	\N
+101673	αθλητικά παπούτσια	n	\N	\N	2	A2	τα	\N
+101674	εκπαίδευση (training)	n	\N	\N	2	A2	η	\N
+101675	μεταφορά	n	\N	\N	2	A2	η	\N
+101676	μεταφορικό μέσο	n	\N	\N	2	A2	το	\N
+101677	ταξιδιώτης	n	\N	\N	2	A2	ο	\N
+101678	ταξιδιώτισσα	n	\N	\N	2	A2	η	\N
+101679	πρόβλημα (trouble)	n	\N	\N	2	A2	το	\N
+101680	μπελάς	n	\N	\N	2	A2	ο	\N
+101681	φορτηγό	n	\N	\N	2	A2	το	\N
+101682	δίδυμος	n	\N	\N	2	A2	ο	\N
+101683	υπόγειος	adj	\N	\N	2	A2	\N	\N
+101684	υπογείως	adv	\N	\N	2	A2	\N	\N
+101685	κατανόηση	n	\N	\N	2	A2	η	\N
+101686	δυστυχισμένος	adj	\N	\N	2	A2	\N	\N
+101687	στολή	n	\N	\N	2	A2	η	\N
+101688	μονάδα	n	\N	\N	2	A2	η	\N
+101689	ενωμένος	adj	\N	\N	2	A2	\N	\N
+101690	ασυνήθιστος	adj	\N	\N	2	A2	\N	\N
+101691	αναστατωμένος	adj	\N	\N	2	A2	\N	\N
+101692	χρήση	n	\N	\N	2	A2	η	\N
+101693	συνήθιζα να	v	\N	\N	2	A2	\N	\N
+101694	χρήστης	n	\N	\N	2	A2	ο	\N
+101695	κοιλάδα	n	\N	\N	2	A2	η	\N
+101696	φορτηγάκι	n	\N	\N	2	A2	το	\N
+101697	ποικιλία	n	\N	\N	2	A2	η	\N
+101698	θέα	n	\N	\N	2	A2	η	\N
+101699	ιός	n	\N	\N	2	A2	ο	\N
+101700	φωνή	n	\N	\N	2	A2	η	\N
+101701	πόλεμος	n	\N	\N	2	A2	ο	\N
+101702	πλύσιμο	n	\N	\N	2	A2	το	\N
+101703	κύμα	n	\N	\N	2	A2	το	\N
+101704	χαιρετώ (wave)	v	\N	\N	2	A2	\N	\N
+101705	αδύναμος	adj	\N	\N	2	A2	\N	\N
+101706	ιστός	n	\N	\N	2	A2	ο	\N
+101707	γάμος	n	\N	\N	2	A2	ο	\N
+101708	βάρος	n	\N	\N	2	A2	το	\N
+101709	υποδοχή (welcome)	n	\N	\N	2	A2	η	\N
+101710	καλοδεχούμενος	adj	\N	\N	2	A2	\N	\N
+101711	καλωσορίζω	v	\N	\N	2	A2	\N	\N
+101712	υγρός	adj	\N	\N	2	A2	\N	\N
+101713	βρεγμένος	adj	\N	\N	2	A2	\N	\N
+101714	ρόδα	n	\N	\N	2	A2	η	\N
+101715	τροχός	n	\N	\N	2	A2	ο	\N
+101716	ολόκληρος	adj	\N	\N	2	A2	\N	\N
+101717	τίνος	det	\N	\N	2	A2	\N	\N
+101718	πλατύς	adj	\N	\N	2	A2	\N	\N
+101719	άγριος	adj	\N	\N	2	A2	\N	\N
+101720	άνεμος	n	\N	\N	2	A2	ο	\N
+101721	νικητής	n	\N	\N	2	A2	ο	\N
+101722	ευχή	n	\N	\N	2	A2	η	\N
+101723	εύχομαι	v	\N	\N	2	A2	\N	\N
+101724	ξύλο	n	\N	\N	2	A2	το	\N
+101725	ξύλινος	adj	\N	\N	2	A2	\N	\N
+101726	εργαζόμενος (adj)	adj	\N	\N	2	A2	\N	\N
+101727	ανήσυχος	adj	\N	\N	2	A2	\N	\N
+101728	ανησυχώ	v	\N	\N	2	A2	\N	\N
+101729	ανησυχία	n	\N	\N	2	A2	η	\N
+101730	χειρότερος	adj	\N	\N	2	A2	\N	\N
+101731	χειρότερα	adv	\N	\N	2	A2	\N	\N
+101732	χείριστος	adj	\N	\N	2	A2	\N	\N
+101733	χείριστα	adv	\N	\N	2	A2	\N	\N
+101734	ουάου	interj	\N	\N	2	A2	\N	\N
+101735	ακόμα (yet)	adv	\N	\N	2	A2	\N	\N
+101736	μηδέν	num	\N	\N	2	A2	το	\N
+101737	απολύτως	adv	\N	\N	2	B1	\N	\N
+101738	ακαδημαϊκός	adj	\N	\N	2	B1	\N	\N
+101739	πρόσβαση	n	\N	\N	2	B1	η	\N
+101740	αποκτώ πρόσβαση	v	\N	\N	2	B1	\N	\N
+101741	κατάλυμα	n	\N	\N	2	B1	το	\N
+101742	λογαριασμός	n	\N	\N	2	B1	ο	\N
+101743	σύμφωνα με	prep	\N	\N	2	B1	\N	\N
+101744	επίτευγμα	n	\N	\N	2	B1	το	\N
+101745	διαφήμιση	n	\N	\N	2	B1	η	\N
+101746	προσθήκη	n	\N	\N	2	B1	η	\N
+101747	θαυμάζω	v	\N	\N	2	B1	\N	\N
+101748	παραδέχομαι	v	\N	\N	2	B1	\N	\N
+101749	προχωρημένος	adj	\N	\N	2	B1	\N	\N
+101750	συμβουλεύω	v	\N	\N	2	B1	\N	\N
+101751	αντέχω οικονομικά	v	\N	\N	2	B1	\N	\N
+101752	ηλικιωμένος	adj	\N	\N	2	B1	\N	\N
+101753	πράκτορας	n	\N	\N	2	B1	ο	\N
+101754	συμφωνία	n	\N	\N	2	B1	η	\N
+101755	μπροστά	adv	\N	\N	2	B1	\N	\N
+101756	στόχος	n	\N	\N	2	B1	ο	\N
+101757	στοχεύω	v	\N	\N	2	B1	\N	\N
+101758	συναγερμός	n	\N	\N	2	B1	ο	\N
+101759	άλμπουμ	n	\N	\N	2	B1	το	\N
+6730	shun	v	\N	\N	1	C2	\N	\N
+101760	αλκοόλ	n	\N	\N	2	B1	το	\N
+101761	αλκοολούχος	adj	\N	\N	2	B1	\N	\N
+101762	εναλλακτικός	adj	\N	\N	2	B1	\N	\N
+101763	εναλλακτική	n	\N	\N	2	B1	η	\N
+101764	έκπληκτος	adj	\N	\N	2	B1	\N	\N
+101765	φιλοδοξία	n	\N	\N	2	B1	η	\N
+101766	φιλόδοξος	adj	\N	\N	2	B1	\N	\N
+101767	ανακοινώνω	v	\N	\N	2	B1	\N	\N
+101768	ανακοίνωση	n	\N	\N	2	B1	η	\N
+101769	ενοχλώ	v	\N	\N	2	B1	\N	\N
+101770	ενοχλημένος	adj	\N	\N	2	B1	\N	\N
+101771	ενοχλητικός	adj	\N	\N	2	B1	\N	\N
+101772	χωριστά	adv	\N	\N	2	B1	\N	\N
+101773	ζητώ συγγνώμη	v	\N	\N	2	B1	\N	\N
+101774	αίτηση	n	\N	\N	2	B1	η	\N
+101775	ραντεβού	n	\N	\N	2	B1	το	\N
+101776	εκτιμώ	v	\N	\N	2	B1	\N	\N
+101777	περίπου	adv	\N	\N	2	B1	\N	\N
+101778	συλλαμβάνω	v	\N	\N	2	B1	\N	\N
+101779	άφιξη	n	\N	\N	2	B1	η	\N
+101780	εργασία	n	\N	\N	2	B1	η	\N
+101781	βοηθώ	v	\N	\N	2	B1	\N	\N
+101782	ατμόσφαιρα	n	\N	\N	2	B1	η	\N
+101783	επισυνάπτω	v	\N	\N	2	B1	\N	\N
+101784	στάση	n	\N	\N	2	B1	η	\N
+101785	ελκύω	v	\N	\N	2	B1	\N	\N
+101786	ατραξιόν	n	\N	\N	2	B1	η	\N
+101787	αρχή	n	\N	\N	2	B1	η	\N
+101788	μέσος όρος	n	\N	\N	2	B1	ο	\N
+101789	βραβείο	n	\N	\N	2	B1	το	\N
+101790	βραβεύω	v	\N	\N	2	B1	\N	\N
+101791	ενήμερος	adj	\N	\N	2	B1	\N	\N
+101792	προς τα πίσω	adv	\N	\N	2	B1	\N	\N
+101793	ψήνω	v	\N	\N	2	B1	\N	\N
+101794	ισορροπία	n	\N	\N	2	B1	η	\N
+101795	απαγόρευση	n	\N	\N	2	B1	η	\N
+101796	όχθη	n	\N	\N	2	B1	η	\N
+101797	βάση	n	\N	\N	2	B1	η	\N
+101798	βασικός	adj	\N	\N	2	B1	\N	\N
+101799	μπαταρία	n	\N	\N	2	B1	η	\N
+101800	μάχη	n	\N	\N	2	B1	η	\N
+101801	ομορφιά	n	\N	\N	2	B1	η	\N
+101802	μέλισσα	n	\N	\N	2	B1	η	\N
+101803	συμπεριφορά	n	\N	\N	2	B1	η	\N
+101804	πεποίθηση	n	\N	\N	2	B1	η	\N
+101805	πίστη	n	\N	\N	2	B1	η	\N
+101806	καμπάνα	n	\N	\N	2	B1	η	\N
+101807	κουδούνι	n	\N	\N	2	B1	το	\N
+101808	λυγίζω	v	\N	\N	2	B1	\N	\N
+101809	ωφελούμαι	v	\N	\N	2	B1	\N	\N
+101810	δαγκώνω	v	\N	\N	2	B1	\N	\N
+101811	τετράγωνο	n	\N	\N	2	B1	το	\N
+101812	μπλοκάρω	v	\N	\N	2	B1	\N	\N
+101813	επιβιβάζομαι	v	\N	\N	2	B1	\N	\N
+101814	βόμβα	n	\N	\N	2	B1	η	\N
+101815	βομβαρδίζω	v	\N	\N	2	B1	\N	\N
+101816	κράτηση	n	\N	\N	2	B1	η	\N
+101817	σύνορο	n	\N	\N	2	B1	το	\N
+101818	ενοχλώ	v	\N	\N	2	B1	\N	\N
+101819	κατάστημα	n	\N	\N	2	B1	το	\N
+101820	κλαδί	n	\N	\N	2	B1	το	\N
+101821	μάρκα	n	\N	\N	2	B1	η	\N
+101822	γενναίος	adj	\N	\N	2	B1	\N	\N
+101823	ανάσα	n	\N	\N	2	B1	η	\N
+101824	αναπνέω	v	\N	\N	2	B1	\N	\N
+101825	αναπνοή	n	\N	\N	2	B1	η	\N
+101826	νύφη	n	\N	\N	2	B1	η	\N
+101827	φούσκα	n	\N	\N	2	B1	η	\N
+101828	σκάω	v	\N	\N	2	B1	\N	\N
+101829	θάβω	v	\N	\N	2	B1	\N	\N
+101830	ήρεμος	adj	\N	\N	2	B1	\N	\N
+101831	εκστρατεία	n	\N	\N	2	B1	η	\N
+101832	πανεπιστημιούπολη	n	\N	\N	2	B1	η	\N
+101833	υποψήφιος	n	\N	\N	2	B1	ο	\N
+101834	καπέλο	n	\N	\N	2	B1	το	\N
+101835	καπετάνιος	n	\N	\N	2	B1	ο	\N
+101836	καριέρα	n	\N	\N	2	B1	η	\N
+101837	απρόσεκτος	adj	\N	\N	2	B1	\N	\N
+101838	κατηγορία	n	\N	\N	2	B1	η	\N
+101839	ταβάνι	n	\N	\N	2	B1	το	\N
+101840	γιορτή	n	\N	\N	2	B1	η	\N
+101841	κεντρικός	adj	\N	\N	2	B1	\N	\N
+101842	αιώνας	n	\N	\N	2	B1	ο	\N
+101843	τελετή	n	\N	\N	2	B1	η	\N
+101844	αλυσίδα	n	\N	\N	2	B1	η	\N
+101845	πρόκληση	n	\N	\N	2	B1	η	\N
+101846	προκαλώ	v	\N	\N	2	B1	\N	\N
+101847	πρωταθλητής	n	\N	\N	2	B1	ο	\N
+101848	κανάλι	n	\N	\N	2	B1	το	\N
+101849	κεφάλαιο	n	\N	\N	2	B1	το	\N
+101850	χρέωση	n	\N	\N	2	B1	η	\N
+101851	κατηγορία	n	\N	\N	2	B1	η	\N
+101852	χρεώνω	v	\N	\N	2	B1	\N	\N
+101853	κλέβω	v	\N	\N	2	B1	\N	\N
+101854	αντιγράφω	v	\N	\N	2	B1	\N	\N
+101855	χαρούμενος	adj	\N	\N	2	B1	\N	\N
+101856	χημική ουσία	n	\N	\N	2	B1	η	\N
+101857	χημικός	adj	\N	\N	2	B1	\N	\N
+101858	στήθος	n	\N	\N	2	B1	το	\N
+101859	παιδική ηλικία	n	\N	\N	2	B1	η	\N
+101860	ισχυρισμός	n	\N	\N	2	B1	ο	\N
+101861	αξίωση	n	\N	\N	2	B1	η	\N
+101862	ισχυρίζομαι	v	\N	\N	2	B1	\N	\N
+101863	κλικ	n	\N	\N	2	B1	το	\N
+101864	κάνω κλικ	v	\N	\N	2	B1	\N	\N
+101865	πελάτης	n	\N	\N	2	B1	ο	\N
+101866	κοντινός	adj	\N	\N	2	B1	\N	\N
+101867	πανί	n	\N	\N	2	B1	το	\N
+101868	ύφασμα	n	\N	\N	2	B1	το	\N
+101869	στοιχείο	n	\N	\N	2	B1	το	\N
+101870	ένδειξη	n	\N	\N	2	B1	η	\N
+101871	πούλμαν	n	\N	\N	2	B1	το	\N
+101872	προπονητής	n	\N	\N	2	B1	ο	\N
+101873	κάρβουνο	n	\N	\N	2	B1	το	\N
+101874	συλλογή	n	\N	\N	2	B1	η	\N
+101875	έγχρωμος	adj	\N	\N	2	B1	\N	\N
+101876	συνδυάζω	v	\N	\N	2	B1	\N	\N
+101877	σχολιάζω	v	\N	\N	2	B1	\N	\N
+101878	εμπορικός	adj	\N	\N	2	B1	\N	\N
+101879	διαφήμιση	n	\N	\N	2	B1	η	\N
+101880	διαπράττω	v	\N	\N	2	B1	\N	\N
+101881	επικοινωνία	n	\N	\N	2	B1	η	\N
+101882	σύγκριση	n	\N	\N	2	B1	η	\N
+101883	ανταγωνιστής	n	\N	\N	2	B1	ο	\N
+101884	ανταγωνιστικός	adj	\N	\N	2	B1	\N	\N
+101885	παράπονο	n	\N	\N	2	B1	το	\N
+101886	σύνθετος	adj	\N	\N	2	B1	\N	\N
+101887	περίπλοκος	adj	\N	\N	2	B1	\N	\N
+101888	συγκεντρώνομαι	v	\N	\N	2	B1	\N	\N
+101889	συμπεραίνω	v	\N	\N	2	B1	\N	\N
+101890	σίγουρος	adj	\N	\N	2	B1	\N	\N
+101891	επιβεβαιώνω	v	\N	\N	2	B1	\N	\N
+101892	μπερδεύω	v	\N	\N	2	B1	\N	\N
+101893	μπερδεμένος	adj	\N	\N	2	B1	\N	\N
+101894	σύνδεση	n	\N	\N	2	B1	η	\N
+101895	επικοινωνώ	v	\N	\N	2	B1	\N	\N
+101896	επαφή	n	\N	\N	2	B1	η	\N
+101897	δοχείο	n	\N	\N	2	B1	το	\N
+101898	περιεχόμενο	n	\N	\N	2	B1	το	\N
+101899	συνεχής	adj	\N	\N	2	B1	\N	\N
+101900	αντίθεση	n	\N	\N	2	B1	η	\N
+101901	κάνω αντίθεση	v	\N	\N	2	B1	\N	\N
+101902	βολικός	adj	\N	\N	2	B1	\N	\N
+101903	πείθω	v	\N	\N	2	B1	\N	\N
+101904	χαλκός	n	\N	\N	2	B1	ο	\N
+101905	κοστούμι	n	\N	\N	2	B1	το	\N
+101906	εξοχικό	n	\N	\N	2	B1	το	\N
+101907	βαμβάκι	n	\N	\N	2	B1	το	\N
+101908	επαρχία	n	\N	\N	2	B1	η	\N
+101909	δικαστήριο	n	\N	\N	2	B1	το	\N
+101910	γήπεδο	n	\N	\N	2	B1	το	\N
+101911	εξώφυλλο	n	\N	\N	2	B1	το	\N
+101912	κάλυμμα	n	\N	\N	2	B1	το	\N
+101913	καλύπτω	v	\N	\N	2	B1	\N	\N
+101914	καλυμμένος	adj	\N	\N	2	B1	\N	\N
+101915	δημιουργώ	v	\N	\N	2	B1	\N	\N
+101916	πίστωση	n	\N	\N	2	B1	η	\N
+101917	σκληρός	adj	\N	\N	2	B1	\N	\N
+101918	πολιτιστικός	adj	\N	\N	2	B1	\N	\N
+101919	πολιτισμός	n	\N	\N	2	B1	ο	\N
+101920	νόμισμα	n	\N	\N	2	B1	το	\N
+101921	τρέχων	adj	\N	\N	2	B1	\N	\N
+101922	επί του παρόντος	adv	\N	\N	2	B1	\N	\N
+101923	κουρτίνα	n	\N	\N	2	B1	η	\N
+101924	έθιμο	n	\N	\N	2	B1	το	\N
+101925	ζημιά	n	\N	\N	2	B1	η	\N
+101926	βλάβη	n	\N	\N	2	B1	η	\N
+101927	προξενώ ζημιά	v	\N	\N	2	B1	\N	\N
+101928	ασχολούμαι	v	\N	\N	2	B1	\N	\N
+101929	δεκαετία	n	\N	\N	2	B1	η	\N
+101930	διακοσμώ	v	\N	\N	2	B1	\N	\N
+101931	οριστικός	adj	\N	\N	2	B1	\N	\N
+101932	παραδίδω	v	\N	\N	2	B1	\N	\N
+101933	αναχώρηση	n	\N	\N	2	B1	η	\N
+101934	επιφάνεια εργασίας	n	\N	\N	2	B1	η	\N
+101935	παρά το γεγονός	prep	\N	\N	2	B1	\N	\N
+101936	προορισμός	n	\N	\N	2	B1	ο	\N
+101937	αποφασισμένος	adj	\N	\N	2	B1	\N	\N
+101938	ανάπτυξη	n	\N	\N	2	B1	η	\N
+101939	διάγραμμα	n	\N	\N	2	B1	το	\N
+101940	διαμάντι	n	\N	\N	2	B1	το	\N
+101941	δυσκολία	n	\N	\N	2	B1	η	\N
+101942	άμεσος	adj	\N	\N	2	B1	\N	\N
+101943	απευθείας	adv	\N	\N	2	B1	\N	\N
+101944	βρωμιά	n	\N	\N	2	B1	η	\N
+101945	μειονέκτημα	n	\N	\N	2	B1	το	\N
+101946	απογοητευμένος	adj	\N	\N	2	B1	\N	\N
+101947	απογοητευτικός	adj	\N	\N	2	B1	\N	\N
+101948	έκπτωση	n	\N	\N	2	B1	η	\N
+101949	συζητώ	v	\N	\N	2	B1	\N	\N
+101950	αντιπαθώ	v	\N	\N	2	B1	\N	\N
+101951	διαιρώ	v	\N	\N	2	B1	\N	\N
+101952	ντοκιμαντέρ	n	\N	\N	2	B1	το	\N
+101953	δωρίζω	v	\N	\N	2	B1	\N	\N
+101954	αμφιβολία	n	\N	\N	2	B1	η	\N
+101955	αμφιβάλλω	v	\N	\N	2	B1	\N	\N
+101956	ντυμένος	adj	\N	\N	2	B1	\N	\N
+101957	μεθυσμένος	adj	\N	\N	2	B1	\N	\N
+101958	αναμενόμενος	adj	\N	\N	2	B1	\N	\N
+101959	σκόνη	n	\N	\N	2	B1	η	\N
+101960	καθήκον	n	\N	\N	2	B1	το	\N
+101961	σεισμός	n	\N	\N	2	B1	ο	\N
+101962	ανατολικός	adj	\N	\N	2	B1	\N	\N
+101963	οικονομικός	adj	\N	\N	2	B1	\N	\N
+101964	οικονομία	n	\N	\N	2	B1	η	\N
+101965	άκρη	n	\N	\N	2	B1	η	\N
+101966	συντάκτης	n	\N	\N	2	B1	ο	\N
+101967	εκπαιδεύω	v	\N	\N	2	B1	\N	\N
+101968	μορφωμένος	adj	\N	\N	2	B1	\N	\N
+101969	εκπαιδευτικός	adj	\N	\N	2	B1	\N	\N
+101970	αποτέλεσμα	n	\N	\N	2	B1	το	\N
+101971	επίδραση	n	\N	\N	2	B1	η	\N
+101972	αποτελεσματικός	adj	\N	\N	2	B1	\N	\N
+101973	αποτελεσματικά	adv	\N	\N	2	B1	\N	\N
+101974	προσπάθεια	n	\N	\N	2	B1	η	\N
+101975	εκλογή	n	\N	\N	2	B1	η	\N
+101976	φέρνω σε δύσκολη θέση	v	\N	\N	2	B1	\N	\N
+101977	αμήχανος	adj	\N	\N	2	B1	\N	\N
+101978	ντροπιαστικός	adj	\N	\N	2	B1	\N	\N
+101979	έκτακτη ανάγκη	n	\N	\N	2	B1	η	\N
+101980	συναίσθημα	n	\N	\N	2	B1	το	\N
+101981	απασχόληση	n	\N	\N	2	B1	η	\N
+101982	ενθαρρύνω	v	\N	\N	2	B1	\N	\N
+101983	εχθρός	n	\N	\N	2	B1	ο	\N
+101984	αρραβωνιασμένος	adj	\N	\N	2	B1	\N	\N
+101985	μηχανική	n	\N	\N	2	B1	η	\N
+101986	ψυχαγωγώ	v	\N	\N	2	B1	\N	\N
+101987	διασκέδαση	n	\N	\N	2	B1	η	\N
+101988	είσοδος	n	\N	\N	2	B1	η	\N
+101989	συμμετοχή	n	\N	\N	2	B1	η	\N
+101990	περιβάλλον	n	\N	\N	2	B1	το	\N
+101991	περιβαλλοντικός	adj	\N	\N	2	B1	\N	\N
+101992	επεισόδιο	n	\N	\N	2	B1	το	\N
+101993	ίσος	adj	\N	\N	2	B1	\N	\N
+101994	εξίσου	adv	\N	\N	2	B1	\N	\N
+101995	δραπετεύω	v	\N	\N	2	B1	\N	\N
+101996	απαραίτητος	adj	\N	\N	2	B1	\N	\N
+101997	εκδήλωση	n	\N	\N	2	B1	η	\N
+101998	γεγονός	n	\N	\N	2	B1	το	\N
+101999	τελικά	adv	\N	\N	2	B1	\N	\N
+102000	εξετάζω	v	\N	\N	2	B1	\N	\N
+102001	ανταλλαγή	n	\N	\N	2	B1	η	\N
+102002	ανταλλάσσω	v	\N	\N	2	B1	\N	\N
+102003	ενθουσιασμός	n	\N	\N	2	B1	ο	\N
+102004	έκθεση	n	\N	\N	2	B1	η	\N
+102005	επεκτείνω	v	\N	\N	2	B1	\N	\N
+102006	αναμενόμενος	adj	\N	\N	2	B1	\N	\N
+102007	αποστολή	n	\N	\N	2	B1	η	\N
+102008	εκστρατεία	n	\N	\N	2	B1	η	\N
+102009	έμπειρος	adj	\N	\N	2	B1	\N	\N
+102010	εκρήγνυμαι	v	\N	\N	2	B1	\N	\N
+102011	εξερευνώ	v	\N	\N	2	B1	\N	\N
+102012	έκρηξη	n	\N	\N	2	B1	η	\N
+102013	εξαγωγή	n	\N	\N	2	B1	η	\N
+102014	εξάγω	v	\N	\N	2	B1	\N	\N
+102015	αντιμετωπίζω	v	\N	\N	2	B1	\N	\N
+102016	γεγονός	n	\N	\N	2	B1	το	\N
+102017	μάλλον	adv	\N	\N	2	B1	\N	\N
+102018	σχετικά	adv	\N	\N	2	B1	\N	\N
+102019	οικείος	adj	\N	\N	2	B1	\N	\N
+102020	γνώριμος	adj	\N	\N	2	B1	\N	\N
+102021	μου αρέσει	v	\N	\N	2	B1	\N	\N
+102022	φαντάζομαι	v	\N	\N	2	B1	\N	\N
+102023	συναρπαστικός	adj	\N	\N	2	B1	\N	\N
+102024	μοντέρνος	adj	\N	\N	2	B1	\N	\N
+102025	της μόδας	adj	\N	\N	2	B1	\N	\N
+102026	δένω	v	\N	\N	2	B1	\N	\N
+102027	ασφαλίζω	v	\N	\N	2	B1	\N	\N
+102028	χάρη	n	\N	\N	2	B1	η	\N
+102029	φόβος	n	\N	\N	2	B1	ο	\N
+102030	φοβάμαι	v	\N	\N	2	B1	\N	\N
+102031	χαρακτηριστικό	n	\N	\N	2	B1	το	\N
+102032	παρουσιάζω	v	\N	\N	2	B1	\N	\N
+102033	ταΐζω	v	\N	\N	2	B1	\N	\N
+102034	φράχτης	n	\N	\N	2	B1	ο	\N
+102035	μάχη	n	\N	\N	2	B1	η	\N
+102036	αριθμός	n	\N	\N	2	B1	ο	\N
+102037	φιγούρα	n	\N	\N	2	B1	η	\N
+102038	αρχείο	n	\N	\N	2	B1	το	\N
+102039	αρχειοθετώ	v	\N	\N	2	B1	\N	\N
+102040	οικονομικός	adj	\N	\N	2	B1	\N	\N
+102041	πρόστιμο	n	\N	\N	2	B1	το	\N
+102042	φυσική κατάσταση	n	\N	\N	2	B1	η	\N
+102043	σταθερός	adj	\N	\N	2	B1	\N	\N
+102044	καθορισμένος	adj	\N	\N	2	B1	\N	\N
+102045	λάμψη	n	\N	\N	2	B1	η	\N
+102046	φλας	n	\N	\N	2	B1	το	\N
+102047	πλημμύρα	n	\N	\N	2	B1	η	\N
+102048	πλημμυρίζω	v	\N	\N	2	B1	\N	\N
+102049	αλεύρι	n	\N	\N	2	B1	το	\N
+102050	ροή	n	\N	\N	2	B1	η	\N
+102051	ρέω	v	\N	\N	2	B1	\N	\N
+102052	διπλώνω	v	\N	\N	2	B1	\N	\N
+102053	κόσμος	n	\N	\N	2	B1	ο	\N
+102054	λαϊκός	adj	\N	\N	2	B1	\N	\N
+102055	επόμενος	adj	\N	\N	2	B1	\N	\N
+102056	δύναμη	n	\N	\N	2	B1	η	\N
+102057	ισχύς	n	\N	\N	2	B1	η	\N
+102058	αναγκάζω	v	\N	\N	2	B1	\N	\N
+102059	για πάντα	adv	\N	\N	2	B1	\N	\N
+102060	πλαίσιο	n	\N	\N	2	B1	το	\N
+102061	κορνίζα	n	\N	\N	2	B1	η	\N
+102062	παγώνω	v	\N	\N	2	B1	\N	\N
+102063	συχνά	adv	\N	\N	2	B1	\N	\N
+102064	φιλία	n	\N	\N	2	B1	η	\N
+102065	τρομάζω	v	\N	\N	2	B1	\N	\N
+102066	τρομαγμένος	adj	\N	\N	2	B1	\N	\N
+102067	τρομακτικός	adj	\N	\N	2	B1	\N	\N
+102068	κατεψυγμένος	adj	\N	\N	2	B1	\N	\N
+102069	τηγανίζω	v	\N	\N	2	B1	\N	\N
+102070	καύσιμο	n	\N	\N	2	B1	το	\N
+102071	λειτουργία	n	\N	\N	2	B1	η	\N
+102072	λειτουργώ	v	\N	\N	2	B1	\N	\N
+102073	γούνα	n	\N	\N	2	B1	η	\N
+102074	περαιτέρω	adv	\N	\N	2	B1	\N	\N
+102075	γκαράζ	n	\N	\N	2	B1	το	\N
+102076	συγκεντρώνομαι	v	\N	\N	2	B1	\N	\N
+102077	μαζεύω	v	\N	\N	2	B1	\N	\N
+102078	γενικά	adv	\N	\N	2	B1	\N	\N
+102079	γενιά	n	\N	\N	2	B1	η	\N
+102080	γενναιόδωρος	adj	\N	\N	2	B1	\N	\N
+102081	ευγενικός	adj	\N	\N	2	B1	\N	\N
+102082	πράος	adj	\N	\N	2	B1	\N	\N
+102083	κύριος	n	\N	\N	2	B1	ο	\N
+102084	φάντασμα	n	\N	\N	2	B1	το	\N
+102085	γίγαντας	n	\N	\N	2	B1	ο	\N
+102086	γιγαντιαίος	adj	\N	\N	2	B1	\N	\N
+102087	συναυλία	n	\N	\N	2	B1	η	\N
+102088	εμφάνιση	n	\N	\N	2	B1	η	\N
+102089	χαρούμενος	adj	\N	\N	2	B1	\N	\N
+102090	ευτυχής	adj	\N	\N	2	B1	\N	\N
+102091	παγκόσμιος	adj	\N	\N	2	B1	\N	\N
+102092	γάντι	n	\N	\N	2	B1	το	\N
+102093	αγαθά	n	\N	\N	2	B1	τα	\N
+102094	εμπορεύματα	n	\N	\N	2	B1	τα	\N
+102095	βαθμός	n	\N	\N	2	B1	ο	\N
+102096	τάξη	n	\N	\N	2	B1	η	\N
+102097	αποφοιτώ	v	\N	\N	2	B1	\N	\N
+102098	κόκκος	n	\N	\N	2	B1	ο	\N
+102099	δημητριακά	n	\N	\N	2	B1	τα	\N
+102100	ευγνώμων	adj	\N	\N	2	B1	\N	\N
+102101	ανάπτυξη	n	\N	\N	2	B1	η	\N
+102102	φύλακας	n	\N	\N	2	B1	ο	\N
+102103	φρουρός	n	\N	\N	2	B1	ο	\N
+102104	φυλάω	v	\N	\N	2	B1	\N	\N
+102105	ένοχος	adj	\N	\N	2	B1	\N	\N
+102106	κρεμάω	v	\N	\N	2	B1	\N	\N
+102107	ευτυχία	n	\N	\N	2	B1	η	\N
+102108	σχεδόν καθόλου	adv	\N	\N	2	B1	\N	\N
+102109	μετά βίας	adv	\N	\N	2	B1	\N	\N
+102110	τίτλος ειδήσεων	n	\N	\N	2	B1	ο	\N
+102111	θέρμανση	n	\N	\N	2	B1	η	\N
+102112	βαριά	adv	\N	\N	2	B1	\N	\N
+102113	ελικόπτερο	n	\N	\N	2	B1	το	\N
+102114	επισημαίνω	v	\N	\N	2	B1	\N	\N
+102115	τονίζω	v	\N	\N	2	B1	\N	\N
+102116	εξαιρετικά	adv	\N	\N	2	B1	\N	\N
+102117	πολύ	adv	\N	\N	2	B1	\N	\N
+102118	προσλαμβάνω	v	\N	\N	2	B1	\N	\N
+102119	νοικιάζω	v	\N	\N	2	B1	\N	\N
+102120	υπαινιγμός	n	\N	\N	2	B1	ο	\N
+102121	υπαινίσσομαι	v	\N	\N	2	B1	\N	\N
+102122	ιστορικός	adj	\N	\N	2	B1	\N	\N
+102123	ειλικρινής	adj	\N	\N	2	B1	\N	\N
+102124	μέλι	n	\N	\N	2	B1	το	\N
+102125	φρικτός	adj	\N	\N	2	B1	\N	\N
+102126	τρόμος	n	\N	\N	2	B1	ο	\N
+102127	οικοδεσπότης	n	\N	\N	2	B1	ο	\N
+102128	φιλοξενώ	v	\N	\N	2	B1	\N	\N
+102129	ωστόσο	adv	\N	\N	2	B1	\N	\N
+102130	κυνηγώ	v	\N	\N	2	B1	\N	\N
+102131	τυφώνας	n	\N	\N	2	B1	ο	\N
+102132	αμαθής	adj	\N	\N	2	B1	\N	\N
+102133	αγνοώ	v	\N	\N	2	B1	\N	\N
+102134	παράνομος	adj	\N	\N	2	B1	\N	\N
+102135	φαντάζομαι	v	\N	\N	2	B1	\N	\N
+102136	φανταστικός	adj	\N	\N	2	B1	\N	\N
+102137	άμεσος	adj	\N	\N	2	B1	\N	\N
+102138	μετανάστης	n	\N	\N	2	B1	ο	\N
+102139	αντίκτυπος	n	\N	\N	2	B1	ο	\N
+102140	επίδραση	n	\N	\N	2	B1	η	\N
+102141	εισαγωγή	n	\N	\N	2	B1	η	\N
+102142	εισάγω	v	\N	\N	2	B1	\N	\N
+102143	σπουδαιότητα	n	\N	\N	2	B1	η	\N
+102144	εντύπωση	n	\N	\N	2	B1	η	\N
+102145	εντυπωσιακός	adj	\N	\N	2	B1	\N	\N
+102146	βελτιώνω	v	\N	\N	2	B1	\N	\N
+102147	βελτίωση	n	\N	\N	2	B1	η	\N
+102148	απίστευτα	adv	\N	\N	2	B1	\N	\N
+102149	πράγματι	adv	\N	\N	2	B1	\N	\N
+102150	υποδεικνύω	v	\N	\N	2	B1	\N	\N
+102151	έμμεσος	adj	\N	\N	2	B1	\N	\N
+102152	εσωτερικού χώρου	adj	\N	\N	2	B1	\N	\N
+102153	μέσα	adv	\N	\N	2	B1	\N	\N
+102154	σε εσωτερικό χώρο	adv	\N	\N	2	B1	\N	\N
+102155	βρέφος	n	\N	\N	2	B1	το	\N
+102156	επιρροή	n	\N	\N	2	B1	η	\N
+102157	επηρεάζω	v	\N	\N	2	B1	\N	\N
+102158	συστατικό	n	\N	\N	2	B1	το	\N
+102159	τραυματίζω	v	\N	\N	2	B1	\N	\N
+102160	τραυματισμένος	adj	\N	\N	2	B1	\N	\N
+102161	αθώος	adj	\N	\N	2	B1	\N	\N
+102162	νοημοσύνη	n	\N	\N	2	B1	η	\N
+102163	ευφυΐα	n	\N	\N	2	B1	η	\N
+102164	σκοπεύω	v	\N	\N	2	B1	\N	\N
+102165	πρόθεση	n	\N	\N	2	B1	η	\N
+102166	επενδύω	v	\N	\N	2	B1	\N	\N
+102167	ερευνώ	v	\N	\N	2	B1	\N	\N
+102168	ανακρίνω	v	\N	\N	2	B1	\N	\N
+102169	αναμεμειγμένος	adj	\N	\N	2	B1	\N	\N
+102170	σίδερο	n	\N	\N	2	B1	το	\N
+102171	σιδερώνω	v	\N	\N	2	B1	\N	\N
+102172	ζήτημα	n	\N	\N	2	B1	το	\N
+102173	θέμα	n	\N	\N	2	B1	το	\N
+102174	πληροφορική	n	\N	\N	2	B1	η	\N
+102175	περιοδικό	n	\N	\N	2	B1	το	\N
+102176	ημερολόγιο	n	\N	\N	2	B1	το	\N
+102177	δικαστής	n	\N	\N	2	B1	ο	\N
+102178	κρίνω	v	\N	\N	2	B1	\N	\N
+102179	πρόθυμος	adj	\N	\N	2	B1	\N	\N
+102180	ένθερμος	adj	\N	\N	2	B1	\N	\N
+102181	βασικός	adj	\N	\N	2	B1	\N	\N
+102182	κλειδί	adj	\N	\N	2	B1	\N	\N
+102183	πληκτρολόγιο	n	\N	\N	2	B1	το	\N
+102184	κλοτσάω	v	\N	\N	2	B1	\N	\N
+102185	φόνος	n	\N	\N	2	B1	ο	\N
+102186	ευγενικός	adj	\N	\N	2	B1	\N	\N
+102187	καλόκαρδος	adj	\N	\N	2	B1	\N	\N
+102188	βασίλειο	n	\N	\N	2	B1	το	\N
+102189	ετικέτα	n	\N	\N	2	B1	η	\N
+102190	βάζω ετικέτα	v	\N	\N	2	B1	\N	\N
+102191	εργαστήριο	n	\N	\N	2	B1	το	\N
+102192	έλλειψη	n	\N	\N	2	B1	η	\N
+102193	στερούμαι	v	\N	\N	2	B1	\N	\N
+102194	τελευταίος	adj	\N	\N	2	B1	\N	\N
+102195	πρόσφατος	adj	\N	\N	2	B1	\N	\N
+102196	ακουμπώ	v	\N	\N	2	B1	\N	\N
+102197	στρώνω	v	\N	\N	2	B1	\N	\N
+102198	στρώμα	n	\N	\N	2	B1	το	\N
+102199	επίπεδο	n	\N	\N	2	B1	το	\N
+102200	προβάδισμα	n	\N	\N	2	B1	το	\N
+102201	κορυφαίος	adj	\N	\N	2	B1	\N	\N
+102202	φύλλο	n	\N	\N	2	B1	το	\N
+102203	δέρμα	n	\N	\N	2	B1	το	\N
+102204	δερμάτινος	adj	\N	\N	2	B1	\N	\N
+102205	νόμιμος	adj	\N	\N	2	B1	\N	\N
+102206	ελεύθερος χρόνος	n	\N	\N	2	B1	ο	\N
+102207	μήκος	n	\N	\N	2	B1	το	\N
+102208	ισοπεδώνω	v	\N	\N	2	B1	\N	\N
+102209	λέω ψέματα	v	\N	\N	2	B1	\N	\N
+102210	κείτομαι	v	\N	\N	2	B1	\N	\N
+102211	όριο	n	\N	\N	2	B1	το	\N
+102212	περιορίζω	v	\N	\N	2	B1	\N	\N
+102213	χείλος	n	\N	\N	2	B1	το	\N
+102214	υγρό	n	\N	\N	2	B1	το	\N
+102215	λογοτεχνία	n	\N	\N	2	B1	η	\N
+102216	διαβίωση	n	\N	\N	2	B1	η	\N
+102217	ζωντανός	adj	\N	\N	2	B1	\N	\N
+102218	εντοπίζω	v	\N	\N	2	B1	\N	\N
+102219	τοποθετώ	v	\N	\N	2	B1	\N	\N
+102220	βρίσκεται	adj	\N	\N	2	B1	\N	\N
+102221	τοποθεσία	n	\N	\N	2	B1	η	\N
+102222	κορμός	n	\N	\N	2	B1	ο	\N
+102223	μόνος	adj	\N	\N	2	B1	\N	\N
+102224	μοναχικός	adj	\N	\N	2	B1	\N	\N
+102225	απώλεια	n	\N	\N	2	B1	η	\N
+102226	πολυτέλεια	n	\N	\N	2	B1	η	\N
+102227	τρελός	adj	\N	\N	2	B1	\N	\N
+102228	μαγεία	n	\N	\N	2	B1	η	\N
+102229	κυρίως	adv	\N	\N	2	B1	\N	\N
+102230	εμπορικό κέντρο	n	\N	\N	2	B1	το	\N
+102231	διοίκηση	n	\N	\N	2	B1	η	\N
+102232	διαχείριση	n	\N	\N	2	B1	η	\N
+102233	μάρκετινγκ	n	\N	\N	2	B1	το	\N
+102234	γάμος	n	\N	\N	2	B1	ο	\N
+102235	υλικό	n	\N	\N	2	B1	το	\N
+102236	εν τω μεταξύ	adv	\N	\N	2	B1	\N	\N
+102237	μέτρο	n	\N	\N	2	B1	το	\N
+102238	μετράω	v	\N	\N	2	B1	\N	\N
+102239	μεσαίος	adj	\N	\N	2	B1	\N	\N
+102240	ψυχικός	adj	\N	\N	2	B1	\N	\N
+102241	ακαταστασία	n	\N	\N	2	B1	η	\N
+102242	μπέρδεμα	n	\N	\N	2	B1	το	\N
+102243	ήπιος	adj	\N	\N	2	B1	\N	\N
+102244	ελαφρύς	adj	\N	\N	2	B1	\N	\N
+102245	μύλος	n	\N	\N	2	B1	ο	\N
+102246	ορυχείο	n	\N	\N	2	B1	το	\N
+102247	ανακατεύω	v	\N	\N	2	B1	\N	\N
+102248	αναμιγνύω	v	\N	\N	2	B1	\N	\N
+102249	μίγμα	n	\N	\N	2	B1	το	\N
+102250	μοντέλο	n	\N	\N	2	B1	το	\N
+102251	διάθεση	n	\N	\N	2	B1	η	\N
+102252	κέφι	n	\N	\N	2	B1	το	\N
+102253	λάσπη	n	\N	\N	2	B1	η	\N
+102254	φόνος	n	\N	\N	2	B1	ο	\N
+102255	δολοφονία	n	\N	\N	2	B1	η	\N
+102256	δολοφονώ	v	\N	\N	2	B1	\N	\N
+102257	μυς	n	\N	\N	2	B1	ο	\N
+102258	μυστήριο	n	\N	\N	2	B1	το	\N
+102259	νύχι	n	\N	\N	2	B1	το	\N
+102260	καρφί	n	\N	\N	2	B1	το	\N
+102261	αφήγηση	n	\N	\N	2	B1	η	\N
+102262	έθνος	n	\N	\N	2	B1	το	\N
+102263	ντόπιος	adj	\N	\N	2	B1	\N	\N
+102264	ιθαγενής	n	\N	\N	2	B1	ο	\N
+102265	φυσικά	adv	\N	\N	2	B1	\N	\N
+102266	αναγκαστικά	adv	\N	\N	2	B1	\N	\N
+102267	βελόνα	n	\N	\N	2	B1	η	\N
+102268	αρνητικός	adj	\N	\N	2	B1	\N	\N
+102269	γειτονιά	n	\N	\N	2	B1	η	\N
+102270	ούτε	conj	\N	\N	2	B1	\N	\N
+102271	δίκτυ	n	\N	\N	2	B1	το	\N
+102272	δίχτυ	n	\N	\N	2	B1	το	\N
+102273	κανονικός	adj	\N	\N	2	B1	\N	\N
+102274	βόρειος	adj	\N	\N	2	B1	\N	\N
+102275	σημειώνω	v	\N	\N	2	B1	\N	\N
+102276	πυρηνικός	adj	\N	\N	2	B1	\N	\N
+102277	προφανής	adj	\N	\N	2	B1	\N	\N
+102278	προφανώς	adv	\N	\N	2	B1	\N	\N
+102279	περίσταση	n	\N	\N	2	B1	η	\N
+102280	συμβαίνω	v	\N	\N	2	B1	\N	\N
+102281	παράξενος	adj	\N	\N	2	B1	\N	\N
+102282	μονός	adj	\N	\N	2	B1	\N	\N
+102283	επίσημος	adj	\N	\N	2	B1	\N	\N
+102284	παλιομοδίτικος	adj	\N	\N	2	B1	\N	\N
+102285	μόλις	conj	\N	\N	2	B1	\N	\N
+102286	άποψη	n	\N	\N	2	B1	η	\N
+102287	γνώμη	n	\N	\N	2	B1	η	\N
+102288	εγχείρηση	n	\N	\N	2	B1	η	\N
+102289	λειτουργία	n	\N	\N	2	B1	η	\N
+102290	ευκαιρία	n	\N	\N	2	B1	η	\N
+102291	οργανωμένος	adj	\N	\N	2	B1	\N	\N
+102292	διοργανωτής	n	\N	\N	2	B1	ο	\N
+102293	πρωτότυπος	adj	\N	\N	2	B1	\N	\N
+102294	αρχικός	adj	\N	\N	2	B1	\N	\N
+102295	αρχικά	adv	\N	\N	2	B1	\N	\N
+102296	πρέπει	v	\N	\N	2	B1	\N	\N
+102297	δικός μας	pron	\N	\N	2	B1	\N	\N
+102298	εξωτερικός	adj	\N	\N	2	B1	\N	\N
+102299	έξω	adv	\N	\N	2	B1	\N	\N
+102300	πακέτο	n	\N	\N	2	B1	το	\N
+102301	σημειωματάριο	n	\N	\N	2	B1	το	\N
+102302	επίθεμα	n	\N	\N	2	B1	το	\N
+102303	επώδυνος	adj	\N	\N	2	B1	\N	\N
+102304	χλωμός	adj	\N	\N	2	B1	\N	\N
+102305	τηγάνι	n	\N	\N	2	B1	το	\N
+102306	συμμετέχω	v	\N	\N	2	B1	\N	\N
+102307	ιδιαίτερα	adv	\N	\N	2	B1	\N	\N
+102308	πάθος	n	\N	\N	2	B1	το	\N
+102309	μονοπάτι	n	\N	\N	2	B1	το	\N
+102310	πληρωμή	n	\N	\N	2	B1	η	\N
+102311	ειρηνικός	adj	\N	\N	2	B1	\N	\N
+102312	ήσυχος	adj	\N	\N	2	B1	\N	\N
+102313	ποσοστό	n	\N	\N	2	B1	το	\N
+102314	τέλεια	adv	\N	\N	2	B1	\N	\N
+102315	παράσταση	n	\N	\N	2	B1	η	\N
+102316	επίδοση	n	\N	\N	2	B1	η	\N
+102317	προσωπικά	adv	\N	\N	2	B1	\N	\N
+102318	απαισιόδοξος	adj	\N	\N	2	B1	\N	\N
+102319	πείθω	v	\N	\N	2	B1	\N	\N
+102320	φωτογράφος	n	\N	\N	2	B1	ο	\N
+102321	φωτογραφία	n	\N	\N	2	B1	η	\N
+102322	πινέζα	n	\N	\N	2	B1	η	\N
+102323	καρφίτσα	n	\N	\N	2	B1	η	\N
+102324	καρφιτσώνω	v	\N	\N	2	B1	\N	\N
+102325	σωλήνας	n	\N	\N	2	B1	ο	\N
+102326	πίπα	n	\N	\N	2	B1	η	\N
+102327	σχεδιασμός	n	\N	\N	2	B1	ο	\N
+102328	προγραμματισμός	n	\N	\N	2	B1	ο	\N
+102329	ευχάριστος	adj	\N	\N	2	B1	\N	\N
+102330	ευχαρίστηση	n	\N	\N	2	B1	η	\N
+102331	απόλαυση	n	\N	\N	2	B1	η	\N
+102332	άφθονος	pron	\N	\N	2	B1	\N	\N
+102333	μπόλικος	pron	\N	\N	2	B1	\N	\N
+102334	πλοκή	n	\N	\N	2	B1	η	\N
+102335	σχέδιο	n	\N	\N	2	B1	το	\N
+102336	συν	prep	\N	\N	2	B1	\N	\N
+102337	επιπλέον	conj	\N	\N	2	B1	\N	\N
+102338	ποίημα	n	\N	\N	2	B1	το	\N
+102339	ποιητής	n	\N	\N	2	B1	ο	\N
+102340	ποίηση	n	\N	\N	2	B1	η	\N
+102341	δείχνω	v	\N	\N	2	B1	\N	\N
+102342	σημαδεύω	v	\N	\N	2	B1	\N	\N
+102343	δηλητήριο	n	\N	\N	2	B1	το	\N
+102344	δηλητηριάζω	v	\N	\N	2	B1	\N	\N
+102345	δηλητηριώδης	adj	\N	\N	2	B1	\N	\N
+102346	πολιτική	n	\N	\N	2	B1	η	\N
+102347	τακτική	n	\N	\N	2	B1	η	\N
+102348	πολιτικός	adj	\N	\N	2	B1	\N	\N
+102349	πολιτικός	n	\N	\N	2	B1	ο	\N
+102350	πολιτική επιστήμη	n	\N	\N	2	B1	η	\N
+102351	λιμάνι	n	\N	\N	2	B1	το	\N
+102352	πορτρέτο	n	\N	\N	2	B1	το	\N
+102353	θέση	n	\N	\N	2	B1	η	\N
+102354	τοποθεσία	n	\N	\N	2	B1	η	\N
+102355	θετικός	adj	\N	\N	2	B1	\N	\N
+102356	πιθανώς	adv	\N	\N	2	B1	\N	\N
+102357	ίσως	adv	\N	\N	2	B1	\N	\N
+102358	γλάστρα	n	\N	\N	2	B1	η	\N
+102359	κατσαρόλα	n	\N	\N	2	B1	η	\N
+102360	ρίχνω	v	\N	\N	2	B1	\N	\N
+102361	φτώχεια	n	\N	\N	2	B1	η	\N
+102362	σκόνη	n	\N	\N	2	B1	η	\N
+102363	πούδρα	n	\N	\N	2	B1	η	\N
+102364	δύναμη	n	\N	\N	2	B1	η	\N
+102365	ισχύς	n	\N	\N	2	B1	η	\N
+102366	ισχυρός	adj	\N	\N	2	B1	\N	\N
+102367	δυνατός	adj	\N	\N	2	B1	\N	\N
+102368	πρακτικός	adj	\N	\N	2	B1	\N	\N
+102369	προσεύχομαι	v	\N	\N	2	B1	\N	\N
+102370	προσευχή	n	\N	\N	2	B1	η	\N
+102371	προσόν	n	\N	\N	2	B1	το	\N
+102372	πτυχίο	n	\N	\N	2	B1	το	\N
+102373	πιστοποιημένος	adj	\N	\N	2	B1	\N	\N
+102374	ειδικευμένος	adj	\N	\N	2	B1	\N	\N
+102375	προκρίνομαι	v	\N	\N	2	B1	\N	\N
+102376	παίρνω πτυχίο	v	\N	\N	2	B1	\N	\N
+102377	ουρά	n	\N	\N	2	B1	η	\N
+102378	περιμένω στην ουρά	v	\N	\N	2	B1	\N	\N
+102379	παραιτούμαι	v	\N	\N	2	B1	\N	\N
+102380	σταματώ	v	\N	\N	2	B1	\N	\N
+102381	παράθεση	n	\N	\N	2	B1	η	\N
+102382	απόσπασμα	n	\N	\N	2	B1	το	\N
+102383	παραθέτω	v	\N	\N	2	B1	\N	\N
+102384	αγώνας δρόμου	n	\N	\N	2	B1	ο	\N
+102385	φυλή	n	\N	\N	2	B1	η	\N
+102386	αγώνες	n	\N	\N	2	B1	οι	\N
+102387	ποικιλία	n	\N	\N	2	B1	η	\N
+102388	εύρος	n	\N	\N	2	B1	το	\N
+102389	σπάνιος	adj	\N	\N	2	B1	\N	\N
+102390	σπάνια	adv	\N	\N	2	B1	\N	\N
+102391	αντίδραση	n	\N	\N	2	B1	η	\N
+102392	πραγματικότητα	n	\N	\N	2	B1	η	\N
+102393	απόδειξη	n	\N	\N	2	B1	η	\N
+102394	σύσταση	n	\N	\N	2	B1	η	\N
+102395	αναφορά	n	\N	\N	2	B1	η	\N
+102396	παραπομπή	n	\N	\N	2	B1	η	\N
+102397	αντανακλώ	v	\N	\N	2	B1	\N	\N
+102398	τακτικά	adv	\N	\N	2	B1	\N	\N
+102399	απορρίπτω	v	\N	\N	2	B1	\N	\N
+102400	σχετίζομαι	v	\N	\N	2	B1	\N	\N
+102401	σχετικός	adj	\N	\N	2	B1	\N	\N
+102402	σχέση	n	\N	\N	2	B1	η	\N
+102403	συγγενής	n	\N	\N	2	B1	ο/η	\N
+102404	χαλαρός	adj	\N	\N	2	B1	\N	\N
+102405	χαλαρωτικός	adj	\N	\N	2	B1	\N	\N
+102406	αποδεσμεύω	v	\N	\N	2	B1	\N	\N
+102407	κυκλοφορώ	v	\N	\N	2	B1	\N	\N
+102408	αξιόπιστος	adj	\N	\N	2	B1	\N	\N
+102409	θρησκεία	n	\N	\N	2	B1	η	\N
+102410	θρησκευτικός	adj	\N	\N	2	B1	\N	\N
+102411	παραμένω	v	\N	\N	2	B1	\N	\N
+102412	υπενθυμίζω	v	\N	\N	2	B1	\N	\N
+102413	απομακρυσμένος	adj	\N	\N	2	B1	\N	\N
+102414	ενοίκιο	n	\N	\N	2	B1	το	\N
+102415	νοικιάζω	v	\N	\N	2	B1	\N	\N
+102416	επαναλαμβανόμενος	adj	\N	\N	2	B1	\N	\N
+102417	αντιπροσωπεύω	v	\N	\N	2	B1	\N	\N
+102418	απαιτώ	v	\N	\N	2	B1	\N	\N
+102419	κράτηση	n	\N	\N	2	B1	η	\N
+102420	πόρος	n	\N	\N	2	B1	ο	\N
+102421	σεβασμός	n	\N	\N	2	B1	ο	\N
+102422	σέβομαι	v	\N	\N	2	B1	\N	\N
+102423	απάντηση	n	\N	\N	2	B1	η	\N
+102424	ανταπόκριση	n	\N	\N	2	B1	η	\N
+102425	υπευθυνότητα	n	\N	\N	2	B1	η	\N
+102426	υπεύθυνος	adj	\N	\N	2	B1	\N	\N
+102427	αποτέλεσμα	n	\N	\N	2	B1	το	\N
+102428	συνταξιοδοτούμαι	v	\N	\N	2	B1	\N	\N
+102429	συνταξιούχος	adj	\N	\N	2	B1	\N	\N
+102430	κάνω επανάληψη	v	\N	\N	2	B1	\N	\N
+102431	τουφέκι	n	\N	\N	2	B1	το	\N
+102432	ανεβαίνω	v	\N	\N	2	B1	\N	\N
+102433	αυξάνομαι	v	\N	\N	2	B1	\N	\N
+102434	ρίσκο	n	\N	\N	2	B1	το	\N
+102435	κίνδυνος	n	\N	\N	2	B1	ο	\N
+102436	ρισκάρω	v	\N	\N	2	B1	\N	\N
+102437	ρομπότ	n	\N	\N	2	B1	το	\N
+102438	κυλάω	v	\N	\N	2	B1	\N	\N
+102439	ρομαντικός	adj	\N	\N	2	B1	\N	\N
+102440	σκοινί	n	\N	\N	2	B1	το	\N
+102441	τραχύς	adj	\N	\N	2	B1	\N	\N
+102442	άγριος	adj	\N	\N	2	B1	\N	\N
+102443	σειρά	n	\N	\N	2	B1	η	\N
+102444	γραμμή	n	\N	\N	2	B1	η	\N
+102445	βασιλικός	adj	\N	\N	2	B1	\N	\N
+102446	ράγκμπι	n	\N	\N	2	B1	το	\N
+102447	κυβερνώ	v	\N	\N	2	B1	\N	\N
+102448	ορίζω	v	\N	\N	2	B1	\N	\N
+102449	ασφάλεια	n	\N	\N	2	B1	η	\N
+102450	ναύτης	n	\N	\N	2	B1	ο	\N
+102451	δείγμα	n	\N	\N	2	B1	το	\N
+102452	άμμος	n	\N	\N	2	B1	η	\N
+102453	σαρώνω	v	\N	\N	2	B1	\N	\N
+102454	επιστημονικός	adj	\N	\N	2	B1	\N	\N
+102455	σενάριο	n	\N	\N	2	B1	το	\N
+102456	γλυπτό	n	\N	\N	2	B1	το	\N
+102457	δευτεροβάθμιος	adj	\N	\N	2	B1	\N	\N
+102458	ασφάλεια	n	\N	\N	2	B1	η	\N
+102459	φύλαξη	n	\N	\N	2	B1	η	\N
+102460	σπόρος	n	\N	\N	2	B1	ο	\N
+102461	λογικός	adj	\N	\N	2	B1	\N	\N
+102462	συνετός	adj	\N	\N	2	B1	\N	\N
+102463	χωρίζω	v	\N	\N	2	B1	\N	\N
+102464	διαχωρίζω	v	\N	\N	2	B1	\N	\N
+102465	σοβαρά	adv	\N	\N	2	B1	\N	\N
+102466	υπηρέτης	n	\N	\N	2	B1	ο	\N
+102467	ορίζω	v	\N	\N	2	B1	\N	\N
+102468	ρυθμίζω	v	\N	\N	2	B1	\N	\N
+102469	σετ	n	\N	\N	2	B1	το	\N
+102470	σκηνικό	n	\N	\N	2	B1	το	\N
+102471	περιβάλλον	n	\N	\N	2	B1	το	\N
+102472	φύλο	n	\N	\N	2	B1	το	\N
+102473	σεξουαλικός	adj	\N	\N	2	B1	\N	\N
+102474	κοφτερός	adj	\N	\N	2	B1	\N	\N
+102475	αιχμηρός	adj	\N	\N	2	B1	\N	\N
+102476	ράφι	n	\N	\N	2	B1	το	\N
+102477	κοχύλι	n	\N	\N	2	B1	το	\N
+102478	κέλυφος	n	\N	\N	2	B1	το	\N
+102479	βάρδια	n	\N	\N	2	B1	η	\N
+102480	μετατοπίζω	v	\N	\N	2	B1	\N	\N
+102481	λάμπω	v	\N	\N	2	B1	\N	\N
+102482	γυαλίζω	v	\N	\N	2	B1	\N	\N
+102483	λαμπερός	adj	\N	\N	2	B1	\N	\N
+102484	γυαλιστερός	adj	\N	\N	2	B1	\N	\N
+102485	πυροβολώ	v	\N	\N	2	B1	\N	\N
+102486	τραβάω φωτογραφία	v	\N	\N	2	B1	\N	\N
+102487	σοκ	n	\N	\N	2	B1	το	\N
+102488	σοκάρω	v	\N	\N	2	B1	\N	\N
+102489	βολή	n	\N	\N	2	B1	η	\N
+102490	πυροβολισμός	n	\N	\N	2	B1	ο	\N
+102491	ντροπαλός	adj	\N	\N	2	B1	\N	\N
+102492	θέα	n	\N	\N	2	B1	η	\N
+102493	όραση	n	\N	\N	2	B1	η	\N
+102494	σήμα	n	\N	\N	2	B1	το	\N
+102495	σιωπηλός	adj	\N	\N	2	B1	\N	\N
+102496	βουβός	adj	\N	\N	2	B1	\N	\N
+102497	ανόητος	adj	\N	\N	2	B1	\N	\N
+102498	χαζός	adj	\N	\N	2	B1	\N	\N
+102499	ομοιότητα	n	\N	\N	2	B1	η	\N
+102500	παρόμοια	adv	\N	\N	2	B1	\N	\N
+102501	απλά	adv	\N	\N	2	B1	\N	\N
+102502	από τότε που	conj	\N	\N	2	B1	\N	\N
+102503	εφόσον	conj	\N	\N	2	B1	\N	\N
+102504	βυθίζομαι	v	\N	\N	2	B1	\N	\N
+102505	δεξιότητα	n	\N	\N	2	B1	η	\N
+102506	ικανότητα	n	\N	\N	2	B1	η	\N
+102507	παραλείπω	v	\N	\N	2	B1	\N	\N
+102508	πηδάω	v	\N	\N	2	B1	\N	\N
+102509	βροντάω	v	\N	\N	2	B1	\N	\N
+102510	χαστουκίζω	v	\N	\N	2	B1	\N	\N
+102511	φέτα	n	\N	\N	2	B1	η	\N
+102512	κόβω σε φέτες	v	\N	\N	2	B1	\N	\N
+102513	ελαφρώς	adv	\N	\N	2	B1	\N	\N
+102514	έξυπνος	adj	\N	\N	2	B1	\N	\N
+102515	κομψός	adj	\N	\N	2	B1	\N	\N
+102516	λείος	adj	\N	\N	2	B1	\N	\N
+102517	ομαλός	adj	\N	\N	2	B1	\N	\N
+102518	κοινωνία	n	\N	\N	2	B1	η	\N
+102519	λογισμικό	n	\N	\N	2	B1	το	\N
+102520	έδαφος	n	\N	\N	2	B1	το	\N
+102521	στερεός	adj	\N	\N	2	B1	\N	\N
+102522	συμπαγής	adj	\N	\N	2	B1	\N	\N
+102523	λύνω	v	\N	\N	2	B1	\N	\N
+102524	επιλύω	v	\N	\N	2	B1	\N	\N
+102525	ταξινομώ	v	\N	\N	2	B1	\N	\N
+102526	ξεδιαλέγω	v	\N	\N	2	B1	\N	\N
+102527	νότιος	adj	\N	\N	2	B1	\N	\N
+102528	ανεπιθύμητη αλληλογραφία	n	\N	\N	2	B1	η	\N
+102529	συγκεκριμένα	adv	\N	\N	2	B1	\N	\N
+102530	ειδικά	adv	\N	\N	2	B1	\N	\N
+102531	ταχύτητα	n	\N	\N	2	B1	η	\N
+102532	δαπάνες	n	\N	\N	2	B1	οι	\N
+102533	έξοδα	n	\N	\N	2	B1	τα	\N
+102534	καυτερός	adj	\N	\N	2	B1	\N	\N
+102535	πικάντικος	adj	\N	\N	2	B1	\N	\N
+102536	πνεύμα	n	\N	\N	2	B1	το	\N
+102537	προφορικός	adj	\N	\N	2	B1	\N	\N
+102538	σημάδι	n	\N	\N	2	B1	το	\N
+102539	κηλίδα	n	\N	\N	2	B1	η	\N
+102540	εντοπίζω	v	\N	\N	2	B1	\N	\N
+102541	διαδίδω	v	\N	\N	2	B1	\N	\N
+102542	απλώνω	v	\N	\N	2	B1	\N	\N
+102543	άνοιξη	n	\N	\N	2	B1	η	\N
+102544	ελατήριο	n	\N	\N	2	B1	το	\N
+102545	κατάσκοπος	n	\N	\N	2	B1	ο	\N
+102546	κατασκοπεύω	v	\N	\N	2	B1	\N	\N
+102547	στάδιο	n	\N	\N	2	B1	το	\N
+102548	προσωπικό	n	\N	\N	2	B1	το	\N
+102549	πρότυπο	n	\N	\N	2	B1	το	\N
+102550	επίπεδο	n	\N	\N	2	B1	το	\N
+102551	δηλώνω	v	\N	\N	2	B1	\N	\N
+102552	άγαλμα	n	\N	\N	2	B1	το	\N
+102553	κολλάω	v	\N	\N	2	B1	\N	\N
+102554	μπήγω	v	\N	\N	2	B1	\N	\N
+102555	ξύλο	n	\N	\N	2	B1	το	\N
+102556	ραβδί	n	\N	\N	2	B1	το	\N
+102557	αποθηκεύω	v	\N	\N	2	B1	\N	\N
+102558	ξένος	n	\N	\N	2	B1	ο	\N
+102559	δύναμη	n	\N	\N	2	B1	η	\N
+102560	σπάγγος	n	\N	\N	2	B1	ο	\N
+102561	σθεναρά	adv	\N	\N	2	B1	\N	\N
+102562	έντονα	adv	\N	\N	2	B1	\N	\N
+102563	στούντιο	n	\N	\N	2	B1	το	\N
+102564	πράγματα	n	\N	\N	2	B1	τα	\N
+102565	υλικό	n	\N	\N	2	B1	το	\N
+102566	με επιτυχία	adv	\N	\N	2	B1	\N	\N
+102567	επιτυχημένα	adv	\N	\N	2	B1	\N	\N
+102568	ξαφνικός	adj	\N	\N	2	B1	\N	\N
+102569	αιφνίδιος	adj	\N	\N	2	B1	\N	\N
+102570	υποφέρω	v	\N	\N	2	B1	\N	\N
+102571	πάσχω	v	\N	\N	2	B1	\N	\N
+102572	ταιριάζω	v	\N	\N	2	B1	\N	\N
+102573	πηγαίνω	v	\N	\N	2	B1	\N	\N
+102574	κατάλληλος	adj	\N	\N	2	B1	\N	\N
+102575	επιτυχία	n	\N	\N	2	B1	η	\N
+102576	συνοψίζω	v	\N	\N	2	B1	\N	\N
+102577	περίληψη	n	\N	\N	2	B1	η	\N
+102578	προμήθεια	n	\N	\N	2	B1	η	\N
+102579	απόθεμα	n	\N	\N	2	B1	το	\N
+102580	προμηθεύω	v	\N	\N	2	B1	\N	\N
+102581	παρέχω	v	\N	\N	2	B1	\N	\N
+102582	υποστηρικτής	n	\N	\N	2	B1	ο	\N
+102583	σίγουρα	adv	\N	\N	2	B1	\N	\N
+102584	ασφαλώς	adv	\N	\N	2	B1	\N	\N
+102585	επιφάνεια	n	\N	\N	2	B1	η	\N
+102586	επιβιώνω	v	\N	\N	2	B1	\N	\N
+102587	έρευνα	n	\N	\N	2	B1	η	\N
+102588	δημοσκόπηση	n	\N	\N	2	B1	η	\N
+102589	διακόπτης	n	\N	\N	2	B1	ο	\N
+102590	αλλάζω	v	\N	\N	2	B1	\N	\N
+102591	σπαθί	n	\N	\N	2	B1	το	\N
+102592	σύμπτωμα	n	\N	\N	2	B1	το	\N
+102593	ουρά	n	\N	\N	2	B1	η	\N
+102594	ταλέντο	n	\N	\N	2	B1	το	\N
+102595	ταλαντούχος	adj	\N	\N	2	B1	\N	\N
+102596	ταινία	n	\N	\N	2	B1	η	\N
+102597	φόρος	n	\N	\N	2	B1	ο	\N
+102598	τεχνικός	adj	\N	\N	2	B1	\N	\N
+102599	τεχνική	n	\N	\N	2	B1	η	\N
+102600	τείνω	v	\N	\N	2	B1	\N	\N
+102601	θέμα	n	\N	\N	2	B1	το	\N
+102602	αν και	conj	\N	\N	2	B1	\N	\N
+102603	όμως	adv	\N	\N	2	B1	\N	\N
+102604	λαιμός	n	\N	\N	2	B1	ο	\N
+102605	καθ’ όλη τη διάρκεια	prep	\N	\N	2	B1	\N	\N
+102606	παντού	adv	\N	\N	2	B1	\N	\N
+102607	στενός	adj	\N	\N	2	B1	\N	\N
+102608	σφιχτός	adj	\N	\N	2	B1	\N	\N
+102609	μέχρι	conj	\N	\N	2	B1	\N	\N
+102610	έως	prep	\N	\N	2	B1	\N	\N
+102611	τενεκές	n	\N	\N	2	B1	ο	\N
+102612	κονσέρβα	n	\N	\N	2	B1	η	\N
+102613	λιλιπούτειος	adj	\N	\N	2	B1	\N	\N
+102614	μικροσκοπικός	adj	\N	\N	2	B1	\N	\N
+102615	γλώσσα	n	\N	\N	2	B1	η	\N
+102616	ζήτημα	n	\N	\N	2	B1	το	\N
+102617	συνολικός	adj	\N	\N	2	B1	\N	\N
+102618	σύνολο	n	\N	\N	2	B1	το	\N
+102619	εντελώς	adv	\N	\N	2	B1	\N	\N
+102620	πλήρως	adv	\N	\N	2	B1	\N	\N
+102621	εμπόριο	n	\N	\N	2	B1	το	\N
+102622	εμπορεύομαι	v	\N	\N	2	B1	\N	\N
+102623	τρέιλερ	n	\N	\N	2	B1	το	\N
+102624	μεταφράζω	v	\N	\N	2	B1	\N	\N
+102625	μετάφραση	n	\N	\N	2	B1	η	\N
+102626	συμπεριφέρομαι	v	\N	\N	2	B1	\N	\N
+102627	θεραπεύω	v	\N	\N	2	B1	\N	\N
+102628	θεραπεία	n	\N	\N	2	B1	η	\N
+102629	μεταχείριση	n	\N	\N	2	B1	η	\N
+102630	τάση	n	\N	\N	2	B1	η	\N
+102631	κόλπο	n	\N	\N	2	B1	το	\N
+102632	τεχνάσμα	n	\N	\N	2	B1	το	\N
+102633	αλήθεια	n	\N	\N	2	B1	η	\N
+102634	σωλήνας	n	\N	\N	2	B1	ο	\N
+102635	πληκτρολογώ	v	\N	\N	2	B1	\N	\N
+102636	τυπικά	adv	\N	\N	2	B1	\N	\N
+102637	λάστιχο	n	\N	\N	2	B1	το	\N
+102638	άσχημος	adj	\N	\N	2	B1	\N	\N
+102639	ανίκανος	adj	\N	\N	2	B1	\N	\N
+102640	άβολος	adj	\N	\N	2	B1	\N	\N
+102641	εσώρουχα	n	\N	\N	2	B1	τα	\N
+102642	άνεργος	adj	\N	\N	2	B1	\N	\N
+102643	ανεργία	n	\N	\N	2	B1	η	\N
+102644	άδικος	adj	\N	\N	2	B1	\N	\N
+102645	ένωση	n	\N	\N	2	B1	η	\N
+102646	συνδικάτο	n	\N	\N	2	B1	το	\N
+102647	εκτός αν	conj	\N	\N	2	B1	\N	\N
+102648	σε αντίθεση με	prep	\N	\N	2	B1	\N	\N
+102649	ανόμοιος	adj	\N	\N	2	B1	\N	\N
+102650	απίθανος	adj	\N	\N	2	B1	\N	\N
+102651	περιττός	adj	\N	\N	2	B1	\N	\N
+102652	αχρείαστος	adj	\N	\N	2	B1	\N	\N
+102653	δυσάρεστος	adj	\N	\N	2	B1	\N	\N
+102654	ενημερώνω	v	\N	\N	2	B1	\N	\N
+102655	επικαιροποιώ	v	\N	\N	2	B1	\N	\N
+102656	πάνω σε	prep	\N	\N	2	B1	\N	\N
+102657	αναστατώνω	v	\N	\N	2	B1	\N	\N
+102658	μεταχειρισμένος	adj	\N	\N	2	B1	\N	\N
+102659	πολύτιμος	adj	\N	\N	2	B1	\N	\N
+102660	αξία	n	\N	\N	2	B1	η	\N
+102661	διάφοροι	adj	\N	\N	2	B1	\N	\N
+102662	ποικίλοι	adj	\N	\N	2	B1	\N	\N
+102663	όχημα	n	\N	\N	2	B1	το	\N
+102664	έκδοση	n	\N	\N	2	B1	η	\N
+102665	εκδοχή	n	\N	\N	2	B1	η	\N
+102666	θύμα	n	\N	\N	2	B1	το	\N
+102667	βίαιος	adj	\N	\N	2	B1	\N	\N
+102668	εθελοντής	n	\N	\N	2	B1	ο	\N
+102669	προσφέρω εθελοντικά	v	\N	\N	2	B1	\N	\N
+102670	ψήφος	n	\N	\N	2	B1	η	\N
+102671	ψηφίζω	v	\N	\N	2	B1	\N	\N
+102672	προειδοποιώ	v	\N	\N	2	B1	\N	\N
+102673	προειδοποίηση	n	\N	\N	2	B1	η	\N
+102674	απόβλητα	n	\N	\N	2	B1	τα	\N
+102675	σπατάλη	n	\N	\N	2	B1	η	\N
+102676	σπαταλώ	v	\N	\N	2	B1	\N	\N
+102677	όπλο	n	\N	\N	2	B1	το	\N
+102678	ζυγίζω	v	\N	\N	2	B1	\N	\N
+102679	δυτικός	adj	\N	\N	2	B1	\N	\N
+102680	οτιδήποτε	pron	\N	\N	2	B1	\N	\N
+102681	οποτεδήποτε	conj	\N	\N	2	B1	\N	\N
+102682	αν	conj	\N	\N	2	B1	\N	\N
+102683	καθώς	conj	\N	\N	2	B1	\N	\N
+102684	ενώ	conj	\N	\N	2	B1	\N	\N
+102685	φτερό	n	\N	\N	2	B1	το	\N
+102686	πτέρυγα	n	\N	\N	2	B1	η	\N
+102687	εντός	prep	\N	\N	2	B1	\N	\N
+102688	μέσα σε	prep	\N	\N	2	B1	\N	\N
+102689	αναρωτιέμαι	v	\N	\N	2	B1	\N	\N
+102690	μαλλί	n	\N	\N	2	B1	το	\N
+102691	παγκόσμιος	adj	\N	\N	2	B1	\N	\N
+102692	αξίζει	adj	\N	\N	2	B1	\N	\N
+102693	ρυτίδα	n	\N	\N	2	B1	η	\N
+102694	γραπτός	adj	\N	\N	2	B1	\N	\N
+102695	αυλή	n	\N	\N	2	B1	η	\N
+102696	ουρλιάζω	v	\N	\N	2	B1	\N	\N
+102697	νεολαία	n	\N	\N	2	B1	η	\N
+102698	νιάτα	n	\N	\N	2	B1	τα	\N
+7233	adjective	noun	\N	\N	1	A2	\N	\N
+7234	adverb	noun	\N	\N	1	B1	\N	\N
+7235	advise	verb	\N	\N	1	B1	\N	\N
+7236	aerobics	noun	\N	\N	1	A2	\N	\N
+2576	abandon	v	\N	\N	1	B2	\N	\N
+2577	absent	adj	\N	\N	1	B2	\N	\N
+2578	absolute	adj	\N	\N	1	B2	\N	\N
+2579	absorb	v	\N	\N	1	B2	\N	\N
+2580	abstract	adj	\N	\N	1	B2	\N	\N
+2581	academic	adj	\N	\N	1	B2	\N	\N
+2582	accent	n	\N	\N	1	B2	\N	\N
+2583	acceptable	adj	\N	\N	1	B2	\N	\N
+2584	accidentally	adv	\N	\N	1	B2	\N	\N
+2585	accommodate	v	\N	\N	1	B2	\N	\N
+2586	accompany	v	\N	\N	1	B2	\N	\N
+2587	accomplish	v	\N	\N	1	B2	\N	\N
+2588	account for	v	\N	\N	1	B2	\N	\N
+2589	accountant	n	\N	\N	1	B2	\N	\N
+2590	accuracy	n	\N	\N	1	B2	\N	\N
+2591	accurate	adj	\N	\N	1	B2	\N	\N
+2592	accurately	adv	\N	\N	1	B2	\N	\N
+2593	accuse	v	\N	\N	1	B2	\N	\N
+2594	acknowledge	v	\N	\N	1	B2	\N	\N
+2595	acquire	v	\N	\N	1	B2	\N	\N
+2596	acre	n	\N	\N	1	B2	\N	\N
+2597	activate	v	\N	\N	1	B2	\N	\N
+2598	actual	adj	\N	\N	1	B2	\N	\N
+2599	adapt	v	\N	\N	1	B2	\N	\N
+2600	addiction	n	\N	\N	1	B2	\N	\N
+2601	additional	adj	\N	\N	1	B2	\N	\N
+2602	additionally	adv	\N	\N	1	B2	\N	\N
+2603	address	v	\N	\N	1	B2	\N	\N
+2604	adequate	adj	\N	\N	1	B2	\N	\N
+2605	adequately	adv	\N	\N	1	B2	\N	\N
+2606	adjust	v	\N	\N	1	B2	\N	\N
+2607	administration	n	\N	\N	1	B2	\N	\N
+2608	adopt	v	\N	\N	1	B2	\N	\N
+2609	advance	n	\N	\N	1	B2	\N	\N
+2610	affair	n	\N	\N	1	B2	\N	\N
+2611	affordable	adj	\N	\N	1	B2	\N	\N
+2612	afterwards	adv	\N	\N	1	B2	\N	\N
+2613	agency	n	\N	\N	1	B2	\N	\N
+2614	agenda	n	\N	\N	1	B2	\N	\N
+2615	aggressive	adj	\N	\N	1	B2	\N	\N
+2616	agriculture	n	\N	\N	1	B2	\N	\N
+2617	aid	n	\N	\N	1	B2	\N	\N
+2618	AIDS	n	\N	\N	1	B2	\N	\N
+2619	aircraft	n	\N	\N	1	B2	\N	\N
+2620	alarm	v	\N	\N	1	B2	\N	\N
+2621	alien	n	\N	\N	1	B2	\N	\N
+2622	alongside	prep	\N	\N	1	B2	\N	\N
+2623	alter	v	\N	\N	1	B2	\N	\N
+2624	altogether	adv	\N	\N	1	B2	\N	\N
+2625	ambulance	n	\N	\N	1	B2	\N	\N
+2626	amusing	adj	\N	\N	1	B2	\N	\N
+2627	analyse	v	\N	\N	1	B2	\N	\N
+2628	analysis	n	\N	\N	1	B2	\N	\N
+2629	analyst	n	\N	\N	1	B2	\N	\N
+2630	ancestor	n	\N	\N	1	B2	\N	\N
+2631	angel	n	\N	\N	1	B2	\N	\N
+2632	anger	n	\N	\N	1	B2	\N	\N
+2633	angle	n	\N	\N	1	B2	\N	\N
+2634	animation	n	\N	\N	1	B2	\N	\N
+2635	anniversary	n	\N	\N	1	B2	\N	\N
+2636	annual	adj	\N	\N	1	B2	\N	\N
+2637	annually	adv	\N	\N	1	B2	\N	\N
+2638	anticipate	v	\N	\N	1	B2	\N	\N
+2639	anxiety	n	\N	\N	1	B2	\N	\N
+2640	anxious	adj	\N	\N	1	B2	\N	\N
+2641	apology	n	\N	\N	1	B2	\N	\N
+2642	apparent	adj	\N	\N	1	B2	\N	\N
+2643	apparently	adv	\N	\N	1	B2	\N	\N
+2644	appeal	n	\N	\N	1	B2	\N	\N
+2645	applicant	n	\N	\N	1	B2	\N	\N
+2646	approach	n	\N	\N	1	B2	\N	\N
+2647	appropriate	adj	\N	\N	1	B2	\N	\N
+2648	appropriately	adv	\N	\N	1	B2	\N	\N
+2649	approval	n	\N	\N	1	B2	\N	\N
+2650	approve	v	\N	\N	1	B2	\N	\N
+2651	arise	v	\N	\N	1	B2	\N	\N
+2652	armed	adj	\N	\N	1	B2	\N	\N
+2653	arms	n	\N	\N	1	B2	\N	\N
+2654	arrow	n	\N	\N	1	B2	\N	\N
+2655	artificial	adj	\N	\N	1	B2	\N	\N
+2656	artistic	adj	\N	\N	1	B2	\N	\N
+2657	artwork	n	\N	\N	1	B2	\N	\N
+2658	ashamed	adj	\N	\N	1	B2	\N	\N
+2659	aspect	n	\N	\N	1	B2	\N	\N
+2660	assess	v	\N	\N	1	B2	\N	\N
+2661	assessment	n	\N	\N	1	B2	\N	\N
+2662	asset	n	\N	\N	1	B2	\N	\N
+2663	assign	v	\N	\N	1	B2	\N	\N
+2664	assistance	n	\N	\N	1	B2	\N	\N
+2665	associate	v	\N	\N	1	B2	\N	\N
+2666	associated	adj	\N	\N	1	B2	\N	\N
+2667	association	n	\N	\N	1	B2	\N	\N
+2668	assume	v	\N	\N	1	B2	\N	\N
+2669	assumption	n	\N	\N	1	B2	\N	\N
+2670	assure	v	\N	\N	1	B2	\N	\N
+2671	astonishing	adj	\N	\N	1	B2	\N	\N
+2672	athletic	adj	\N	\N	1	B2	\N	\N
+2673	attachment	n	\N	\N	1	B2	\N	\N
+2674	attempt	n	\N	\N	1	B2	\N	\N
+2675	audio	adj	\N	\N	1	B2	\N	\N
+2676	awareness	n	\N	\N	1	B2	\N	\N
+2677	awkward	adj	\N	\N	1	B2	\N	\N
+2678	bacteria	n	\N	\N	1	B2	\N	\N
+2679	badge	n	\N	\N	1	B2	\N	\N
+2680	balanced	adj	\N	\N	1	B2	\N	\N
+2681	ballet	n	\N	\N	1	B2	\N	\N
+2682	balloon	n	\N	\N	1	B2	\N	\N
+2683	barely	adv	\N	\N	1	B2	\N	\N
+2684	bargain	n	\N	\N	1	B2	\N	\N
+2685	barrier	n	\N	\N	1	B2	\N	\N
+2686	based on	adj	\N	\N	1	B2	\N	\N
+2687	basement	n	\N	\N	1	B2	\N	\N
+2688	basically	adv	\N	\N	1	B2	\N	\N
+2689	basis	n	\N	\N	1	B2	\N	\N
+2690	basket	n	\N	\N	1	B2	\N	\N
+2691	bat	n	\N	\N	1	B2	\N	\N
+2692	bear	v	\N	\N	1	B2	\N	\N
+2693	beg	v	\N	\N	1	B2	\N	\N
+2694	being	n	\N	\N	1	B2	\N	\N
+2695	beneficial	adj	\N	\N	1	B2	\N	\N
+2696	bent	adj	\N	\N	1	B2	\N	\N
+2697	beside	prep	\N	\N	1	B2	\N	\N
+2698	besides	prep	\N	\N	1	B2	\N	\N
+2699	bet	v	\N	\N	1	B2	\N	\N
+2700	beyond	prep	\N	\N	1	B2	\N	\N
+2701	bias	n	\N	\N	1	B2	\N	\N
+2702	bid	v	\N	\N	1	B2	\N	\N
+2703	biological	adj	\N	\N	1	B2	\N	\N
+2704	bitter	adj	\N	\N	1	B2	\N	\N
+2705	blame	n	\N	\N	1	B2	\N	\N
+2706	blanket	n	\N	\N	1	B2	\N	\N
+2707	blind	adj	\N	\N	1	B2	\N	\N
+2708	bold	adj	\N	\N	1	B2	\N	\N
+2709	bombing	n	\N	\N	1	B2	\N	\N
+2710	bond	n	\N	\N	1	B2	\N	\N
+2711	boost	v	\N	\N	1	B2	\N	\N
+2712	bound	adj	\N	\N	1	B2	\N	\N
+2713	breast	n	\N	\N	1	B2	\N	\N
+2714	brick	n	\N	\N	1	B2	\N	\N
+2715	brief	adj	\N	\N	1	B2	\N	\N
+2716	briefly	adv	\N	\N	1	B2	\N	\N
+2717	broad	adj	\N	\N	1	B2	\N	\N
+2718	broadcast	n	\N	\N	1	B2	\N	\N
+2719	broadcaster	n	\N	\N	1	B2	\N	\N
+2720	broadly	adv	\N	\N	1	B2	\N	\N
+2721	buck	n	\N	\N	1	B2	\N	\N
+2722	budget	n	\N	\N	1	B2	\N	\N
+2723	bug	n	\N	\N	1	B2	\N	\N
+2724	bullet	n	\N	\N	1	B2	\N	\N
+2725	bunch	n	\N	\N	1	B2	\N	\N
+2726	bush	n	\N	\N	1	B2	\N	\N
+2727	but	prep	\N	\N	1	B2	\N	\N
+2728	cabin	n	\N	\N	1	B2	\N	\N
+2729	cable	n	\N	\N	1	B2	\N	\N
+2730	calculate	v	\N	\N	1	B2	\N	\N
+2731	canal	n	\N	\N	1	B2	\N	\N
+2732	cancel	v	\N	\N	1	B2	\N	\N
+2733	cancer	n	\N	\N	1	B2	\N	\N
+2734	candle	n	\N	\N	1	B2	\N	\N
+2735	capable	adj	\N	\N	1	B2	\N	\N
+2736	capacity	n	\N	\N	1	B2	\N	\N
+2737	capture	v	\N	\N	1	B2	\N	\N
+2738	carbon	n	\N	\N	1	B2	\N	\N
+2739	cast	n	\N	\N	1	B2	\N	\N
+2740	casual	adj	\N	\N	1	B2	\N	\N
+2741	catastrophe	n	\N	\N	1	B2	\N	\N
+2742	cave	n	\N	\N	1	B2	\N	\N
+2743	cell	n	\N	\N	1	B2	\N	\N
+2744	certainty	n	\N	\N	1	B2	\N	\N
+2745	certificate	n	\N	\N	1	B2	\N	\N
+2746	chairman	n	\N	\N	1	B2	\N	\N
+2747	challenging	adj	\N	\N	1	B2	\N	\N
+2748	championship	n	\N	\N	1	B2	\N	\N
+2749	characteristic	n	\N	\N	1	B2	\N	\N
+2750	charming	adj	\N	\N	1	B2	\N	\N
+2751	chase	v	\N	\N	1	B2	\N	\N
+2752	cheek	n	\N	\N	1	B2	\N	\N
+2753	cheer	v	\N	\N	1	B2	\N	\N
+2754	chief	adj	\N	\N	1	B2	\N	\N
+2755	chop	v	\N	\N	1	B2	\N	\N
+2756	circuit	n	\N	\N	1	B2	\N	\N
+2757	circumstance	n	\N	\N	1	B2	\N	\N
+2758	cite	v	\N	\N	1	B2	\N	\N
+2759	citizen	n	\N	\N	1	B2	\N	\N
+2760	civil	adj	\N	\N	1	B2	\N	\N
+2761	civilization	n	\N	\N	1	B2	\N	\N
+2762	clarify	v	\N	\N	1	B2	\N	\N
+2763	classic	adj	\N	\N	1	B2	\N	\N
+2764	classify	v	\N	\N	1	B2	\N	\N
+2765	clause	n	\N	\N	1	B2	\N	\N
+2766	cliff	n	\N	\N	1	B2	\N	\N
+2767	clinic	n	\N	\N	1	B2	\N	\N
+2768	clip	n	\N	\N	1	B2	\N	\N
+2769	closely	adv	\N	\N	1	B2	\N	\N
+2770	coincidence	n	\N	\N	1	B2	\N	\N
+2771	collapse	v	\N	\N	1	B2	\N	\N
+2772	collector	n	\N	\N	1	B2	\N	\N
+2773	colony	n	\N	\N	1	B2	\N	\N
+2774	colourful	adj	\N	\N	1	B2	\N	\N
+2775	combination	n	\N	\N	1	B2	\N	\N
+2776	comfort	n	\N	\N	1	B2	\N	\N
+2777	comic	adj	\N	\N	1	B2	\N	\N
+2778	command	n	\N	\N	1	B2	\N	\N
+2779	commander	n	\N	\N	1	B2	\N	\N
+2780	commission	n	\N	\N	1	B2	\N	\N
+2781	commitment	n	\N	\N	1	B2	\N	\N
+2782	committee	n	\N	\N	1	B2	\N	\N
+2783	commonly	adv	\N	\N	1	B2	\N	\N
+2784	comparative	adj	\N	\N	1	B2	\N	\N
+2785	completion	n	\N	\N	1	B2	\N	\N
+2786	complicated	adj	\N	\N	1	B2	\N	\N
+2787	component	n	\N	\N	1	B2	\N	\N
+2788	compose	v	\N	\N	1	B2	\N	\N
+2789	composer	n	\N	\N	1	B2	\N	\N
+2790	compound	n	\N	\N	1	B2	\N	\N
+2791	comprehensive	adj	\N	\N	1	B2	\N	\N
+2792	compulsory	adj	\N	\N	1	B2	\N	\N
+2793	concentration	n	\N	\N	1	B2	\N	\N
+2794	concept	n	\N	\N	1	B2	\N	\N
+2795	concern	n	\N	\N	1	B2	\N	\N
+2796	concerned	adj	\N	\N	1	B2	\N	\N
+2797	conclusion	n	\N	\N	1	B2	\N	\N
+2798	concrete	adj	\N	\N	1	B2	\N	\N
+2799	conduct	v	\N	\N	1	B2	\N	\N
+2800	confess	v	\N	\N	1	B2	\N	\N
+2801	confidence	n	\N	\N	1	B2	\N	\N
+2802	conflict	n	\N	\N	1	B2	\N	\N
+2803	confusing	adj	\N	\N	1	B2	\N	\N
+2804	confusion	n	\N	\N	1	B2	\N	\N
+2805	conscious	adj	\N	\N	1	B2	\N	\N
+2806	consequence	n	\N	\N	1	B2	\N	\N
+2807	consequently	adv	\N	\N	1	B2	\N	\N
+2808	conservation	n	\N	\N	1	B2	\N	\N
+2809	conservative	adj	\N	\N	1	B2	\N	\N
+2810	considerable	adj	\N	\N	1	B2	\N	\N
+2811	considerably	adv	\N	\N	1	B2	\N	\N
+2812	consideration	n	\N	\N	1	B2	\N	\N
+2813	consist of	v	\N	\N	1	B2	\N	\N
+2814	consistent	adj	\N	\N	1	B2	\N	\N
+2815	consistently	adv	\N	\N	1	B2	\N	\N
+2816	conspiracy	n	\N	\N	1	B2	\N	\N
+2817	constant	adj	\N	\N	1	B2	\N	\N
+2818	constantly	adv	\N	\N	1	B2	\N	\N
+2819	construct	v	\N	\N	1	B2	\N	\N
+2820	construction	n	\N	\N	1	B2	\N	\N
+2821	consult	v	\N	\N	1	B2	\N	\N
+2822	consultant	n	\N	\N	1	B2	\N	\N
+2823	consumer	n	\N	\N	1	B2	\N	\N
+2824	consumption	n	\N	\N	1	B2	\N	\N
+2825	contemporary	adj	\N	\N	1	B2	\N	\N
+2826	contest	n	\N	\N	1	B2	\N	\N
+2827	context	n	\N	\N	1	B2	\N	\N
+2828	contract	n	\N	\N	1	B2	\N	\N
+2829	contribute	v	\N	\N	1	B2	\N	\N
+2830	contribution	n	\N	\N	1	B2	\N	\N
+2831	controversial	adj	\N	\N	1	B2	\N	\N
+2832	controversy	n	\N	\N	1	B2	\N	\N
+2833	convenience	n	\N	\N	1	B2	\N	\N
+2834	convention	n	\N	\N	1	B2	\N	\N
+2835	conventional	adj	\N	\N	1	B2	\N	\N
+2836	convert	v	\N	\N	1	B2	\N	\N
+2837	convey	v	\N	\N	1	B2	\N	\N
+2838	convinced	adj	\N	\N	1	B2	\N	\N
+2839	convincing	adj	\N	\N	1	B2	\N	\N
+2840	cope	v	\N	\N	1	B2	\N	\N
+2841	core	n	\N	\N	1	B2	\N	\N
+2842	corporate	adj	\N	\N	1	B2	\N	\N
+2843	corporation	n	\N	\N	1	B2	\N	\N
+2844	corridor	n	\N	\N	1	B2	\N	\N
+2845	council	n	\N	\N	1	B2	\N	\N
+2846	counter	n	\N	\N	1	B2	\N	\N
+2847	county	n	\N	\N	1	B2	\N	\N
+2848	courage	n	\N	\N	1	B2	\N	\N
+2849	coverage	n	\N	\N	1	B2	\N	\N
+2850	cowboy	n	\N	\N	1	B2	\N	\N
+2851	crack	v	\N	\N	1	B2	\N	\N
+2852	crash	n	\N	\N	1	B2	\N	\N
+2853	creation	n	\N	\N	1	B2	\N	\N
+2854	creativity	n	\N	\N	1	B2	\N	\N
+2855	creature	n	\N	\N	1	B2	\N	\N
+2856	crew	n	\N	\N	1	B2	\N	\N
+2857	crisis	n	\N	\N	1	B2	\N	\N
+2858	critic	n	\N	\N	1	B2	\N	\N
+2859	critical	adj	\N	\N	1	B2	\N	\N
+2860	critically	adv	\N	\N	1	B2	\N	\N
+2861	criticism	n	\N	\N	1	B2	\N	\N
+2862	criticise	v	\N	\N	1	B2	\N	\N
+2863	crop	n	\N	\N	1	B2	\N	\N
+2864	crucial	adj	\N	\N	1	B2	\N	\N
+2865	cruise	n	\N	\N	1	B2	\N	\N
+2866	cue	n	\N	\N	1	B2	\N	\N
+2867	cure	n	\N	\N	1	B2	\N	\N
+2868	curious	adj	\N	\N	1	B2	\N	\N
+2869	curriculum	n	\N	\N	1	B2	\N	\N
+2870	curve	n	\N	\N	1	B2	\N	\N
+2871	curved	adj	\N	\N	1	B2	\N	\N
+2872	dairy	n	\N	\N	1	B2	\N	\N
+2873	dare	v	\N	\N	1	B2	\N	\N
+2874	darkness	n	\N	\N	1	B2	\N	\N
+2875	data	n	\N	\N	1	B2	\N	\N
+2876	database	n	\N	\N	1	B2	\N	\N
+2877	deadline	n	\N	\N	1	B2	\N	\N
+2878	deadly	adj	\N	\N	1	B2	\N	\N
+2879	dealer	n	\N	\N	1	B2	\N	\N
+2880	debate	n	\N	\N	1	B2	\N	\N
+2881	debt	n	\N	\N	1	B2	\N	\N
+2882	decent	adj	\N	\N	1	B2	\N	\N
+2883	deck	n	\N	\N	1	B2	\N	\N
+2884	declare	v	\N	\N	1	B2	\N	\N
+2885	decline	n	\N	\N	1	B2	\N	\N
+2886	decoration	n	\N	\N	1	B2	\N	\N
+2887	decrease	v	\N	\N	1	B2	\N	\N
+2888	deeply	adv	\N	\N	1	B2	\N	\N
+2889	defeat	n	\N	\N	1	B2	\N	\N
+2890	defence	n	\N	\N	1	B2	\N	\N
+2891	defend	v	\N	\N	1	B2	\N	\N
+2892	defender	n	\N	\N	1	B2	\N	\N
+2893	define	v	\N	\N	1	B2	\N	\N
+2894	definition	n	\N	\N	1	B2	\N	\N
+2895	delay	n	\N	\N	1	B2	\N	\N
+2896	delete	v	\N	\N	1	B2	\N	\N
+2897	deliberate	adj	\N	\N	1	B2	\N	\N
+2898	deliberately	adv	\N	\N	1	B2	\N	\N
+2899	delight	n	\N	\N	1	B2	\N	\N
+2900	delighted	adj	\N	\N	1	B2	\N	\N
+2901	delivery	n	\N	\N	1	B2	\N	\N
+2902	demand	n	\N	\N	1	B2	\N	\N
+2903	democracy	n	\N	\N	1	B2	\N	\N
+2904	democratic	adj	\N	\N	1	B2	\N	\N
+2905	demonstrate	v	\N	\N	1	B2	\N	\N
+2906	demonstration	n	\N	\N	1	B2	\N	\N
+2907	deny	v	\N	\N	1	B2	\N	\N
+2908	depart	v	\N	\N	1	B2	\N	\N
+2909	dependent	adj	\N	\N	1	B2	\N	\N
+2910	deposit	n	\N	\N	1	B2	\N	\N
+2911	depressed	adj	\N	\N	1	B2	\N	\N
+2912	depressing	adj	\N	\N	1	B2	\N	\N
+2913	depression	n	\N	\N	1	B2	\N	\N
+2914	depth	n	\N	\N	1	B2	\N	\N
+2915	derive	v	\N	\N	1	B2	\N	\N
+2916	deserve	v	\N	\N	1	B2	\N	\N
+2917	desire	n	\N	\N	1	B2	\N	\N
+2918	desperate	adj	\N	\N	1	B2	\N	\N
+2919	desperately	adv	\N	\N	1	B2	\N	\N
+2920	destruction	n	\N	\N	1	B2	\N	\N
+2921	detailed	adj	\N	\N	1	B2	\N	\N
+2922	detect	v	\N	\N	1	B2	\N	\N
+2923	determine	v	\N	\N	1	B2	\N	\N
+2924	determination	n	\N	\N	1	B2	\N	\N
+2925	devil	n	\N	\N	1	B2	\N	\N
+2926	devote	v	\N	\N	1	B2	\N	\N
+2927	differ	v	\N	\N	1	B2	\N	\N
+2928	dig	v	\N	\N	1	B2	\N	\N
+2929	dime	n	\N	\N	1	B2	\N	\N
+2930	disability	n	\N	\N	1	B2	\N	\N
+2931	disabled	adj	\N	\N	1	B2	\N	\N
+2932	disagreement	n	\N	\N	1	B2	\N	\N
+2933	disappoint	v	\N	\N	1	B2	\N	\N
+2934	disappointment	n	\N	\N	1	B2	\N	\N
+2935	disc	n	\N	\N	1	B2	\N	\N
+2936	discipline	n	\N	\N	1	B2	\N	\N
+2937	discourage	v	\N	\N	1	B2	\N	\N
+2938	dishonest	adj	\N	\N	1	B2	\N	\N
+2939	dismiss	v	\N	\N	1	B2	\N	\N
+2940	disorder	n	\N	\N	1	B2	\N	\N
+2941	display	n	\N	\N	1	B2	\N	\N
+2942	distant	adj	\N	\N	1	B2	\N	\N
+2943	distinct	adj	\N	\N	1	B2	\N	\N
+2944	distinguish	v	\N	\N	1	B2	\N	\N
+2945	distract	v	\N	\N	1	B2	\N	\N
+2946	distribute	v	\N	\N	1	B2	\N	\N
+2947	distribution	n	\N	\N	1	B2	\N	\N
+2948	district	n	\N	\N	1	B2	\N	\N
+2949	disturb	v	\N	\N	1	B2	\N	\N
+2950	dive	v	\N	\N	1	B2	\N	\N
+2951	diverse	adj	\N	\N	1	B2	\N	\N
+2952	diversity	n	\N	\N	1	B2	\N	\N
+2953	division	n	\N	\N	1	B2	\N	\N
+2954	divorce	n	\N	\N	1	B2	\N	\N
+2955	document	n	\N	\N	1	B2	\N	\N
+2956	domestic	adj	\N	\N	1	B2	\N	\N
+2957	dominant	adj	\N	\N	1	B2	\N	\N
+2958	dominate	v	\N	\N	1	B2	\N	\N
+2959	donation	n	\N	\N	1	B2	\N	\N
+2960	dot	n	\N	\N	1	B2	\N	\N
+2961	downwards	adv	\N	\N	1	B2	\N	\N
+2962	dozen	n	\N	\N	1	B2	\N	\N
+2963	draft	n	\N	\N	1	B2	\N	\N
+2964	drag	v	\N	\N	1	B2	\N	\N
+2965	dramatic	adj	\N	\N	1	B2	\N	\N
+2966	dramatically	adv	\N	\N	1	B2	\N	\N
+2967	drought	n	\N	\N	1	B2	\N	\N
+2968	dull	adj	\N	\N	1	B2	\N	\N
+2969	dump	v	\N	\N	1	B2	\N	\N
+2970	duration	n	\N	\N	1	B2	\N	\N
+2971	dynamic	adj	\N	\N	1	B2	\N	\N
+2972	eager	adj	\N	\N	1	B2	\N	\N
+2973	economics	n	\N	\N	1	B2	\N	\N
+2974	economist	n	\N	\N	1	B2	\N	\N
+2975	edit	v	\N	\N	1	B2	\N	\N
+2976	edition	n	\N	\N	1	B2	\N	\N
+2977	editorial	n	\N	\N	1	B2	\N	\N
+2978	efficient	adj	\N	\N	1	B2	\N	\N
+2979	efficiently	adv	\N	\N	1	B2	\N	\N
+2980	elbow	n	\N	\N	1	B2	\N	\N
+2981	elderly	adj	\N	\N	1	B2	\N	\N
+2982	elect	v	\N	\N	1	B2	\N	\N
+2983	element	n	\N	\N	1	B2	\N	\N
+2984	electronics	n	\N	\N	1	B2	\N	\N
+2985	elegant	adj	\N	\N	1	B2	\N	\N
+2986	elementary	adj	\N	\N	1	B2	\N	\N
+2987	eliminate	v	\N	\N	1	B2	\N	\N
+2988	elsewhere	adv	\N	\N	1	B2	\N	\N
+2989	embrace	v	\N	\N	1	B2	\N	\N
+2990	emerge	v	\N	\N	1	B2	\N	\N
+2991	emission	n	\N	\N	1	B2	\N	\N
+2992	emotional	adj	\N	\N	1	B2	\N	\N
+2993	emotionally	adv	\N	\N	1	B2	\N	\N
+2994	emphasis	n	\N	\N	1	B2	\N	\N
+2995	emphasise	v	\N	\N	1	B2	\N	\N
+2996	empire	n	\N	\N	1	B2	\N	\N
+2997	enable	v	\N	\N	1	B2	\N	\N
+2998	encounter	v	\N	\N	1	B2	\N	\N
+2999	engage	v	\N	\N	1	B2	\N	\N
+3000	enhance	v	\N	\N	1	B2	\N	\N
+3001	enjoyable	adj	\N	\N	1	B2	\N	\N
+3002	enquiry	n	\N	\N	1	B2	\N	\N
+3003	ensure	v	\N	\N	1	B2	\N	\N
+3004	entertaining	adj	\N	\N	1	B2	\N	\N
+3005	enthusiasm	n	\N	\N	1	B2	\N	\N
+3006	enthusiastic	adj	\N	\N	1	B2	\N	\N
+3007	entire	adj	\N	\N	1	B2	\N	\N
+3008	entirely	adv	\N	\N	1	B2	\N	\N
+3009	entrepreneur	n	\N	\N	1	B2	\N	\N
+3010	envelope	n	\N	\N	1	B2	\N	\N
+3011	equip	v	\N	\N	1	B2	\N	\N
+3012	equivalent	adj	\N	\N	1	B2	\N	\N
+3013	era	n	\N	\N	1	B2	\N	\N
+3014	erupt	v	\N	\N	1	B2	\N	\N
+3015	essentially	adv	\N	\N	1	B2	\N	\N
+3016	establish	v	\N	\N	1	B2	\N	\N
+3017	estate	n	\N	\N	1	B2	\N	\N
+3018	estimate	n	\N	\N	1	B2	\N	\N
+3019	ethic	n	\N	\N	1	B2	\N	\N
+3020	ethical	adj	\N	\N	1	B2	\N	\N
+3021	ethnic	adj	\N	\N	1	B2	\N	\N
+3022	evaluate	v	\N	\N	1	B2	\N	\N
+3023	evaluation	n	\N	\N	1	B2	\N	\N
+3024	even	adv	\N	\N	1	B2	\N	\N
+3025	evidence	n	\N	\N	1	B2	\N	\N
+3026	evident	adj	\N	\N	1	B2	\N	\N
+3027	evil	adj	\N	\N	1	B2	\N	\N
+3028	evolution	n	\N	\N	1	B2	\N	\N
+3029	evolve	v	\N	\N	1	B2	\N	\N
+3030	examination	n	\N	\N	1	B2	\N	\N
+3031	exceed	v	\N	\N	1	B2	\N	\N
+3032	exception	n	\N	\N	1	B2	\N	\N
+3033	excessive	adj	\N	\N	1	B2	\N	\N
+3034	exclude	v	\N	\N	1	B2	\N	\N
+3035	excuse	n	\N	\N	1	B2	\N	\N
+3036	executive	n	\N	\N	1	B2	\N	\N
+3037	existence	n	\N	\N	1	B2	\N	\N
+3038	exotic	adj	\N	\N	1	B2	\N	\N
+3039	expansion	n	\N	\N	1	B2	\N	\N
+3040	expectation	n	\N	\N	1	B2	\N	\N
+3041	expense	n	\N	\N	1	B2	\N	\N
+3042	expertise	n	\N	\N	1	B2	\N	\N
+3043	exploit	v	\N	\N	1	B2	\N	\N
+3044	exploration	n	\N	\N	1	B2	\N	\N
+3045	expose	v	\N	\N	1	B2	\N	\N
+3046	exposure	n	\N	\N	1	B2	\N	\N
+3047	extend	v	\N	\N	1	B2	\N	\N
+3048	extension	n	\N	\N	1	B2	\N	\N
+3049	extensive	adj	\N	\N	1	B2	\N	\N
+3050	extensively	adv	\N	\N	1	B2	\N	\N
+3051	extent	n	\N	\N	1	B2	\N	\N
+3052	external	adj	\N	\N	1	B2	\N	\N
+3053	extract	n	\N	\N	1	B2	\N	\N
+3054	extraordinary	adj	\N	\N	1	B2	\N	\N
+3055	fabric	n	\N	\N	1	B2	\N	\N
+3056	fabulous	adj	\N	\N	1	B2	\N	\N
+3057	facility	n	\N	\N	1	B2	\N	\N
+3058	factor	n	\N	\N	1	B2	\N	\N
+3059	faculty	n	\N	\N	1	B2	\N	\N
+3060	failed	adj	\N	\N	1	B2	\N	\N
+3061	failure	n	\N	\N	1	B2	\N	\N
+3062	faith	n	\N	\N	1	B2	\N	\N
+3063	fake	adj	\N	\N	1	B2	\N	\N
+3064	fame	n	\N	\N	1	B2	\N	\N
+3065	fantasy	n	\N	\N	1	B2	\N	\N
+3066	fare	n	\N	\N	1	B2	\N	\N
+3067	fault	n	\N	\N	1	B2	\N	\N
+3068	favour	n	\N	\N	1	B2	\N	\N
+3069	feather	n	\N	\N	1	B2	\N	\N
+3070	fee	n	\N	\N	1	B2	\N	\N
+3071	feedback	n	\N	\N	1	B2	\N	\N
+3072	fellow	adj	\N	\N	1	B2	\N	\N
+3073	finance	n	\N	\N	1	B2	\N	\N
+3074	finding	n	\N	\N	1	B2	\N	\N
+3075	firefighter	n	\N	\N	1	B2	\N	\N
+3076	firework	n	\N	\N	1	B2	\N	\N
+3077	firm	n	\N	\N	1	B2	\N	\N
+3078	firmly	adv	\N	\N	1	B2	\N	\N
+3079	flame	n	\N	\N	1	B2	\N	\N
+3080	flash	v	\N	\N	1	B2	\N	\N
+3081	flavour	n	\N	\N	1	B2	\N	\N
+3082	flexible	adj	\N	\N	1	B2	\N	\N
+3083	float	v	\N	\N	1	B2	\N	\N
+3084	folding	adj	\N	\N	1	B2	\N	\N
+3085	fond	adj	\N	\N	1	B2	\N	\N
+3086	fool	n	\N	\N	1	B2	\N	\N
+3087	forbid	v	\N	\N	1	B2	\N	\N
+3088	forecast	n	\N	\N	1	B2	\N	\N
+3089	forgive	v	\N	\N	1	B2	\N	\N
+3090	format	n	\N	\N	1	B2	\N	\N
+3091	formation	n	\N	\N	1	B2	\N	\N
+3092	former	adj	\N	\N	1	B2	\N	\N
+3093	formerly	adv	\N	\N	1	B2	\N	\N
+3094	fortunate	adj	\N	\N	1	B2	\N	\N
+3095	fortune	n	\N	\N	1	B2	\N	\N
+3096	forum	n	\N	\N	1	B2	\N	\N
+3097	found	v	\N	\N	1	B2	\N	\N
+3098	foundation	n	\N	\N	1	B2	\N	\N
+3099	founder	n	\N	\N	1	B2	\N	\N
+3100	fraction	n	\N	\N	1	B2	\N	\N
+3101	fragment	n	\N	\N	1	B2	\N	\N
+3102	framework	n	\N	\N	1	B2	\N	\N
+3103	fraud	n	\N	\N	1	B2	\N	\N
+3104	freedom	n	\N	\N	1	B2	\N	\N
+3105	freely	adv	\N	\N	1	B2	\N	\N
+3106	frequency	n	\N	\N	1	B2	\N	\N
+3107	frequent	adj	\N	\N	1	B2	\N	\N
+3108	frustrated	adj	\N	\N	1	B2	\N	\N
+3109	fulfil	v	\N	\N	1	B2	\N	\N
+3110	full-time	adj	\N	\N	1	B2	\N	\N
+3111	fully	adv	\N	\N	1	B2	\N	\N
+3112	fund	n	\N	\N	1	B2	\N	\N
+3113	fundamental	adj	\N	\N	1	B2	\N	\N
+3114	fundamentally	adv	\N	\N	1	B2	\N	\N
+3115	funding	n	\N	\N	1	B2	\N	\N
+3116	funeral	n	\N	\N	1	B2	\N	\N
+3117	furious	adj	\N	\N	1	B2	\N	\N
+3118	furthermore	adv	\N	\N	1	B2	\N	\N
+3119	gain	v	\N	\N	1	B2	\N	\N
+3120	gallon	n	\N	\N	1	B2	\N	\N
+3121	gaming	n	\N	\N	1	B2	\N	\N
+3122	gang	n	\N	\N	1	B2	\N	\N
+3123	gay	adj	\N	\N	1	B2	\N	\N
+3124	gender	n	\N	\N	1	B2	\N	\N
+3125	gene	n	\N	\N	1	B2	\N	\N
+3126	generate	v	\N	\N	1	B2	\N	\N
+3127	genetic	adj	\N	\N	1	B2	\N	\N
+3128	genius	n	\N	\N	1	B2	\N	\N
+3129	genre	n	\N	\N	1	B2	\N	\N
+3130	genuine	adj	\N	\N	1	B2	\N	\N
+3131	genuinely	adv	\N	\N	1	B2	\N	\N
+3132	gesture	n	\N	\N	1	B2	\N	\N
+3133	globalization	n	\N	\N	1	B2	\N	\N
+3134	globe	n	\N	\N	1	B2	\N	\N
+3135	golden	adj	\N	\N	1	B2	\N	\N
+3136	goodness	n	\N	\N	1	B2	\N	\N
+3137	gorgeous	adj	\N	\N	1	B2	\N	\N
+3138	govern	v	\N	\N	1	B2	\N	\N
+3139	grab	v	\N	\N	1	B2	\N	\N
+3140	gradually	adv	\N	\N	1	B2	\N	\N
+3141	grand	adj	\N	\N	1	B2	\N	\N
+3142	grant	n	\N	\N	1	B2	\N	\N
+3143	graphic	adj	\N	\N	1	B2	\N	\N
+3144	graphics	n	\N	\N	1	B2	\N	\N
+3145	grave	n	\N	\N	1	B2	\N	\N
+3146	greatly	adv	\N	\N	1	B2	\N	\N
+3147	greenhouse	n	\N	\N	1	B2	\N	\N
+3148	guarantee	v	\N	\N	1	B2	\N	\N
+3149	guideline	n	\N	\N	1	B2	\N	\N
+3150	habitat	n	\N	\N	1	B2	\N	\N
+3151	handle	v	\N	\N	1	B2	\N	\N
+3152	harbour	n	\N	\N	1	B2	\N	\N
+3153	harm	n	\N	\N	1	B2	\N	\N
+3154	harmful	adj	\N	\N	1	B2	\N	\N
+3155	headquarters	n	\N	\N	1	B2	\N	\N
+3157	healthcare	n	\N	\N	1	B2	\N	\N
+3158	hearing	n	\N	\N	1	B2	\N	\N
+3159	heaven	n	\N	\N	1	B2	\N	\N
+3160	heel	n	\N	\N	1	B2	\N	\N
+3161	hell	n	\N	\N	1	B2	\N	\N
+3162	helmet	n	\N	\N	1	B2	\N	\N
+3163	herb	n	\N	\N	1	B2	\N	\N
+3164	hesitate	v	\N	\N	1	B2	\N	\N
+3165	hidden	adj	\N	\N	1	B2	\N	\N
+3166	hilarious	adj	\N	\N	1	B2	\N	\N
+3167	hip	n	\N	\N	1	B2	\N	\N
+3168	historian	n	\N	\N	1	B2	\N	\N
+3169	hollow	adj	\N	\N	1	B2	\N	\N
+3170	holy	adj	\N	\N	1	B2	\N	\N
+3171	homeless	adj	\N	\N	1	B2	\N	\N
+3172	honesty	n	\N	\N	1	B2	\N	\N
+3173	honour	n	\N	\N	1	B2	\N	\N
+3174	hook	n	\N	\N	1	B2	\N	\N
+3175	hopefully	adv	\N	\N	1	B2	\N	\N
+3176	household	n	\N	\N	1	B2	\N	\N
+3177	housing	n	\N	\N	1	B2	\N	\N
+3178	humorous	adj	\N	\N	1	B2	\N	\N
+3179	humour	n	\N	\N	1	B2	\N	\N
+3180	hunger	n	\N	\N	1	B2	\N	\N
+3181	hunting	n	\N	\N	1	B2	\N	\N
+3182	icon	n	\N	\N	1	B2	\N	\N
+3183	ID	n	\N	\N	1	B2	\N	\N
+3184	ideal	adj	\N	\N	1	B2	\N	\N
+3185	identical	adj	\N	\N	1	B2	\N	\N
+3186	identity	n	\N	\N	1	B2	\N	\N
+3187	illusion	n	\N	\N	1	B2	\N	\N
+3188	illustrate	v	\N	\N	1	B2	\N	\N
+3189	illustration	n	\N	\N	1	B2	\N	\N
+3190	imagination	n	\N	\N	1	B2	\N	\N
+3191	immigration	n	\N	\N	1	B2	\N	\N
+3192	immune	adj	\N	\N	1	B2	\N	\N
+3193	impatient	adj	\N	\N	1	B2	\N	\N
+3194	implement	v	\N	\N	1	B2	\N	\N
+3195	implication	n	\N	\N	1	B2	\N	\N
+3196	imply	v	\N	\N	1	B2	\N	\N
+3197	impose	v	\N	\N	1	B2	\N	\N
+3198	impress	v	\N	\N	1	B2	\N	\N
+3199	impressed	adj	\N	\N	1	B2	\N	\N
+3200	incentive	n	\N	\N	1	B2	\N	\N
+3201	inch	n	\N	\N	1	B2	\N	\N
+3202	incident	n	\N	\N	1	B2	\N	\N
+3203	income	n	\N	\N	1	B2	\N	\N
+3204	incorporate	v	\N	\N	1	B2	\N	\N
+3205	incorrect	adj	\N	\N	1	B2	\N	\N
+3206	increasingly	adv	\N	\N	1	B2	\N	\N
+3207	independence	n	\N	\N	1	B2	\N	\N
+3208	index	n	\N	\N	1	B2	\N	\N
+3209	indication	n	\N	\N	1	B2	\N	\N
+3210	industrial	adj	\N	\N	1	B2	\N	\N
+3211	inevitable	adj	\N	\N	1	B2	\N	\N
+3212	inevitably	adv	\N	\N	1	B2	\N	\N
+3213	infection	n	\N	\N	1	B2	\N	\N
+3214	infer	v	\N	\N	1	B2	\N	\N
+3215	inflation	n	\N	\N	1	B2	\N	\N
+3216	info	n	\N	\N	1	B2	\N	\N
+3217	inform	v	\N	\N	1	B2	\N	\N
+3218	inhabitant	n	\N	\N	1	B2	\N	\N
+3219	inherit	v	\N	\N	1	B2	\N	\N
+3220	initial	adj	\N	\N	1	B2	\N	\N
+3221	initially	adv	\N	\N	1	B2	\N	\N
+3222	initiative	n	\N	\N	1	B2	\N	\N
+3223	ink	n	\N	\N	1	B2	\N	\N
+3224	inner	adj	\N	\N	1	B2	\N	\N
+3225	innovation	n	\N	\N	1	B2	\N	\N
+3226	innovative	adj	\N	\N	1	B2	\N	\N
+3227	input	n	\N	\N	1	B2	\N	\N
+3228	insert	v	\N	\N	1	B2	\N	\N
+3229	insight	n	\N	\N	1	B2	\N	\N
+3230	insist	v	\N	\N	1	B2	\N	\N
+3231	inspector	n	\N	\N	1	B2	\N	\N
+3232	inspire	v	\N	\N	1	B2	\N	\N
+3233	install	v	\N	\N	1	B2	\N	\N
+3234	installation	n	\N	\N	1	B2	\N	\N
+3235	instance	n	\N	\N	1	B2	\N	\N
+3236	instant	adj	\N	\N	1	B2	\N	\N
+3237	instantly	adv	\N	\N	1	B2	\N	\N
+3238	institute	n	\N	\N	1	B2	\N	\N
+3239	institution	n	\N	\N	1	B2	\N	\N
+3240	insurance	n	\N	\N	1	B2	\N	\N
+3241	integrate	v	\N	\N	1	B2	\N	\N
+3242	intellectual	adj	\N	\N	1	B2	\N	\N
+3243	intended	adj	\N	\N	1	B2	\N	\N
+3244	intense	adj	\N	\N	1	B2	\N	\N
+3245	interact	v	\N	\N	1	B2	\N	\N
+3246	interaction	n	\N	\N	1	B2	\N	\N
+3247	internal	adj	\N	\N	1	B2	\N	\N
+3248	interpret	v	\N	\N	1	B2	\N	\N
+3249	interpretation	n	\N	\N	1	B2	\N	\N
+3250	interrupt	v	\N	\N	1	B2	\N	\N
+3251	interval	n	\N	\N	1	B2	\N	\N
+3252	invade	v	\N	\N	1	B2	\N	\N
+3253	invasion	n	\N	\N	1	B2	\N	\N
+3254	investigation	n	\N	\N	1	B2	\N	\N
+3255	investment	n	\N	\N	1	B2	\N	\N
+3256	investor	n	\N	\N	1	B2	\N	\N
+3257	isolate	v	\N	\N	1	B2	\N	\N
+3258	isolated	adj	\N	\N	1	B2	\N	\N
+3259	issue	v	\N	\N	1	B2	\N	\N
+3260	jail	n	\N	\N	1	B2	\N	\N
+3261	jet	n	\N	\N	1	B2	\N	\N
+3262	joint	n	\N	\N	1	B2	\N	\N
+3263	journalism	n	\N	\N	1	B2	\N	\N
+3264	joy	n	\N	\N	1	B2	\N	\N
+3265	judgement	n	\N	\N	1	B2	\N	\N
+3266	junior	adj	\N	\N	1	B2	\N	\N
+3267	jury	n	\N	\N	1	B2	\N	\N
+3268	justice	n	\N	\N	1	B2	\N	\N
+3269	justify	v	\N	\N	1	B2	\N	\N
+3270	kidnap	v	\N	\N	1	B2	\N	\N
+3271	kidney	n	\N	\N	1	B2	\N	\N
+3272	kindergarten	n	\N	\N	1	B2	\N	\N
+3273	kit	n	\N	\N	1	B2	\N	\N
+3274	labour	n	\N	\N	1	B2	\N	\N
+3275	ladder	n	\N	\N	1	B2	\N	\N
+3276	landing	n	\N	\N	1	B2	\N	\N
+3277	landscape	n	\N	\N	1	B2	\N	\N
+3278	lane	n	\N	\N	1	B2	\N	\N
+3279	largely	adv	\N	\N	1	B2	\N	\N
+3280	laser	n	\N	\N	1	B2	\N	\N
+3281	lately	adv	\N	\N	1	B2	\N	\N
+3282	launch	v	\N	\N	1	B2	\N	\N
+3283	leadership	n	\N	\N	1	B2	\N	\N
+3284	league	n	\N	\N	1	B2	\N	\N
+3285	lean	v	\N	\N	1	B2	\N	\N
+3286	legend	n	\N	\N	1	B2	\N	\N
+3287	lens	n	\N	\N	1	B2	\N	\N
+3288	licence	n	\N	\N	1	B2	\N	\N
+3289	lifetime	n	\N	\N	1	B2	\N	\N
+3290	lighting	n	\N	\N	1	B2	\N	\N
+3291	likewise	adv	\N	\N	1	B2	\N	\N
+3292	limitation	n	\N	\N	1	B2	\N	\N
+3293	limited	adj	\N	\N	1	B2	\N	\N
+3294	literally	adv	\N	\N	1	B2	\N	\N
+3295	literary	adj	\N	\N	1	B2	\N	\N
+3296	litter	n	\N	\N	1	B2	\N	\N
+3297	lively	adj	\N	\N	1	B2	\N	\N
+3298	liver	n	\N	\N	1	B2	\N	\N
+3299	load	n	\N	\N	1	B2	\N	\N
+3300	loan	n	\N	\N	1	B2	\N	\N
+3301	logical	adj	\N	\N	1	B2	\N	\N
+3302	logo	n	\N	\N	1	B2	\N	\N
+3303	long-term	adj	\N	\N	1	B2	\N	\N
+3304	loose	adj	\N	\N	1	B2	\N	\N
+3305	lord	n	\N	\N	1	B2	\N	\N
+3306	lottery	n	\N	\N	1	B2	\N	\N
+3307	lower	v	\N	\N	1	B2	\N	\N
+3308	loyal	adj	\N	\N	1	B2	\N	\N
+3309	lung	n	\N	\N	1	B2	\N	\N
+3310	lyric	n	\N	\N	1	B2	\N	\N
+3311	magnificent	adj	\N	\N	1	B2	\N	\N
+3312	maintain	v	\N	\N	1	B2	\N	\N
+3313	majority	n	\N	\N	1	B2	\N	\N
+3314	makeup	n	\N	\N	1	B2	\N	\N
+3315	making	n	\N	\N	1	B2	\N	\N
+3316	manufacture	v	\N	\N	1	B2	\N	\N
+3317	manufacturing	n	\N	\N	1	B2	\N	\N
+3318	marathon	n	\N	\N	1	B2	\N	\N
+3319	margin	n	\N	\N	1	B2	\N	\N
+3320	marker	n	\N	\N	1	B2	\N	\N
+3321	martial	adj	\N	\N	1	B2	\N	\N
+3322	mass	n	\N	\N	1	B2	\N	\N
+3323	massive	adj	\N	\N	1	B2	\N	\N
+3324	master	n	\N	\N	1	B2	\N	\N
+3325	matching	adj	\N	\N	1	B2	\N	\N
+3326	mate	n	\N	\N	1	B2	\N	\N
+3327	maximum	n	\N	\N	1	B2	\N	\N
+3328	means	n	\N	\N	1	B2	\N	\N
+3329	measurement	n	\N	\N	1	B2	\N	\N
+3330	mechanic	n	\N	\N	1	B2	\N	\N
+3331	mechanical	adj	\N	\N	1	B2	\N	\N
+3332	mechanism	n	\N	\N	1	B2	\N	\N
+3333	medal	n	\N	\N	1	B2	\N	\N
+3334	medication	n	\N	\N	1	B2	\N	\N
+3335	medium	n	\N	\N	1	B2	\N	\N
+3336	melt	v	\N	\N	1	B2	\N	\N
+3337	membership	n	\N	\N	1	B2	\N	\N
+3338	memorable	adj	\N	\N	1	B2	\N	\N
+3339	metaphor	n	\N	\N	1	B2	\N	\N
+3340	method	n	\N	\N	1	B2	\N	\N
+3341	military	adj	\N	\N	1	B2	\N	\N
+3342	miner	n	\N	\N	1	B2	\N	\N
+3343	mineral	n	\N	\N	1	B2	\N	\N
+3344	minimum	n	\N	\N	1	B2	\N	\N
+3345	minister	n	\N	\N	1	B2	\N	\N
+3346	minor	adj	\N	\N	1	B2	\N	\N
+3347	minority	n	\N	\N	1	B2	\N	\N
+3348	miserable	adj	\N	\N	1	B2	\N	\N
+3349	mission	n	\N	\N	1	B2	\N	\N
+3350	mistaken	adj	\N	\N	1	B2	\N	\N
+3351	mixed	adj	\N	\N	1	B2	\N	\N
+3352	mode	n	\N	\N	1	B2	\N	\N
+3353	modest	adj	\N	\N	1	B2	\N	\N
+3354	modify	v	\N	\N	1	B2	\N	\N
+3355	monitor	n	\N	\N	1	B2	\N	\N
+3356	monster	n	\N	\N	1	B2	\N	\N
+3357	monthly	adj	\N	\N	1	B2	\N	\N
+3358	monument	n	\N	\N	1	B2	\N	\N
+3359	moral	adj	\N	\N	1	B2	\N	\N
+3360	moreover	adv	\N	\N	1	B2	\N	\N
+3361	mortgage	n	\N	\N	1	B2	\N	\N
+3362	mosque	n	\N	\N	1	B2	\N	\N
+3363	mosquito	n	\N	\N	1	B2	\N	\N
+3364	motion	n	\N	\N	1	B2	\N	\N
+3365	motivate	v	\N	\N	1	B2	\N	\N
+3366	motivation	n	\N	\N	1	B2	\N	\N
+3367	motor	n	\N	\N	1	B2	\N	\N
+3368	mount	v	\N	\N	1	B2	\N	\N
+3369	moving	adj	\N	\N	1	B2	\N	\N
+3370	multiple	adj	\N	\N	1	B2	\N	\N
+3371	multiply	v	\N	\N	1	B2	\N	\N
+3372	mysterious	adj	\N	\N	1	B2	\N	\N
+3373	myth	n	\N	\N	1	B2	\N	\N
+3374	naked	adj	\N	\N	1	B2	\N	\N
+3375	nasty	adj	\N	\N	1	B2	\N	\N
+3376	navigation	n	\N	\N	1	B2	\N	\N
+3377	nearby	adj	\N	\N	1	B2	\N	\N
+3378	neat	adj	\N	\N	1	B2	\N	\N
+3379	necessity	n	\N	\N	1	B2	\N	\N
+3380	negative	adj	\N	\N	1	B2	\N	\N
+3381	negotiate	v	\N	\N	1	B2	\N	\N
+3382	negotiation	n	\N	\N	1	B2	\N	\N
+3383	nerve	n	\N	\N	1	B2	\N	\N
+3384	neutral	adj	\N	\N	1	B2	\N	\N
+3385	nevertheless	adv	\N	\N	1	B2	\N	\N
+3386	newly	adv	\N	\N	1	B2	\N	\N
+3387	nickel	n	\N	\N	1	B2	\N	\N
+3388	nightmare	n	\N	\N	1	B2	\N	\N
+3389	nostalgia	n	\N	\N	1	B2	\N	\N
+3390	notebook	n	\N	\N	1	B2	\N	\N
+3391	notion	n	\N	\N	1	B2	\N	\N
+3392	novelist	n	\N	\N	1	B2	\N	\N
+3393	nowadays	adv	\N	\N	1	B2	\N	\N
+3394	numerous	adj	\N	\N	1	B2	\N	\N
+3395	nursing	n	\N	\N	1	B2	\N	\N
+3396	nutrition	n	\N	\N	1	B2	\N	\N
+3397	obesity	n	\N	\N	1	B2	\N	\N
+3398	obey	v	\N	\N	1	B2	\N	\N
+3399	object	n	\N	\N	1	B2	\N	\N
+3400	objective	n	\N	\N	1	B2	\N	\N
+3401	obligatory	adj	\N	\N	1	B2	\N	\N
+3402	obligation	n	\N	\N	1	B2	\N	\N
+3403	observation	n	\N	\N	1	B2	\N	\N
+3404	observe	v	\N	\N	1	B2	\N	\N
+3405	observer	n	\N	\N	1	B2	\N	\N
+3406	obstacle	n	\N	\N	1	B2	\N	\N
+3407	obtain	v	\N	\N	1	B2	\N	\N
+3408	occasionally	adv	\N	\N	1	B2	\N	\N
+3409	occupation	n	\N	\N	1	B2	\N	\N
+3410	occupy	v	\N	\N	1	B2	\N	\N
+3411	offence	n	\N	\N	1	B2	\N	\N
+3412	offend	v	\N	\N	1	B2	\N	\N
+3413	offender	n	\N	\N	1	B2	\N	\N
+3414	offensive	adj	\N	\N	1	B2	\N	\N
+3415	ongoing	adj	\N	\N	1	B2	\N	\N
+3416	onwards	adv	\N	\N	1	B2	\N	\N
+3417	opening	n	\N	\N	1	B2	\N	\N
+3418	openly	adv	\N	\N	1	B2	\N	\N
+3419	opera	n	\N	\N	1	B2	\N	\N
+3420	operate	v	\N	\N	1	B2	\N	\N
+3421	operator	n	\N	\N	1	B2	\N	\N
+3422	opponent	n	\N	\N	1	B2	\N	\N
+3423	oppose	v	\N	\N	1	B2	\N	\N
+3424	opposed	adj	\N	\N	1	B2	\N	\N
+3425	opposition	n	\N	\N	1	B2	\N	\N
+3426	optical	adj	\N	\N	1	B2	\N	\N
+3427	optimistic	adj	\N	\N	1	B2	\N	\N
+3428	orchestra	n	\N	\N	1	B2	\N	\N
+3429	organ	n	\N	\N	1	B2	\N	\N
+3430	organic	adj	\N	\N	1	B2	\N	\N
+3431	origin	n	\N	\N	1	B2	\N	\N
+3432	otherwise	adv	\N	\N	1	B2	\N	\N
+3433	outcome	n	\N	\N	1	B2	\N	\N
+3434	outer	adj	\N	\N	1	B2	\N	\N
+3435	outfit	n	\N	\N	1	B2	\N	\N
+3436	outline	n	\N	\N	1	B2	\N	\N
+3437	output	n	\N	\N	1	B2	\N	\N
+3438	outstanding	adj	\N	\N	1	B2	\N	\N
+3439	overall	adj	\N	\N	1	B2	\N	\N
+3440	overcome	v	\N	\N	1	B2	\N	\N
+3441	overnight	adv	\N	\N	1	B2	\N	\N
+3442	overseas	adv	\N	\N	1	B2	\N	\N
+3443	owe	v	\N	\N	1	B2	\N	\N
+3444	ownership	n	\N	\N	1	B2	\N	\N
+3445	oxygen	n	\N	\N	1	B2	\N	\N
+3446	pace	n	\N	\N	1	B2	\N	\N
+3447	packet	n	\N	\N	1	B2	\N	\N
+3448	palm	n	\N	\N	1	B2	\N	\N
+3449	panel	n	\N	\N	1	B2	\N	\N
+3450	panic	n	\N	\N	1	B2	\N	\N
+3451	parade	n	\N	\N	1	B2	\N	\N
+3452	parallel	adj	\N	\N	1	B2	\N	\N
+3453	parliament	n	\N	\N	1	B2	\N	\N
+3454	part-time	adj	\N	\N	1	B2	\N	\N
+3455	participant	n	\N	\N	1	B2	\N	\N
+3456	participation	n	\N	\N	1	B2	\N	\N
+3457	partly	adv	\N	\N	1	B2	\N	\N
+3458	partnership	n	\N	\N	1	B2	\N	\N
+3459	passage	n	\N	\N	1	B2	\N	\N
+3460	passionate	adj	\N	\N	1	B2	\N	\N
+3461	password	n	\N	\N	1	B2	\N	\N
+3462	patch	n	\N	\N	1	B2	\N	\N
+3463	patience	n	\N	\N	1	B2	\N	\N
+3464	pause	n	\N	\N	1	B2	\N	\N
+3465	peer	n	\N	\N	1	B2	\N	\N
+3466	penalty	n	\N	\N	1	B2	\N	\N
+3467	pension	n	\N	\N	1	B2	\N	\N
+3468	perceive	v	\N	\N	1	B2	\N	\N
+3469	perception	n	\N	\N	1	B2	\N	\N
+3470	permanent	adj	\N	\N	1	B2	\N	\N
+3471	permanently	adv	\N	\N	1	B2	\N	\N
+3472	permit	n	\N	\N	1	B2	\N	\N
+3473	perspective	n	\N	\N	1	B2	\N	\N
+3474	pharmacy	n	\N	\N	1	B2	\N	\N
+3475	phase	n	\N	\N	1	B2	\N	\N
+3476	phenomenon	n	\N	\N	1	B2	\N	\N
+3477	philosophy	n	\N	\N	1	B2	\N	\N
+3478	physician	n	\N	\N	1	B2	\N	\N
+3479	pile	n	\N	\N	1	B2	\N	\N
+3480	pill	n	\N	\N	1	B2	\N	\N
+3481	pitch	n	\N	\N	1	B2	\N	\N
+3482	pity	n	\N	\N	1	B2	\N	\N
+3483	placement	n	\N	\N	1	B2	\N	\N
+3484	plain	adj	\N	\N	1	B2	\N	\N
+3485	plus	prep	\N	\N	1	B2	\N	\N
+3486	pointed	adj	\N	\N	1	B2	\N	\N
+3487	popularity	n	\N	\N	1	B2	\N	\N
+3488	portion	n	\N	\N	1	B2	\N	\N
+3489	pose	n	\N	\N	1	B2	\N	\N
+3490	positive	adj	\N	\N	1	B2	\N	\N
+3491	possess	v	\N	\N	1	B2	\N	\N
+3492	potential	adj	\N	\N	1	B2	\N	\N
+3493	potentially	adv	\N	\N	1	B2	\N	\N
+3494	praise	v	\N	\N	1	B2	\N	\N
+3495	precious	adj	\N	\N	1	B2	\N	\N
+3496	precise	adj	\N	\N	1	B2	\N	\N
+3497	precisely	adv	\N	\N	1	B2	\N	\N
+3498	predictable	adj	\N	\N	1	B2	\N	\N
+3499	preference	n	\N	\N	1	B2	\N	\N
+3500	pregnant	adj	\N	\N	1	B2	\N	\N
+3501	preparation	n	\N	\N	1	B2	\N	\N
+3502	presence	n	\N	\N	1	B2	\N	\N
+3503	preserve	v	\N	\N	1	B2	\N	\N
+3504	presidential	adj	\N	\N	1	B2	\N	\N
+3505	pride	n	\N	\N	1	B2	\N	\N
+3506	primarily	adv	\N	\N	1	B2	\N	\N
+3507	prime	adj	\N	\N	1	B2	\N	\N
+3508	principal	adj	\N	\N	1	B2	\N	\N
+3509	principle	n	\N	\N	1	B2	\N	\N
+3510	prior	adj	\N	\N	1	B2	\N	\N
+3511	priority	n	\N	\N	1	B2	\N	\N
+3512	privacy	n	\N	\N	1	B2	\N	\N
+3513	probability	n	\N	\N	1	B2	\N	\N
+3514	probable	adj	\N	\N	1	B2	\N	\N
+3515	procedure	n	\N	\N	1	B2	\N	\N
+3516	proceed	v	\N	\N	1	B2	\N	\N
+3517	professional	adj	\N	\N	1	B2	\N	\N
+3518	programming	n	\N	\N	1	B2	\N	\N
+3519	progressive	adj	\N	\N	1	B2	\N	\N
+3520	prohibit	v	\N	\N	1	B2	\N	\N
+3521	promising	adj	\N	\N	1	B2	\N	\N
+3522	promotion	n	\N	\N	1	B2	\N	\N
+3523	prompt	v	\N	\N	1	B2	\N	\N
+3524	proof	n	\N	\N	1	B2	\N	\N
+3525	proportion	n	\N	\N	1	B2	\N	\N
+3526	proportion	n	\N	\N	1	B2	\N	\N
+3527	proposal	n	\N	\N	1	B2	\N	\N
+3528	propose	v	\N	\N	1	B2	\N	\N
+3529	prospect	n	\N	\N	1	B2	\N	\N
+3530	protection	n	\N	\N	1	B2	\N	\N
+3531	protein	n	\N	\N	1	B2	\N	\N
+3532	protester	n	\N	\N	1	B2	\N	\N
+3533	proven	adj	\N	\N	1	B2	\N	\N
+3534	psychological	adj	\N	\N	1	B2	\N	\N
+3535	psychologist	n	\N	\N	1	B2	\N	\N
+3536	psychology	n	\N	\N	1	B2	\N	\N
+3537	publication	n	\N	\N	1	B2	\N	\N
+3538	publicity	n	\N	\N	1	B2	\N	\N
+3539	publishing	n	\N	\N	1	B2	\N	\N
+3540	punk	n	\N	\N	1	B2	\N	\N
+3541	pupil	n	\N	\N	1	B2	\N	\N
+3542	purchase	n	\N	\N	1	B2	\N	\N
+3543	pure	adj	\N	\N	1	B2	\N	\N
+3544	purely	adv	\N	\N	1	B2	\N	\N
+3545	pursue	v	\N	\N	1	B2	\N	\N
+3546	pursuit	n	\N	\N	1	B2	\N	\N
+3547	puzzle	n	\N	\N	1	B2	\N	\N
+3548	question	v	\N	\N	1	B2	\N	\N
+3549	questionnaire	n	\N	\N	1	B2	\N	\N
+3550	racial	adj	\N	\N	1	B2	\N	\N
+3551	racism	n	\N	\N	1	B2	\N	\N
+3552	racist	adj	\N	\N	1	B2	\N	\N
+3553	radar	n	\N	\N	1	B2	\N	\N
+3554	radiation	n	\N	\N	1	B2	\N	\N
+3555	rail	n	\N	\N	1	B2	\N	\N
+3556	random	adj	\N	\N	1	B2	\N	\N
+3557	rank	n	\N	\N	1	B2	\N	\N
+3558	rapid	adj	\N	\N	1	B2	\N	\N
+3559	rapidly	adv	\N	\N	1	B2	\N	\N
+3560	raw	adj	\N	\N	1	B2	\N	\N
+3561	realistic	adj	\N	\N	1	B2	\N	\N
+3562	reasonable	adj	\N	\N	1	B2	\N	\N
+3563	reasonably	adv	\N	\N	1	B2	\N	\N
+3564	rebuild	v	\N	\N	1	B2	\N	\N
+3565	recall	v	\N	\N	1	B2	\N	\N
+3566	receiver	n	\N	\N	1	B2	\N	\N
+3567	recession	n	\N	\N	1	B2	\N	\N
+3568	reckon	v	\N	\N	1	B2	\N	\N
+3569	recognition	n	\N	\N	1	B2	\N	\N
+3570	recover	v	\N	\N	1	B2	\N	\N
+3571	recovery	n	\N	\N	1	B2	\N	\N
+3572	recruit	v	\N	\N	1	B2	\N	\N
+3573	reduction	n	\N	\N	1	B2	\N	\N
+3574	referee	n	\N	\N	1	B2	\N	\N
+3575	refugee	n	\N	\N	1	B2	\N	\N
+3576	regard	v	\N	\N	1	B2	\N	\N
+3577	regional	adj	\N	\N	1	B2	\N	\N
+3578	register	v	\N	\N	1	B2	\N	\N
+3579	registration	n	\N	\N	1	B2	\N	\N
+3580	regret	v	\N	\N	1	B2	\N	\N
+3581	regulate	v	\N	\N	1	B2	\N	\N
+3582	regulation	n	\N	\N	1	B2	\N	\N
+3583	reinforce	v	\N	\N	1	B2	\N	\N
+3584	relatively	adv	\N	\N	1	B2	\N	\N
+3585	relevant	adj	\N	\N	1	B2	\N	\N
+3586	relief	n	\N	\N	1	B2	\N	\N
+3587	relieve	v	\N	\N	1	B2	\N	\N
+3588	relieved	adj	\N	\N	1	B2	\N	\N
+3589	rely on	v	\N	\N	1	B2	\N	\N
+3590	remark	n	\N	\N	1	B2	\N	\N
+3591	remarkable	adj	\N	\N	1	B2	\N	\N
+3592	remarkably	adv	\N	\N	1	B2	\N	\N
+3593	reporting	n	\N	\N	1	B2	\N	\N
+3594	representative	n	\N	\N	1	B2	\N	\N
+3595	reputation	n	\N	\N	1	B2	\N	\N
+3596	requirement	n	\N	\N	1	B2	\N	\N
+3597	rescue	v	\N	\N	1	B2	\N	\N
+3598	research	n	\N	\N	1	B2	\N	\N
+3599	reserve	v	\N	\N	1	B2	\N	\N
+3600	resident	n	\N	\N	1	B2	\N	\N
+3601	resign	v	\N	\N	1	B2	\N	\N
+3602	resist	v	\N	\N	1	B2	\N	\N
+3603	resolution	n	\N	\N	1	B2	\N	\N
+3604	resolve	v	\N	\N	1	B2	\N	\N
+3605	resort	n	\N	\N	1	B2	\N	\N
+3606	restore	v	\N	\N	1	B2	\N	\N
+3607	restrict	v	\N	\N	1	B2	\N	\N
+3608	restriction	n	\N	\N	1	B2	\N	\N
+3609	résumé	n	\N	\N	1	B2	\N	\N
+3610	retail	n	\N	\N	1	B2	\N	\N
+3611	retain	v	\N	\N	1	B2	\N	\N
+3612	retirement	n	\N	\N	1	B2	\N	\N
+3613	reveal	v	\N	\N	1	B2	\N	\N
+3614	revenue	n	\N	\N	1	B2	\N	\N
+3615	revision	n	\N	\N	1	B2	\N	\N
+3616	revolution	n	\N	\N	1	B2	\N	\N
+3617	reward	n	\N	\N	1	B2	\N	\N
+3618	rhythm	n	\N	\N	1	B2	\N	\N
+3619	rid	adj	\N	\N	1	B2	\N	\N
+3620	ridiculous	adj	\N	\N	1	B2	\N	\N
+3621	risky	adj	\N	\N	1	B2	\N	\N
+3622	rival	n	\N	\N	1	B2	\N	\N
+3623	rob	v	\N	\N	1	B2	\N	\N
+3624	robbery	n	\N	\N	1	B2	\N	\N
+3625	rocket	n	\N	\N	1	B2	\N	\N
+3626	romance	n	\N	\N	1	B2	\N	\N
+3627	root	n	\N	\N	1	B2	\N	\N
+3628	rose	n	\N	\N	1	B2	\N	\N
+3629	roughly	adv	\N	\N	1	B2	\N	\N
+3630	rub	v	\N	\N	1	B2	\N	\N
+3631	rubber	n	\N	\N	1	B2	\N	\N
+3632	ruin	v	\N	\N	1	B2	\N	\N
+3633	rural	adj	\N	\N	1	B2	\N	\N
+3634	rush	v	\N	\N	1	B2	\N	\N
+3635	satellite	n	\N	\N	1	B2	\N	\N
+3636	satisfaction	n	\N	\N	1	B2	\N	\N
+3637	satisfied	adj	\N	\N	1	B2	\N	\N
+3638	satisfy	v	\N	\N	1	B2	\N	\N
+3639	saving	n	\N	\N	1	B2	\N	\N
+3640	scale	n	\N	\N	1	B2	\N	\N
+3641	scandal	n	\N	\N	1	B2	\N	\N
+3642	scare	v	\N	\N	1	B2	\N	\N
+3643	scholar	n	\N	\N	1	B2	\N	\N
+3644	scholarship	n	\N	\N	1	B2	\N	\N
+3645	scratch	v	\N	\N	1	B2	\N	\N
+3646	scream	v	\N	\N	1	B2	\N	\N
+3647	screening	n	\N	\N	1	B2	\N	\N
+3648	sector	n	\N	\N	1	B2	\N	\N
+3649	secure	v	\N	\N	1	B2	\N	\N
+3650	seek	v	\N	\N	1	B2	\N	\N
+3651	seeker	n	\N	\N	1	B2	\N	\N
+3652	select	v	\N	\N	1	B2	\N	\N
+3653	selection	n	\N	\N	1	B2	\N	\N
+3654	self	n	\N	\N	1	B2	\N	\N
+3655	seminar	n	\N	\N	1	B2	\N	\N
+3656	senior	adj	\N	\N	1	B2	\N	\N
+3657	sensitive	adj	\N	\N	1	B2	\N	\N
+3658	sequence	n	\N	\N	1	B2	\N	\N
+3659	session	n	\N	\N	1	B2	\N	\N
+3660	settle	v	\N	\N	1	B2	\N	\N
+3661	settler	n	\N	\N	1	B2	\N	\N
+3662	severe	adj	\N	\N	1	B2	\N	\N
+3663	severely	adv	\N	\N	1	B2	\N	\N
+3664	sexy	adj	\N	\N	1	B2	\N	\N
+3665	shade	n	\N	\N	1	B2	\N	\N
+3666	shadow	n	\N	\N	1	B2	\N	\N
+3667	shallow	adj	\N	\N	1	B2	\N	\N
+3668	shame	n	\N	\N	1	B2	\N	\N
+3669	shaped	adj	\N	\N	1	B2	\N	\N
+3670	shelter	n	\N	\N	1	B2	\N	\N
+3671	shooting	n	\N	\N	1	B2	\N	\N
+3672	shore	n	\N	\N	1	B2	\N	\N
+3673	short-term	adj	\N	\N	1	B2	\N	\N
+3674	shortage	n	\N	\N	1	B2	\N	\N
+3675	shortly	adv	\N	\N	1	B2	\N	\N
+3676	sibling	n	\N	\N	1	B2	\N	\N
+3677	sidewalk	n	\N	\N	1	B2	\N	\N
+3678	signature	n	\N	\N	1	B2	\N	\N
+3679	significance	n	\N	\N	1	B2	\N	\N
+3680	significant	adj	\N	\N	1	B2	\N	\N
+3681	significantly	adv	\N	\N	1	B2	\N	\N
+3682	silence	n	\N	\N	1	B2	\N	\N
+3683	silk	n	\N	\N	1	B2	\N	\N
+3684	sincere	adj	\N	\N	1	B2	\N	\N
+3685	skilled	adj	\N	\N	1	B2	\N	\N
+3686	skull	n	\N	\N	1	B2	\N	\N
+3687	slave	n	\N	\N	1	B2	\N	\N
+3688	slide	v	\N	\N	1	B2	\N	\N
+3689	slight	adj	\N	\N	1	B2	\N	\N
+3690	slip	v	\N	\N	1	B2	\N	\N
+3691	slogan	n	\N	\N	1	B2	\N	\N
+3692	slope	n	\N	\N	1	B2	\N	\N
+3693	so-called	adj	\N	\N	1	B2	\N	\N
+3694	solar	adj	\N	\N	1	B2	\N	\N
+3695	somehow	adv	\N	\N	1	B2	\N	\N
+3696	sometime	adv	\N	\N	1	B2	\N	\N
+3697	somewhat	adv	\N	\N	1	B2	\N	\N
+3698	sophisticated	adj	\N	\N	1	B2	\N	\N
+3699	soul	n	\N	\N	1	B2	\N	\N
+3700	source	n	\N	\N	1	B2	\N	\N
+3701	spare	adj	\N	\N	1	B2	\N	\N
+3702	specialise	v	\N	\N	1	B2	\N	\N
+3703	specialist	n	\N	\N	1	B2	\N	\N
+3704	species	n	\N	\N	1	B2	\N	\N
+3705	specify	v	\N	\N	1	B2	\N	\N
+3706	spectacular	adj	\N	\N	1	B2	\N	\N
+3707	spectator	n	\N	\N	1	B2	\N	\N
+3708	speculate	v	\N	\N	1	B2	\N	\N
+3709	speculation	n	\N	\N	1	B2	\N	\N
+3710	spice	n	\N	\N	1	B2	\N	\N
+3711	spill	v	\N	\N	1	B2	\N	\N
+3712	spiritual	adj	\N	\N	1	B2	\N	\N
+3713	in spite of	prep	\N	\N	1	B2	\N	\N
+3714	split	v	\N	\N	1	B2	\N	\N
+3715	spoil	v	\N	\N	1	B2	\N	\N
+3716	spokesman	n	\N	\N	1	B2	\N	\N
+3717	spokesperson	n	\N	\N	1	B2	\N	\N
+3718	spokeswoman	n	\N	\N	1	B2	\N	\N
+3719	sponsor	n	\N	\N	1	B2	\N	\N
+3720	sponsorship	n	\N	\N	1	B2	\N	\N
+3721	stable	adj	\N	\N	1	B2	\N	\N
+3722	stall	n	\N	\N	1	B2	\N	\N
+3723	stance	n	\N	\N	1	B2	\N	\N
+3724	stare	v	\N	\N	1	B2	\N	\N
+3725	starve	v	\N	\N	1	B2	\N	\N
+3726	statistic	n	\N	\N	1	B2	\N	\N
+3727	status	n	\N	\N	1	B2	\N	\N
+3728	steadily	adv	\N	\N	1	B2	\N	\N
+3729	steady	adj	\N	\N	1	B2	\N	\N
+3730	steam	n	\N	\N	1	B2	\N	\N
+3731	steel	n	\N	\N	1	B2	\N	\N
+3732	steep	adj	\N	\N	1	B2	\N	\N
+3733	sticky	adj	\N	\N	1	B2	\N	\N
+3734	stiff	adj	\N	\N	1	B2	\N	\N
+3735	stimulate	v	\N	\N	1	B2	\N	\N
+3736	stock	n	\N	\N	1	B2	\N	\N
+3737	stream	n	\N	\N	1	B2	\N	\N
+3738	strengthen	v	\N	\N	1	B2	\N	\N
+3739	stretch	v	\N	\N	1	B2	\N	\N
+3740	strict	adj	\N	\N	1	B2	\N	\N
+3741	strictly	adv	\N	\N	1	B2	\N	\N
+3742	strike	n	\N	\N	1	B2	\N	\N
+3743	striking	adj	\N	\N	1	B2	\N	\N
+3744	stroke	n	\N	\N	1	B2	\N	\N
+3745	struggle	v	\N	\N	1	B2	\N	\N
+3746	stunning	adj	\N	\N	1	B2	\N	\N
+3747	submit	v	\N	\N	1	B2	\N	\N
+3748	substance	n	\N	\N	1	B2	\N	\N
+3749	suburb	n	\N	\N	1	B2	\N	\N
+3750	suffering	n	\N	\N	1	B2	\N	\N
+3751	sufficient	adj	\N	\N	1	B2	\N	\N
+3752	sufficiently	adv	\N	\N	1	B2	\N	\N
+3753	sum	n	\N	\N	1	B2	\N	\N
+3754	super	adj	\N	\N	1	B2	\N	\N
+3755	surgeon	n	\N	\N	1	B2	\N	\N
+3756	surgery	n	\N	\N	1	B2	\N	\N
+3757	surround	v	\N	\N	1	B2	\N	\N
+3758	surrounding	adj	\N	\N	1	B2	\N	\N
+3759	survival	n	\N	\N	1	B2	\N	\N
+3760	survivor	n	\N	\N	1	B2	\N	\N
+3761	suspect	n	\N	\N	1	B2	\N	\N
+3762	suspend	v	\N	\N	1	B2	\N	\N
+3763	sustainability	n	\N	\N	1	B2	\N	\N
+3764	sustainable	adj	\N	\N	1	B2	\N	\N
+3765	swallow	v	\N	\N	1	B2	\N	\N
+3766	swear	v	\N	\N	1	B2	\N	\N
+3767	sweep	v	\N	\N	1	B2	\N	\N
+3768	symbol	n	\N	\N	1	B2	\N	\N
+3769	symbolise	v	\N	\N	1	B2	\N	\N
+3770	sympathetic	adj	\N	\N	1	B2	\N	\N
+3771	sympathy	n	\N	\N	1	B2	\N	\N
+3772	tag	n	\N	\N	1	B2	\N	\N
+3773	tale	n	\N	\N	1	B2	\N	\N
+3774	tank	n	\N	\N	1	B2	\N	\N
+3775	tap	n	\N	\N	1	B2	\N	\N
+3776	tear	n	\N	\N	1	B2	\N	\N
+3777	technological	adj	\N	\N	1	B2	\N	\N
+3778	teen	n	\N	\N	1	B2	\N	\N
+3779	temple	n	\N	\N	1	B2	\N	\N
+3780	temporarily	adv	\N	\N	1	B2	\N	\N
+3781	temporary	adj	\N	\N	1	B2	\N	\N
+3782	tendency	n	\N	\N	1	B2	\N	\N
+3783	tension	n	\N	\N	1	B2	\N	\N
+3784	terminal	n	\N	\N	1	B2	\N	\N
+3785	terms	n	\N	\N	1	B2	\N	\N
+3786	terribly	adv	\N	\N	1	B2	\N	\N
+3787	terrify	v	\N	\N	1	B2	\N	\N
+3788	territory	n	\N	\N	1	B2	\N	\N
+3789	terror	n	\N	\N	1	B2	\N	\N
+3790	terrorism	n	\N	\N	1	B2	\N	\N
+3791	terrorist	n	\N	\N	1	B2	\N	\N
+3792	testing	n	\N	\N	1	B2	\N	\N
+3793	textbook	n	\N	\N	1	B2	\N	\N
+3794	theft	n	\N	\N	1	B2	\N	\N
+3795	therapist	n	\N	\N	1	B2	\N	\N
+3796	therapy	n	\N	\N	1	B2	\N	\N
+3797	theory	n	\N	\N	1	B2	\N	\N
+3798	therefore	adv	\N	\N	1	B2	\N	\N
+3799	thorough	adj	\N	\N	1	B2	\N	\N
+3800	thoroughly	adv	\N	\N	1	B2	\N	\N
+3801	threat	n	\N	\N	1	B2	\N	\N
+3802	threaten	v	\N	\N	1	B2	\N	\N
+3803	thumb	n	\N	\N	1	B2	\N	\N
+3804	thus	adv	\N	\N	1	B2	\N	\N
+3805	timing	n	\N	\N	1	B2	\N	\N
+3806	tissue	n	\N	\N	1	B2	\N	\N
+3807	tone	n	\N	\N	1	B2	\N	\N
+3808	tough	adj	\N	\N	1	B2	\N	\N
+3809	tournament	n	\N	\N	1	B2	\N	\N
+3810	toxic	adj	\N	\N	1	B2	\N	\N
+3813	trading	n	\N	\N	1	B2	\N	\N
+3814	tragedy	n	\N	\N	1	B2	\N	\N
+3815	tragic	adj	\N	\N	1	B2	\N	\N
+3816	trait	n	\N	\N	1	B2	\N	\N
+3817	transfer	n	\N	\N	1	B2	\N	\N
+3818	transform	v	\N	\N	1	B2	\N	\N
+3819	transition	n	\N	\N	1	B2	\N	\N
+3820	transmit	v	\N	\N	1	B2	\N	\N
+3821	trap	n	\N	\N	1	B2	\N	\N
+3822	treasure	n	\N	\N	1	B2	\N	\N
+3823	trial	n	\N	\N	1	B2	\N	\N
+3824	tribe	n	\N	\N	1	B2	\N	\N
+3825	trillion	num	\N	\N	1	B2	\N	\N
+3826	troop	n	\N	\N	1	B2	\N	\N
+3827	tropical	adj	\N	\N	1	B2	\N	\N
+3828	truly	adv	\N	\N	1	B2	\N	\N
+3829	trust	n	\N	\N	1	B2	\N	\N
+3830	tsunami	n	\N	\N	1	B2	\N	\N
+3831	tune	n	\N	\N	1	B2	\N	\N
+3832	tunnel	n	\N	\N	1	B2	\N	\N
+3833	ultimate	adj	\N	\N	1	B2	\N	\N
+3834	ultimately	adv	\N	\N	1	B2	\N	\N
+3835	unacceptable	adj	\N	\N	1	B2	\N	\N
+3836	uncertainty	n	\N	\N	1	B2	\N	\N
+3837	unconscious	adj	\N	\N	1	B2	\N	\N
+3838	undergo	v	\N	\N	1	B2	\N	\N
+3839	undertake	v	\N	\N	1	B2	\N	\N
+3840	unexpected	adj	\N	\N	1	B2	\N	\N
+3841	unfold	v	\N	\N	1	B2	\N	\N
+3842	unfortunate	adj	\N	\N	1	B2	\N	\N
+3843	unique	adj	\N	\N	1	B2	\N	\N
+3844	unite	v	\N	\N	1	B2	\N	\N
+3845	unity	n	\N	\N	1	B2	\N	\N
+3846	universal	adj	\N	\N	1	B2	\N	\N
+3847	universe	n	\N	\N	1	B2	\N	\N
+3848	unknown	adj	\N	\N	1	B2	\N	\N
+3849	upper	adj	\N	\N	1	B2	\N	\N
+3850	upwards	adv	\N	\N	1	B2	\N	\N
+3851	urban	adj	\N	\N	1	B2	\N	\N
+3852	urge	v	\N	\N	1	B2	\N	\N
+3853	urgent	adj	\N	\N	1	B2	\N	\N
+3854	usage	n	\N	\N	1	B2	\N	\N
+3855	useless	adj	\N	\N	1	B2	\N	\N
+3856	valid	adj	\N	\N	1	B2	\N	\N
+3857	variation	n	\N	\N	1	B2	\N	\N
+3858	vary	v	\N	\N	1	B2	\N	\N
+3859	vast	adj	\N	\N	1	B2	\N	\N
+3860	venue	n	\N	\N	1	B2	\N	\N
+3861	vertical	adj	\N	\N	1	B2	\N	\N
+3862	via	prep	\N	\N	1	B2	\N	\N
+3863	victory	n	\N	\N	1	B2	\N	\N
+3864	victorious	adj	\N	\N	1	B2	\N	\N
+3865	viewpoint	n	\N	\N	1	B2	\N	\N
+3866	violence	n	\N	\N	1	B2	\N	\N
+3867	virtual	adj	\N	\N	1	B2	\N	\N
+3868	visa	n	\N	\N	1	B2	\N	\N
+3869	visible	adj	\N	\N	1	B2	\N	\N
+3870	vision	n	\N	\N	1	B2	\N	\N
+3871	visual	adj	\N	\N	1	B2	\N	\N
+3872	vital	adj	\N	\N	1	B2	\N	\N
+3873	vitamin	n	\N	\N	1	B2	\N	\N
+3874	volume	n	\N	\N	1	B2	\N	\N
+3875	voluntarily	adv	\N	\N	1	B2	\N	\N
+3876	voluntary	adj	\N	\N	1	B2	\N	\N
+3877	voting	n	\N	\N	1	B2	\N	\N
+3878	wage	n	\N	\N	1	B2	\N	\N
+3879	wander	v	\N	\N	1	B2	\N	\N
+3880	warming	n	\N	\N	1	B2	\N	\N
+3881	weakness	n	\N	\N	1	B2	\N	\N
+3882	wealth	n	\N	\N	1	B2	\N	\N
+3883	wealthy	adj	\N	\N	1	B2	\N	\N
+3884	weekly	adj	\N	\N	1	B2	\N	\N
+3885	weird	adj	\N	\N	1	B2	\N	\N
+3886	welfare	n	\N	\N	1	B2	\N	\N
+3887	wheat	n	\N	\N	1	B2	\N	\N
+3888	whereas	conj	\N	\N	1	B2	\N	\N
+3889	wherever	conj	\N	\N	1	B2	\N	\N
+3890	whisper	v	\N	\N	1	B2	\N	\N
+3891	whoever	pron	\N	\N	1	B2	\N	\N
+3892	whom	pron	\N	\N	1	B2	\N	\N
+3893	widely	adv	\N	\N	1	B2	\N	\N
+3894	widespread	adj	\N	\N	1	B2	\N	\N
+3895	widow	n	\N	\N	1	B2	\N	\N
+3896	wildlife	n	\N	\N	1	B2	\N	\N
+3897	willing	adj	\N	\N	1	B2	\N	\N
+3898	wire	n	\N	\N	1	B2	\N	\N
+3899	wisdom	n	\N	\N	1	B2	\N	\N
+3900	wise	adj	\N	\N	1	B2	\N	\N
+3901	withdraw	v	\N	\N	1	B2	\N	\N
+3902	witness	n	\N	\N	1	B2	\N	\N
+3903	wolf	n	\N	\N	1	B2	\N	\N
+3904	workforce	n	\N	\N	1	B2	\N	\N
+3905	workplace	n	\N	\N	1	B2	\N	\N
+3906	workshop	n	\N	\N	1	B2	\N	\N
+3907	worm	n	\N	\N	1	B2	\N	\N
+3908	wound	n	\N	\N	1	B2	\N	\N
+3909	wrap	v	\N	\N	1	B2	\N	\N
+3910	wrist	n	\N	\N	1	B2	\N	\N
+3911	zone	n	\N	\N	1	B2	\N	\N
+3912	yield	v	\N	\N	1	B2	\N	\N
+3913	abolish	v	\N	\N	1	C1	\N	\N
+3914	abortion	n	\N	\N	1	C1	\N	\N
+3915	absence	n	\N	\N	1	C1	\N	\N
+3916	absurd	adj	\N	\N	1	C1	\N	\N
+3917	abuse	n	\N	\N	1	C1	\N	\N
+3918	academy	n	\N	\N	1	C1	\N	\N
+3919	accelerate	v	\N	\N	1	C1	\N	\N
+3920	acceptance	n	\N	\N	1	C1	\N	\N
+3921	accessible	adj	\N	\N	1	C1	\N	\N
+3922	accomplishment	n	\N	\N	1	C1	\N	\N
+3923	accordingly	adv	\N	\N	1	C1	\N	\N
+3924	accountability	n	\N	\N	1	C1	\N	\N
+3925	accountable	adj	\N	\N	1	C1	\N	\N
+3926	accumulate	v	\N	\N	1	C1	\N	\N
+3927	accumulation	n	\N	\N	1	C1	\N	\N
+3928	accusation	n	\N	\N	1	C1	\N	\N
+3929	accused	n	\N	\N	1	C1	\N	\N
+3930	acid	n	\N	\N	1	C1	\N	\N
+3931	acquisition	n	\N	\N	1	C1	\N	\N
+3932	activation	n	\N	\N	1	C1	\N	\N
+3933	activist	n	\N	\N	1	C1	\N	\N
+3934	acute	adj	\N	\N	1	C1	\N	\N
+3935	adaptation	n	\N	\N	1	C1	\N	\N
+3936	adhere	v	\N	\N	1	C1	\N	\N
+3937	adjacent	adj	\N	\N	1	C1	\N	\N
+3938	adjustment	n	\N	\N	1	C1	\N	\N
+3939	administer	v	\N	\N	1	C1	\N	\N
+3940	administrative	adj	\N	\N	1	C1	\N	\N
+3941	administrator	n	\N	\N	1	C1	\N	\N
+3942	admission	n	\N	\N	1	C1	\N	\N
+3943	adolescent	n	\N	\N	1	C1	\N	\N
+3944	adoption	n	\N	\N	1	C1	\N	\N
+3945	adverse	adj	\N	\N	1	C1	\N	\N
+3946	advocate	n	\N	\N	1	C1	\N	\N
+3947	aesthetic	adj	\N	\N	1	C1	\N	\N
+3948	affection	n	\N	\N	1	C1	\N	\N
+3949	aftermath	n	\N	\N	1	C1	\N	\N
+3950	aggression	n	\N	\N	1	C1	\N	\N
+3951	agricultural	adj	\N	\N	1	C1	\N	\N
+3952	aide	n	\N	\N	1	C1	\N	\N
+3953	alert	v	\N	\N	1	C1	\N	\N
+3954	align	v	\N	\N	1	C1	\N	\N
+3955	alignment	n	\N	\N	1	C1	\N	\N
+3956	alike	adj	\N	\N	1	C1	\N	\N
+3957	allegation	n	\N	\N	1	C1	\N	\N
+3958	allege	v	\N	\N	1	C1	\N	\N
+3959	allegedly	adv	\N	\N	1	C1	\N	\N
+3960	alliance	n	\N	\N	1	C1	\N	\N
+3961	allocate	v	\N	\N	1	C1	\N	\N
+3962	allocation	n	\N	\N	1	C1	\N	\N
+3963	allowance	n	\N	\N	1	C1	\N	\N
+3964	ally	n	\N	\N	1	C1	\N	\N
+3965	aluminium	n	\N	\N	1	C1	\N	\N
+3966	amateur	n	\N	\N	1	C1	\N	\N
+3967	ambassador	n	\N	\N	1	C1	\N	\N
+3968	amend	v	\N	\N	1	C1	\N	\N
+3969	amendment	n	\N	\N	1	C1	\N	\N
+3970	amid	prep	\N	\N	1	C1	\N	\N
+3971	analogy	n	\N	\N	1	C1	\N	\N
+3972	anchor	n	\N	\N	1	C1	\N	\N
+3973	anonymous	adj	\N	\N	1	C1	\N	\N
+3974	apparel	n	\N	\N	1	C1	\N	\N
+3975	appealing	adj	\N	\N	1	C1	\N	\N
+3976	appetite	n	\N	\N	1	C1	\N	\N
+3977	applaud	v	\N	\N	1	C1	\N	\N
+3978	applicable	adj	\N	\N	1	C1	\N	\N
+3979	appoint	v	\N	\N	1	C1	\N	\N
+3980	appreciation	n	\N	\N	1	C1	\N	\N
+3981	arbitrary	adj	\N	\N	1	C1	\N	\N
+3982	architectural	adj	\N	\N	1	C1	\N	\N
+3983	archive	n	\N	\N	1	C1	\N	\N
+3984	arena	n	\N	\N	1	C1	\N	\N
+3985	arm	v	\N	\N	1	C1	\N	\N
+3986	array	n	\N	\N	1	C1	\N	\N
+3987	articulate	v	\N	\N	1	C1	\N	\N
+3988	ash	n	\N	\N	1	C1	\N	\N
+3989	aspiration	n	\N	\N	1	C1	\N	\N
+3990	aspire	v	\N	\N	1	C1	\N	\N
+3991	assassination	n	\N	\N	1	C1	\N	\N
+3992	assault	n	\N	\N	1	C1	\N	\N
+3993	assemble	v	\N	\N	1	C1	\N	\N
+3994	assembly	n	\N	\N	1	C1	\N	\N
+3995	assert	v	\N	\N	1	C1	\N	\N
+3996	assertion	n	\N	\N	1	C1	\N	\N
+3997	assurance	n	\N	\N	1	C1	\N	\N
+3998	asylum	n	\N	\N	1	C1	\N	\N
+3999	atrocity	n	\N	\N	1	C1	\N	\N
+4000	attain	v	\N	\N	1	C1	\N	\N
+4001	attendance	n	\N	\N	1	C1	\N	\N
+4002	attribute	n	\N	\N	1	C1	\N	\N
+4003	auction	n	\N	\N	1	C1	\N	\N
+4004	audit	n	\N	\N	1	C1	\N	\N
+4005	authentic	adj	\N	\N	1	C1	\N	\N
+4006	authorise	v	\N	\N	1	C1	\N	\N
+4007	auto	n	\N	\N	1	C1	\N	\N
+4008	autonomy	n	\N	\N	1	C1	\N	\N
+4009	availability	n	\N	\N	1	C1	\N	\N
+4010	await	v	\N	\N	1	C1	\N	\N
+4011	backdrop	n	\N	\N	1	C1	\N	\N
+4012	backing	n	\N	\N	1	C1	\N	\N
+4013	backup	n	\N	\N	1	C1	\N	\N
+4014	bail	n	\N	\N	1	C1	\N	\N
+4015	ballot	n	\N	\N	1	C1	\N	\N
+4016	bankruptcy	n	\N	\N	1	C1	\N	\N
+4017	banner	n	\N	\N	1	C1	\N	\N
+4018	bare	adj	\N	\N	1	C1	\N	\N
+4019	barrel	n	\N	\N	1	C1	\N	\N
+4020	battlefield	n	\N	\N	1	C1	\N	\N
+4021	bay	n	\N	\N	1	C1	\N	\N
+4022	beam	n	\N	\N	1	C1	\N	\N
+4023	beast	n	\N	\N	1	C1	\N	\N
+4024	behalf	n	\N	\N	1	C1	\N	\N
+4025	behavioural	adj	\N	\N	1	C1	\N	\N
+4026	beloved	adj	\N	\N	1	C1	\N	\N
+4027	bench	n	\N	\N	1	C1	\N	\N
+4028	benchmark	n	\N	\N	1	C1	\N	\N
+4029	beneath	prep	\N	\N	1	C1	\N	\N
+4030	beneficiary	n	\N	\N	1	C1	\N	\N
+6731	siege	n	\N	\N	1	C2	\N	\N
+4031	betray	v	\N	\N	1	C1	\N	\N
+4032	betrayal	n	\N	\N	1	C1	\N	\N
+4033	beverage	n	\N	\N	1	C1	\N	\N
+4034	bind	v	\N	\N	1	C1	\N	\N
+4035	biography	n	\N	\N	1	C1	\N	\N
+4036	bishop	n	\N	\N	1	C1	\N	\N
+4037	bizarre	adj	\N	\N	1	C1	\N	\N
+4038	blade	n	\N	\N	1	C1	\N	\N
+4039	blast	n	\N	\N	1	C1	\N	\N
+4040	bleed	v	\N	\N	1	C1	\N	\N
+4041	blend	n	\N	\N	1	C1	\N	\N
+4042	bless	v	\N	\N	1	C1	\N	\N
+4043	blessing	n	\N	\N	1	C1	\N	\N
+4044	boast	v	\N	\N	1	C1	\N	\N
+4045	bonus	n	\N	\N	1	C1	\N	\N
+4046	boom	n	\N	\N	1	C1	\N	\N
+4047	bounce	v	\N	\N	1	C1	\N	\N
+4048	boundary	n	\N	\N	1	C1	\N	\N
+4049	bow	v	\N	\N	1	C1	\N	\N
+4050	breach	n	\N	\N	1	C1	\N	\N
+4051	breakdown	n	\N	\N	1	C1	\N	\N
+4052	breakthrough	n	\N	\N	1	C1	\N	\N
+4053	breed	v	\N	\N	1	C1	\N	\N
+4054	broadband	n	\N	\N	1	C1	\N	\N
+4055	browser	n	\N	\N	1	C1	\N	\N
+4056	brutal	adj	\N	\N	1	C1	\N	\N
+4057	buffer	n	\N	\N	1	C1	\N	\N
+4058	bulk	n	\N	\N	1	C1	\N	\N
+4059	burden	n	\N	\N	1	C1	\N	\N
+4060	bureaucracy	n	\N	\N	1	C1	\N	\N
+4061	burial	n	\N	\N	1	C1	\N	\N
+4062	cabinet	n	\N	\N	1	C1	\N	\N
+4063	calculation	n	\N	\N	1	C1	\N	\N
+4064	canvas	n	\N	\N	1	C1	\N	\N
+4065	capability	n	\N	\N	1	C1	\N	\N
+4066	capitalism	n	\N	\N	1	C1	\N	\N
+4067	capitalist	n	\N	\N	1	C1	\N	\N
+4068	cargo	n	\N	\N	1	C1	\N	\N
+4069	carriage	n	\N	\N	1	C1	\N	\N
+4070	carve	v	\N	\N	1	C1	\N	\N
+4071	casualty	n	\N	\N	1	C1	\N	\N
+4072	catalogue	n	\N	\N	1	C1	\N	\N
+4073	cater	v	\N	\N	1	C1	\N	\N
+4074	cattle	n	\N	\N	1	C1	\N	\N
+4075	caution	n	\N	\N	1	C1	\N	\N
+4076	cautious	adj	\N	\N	1	C1	\N	\N
+4077	cease	v	\N	\N	1	C1	\N	\N
+4078	cemetery	n	\N	\N	1	C1	\N	\N
+4079	chamber	n	\N	\N	1	C1	\N	\N
+4080	chaos	n	\N	\N	1	C1	\N	\N
+4081	characterise	v	\N	\N	1	C1	\N	\N
+4082	charm	n	\N	\N	1	C1	\N	\N
+4083	charter	n	\N	\N	1	C1	\N	\N
+4084	choir	n	\N	\N	1	C1	\N	\N
+4085	chronic	adj	\N	\N	1	C1	\N	\N
+4086	chunk	n	\N	\N	1	C1	\N	\N
+4087	circulate	v	\N	\N	1	C1	\N	\N
+4088	circulation	n	\N	\N	1	C1	\N	\N
+4089	citizenship	n	\N	\N	1	C1	\N	\N
+4090	civic	adj	\N	\N	1	C1	\N	\N
+4091	civilian	n	\N	\N	1	C1	\N	\N
+4092	clarity	n	\N	\N	1	C1	\N	\N
+4093	clash	n	\N	\N	1	C1	\N	\N
+4094	classification	n	\N	\N	1	C1	\N	\N
+4095	cling	v	\N	\N	1	C1	\N	\N
+4096	clinical	adj	\N	\N	1	C1	\N	\N
+4097	closure	n	\N	\N	1	C1	\N	\N
+4098	cluster	n	\N	\N	1	C1	\N	\N
+4099	coalition	n	\N	\N	1	C1	\N	\N
+4100	coastal	adj	\N	\N	1	C1	\N	\N
+4101	cocktail	n	\N	\N	1	C1	\N	\N
+4102	cognitive	adj	\N	\N	1	C1	\N	\N
+4103	coincide	v	\N	\N	1	C1	\N	\N
+4104	collaborate	v	\N	\N	1	C1	\N	\N
+4105	collaboration	n	\N	\N	1	C1	\N	\N
+4106	collective	adj	\N	\N	1	C1	\N	\N
+4107	collision	n	\N	\N	1	C1	\N	\N
+4108	colonial	adj	\N	\N	1	C1	\N	\N
+4109	columnist	n	\N	\N	1	C1	\N	\N
+4110	combat	n	\N	\N	1	C1	\N	\N
+4111	commence	v	\N	\N	1	C1	\N	\N
+4112	commentary	n	\N	\N	1	C1	\N	\N
+4113	commentator	n	\N	\N	1	C1	\N	\N
+4114	commerce	n	\N	\N	1	C1	\N	\N
+4115	commissioner	n	\N	\N	1	C1	\N	\N
+4116	commodity	n	\N	\N	1	C1	\N	\N
+4117	communist	n	\N	\N	1	C1	\N	\N
+4118	companion	n	\N	\N	1	C1	\N	\N
+4119	comparable	adj	\N	\N	1	C1	\N	\N
+4120	compassion	n	\N	\N	1	C1	\N	\N
+4121	compel	v	\N	\N	1	C1	\N	\N
+4122	compelling	adj	\N	\N	1	C1	\N	\N
+4123	compensate	v	\N	\N	1	C1	\N	\N
+4124	compensation	n	\N	\N	1	C1	\N	\N
+4125	competence	n	\N	\N	1	C1	\N	\N
+4126	competent	adj	\N	\N	1	C1	\N	\N
+4127	compile	v	\N	\N	1	C1	\N	\N
+4128	complement	n	\N	\N	1	C1	\N	\N
+4129	complexity	n	\N	\N	1	C1	\N	\N
+4130	compliance	n	\N	\N	1	C1	\N	\N
+4131	complication	n	\N	\N	1	C1	\N	\N
+4132	comply	v	\N	\N	1	C1	\N	\N
+4133	composition	n	\N	\N	1	C1	\N	\N
+4134	comprise	v	\N	\N	1	C1	\N	\N
+4135	compromise	n	\N	\N	1	C1	\N	\N
+4136	compute	v	\N	\N	1	C1	\N	\N
+4137	conceal	v	\N	\N	1	C1	\N	\N
+4138	concede	v	\N	\N	1	C1	\N	\N
+4139	conceive	v	\N	\N	1	C1	\N	\N
+4140	conception	n	\N	\N	1	C1	\N	\N
+4141	concession	n	\N	\N	1	C1	\N	\N
+4142	condemn	v	\N	\N	1	C1	\N	\N
+4143	confer	v	\N	\N	1	C1	\N	\N
+4144	confession	n	\N	\N	1	C1	\N	\N
+4145	configuration	n	\N	\N	1	C1	\N	\N
+4146	confine	v	\N	\N	1	C1	\N	\N
+4147	confirmation	n	\N	\N	1	C1	\N	\N
+4148	confront	v	\N	\N	1	C1	\N	\N
+4149	confrontation	n	\N	\N	1	C1	\N	\N
+4150	congratulate	v	\N	\N	1	C1	\N	\N
+4151	congregation	n	\N	\N	1	C1	\N	\N
+4152	congressional	adj	\N	\N	1	C1	\N	\N
+4153	conquer	v	\N	\N	1	C1	\N	\N
+4154	conscience	n	\N	\N	1	C1	\N	\N
+4155	consciously	adv	\N	\N	1	C1	\N	\N
+4156	consciousness	n	\N	\N	1	C1	\N	\N
+4157	consecutive	adj	\N	\N	1	C1	\N	\N
+4158	consensus	n	\N	\N	1	C1	\N	\N
+4159	consent	n	\N	\N	1	C1	\N	\N
+4160	conserve	v	\N	\N	1	C1	\N	\N
+4161	consistency	n	\N	\N	1	C1	\N	\N
+4162	consolidate	v	\N	\N	1	C1	\N	\N
+4163	consolidation	n	\N	\N	1	C1	\N	\N
+4164	constitute	v	\N	\N	1	C1	\N	\N
+4165	constitution	n	\N	\N	1	C1	\N	\N
+4166	constitutional	adj	\N	\N	1	C1	\N	\N
+4167	constraint	n	\N	\N	1	C1	\N	\N
+4168	consultation	n	\N	\N	1	C1	\N	\N
+4169	contemplate	v	\N	\N	1	C1	\N	\N
+4170	contempt	n	\N	\N	1	C1	\N	\N
+4171	contend	v	\N	\N	1	C1	\N	\N
+4172	contender	n	\N	\N	1	C1	\N	\N
+4173	content	adj	\N	\N	1	C1	\N	\N
+4174	contention	n	\N	\N	1	C1	\N	\N
+4175	continually	adv	\N	\N	1	C1	\N	\N
+4176	contractor	n	\N	\N	1	C1	\N	\N
+4177	contradiction	n	\N	\N	1	C1	\N	\N
+4178	contrary	adj	\N	\N	1	C1	\N	\N
+4179	contributor	n	\N	\N	1	C1	\N	\N
+4180	conversion	n	\N	\N	1	C1	\N	\N
+4181	convict	n	\N	\N	1	C1	\N	\N
+4182	conviction	n	\N	\N	1	C1	\N	\N
+4183	cooperate	v	\N	\N	1	C1	\N	\N
+4184	cooperative	adj	\N	\N	1	C1	\N	\N
+4185	coordinate	v	\N	\N	1	C1	\N	\N
+4186	coordination	n	\N	\N	1	C1	\N	\N
+4187	coordinator	n	\N	\N	1	C1	\N	\N
+4188	copyright	n	\N	\N	1	C1	\N	\N
+4189	correction	n	\N	\N	1	C1	\N	\N
+4190	correlate	v	\N	\N	1	C1	\N	\N
+4191	correlation	n	\N	\N	1	C1	\N	\N
+4192	correspond	v	\N	\N	1	C1	\N	\N
+4193	correspondence	n	\N	\N	1	C1	\N	\N
+4194	correspondent	n	\N	\N	1	C1	\N	\N
+4195	corresponding	adj	\N	\N	1	C1	\N	\N
+4196	correspondingly	adv	\N	\N	1	C1	\N	\N
+4197	corrupt	adj	\N	\N	1	C1	\N	\N
+4198	corruption	n	\N	\N	1	C1	\N	\N
+4199	costly	adj	\N	\N	1	C1	\N	\N
+4200	councillor	n	\N	\N	1	C1	\N	\N
+4201	counselling	n	\N	\N	1	C1	\N	\N
+4202	counsellor	n	\N	\N	1	C1	\N	\N
+4203	counter	v	\N	\N	1	C1	\N	\N
+4204	counterpart	n	\N	\N	1	C1	\N	\N
+4205	countless	adj	\N	\N	1	C1	\N	\N
+4206	coup	n	\N	\N	1	C1	\N	\N
+4207	courtesy	n	\N	\N	1	C1	\N	\N
+4208	craft	n	\N	\N	1	C1	\N	\N
+4209	crawl	v	\N	\N	1	C1	\N	\N
+4210	creator	n	\N	\N	1	C1	\N	\N
+4211	credibility	n	\N	\N	1	C1	\N	\N
+4212	credible	adj	\N	\N	1	C1	\N	\N
+4213	creep	v	\N	\N	1	C1	\N	\N
+4214	criterion	n	\N	\N	1	C1	\N	\N
+4215	critique	n	\N	\N	1	C1	\N	\N
+4216	crown	n	\N	\N	1	C1	\N	\N
+4217	crude	adj	\N	\N	1	C1	\N	\N
+4218	crush	v	\N	\N	1	C1	\N	\N
+4219	crystal	n	\N	\N	1	C1	\N	\N
+4220	cult	n	\N	\N	1	C1	\N	\N
+4221	cultivate	v	\N	\N	1	C1	\N	\N
+4222	curiosity	n	\N	\N	1	C1	\N	\N
+4223	custody	n	\N	\N	1	C1	\N	\N
+4224	cutting	n	\N	\N	1	C1	\N	\N
+4225	cynical	adj	\N	\N	1	C1	\N	\N
+4226	dam	n	\N	\N	1	C1	\N	\N
+4227	damaging	adj	\N	\N	1	C1	\N	\N
+4228	dawn	n	\N	\N	1	C1	\N	\N
+4229	debris	n	\N	\N	1	C1	\N	\N
+4230	debut	n	\N	\N	1	C1	\N	\N
+4231	decision-making	n	\N	\N	1	C1	\N	\N
+4232	decisive	adj	\N	\N	1	C1	\N	\N
+4233	declaration	n	\N	\N	1	C1	\N	\N
+4234	dedicated	adj	\N	\N	1	C1	\N	\N
+4235	dedication	n	\N	\N	1	C1	\N	\N
+4236	deed	n	\N	\N	1	C1	\N	\N
+4237	deem	v	\N	\N	1	C1	\N	\N
+4238	default	n	\N	\N	1	C1	\N	\N
+4239	defect	n	\N	\N	1	C1	\N	\N
+4240	defensive	adj	\N	\N	1	C1	\N	\N
+4241	deficiency	n	\N	\N	1	C1	\N	\N
+4242	deficit	n	\N	\N	1	C1	\N	\N
+4243	definitive	adj	\N	\N	1	C1	\N	\N
+4244	defy	v	\N	\N	1	C1	\N	\N
+4245	delegate	n	\N	\N	1	C1	\N	\N
+4246	delegation	n	\N	\N	1	C1	\N	\N
+4247	delicate	adj	\N	\N	1	C1	\N	\N
+4249	denial	n	\N	\N	1	C1	\N	\N
+4250	denounce	v	\N	\N	1	C1	\N	\N
+4251	dense	adj	\N	\N	1	C1	\N	\N
+4252	density	n	\N	\N	1	C1	\N	\N
+4253	dependence	n	\N	\N	1	C1	\N	\N
+4254	depict	v	\N	\N	1	C1	\N	\N
+4255	deploy	v	\N	\N	1	C1	\N	\N
+4256	deployment	n	\N	\N	1	C1	\N	\N
+4257	deprive	v	\N	\N	1	C1	\N	\N
+4258	deputy	n	\N	\N	1	C1	\N	\N
+4259	descend	v	\N	\N	1	C1	\N	\N
+4260	descent	n	\N	\N	1	C1	\N	\N
+4261	designate	v	\N	\N	1	C1	\N	\N
+4262	desirable	adj	\N	\N	1	C1	\N	\N
+4263	destructive	adj	\N	\N	1	C1	\N	\N
+4264	detain	v	\N	\N	1	C1	\N	\N
+4265	detection	n	\N	\N	1	C1	\N	\N
+4266	detention	n	\N	\N	1	C1	\N	\N
+4267	deteriorate	v	\N	\N	1	C1	\N	\N
+4268	devastate	v	\N	\N	1	C1	\N	\N
+4269	devise	v	\N	\N	1	C1	\N	\N
+4270	diagnose	v	\N	\N	1	C1	\N	\N
+4271	diagnosis	n	\N	\N	1	C1	\N	\N
+4272	dictate	v	\N	\N	1	C1	\N	\N
+4273	dictator	n	\N	\N	1	C1	\N	\N
+4274	differentiate	v	\N	\N	1	C1	\N	\N
+4275	dignity	n	\N	\N	1	C1	\N	\N
+4276	dilemma	n	\N	\N	1	C1	\N	\N
+4277	dimension	n	\N	\N	1	C1	\N	\N
+4278	diminish	v	\N	\N	1	C1	\N	\N
+4279	dip	v	\N	\N	1	C1	\N	\N
+4280	diplomat	n	\N	\N	1	C1	\N	\N
+4281	diplomatic	adj	\N	\N	1	C1	\N	\N
+4282	directory	n	\N	\N	1	C1	\N	\N
+4283	disastrous	adj	\N	\N	1	C1	\N	\N
+4284	discard	v	\N	\N	1	C1	\N	\N
+4285	discharge	v	\N	\N	1	C1	\N	\N
+4286	disclose	v	\N	\N	1	C1	\N	\N
+4287	disclosure	n	\N	\N	1	C1	\N	\N
+4288	discourse	n	\N	\N	1	C1	\N	\N
+4289	discretion	n	\N	\N	1	C1	\N	\N
+4290	discrimination	n	\N	\N	1	C1	\N	\N
+4291	disregard	v	\N	\N	1	C1	\N	\N
+4292	dismissal	n	\N	\N	1	C1	\N	\N
+4293	displace	v	\N	\N	1	C1	\N	\N
+4294	disposal	n	\N	\N	1	C1	\N	\N
+4295	dispose of	v	\N	\N	1	C1	\N	\N
+4296	dispute	n	\N	\N	1	C1	\N	\N
+4297	disrupt	v	\N	\N	1	C1	\N	\N
+4298	disruption	n	\N	\N	1	C1	\N	\N
+4299	dissolve	v	\N	\N	1	C1	\N	\N
+4300	distinction	n	\N	\N	1	C1	\N	\N
+4301	distinctive	adj	\N	\N	1	C1	\N	\N
+4302	distort	v	\N	\N	1	C1	\N	\N
+4303	distress	n	\N	\N	1	C1	\N	\N
+4304	disturbing	adj	\N	\N	1	C1	\N	\N
+4305	divert	v	\N	\N	1	C1	\N	\N
+4306	divine	adj	\N	\N	1	C1	\N	\N
+4307	doctrine	n	\N	\N	1	C1	\N	\N
+4308	documentation	n	\N	\N	1	C1	\N	\N
+4309	domain	n	\N	\N	1	C1	\N	\N
+4310	dominance	n	\N	\N	1	C1	\N	\N
+4311	donor	n	\N	\N	1	C1	\N	\N
+4312	dose	n	\N	\N	1	C1	\N	\N
+4313	drawback	n	\N	\N	1	C1	\N	\N
+4314	drain	v	\N	\N	1	C1	\N	\N
+4315	drift	v	\N	\N	1	C1	\N	\N
+4316	drown	v	\N	\N	1	C1	\N	\N
+4317	dual	adj	\N	\N	1	C1	\N	\N
+4318	dub	v	\N	\N	1	C1	\N	\N
+4319	dumb	adj	\N	\N	1	C1	\N	\N
+4320	duo	n	\N	\N	1	C1	\N	\N
+4321	earnings	n	\N	\N	1	C1	\N	\N
+4322	ease	n	\N	\N	1	C1	\N	\N
+4323	echo	n	\N	\N	1	C1	\N	\N
+4324	ecological	adj	\N	\N	1	C1	\N	\N
+4325	educator	n	\N	\N	1	C1	\N	\N
+4326	effectiveness	n	\N	\N	1	C1	\N	\N
+4327	efficiency	n	\N	\N	1	C1	\N	\N
+4328	ego	n	\N	\N	1	C1	\N	\N
+4329	elaborate	adj	\N	\N	1	C1	\N	\N
+4330	electoral	adj	\N	\N	1	C1	\N	\N
+4331	elevate	v	\N	\N	1	C1	\N	\N
+4332	eligible	adj	\N	\N	1	C1	\N	\N
+4333	elite	n	\N	\N	1	C1	\N	\N
+4334	embark	v	\N	\N	1	C1	\N	\N
+4335	embarrassment	n	\N	\N	1	C1	\N	\N
+4336	embassy	n	\N	\N	1	C1	\N	\N
+4337	embed	v	\N	\N	1	C1	\N	\N
+4338	embody	v	\N	\N	1	C1	\N	\N
+4339	emergence	n	\N	\N	1	C1	\N	\N
+4340	empirical	adj	\N	\N	1	C1	\N	\N
+4341	empower	v	\N	\N	1	C1	\N	\N
+4342	enact	v	\N	\N	1	C1	\N	\N
+4343	encompass	v	\N	\N	1	C1	\N	\N
+4344	encouragement	n	\N	\N	1	C1	\N	\N
+4345	encouraging	adj	\N	\N	1	C1	\N	\N
+4346	endeavour	n	\N	\N	1	C1	\N	\N
+4347	endless	adj	\N	\N	1	C1	\N	\N
+4348	endorse	v	\N	\N	1	C1	\N	\N
+4349	endorsement	n	\N	\N	1	C1	\N	\N
+4350	endure	v	\N	\N	1	C1	\N	\N
+4351	enforce	v	\N	\N	1	C1	\N	\N
+4352	enforcement	n	\N	\N	1	C1	\N	\N
+4353	engagement	n	\N	\N	1	C1	\N	\N
+4354	engaging	adj	\N	\N	1	C1	\N	\N
+4355	enrich	v	\N	\N	1	C1	\N	\N
+4356	enrol	v	\N	\N	1	C1	\N	\N
+7163	wager	v	\N	\N	1	C2	\N	\N
+4357	enterprise	n	\N	\N	1	C1	\N	\N
+4358	enthusiast	n	\N	\N	1	C1	\N	\N
+4359	entitle	v	\N	\N	1	C1	\N	\N
+4360	entity	n	\N	\N	1	C1	\N	\N
+4361	epidemic	n	\N	\N	1	C1	\N	\N
+4362	equality	n	\N	\N	1	C1	\N	\N
+4363	equation	n	\N	\N	1	C1	\N	\N
+4364	erect	v	\N	\N	1	C1	\N	\N
+4365	escalate	v	\N	\N	1	C1	\N	\N
+4366	escort	n	\N	\N	1	C1	\N	\N
+4367	essence	n	\N	\N	1	C1	\N	\N
+4368	establishment	n	\N	\N	1	C1	\N	\N
+4369	eternal	adj	\N	\N	1	C1	\N	\N
+4370	evacuate	v	\N	\N	1	C1	\N	\N
+4371	evoke	v	\N	\N	1	C1	\N	\N
+4372	evolutionary	adj	\N	\N	1	C1	\N	\N
+4373	exaggerate	v	\N	\N	1	C1	\N	\N
+4374	excellence	n	\N	\N	1	C1	\N	\N
+4375	exceptional	adj	\N	\N	1	C1	\N	\N
+4376	excess	n	\N	\N	1	C1	\N	\N
+4377	exclusion	n	\N	\N	1	C1	\N	\N
+4378	exclusive	adj	\N	\N	1	C1	\N	\N
+4379	exclusively	adv	\N	\N	1	C1	\N	\N
+4380	execute	v	\N	\N	1	C1	\N	\N
+4381	execution	n	\N	\N	1	C1	\N	\N
+4382	exert	v	\N	\N	1	C1	\N	\N
+4383	exile	n	\N	\N	1	C1	\N	\N
+4384	expenditure	n	\N	\N	1	C1	\N	\N
+4385	experimental	adj	\N	\N	1	C1	\N	\N
+4386	expire	v	\N	\N	1	C1	\N	\N
+4387	explicit	adj	\N	\N	1	C1	\N	\N
+4388	explicitly	adv	\N	\N	1	C1	\N	\N
+4389	exploitation	n	\N	\N	1	C1	\N	\N
+4390	explosive	n	\N	\N	1	C1	\N	\N
+4391	extremist	n	\N	\N	1	C1	\N	\N
+4392	facilitate	v	\N	\N	1	C1	\N	\N
+4393	faction	n	\N	\N	1	C1	\N	\N
+4394	fade	v	\N	\N	1	C1	\N	\N
+4395	fairness	n	\N	\N	1	C1	\N	\N
+4396	fatal	adj	\N	\N	1	C1	\N	\N
+4397	fate	n	\N	\N	1	C1	\N	\N
+4398	favourable	adj	\N	\N	1	C1	\N	\N
+4399	feat	n	\N	\N	1	C1	\N	\N
+4400	felony	n	\N	\N	1	C1	\N	\N
+4401	feminist	n	\N	\N	1	C1	\N	\N
+4402	fibre	n	\N	\N	1	C1	\N	\N
+4403	fierce	adj	\N	\N	1	C1	\N	\N
+4404	filmmaker	n	\N	\N	1	C1	\N	\N
+4405	filter	n	\N	\N	1	C1	\N	\N
+4406	firearm	n	\N	\N	1	C1	\N	\N
+4407	fiscal	adj	\N	\N	1	C1	\N	\N
+4408	flaw	n	\N	\N	1	C1	\N	\N
+4409	flawed	adj	\N	\N	1	C1	\N	\N
+4410	flee	v	\N	\N	1	C1	\N	\N
+4411	fleet	n	\N	\N	1	C1	\N	\N
+4412	flesh	n	\N	\N	1	C1	\N	\N
+4413	flexibility	n	\N	\N	1	C1	\N	\N
+4414	flourish	v	\N	\N	1	C1	\N	\N
+4415	fluid	n	\N	\N	1	C1	\N	\N
+4416	footage	n	\N	\N	1	C1	\N	\N
+4417	foresee	v	\N	\N	1	C1	\N	\N
+4418	foreigner	n	\N	\N	1	C1	\N	\N
+4419	forge	v	\N	\N	1	C1	\N	\N
+4420	formula	n	\N	\N	1	C1	\N	\N
+4421	formulate	v	\N	\N	1	C1	\N	\N
+4422	forth	adv	\N	\N	1	C1	\N	\N
+4423	forthcoming	adj	\N	\N	1	C1	\N	\N
+4424	foster	v	\N	\N	1	C1	\N	\N
+4425	fragile	adj	\N	\N	1	C1	\N	\N
+4426	franchise	n	\N	\N	1	C1	\N	\N
+4427	frankly	adv	\N	\N	1	C1	\N	\N
+4428	fraudulent	adj	\N	\N	1	C1	\N	\N
+4429	frustrating	adj	\N	\N	1	C1	\N	\N
+4430	frustration	n	\N	\N	1	C1	\N	\N
+4431	functional	adj	\N	\N	1	C1	\N	\N
+4432	fundraising	n	\N	\N	1	C1	\N	\N
+4433	gambling	n	\N	\N	1	C1	\N	\N
+4434	gathering	n	\N	\N	1	C1	\N	\N
+4435	gaze	v	\N	\N	1	C1	\N	\N
+4436	gear	n	\N	\N	1	C1	\N	\N
+4437	generic	adj	\N	\N	1	C1	\N	\N
+4438	genocide	n	\N	\N	1	C1	\N	\N
+4439	glance	v	\N	\N	1	C1	\N	\N
+4440	glimpse	n	\N	\N	1	C1	\N	\N
+4441	glorious	adj	\N	\N	1	C1	\N	\N
+4442	glory	n	\N	\N	1	C1	\N	\N
+4443	governance	n	\N	\N	1	C1	\N	\N
+4444	grace	n	\N	\N	1	C1	\N	\N
+4445	grasp	v	\N	\N	1	C1	\N	\N
+4446	grave	adj	\N	\N	1	C1	\N	\N
+4447	gravity	n	\N	\N	1	C1	\N	\N
+4448	grid	n	\N	\N	1	C1	\N	\N
+4449	grief	n	\N	\N	1	C1	\N	\N
+4450	grin	v	\N	\N	1	C1	\N	\N
+4451	grind	v	\N	\N	1	C1	\N	\N
+4452	grip	n	\N	\N	1	C1	\N	\N
+4453	gross	adj	\N	\N	1	C1	\N	\N
+4454	guerrilla	n	\N	\N	1	C1	\N	\N
+4455	guidance	n	\N	\N	1	C1	\N	\N
+4456	guilt	n	\N	\N	1	C1	\N	\N
+4457	gut	n	\N	\N	1	C1	\N	\N
+4458	hail	v	\N	\N	1	C1	\N	\N
+4459	halfway	adv	\N	\N	1	C1	\N	\N
+4460	halt	v	\N	\N	1	C1	\N	\N
+4461	handful	n	\N	\N	1	C1	\N	\N
+4462	handling	n	\N	\N	1	C1	\N	\N
+4463	handy	adj	\N	\N	1	C1	\N	\N
+4464	harassment	n	\N	\N	1	C1	\N	\N
+4465	hardware	n	\N	\N	1	C1	\N	\N
+4466	harmony	n	\N	\N	1	C1	\N	\N
+4467	harsh	adj	\N	\N	1	C1	\N	\N
+4468	harvest	n	\N	\N	1	C1	\N	\N
+4469	hatred	n	\N	\N	1	C1	\N	\N
+4470	haunt	v	\N	\N	1	C1	\N	\N
+4471	hazard	n	\N	\N	1	C1	\N	\N
+4472	hence	adv	\N	\N	1	C1	\N	\N
+4473	heighten	v	\N	\N	1	C1	\N	\N
+4474	heritage	n	\N	\N	1	C1	\N	\N
+4475	hierarchy	n	\N	\N	1	C1	\N	\N
+4476	high-profile	adj	\N	\N	1	C1	\N	\N
+4477	homeland	n	\N	\N	1	C1	\N	\N
+4478	hopeful	adj	\N	\N	1	C1	\N	\N
+4479	horizon	n	\N	\N	1	C1	\N	\N
+4480	hostage	n	\N	\N	1	C1	\N	\N
+4481	hostile	adj	\N	\N	1	C1	\N	\N
+4482	hostility	n	\N	\N	1	C1	\N	\N
+4483	humanitarian	adj	\N	\N	1	C1	\N	\N
+4484	humanity	n	\N	\N	1	C1	\N	\N
+4485	humble	adj	\N	\N	1	C1	\N	\N
+4486	hydrogen	n	\N	\N	1	C1	\N	\N
+4487	hypothesis	n	\N	\N	1	C1	\N	\N
+4488	identification	n	\N	\N	1	C1	\N	\N
+4489	ideological	adj	\N	\N	1	C1	\N	\N
+4490	ideology	n	\N	\N	1	C1	\N	\N
+4491	ignorance	n	\N	\N	1	C1	\N	\N
+4492	imagery	n	\N	\N	1	C1	\N	\N
+4493	immense	adj	\N	\N	1	C1	\N	\N
+4494	imminent	adj	\N	\N	1	C1	\N	\N
+4495	implementation	n	\N	\N	1	C1	\N	\N
+4496	imprison	v	\N	\N	1	C1	\N	\N
+4497	inability	n	\N	\N	1	C1	\N	\N
+4498	inadequate	adj	\N	\N	1	C1	\N	\N
+4499	inappropriate	adj	\N	\N	1	C1	\N	\N
+4500	incarcerate	v	\N	\N	1	C1	\N	\N
+4501	incarceration	n	\N	\N	1	C1	\N	\N
+4502	incidence	n	\N	\N	1	C1	\N	\N
+4503	inclined	adj	\N	\N	1	C1	\N	\N
+4504	inclusion	n	\N	\N	1	C1	\N	\N
+4505	incur	v	\N	\N	1	C1	\N	\N
+4506	indicator	n	\N	\N	1	C1	\N	\N
+4507	indictment	n	\N	\N	1	C1	\N	\N
+4508	indigenous	adj	\N	\N	1	C1	\N	\N
+4509	induce	v	\N	\N	1	C1	\N	\N
+4510	indulge	v	\N	\N	1	C1	\N	\N
+4511	inequality	n	\N	\N	1	C1	\N	\N
+4512	infamous	adj	\N	\N	1	C1	\N	\N
+4513	infect	v	\N	\N	1	C1	\N	\N
+4514	inflict	v	\N	\N	1	C1	\N	\N
+4515	influential	adj	\N	\N	1	C1	\N	\N
+4516	infrastructure	n	\N	\N	1	C1	\N	\N
+4517	inherent	adj	\N	\N	1	C1	\N	\N
+4518	inhibit	v	\N	\N	1	C1	\N	\N
+4519	initiate	v	\N	\N	1	C1	\N	\N
+4520	inject	v	\N	\N	1	C1	\N	\N
+4521	injection	n	\N	\N	1	C1	\N	\N
+4522	injustice	n	\N	\N	1	C1	\N	\N
+4523	inmate	n	\N	\N	1	C1	\N	\N
+4524	inquire	v	\N	\N	1	C1	\N	\N
+4525	insertion	n	\N	\N	1	C1	\N	\N
+4526	insider	n	\N	\N	1	C1	\N	\N
+4527	inspect	v	\N	\N	1	C1	\N	\N
+4528	inspection	n	\N	\N	1	C1	\N	\N
+4529	inspiration	n	\N	\N	1	C1	\N	\N
+4530	instinct	n	\N	\N	1	C1	\N	\N
+4531	institutional	adj	\N	\N	1	C1	\N	\N
+4532	instruct	v	\N	\N	1	C1	\N	\N
+4533	instrumental	adj	\N	\N	1	C1	\N	\N
+4534	insufficient	adj	\N	\N	1	C1	\N	\N
+4535	insult	n	\N	\N	1	C1	\N	\N
+4536	intact	adj	\N	\N	1	C1	\N	\N
+4537	intake	n	\N	\N	1	C1	\N	\N
+4538	integral	adj	\N	\N	1	C1	\N	\N
+4539	integrated	adj	\N	\N	1	C1	\N	\N
+4540	integration	n	\N	\N	1	C1	\N	\N
+4541	integrity	n	\N	\N	1	C1	\N	\N
+4542	intensify	v	\N	\N	1	C1	\N	\N
+4543	intensity	n	\N	\N	1	C1	\N	\N
+4544	intensive	adj	\N	\N	1	C1	\N	\N
+4545	intent	n	\N	\N	1	C1	\N	\N
+4546	interactive	adj	\N	\N	1	C1	\N	\N
+4547	interface	n	\N	\N	1	C1	\N	\N
+4548	interfere	v	\N	\N	1	C1	\N	\N
+4549	interference	n	\N	\N	1	C1	\N	\N
+4550	interim	adj	\N	\N	1	C1	\N	\N
+4551	interior	n	\N	\N	1	C1	\N	\N
+4552	intermediate	adj	\N	\N	1	C1	\N	\N
+4553	intersection	n	\N	\N	1	C1	\N	\N
+4554	intervene	v	\N	\N	1	C1	\N	\N
+4555	intervention	n	\N	\N	1	C1	\N	\N
+4556	intimate	adj	\N	\N	1	C1	\N	\N
+4557	intriguing	adj	\N	\N	1	C1	\N	\N
+4558	inventory	n	\N	\N	1	C1	\N	\N
+4559	investigator	n	\N	\N	1	C1	\N	\N
+4560	invisible	adj	\N	\N	1	C1	\N	\N
+4561	invoke	v	\N	\N	1	C1	\N	\N
+4562	involvement	n	\N	\N	1	C1	\N	\N
+4563	ironic	adj	\N	\N	1	C1	\N	\N
+4564	ironically	adv	\N	\N	1	C1	\N	\N
+4565	irony	n	\N	\N	1	C1	\N	\N
+4566	irrelevant	adj	\N	\N	1	C1	\N	\N
+4567	isolation	n	\N	\N	1	C1	\N	\N
+4568	judicial	adj	\N	\N	1	C1	\N	\N
+4569	jurisdiction	n	\N	\N	1	C1	\N	\N
+4570	just	adj	\N	\N	1	C1	\N	\N
+4571	justification	n	\N	\N	1	C1	\N	\N
+4572	landlord	n	\N	\N	1	C1	\N	\N
+4573	landmark	n	\N	\N	1	C1	\N	\N
+4574	lap	n	\N	\N	1	C1	\N	\N
+4575	large-scale	adj	\N	\N	1	C1	\N	\N
+4576	latter	adj	\N	\N	1	C1	\N	\N
+4577	lawmaker	n	\N	\N	1	C1	\N	\N
+4578	lawn	n	\N	\N	1	C1	\N	\N
+4579	lawsuit	n	\N	\N	1	C1	\N	\N
+4580	layout	n	\N	\N	1	C1	\N	\N
+4581	leak	n	\N	\N	1	C1	\N	\N
+4582	leap	v	\N	\N	1	C1	\N	\N
+4583	legacy	n	\N	\N	1	C1	\N	\N
+4584	legendary	adj	\N	\N	1	C1	\N	\N
+4585	legislation	n	\N	\N	1	C1	\N	\N
+4586	legislative	adj	\N	\N	1	C1	\N	\N
+4587	legislature	n	\N	\N	1	C1	\N	\N
+4588	legitimate	adj	\N	\N	1	C1	\N	\N
+4589	lengthy	adj	\N	\N	1	C1	\N	\N
+4590	lesbian	adj	\N	\N	1	C1	\N	\N
+4591	lesser	adj	\N	\N	1	C1	\N	\N
+4592	lethal	adj	\N	\N	1	C1	\N	\N
+4593	liable	adj	\N	\N	1	C1	\N	\N
+4594	liability	n	\N	\N	1	C1	\N	\N
+4595	liberal	adj	\N	\N	1	C1	\N	\N
+4596	liberation	n	\N	\N	1	C1	\N	\N
+4597	liberty	n	\N	\N	1	C1	\N	\N
+4598	lifelong	adj	\N	\N	1	C1	\N	\N
+4599	likelihood	n	\N	\N	1	C1	\N	\N
+4600	limb	n	\N	\N	1	C1	\N	\N
+4601	linear	adj	\N	\N	1	C1	\N	\N
+4602	line-up	n	\N	\N	1	C1	\N	\N
+4603	linger	v	\N	\N	1	C1	\N	\N
+4604	listing	n	\N	\N	1	C1	\N	\N
+4605	literacy	n	\N	\N	1	C1	\N	\N
+4606	lobby	n	\N	\N	1	C1	\N	\N
+4607	logic	n	\N	\N	1	C1	\N	\N
+4608	long-standing	adj	\N	\N	1	C1	\N	\N
+4609	long-time	adj	\N	\N	1	C1	\N	\N
+4610	loom	v	\N	\N	1	C1	\N	\N
+4611	loop	n	\N	\N	1	C1	\N	\N
+4612	loyalty	n	\N	\N	1	C1	\N	\N
+4613	machinery	n	\N	\N	1	C1	\N	\N
+4614	magical	adj	\N	\N	1	C1	\N	\N
+4615	magnetic	adj	\N	\N	1	C1	\N	\N
+4616	magnitude	n	\N	\N	1	C1	\N	\N
+4617	mainland	n	\N	\N	1	C1	\N	\N
+4618	mainstream	n	\N	\N	1	C1	\N	\N
+4619	maintenance	n	\N	\N	1	C1	\N	\N
+4620	mandate	n	\N	\N	1	C1	\N	\N
+4621	mandatory	adj	\N	\N	1	C1	\N	\N
+4622	manifest	v	\N	\N	1	C1	\N	\N
+4623	manipulate	v	\N	\N	1	C1	\N	\N
+4624	manipulation	n	\N	\N	1	C1	\N	\N
+4625	manuscript	n	\N	\N	1	C1	\N	\N
+4626	march	n	\N	\N	1	C1	\N	\N
+4627	marginal	adj	\N	\N	1	C1	\N	\N
+4628	marine	adj	\N	\N	1	C1	\N	\N
+4629	marketplace	n	\N	\N	1	C1	\N	\N
+4630	massacre	n	\N	\N	1	C1	\N	\N
+4631	mathematical	adj	\N	\N	1	C1	\N	\N
+4632	mature	adj	\N	\N	1	C1	\N	\N
+4633	maximise	v	\N	\N	1	C1	\N	\N
+4634	meaningful	adj	\N	\N	1	C1	\N	\N
+4635	meantime	n	\N	\N	1	C1	\N	\N
+4636	medieval	adj	\N	\N	1	C1	\N	\N
+4637	meditation	n	\N	\N	1	C1	\N	\N
+4638	melody	n	\N	\N	1	C1	\N	\N
+4639	memo	n	\N	\N	1	C1	\N	\N
+4640	memoir	n	\N	\N	1	C1	\N	\N
+4641	memorial	n	\N	\N	1	C1	\N	\N
+4642	mentor	n	\N	\N	1	C1	\N	\N
+4643	merchant	n	\N	\N	1	C1	\N	\N
+4644	mercy	n	\N	\N	1	C1	\N	\N
+4645	mere	adj	\N	\N	1	C1	\N	\N
+4646	merely	adv	\N	\N	1	C1	\N	\N
+4647	merge	v	\N	\N	1	C1	\N	\N
+4648	merger	n	\N	\N	1	C1	\N	\N
+4649	merit	n	\N	\N	1	C1	\N	\N
+4650	in the midst of	prep	\N	\N	1	C1	\N	\N
+4651	migration	n	\N	\N	1	C1	\N	\N
+4652	militant	n	\N	\N	1	C1	\N	\N
+4653	militia	n	\N	\N	1	C1	\N	\N
+4654	minimal	adj	\N	\N	1	C1	\N	\N
+4655	minimise	v	\N	\N	1	C1	\N	\N
+4656	mining	n	\N	\N	1	C1	\N	\N
+4657	ministry	n	\N	\N	1	C1	\N	\N
+4658	minute	adj	\N	\N	1	C1	\N	\N
+4659	miracle	n	\N	\N	1	C1	\N	\N
+4660	misery	n	\N	\N	1	C1	\N	\N
+4661	misleading	adj	\N	\N	1	C1	\N	\N
+4662	mismanagement	n	\N	\N	1	C1	\N	\N
+4663	missile	n	\N	\N	1	C1	\N	\N
+4664	mob	n	\N	\N	1	C1	\N	\N
+4665	mobility	n	\N	\N	1	C1	\N	\N
+4666	mobilise	v	\N	\N	1	C1	\N	\N
+4667	moderate	adj	\N	\N	1	C1	\N	\N
+4668	modification	n	\N	\N	1	C1	\N	\N
+4669	module	n	\N	\N	1	C1	\N	\N
+4670	momentum	n	\N	\N	1	C1	\N	\N
+4671	monk	n	\N	\N	1	C1	\N	\N
+4672	monopoly	n	\N	\N	1	C1	\N	\N
+4673	morality	n	\N	\N	1	C1	\N	\N
+4674	motive	n	\N	\N	1	C1	\N	\N
+4675	municipal	adj	\N	\N	1	C1	\N	\N
+4676	mutual	adj	\N	\N	1	C1	\N	\N
+4677	naive	adj	\N	\N	1	C1	\N	\N
+4678	namely	adv	\N	\N	1	C1	\N	\N
+4679	nationwide	adj	\N	\N	1	C1	\N	\N
+4680	naval	adj	\N	\N	1	C1	\N	\N
+4681	neglect	v	\N	\N	1	C1	\N	\N
+4682	neighbouring	adj	\N	\N	1	C1	\N	\N
+4683	newsletter	n	\N	\N	1	C1	\N	\N
+4684	niche	n	\N	\N	1	C1	\N	\N
+4685	noble	adj	\N	\N	1	C1	\N	\N
+4686	nod	v	\N	\N	1	C1	\N	\N
+4687	nominate	v	\N	\N	1	C1	\N	\N
+4688	nomination	n	\N	\N	1	C1	\N	\N
+4689	nominee	n	\N	\N	1	C1	\N	\N
+4690	nonetheless	adv	\N	\N	1	C1	\N	\N
+4691	non-profit	adj	\N	\N	1	C1	\N	\N
+4692	nonsense	n	\N	\N	1	C1	\N	\N
+4693	norm	n	\N	\N	1	C1	\N	\N
+4694	notable	adj	\N	\N	1	C1	\N	\N
+4695	notably	adv	\N	\N	1	C1	\N	\N
+4696	notify	v	\N	\N	1	C1	\N	\N
+4697	notorious	adj	\N	\N	1	C1	\N	\N
+4698	nursery	n	\N	\N	1	C1	\N	\N
+4699	objection	n	\N	\N	1	C1	\N	\N
+4700	oblige	v	\N	\N	1	C1	\N	\N
+4701	obsess	v	\N	\N	1	C1	\N	\N
+4702	obsession	n	\N	\N	1	C1	\N	\N
+4703	occasional	adj	\N	\N	1	C1	\N	\N
+4704	occurrence	n	\N	\N	1	C1	\N	\N
+4705	odds	n	\N	\N	1	C1	\N	\N
+4706	offering	n	\N	\N	1	C1	\N	\N
+4707	offspring	n	\N	\N	1	C1	\N	\N
+4708	operational	adj	\N	\N	1	C1	\N	\N
+4709	opt	v	\N	\N	1	C1	\N	\N
+4710	optimism	n	\N	\N	1	C1	\N	\N
+4711	oral	adj	\N	\N	1	C1	\N	\N
+4712	organisational	adj	\N	\N	1	C1	\N	\N
+4713	orientation	n	\N	\N	1	C1	\N	\N
+4714	originate	v	\N	\N	1	C1	\N	\N
+4715	outbreak	n	\N	\N	1	C1	\N	\N
+4716	outing	n	\N	\N	1	C1	\N	\N
+4717	outlet	n	\N	\N	1	C1	\N	\N
+4718	outlook	n	\N	\N	1	C1	\N	\N
+4719	outrage	n	\N	\N	1	C1	\N	\N
+4720	outsider	n	\N	\N	1	C1	\N	\N
+4721	overlook	v	\N	\N	1	C1	\N	\N
+4722	overly	adv	\N	\N	1	C1	\N	\N
+4723	oversee	v	\N	\N	1	C1	\N	\N
+4724	overturn	v	\N	\N	1	C1	\N	\N
+4725	overwhelm	v	\N	\N	1	C1	\N	\N
+4726	overwhelming	adj	\N	\N	1	C1	\N	\N
+4727	parameter	n	\N	\N	1	C1	\N	\N
+4728	parental	adj	\N	\N	1	C1	\N	\N
+4729	partial	adj	\N	\N	1	C1	\N	\N
+4730	partially	adv	\N	\N	1	C1	\N	\N
+4731	passing	n	\N	\N	1	C1	\N	\N
+4732	passive	adj	\N	\N	1	C1	\N	\N
+4733	pastor	n	\N	\N	1	C1	\N	\N
+4734	patent	n	\N	\N	1	C1	\N	\N
+4735	pathway	n	\N	\N	1	C1	\N	\N
+4736	patrol	n	\N	\N	1	C1	\N	\N
+4737	patron	n	\N	\N	1	C1	\N	\N
+4738	peak	n	\N	\N	1	C1	\N	\N
+4739	peasant	n	\N	\N	1	C1	\N	\N
+4740	peculiar	adj	\N	\N	1	C1	\N	\N
+4741	persist	v	\N	\N	1	C1	\N	\N
+4742	persistent	adj	\N	\N	1	C1	\N	\N
+4743	personnel	n	\N	\N	1	C1	\N	\N
+4744	petition	n	\N	\N	1	C1	\N	\N
+4745	philosopher	n	\N	\N	1	C1	\N	\N
+4746	philosophical	adj	\N	\N	1	C1	\N	\N
+4747	pioneer	n	\N	\N	1	C1	\N	\N
+4748	pipeline	n	\N	\N	1	C1	\N	\N
+4749	pit	n	\N	\N	1	C1	\N	\N
+4750	plausible	adj	\N	\N	1	C1	\N	\N
+4751	plea	n	\N	\N	1	C1	\N	\N
+4752	plead	v	\N	\N	1	C1	\N	\N
+4753	pledge	n	\N	\N	1	C1	\N	\N
+4754	plunge	n	\N	\N	1	C1	\N	\N
+4755	pole	n	\N	\N	1	C1	\N	\N
+4756	poll	n	\N	\N	1	C1	\N	\N
+4757	portfolio	n	\N	\N	1	C1	\N	\N
+4758	portray	v	\N	\N	1	C1	\N	\N
+4759	postpone	v	\N	\N	1	C1	\N	\N
+4760	post-war	adj	\N	\N	1	C1	\N	\N
+4761	practitioner	n	\N	\N	1	C1	\N	\N
+4762	preach	v	\N	\N	1	C1	\N	\N
+4763	precede	v	\N	\N	1	C1	\N	\N
+4764	precedent	n	\N	\N	1	C1	\N	\N
+4765	precision	n	\N	\N	1	C1	\N	\N
+4766	predator	n	\N	\N	1	C1	\N	\N
+4767	predecessor	n	\N	\N	1	C1	\N	\N
+4768	predominantly	adv	\N	\N	1	C1	\N	\N
+4769	pregnancy	n	\N	\N	1	C1	\N	\N
+4770	prejudice	n	\N	\N	1	C1	\N	\N
+4771	preliminary	adj	\N	\N	1	C1	\N	\N
+4772	premier	n	\N	\N	1	C1	\N	\N
+4773	premise	n	\N	\N	1	C1	\N	\N
+4774	premium	n	\N	\N	1	C1	\N	\N
+4775	prescribe	v	\N	\N	1	C1	\N	\N
+4776	prescription	n	\N	\N	1	C1	\N	\N
+4777	presently	adv	\N	\N	1	C1	\N	\N
+4778	preservation	n	\N	\N	1	C1	\N	\N
+4779	preside	v	\N	\N	1	C1	\N	\N
+4780	presidency	n	\N	\N	1	C1	\N	\N
+4781	prestigious	adj	\N	\N	1	C1	\N	\N
+4782	presumably	adv	\N	\N	1	C1	\N	\N
+4783	presume	v	\N	\N	1	C1	\N	\N
+4784	prevail	v	\N	\N	1	C1	\N	\N
+4785	prevalence	n	\N	\N	1	C1	\N	\N
+4786	prevention	n	\N	\N	1	C1	\N	\N
+4787	prey	n	\N	\N	1	C1	\N	\N
+4788	privatization	n	\N	\N	1	C1	\N	\N
+4789	privilege	n	\N	\N	1	C1	\N	\N
+4790	probe	n	\N	\N	1	C1	\N	\N
+4791	problematic	adj	\N	\N	1	C1	\N	\N
+4792	proceeding	n	\N	\N	1	C1	\N	\N
+4793	proceeds	n	\N	\N	1	C1	\N	\N
+4794	processing	n	\N	\N	1	C1	\N	\N
+4795	processor	n	\N	\N	1	C1	\N	\N
+4796	proclaim	v	\N	\N	1	C1	\N	\N
+4797	productive	adj	\N	\N	1	C1	\N	\N
+4798	productivity	n	\N	\N	1	C1	\N	\N
+4799	profitable	adj	\N	\N	1	C1	\N	\N
+4800	profound	adj	\N	\N	1	C1	\N	\N
+4801	projection	n	\N	\N	1	C1	\N	\N
+4802	prominent	adj	\N	\N	1	C1	\N	\N
+4803	pronounced	adj	\N	\N	1	C1	\N	\N
+4804	propaganda	n	\N	\N	1	C1	\N	\N
+4805	proposition	n	\N	\N	1	C1	\N	\N
+4806	prosecute	v	\N	\N	1	C1	\N	\N
+4807	prosecution	n	\N	\N	1	C1	\N	\N
+4808	prosecutor	n	\N	\N	1	C1	\N	\N
+4809	prospective	adj	\N	\N	1	C1	\N	\N
+4810	prosperity	n	\N	\N	1	C1	\N	\N
+4811	protective	adj	\N	\N	1	C1	\N	\N
+4812	protocol	n	\N	\N	1	C1	\N	\N
+4813	province	n	\N	\N	1	C1	\N	\N
+4814	provincial	adj	\N	\N	1	C1	\N	\N
+4815	provision	n	\N	\N	1	C1	\N	\N
+4816	provoke	v	\N	\N	1	C1	\N	\N
+4817	psychiatric	adj	\N	\N	1	C1	\N	\N
+4818	pulse	n	\N	\N	1	C1	\N	\N
+4819	query	n	\N	\N	1	C1	\N	\N
+4820	quest	n	\N	\N	1	C1	\N	\N
+4821	quota	n	\N	\N	1	C1	\N	\N
+4822	radical	adj	\N	\N	1	C1	\N	\N
+4823	rage	n	\N	\N	1	C1	\N	\N
+4824	raid	n	\N	\N	1	C1	\N	\N
+4825	rally	n	\N	\N	1	C1	\N	\N
+4826	ranking	n	\N	\N	1	C1	\N	\N
+4827	rape	n	\N	\N	1	C1	\N	\N
+4828	ratio	n	\N	\N	1	C1	\N	\N
+4829	rational	adj	\N	\N	1	C1	\N	\N
+4830	ray	n	\N	\N	1	C1	\N	\N
+4831	readily	adv	\N	\N	1	C1	\N	\N
+4832	realization	n	\N	\N	1	C1	\N	\N
+4833	realm	n	\N	\N	1	C1	\N	\N
+4834	rear	n	\N	\N	1	C1	\N	\N
+4835	reasoning	n	\N	\N	1	C1	\N	\N
+4836	reassure	v	\N	\N	1	C1	\N	\N
+4837	rebel	n	\N	\N	1	C1	\N	\N
+4838	rebellion	n	\N	\N	1	C1	\N	\N
+4839	recipient	n	\N	\N	1	C1	\N	\N
+4840	reconstruction	n	\N	\N	1	C1	\N	\N
+4841	recount	v	\N	\N	1	C1	\N	\N
+4842	recruitment	n	\N	\N	1	C1	\N	\N
+4843	referendum	n	\N	\N	1	C1	\N	\N
+4844	reflection	n	\N	\N	1	C1	\N	\N
+4845	reform	n	\N	\N	1	C1	\N	\N
+4846	refuge	n	\N	\N	1	C1	\N	\N
+4847	refusal	n	\N	\N	1	C1	\N	\N
+4848	regain	v	\N	\N	1	C1	\N	\N
+4849	regardless	adv	\N	\N	1	C1	\N	\N
+4850	regime	n	\N	\N	1	C1	\N	\N
+4851	regulator	n	\N	\N	1	C1	\N	\N
+4852	regulatory	adj	\N	\N	1	C1	\N	\N
+4853	rehabilitation	n	\N	\N	1	C1	\N	\N
+4854	reign	n	\N	\N	1	C1	\N	\N
+4855	rejection	n	\N	\N	1	C1	\N	\N
+4856	relevance	n	\N	\N	1	C1	\N	\N
+4857	reliability	n	\N	\N	1	C1	\N	\N
+4858	reluctant	adj	\N	\N	1	C1	\N	\N
+4859	remainder	n	\N	\N	1	C1	\N	\N
+4860	remains	n	\N	\N	1	C1	\N	\N
+4861	remedy	n	\N	\N	1	C1	\N	\N
+4862	reminder	n	\N	\N	1	C1	\N	\N
+4863	removal	n	\N	\N	1	C1	\N	\N
+4864	render	v	\N	\N	1	C1	\N	\N
+4865	renew	v	\N	\N	1	C1	\N	\N
+4866	renowned	adj	\N	\N	1	C1	\N	\N
+4867	rental	n	\N	\N	1	C1	\N	\N
+4868	replacement	n	\N	\N	1	C1	\N	\N
+4869	reportedly	adv	\N	\N	1	C1	\N	\N
+4870	representation	n	\N	\N	1	C1	\N	\N
+4871	reproduce	v	\N	\N	1	C1	\N	\N
+4872	reproduction	n	\N	\N	1	C1	\N	\N
+4873	republic	n	\N	\N	1	C1	\N	\N
+4874	resemble	v	\N	\N	1	C1	\N	\N
+4875	reside	v	\N	\N	1	C1	\N	\N
+4876	residence	n	\N	\N	1	C1	\N	\N
+4877	residential	adj	\N	\N	1	C1	\N	\N
+4878	residue	n	\N	\N	1	C1	\N	\N
+4879	resignation	n	\N	\N	1	C1	\N	\N
+4880	resistance	n	\N	\N	1	C1	\N	\N
+4881	respective	adj	\N	\N	1	C1	\N	\N
+4882	respectively	adv	\N	\N	1	C1	\N	\N
+4883	restoration	n	\N	\N	1	C1	\N	\N
+4884	restraint	n	\N	\N	1	C1	\N	\N
+4885	resume	v	\N	\N	1	C1	\N	\N
+4886	retreat	n	\N	\N	1	C1	\N	\N
+4887	retrieve	v	\N	\N	1	C1	\N	\N
+4888	revelation	n	\N	\N	1	C1	\N	\N
+4889	revenge	n	\N	\N	1	C1	\N	\N
+4890	reverse	v	\N	\N	1	C1	\N	\N
+4891	revival	n	\N	\N	1	C1	\N	\N
+4892	revive	v	\N	\N	1	C1	\N	\N
+4893	revolutionary	adj	\N	\N	1	C1	\N	\N
+4894	rhetoric	n	\N	\N	1	C1	\N	\N
+4895	riot	n	\N	\N	1	C1	\N	\N
+4896	rip	v	\N	\N	1	C1	\N	\N
+4897	ritual	n	\N	\N	1	C1	\N	\N
+4898	robust	adj	\N	\N	1	C1	\N	\N
+4899	rod	n	\N	\N	1	C1	\N	\N
+4900	rookie	n	\N	\N	1	C1	\N	\N
+4901	roster	n	\N	\N	1	C1	\N	\N
+4902	rotate	v	\N	\N	1	C1	\N	\N
+4903	rotation	n	\N	\N	1	C1	\N	\N
+4904	ruling	n	\N	\N	1	C1	\N	\N
+4905	rumour	n	\N	\N	1	C1	\N	\N
+4906	sacred	adj	\N	\N	1	C1	\N	\N
+4907	sacrifice	n	\N	\N	1	C1	\N	\N
+4908	saint	n	\N	\N	1	C1	\N	\N
+4909	sake	n	\N	\N	1	C1	\N	\N
+4910	sanction	n	\N	\N	1	C1	\N	\N
+4911	saviour	n	\N	\N	1	C1	\N	\N
+4912	scenario	n	\N	\N	1	C1	\N	\N
+4913	scattered	adj	\N	\N	1	C1	\N	\N
+4914	scope	n	\N	\N	1	C1	\N	\N
+4915	screw	n	\N	\N	1	C1	\N	\N
+4916	scrutiny	n	\N	\N	1	C1	\N	\N
+4917	seal	n	\N	\N	1	C1	\N	\N
+4918	secondly	adv	\N	\N	1	C1	\N	\N
+4919	secular	adj	\N	\N	1	C1	\N	\N
+4920	seemingly	adv	\N	\N	1	C1	\N	\N
+4921	segment	n	\N	\N	1	C1	\N	\N
+4922	seize	v	\N	\N	1	C1	\N	\N
+4923	seldom	adv	\N	\N	1	C1	\N	\N
+4924	selective	adj	\N	\N	1	C1	\N	\N
+4925	sensation	n	\N	\N	1	C1	\N	\N
+4926	sensitivity	n	\N	\N	1	C1	\N	\N
+4927	sentiment	n	\N	\N	1	C1	\N	\N
+4928	separation	n	\N	\N	1	C1	\N	\N
+4929	serial	adj	\N	\N	1	C1	\N	\N
+4930	settlement	n	\N	\N	1	C1	\N	\N
+4931	setup	n	\N	\N	1	C1	\N	\N
+4932	sexuality	n	\N	\N	1	C1	\N	\N
+4933	shareholder	n	\N	\N	1	C1	\N	\N
+4934	shatter	v	\N	\N	1	C1	\N	\N
+4935	shed	v	\N	\N	1	C1	\N	\N
+4936	sheer	adj	\N	\N	1	C1	\N	\N
+4937	shipping	n	\N	\N	1	C1	\N	\N
+4938	shrink	v	\N	\N	1	C1	\N	\N
+4939	shrug	v	\N	\N	1	C1	\N	\N
+4940	sigh	v	\N	\N	1	C1	\N	\N
+4941	simulate	v	\N	\N	1	C1	\N	\N
+4942	simulation	n	\N	\N	1	C1	\N	\N
+4943	simultaneously	adv	\N	\N	1	C1	\N	\N
+4944	sin	n	\N	\N	1	C1	\N	\N
+4945	situated	adj	\N	\N	1	C1	\N	\N
+4946	sceptical	adj	\N	\N	1	C1	\N	\N
+4947	sketch	n	\N	\N	1	C1	\N	\N
+4948	slash	n	\N	\N	1	C1	\N	\N
+4949	slavery	n	\N	\N	1	C1	\N	\N
+4950	slot	n	\N	\N	1	C1	\N	\N
+4951	smash	v	\N	\N	1	C1	\N	\N
+4952	snap	v	\N	\N	1	C1	\N	\N
+4953	soak	v	\N	\N	1	C1	\N	\N
+4954	soar	v	\N	\N	1	C1	\N	\N
+4955	socialist	adj	\N	\N	1	C1	\N	\N
+4956	sole	adj	\N	\N	1	C1	\N	\N
+4957	solely	adv	\N	\N	1	C1	\N	\N
+4958	solidarity	n	\N	\N	1	C1	\N	\N
+4959	solo	n	\N	\N	1	C1	\N	\N
+4960	sovereignty	n	\N	\N	1	C1	\N	\N
+4961	span	n	\N	\N	1	C1	\N	\N
+4962	spark	n	\N	\N	1	C1	\N	\N
+4963	specialised	adj	\N	\N	1	C1	\N	\N
+4964	specification	n	\N	\N	1	C1	\N	\N
+4965	specimen	n	\N	\N	1	C1	\N	\N
+4966	spectacle	n	\N	\N	1	C1	\N	\N
+4967	spectrum	n	\N	\N	1	C1	\N	\N
+4968	sphere	n	\N	\N	1	C1	\N	\N
+4969	spin	v	\N	\N	1	C1	\N	\N
+4970	spine	n	\N	\N	1	C1	\N	\N
+4971	spotlight	n	\N	\N	1	C1	\N	\N
+4972	spouse	n	\N	\N	1	C1	\N	\N
+4973	squad	n	\N	\N	1	C1	\N	\N
+4974	squeeze	v	\N	\N	1	C1	\N	\N
+4975	stab	v	\N	\N	1	C1	\N	\N
+4976	stability	n	\N	\N	1	C1	\N	\N
+4977	stabilise	v	\N	\N	1	C1	\N	\N
+4978	stake	n	\N	\N	1	C1	\N	\N
+4979	standing	n	\N	\N	1	C1	\N	\N
+4980	stark	adj	\N	\N	1	C1	\N	\N
+4981	statistical	adj	\N	\N	1	C1	\N	\N
+4982	steer	v	\N	\N	1	C1	\N	\N
+4983	stem from	v	\N	\N	1	C1	\N	\N
+4984	stereotype	n	\N	\N	1	C1	\N	\N
+4985	stimulus	n	\N	\N	1	C1	\N	\N
+4986	stir	v	\N	\N	1	C1	\N	\N
+4987	storage	n	\N	\N	1	C1	\N	\N
+4988	straightforward	adj	\N	\N	1	C1	\N	\N
+4989	strain	n	\N	\N	1	C1	\N	\N
+4990	strand	n	\N	\N	1	C1	\N	\N
+4991	strategic	adj	\N	\N	1	C1	\N	\N
+4992	strip	n	\N	\N	1	C1	\N	\N
+4993	strive	v	\N	\N	1	C1	\N	\N
+4994	structural	adj	\N	\N	1	C1	\N	\N
+4995	stumble	v	\N	\N	1	C1	\N	\N
+4996	stun	v	\N	\N	1	C1	\N	\N
+4997	submission	n	\N	\N	1	C1	\N	\N
+4998	subscriber	n	\N	\N	1	C1	\N	\N
+4999	subscription	n	\N	\N	1	C1	\N	\N
+5000	subsequent	adj	\N	\N	1	C1	\N	\N
+5001	subsequently	adv	\N	\N	1	C1	\N	\N
+5002	subsidy	n	\N	\N	1	C1	\N	\N
+5003	substantial	adj	\N	\N	1	C1	\N	\N
+5004	substantially	adv	\N	\N	1	C1	\N	\N
+5005	substitute	n	\N	\N	1	C1	\N	\N
+5006	substitution	n	\N	\N	1	C1	\N	\N
+5007	subtle	adj	\N	\N	1	C1	\N	\N
+5008	suburban	adj	\N	\N	1	C1	\N	\N
+5009	succession	n	\N	\N	1	C1	\N	\N
+5010	successive	adj	\N	\N	1	C1	\N	\N
+5011	successor	n	\N	\N	1	C1	\N	\N
+5012	suck	v	\N	\N	1	C1	\N	\N
+5013	sue	v	\N	\N	1	C1	\N	\N
+5014	suicide	n	\N	\N	1	C1	\N	\N
+5015	suite	n	\N	\N	1	C1	\N	\N
+5016	summit	n	\N	\N	1	C1	\N	\N
+5017	superb	adj	\N	\N	1	C1	\N	\N
+5018	superintendent	n	\N	\N	1	C1	\N	\N
+5019	superior	adj	\N	\N	1	C1	\N	\N
+5020	supervise	v	\N	\N	1	C1	\N	\N
+5021	supervision	n	\N	\N	1	C1	\N	\N
+5022	supervisor	n	\N	\N	1	C1	\N	\N
+5023	supplement	n	\N	\N	1	C1	\N	\N
+5024	supportive	adj	\N	\N	1	C1	\N	\N
+5025	supposedly	adv	\N	\N	1	C1	\N	\N
+5026	suppress	v	\N	\N	1	C1	\N	\N
+5027	supreme	adj	\N	\N	1	C1	\N	\N
+5028	surge	n	\N	\N	1	C1	\N	\N
+5029	surgical	adj	\N	\N	1	C1	\N	\N
+5030	surplus	n	\N	\N	1	C1	\N	\N
+5031	surrender	v	\N	\N	1	C1	\N	\N
+5032	surveillance	n	\N	\N	1	C1	\N	\N
+5033	suspension	n	\N	\N	1	C1	\N	\N
+5034	suspicion	n	\N	\N	1	C1	\N	\N
+5035	suspicious	adj	\N	\N	1	C1	\N	\N
+5036	sustain	v	\N	\N	1	C1	\N	\N
+5037	symbolic	adj	\N	\N	1	C1	\N	\N
+5038	syndrome	n	\N	\N	1	C1	\N	\N
+5039	synthesis	n	\N	\N	1	C1	\N	\N
+5040	systematic	adj	\N	\N	1	C1	\N	\N
+5041	tackle	v	\N	\N	1	C1	\N	\N
+5042	tactic	n	\N	\N	1	C1	\N	\N
+5043	tactical	adj	\N	\N	1	C1	\N	\N
+5044	taxpayer	n	\N	\N	1	C1	\N	\N
+5045	tempt	v	\N	\N	1	C1	\N	\N
+5046	tenant	n	\N	\N	1	C1	\N	\N
+5047	tender	adj	\N	\N	1	C1	\N	\N
+5048	tenure	n	\N	\N	1	C1	\N	\N
+5049	terminate	v	\N	\N	1	C1	\N	\N
+5050	terrain	n	\N	\N	1	C1	\N	\N
+5051	terrific	adj	\N	\N	1	C1	\N	\N
+5052	testify	v	\N	\N	1	C1	\N	\N
+5053	testimony	n	\N	\N	1	C1	\N	\N
+5054	texture	n	\N	\N	1	C1	\N	\N
+5055	thankfully	adv	\N	\N	1	C1	\N	\N
+5056	theatrical	adj	\N	\N	1	C1	\N	\N
+5057	theology	n	\N	\N	1	C1	\N	\N
+5058	theoretical	adj	\N	\N	1	C1	\N	\N
+5059	thereafter	adv	\N	\N	1	C1	\N	\N
+5060	thereby	adv	\N	\N	1	C1	\N	\N
+5061	thesis	n	\N	\N	1	C1	\N	\N
+5062	thoughtful	adj	\N	\N	1	C1	\N	\N
+5063	thread	n	\N	\N	1	C1	\N	\N
+5064	threshold	n	\N	\N	1	C1	\N	\N
+5065	thrilled	adj	\N	\N	1	C1	\N	\N
+5066	thrive	v	\N	\N	1	C1	\N	\N
+5067	tide	n	\N	\N	1	C1	\N	\N
+5068	tighten	v	\N	\N	1	C1	\N	\N
+5069	timber	n	\N	\N	1	C1	\N	\N
+5070	timely	adj	\N	\N	1	C1	\N	\N
+5071	tobacco	n	\N	\N	1	C1	\N	\N
+5072	tolerance	n	\N	\N	1	C1	\N	\N
+5073	tolerate	v	\N	\N	1	C1	\N	\N
+5074	toll	n	\N	\N	1	C1	\N	\N
+5075	torture	n	\N	\N	1	C1	\N	\N
+5076	toss	v	\N	\N	1	C1	\N	\N
+5077	trademark	n	\N	\N	1	C1	\N	\N
+5078	trail	n	\N	\N	1	C1	\N	\N
+5079	traitor	n	\N	\N	1	C1	\N	\N
+5080	transaction	n	\N	\N	1	C1	\N	\N
+5081	transcript	n	\N	\N	1	C1	\N	\N
+5082	transformation	n	\N	\N	1	C1	\N	\N
+5083	transit	n	\N	\N	1	C1	\N	\N
+5084	transmission	n	\N	\N	1	C1	\N	\N
+5085	transparency	n	\N	\N	1	C1	\N	\N
+5086	transparent	adj	\N	\N	1	C1	\N	\N
+5087	trauma	n	\N	\N	1	C1	\N	\N
+5088	treaty	n	\N	\N	1	C1	\N	\N
+5089	tremendous	adj	\N	\N	1	C1	\N	\N
+5090	tribal	adj	\N	\N	1	C1	\N	\N
+5091	tribute	n	\N	\N	1	C1	\N	\N
+5092	trigger	n	\N	\N	1	C1	\N	\N
+5093	trio	n	\N	\N	1	C1	\N	\N
+5094	triumph	n	\N	\N	1	C1	\N	\N
+5095	trophy	n	\N	\N	1	C1	\N	\N
+5096	troubled	adj	\N	\N	1	C1	\N	\N
+5097	trustee	n	\N	\N	1	C1	\N	\N
+5098	tuition	n	\N	\N	1	C1	\N	\N
+5099	tumour	n	\N	\N	1	C1	\N	\N
+5100	turnout	n	\N	\N	1	C1	\N	\N
+5101	turnover	n	\N	\N	1	C1	\N	\N
+5102	twist	v	\N	\N	1	C1	\N	\N
+5103	unconstitutional	adj	\N	\N	1	C1	\N	\N
+5104	undergraduate	n	\N	\N	1	C1	\N	\N
+5105	underlying	adj	\N	\N	1	C1	\N	\N
+5106	undermine	v	\N	\N	1	C1	\N	\N
+5107	undoubtedly	adv	\N	\N	1	C1	\N	\N
+5108	unify	v	\N	\N	1	C1	\N	\N
+5109	unprecedented	adj	\N	\N	1	C1	\N	\N
+5110	unveil	v	\N	\N	1	C1	\N	\N
+5111	upcoming	adj	\N	\N	1	C1	\N	\N
+5112	upgrade	v	\N	\N	1	C1	\N	\N
+5113	uphold	v	\N	\N	1	C1	\N	\N
+5114	utility	n	\N	\N	1	C1	\N	\N
+5115	utilise	v	\N	\N	1	C1	\N	\N
+5116	utterly	adv	\N	\N	1	C1	\N	\N
+5117	vacuum	n	\N	\N	1	C1	\N	\N
+5118	vague	adj	\N	\N	1	C1	\N	\N
+5119	validity	n	\N	\N	1	C1	\N	\N
+5120	vanish	v	\N	\N	1	C1	\N	\N
+5121	variable	n	\N	\N	1	C1	\N	\N
+5122	varied	adj	\N	\N	1	C1	\N	\N
+5123	vein	n	\N	\N	1	C1	\N	\N
+5124	venture	n	\N	\N	1	C1	\N	\N
+5125	verbal	adj	\N	\N	1	C1	\N	\N
+5126	verdict	n	\N	\N	1	C1	\N	\N
+5127	verify	v	\N	\N	1	C1	\N	\N
+5128	verse	n	\N	\N	1	C1	\N	\N
+5129	versus	prep	\N	\N	1	C1	\N	\N
+5130	vessel	n	\N	\N	1	C1	\N	\N
+5131	veteran	n	\N	\N	1	C1	\N	\N
+5132	viable	adj	\N	\N	1	C1	\N	\N
+5133	vibrant	adj	\N	\N	1	C1	\N	\N
+5134	vice	n	\N	\N	1	C1	\N	\N
+5135	vicious	adj	\N	\N	1	C1	\N	\N
+5136	violate	v	\N	\N	1	C1	\N	\N
+5137	violation	n	\N	\N	1	C1	\N	\N
+5138	virtue	n	\N	\N	1	C1	\N	\N
+5139	vocal	adj	\N	\N	1	C1	\N	\N
+5140	vow	v	\N	\N	1	C1	\N	\N
+5141	vulnerability	n	\N	\N	1	C1	\N	\N
+5142	vulnerable	adj	\N	\N	1	C1	\N	\N
+5143	ward	n	\N	\N	1	C1	\N	\N
+5144	warehouse	n	\N	\N	1	C1	\N	\N
+5145	warfare	n	\N	\N	1	C1	\N	\N
+5146	warrant	n	\N	\N	1	C1	\N	\N
+5147	warrior	n	\N	\N	1	C1	\N	\N
+5148	weaken	v	\N	\N	1	C1	\N	\N
+5149	weave	v	\N	\N	1	C1	\N	\N
+5150	weed	n	\N	\N	1	C1	\N	\N
+5151	well	n	\N	\N	1	C1	\N	\N
+5152	well-being	n	\N	\N	1	C1	\N	\N
+5153	whatsoever	adv	\N	\N	1	C1	\N	\N
+5154	whip	v	\N	\N	1	C1	\N	\N
+5155	wholly	adv	\N	\N	1	C1	\N	\N
+5156	widen	v	\N	\N	1	C1	\N	\N
+5157	width	n	\N	\N	1	C1	\N	\N
+5158	willingness	n	\N	\N	1	C1	\N	\N
+5159	wipe	v	\N	\N	1	C1	\N	\N
+5160	wit	n	\N	\N	1	C1	\N	\N
+5161	withdrawal	n	\N	\N	1	C1	\N	\N
+5162	workout	n	\N	\N	1	C1	\N	\N
+5163	worship	n	\N	\N	1	C1	\N	\N
+5164	worthwhile	adj	\N	\N	1	C1	\N	\N
+5165	worthy	adj	\N	\N	1	C1	\N	\N
+5166	wrongdoing	n	\N	\N	1	C1	\N	\N
+5167	yield	v	\N	\N	1	C1	\N	\N
+5168	abate	v	\N	\N	1	C2	\N	\N
+5169	abdicate	v	\N	\N	1	C2	\N	\N
+5170	aberration	n	\N	\N	1	C2	\N	\N
+5171	abet	v	\N	\N	1	C2	\N	\N
+5172	abeyance	n	\N	\N	1	C2	\N	\N
+5173	abhor	v	\N	\N	1	C2	\N	\N
+5174	abiding	adj	\N	\N	1	C2	\N	\N
+5175	abject	adj	\N	\N	1	C2	\N	\N
+5176	abjure	v	\N	\N	1	C2	\N	\N
+5177	abrogated	v	\N	\N	1	C2	\N	\N
+5178	abrogation	n	\N	\N	1	C2	\N	\N
+5179	abscond	v	\N	\N	1	C2	\N	\N
+5180	absolve	v	\N	\N	1	C2	\N	\N
+5181	abstain	v	\N	\N	1	C2	\N	\N
+5182	abstention	n	\N	\N	1	C2	\N	\N
+5183	abstinence	n	\N	\N	1	C2	\N	\N
+5184	abstruse	adj	\N	\N	1	C2	\N	\N
+5185	abyss	n	\N	\N	1	C2	\N	\N
+5186	accede	v	\N	\N	1	C2	\N	\N
+5187	accentuate	v	\N	\N	1	C2	\N	\N
+5188	accession	n	\N	\N	1	C2	\N	\N
+5189	acclaimed	adj	\N	\N	1	C2	\N	\N
+5190	acclamation	n	\N	\N	1	C2	\N	\N
+5191	accolade	n	\N	\N	1	C2	\N	\N
+5192	accomplice	n	\N	\N	1	C2	\N	\N
+5193	accost	v	\N	\N	1	C2	\N	\N
+5194	accredit	v	\N	\N	1	C2	\N	\N
+5195	accreditation	n	\N	\N	1	C2	\N	\N
+5196	accrue	v	\N	\N	1	C2	\N	\N
+5197	acerbic	adj	\N	\N	1	C2	\N	\N
+5198	acquiesce	v	\N	\N	1	C2	\N	\N
+5199	acquiescence	n	\N	\N	1	C2	\N	\N
+5200	acquit	v	\N	\N	1	C2	\N	\N
+5201	acrimonious	adj	\N	\N	1	C2	\N	\N
+5202	acrimony	n	\N	\N	1	C2	\N	\N
+5203	acuity	n	\N	\N	1	C2	\N	\N
+5204	acumen	n	\N	\N	1	C2	\N	\N
+5205	adage	n	\N	\N	1	C2	\N	\N
+5206	adamant	adj	\N	\N	1	C2	\N	\N
+5207	adherence	n	\N	\N	1	C2	\N	\N
+5208	adherent	n	\N	\N	1	C2	\N	\N
+5209	adjuration	n	\N	\N	1	C2	\N	\N
+5210	admittance	n	\N	\N	1	C2	\N	\N
+5211	admonish	v	\N	\N	1	C2	\N	\N
+5212	adroit	adj	\N	\N	1	C2	\N	\N
+5213	adulation	n	\N	\N	1	C2	\N	\N
+5214	advent	n	\N	\N	1	C2	\N	\N
+5215	adversary	n	\N	\N	1	C2	\N	\N
+5216	adversity	n	\N	\N	1	C2	\N	\N
+5217	aegis	n	\N	\N	1	C2	\N	\N
+5218	affable	adj	\N	\N	1	C2	\N	\N
+5219	affectation	n	\N	\N	1	C2	\N	\N
+5220	affidavit	n	\N	\N	1	C2	\N	\N
+5221	affinity	n	\N	\N	1	C2	\N	\N
+5222	affliction	n	\N	\N	1	C2	\N	\N
+5223	alacrity	n	\N	\N	1	C2	\N	\N
+5224	albeit	conj	\N	\N	1	C2	\N	\N
+5225	alchemy	n	\N	\N	1	C2	\N	\N
+5226	allegiance	n	\N	\N	1	C2	\N	\N
+5227	allegory	n	\N	\N	1	C2	\N	\N
+5228	alleviate	v	\N	\N	1	C2	\N	\N
+5229	allude	v	\N	\N	1	C2	\N	\N
+5230	allusion	n	\N	\N	1	C2	\N	\N
+5231	aloof	adj	\N	\N	1	C2	\N	\N
+5232	altercation	n	\N	\N	1	C2	\N	\N
+5233	altruistic	adj	\N	\N	1	C2	\N	\N
+5234	amalgamation	n	\N	\N	1	C2	\N	\N
+5235	ambiguity	n	\N	\N	1	C2	\N	\N
+5236	ambivalent	adj	\N	\N	1	C2	\N	\N
+5237	ambrosial	adj	\N	\N	1	C2	\N	\N
+5238	ameliorate	v	\N	\N	1	C2	\N	\N
+5239	amenable	adj	\N	\N	1	C2	\N	\N
+5240	anachronism	n	\N	\N	1	C2	\N	\N
+5241	anachronistic	adj	\N	\N	1	C2	\N	\N
+5242	analogous	adj	\N	\N	1	C2	\N	\N
+5243	anarchy	n	\N	\N	1	C2	\N	\N
+5244	anathema	n	\N	\N	1	C2	\N	\N
+5245	anecdote	n	\N	\N	1	C2	\N	\N
+5246	anguish	n	\N	\N	1	C2	\N	\N
+5247	animosity	n	\N	\N	1	C2	\N	\N
+5248	annihilation	n	\N	\N	1	C2	\N	\N
+5249	annum	n	\N	\N	1	C2	\N	\N
+5250	anomaly	n	\N	\N	1	C2	\N	\N
+5251	antagonise	v	\N	\N	1	C2	\N	\N
+5252	antecedent	n	\N	\N	1	C2	\N	\N
+5253	antidote	n	\N	\N	1	C2	\N	\N
+5254	antipathy	n	\N	\N	1	C2	\N	\N
+5255	antiquated	adj	\N	\N	1	C2	\N	\N
+5256	antiquity	n	\N	\N	1	C2	\N	\N
+5257	antithesis	n	\N	\N	1	C2	\N	\N
+5258	apathetic	adj	\N	\N	1	C2	\N	\N
+5259	aperture	n	\N	\N	1	C2	\N	\N
+5260	apex	n	\N	\N	1	C2	\N	\N
+5261	aplomb	n	\N	\N	1	C2	\N	\N
+5262	apostle	n	\N	\N	1	C2	\N	\N
+5263	apparatus	n	\N	\N	1	C2	\N	\N
+5264	apparition	n	\N	\N	1	C2	\N	\N
+5265	appease	v	\N	\N	1	C2	\N	\N
+5266	appellation	n	\N	\N	1	C2	\N	\N
+5267	apprehension	n	\N	\N	1	C2	\N	\N
+5268	apprehensive	adj	\N	\N	1	C2	\N	\N
+5269	aptitude	n	\N	\N	1	C2	\N	\N
+5270	arbiter	n	\N	\N	1	C2	\N	\N
+5271	arcane	adj	\N	\N	1	C2	\N	\N
+5272	archetype	n	\N	\N	1	C2	\N	\N
+5273	archipelago	n	\N	\N	1	C2	\N	\N
+5274	ardour	n	\N	\N	1	C2	\N	\N
+5275	arduous	adj	\N	\N	1	C2	\N	\N
+5276	arguably	adv	\N	\N	1	C2	\N	\N
+5277	armistice	n	\N	\N	1	C2	\N	\N
+5278	arrogance	n	\N	\N	1	C2	\N	\N
+5279	artifice	n	\N	\N	1	C2	\N	\N
+5280	artisan	n	\N	\N	1	C2	\N	\N
+5281	ascendancy	n	\N	\N	1	C2	\N	\N
+5282	ascertain	v	\N	\N	1	C2	\N	\N
+5283	aspersion	n	\N	\N	1	C2	\N	\N
+5284	assiduous	adj	\N	\N	1	C2	\N	\N
+5285	assuage	v	\N	\N	1	C2	\N	\N
+5286	astute	adj	\N	\N	1	C2	\N	\N
+5287	atone	v	\N	\N	1	C2	\N	\N
+5288	attrition	n	\N	\N	1	C2	\N	\N
+5289	audacity	n	\N	\N	1	C2	\N	\N
+5290	augment	v	\N	\N	1	C2	\N	\N
+5291	auspicious	adj	\N	\N	1	C2	\N	\N
+5292	austere	adj	\N	\N	1	C2	\N	\N
+5293	autocracy	n	\N	\N	1	C2	\N	\N
+5294	autocrat	n	\N	\N	1	C2	\N	\N
+5295	avarice	n	\N	\N	1	C2	\N	\N
+5296	aversion	n	\N	\N	1	C2	\N	\N
+5297	axiom	n	\N	\N	1	C2	\N	\N
+5298	axiomatic	adj	\N	\N	1	C2	\N	\N
+5299	backlash	n	\N	\N	1	C2	\N	\N
+5300	baleful	adj	\N	\N	1	C2	\N	\N
+5301	balk	v	\N	\N	1	C2	\N	\N
+5302	ballast	n	\N	\N	1	C2	\N	\N
+5303	balm	n	\N	\N	1	C2	\N	\N
+5304	banal	adj	\N	\N	1	C2	\N	\N
+5305	bane	n	\N	\N	1	C2	\N	\N
+5306	barrage	n	\N	\N	1	C2	\N	\N
+5307	bastion	n	\N	\N	1	C2	\N	\N
+5308	bear up	phr v	\N	\N	1	C2	\N	\N
+5309	bedlam	n	\N	\N	1	C2	\N	\N
+5310	beguile	v	\N	\N	1	C2	\N	\N
+5311	behemoth	n	\N	\N	1	C2	\N	\N
+5312	beleaguer	v	\N	\N	1	C2	\N	\N
+5313	belie	v	\N	\N	1	C2	\N	\N
+5314	bellicose	adj	\N	\N	1	C2	\N	\N
+5315	belligerent	adj	\N	\N	1	C2	\N	\N
+5316	bellwether	n	\N	\N	1	C2	\N	\N
+5317	bemoan	v	\N	\N	1	C2	\N	\N
+5318	benefactor	n	\N	\N	1	C2	\N	\N
+5319	benevolence	n	\N	\N	1	C2	\N	\N
+5320	benevolent	adj	\N	\N	1	C2	\N	\N
+5321	bequeath	v	\N	\N	1	C2	\N	\N
+5322	bequest	n	\N	\N	1	C2	\N	\N
+5323	berate	v	\N	\N	1	C2	\N	\N
+5324	bereavement	n	\N	\N	1	C2	\N	\N
+5325	bereft	adj	\N	\N	1	C2	\N	\N
+5326	beseech	v	\N	\N	1	C2	\N	\N
+5327	beset	v	\N	\N	1	C2	\N	\N
+5328	besotted	adj	\N	\N	1	C2	\N	\N
+5329	bestow	v	\N	\N	1	C2	\N	\N
+5330	bewitching	adj	\N	\N	1	C2	\N	\N
+5331	bigotry	n	\N	\N	1	C2	\N	\N
+5332	bilateral	adj	\N	\N	1	C2	\N	\N
+5333	billow	v	\N	\N	1	C2	\N	\N
+5334	bite the bullet	idiom	\N	\N	1	C2	\N	\N
+5335	blasphemy	n	\N	\N	1	C2	\N	\N
+5336	blithe	adj	\N	\N	1	C2	\N	\N
+5337	boisterous	adj	\N	\N	1	C2	\N	\N
+5338	bombastic	adj	\N	\N	1	C2	\N	\N
+5339	boon	n	\N	\N	1	C2	\N	\N
+5340	boorish	adj	\N	\N	1	C2	\N	\N
+5341	bounty	n	\N	\N	1	C2	\N	\N
+5342	bourgeoisie	n	\N	\N	1	C2	\N	\N
+5343	brandish	v	\N	\N	1	C2	\N	\N
+5344	bravado	n	\N	\N	1	C2	\N	\N
+5345	bravura	n	\N	\N	1	C2	\N	\N
+5346	brevity	n	\N	\N	1	C2	\N	\N
+5347	brinkmanship	n	\N	\N	1	C2	\N	\N
+5348	brusque	adj	\N	\N	1	C2	\N	\N
+5349	bulwark	n	\N	\N	1	C2	\N	\N
+5350	burgeon	v	\N	\N	1	C2	\N	\N
+5351	buttress	v	\N	\N	1	C2	\N	\N
+5352	byword	n	\N	\N	1	C2	\N	\N
+5353	cabal	n	\N	\N	1	C2	\N	\N
+5354	cache	n	\N	\N	1	C2	\N	\N
+5355	cacophony	n	\N	\N	1	C2	\N	\N
+5356	cadence	n	\N	\N	1	C2	\N	\N
+5357	cajole	v	\N	\N	1	C2	\N	\N
+5358	calibre	n	\N	\N	1	C2	\N	\N
+5359	callous	adj	\N	\N	1	C2	\N	\N
+5360	camaraderie	n	\N	\N	1	C2	\N	\N
+5361	candour	n	\N	\N	1	C2	\N	\N
+5362	cantankerous	adj	\N	\N	1	C2	\N	\N
+5363	capitulate	v	\N	\N	1	C2	\N	\N
+5364	capricious	adj	\N	\N	1	C2	\N	\N
+5365	cardinal	adj	\N	\N	1	C2	\N	\N
+5366	cartography	n	\N	\N	1	C2	\N	\N
+5367	caste	n	\N	\N	1	C2	\N	\N
+5368	castigate	v	\N	\N	1	C2	\N	\N
+5369	cataclysm	n	\N	\N	1	C2	\N	\N
+5370	catharsis	n	\N	\N	1	C2	\N	\N
+5371	caustic	adj	\N	\N	1	C2	\N	\N
+5372	cavalcade	n	\N	\N	1	C2	\N	\N
+5373	caveat	n	\N	\N	1	C2	\N	\N
+5374	censure	n	\N	\N	1	C2	\N	\N
+5375	cessation	n	\N	\N	1	C2	\N	\N
+5376	chagrin	n	\N	\N	1	C2	\N	\N
+5377	charlatan	n	\N	\N	1	C2	\N	\N
+5378	chasm	n	\N	\N	1	C2	\N	\N
+5379	chastise	v	\N	\N	1	C2	\N	\N
+5380	chattel	n	\N	\N	1	C2	\N	\N
+5381	chicanery	n	\N	\N	1	C2	\N	\N
+5382	chide	v	\N	\N	1	C2	\N	\N
+5383	chronology	n	\N	\N	1	C2	\N	\N
+5384	churlish	adj	\N	\N	1	C2	\N	\N
+5385	circumspect	adj	\N	\N	1	C2	\N	\N
+5386	circumvent	v	\N	\N	1	C2	\N	\N
+5387	citadel	n	\N	\N	1	C2	\N	\N
+5388	clandestine	adj	\N	\N	1	C2	\N	\N
+5389	cleave	v	\N	\N	1	C2	\N	\N
+5390	clemency	n	\N	\N	1	C2	\N	\N
+5391	clique	n	\N	\N	1	C2	\N	\N
+5392	cloister	n	\N	\N	1	C2	\N	\N
+5393	cloistered	adj	\N	\N	1	C2	\N	\N
+5394	clout	n	\N	\N	1	C2	\N	\N
+5395	coalesce	v	\N	\N	1	C2	\N	\N
+5396	coerce	v	\N	\N	1	C2	\N	\N
+5397	coercion	n	\N	\N	1	C2	\N	\N
+5398	cogent	adj	\N	\N	1	C2	\N	\N
+5399	cohesion	n	\N	\N	1	C2	\N	\N
+5400	collude	v	\N	\N	1	C2	\N	\N
+5401	collusion	n	\N	\N	1	C2	\N	\N
+5402	colossal	adj	\N	\N	1	C2	\N	\N
+5403	colossus	n	\N	\N	1	C2	\N	\N
+5404	commensurate	adj	\N	\N	1	C2	\N	\N
+5405	commiserate	v	\N	\N	1	C2	\N	\N
+5406	compatriot	n	\N	\N	1	C2	\N	\N
+5407	complacency	n	\N	\N	1	C2	\N	\N
+5408	complacent	adj	\N	\N	1	C2	\N	\N
+5409	complementary	adj	\N	\N	1	C2	\N	\N
+5410	complicity	n	\N	\N	1	C2	\N	\N
+5411	compulsion	n	\N	\N	1	C2	\N	\N
+5412	concatenation	n	\N	\N	1	C2	\N	\N
+5413	conciliatory	adj	\N	\N	1	C2	\N	\N
+5414	conclave	n	\N	\N	1	C2	\N	\N
+5415	concordance	n	\N	\N	1	C2	\N	\N
+5416	condescension	n	\N	\N	1	C2	\N	\N
+5417	condone	v	\N	\N	1	C2	\N	\N
+5418	confiscate	v	\N	\N	1	C2	\N	\N
+5419	conflagration	n	\N	\N	1	C2	\N	\N
+5420	confluence	n	\N	\N	1	C2	\N	\N
+5421	confound	v	\N	\N	1	C2	\N	\N
+5422	conjecture	n	\N	\N	1	C2	\N	\N
+5423	conjure	v	\N	\N	1	C2	\N	\N
+5424	connive	v	\N	\N	1	C2	\N	\N
+5425	connoisseur	n	\N	\N	1	C2	\N	\N
+5426	connotation	n	\N	\N	1	C2	\N	\N
+5427	conquest	n	\N	\N	1	C2	\N	\N
+5428	consecration	n	\N	\N	1	C2	\N	\N
+5429	consortium	n	\N	\N	1	C2	\N	\N
+5430	consternation	n	\N	\N	1	C2	\N	\N
+5431	construe	v	\N	\N	1	C2	\N	\N
+5432	consummation	n	\N	\N	1	C2	\N	\N
+5433	contagion	n	\N	\N	1	C2	\N	\N
+5434	contemptible	adj	\N	\N	1	C2	\N	\N
+5435	contingency	n	\N	\N	1	C2	\N	\N
+5436	continuum	n	\N	\N	1	C2	\N	\N
+5437	contravene	v	\N	\N	1	C2	\N	\N
+5438	contrition	n	\N	\N	1	C2	\N	\N
+5439	conundrum	n	\N	\N	1	C2	\N	\N
+5440	convene	v	\N	\N	1	C2	\N	\N
+5441	convergence	n	\N	\N	1	C2	\N	\N
+5442	convivial	adj	\N	\N	1	C2	\N	\N
+5443	convoluted	adj	\N	\N	1	C2	\N	\N
+5444	copious	adj	\N	\N	1	C2	\N	\N
+5445	coquettish	adj	\N	\N	1	C2	\N	\N
+5446	cordial	adj	\N	\N	1	C2	\N	\N
+5447	cornucopia	n	\N	\N	1	C2	\N	\N
+5448	corollary	n	\N	\N	1	C2	\N	\N
+5449	corroborate	v	\N	\N	1	C2	\N	\N
+5450	cortege	n	\N	\N	1	C2	\N	\N
+5451	cosmology	n	\N	\N	1	C2	\N	\N
+5452	cosmos	n	\N	\N	1	C2	\N	\N
+5453	countenance	v	\N	\N	1	C2	\N	\N
+5454	covet	v	\N	\N	1	C2	\N	\N
+5455	craven	adj	\N	\N	1	C2	\N	\N
+5456	credulous	adj	\N	\N	1	C2	\N	\N
+5457	creed	n	\N	\N	1	C2	\N	\N
+5458	crevasse	n	\N	\N	1	C2	\N	\N
+5459	crucible	n	\N	\N	1	C2	\N	\N
+5460	crux	n	\N	\N	1	C2	\N	\N
+5461	crypt	n	\N	\N	1	C2	\N	\N
+5462	culminate	v	\N	\N	1	C2	\N	\N
+5463	culpable	adj	\N	\N	1	C2	\N	\N
+5464	culprit	n	\N	\N	1	C2	\N	\N
+5465	cunning	adj	\N	\N	1	C2	\N	\N
+5466	cupidity	n	\N	\N	1	C2	\N	\N
+5467	curmudgeon	n	\N	\N	1	C2	\N	\N
+5468	cursory	adj	\N	\N	1	C2	\N	\N
+5469	curtail	v	\N	\N	1	C2	\N	\N
+5470	daft	adj	\N	\N	1	C2	\N	\N
+5471	dalliance	n	\N	\N	1	C2	\N	\N
+5472	daunting	adj	\N	\N	1	C2	\N	\N
+5473	dawdle	v	\N	\N	1	C2	\N	\N
+5474	dearth	n	\N	\N	1	C2	\N	\N
+5475	debacle	n	\N	\N	1	C2	\N	\N
+5476	debilitate	v	\N	\N	1	C2	\N	\N
+5477	debonair	adj	\N	\N	1	C2	\N	\N
+5478	debunk	v	\N	\N	1	C2	\N	\N
+5479	decadence	n	\N	\N	1	C2	\N	\N
+5480	deceitful	adj	\N	\N	1	C2	\N	\N
+5481	decimate	v	\N	\N	1	C2	\N	\N
+5482	decorous	adj	\N	\N	1	C2	\N	\N
+5483	decorum	n	\N	\N	1	C2	\N	\N
+5484	decree	n	\N	\N	1	C2	\N	\N
+5485	decrepit	adj	\N	\N	1	C2	\N	\N
+5486	decry	v	\N	\N	1	C2	\N	\N
+5487	defamation	n	\N	\N	1	C2	\N	\N
+5488	deference	n	\N	\N	1	C2	\N	\N
+5489	deflate	v	\N	\N	1	C2	\N	\N
+5490	defunct	adj	\N	\N	1	C2	\N	\N
+5491	dehort	v	\N	\N	1	C2	\N	\N
+5492	deign	v	\N	\N	1	C2	\N	\N
+5493	deity	n	\N	\N	1	C2	\N	\N
+5494	deleterious	adj	\N	\N	1	C2	\N	\N
+5495	deliberation	n	\N	\N	1	C2	\N	\N
+5496	delineate	v	\N	\N	1	C2	\N	\N
+5497	delineation	n	\N	\N	1	C2	\N	\N
+5498	delirium	n	\N	\N	1	C2	\N	\N
+5499	deliverance	n	\N	\N	1	C2	\N	\N
+5500	deluge	n	\N	\N	1	C2	\N	\N
+5501	demagogue	n	\N	\N	1	C2	\N	\N
+5502	demarcation	n	\N	\N	1	C2	\N	\N
+5503	demean	v	\N	\N	1	C2	\N	\N
+5504	demeanour	n	\N	\N	1	C2	\N	\N
+5505	demise	n	\N	\N	1	C2	\N	\N
+5506	demur	v	\N	\N	1	C2	\N	\N
+5507	demure	adj	\N	\N	1	C2	\N	\N
+5508	denigrate	v	\N	\N	1	C2	\N	\N
+5509	denouement	n	\N	\N	1	C2	\N	\N
+5510	deplete	v	\N	\N	1	C2	\N	\N
+5511	deplorable	adj	\N	\N	1	C2	\N	\N
+5512	deplore	v	\N	\N	1	C2	\N	\N
+5513	depravity	n	\N	\N	1	C2	\N	\N
+5514	derelict	adj	\N	\N	1	C2	\N	\N
+5515	deride	v	\N	\N	1	C2	\N	\N
+5516	derisive	adj	\N	\N	1	C2	\N	\N
+5517	derogatory	adj	\N	\N	1	C2	\N	\N
+5518	desecrate	v	\N	\N	1	C2	\N	\N
+5519	desolation	n	\N	\N	1	C2	\N	\N
+5520	despondency	n	\N	\N	1	C2	\N	\N
+5521	despondent	adj	\N	\N	1	C2	\N	\N
+5522	destitute	adj	\N	\N	1	C2	\N	\N
+5523	desultory	adj	\N	\N	1	C2	\N	\N
+5524	detachment	n	\N	\N	1	C2	\N	\N
+5525	deter	v	\N	\N	1	C2	\N	\N
+5526	detestable	adj	\N	\N	1	C2	\N	\N
+5527	detriment	n	\N	\N	1	C2	\N	\N
+5528	detrimental	adj	\N	\N	1	C2	\N	\N
+5529	deviation	n	\N	\N	1	C2	\N	\N
+5530	devious	adj	\N	\N	1	C2	\N	\N
+5531	devoid	adj	\N	\N	1	C2	\N	\N
+5532	dexterity	n	\N	\N	1	C2	\N	\N
+5533	dexterous	adj	\N	\N	1	C2	\N	\N
+5534	dialectic	n	\N	\N	1	C2	\N	\N
+5535	diaphanous	adj	\N	\N	1	C2	\N	\N
+5536	diaspora	n	\N	\N	1	C2	\N	\N
+5537	diatribe	n	\N	\N	1	C2	\N	\N
+5538	dichotomy	n	\N	\N	1	C2	\N	\N
+5539	didactic	adj	\N	\N	1	C2	\N	\N
+5540	diffident	adj	\N	\N	1	C2	\N	\N
+5541	dilatory	adj	\N	\N	1	C2	\N	\N
+5542	diligence	n	\N	\N	1	C2	\N	\N
+5543	diligently	adv	\N	\N	1	C2	\N	\N
+5544	diminution	n	\N	\N	1	C2	\N	\N
+5545	dingy	adj	\N	\N	1	C2	\N	\N
+5546	dirge	n	\N	\N	1	C2	\N	\N
+5547	disaffection	n	\N	\N	1	C2	\N	\N
+5548	discern	v	\N	\N	1	C2	\N	\N
+5549	discernment	n	\N	\N	1	C2	\N	\N
+5550	disciple	n	\N	\N	1	C2	\N	\N
+5551	discord	n	\N	\N	1	C2	\N	\N
+5552	discordant	adj	\N	\N	1	C2	\N	\N
+5553	discrepancy	n	\N	\N	1	C2	\N	\N
+5554	disdain	n	\N	\N	1	C2	\N	\N
+5555	dishevelled	adj	\N	\N	1	C2	\N	\N
+5556	disillusionment	n	\N	\N	1	C2	\N	\N
+5557	disingenuous	adj	\N	\N	1	C2	\N	\N
+5558	disinterested	adj	\N	\N	1	C2	\N	\N
+5559	disjointed	adj	\N	\N	1	C2	\N	\N
+5560	dismay	n	\N	\N	1	C2	\N	\N
+5561	disparage	v	\N	\N	1	C2	\N	\N
+5562	disparate	adj	\N	\N	1	C2	\N	\N
+5563	disparity	n	\N	\N	1	C2	\N	\N
+5564	dispassionate	adj	\N	\N	1	C2	\N	\N
+5565	dispel	v	\N	\N	1	C2	\N	\N
+5566	dispensation	n	\N	\N	1	C2	\N	\N
+5567	dispense	v	\N	\N	1	C2	\N	\N
+5568	disposition	n	\N	\N	1	C2	\N	\N
+5569	disrepute	n	\N	\N	1	C2	\N	\N
+5570	disseminate	v	\N	\N	1	C2	\N	\N
+5571	dissension	n	\N	\N	1	C2	\N	\N
+5572	dissent	n	\N	\N	1	C2	\N	\N
+5573	dissertation	n	\N	\N	1	C2	\N	\N
+5574	dissident	n	\N	\N	1	C2	\N	\N
+5575	dissipate	v	\N	\N	1	C2	\N	\N
+5576	dissolution	n	\N	\N	1	C2	\N	\N
+5577	dissonance	n	\N	\N	1	C2	\N	\N
+5578	divination	n	\N	\N	1	C2	\N	\N
+5579	divulge	v	\N	\N	1	C2	\N	\N
+5580	dogged	adj	\N	\N	1	C2	\N	\N
+5581	dogma	n	\N	\N	1	C2	\N	\N
+5582	dogmatic	adj	\N	\N	1	C2	\N	\N
+5583	doldrums	n	\N	\N	1	C2	\N	\N
+5584	domicile	n	\N	\N	1	C2	\N	\N
+5585	dominion	n	\N	\N	1	C2	\N	\N
+5586	dormant	adj	\N	\N	1	C2	\N	\N
+5587	dossier	n	\N	\N	1	C2	\N	\N
+5588	dotage	n	\N	\N	1	C2	\N	\N
+5589	drudgery	n	\N	\N	1	C2	\N	\N
+5590	dubious	adj	\N	\N	1	C2	\N	\N
+5591	duplicity	n	\N	\N	1	C2	\N	\N
+5592	duress	n	\N	\N	1	C2	\N	\N
+5593	dwindle	v	\N	\N	1	C2	\N	\N
+5594	dynasty	n	\N	\N	1	C2	\N	\N
+5595	ebullience	n	\N	\N	1	C2	\N	\N
+5596	ebullient	adj	\N	\N	1	C2	\N	\N
+5597	eccentric	adj	\N	\N	1	C2	\N	\N
+5598	echelon	n	\N	\N	1	C2	\N	\N
+5599	eclectic	adj	\N	\N	1	C2	\N	\N
+5600	edict	n	\N	\N	1	C2	\N	\N
+5601	edification	n	\N	\N	1	C2	\N	\N
+5602	edifice	n	\N	\N	1	C2	\N	\N
+5603	efficacious	adj	\N	\N	1	C2	\N	\N
+5604	effigy	n	\N	\N	1	C2	\N	\N
+5605	effrontery	n	\N	\N	1	C2	\N	\N
+5606	effusion	n	\N	\N	1	C2	\N	\N
+5607	effusive	adj	\N	\N	1	C2	\N	\N
+5608	egregious	adj	\N	\N	1	C2	\N	\N
+5609	elated	adj	\N	\N	1	C2	\N	\N
+5610	elation	n	\N	\N	1	C2	\N	\N
+5611	elicit	v	\N	\N	1	C2	\N	\N
+5612	eloquent	adj	\N	\N	1	C2	\N	\N
+5613	elucidate	v	\N	\N	1	C2	\N	\N
+5614	elusive	adj	\N	\N	1	C2	\N	\N
+5615	emaciated	adj	\N	\N	1	C2	\N	\N
+5616	emanate	v	\N	\N	1	C2	\N	\N
+5617	emancipate	v	\N	\N	1	C2	\N	\N
+5618	emancipation	n	\N	\N	1	C2	\N	\N
+5619	embargo	n	\N	\N	1	C2	\N	\N
+5620	embellish	v	\N	\N	1	C2	\N	\N
+5621	embezzle	v	\N	\N	1	C2	\N	\N
+5622	emblem	n	\N	\N	1	C2	\N	\N
+5623	embroil	v	\N	\N	1	C2	\N	\N
+5624	emissary	n	\N	\N	1	C2	\N	\N
+5625	emulate	v	\N	\N	1	C2	\N	\N
+5626	enclave	n	\N	\N	1	C2	\N	\N
+5627	encroach	v	\N	\N	1	C2	\N	\N
+5628	endemic	adj	\N	\N	1	C2	\N	\N
+5629	endow	v	\N	\N	1	C2	\N	\N
+5630	enervate	v	\N	\N	1	C2	\N	\N
+5631	engender	v	\N	\N	1	C2	\N	\N
+5632	enigma	n	\N	\N	1	C2	\N	\N
+5633	enigmatic	adj	\N	\N	1	C2	\N	\N
+5634	enmity	n	\N	\N	1	C2	\N	\N
+5635	ennui	n	\N	\N	1	C2	\N	\N
+5636	enormity	n	\N	\N	1	C2	\N	\N
+5637	ensue	v	\N	\N	1	C2	\N	\N
+5638	entail	v	\N	\N	1	C2	\N	\N
+5639	enthrall	v	\N	\N	1	C2	\N	\N
+5640	enticing	adj	\N	\N	1	C2	\N	\N
+5641	entourage	n	\N	\N	1	C2	\N	\N
+5642	entreat	v	\N	\N	1	C2	\N	\N
+5643	entrenchment	n	\N	\N	1	C2	\N	\N
+5644	entropy	n	\N	\N	1	C2	\N	\N
+5645	enumerate	v	\N	\N	1	C2	\N	\N
+5646	envoy	n	\N	\N	1	C2	\N	\N
+5647	ephemeral	adj	\N	\N	1	C2	\N	\N
+5648	epicentre	n	\N	\N	1	C2	\N	\N
+5649	epicure	n	\N	\N	1	C2	\N	\N
+5650	epigram	n	\N	\N	1	C2	\N	\N
+5651	epilogue	n	\N	\N	1	C2	\N	\N
+5652	epiphany	n	\N	\N	1	C2	\N	\N
+5653	epitaph	n	\N	\N	1	C2	\N	\N
+5654	epitome	n	\N	\N	1	C2	\N	\N
+5655	epitomise	v	\N	\N	1	C2	\N	\N
+5656	epoch	n	\N	\N	1	C2	\N	\N
+5657	equanimity	n	\N	\N	1	C2	\N	\N
+5658	equilibrium	n	\N	\N	1	C2	\N	\N
+5659	equivocal	adj	\N	\N	1	C2	\N	\N
+5660	eradicate	v	\N	\N	1	C2	\N	\N
+5661	erotic	adj	\N	\N	1	C2	\N	\N
+5662	err	v	\N	\N	1	C2	\N	\N
+5663	erstwhile	adj	\N	\N	1	C2	\N	\N
+5664	erudite	adj	\N	\N	1	C2	\N	\N
+5665	erudition	n	\N	\N	1	C2	\N	\N
+5666	escapade	n	\N	\N	1	C2	\N	\N
+5667	escarpment	n	\N	\N	1	C2	\N	\N
+5668	eschew	v	\N	\N	1	C2	\N	\N
+5669	esoteric	adj	\N	\N	1	C2	\N	\N
+5670	espouse	v	\N	\N	1	C2	\N	\N
+5671	esteem	n	\N	\N	1	C2	\N	\N
+5672	ethereal	adj	\N	\N	1	C2	\N	\N
+5673	ethos	n	\N	\N	1	C2	\N	\N
+5674	etymology	n	\N	\N	1	C2	\N	\N
+5675	eulogy	n	\N	\N	1	C2	\N	\N
+5676	euphemism	n	\N	\N	1	C2	\N	\N
+5677	euphoria	n	\N	\N	1	C2	\N	\N
+5678	evanescent	adj	\N	\N	1	C2	\N	\N
+5679	exacerbate	v	\N	\N	1	C2	\N	\N
+5680	exacting	adj	\N	\N	1	C2	\N	\N
+5681	exalt	v	\N	\N	1	C2	\N	\N
+5682	exaltation	n	\N	\N	1	C2	\N	\N
+5683	exchequer	n	\N	\N	1	C2	\N	\N
+5684	excoriate	v	\N	\N	1	C2	\N	\N
+5685	excruciating	adj	\N	\N	1	C2	\N	\N
+5686	execrable	adj	\N	\N	1	C2	\N	\N
+5687	exemplify	v	\N	\N	1	C2	\N	\N
+5688	exhort	v	\N	\N	1	C2	\N	\N
+5689	exhortation	n	\N	\N	1	C2	\N	\N
+5690	exigency	n	\N	\N	1	C2	\N	\N
+5691	exigent	adj	\N	\N	1	C2	\N	\N
+5692	exodus	n	\N	\N	1	C2	\N	\N
+5693	exonerate	v	\N	\N	1	C2	\N	\N
+5694	exorbitant	adj	\N	\N	1	C2	\N	\N
+5695	expatriate	n	\N	\N	1	C2	\N	\N
+5696	expediency	n	\N	\N	1	C2	\N	\N
+5697	expedient	adj	\N	\N	1	C2	\N	\N
+5698	expedite	v	\N	\N	1	C2	\N	\N
+5699	exponent	n	\N	\N	1	C2	\N	\N
+5700	exposition	n	\N	\N	1	C2	\N	\N
+5701	expound	v	\N	\N	1	C2	\N	\N
+5702	expunge	v	\N	\N	1	C2	\N	\N
+5703	exquisite	adj	\N	\N	1	C2	\N	\N
+5704	extol	v	\N	\N	1	C2	\N	\N
+5705	extraneous	adj	\N	\N	1	C2	\N	\N
+5706	extricate	v	\N	\N	1	C2	\N	\N
+5707	exuberant	adj	\N	\N	1	C2	\N	\N
+5708	exude	v	\N	\N	1	C2	\N	\N
+5709	exultation	n	\N	\N	1	C2	\N	\N
+5710	fabricate	v	\N	\N	1	C2	\N	\N
+5711	fabrication	n	\N	\N	1	C2	\N	\N
+5712	facet	n	\N	\N	1	C2	\N	\N
+5713	facetious	adj	\N	\N	1	C2	\N	\N
+5714	facile	adj	\N	\N	1	C2	\N	\N
+5715	facsimile	n	\N	\N	1	C2	\N	\N
+5716	fallacious	adj	\N	\N	1	C2	\N	\N
+5717	fallacy	n	\N	\N	1	C2	\N	\N
+5718	fallibility	n	\N	\N	1	C2	\N	\N
+5719	famine	n	\N	\N	1	C2	\N	\N
+5720	fanaticism	n	\N	\N	1	C2	\N	\N
+5721	farce	n	\N	\N	1	C2	\N	\N
+5722	farcical	adj	\N	\N	1	C2	\N	\N
+5723	fastidious	adj	\N	\N	1	C2	\N	\N
+5724	fatalism	n	\N	\N	1	C2	\N	\N
+5725	fathom	v	\N	\N	1	C2	\N	\N
+5726	fatuous	adj	\N	\N	1	C2	\N	\N
+5727	fauna	n	\N	\N	1	C2	\N	\N
+5728	fawn over	phr v	\N	\N	1	C2	\N	\N
+5729	façade	n	\N	\N	1	C2	\N	\N
+5730	feckless	adj	\N	\N	1	C2	\N	\N
+5731	feign	v	\N	\N	1	C2	\N	\N
+5732	feisty	adj	\N	\N	1	C2	\N	\N
+5733	fermentation	n	\N	\N	1	C2	\N	\N
+5734	ferocious	adj	\N	\N	1	C2	\N	\N
+5735	ferret out	phr v	\N	\N	1	C2	\N	\N
+5736	fervent	adj	\N	\N	1	C2	\N	\N
+5737	fervid	adj	\N	\N	1	C2	\N	\N
+5738	fervour	n	\N	\N	1	C2	\N	\N
+5739	fetish	n	\N	\N	1	C2	\N	\N
+5740	feud	n	\N	\N	1	C2	\N	\N
+5741	fiasco	n	\N	\N	1	C2	\N	\N
+5742	fickle	adj	\N	\N	1	C2	\N	\N
+5743	fidelity	n	\N	\N	1	C2	\N	\N
+5744	figment	n	\N	\N	1	C2	\N	\N
+5745	figurehead	n	\N	\N	1	C2	\N	\N
+5746	filibuster	n	\N	\N	1	C2	\N	\N
+5747	finesse	n	\N	\N	1	C2	\N	\N
+5748	fissure	n	\N	\N	1	C2	\N	\N
+5749	flagrant	adj	\N	\N	1	C2	\N	\N
+5750	flaunt	v	\N	\N	1	C2	\N	\N
+5751	fleeting	adj	\N	\N	1	C2	\N	\N
+5752	flimsy	adj	\N	\N	1	C2	\N	\N
+5753	flora	n	\N	\N	1	C2	\N	\N
+5754	flotsam	n	\N	\N	1	C2	\N	\N
+5755	flout	v	\N	\N	1	C2	\N	\N
+5756	flux	n	\N	\N	1	C2	\N	\N
+5757	fodder	n	\N	\N	1	C2	\N	\N
+5758	foible	n	\N	\N	1	C2	\N	\N
+5759	folly	n	\N	\N	1	C2	\N	\N
+5760	foment	v	\N	\N	1	C2	\N	\N
+5761	foolhardiness	n	\N	\N	1	C2	\N	\N
+5763	forbearance	n	\N	\N	1	C2	\N	\N
+5764	forerunner	n	\N	\N	1	C2	\N	\N
+5765	forestall	v	\N	\N	1	C2	\N	\N
+5766	forfeiture	n	\N	\N	1	C2	\N	\N
+5767	forgo	v	\N	\N	1	C2	\N	\N
+5768	forlorn	adj	\N	\N	1	C2	\N	\N
+5769	formidable	adj	\N	\N	1	C2	\N	\N
+5770	forsake	v	\N	\N	1	C2	\N	\N
+5771	forte	n	\N	\N	1	C2	\N	\N
+5772	fortitude	n	\N	\N	1	C2	\N	\N
+5773	fortuitous	adj	\N	\N	1	C2	\N	\N
+5774	founder	v	\N	\N	1	C2	\N	\N
+5775	fractious	adj	\N	\N	1	C2	\N	\N
+5776	fraught	adj	\N	\N	1	C2	\N	\N
+5777	fray	n	\N	\N	1	C2	\N	\N
+5778	frenetic	adj	\N	\N	1	C2	\N	\N
+5779	frenzy	n	\N	\N	1	C2	\N	\N
+5780	freshman	n	\N	\N	1	C2	\N	\N
+5781	fretful	adj	\N	\N	1	C2	\N	\N
+5782	frivolous	adj	\N	\N	1	C2	\N	\N
+5783	frugal	adj	\N	\N	1	C2	\N	\N
+5784	fruition	n	\N	\N	1	C2	\N	\N
+5785	fulcrum	n	\N	\N	1	C2	\N	\N
+5786	fulsome	adj	\N	\N	1	C2	\N	\N
+5787	furor	n	\N	\N	1	C2	\N	\N
+5788	furtive	adj	\N	\N	1	C2	\N	\N
+5789	futile	adj	\N	\N	1	C2	\N	\N
+5790	futility	n	\N	\N	1	C2	\N	\N
+5791	gaffe	n	\N	\N	1	C2	\N	\N
+5792	galvanise	v	\N	\N	1	C2	\N	\N
+5793	gambit	n	\N	\N	1	C2	\N	\N
+5794	garish	adj	\N	\N	1	C2	\N	\N
+5795	garner	v	\N	\N	1	C2	\N	\N
+5796	garrison	n	\N	\N	1	C2	\N	\N
+5797	garrulous	adj	\N	\N	1	C2	\N	\N
+5798	gauche	adj	\N	\N	1	C2	\N	\N
+5799	gauntlet	n	\N	\N	1	C2	\N	\N
+5800	genealogy	n	\N	\N	1	C2	\N	\N
+5801	genesis	n	\N	\N	1	C2	\N	\N
+5802	genial	adj	\N	\N	1	C2	\N	\N
+5803	genuflect	v	\N	\N	1	C2	\N	\N
+5804	germane	adj	\N	\N	1	C2	\N	\N
+5805	gestation	n	\N	\N	1	C2	\N	\N
+5806	gingerly	adv	\N	\N	1	C2	\N	\N
+5807	gist	n	\N	\N	1	C2	\N	\N
+5808	glean	v	\N	\N	1	C2	\N	\N
+5809	glib	adj	\N	\N	1	C2	\N	\N
+5810	glossary	n	\N	\N	1	C2	\N	\N
+5811	gluttony	n	\N	\N	1	C2	\N	\N
+5812	grandeur	n	\N	\N	1	C2	\N	\N
+5813	gratification	n	\N	\N	1	C2	\N	\N
+5814	gratuitous	adj	\N	\N	1	C2	\N	\N
+5815	gravitas	n	\N	\N	1	C2	\N	\N
+5816	gregarious	adj	\N	\N	1	C2	\N	\N
+5817	grievance	n	\N	\N	1	C2	\N	\N
+5818	grovel	v	\N	\N	1	C2	\N	\N
+5819	gruelling	adj	\N	\N	1	C2	\N	\N
+5820	guile	n	\N	\N	1	C2	\N	\N
+5821	gullible	adj	\N	\N	1	C2	\N	\N
+5822	hackneyed	adj	\N	\N	1	C2	\N	\N
+5823	halcyon	n	\N	\N	1	C2	\N	\N
+5824	hallmark	n	\N	\N	1	C2	\N	\N
+5825	halo	n	\N	\N	1	C2	\N	\N
+5826	hamper	v	\N	\N	1	C2	\N	\N
+5827	haphazard	adj	\N	\N	1	C2	\N	\N
+5828	hapless	adj	\N	\N	1	C2	\N	\N
+5829	harangue	n	\N	\N	1	C2	\N	\N
+5830	harbinger	n	\N	\N	1	C2	\N	\N
+5831	harness	v	\N	\N	1	C2	\N	\N
+5832	hasten	v	\N	\N	1	C2	\N	\N
+5833	haughty	adj	\N	\N	1	C2	\N	\N
+5834	havoc	n	\N	\N	1	C2	\N	\N
+5835	hearsay	n	\N	\N	1	C2	\N	\N
+5836	hedonistic	adj	\N	\N	1	C2	\N	\N
+5837	heed	v	\N	\N	1	C2	\N	\N
+5838	hegemony	n	\N	\N	1	C2	\N	\N
+5839	heinous	adj	\N	\N	1	C2	\N	\N
+5840	heirloom	n	\N	\N	1	C2	\N	\N
+5841	henceforth	adv	\N	\N	1	C2	\N	\N
+5842	henchman	n	\N	\N	1	C2	\N	\N
+5843	herald	v	\N	\N	1	C2	\N	\N
+5844	herbivore	n	\N	\N	1	C2	\N	\N
+5845	heresy	n	\N	\N	1	C2	\N	\N
+5846	heretical	adj	\N	\N	1	C2	\N	\N
+5847	hiatus	n	\N	\N	1	C2	\N	\N
+5848	hindrance	n	\N	\N	1	C2	\N	\N
+5849	hinterland	n	\N	\N	1	C2	\N	\N
+5850	histrionic	adj	\N	\N	1	C2	\N	\N
+5851	hitherto	adv	\N	\N	1	C2	\N	\N
+5852	hoard	v	\N	\N	1	C2	\N	\N
+5853	holocaust	n	\N	\N	1	C2	\N	\N
+5854	homage	n	\N	\N	1	C2	\N	\N
+5855	homogeneous	adj	\N	\N	1	C2	\N	\N
+5856	hone	v	\N	\N	1	C2	\N	\N
+5857	horoscope	n	\N	\N	1	C2	\N	\N
+5858	hospice	n	\N	\N	1	C2	\N	\N
+5859	hubris	n	\N	\N	1	C2	\N	\N
+5860	hybrid	n	\N	\N	1	C2	\N	\N
+5861	hyperbole	n	\N	\N	1	C2	\N	\N
+5862	hypocrisy	n	\N	\N	1	C2	\N	\N
+5863	hypothetical	adj	\N	\N	1	C2	\N	\N
+5864	hysteria	n	\N	\N	1	C2	\N	\N
+5865	iconoclasm	n	\N	\N	1	C2	\N	\N
+5866	iconoclast	n	\N	\N	1	C2	\N	\N
+5867	ideologue	n	\N	\N	1	C2	\N	\N
+5868	idiosyncrasy	n	\N	\N	1	C2	\N	\N
+5869	idiosyncratic	adj	\N	\N	1	C2	\N	\N
+5870	idyllic	adj	\N	\N	1	C2	\N	\N
+5871	ignominious	adj	\N	\N	1	C2	\N	\N
+5872	ignominy	n	\N	\N	1	C2	\N	\N
+5873	ill-advised	adj	\N	\N	1	C2	\N	\N
+5874	illicit	adj	\N	\N	1	C2	\N	\N
+5875	imbue	v	\N	\N	1	C2	\N	\N
+5876	immaculate	adj	\N	\N	1	C2	\N	\N
+5877	immeasurably	adv	\N	\N	1	C2	\N	\N
+5878	immensity	n	\N	\N	1	C2	\N	\N
+5879	immortal	adj	\N	\N	1	C2	\N	\N
+5880	immutable	adj	\N	\N	1	C2	\N	\N
+5881	impair	v	\N	\N	1	C2	\N	\N
+5882	impartial	adj	\N	\N	1	C2	\N	\N
+5883	impasse	n	\N	\N	1	C2	\N	\N
+5884	impassive	adj	\N	\N	1	C2	\N	\N
+5885	impeachment	n	\N	\N	1	C2	\N	\N
+5886	impeccable	adj	\N	\N	1	C2	\N	\N
+5887	impede	v	\N	\N	1	C2	\N	\N
+5888	impediment	n	\N	\N	1	C2	\N	\N
+5889	imperative	adj	\N	\N	1	C2	\N	\N
+5890	imperceptibly	adv	\N	\N	1	C2	\N	\N
+5891	imperialism	n	\N	\N	1	C2	\N	\N
+5892	imperil	v	\N	\N	1	C2	\N	\N
+5893	imperious	adj	\N	\N	1	C2	\N	\N
+5894	impertinent	adj	\N	\N	1	C2	\N	\N
+5895	imperturbable	adj	\N	\N	1	C2	\N	\N
+5896	impervious	adj	\N	\N	1	C2	\N	\N
+5897	impetuous	adj	\N	\N	1	C2	\N	\N
+5898	impetus	n	\N	\N	1	C2	\N	\N
+5899	implacable	adj	\N	\N	1	C2	\N	\N
+5900	implausible	adj	\N	\N	1	C2	\N	\N
+5901	impracticable	adj	\N	\N	1	C2	\N	\N
+5902	impregnable	adj	\N	\N	1	C2	\N	\N
+5903	impromptu	adj	\N	\N	1	C2	\N	\N
+5904	impropriety	n	\N	\N	1	C2	\N	\N
+5905	impudence	n	\N	\N	1	C2	\N	\N
+5906	impugn	v	\N	\N	1	C2	\N	\N
+5907	impunity	n	\N	\N	1	C2	\N	\N
+5908	inadequacy	n	\N	\N	1	C2	\N	\N
+5909	inadvertent	adj	\N	\N	1	C2	\N	\N
+5910	inane	adj	\N	\N	1	C2	\N	\N
+5911	inaugurate	v	\N	\N	1	C2	\N	\N
+5912	incarnation	n	\N	\N	1	C2	\N	\N
+5913	incendiary	adj	\N	\N	1	C2	\N	\N
+5914	incense	v	\N	\N	1	C2	\N	\N
+5915	inception	n	\N	\N	1	C2	\N	\N
+5916	incessant	adj	\N	\N	1	C2	\N	\N
+5917	incisive	adj	\N	\N	1	C2	\N	\N
+5918	incite	v	\N	\N	1	C2	\N	\N
+5919	inclement	adj	\N	\N	1	C2	\N	\N
+5920	inclination	n	\N	\N	1	C2	\N	\N
+5921	inclusive	adj	\N	\N	1	C2	\N	\N
+5922	incomprehensible	adj	\N	\N	1	C2	\N	\N
+5923	inconceivable	adj	\N	\N	1	C2	\N	\N
+5924	incongruity	n	\N	\N	1	C2	\N	\N
+5925	incongruous	adj	\N	\N	1	C2	\N	\N
+5926	incontrovertible	adj	\N	\N	1	C2	\N	\N
+5927	incorrigible	adj	\N	\N	1	C2	\N	\N
+5928	incredulity	n	\N	\N	1	C2	\N	\N
+5929	incredulous	adj	\N	\N	1	C2	\N	\N
+5930	incumbency	n	\N	\N	1	C2	\N	\N
+5931	incumbent	n	\N	\N	1	C2	\N	\N
+5932	incursion	n	\N	\N	1	C2	\N	\N
+5933	indefatigable	adj	\N	\N	1	C2	\N	\N
+5934	indelible	adj	\N	\N	1	C2	\N	\N
+5935	indemnify	v	\N	\N	1	C2	\N	\N
+5936	indifference	n	\N	\N	1	C2	\N	\N
+5937	indifferent	adj	\N	\N	1	C2	\N	\N
+5938	indignant	adj	\N	\N	1	C2	\N	\N
+5939	indignation	n	\N	\N	1	C2	\N	\N
+5940	indiscretion	n	\N	\N	1	C2	\N	\N
+5941	indoctrination	n	\N	\N	1	C2	\N	\N
+5942	indolent	adj	\N	\N	1	C2	\N	\N
+5943	indomitable	adj	\N	\N	1	C2	\N	\N
+5944	inducement	n	\N	\N	1	C2	\N	\N
+5945	induction	n	\N	\N	1	C2	\N	\N
+5946	indulgent	adj	\N	\N	1	C2	\N	\N
+5947	industrious	adj	\N	\N	1	C2	\N	\N
+5948	ineffable	adj	\N	\N	1	C2	\N	\N
+5949	inept	adj	\N	\N	1	C2	\N	\N
+5950	ineptitude	n	\N	\N	1	C2	\N	\N
+5951	inequity	n	\N	\N	1	C2	\N	\N
+5952	inertia	n	\N	\N	1	C2	\N	\N
+5953	inexhaustible	adj	\N	\N	1	C2	\N	\N
+5954	inexorable	adj	\N	\N	1	C2	\N	\N
+5955	infallible	adj	\N	\N	1	C2	\N	\N
+5956	infamy	n	\N	\N	1	C2	\N	\N
+5957	infatuation	n	\N	\N	1	C2	\N	\N
+5958	inferno	n	\N	\N	1	C2	\N	\N
+5959	infirmary	n	\N	\N	1	C2	\N	\N
+5960	inflammatory	adj	\N	\N	1	C2	\N	\N
+5961	influx	n	\N	\N	1	C2	\N	\N
+5962	infraction	n	\N	\N	1	C2	\N	\N
+5963	ingenious	adj	\N	\N	1	C2	\N	\N
+5964	ingenuity	n	\N	\N	1	C2	\N	\N
+5965	ingenuous	adj	\N	\N	1	C2	\N	\N
+5966	ingrained	adj	\N	\N	1	C2	\N	\N
+5967	inhospitable	adj	\N	\N	1	C2	\N	\N
+5968	inhumanity	n	\N	\N	1	C2	\N	\N
+5969	inimical	adj	\N	\N	1	C2	\N	\N
+5970	iniquitous	adj	\N	\N	1	C2	\N	\N
+5971	injunction	n	\N	\N	1	C2	\N	\N
+5972	inkling	n	\N	\N	1	C2	\N	\N
+5973	innocuous	adj	\N	\N	1	C2	\N	\N
+5974	innuendo	n	\N	\N	1	C2	\N	\N
+5975	innumerable	adj	\N	\N	1	C2	\N	\N
+5976	inquisition	n	\N	\N	1	C2	\N	\N
+5977	insatiable	adj	\N	\N	1	C2	\N	\N
+5978	inscrutable	adj	\N	\N	1	C2	\N	\N
+5979	insidious	adj	\N	\N	1	C2	\N	\N
+5980	insipid	adj	\N	\N	1	C2	\N	\N
+5981	insolent	adj	\N	\N	1	C2	\N	\N
+5982	insoluble	adj	\N	\N	1	C2	\N	\N
+5983	insouciant	adj	\N	\N	1	C2	\N	\N
+5984	instigate	v	\N	\N	1	C2	\N	\N
+5985	insurgency	n	\N	\N	1	C2	\N	\N
+5986	insurmountable	adj	\N	\N	1	C2	\N	\N
+5987	insurrection	n	\N	\N	1	C2	\N	\N
+5988	intelligentsia	n	\N	\N	1	C2	\N	\N
+5989	inter alia	adv	\N	\N	1	C2	\N	\N
+5990	interlude	n	\N	\N	1	C2	\N	\N
+5991	intermittently	adv	\N	\N	1	C2	\N	\N
+5992	internecine	adj	\N	\N	1	C2	\N	\N
+5993	intimation	n	\N	\N	1	C2	\N	\N
+5994	intimidation	n	\N	\N	1	C2	\N	\N
+5995	intransigence	n	\N	\N	1	C2	\N	\N
+5996	intransigent	adj	\N	\N	1	C2	\N	\N
+5997	intrepid	adj	\N	\N	1	C2	\N	\N
+5998	intrinsic	adj	\N	\N	1	C2	\N	\N
+5999	introspection	n	\N	\N	1	C2	\N	\N
+6000	intrusive	adj	\N	\N	1	C2	\N	\N
+6001	intuition	n	\N	\N	1	C2	\N	\N
+6002	inundate	v	\N	\N	1	C2	\N	\N
+6003	invasive	adj	\N	\N	1	C2	\N	\N
+6004	invective	n	\N	\N	1	C2	\N	\N
+6005	inveterate	adj	\N	\N	1	C2	\N	\N
+6006	invidious	adj	\N	\N	1	C2	\N	\N
+6007	invocation	n	\N	\N	1	C2	\N	\N
+6008	iota	n	\N	\N	1	C2	\N	\N
+6009	irascible	adj	\N	\N	1	C2	\N	\N
+6010	ire	n	\N	\N	1	C2	\N	\N
+6011	irk	v	\N	\N	1	C2	\N	\N
+6012	irreproachable	adj	\N	\N	1	C2	\N	\N
+6013	irreverent	adj	\N	\N	1	C2	\N	\N
+6014	itinerant	adj	\N	\N	1	C2	\N	\N
+6015	itinerary	n	\N	\N	1	C2	\N	\N
+6016	jaded	adj	\N	\N	1	C2	\N	\N
+6017	jamboree	n	\N	\N	1	C2	\N	\N
+6018	jargon	n	\N	\N	1	C2	\N	\N
+6019	jaundiced	adj	\N	\N	1	C2	\N	\N
+6020	jaunt	n	\N	\N	1	C2	\N	\N
+6021	jeopardise	v	\N	\N	1	C2	\N	\N
+6022	jingoism	n	\N	\N	1	C2	\N	\N
+6023	jocular	adj	\N	\N	1	C2	\N	\N
+6024	jocularity	n	\N	\N	1	C2	\N	\N
+6025	journeyman	n	\N	\N	1	C2	\N	\N
+6026	joust	n	\N	\N	1	C2	\N	\N
+6027	jubilation	n	\N	\N	1	C2	\N	\N
+6028	jubilee	n	\N	\N	1	C2	\N	\N
+6029	judicious	adj	\N	\N	1	C2	\N	\N
+6030	juggernaut	n	\N	\N	1	C2	\N	\N
+6031	juncture	n	\N	\N	1	C2	\N	\N
+6032	jurisprudence	n	\N	\N	1	C2	\N	\N
+6033	jurist	n	\N	\N	1	C2	\N	\N
+6034	juxtapose	v	\N	\N	1	C2	\N	\N
+6035	juxtaposition	n	\N	\N	1	C2	\N	\N
+6036	kaleidoscope	n	\N	\N	1	C2	\N	\N
+6037	ken	n	\N	\N	1	C2	\N	\N
+6038	kernel	n	\N	\N	1	C2	\N	\N
+6039	keynote	n	\N	\N	1	C2	\N	\N
+6040	kindle	v	\N	\N	1	C2	\N	\N
+6041	kindred	n	\N	\N	1	C2	\N	\N
+6042	kinship	n	\N	\N	1	C2	\N	\N
+6043	knoll	n	\N	\N	1	C2	\N	\N
+6044	kudos	n	\N	\N	1	C2	\N	\N
+6045	labyrinth	n	\N	\N	1	C2	\N	\N
+6046	lackadaisical	adj	\N	\N	1	C2	\N	\N
+6047	lacklustre	adj	\N	\N	1	C2	\N	\N
+6048	laconic	adj	\N	\N	1	C2	\N	\N
+6049	laggard	n	\N	\N	1	C2	\N	\N
+6050	lambaste	v	\N	\N	1	C2	\N	\N
+6051	lament	v	\N	\N	1	C2	\N	\N
+6052	lamentable	adj	\N	\N	1	C2	\N	\N
+6053	lampoon	n	\N	\N	1	C2	\N	\N
+6054	languid	adj	\N	\N	1	C2	\N	\N
+6055	languish	v	\N	\N	1	C2	\N	\N
+6056	lapse	n	\N	\N	1	C2	\N	\N
+6057	larceny	n	\N	\N	1	C2	\N	\N
+6058	largesse	n	\N	\N	1	C2	\N	\N
+6059	latent	adj	\N	\N	1	C2	\N	\N
+6060	latitude	n	\N	\N	1	C2	\N	\N
+6061	laud	v	\N	\N	1	C2	\N	\N
+6062	laudable	adj	\N	\N	1	C2	\N	\N
+6063	laureate	n	\N	\N	1	C2	\N	\N
+6064	lectern	n	\N	\N	1	C2	\N	\N
+6065	leery of	adj	\N	\N	1	C2	\N	\N
+6066	leeway	n	\N	\N	1	C2	\N	\N
+6067	lenient	adj	\N	\N	1	C2	\N	\N
+6068	lethargic	adj	\N	\N	1	C2	\N	\N
+6069	lethargy	n	\N	\N	1	C2	\N	\N
+6070	level-headed	adj	\N	\N	1	C2	\N	\N
+6071	levity	n	\N	\N	1	C2	\N	\N
+6072	levy	v	\N	\N	1	C2	\N	\N
+6073	lexicon	n	\N	\N	1	C2	\N	\N
+6074	liaison	n	\N	\N	1	C2	\N	\N
+6075	licentious	adj	\N	\N	1	C2	\N	\N
+6076	limbo	n	\N	\N	1	C2	\N	\N
+6077	lineage	n	\N	\N	1	C2	\N	\N
+6078	linguist	n	\N	\N	1	C2	\N	\N
+6079	liquidate	v	\N	\N	1	C2	\N	\N
+6080	liquidation	n	\N	\N	1	C2	\N	\N
+6081	litany	n	\N	\N	1	C2	\N	\N
+6082	litigant	n	\N	\N	1	C2	\N	\N
+6083	litigious	adj	\N	\N	1	C2	\N	\N
+6084	liturgy	n	\N	\N	1	C2	\N	\N
+6085	loathe	v	\N	\N	1	C2	\N	\N
+6086	longevity	n	\N	\N	1	C2	\N	\N
+6087	loophole	n	\N	\N	1	C2	\N	\N
+6088	loquacious	adj	\N	\N	1	C2	\N	\N
+6089	lore	n	\N	\N	1	C2	\N	\N
+6090	lout	n	\N	\N	1	C2	\N	\N
+6091	lucid	adj	\N	\N	1	C2	\N	\N
+6092	ludicrous	adj	\N	\N	1	C2	\N	\N
+6093	lugubrious	adj	\N	\N	1	C2	\N	\N
+6094	lukewarm	adj	\N	\N	1	C2	\N	\N
+6095	luminary	n	\N	\N	1	C2	\N	\N
+6096	luminous	adj	\N	\N	1	C2	\N	\N
+6097	lustre	n	\N	\N	1	C2	\N	\N
+6098	luxuriant	adj	\N	\N	1	C2	\N	\N
+6099	machination	n	\N	\N	1	C2	\N	\N
+6100	machismo	n	\N	\N	1	C2	\N	\N
+6101	macrocosm	n	\N	\N	1	C2	\N	\N
+6102	madcap	adj	\N	\N	1	C2	\N	\N
+6103	maelstrom	n	\N	\N	1	C2	\N	\N
+6104	maestro	n	\N	\N	1	C2	\N	\N
+6105	magnanimous	adj	\N	\N	1	C2	\N	\N
+6106	magnate	n	\N	\N	1	C2	\N	\N
+6107	mainstay	n	\N	\N	1	C2	\N	\N
+6108	malady	n	\N	\N	1	C2	\N	\N
+6109	malaise	n	\N	\N	1	C2	\N	\N
+6110	malcontent	n	\N	\N	1	C2	\N	\N
+6111	malevolent	adj	\N	\N	1	C2	\N	\N
+6112	malfeasance	n	\N	\N	1	C2	\N	\N
+6113	malice	n	\N	\N	1	C2	\N	\N
+6114	malign	v	\N	\N	1	C2	\N	\N
+6115	malleable	adj	\N	\N	1	C2	\N	\N
+6116	malodorous	adj	\N	\N	1	C2	\N	\N
+6117	manifestation	n	\N	\N	1	C2	\N	\N
+6118	mannerism	n	\N	\N	1	C2	\N	\N
+6119	manor	n	\N	\N	1	C2	\N	\N
+6120	mantle	n	\N	\N	1	C2	\N	\N
+6121	marauder	n	\N	\N	1	C2	\N	\N
+6122	marquee	n	\N	\N	1	C2	\N	\N
+6123	martyrdom	n	\N	\N	1	C2	\N	\N
+6124	masochism	n	\N	\N	1	C2	\N	\N
+6125	masquerade	n	\N	\N	1	C2	\N	\N
+6126	materialism	n	\N	\N	1	C2	\N	\N
+6127	matriarch	n	\N	\N	1	C2	\N	\N
+6128	maudlin	adj	\N	\N	1	C2	\N	\N
+6129	maverick	n	\N	\N	1	C2	\N	\N
+6130	maxim	n	\N	\N	1	C2	\N	\N
+6131	mayhem	n	\N	\N	1	C2	\N	\N
+6132	meagre	adj	\N	\N	1	C2	\N	\N
+6133	mediator	n	\N	\N	1	C2	\N	\N
+6134	mediocrity	n	\N	\N	1	C2	\N	\N
+6135	megalomania	n	\N	\N	1	C2	\N	\N
+6136	melancholy	n	\N	\N	1	C2	\N	\N
+6137	melee	n	\N	\N	1	C2	\N	\N
+6138	memento	n	\N	\N	1	C2	\N	\N
+6139	memorabilia	n	\N	\N	1	C2	\N	\N
+6140	menacing	adj	\N	\N	1	C2	\N	\N
+6141	mendacious	adj	\N	\N	1	C2	\N	\N
+6142	mercenary	n	\N	\N	1	C2	\N	\N
+6143	meritocracy	n	\N	\N	1	C2	\N	\N
+6144	messiah	n	\N	\N	1	C2	\N	\N
+6145	metamorphosis	n	\N	\N	1	C2	\N	\N
+6146	methodology	n	\N	\N	1	C2	\N	\N
+6147	meticulous	adj	\N	\N	1	C2	\N	\N
+6148	mettle	n	\N	\N	1	C2	\N	\N
+6149	microcosm	n	\N	\N	1	C2	\N	\N
+6150	minion	n	\N	\N	1	C2	\N	\N
+6151	minutiae	n	\N	\N	1	C2	\N	\N
+6152	mirage	n	\N	\N	1	C2	\N	\N
+6153	mire	n	\N	\N	1	C2	\N	\N
+6154	misanthrope	n	\N	\N	1	C2	\N	\N
+6155	mischievous	adj	\N	\N	1	C2	\N	\N
+6156	misgiving	n	\N	\N	1	C2	\N	\N
+6157	mishap	n	\N	\N	1	C2	\N	\N
+6158	misnomer	n	\N	\N	1	C2	\N	\N
+6159	misogyny	n	\N	\N	1	C2	\N	\N
+6160	mitigate	v	\N	\N	1	C2	\N	\N
+6161	modicum	n	\N	\N	1	C2	\N	\N
+6162	mogul	n	\N	\N	1	C2	\N	\N
+6163	mollify	v	\N	\N	1	C2	\N	\N
+6164	moniker	n	\N	\N	1	C2	\N	\N
+6165	monolith	n	\N	\N	1	C2	\N	\N
+6166	monologue	n	\N	\N	1	C2	\N	\N
+6167	montage	n	\N	\N	1	C2	\N	\N
+6168	moratorium	n	\N	\N	1	C2	\N	\N
+6169	mordant	adj	\N	\N	1	C2	\N	\N
+6170	morgue	n	\N	\N	1	C2	\N	\N
+6171	moribund	adj	\N	\N	1	C2	\N	\N
+6172	morose	adj	\N	\N	1	C2	\N	\N
+6173	mortal	adj	\N	\N	1	C2	\N	\N
+6174	mortifying	adj	\N	\N	1	C2	\N	\N
+6175	mosaic	n	\N	\N	1	C2	\N	\N
+6176	muffle	v	\N	\N	1	C2	\N	\N
+6177	multitude	n	\N	\N	1	C2	\N	\N
+6178	mundane	adj	\N	\N	1	C2	\N	\N
+6179	munificent	adj	\N	\N	1	C2	\N	\N
+6180	munition	n	\N	\N	1	C2	\N	\N
+6181	mural	n	\N	\N	1	C2	\N	\N
+6182	mutable	adj	\N	\N	1	C2	\N	\N
+6183	myopic	adj	\N	\N	1	C2	\N	\N
+6184	myriad	n	\N	\N	1	C2	\N	\N
+6185	mystique	n	\N	\N	1	C2	\N	\N
+6186	nadir	n	\N	\N	1	C2	\N	\N
+6187	nag	v	\N	\N	1	C2	\N	\N
+6188	naivety	n	\N	\N	1	C2	\N	\N
+6189	namesake	n	\N	\N	1	C2	\N	\N
+6190	narcissism	n	\N	\N	1	C2	\N	\N
+6191	nascent	adj	\N	\N	1	C2	\N	\N
+6192	nebulous	adj	\N	\N	1	C2	\N	\N
+6193	nefarious	adj	\N	\N	1	C2	\N	\N
+6194	negligence	n	\N	\N	1	C2	\N	\N
+6195	nemesis	n	\N	\N	1	C2	\N	\N
+6196	neophyte	n	\N	\N	1	C2	\N	\N
+6197	nepotism	n	\N	\N	1	C2	\N	\N
+6198	nexus	n	\N	\N	1	C2	\N	\N
+6199	nihilism	n	\N	\N	1	C2	\N	\N
+6200	nirvana	n	\N	\N	1	C2	\N	\N
+6201	nomenclature	n	\N	\N	1	C2	\N	\N
+6202	nonchalance	n	\N	\N	1	C2	\N	\N
+6203	nonchalant	adj	\N	\N	1	C2	\N	\N
+6204	nonentity	n	\N	\N	1	C2	\N	\N
+6205	notoriety	n	\N	\N	1	C2	\N	\N
+6206	novice	n	\N	\N	1	C2	\N	\N
+6207	noxious	adj	\N	\N	1	C2	\N	\N
+6208	nuance	n	\N	\N	1	C2	\N	\N
+6209	oaf	n	\N	\N	1	C2	\N	\N
+6210	oasis	n	\N	\N	1	C2	\N	\N
+6211	obdurate	adj	\N	\N	1	C2	\N	\N
+6212	obfuscate	v	\N	\N	1	C2	\N	\N
+6213	obfuscation	n	\N	\N	1	C2	\N	\N
+6214	obituary	n	\N	\N	1	C2	\N	\N
+6215	obliterate	v	\N	\N	1	C2	\N	\N
+6216	oblivion	n	\N	\N	1	C2	\N	\N
+6217	obscenity	n	\N	\N	1	C2	\N	\N
+6218	obscure	adj	\N	\N	1	C2	\N	\N
+6219	obscurity	n	\N	\N	1	C2	\N	\N
+6220	obsequious	adj	\N	\N	1	C2	\N	\N
+6221	observance	n	\N	\N	1	C2	\N	\N
+6222	obsolescence	n	\N	\N	1	C2	\N	\N
+6223	obsolete	adj	\N	\N	1	C2	\N	\N
+6224	obstinate	adj	\N	\N	1	C2	\N	\N
+6225	obstreperous	adj	\N	\N	1	C2	\N	\N
+6226	obtuse	adj	\N	\N	1	C2	\N	\N
+6227	obviate	v	\N	\N	1	C2	\N	\N
+6228	ode	n	\N	\N	1	C2	\N	\N
+6229	odyssey	n	\N	\N	1	C2	\N	\N
+6230	officious	adj	\N	\N	1	C2	\N	\N
+6231	oligarchy	n	\N	\N	1	C2	\N	\N
+6232	omen	n	\N	\N	1	C2	\N	\N
+6233	ominous	adj	\N	\N	1	C2	\N	\N
+6234	omission	n	\N	\N	1	C2	\N	\N
+6235	omnipotence	n	\N	\N	1	C2	\N	\N
+6236	omniscience	n	\N	\N	1	C2	\N	\N
+6237	onerous	adj	\N	\N	1	C2	\N	\N
+6238	onset	n	\N	\N	1	C2	\N	\N
+6239	onslaught	n	\N	\N	1	C2	\N	\N
+6240	onus	n	\N	\N	1	C2	\N	\N
+6241	opacity	n	\N	\N	1	C2	\N	\N
+6242	opaque	adj	\N	\N	1	C2	\N	\N
+6243	opportunistic	adj	\N	\N	1	C2	\N	\N
+6244	opulence	n	\N	\N	1	C2	\N	\N
+6245	opulent	adj	\N	\N	1	C2	\N	\N
+6246	oracle	n	\N	\N	1	C2	\N	\N
+6247	orator	n	\N	\N	1	C2	\N	\N
+6248	oratory	n	\N	\N	1	C2	\N	\N
+6249	ordeal	n	\N	\N	1	C2	\N	\N
+6250	ordinance	n	\N	\N	1	C2	\N	\N
+6251	ornate	adj	\N	\N	1	C2	\N	\N
+6252	orthodoxy	n	\N	\N	1	C2	\N	\N
+6253	oscillation	n	\N	\N	1	C2	\N	\N
+6254	ostensible	adj	\N	\N	1	C2	\N	\N
+6255	ostentation	n	\N	\N	1	C2	\N	\N
+6256	ostentatious	adj	\N	\N	1	C2	\N	\N
+6257	ostracise	v	\N	\N	1	C2	\N	\N
+6258	ostracism	n	\N	\N	1	C2	\N	\N
+6259	oust	v	\N	\N	1	C2	\N	\N
+6260	outweigh	v	\N	\N	1	C2	\N	\N
+6261	ovation	n	\N	\N	1	C2	\N	\N
+6262	oversight	n	\N	\N	1	C2	\N	\N
+6263	overweening	adj	\N	\N	1	C2	\N	\N
+6264	oxymoron	n	\N	\N	1	C2	\N	\N
+6265	pacifism	n	\N	\N	1	C2	\N	\N
+6266	pacify	v	\N	\N	1	C2	\N	\N
+6267	pageant	n	\N	\N	1	C2	\N	\N
+6268	pageantry	n	\N	\N	1	C2	\N	\N
+6269	painstaking	adj	\N	\N	1	C2	\N	\N
+6270	palatable	adj	\N	\N	1	C2	\N	\N
+6271	palatial	adj	\N	\N	1	C2	\N	\N
+6272	pallbearer	n	\N	\N	1	C2	\N	\N
+6273	palliate	v	\N	\N	1	C2	\N	\N
+6274	pallid	adj	\N	\N	1	C2	\N	\N
+6275	pallor	n	\N	\N	1	C2	\N	\N
+6276	palpable	adj	\N	\N	1	C2	\N	\N
+6277	palpitation	n	\N	\N	1	C2	\N	\N
+6278	paltry	adj	\N	\N	1	C2	\N	\N
+6279	pamper	v	\N	\N	1	C2	\N	\N
+6280	panacea	n	\N	\N	1	C2	\N	\N
+6281	panache	n	\N	\N	1	C2	\N	\N
+6282	pandemonium	n	\N	\N	1	C2	\N	\N
+6283	pang	n	\N	\N	1	C2	\N	\N
+6284	panorama	n	\N	\N	1	C2	\N	\N
+6285	parable	n	\N	\N	1	C2	\N	\N
+6286	paradigm	n	\N	\N	1	C2	\N	\N
+6287	paradox	n	\N	\N	1	C2	\N	\N
+6288	paragon	n	\N	\N	1	C2	\N	\N
+6289	paramount	adj	\N	\N	1	C2	\N	\N
+6290	paraphernalia	n	\N	\N	1	C2	\N	\N
+6291	pariah	n	\N	\N	1	C2	\N	\N
+6292	parity	n	\N	\N	1	C2	\N	\N
+6293	parlance	n	\N	\N	1	C2	\N	\N
+6294	parochial	adj	\N	\N	1	C2	\N	\N
+6295	parody	n	\N	\N	1	C2	\N	\N
+6296	parsimonious	adj	\N	\N	1	C2	\N	\N
+6297	parsimony	n	\N	\N	1	C2	\N	\N
+6298	partisan	adj	\N	\N	1	C2	\N	\N
+6299	partisanship	n	\N	\N	1	C2	\N	\N
+6300	patently	adv	\N	\N	1	C2	\N	\N
+6301	pathos	n	\N	\N	1	C2	\N	\N
+6302	patriarch	n	\N	\N	1	C2	\N	\N
+6303	patronage	n	\N	\N	1	C2	\N	\N
+6304	paucity	n	\N	\N	1	C2	\N	\N
+6305	pavilion	n	\N	\N	1	C2	\N	\N
+6306	pedagogy	n	\N	\N	1	C2	\N	\N
+6307	pedant	n	\N	\N	1	C2	\N	\N
+6308	pedantic	adj	\N	\N	1	C2	\N	\N
+6309	pedantry	n	\N	\N	1	C2	\N	\N
+6310	pedestal	n	\N	\N	1	C2	\N	\N
+6311	pedigree	n	\N	\N	1	C2	\N	\N
+6312	peevish	adj	\N	\N	1	C2	\N	\N
+6313	pejorative	adj	\N	\N	1	C2	\N	\N
+6314	penchant	n	\N	\N	1	C2	\N	\N
+6315	pending	adj	\N	\N	1	C2	\N	\N
+6316	penitence	n	\N	\N	1	C2	\N	\N
+6317	penitent	adj	\N	\N	1	C2	\N	\N
+6318	pennant	n	\N	\N	1	C2	\N	\N
+6319	pensive	adj	\N	\N	1	C2	\N	\N
+6320	penury	n	\N	\N	1	C2	\N	\N
+6321	peremptory	adj	\N	\N	1	C2	\N	\N
+6322	perennial	adj	\N	\N	1	C2	\N	\N
+6323	perfidious	adj	\N	\N	1	C2	\N	\N
+6324	perfunctory	adj	\N	\N	1	C2	\N	\N
+6325	peril	n	\N	\N	1	C2	\N	\N
+6326	perilous	adj	\N	\N	1	C2	\N	\N
+6327	perimeter	n	\N	\N	1	C2	\N	\N
+6328	periphery	n	\N	\N	1	C2	\N	\N
+6329	perjurer	n	\N	\N	1	C2	\N	\N
+6330	perjury	n	\N	\N	1	C2	\N	\N
+6331	permanence	n	\N	\N	1	C2	\N	\N
+6332	permeate	v	\N	\N	1	C2	\N	\N
+6333	permutation	n	\N	\N	1	C2	\N	\N
+6334	pernicious	adj	\N	\N	1	C2	\N	\N
+6335	perpetrator	n	\N	\N	1	C2	\N	\N
+6336	perpetual	adj	\N	\N	1	C2	\N	\N
+6337	perpetuate	v	\N	\N	1	C2	\N	\N
+6338	perplexity	n	\N	\N	1	C2	\N	\N
+6339	persecute	v	\N	\N	1	C2	\N	\N
+6340	perseverance	n	\N	\N	1	C2	\N	\N
+6341	perspicacious	adj	\N	\N	1	C2	\N	\N
+6342	perturbed	adj	\N	\N	1	C2	\N	\N
+6343	peruse	v	\N	\N	1	C2	\N	\N
+6344	pervade	v	\N	\N	1	C2	\N	\N
+6345	pervasive	adj	\N	\N	1	C2	\N	\N
+6346	pervert	v	\N	\N	1	C2	\N	\N
+6347	pessimism	n	\N	\N	1	C2	\N	\N
+6348	petulant	adj	\N	\N	1	C2	\N	\N
+6349	philanthropic	adj	\N	\N	1	C2	\N	\N
+6350	philanthropist	n	\N	\N	1	C2	\N	\N
+6351	philistine	n	\N	\N	1	C2	\N	\N
+6352	phlegmatic	adj	\N	\N	1	C2	\N	\N
+6353	phoenix	n	\N	\N	1	C2	\N	\N
+6354	piety	n	\N	\N	1	C2	\N	\N
+6355	pillage	v	\N	\N	1	C2	\N	\N
+6356	pinnacle	n	\N	\N	1	C2	\N	\N
+6357	pioneering	adj	\N	\N	1	C2	\N	\N
+6358	pious	adj	\N	\N	1	C2	\N	\N
+6359	pique	n	\N	\N	1	C2	\N	\N
+6360	piracy	n	\N	\N	1	C2	\N	\N
+6361	pitfall	n	\N	\N	1	C2	\N	\N
+6362	pithy	adj	\N	\N	1	C2	\N	\N
+6363	pittance	n	\N	\N	1	C2	\N	\N
+6364	placate	v	\N	\N	1	C2	\N	\N
+6365	placebo	n	\N	\N	1	C2	\N	\N
+6366	placid	adj	\N	\N	1	C2	\N	\N
+6367	plagiarism	n	\N	\N	1	C2	\N	\N
+6368	plaintiff	n	\N	\N	1	C2	\N	\N
+6369	plasticity	n	\N	\N	1	C2	\N	\N
+6370	platitude	n	\N	\N	1	C2	\N	\N
+6371	playwright	n	\N	\N	1	C2	\N	\N
+6372	plebiscite	n	\N	\N	1	C2	\N	\N
+6373	plethora	n	\N	\N	1	C2	\N	\N
+6374	plight	n	\N	\N	1	C2	\N	\N
+6375	ploy	n	\N	\N	1	C2	\N	\N
+6376	plunder	v	\N	\N	1	C2	\N	\N
+6377	podium	n	\N	\N	1	C2	\N	\N
+6378	poignancy	n	\N	\N	1	C2	\N	\N
+6379	poignant	adj	\N	\N	1	C2	\N	\N
+6380	poise	n	\N	\N	1	C2	\N	\N
+6381	polemic	n	\N	\N	1	C2	\N	\N
+6382	polyglot	n	\N	\N	1	C2	\N	\N
+6383	pomp	n	\N	\N	1	C2	\N	\N
+6384	pompous	adj	\N	\N	1	C2	\N	\N
+6385	ponder	v	\N	\N	1	C2	\N	\N
+6386	ponderous	adj	\N	\N	1	C2	\N	\N
+6387	pontificate	v	\N	\N	1	C2	\N	\N
+6388	populace	n	\N	\N	1	C2	\N	\N
+6389	populism	n	\N	\N	1	C2	\N	\N
+6390	portend	v	\N	\N	1	C2	\N	\N
+6391	portent	n	\N	\N	1	C2	\N	\N
+6392	portentous	adj	\N	\N	1	C2	\N	\N
+6393	posterity	n	\N	\N	1	C2	\N	\N
+6394	posthumous	adj	\N	\N	1	C2	\N	\N
+6395	postmortem	n	\N	\N	1	C2	\N	\N
+6396	postulate	v	\N	\N	1	C2	\N	\N
+6397	pragmatism	n	\N	\N	1	C2	\N	\N
+6398	pragmatist	n	\N	\N	1	C2	\N	\N
+6399	preamble	n	\N	\N	1	C2	\N	\N
+6400	precarious	adj	\N	\N	1	C2	\N	\N
+6401	precedence	n	\N	\N	1	C2	\N	\N
+6402	precipice	n	\N	\N	1	C2	\N	\N
+6403	precipitate	v	\N	\N	1	C2	\N	\N
+6404	precipitous	adj	\N	\N	1	C2	\N	\N
+6405	preclude	v	\N	\N	1	C2	\N	\N
+6406	precocious	adj	\N	\N	1	C2	\N	\N
+6407	precursor	n	\N	\N	1	C2	\N	\N
+6408	predilection	n	\N	\N	1	C2	\N	\N
+6409	predominance	n	\N	\N	1	C2	\N	\N
+6410	preeminent	adj	\N	\N	1	C2	\N	\N
+6411	preempt	v	\N	\N	1	C2	\N	\N
+6412	prelude	n	\N	\N	1	C2	\N	\N
+6413	premonition	n	\N	\N	1	C2	\N	\N
+6414	preponderance	n	\N	\N	1	C2	\N	\N
+6415	preposterous	adj	\N	\N	1	C2	\N	\N
+6416	prerequisite	n	\N	\N	1	C2	\N	\N
+6417	prerogative	n	\N	\N	1	C2	\N	\N
+6418	presumption	n	\N	\N	1	C2	\N	\N
+6419	presumptuous	adj	\N	\N	1	C2	\N	\N
+6420	pretence	n	\N	\N	1	C2	\N	\N
+6421	pretender	n	\N	\N	1	C2	\N	\N
+6422	pretentious	adj	\N	\N	1	C2	\N	\N
+6423	pretext	n	\N	\N	1	C2	\N	\N
+6424	prevalent	adj	\N	\N	1	C2	\N	\N
+6425	prevaricate	v	\N	\N	1	C2	\N	\N
+6426	primacy	n	\N	\N	1	C2	\N	\N
+6427	primeval	adj	\N	\N	1	C2	\N	\N
+6428	pristine	adj	\N	\N	1	C2	\N	\N
+6429	privation	n	\N	\N	1	C2	\N	\N
+6430	probity	n	\N	\N	1	C2	\N	\N
+6431	proclamation	n	\N	\N	1	C2	\N	\N
+6432	proclivity	n	\N	\N	1	C2	\N	\N
+6433	procrastinate	v	\N	\N	1	C2	\N	\N
+6434	procure	v	\N	\N	1	C2	\N	\N
+6435	procurement	n	\N	\N	1	C2	\N	\N
+6436	prodigal	adj	\N	\N	1	C2	\N	\N
+6437	prodigious	adj	\N	\N	1	C2	\N	\N
+6438	prodigy	n	\N	\N	1	C2	\N	\N
+6439	profane	adj	\N	\N	1	C2	\N	\N
+6440	profanity	n	\N	\N	1	C2	\N	\N
+6441	profess	v	\N	\N	1	C2	\N	\N
+6442	proffer	v	\N	\N	1	C2	\N	\N
+6443	proficiency	n	\N	\N	1	C2	\N	\N
+6444	profligate	adj	\N	\N	1	C2	\N	\N
+6445	profusion	n	\N	\N	1	C2	\N	\N
+6446	progeny	n	\N	\N	1	C2	\N	\N
+6447	prognosis	n	\N	\N	1	C2	\N	\N
+6448	prohibitive	adj	\N	\N	1	C2	\N	\N
+6449	proliferation	n	\N	\N	1	C2	\N	\N
+6450	prolific	adj	\N	\N	1	C2	\N	\N
+6451	prologue	n	\N	\N	1	C2	\N	\N
+6452	promiscuity	n	\N	\N	1	C2	\N	\N
+6453	propagandist	n	\N	\N	1	C2	\N	\N
+6454	propensity	n	\N	\N	1	C2	\N	\N
+6455	prophecy	n	\N	\N	1	C2	\N	\N
+6456	propitious	adj	\N	\N	1	C2	\N	\N
+6457	proponent	n	\N	\N	1	C2	\N	\N
+6458	proprietor	n	\N	\N	1	C2	\N	\N
+6459	propriety	n	\N	\N	1	C2	\N	\N
+6460	prosaic	adj	\N	\N	1	C2	\N	\N
+6461	proscribe	v	\N	\N	1	C2	\N	\N
+6462	protagonist	n	\N	\N	1	C2	\N	\N
+6463	prototype	n	\N	\N	1	C2	\N	\N
+6464	protract	v	\N	\N	1	C2	\N	\N
+6465	protégé	n	\N	\N	1	C2	\N	\N
+6466	provenance	n	\N	\N	1	C2	\N	\N
+6467	proverb	n	\N	\N	1	C2	\N	\N
+6468	providence	n	\N	\N	1	C2	\N	\N
+6469	proviso	n	\N	\N	1	C2	\N	\N
+6470	prowess	n	\N	\N	1	C2	\N	\N
+6471	proximity	n	\N	\N	1	C2	\N	\N
+6472	proxy	n	\N	\N	1	C2	\N	\N
+6473	prudence	n	\N	\N	1	C2	\N	\N
+6474	prudent	adj	\N	\N	1	C2	\N	\N
+6475	pseudonym	n	\N	\N	1	C2	\N	\N
+6476	psyche	n	\N	\N	1	C2	\N	\N
+6477	puerile	adj	\N	\N	1	C2	\N	\N
+6478	pugnacious	adj	\N	\N	1	C2	\N	\N
+6479	pulpit	n	\N	\N	1	C2	\N	\N
+6480	punctilious	adj	\N	\N	1	C2	\N	\N
+6481	pundit	n	\N	\N	1	C2	\N	\N
+6482	pungency	n	\N	\N	1	C2	\N	\N
+6483	pungent	adj	\N	\N	1	C2	\N	\N
+6484	purge	n	\N	\N	1	C2	\N	\N
+6485	purist	n	\N	\N	1	C2	\N	\N
+6486	purport	v	\N	\N	1	C2	\N	\N
+6487	purveyor	n	\N	\N	1	C2	\N	\N
+6488	pusillanimous	adj	\N	\N	1	C2	\N	\N
+6489	quack	n	\N	\N	1	C2	\N	\N
+6490	quadrant	n	\N	\N	1	C2	\N	\N
+6491	quagmire	n	\N	\N	1	C2	\N	\N
+6492	quaint	adj	\N	\N	1	C2	\N	\N
+6493	qualm	n	\N	\N	1	C2	\N	\N
+6494	quandary	n	\N	\N	1	C2	\N	\N
+6495	quarantine	n	\N	\N	1	C2	\N	\N
+6496	quarry	n	\N	\N	1	C2	\N	\N
+6497	quartet	n	\N	\N	1	C2	\N	\N
+6498	quash	v	\N	\N	1	C2	\N	\N
+6499	quaver	n	\N	\N	1	C2	\N	\N
+6500	quell	v	\N	\N	1	C2	\N	\N
+6501	querulous	adj	\N	\N	1	C2	\N	\N
+6502	quibble	n	\N	\N	1	C2	\N	\N
+6503	quicksand	n	\N	\N	1	C2	\N	\N
+6504	quiescent	adj	\N	\N	1	C2	\N	\N
+6505	quintessence	n	\N	\N	1	C2	\N	\N
+6506	quintessential	adj	\N	\N	1	C2	\N	\N
+6507	quintet	n	\N	\N	1	C2	\N	\N
+6508	quip	n	\N	\N	1	C2	\N	\N
+6509	quiver	n	\N	\N	1	C2	\N	\N
+6510	quixotic	adj	\N	\N	1	C2	\N	\N
+6511	quorum	n	\N	\N	1	C2	\N	\N
+6512	rabble	n	\N	\N	1	C2	\N	\N
+6513	radiance	n	\N	\N	1	C2	\N	\N
+6514	radicalism	n	\N	\N	1	C2	\N	\N
+6515	rambunctious	adj	\N	\N	1	C2	\N	\N
+6516	ramification	n	\N	\N	1	C2	\N	\N
+6517	rancour	n	\N	\N	1	C2	\N	\N
+6518	ransom	n	\N	\N	1	C2	\N	\N
+6519	rapacious	adj	\N	\N	1	C2	\N	\N
+6520	rapacity	n	\N	\N	1	C2	\N	\N
+6521	rapport	n	\N	\N	1	C2	\N	\N
+6522	rapture	n	\N	\N	1	C2	\N	\N
+6523	rascal	n	\N	\N	1	C2	\N	\N
+6524	rashness	n	\N	\N	1	C2	\N	\N
+6525	ratification	n	\N	\N	1	C2	\N	\N
+6526	ratify	v	\N	\N	1	C2	\N	\N
+6527	rationale	n	\N	\N	1	C2	\N	\N
+6528	rationalism	n	\N	\N	1	C2	\N	\N
+6529	raucous	adj	\N	\N	1	C2	\N	\N
+6530	ravage	n	\N	\N	1	C2	\N	\N
+6531	ravine	n	\N	\N	1	C2	\N	\N
+6532	rebuff	v	\N	\N	1	C2	\N	\N
+6533	rebuke	v	\N	\N	1	C2	\N	\N
+6534	rebuttal	n	\N	\N	1	C2	\N	\N
+6535	recalcitrance	n	\N	\N	1	C2	\N	\N
+6536	recalcitrant	adj	\N	\N	1	C2	\N	\N
+6537	recant	v	\N	\N	1	C2	\N	\N
+6538	recidivism	n	\N	\N	1	C2	\N	\N
+6539	reciprocal	adj	\N	\N	1	C2	\N	\N
+6540	reciprocate	v	\N	\N	1	C2	\N	\N
+6541	reciprocity	n	\N	\N	1	C2	\N	\N
+6542	recklessness	n	\N	\N	1	C2	\N	\N
+6543	reclamation	n	\N	\N	1	C2	\N	\N
+6544	recluse	n	\N	\N	1	C2	\N	\N
+6545	reclusive	adj	\N	\N	1	C2	\N	\N
+6546	reconcile	v	\N	\N	1	C2	\N	\N
+6547	recondite	adj	\N	\N	1	C2	\N	\N
+6548	reconnaissance	n	\N	\N	1	C2	\N	\N
+6549	recourse	n	\N	\N	1	C2	\N	\N
+6550	recrimination	n	\N	\N	1	C2	\N	\N
+6551	rectification	n	\N	\N	1	C2	\N	\N
+6552	rectify	v	\N	\N	1	C2	\N	\N
+6553	rectitude	n	\N	\N	1	C2	\N	\N
+6554	redeem	v	\N	\N	1	C2	\N	\N
+6555	redemption	n	\N	\N	1	C2	\N	\N
+6556	redress	n	\N	\N	1	C2	\N	\N
+6557	refinery	n	\N	\N	1	C2	\N	\N
+6558	reformation	n	\N	\N	1	C2	\N	\N
+6559	refractory	adj	\N	\N	1	C2	\N	\N
+6560	refutation	n	\N	\N	1	C2	\N	\N
+6561	refute	v	\N	\N	1	C2	\N	\N
+6562	regent	n	\N	\N	1	C2	\N	\N
+6563	registrar	n	\N	\N	1	C2	\N	\N
+6564	regression	n	\N	\N	1	C2	\N	\N
+6565	reimbursement	n	\N	\N	1	C2	\N	\N
+6566	reincarnation	n	\N	\N	1	C2	\N	\N
+6567	reiteration	n	\N	\N	1	C2	\N	\N
+6568	relegate	v	\N	\N	1	C2	\N	\N
+6569	relegation	n	\N	\N	1	C2	\N	\N
+6570	relic	n	\N	\N	1	C2	\N	\N
+6571	relinquish	v	\N	\N	1	C2	\N	\N
+6572	relish	v	\N	\N	1	C2	\N	\N
+6573	reluctance	n	\N	\N	1	C2	\N	\N
+6574	remembrance	n	\N	\N	1	C2	\N	\N
+6575	reminiscent	adj	\N	\N	1	C2	\N	\N
+6576	remiss	adj	\N	\N	1	C2	\N	\N
+6577	remission	n	\N	\N	1	C2	\N	\N
+6578	remit	v	\N	\N	1	C2	\N	\N
+6579	remnant	n	\N	\N	1	C2	\N	\N
+6580	remorse	n	\N	\N	1	C2	\N	\N
+6581	remuneration	n	\N	\N	1	C2	\N	\N
+6582	renaissance	n	\N	\N	1	C2	\N	\N
+6583	rendition	n	\N	\N	1	C2	\N	\N
+6584	renegade	n	\N	\N	1	C2	\N	\N
+6585	renege	v	\N	\N	1	C2	\N	\N
+6586	renounce	v	\N	\N	1	C2	\N	\N
+6587	renown	n	\N	\N	1	C2	\N	\N
+6588	reparation	n	\N	\N	1	C2	\N	\N
+6589	repatriation	n	\N	\N	1	C2	\N	\N
+6590	repeal	v	\N	\N	1	C2	\N	\N
+6591	repentance	n	\N	\N	1	C2	\N	\N
+6592	repercussion	n	\N	\N	1	C2	\N	\N
+6593	repertoire	n	\N	\N	1	C2	\N	\N
+6594	replenish	v	\N	\N	1	C2	\N	\N
+6595	replete	adj	\N	\N	1	C2	\N	\N
+6596	repository	n	\N	\N	1	C2	\N	\N
+6597	reprehensible	adj	\N	\N	1	C2	\N	\N
+6598	repression	n	\N	\N	1	C2	\N	\N
+6599	reprieve	n	\N	\N	1	C2	\N	\N
+6600	reprimand	n	\N	\N	1	C2	\N	\N
+6601	reprisal	n	\N	\N	1	C2	\N	\N
+6602	reproach	v	\N	\N	1	C2	\N	\N
+6603	repudiate	v	\N	\N	1	C2	\N	\N
+6604	repudiation	n	\N	\N	1	C2	\N	\N
+6605	repugnance	n	\N	\N	1	C2	\N	\N
+6606	repugnant	adj	\N	\N	1	C2	\N	\N
+6607	repute	n	\N	\N	1	C2	\N	\N
+6608	requisite	n	\N	\N	1	C2	\N	\N
+6609	requisition	n	\N	\N	1	C2	\N	\N
+6610	rescind	v	\N	\N	1	C2	\N	\N
+6611	residual	adj	\N	\N	1	C2	\N	\N
+6612	resilience	n	\N	\N	1	C2	\N	\N
+6613	resilient	adj	\N	\N	1	C2	\N	\N
+6614	resolute	adj	\N	\N	1	C2	\N	\N
+6615	resolutely	adv	\N	\N	1	C2	\N	\N
+6616	resonance	n	\N	\N	1	C2	\N	\N
+6617	respite	n	\N	\N	1	C2	\N	\N
+6618	resplendent	adj	\N	\N	1	C2	\N	\N
+6619	restitution	n	\N	\N	1	C2	\N	\N
+6620	restive	adj	\N	\N	1	C2	\N	\N
+6621	resurgence	n	\N	\N	1	C2	\N	\N
+6622	resurrection	n	\N	\N	1	C2	\N	\N
+6623	retaliate	v	\N	\N	1	C2	\N	\N
+6624	reticence	n	\N	\N	1	C2	\N	\N
+6625	reticent	adj	\N	\N	1	C2	\N	\N
+6626	retort	n	\N	\N	1	C2	\N	\N
+6627	retract	v	\N	\N	1	C2	\N	\N
+6628	retraction	n	\N	\N	1	C2	\N	\N
+6629	retribution	n	\N	\N	1	C2	\N	\N
+6630	retrospection	n	\N	\N	1	C2	\N	\N
+6631	revelry	n	\N	\N	1	C2	\N	\N
+6632	reverberation	n	\N	\N	1	C2	\N	\N
+6633	revere	v	\N	\N	1	C2	\N	\N
+6634	reverent	adj	\N	\N	1	C2	\N	\N
+6635	reverential	adj	\N	\N	1	C2	\N	\N
+6636	reverie	n	\N	\N	1	C2	\N	\N
+6637	revisionism	n	\N	\N	1	C2	\N	\N
+6638	revocation	n	\N	\N	1	C2	\N	\N
+6639	revoke	v	\N	\N	1	C2	\N	\N
+6640	rift	n	\N	\N	1	C2	\N	\N
+6641	righteousness	n	\N	\N	1	C2	\N	\N
+6642	rigmarole	n	\N	\N	1	C2	\N	\N
+6643	rigorous	adj	\N	\N	1	C2	\N	\N
+6644	rigour	n	\N	\N	1	C2	\N	\N
+6645	ringleader	n	\N	\N	1	C2	\N	\N
+6646	rite	n	\N	\N	1	C2	\N	\N
+6647	rogue	n	\N	\N	1	C2	\N	\N
+6648	rostrum	n	\N	\N	1	C2	\N	\N
+6649	rout	n	\N	\N	1	C2	\N	\N
+6650	rubric	n	\N	\N	1	C2	\N	\N
+6651	ruckus	n	\N	\N	1	C2	\N	\N
+6652	rudiment	n	\N	\N	1	C2	\N	\N
+6653	ruination	n	\N	\N	1	C2	\N	\N
+6654	ruminate	v	\N	\N	1	C2	\N	\N
+6655	rumination	n	\N	\N	1	C2	\N	\N
+6656	rupture	v	\N	\N	1	C2	\N	\N
+6657	ruse	n	\N	\N	1	C2	\N	\N
+6658	sabotage	n	\N	\N	1	C2	\N	\N
+6659	saboteur	n	\N	\N	1	C2	\N	\N
+6660	sacrilege	n	\N	\N	1	C2	\N	\N
+6661	sacrosanct	adj	\N	\N	1	C2	\N	\N
+6662	safeguard	v	\N	\N	1	C2	\N	\N
+6663	saga	n	\N	\N	1	C2	\N	\N
+6664	sagacious	adj	\N	\N	1	C2	\N	\N
+6665	sage	n	\N	\N	1	C2	\N	\N
+6666	sainthood	n	\N	\N	1	C2	\N	\N
+6667	salacious	adj	\N	\N	1	C2	\N	\N
+6668	salient	adj	\N	\N	1	C2	\N	\N
+6669	salubrious	adj	\N	\N	1	C2	\N	\N
+6670	salutation	n	\N	\N	1	C2	\N	\N
+6671	salvation	n	\N	\N	1	C2	\N	\N
+6672	sanctimonious	adj	\N	\N	1	C2	\N	\N
+6673	sanctity	n	\N	\N	1	C2	\N	\N
+6674	sanctuary	n	\N	\N	1	C2	\N	\N
+6675	sanguine	adj	\N	\N	1	C2	\N	\N
+6676	sarcasm	n	\N	\N	1	C2	\N	\N
+6677	sardonic	adj	\N	\N	1	C2	\N	\N
+6678	satiate	v	\N	\N	1	C2	\N	\N
+6679	satire	n	\N	\N	1	C2	\N	\N
+6680	satirist	n	\N	\N	1	C2	\N	\N
+6681	savagery	n	\N	\N	1	C2	\N	\N
+6682	savant	n	\N	\N	1	C2	\N	\N
+6683	scaffold	n	\N	\N	1	C2	\N	\N
+6684	scapegoat	n	\N	\N	1	C2	\N	\N
+6685	scarcity	n	\N	\N	1	C2	\N	\N
+6686	scathing	adj	\N	\N	1	C2	\N	\N
+6687	schism	n	\N	\N	1	C2	\N	\N
+6688	scion	n	\N	\N	1	C2	\N	\N
+6689	scorn	v	\N	\N	1	C2	\N	\N
+6690	scoundrel	n	\N	\N	1	C2	\N	\N
+6691	scourge	n	\N	\N	1	C2	\N	\N
+6692	scruple	n	\N	\N	1	C2	\N	\N
+6693	scrupulous	adj	\N	\N	1	C2	\N	\N
+6694	scrutinise	v	\N	\N	1	C2	\N	\N
+6695	scurrilous	adj	\N	\N	1	C2	\N	\N
+6696	secession	n	\N	\N	1	C2	\N	\N
+6697	seclusion	n	\N	\N	1	C2	\N	\N
+6698	secretariat	n	\N	\N	1	C2	\N	\N
+6699	sedentary	adj	\N	\N	1	C2	\N	\N
+6700	sediment	n	\N	\N	1	C2	\N	\N
+6701	seditious	adj	\N	\N	1	C2	\N	\N
+6702	sedulous	adj	\N	\N	1	C2	\N	\N
+6703	seer	n	\N	\N	1	C2	\N	\N
+6704	segregation	n	\N	\N	1	C2	\N	\N
+6705	seizure	n	\N	\N	1	C2	\N	\N
+6706	semantics	n	\N	\N	1	C2	\N	\N
+6707	semblance	n	\N	\N	1	C2	\N	\N
+6708	seminal	adj	\N	\N	1	C2	\N	\N
+6709	senility	n	\N	\N	1	C2	\N	\N
+6710	sequel	n	\N	\N	1	C2	\N	\N
+6711	sequestration	n	\N	\N	1	C2	\N	\N
+6712	serendipitous	adj	\N	\N	1	C2	\N	\N
+6713	serenity	n	\N	\N	1	C2	\N	\N
+6714	serfdom	n	\N	\N	1	C2	\N	\N
+6715	servile	adj	\N	\N	1	C2	\N	\N
+6716	servility	n	\N	\N	1	C2	\N	\N
+6717	servitude	n	\N	\N	1	C2	\N	\N
+6718	severance	n	\N	\N	1	C2	\N	\N
+6719	severity	n	\N	\N	1	C2	\N	\N
+6720	shackle	n	\N	\N	1	C2	\N	\N
+6721	shambles	n	\N	\N	1	C2	\N	\N
+6722	shard	n	\N	\N	1	C2	\N	\N
+6723	sheen	n	\N	\N	1	C2	\N	\N
+6724	shirk	v	\N	\N	1	C2	\N	\N
+6725	shoddy	adj	\N	\N	1	C2	\N	\N
+6726	shrewdness	n	\N	\N	1	C2	\N	\N
+6727	shrine	n	\N	\N	1	C2	\N	\N
+6728	shroud	n	\N	\N	1	C2	\N	\N
+6729	shrouded	adj	\N	\N	1	C2	\N	\N
+6732	silhouette	n	\N	\N	1	C2	\N	\N
+6733	simile	n	\N	\N	1	C2	\N	\N
+6734	simpleton	n	\N	\N	1	C2	\N	\N
+6735	sinecure	n	\N	\N	1	C2	\N	\N
+6736	singular	adj	\N	\N	1	C2	\N	\N
+6737	singularity	n	\N	\N	1	C2	\N	\N
+6738	siren	n	\N	\N	1	C2	\N	\N
+6739	skirmish	n	\N	\N	1	C2	\N	\N
+6740	skullduggery	n	\N	\N	1	C2	\N	\N
+6741	slander	n	\N	\N	1	C2	\N	\N
+6742	sloth	n	\N	\N	1	C2	\N	\N
+6743	slumber	n	\N	\N	1	C2	\N	\N
+6744	smattering	n	\N	\N	1	C2	\N	\N
+6745	snare	n	\N	\N	1	C2	\N	\N
+6746	snooty	adj	\N	\N	1	C2	\N	\N
+6747	snub	n	\N	\N	1	C2	\N	\N
+6748	sobriety	n	\N	\N	1	C2	\N	\N
+6749	sojourn	n	\N	\N	1	C2	\N	\N
+6750	solace	n	\N	\N	1	C2	\N	\N
+6751	solemn	adj	\N	\N	1	C2	\N	\N
+6752	solemnity	n	\N	\N	1	C2	\N	\N
+6753	solicitor	n	\N	\N	1	C2	\N	\N
+6754	solicitous	adj	\N	\N	1	C2	\N	\N
+6755	soliloquy	n	\N	\N	1	C2	\N	\N
+6756	solitary	adj	\N	\N	1	C2	\N	\N
+6757	solitude	n	\N	\N	1	C2	\N	\N
+6758	solstice	n	\N	\N	1	C2	\N	\N
+6759	sombre	adj	\N	\N	1	C2	\N	\N
+6760	sophistry	n	\N	\N	1	C2	\N	\N
+6761	sophomore	n	\N	\N	1	C2	\N	\N
+6762	sordid	adj	\N	\N	1	C2	\N	\N
+6763	sovereign	n	\N	\N	1	C2	\N	\N
+6764	sow	v	\N	\N	1	C2	\N	\N
+6765	spasm	n	\N	\N	1	C2	\N	\N
+6766	spate	n	\N	\N	1	C2	\N	\N
+6767	spawn	v	\N	\N	1	C2	\N	\N
+6768	specious	adj	\N	\N	1	C2	\N	\N
+6769	spectre	n	\N	\N	1	C2	\N	\N
+6770	speculator	n	\N	\N	1	C2	\N	\N
+6771	spinster	n	\N	\N	1	C2	\N	\N
+6772	splendour	n	\N	\N	1	C2	\N	\N
+6773	spontaneity	n	\N	\N	1	C2	\N	\N
+6774	sprawl	n	\N	\N	1	C2	\N	\N
+6775	spur	n	\N	\N	1	C2	\N	\N
+6776	spurious	adj	\N	\N	1	C2	\N	\N
+6777	spurn	v	\N	\N	1	C2	\N	\N
+6778	squadron	n	\N	\N	1	C2	\N	\N
+6779	squalid	adj	\N	\N	1	C2	\N	\N
+6780	squalor	n	\N	\N	1	C2	\N	\N
+6781	squander	v	\N	\N	1	C2	\N	\N
+6782	stagnant	adj	\N	\N	1	C2	\N	\N
+6783	staid	adj	\N	\N	1	C2	\N	\N
+6784	stalemate	n	\N	\N	1	C2	\N	\N
+6785	stalwart	n	\N	\N	1	C2	\N	\N
+6786	stamina	n	\N	\N	1	C2	\N	\N
+6787	stampede	n	\N	\N	1	C2	\N	\N
+6788	standoff	n	\N	\N	1	C2	\N	\N
+6789	standstill	n	\N	\N	1	C2	\N	\N
+6790	stanza	n	\N	\N	1	C2	\N	\N
+6791	stasis	n	\N	\N	1	C2	\N	\N
+6792	stately	adj	\N	\N	1	C2	\N	\N
+6793	statesmanship	n	\N	\N	1	C2	\N	\N
+6794	statute	n	\N	\N	1	C2	\N	\N
+6795	staunch	adj	\N	\N	1	C2	\N	\N
+6796	steadfastness	n	\N	\N	1	C2	\N	\N
+6797	stealth	n	\N	\N	1	C2	\N	\N
+6798	stench	n	\N	\N	1	C2	\N	\N
+6799	steward	n	\N	\N	1	C2	\N	\N
+6800	stewardship	n	\N	\N	1	C2	\N	\N
+6801	stickler	n	\N	\N	1	C2	\N	\N
+6802	stifle	v	\N	\N	1	C2	\N	\N
+6803	stigma	n	\N	\N	1	C2	\N	\N
+6804	stint	n	\N	\N	1	C2	\N	\N
+6805	stipulate	v	\N	\N	1	C2	\N	\N
+6806	stoic	adj	\N	\N	1	C2	\N	\N
+6807	stoicism	n	\N	\N	1	C2	\N	\N
+6808	stolid	adj	\N	\N	1	C2	\N	\N
+6809	stopgap	n	\N	\N	1	C2	\N	\N
+6810	stowaway	n	\N	\N	1	C2	\N	\N
+6811	stratagem	n	\N	\N	1	C2	\N	\N
+6812	strategist	n	\N	\N	1	C2	\N	\N
+6813	stratification	n	\N	\N	1	C2	\N	\N
+6814	stratum	n	\N	\N	1	C2	\N	\N
+6815	stricture	n	\N	\N	1	C2	\N	\N
+6816	strident	adj	\N	\N	1	C2	\N	\N
+6817	strife	n	\N	\N	1	C2	\N	\N
+6818	stringency	n	\N	\N	1	C2	\N	\N
+6819	stringent	adj	\N	\N	1	C2	\N	\N
+6820	stronghold	n	\N	\N	1	C2	\N	\N
+6821	stupor	n	\N	\N	1	C2	\N	\N
+6822	subconscious	n	\N	\N	1	C2	\N	\N
+6823	subdue	v	\N	\N	1	C2	\N	\N
+6824	subjugate	v	\N	\N	1	C2	\N	\N
+6825	sublime	adj	\N	\N	1	C2	\N	\N
+6826	subordinate	adj	\N	\N	1	C2	\N	\N
+6827	subordination	n	\N	\N	1	C2	\N	\N
+6828	subpoena	n	\N	\N	1	C2	\N	\N
+6829	subservience	n	\N	\N	1	C2	\N	\N
+6830	subsistence	n	\N	\N	1	C2	\N	\N
+6831	substantiate	v	\N	\N	1	C2	\N	\N
+6832	substantiation	n	\N	\N	1	C2	\N	\N
+6833	subterfuge	n	\N	\N	1	C2	\N	\N
+6834	subtlety	n	\N	\N	1	C2	\N	\N
+6835	subversion	n	\N	\N	1	C2	\N	\N
+6836	subversive	adj	\N	\N	1	C2	\N	\N
+6837	subvert	v	\N	\N	1	C2	\N	\N
+6838	succinct	adj	\N	\N	1	C2	\N	\N
+6839	succumb	v	\N	\N	1	C2	\N	\N
+6840	sufficiency	n	\N	\N	1	C2	\N	\N
+6841	suffrage	n	\N	\N	1	C2	\N	\N
+6842	suffragette	n	\N	\N	1	C2	\N	\N
+6843	sullen	adj	\N	\N	1	C2	\N	\N
+6844	summation	n	\N	\N	1	C2	\N	\N
+6845	summons	n	\N	\N	1	C2	\N	\N
+6846	sumptuous	adj	\N	\N	1	C2	\N	\N
+6847	superficial	adj	\N	\N	1	C2	\N	\N
+6848	superfluous	adj	\N	\N	1	C2	\N	\N
+6849	supersede	v	\N	\N	1	C2	\N	\N
+6850	superstition	n	\N	\N	1	C2	\N	\N
+6851	supine	adj	\N	\N	1	C2	\N	\N
+6852	supplant	v	\N	\N	1	C2	\N	\N
+6853	supple	adj	\N	\N	1	C2	\N	\N
+6854	supremacist	n	\N	\N	1	C2	\N	\N
+6855	supremacy	n	\N	\N	1	C2	\N	\N
+6856	surfeit	n	\N	\N	1	C2	\N	\N
+6857	surmise	v	\N	\N	1	C2	\N	\N
+6858	surmount	v	\N	\N	1	C2	\N	\N
+6859	surpass	v	\N	\N	1	C2	\N	\N
+6860	surreptitious	adj	\N	\N	1	C2	\N	\N
+6861	surrogate	n	\N	\N	1	C2	\N	\N
+6862	susceptibility	n	\N	\N	1	C2	\N	\N
+6863	susceptible	adj	\N	\N	1	C2	\N	\N
+6864	sustenance	n	\N	\N	1	C2	\N	\N
+6865	swathe	n	\N	\N	1	C2	\N	\N
+6866	swindle	n	\N	\N	1	C2	\N	\N
+6867	sycophancy	n	\N	\N	1	C2	\N	\N
+6868	sycophant	n	\N	\N	1	C2	\N	\N
+6869	sycophantic	adj	\N	\N	1	C2	\N	\N
+6870	syllabus	n	\N	\N	1	C2	\N	\N
+6871	symbiosis	n	\N	\N	1	C2	\N	\N
+6872	symbolism	n	\N	\N	1	C2	\N	\N
+6873	symposium	n	\N	\N	1	C2	\N	\N
+6874	syndicate	n	\N	\N	1	C2	\N	\N
+6875	synergy	n	\N	\N	1	C2	\N	\N
+6876	synopsis	n	\N	\N	1	C2	\N	\N
+6877	tableau	n	\N	\N	1	C2	\N	\N
+6878	tabloid	n	\N	\N	1	C2	\N	\N
+6879	taboo	n	\N	\N	1	C2	\N	\N
+6880	tacit	adj	\N	\N	1	C2	\N	\N
+6881	taciturn	adj	\N	\N	1	C2	\N	\N
+6882	tact	n	\N	\N	1	C2	\N	\N
+6883	tactician	n	\N	\N	1	C2	\N	\N
+6884	taint	n	\N	\N	1	C2	\N	\N
+6885	talisman	n	\N	\N	1	C2	\N	\N
+6886	tangential	adj	\N	\N	1	C2	\N	\N
+6887	tangible	adj	\N	\N	1	C2	\N	\N
+6888	tantamount	adj	\N	\N	1	C2	\N	\N
+6889	tantrum	n	\N	\N	1	C2	\N	\N
+6890	tariff	n	\N	\N	1	C2	\N	\N
+6891	tarnish	v	\N	\N	1	C2	\N	\N
+6892	taskmaster	n	\N	\N	1	C2	\N	\N
+6893	tawdry	adj	\N	\N	1	C2	\N	\N
+6894	tedious	adj	\N	\N	1	C2	\N	\N
+6895	tedium	n	\N	\N	1	C2	\N	\N
+6896	telepathy	n	\N	\N	1	C2	\N	\N
+6897	temerity	n	\N	\N	1	C2	\N	\N
+6898	temperament	n	\N	\N	1	C2	\N	\N
+6899	temperance	n	\N	\N	1	C2	\N	\N
+6900	tempestuous	adj	\N	\N	1	C2	\N	\N
+6901	tempo	n	\N	\N	1	C2	\N	\N
+6902	temporal	adj	\N	\N	1	C2	\N	\N
+6903	tenacious	adj	\N	\N	1	C2	\N	\N
+6904	tenacity	n	\N	\N	1	C2	\N	\N
+6905	tenet	n	\N	\N	1	C2	\N	\N
+6906	tenor	n	\N	\N	1	C2	\N	\N
+6907	tentative	adj	\N	\N	1	C2	\N	\N
+6908	tenuous	adj	\N	\N	1	C2	\N	\N
+6909	termination	n	\N	\N	1	C2	\N	\N
+6910	terminology	n	\N	\N	1	C2	\N	\N
+6911	terminus	n	\N	\N	1	C2	\N	\N
+6912	terse	adj	\N	\N	1	C2	\N	\N
+6913	testament	n	\N	\N	1	C2	\N	\N
+6914	testimonial	n	\N	\N	1	C2	\N	\N
+6915	tether	n	\N	\N	1	C2	\N	\N
+6916	theatricality	n	\N	\N	1	C2	\N	\N
+6917	theologian	n	\N	\N	1	C2	\N	\N
+6918	theorem	n	\N	\N	1	C2	\N	\N
+6919	thesaurus	n	\N	\N	1	C2	\N	\N
+6920	thicket	n	\N	\N	1	C2	\N	\N
+6921	th thoroughfare	n	\N	\N	1	C2	\N	\N
+6922	thrall	n	\N	\N	1	C2	\N	\N
+6923	thrift	n	\N	\N	1	C2	\N	\N
+6924	throwback	n	\N	\N	1	C2	\N	\N
+6925	thwart	v	\N	\N	1	C2	\N	\N
+6926	timbre	n	\N	\N	1	C2	\N	\N
+6927	timidity	n	\N	\N	1	C2	\N	\N
+6928	timorous	adj	\N	\N	1	C2	\N	\N
+6929	tipster	n	\N	\N	1	C2	\N	\N
+6930	tirade	n	\N	\N	1	C2	\N	\N
+6931	titan	n	\N	\N	1	C2	\N	\N
+6932	tithe	n	\N	\N	1	C2	\N	\N
+6933	token	n	\N	\N	1	C2	\N	\N
+6934	tokenism	n	\N	\N	1	C2	\N	\N
+6935	tombstone	n	\N	\N	1	C2	\N	\N
+6936	tome	n	\N	\N	1	C2	\N	\N
+6937	tonnage	n	\N	\N	1	C2	\N	\N
+6938	topography	n	\N	\N	1	C2	\N	\N
+6939	torment	n	\N	\N	1	C2	\N	\N
+6940	tornado	n	\N	\N	1	C2	\N	\N
+6941	torpid	adj	\N	\N	1	C2	\N	\N
+6942	torpor	n	\N	\N	1	C2	\N	\N
+6943	torque	n	\N	\N	1	C2	\N	\N
+6944	torrent	n	\N	\N	1	C2	\N	\N
+6945	torrid	adj	\N	\N	1	C2	\N	\N
+6946	tortuous	adj	\N	\N	1	C2	\N	\N
+6947	totalitarian	adj	\N	\N	1	C2	\N	\N
+6948	touchstone	n	\N	\N	1	C2	\N	\N
+6949	tourniquet	n	\N	\N	1	C2	\N	\N
+6950	toxicity	n	\N	\N	1	C2	\N	\N
+6951	tract	n	\N	\N	1	C2	\N	\N
+6952	tractable	adj	\N	\N	1	C2	\N	\N
+6953	tradesman	n	\N	\N	1	C2	\N	\N
+6954	traditionalism	n	\N	\N	1	C2	\N	\N
+6955	trafficker	n	\N	\N	1	C2	\N	\N
+6956	trailblazer	n	\N	\N	1	C2	\N	\N
+6957	trajectory	n	\N	\N	1	C2	\N	\N
+6958	trance	n	\N	\N	1	C2	\N	\N
+6959	tranquil	adj	\N	\N	1	C2	\N	\N
+6960	tranquillity	n	\N	\N	1	C2	\N	\N
+6961	transcend	v	\N	\N	1	C2	\N	\N
+6962	transcendence	n	\N	\N	1	C2	\N	\N
+6963	transcribe	v	\N	\N	1	C2	\N	\N
+6964	transgress	v	\N	\N	1	C2	\N	\N
+6965	transgression	n	\N	\N	1	C2	\N	\N
+6966	transient	adj	\N	\N	1	C2	\N	\N
+6967	translucent	adj	\N	\N	1	C2	\N	\N
+6968	travesty	n	\N	\N	1	C2	\N	\N
+6969	treacherous	adj	\N	\N	1	C2	\N	\N
+6970	treachery	n	\N	\N	1	C2	\N	\N
+6971	treason	n	\N	\N	1	C2	\N	\N
+6972	treatise	n	\N	\N	1	C2	\N	\N
+6973	tremor	n	\N	\N	1	C2	\N	\N
+6974	trenchant	adj	\N	\N	1	C2	\N	\N
+6975	trepidation	n	\N	\N	1	C2	\N	\N
+6976	tribalism	n	\N	\N	1	C2	\N	\N
+6977	tribulation	n	\N	\N	1	C2	\N	\N
+6978	tribunal	n	\N	\N	1	C2	\N	\N
+6979	tribune	n	\N	\N	1	C2	\N	\N
+6980	tributary	n	\N	\N	1	C2	\N	\N
+6981	trickery	n	\N	\N	1	C2	\N	\N
+6982	trickster	n	\N	\N	1	C2	\N	\N
+6983	trifle	n	\N	\N	1	C2	\N	\N
+6984	trilogy	n	\N	\N	1	C2	\N	\N
+6985	trinket	n	\N	\N	1	C2	\N	\N
+6986	trite	adj	\N	\N	1	C2	\N	\N
+6987	troupe	n	\N	\N	1	C2	\N	\N
+6988	truculent	adj	\N	\N	1	C2	\N	\N
+6989	trudge	n	\N	\N	1	C2	\N	\N
+6990	truism	n	\N	\N	1	C2	\N	\N
+6991	truncate	v	\N	\N	1	C2	\N	\N
+6992	trusteeship	n	\N	\N	1	C2	\N	\N
+6993	tumult	n	\N	\N	1	C2	\N	\N
+6994	tumultuous	adj	\N	\N	1	C2	\N	\N
+6995	tundra	n	\N	\N	1	C2	\N	\N
+6996	turbulence	n	\N	\N	1	C2	\N	\N
+6997	turbulent	adj	\N	\N	1	C2	\N	\N
+6998	turmoil	n	\N	\N	1	C2	\N	\N
+6999	turncoat	n	\N	\N	1	C2	\N	\N
+7000	turpitude	n	\N	\N	1	C2	\N	\N
+7001	tutelage	n	\N	\N	1	C2	\N	\N
+7002	twilight	n	\N	\N	1	C2	\N	\N
+7003	tycoon	n	\N	\N	1	C2	\N	\N
+7004	typhoon	n	\N	\N	1	C2	\N	\N
+7005	tyranny	n	\N	\N	1	C2	\N	\N
+7006	tyrant	n	\N	\N	1	C2	\N	\N
+7007	ubiquitous	adj	\N	\N	1	C2	\N	\N
+7008	ubiquity	n	\N	\N	1	C2	\N	\N
+7009	ultimatum	n	\N	\N	1	C2	\N	\N
+7010	umbrage	n	\N	\N	1	C2	\N	\N
+7011	umpire	n	\N	\N	1	C2	\N	\N
+7012	unanimity	n	\N	\N	1	C2	\N	\N
+7013	unanimous	adj	\N	\N	1	C2	\N	\N
+7014	unctuous	adj	\N	\N	1	C2	\N	\N
+7015	undaunted	adj	\N	\N	1	C2	\N	\N
+7016	undercurrent	n	\N	\N	1	C2	\N	\N
+7017	underdog	n	\N	\N	1	C2	\N	\N
+7018	underling	n	\N	\N	1	C2	\N	\N
+7019	underpinning	n	\N	\N	1	C2	\N	\N
+7020	understatement	n	\N	\N	1	C2	\N	\N
+7021	understudy	n	\N	\N	1	C2	\N	\N
+7022	undertaker	n	\N	\N	1	C2	\N	\N
+7023	undertaking	n	\N	\N	1	C2	\N	\N
+7024	undertone	n	\N	\N	1	C2	\N	\N
+7025	underworld	n	\N	\N	1	C2	\N	\N
+7026	underwriter	n	\N	\N	1	C2	\N	\N
+7027	undoing	n	\N	\N	1	C2	\N	\N
+7028	unease	n	\N	\N	1	C2	\N	\N
+7029	unenviable	adj	\N	\N	1	C2	\N	\N
+7030	unequivocal	adj	\N	\N	1	C2	\N	\N
+7031	unfathomable	adj	\N	\N	1	C2	\N	\N
+7032	unification	n	\N	\N	1	C2	\N	\N
+7033	uniformity	n	\N	\N	1	C2	\N	\N
+7034	unison	n	\N	\N	1	C2	\N	\N
+7035	universality	n	\N	\N	1	C2	\N	\N
+7036	unpalatable	adj	\N	\N	1	C2	\N	\N
+7037	unpretentious	adj	\N	\N	1	C2	\N	\N
+7038	unremitting	adj	\N	\N	1	C2	\N	\N
+7039	unrivalled	adj	\N	\N	1	C2	\N	\N
+7040	unruly	adj	\N	\N	1	C2	\N	\N
+7041	unsullied	adj	\N	\N	1	C2	\N	\N
+7042	untenable	adj	\N	\N	1	C2	\N	\N
+7043	unthinkable	adj	\N	\N	1	C2	\N	\N
+7044	untrodden	adj	\N	\N	1	C2	\N	\N
+7045	unwieldy	adj	\N	\N	1	C2	\N	\N
+7046	unwitting	adj	\N	\N	1	C2	\N	\N
+7047	upbraid	v	\N	\N	1	C2	\N	\N
+7048	upheaval	n	\N	\N	1	C2	\N	\N
+7049	upkeep	n	\N	\N	1	C2	\N	\N
+7050	uprising	n	\N	\N	1	C2	\N	\N
+7051	uproar	n	\N	\N	1	C2	\N	\N
+7052	uproarious	adj	\N	\N	1	C2	\N	\N
+7053	upshot	n	\N	\N	1	C2	\N	\N
+7054	upsurge	n	\N	\N	1	C2	\N	\N
+7055	upturn	n	\N	\N	1	C2	\N	\N
+7056	urbane	adj	\N	\N	1	C2	\N	\N
+7057	urgency	n	\N	\N	1	C2	\N	\N
+7058	usher	n	\N	\N	1	C2	\N	\N
+7059	usurp	v	\N	\N	1	C2	\N	\N
+7060	usurpation	n	\N	\N	1	C2	\N	\N
+7061	utensil	n	\N	\N	1	C2	\N	\N
+7062	utilitarianism	n	\N	\N	1	C2	\N	\N
+7063	utmost	adj	\N	\N	1	C2	\N	\N
+7064	utopia	n	\N	\N	1	C2	\N	\N
+7065	utopianism	n	\N	\N	1	C2	\N	\N
+7066	utterance	n	\N	\N	1	C2	\N	\N
+7067	vacancy	n	\N	\N	1	C2	\N	\N
+7068	vacillate	v	\N	\N	1	C2	\N	\N
+7069	vacillation	n	\N	\N	1	C2	\N	\N
+7070	vacuous	adj	\N	\N	1	C2	\N	\N
+7071	vagary	n	\N	\N	1	C2	\N	\N
+7072	vagrant	n	\N	\N	1	C2	\N	\N
+7073	vain	adj	\N	\N	1	C2	\N	\N
+7074	validate	v	\N	\N	1	C2	\N	\N
+7075	valour	n	\N	\N	1	C2	\N	\N
+7076	valuation	n	\N	\N	1	C2	\N	\N
+7077	vandal	n	\N	\N	1	C2	\N	\N
+7078	vandalism	n	\N	\N	1	C2	\N	\N
+7079	vanguard	n	\N	\N	1	C2	\N	\N
+7080	vanity	n	\N	\N	1	C2	\N	\N
+7081	vanquish	v	\N	\N	1	C2	\N	\N
+7082	vanquished	adj	\N	\N	1	C2	\N	\N
+7083	vapid	adj	\N	\N	1	C2	\N	\N
+7084	variance	n	\N	\N	1	C2	\N	\N
+7085	variegated	adj	\N	\N	1	C2	\N	\N
+7086	vastness	n	\N	\N	1	C2	\N	\N
+7087	vault	n	\N	\N	1	C2	\N	\N
+7088	vehemence	n	\N	\N	1	C2	\N	\N
+7089	vehemently	adv	\N	\N	1	C2	\N	\N
+7090	velocity	n	\N	\N	1	C2	\N	\N
+7091	velvet	n	\N	\N	1	C2	\N	\N
+7092	venal	adj	\N	\N	1	C2	\N	\N
+7093	vendetta	n	\N	\N	1	C2	\N	\N
+7094	veneer	n	\N	\N	1	C2	\N	\N
+7095	venerable	adj	\N	\N	1	C2	\N	\N
+7096	veneration	n	\N	\N	1	C2	\N	\N
+7097	vengeance	n	\N	\N	1	C2	\N	\N
+7098	venom	n	\N	\N	1	C2	\N	\N
+7099	vent	n	\N	\N	1	C2	\N	\N
+7100	veracity	n	\N	\N	1	C2	\N	\N
+7101	verbatim	adv	\N	\N	1	C2	\N	\N
+7102	verbose	adj	\N	\N	1	C2	\N	\N
+7103	verdant	adj	\N	\N	1	C2	\N	\N
+7104	verge	n	\N	\N	1	C2	\N	\N
+7105	verification	n	\N	\N	1	C2	\N	\N
+7106	verisimilitude	n	\N	\N	1	C2	\N	\N
+7107	vermin	n	\N	\N	1	C2	\N	\N
+7108	vernacular	n	\N	\N	1	C2	\N	\N
+7109	versatility	n	\N	\N	1	C2	\N	\N
+7110	vertex	n	\N	\N	1	C2	\N	\N
+7111	vertigo	n	\N	\N	1	C2	\N	\N
+7112	verve	n	\N	\N	1	C2	\N	\N
+7113	vestige	n	\N	\N	1	C2	\N	\N
+7114	veto	n	\N	\N	1	C2	\N	\N
+7115	vexation	n	\N	\N	1	C2	\N	\N
+7116	vexatious	adj	\N	\N	1	C2	\N	\N
+7117	viability	n	\N	\N	1	C2	\N	\N
+7118	vicarious	adj	\N	\N	1	C2	\N	\N
+7119	vicinity	n	\N	\N	1	C2	\N	\N
+7120	vicissitude	n	\N	\N	1	C2	\N	\N
+7121	victor	n	\N	\N	1	C2	\N	\N
+7122	vigil	n	\N	\N	1	C2	\N	\N
+7123	vigilance	n	\N	\N	1	C2	\N	\N
+7124	vigilante	n	\N	\N	1	C2	\N	\N
+7125	vigour	n	\N	\N	1	C2	\N	\N
+7126	vile	adj	\N	\N	1	C2	\N	\N
+7127	vilification	n	\N	\N	1	C2	\N	\N
+7128	vilify	v	\N	\N	1	C2	\N	\N
+7129	villain	n	\N	\N	1	C2	\N	\N
+7130	villainy	n	\N	\N	1	C2	\N	\N
+7131	vindicate	v	\N	\N	1	C2	\N	\N
+7132	vindication	n	\N	\N	1	C2	\N	\N
+7133	vindictive	adj	\N	\N	1	C2	\N	\N
+7134	vindictiveness	n	\N	\N	1	C2	\N	\N
+7135	vintage	n	\N	\N	1	C2	\N	\N
+7136	viper	n	\N	\N	1	C2	\N	\N
+7137	virtuosity	n	\N	\N	1	C2	\N	\N
+7138	virtuoso	n	\N	\N	1	C2	\N	\N
+7139	virulence	n	\N	\N	1	C2	\N	\N
+7140	virulent	adj	\N	\N	1	C2	\N	\N
+7141	visage	n	\N	\N	1	C2	\N	\N
+7142	visceral	adj	\N	\N	1	C2	\N	\N
+7143	visionary	n	\N	\N	1	C2	\N	\N
+7144	vista	n	\N	\N	1	C2	\N	\N
+7145	vitality	n	\N	\N	1	C2	\N	\N
+7146	vitriolic	adj	\N	\N	1	C2	\N	\N
+7147	vituperate	v	\N	\N	1	C2	\N	\N
+7148	vivacious	adj	\N	\N	1	C2	\N	\N
+7149	vivacity	n	\N	\N	1	C2	\N	\N
+7150	vocation	n	\N	\N	1	C2	\N	\N
+7151	vociferous	adj	\N	\N	1	C2	\N	\N
+7152	vogue	n	\N	\N	1	C2	\N	\N
+7153	void	n	\N	\N	1	C2	\N	\N
+7154	volatile	adj	\N	\N	1	C2	\N	\N
+7155	volatility	n	\N	\N	1	C2	\N	\N
+7156	volition	n	\N	\N	1	C2	\N	\N
+7157	volley	n	\N	\N	1	C2	\N	\N
+7158	voracious	adj	\N	\N	1	C2	\N	\N
+7159	vortex	n	\N	\N	1	C2	\N	\N
+7160	voucher	n	\N	\N	1	C2	\N	\N
+7161	voyeur	n	\N	\N	1	C2	\N	\N
+7162	vulgarity	n	\N	\N	1	C2	\N	\N
+7164	waiver	n	\N	\N	1	C2	\N	\N
+7165	walkout	n	\N	\N	1	C2	\N	\N
+7166	wane	v	\N	\N	1	C2	\N	\N
+7167	wanton	adj	\N	\N	1	C2	\N	\N
+7168	wantonness	n	\N	\N	1	C2	\N	\N
+7169	warden	n	\N	\N	1	C2	\N	\N
+7170	warlord	n	\N	\N	1	C2	\N	\N
+7171	warranty	n	\N	\N	1	C2	\N	\N
+7172	wasteland	n	\N	\N	1	C2	\N	\N
+7173	watchdog	n	\N	\N	1	C2	\N	\N
+7174	watchword	n	\N	\N	1	C2	\N	\N
+7175	watershed	n	\N	\N	1	C2	\N	\N
+7176	waver	v	\N	\N	1	C2	\N	\N
+7177	wayward	adj	\N	\N	1	C2	\N	\N
+7178	waywardness	n	\N	\N	1	C2	\N	\N
+7179	weaponry	n	\N	\N	1	C2	\N	\N
+7180	weariness	n	\N	\N	1	C2	\N	\N
+7181	wedlock	n	\N	\N	1	C2	\N	\N
+7182	wharf	n	\N	\N	1	C2	\N	\N
+7183	wheedling	adj	\N	\N	1	C2	\N	\N
+7184	whereby	adv	\N	\N	1	C2	\N	\N
+7185	wherewithal	n	\N	\N	1	C2	\N	\N
+7186	whim	n	\N	\N	1	C2	\N	\N
+7187	whimsical	adj	\N	\N	1	C2	\N	\N
+7188	whimsy	n	\N	\N	1	C2	\N	\N
+7189	whirlpool	n	\N	\N	1	C2	\N	\N
+7190	whirlwind	n	\N	\N	1	C2	\N	\N
+7191	whistleblower	n	\N	\N	1	C2	\N	\N
+7192	whitewash	n	\N	\N	1	C2	\N	\N
+7193	wickedness	n	\N	\N	1	C2	\N	\N
+7194	wield	v	\N	\N	1	C2	\N	\N
+7195	wilderness	n	\N	\N	1	C2	\N	\N
+7196	wildfire	n	\N	\N	1	C2	\N	\N
+7197	willfulness	n	\N	\N	1	C2	\N	\N
+7198	windfall	n	\N	\N	1	C2	\N	\N
+7199	wisp	n	\N	\N	1	C2	\N	\N
+7200	wistful	adj	\N	\N	1	C2	\N	\N
+7201	wistfulness	n	\N	\N	1	C2	\N	\N
+7202	witchcraft	n	\N	\N	1	C2	\N	\N
+7203	withstand	v	\N	\N	1	C2	\N	\N
+7204	witticism	n	\N	\N	1	C2	\N	\N
+7205	wizardry	n	\N	\N	1	C2	\N	\N
+7206	wizened	adj	\N	\N	1	C2	\N	\N
+7207	woe	n	\N	\N	1	C2	\N	\N
+7208	wordiness	n	\N	\N	1	C2	\N	\N
+7209	workmanship	n	\N	\N	1	C2	\N	\N
+7210	wrath	n	\N	\N	1	C2	\N	\N
+7211	wreckage	n	\N	\N	1	C2	\N	\N
+7212	wretched	adj	\N	\N	1	C2	\N	\N
+7213	wrongdoer	n	\N	\N	1	C2	\N	\N
+7214	wry	adj	\N	\N	1	C2	\N	\N
+7215	xenophobe	n	\N	\N	1	C2	\N	\N
+7216	xenophobia	n	\N	\N	1	C2	\N	\N
+7217	yardstick	n	\N	\N	1	C2	\N	\N
+7218	yarn	n	\N	\N	1	C2	\N	\N
+7219	yearning	n	\N	\N	1	C2	\N	\N
+7220	yoke	n	\N	\N	1	C2	\N	\N
+7221	yokel	n	\N	\N	1	C2	\N	\N
+7222	youngster	n	\N	\N	1	C2	\N	\N
+7223	zeal	n	\N	\N	1	C2	\N	\N
+7224	zealot	n	\N	\N	1	C2	\N	\N
+7225	zealotry	n	\N	\N	1	C2	\N	\N
+7226	zealous	adj	\N	\N	1	C2	\N	\N
+7227	zeitgeist	n	\N	\N	1	C2	\N	\N
+7228	zenith	n	\N	\N	1	C2	\N	\N
+7229	zest	n	\N	\N	1	C2	\N	\N
+7230	zigzag	n	\N	\N	1	C2	\N	\N
+7231	zodiac	n	\N	\N	1	C2	\N	\N
+7232	zoology	n	\N	\N	1	C2	\N	\N
+0	a	letter	\N	\N	1	N	\N	\N
+1	b	letter	\N	\N	1	N	\N	\N
+2	c	letter	\N	\N	1	N	\N	\N
+3	d	letter	\N	\N	1	N	\N	\N
+4	e	letter	\N	\N	1	N	\N	\N
+5	f	letter	\N	\N	1	N	\N	\N
+6	g	letter	\N	\N	1	N	\N	\N
+7	h	letter	\N	\N	1	N	\N	\N
+8	i	letter	\N	\N	1	N	\N	\N
+9	j	letter	\N	\N	1	N	\N	\N
+10	k	letter	\N	\N	1	N	\N	\N
+11	l	letter	\N	\N	1	N	\N	\N
+12	m	letter	\N	\N	1	N	\N	\N
+13	n	letter	\N	\N	1	N	\N	\N
+14	o	letter	\N	\N	1	N	\N	\N
+15	p	letter	\N	\N	1	N	\N	\N
+16	q	letter	\N	\N	1	N	\N	\N
+17	r	letter	\N	\N	1	N	\N	\N
+18	s	letter	\N	\N	1	N	\N	\N
+19	t	letter	\N	\N	1	N	\N	\N
+20	u	letter	\N	\N	1	N	\N	\N
+21	v	letter	\N	\N	1	N	\N	\N
+22	w	letter	\N	\N	1	N	\N	\N
+23	x	letter	\N	\N	1	N	\N	\N
+24	y	letter	\N	\N	1	N	\N	\N
+25	z	letter	\N	\N	1	N	\N	\N
+7237	affix	noun	\N	\N	1	B2	\N	\N
+7238	afraid of s.th	adjective	\N	\N	1	A1	\N	\N
+7239	airplane	noun	\N	\N	1	A1	\N	\N
+7240	a little	adverb	\N	\N	1	A1	\N	\N
+7241	armchair	noun	\N	\N	1	A1	\N	\N
+7242	around s.th	preposition	\N	\N	1	A1	\N	\N
+7243	at the beginning	phrase	\N	\N	1	A2	\N	\N
+7244	at the end of	phrase	\N	\N	1	A2	\N	\N
+7245	backpack	noun	\N	\N	1	A1	\N	\N
+7246	bad-tempred	adjective	\N	\N	1	B1	\N	\N
+7247	bazaar	noun	\N	\N	1	A2	\N	\N
+7248	be able to	verb	\N	\N	1	A2	\N	\N
+7249	beauty salon	noun	\N	\N	1	A2	\N	\N
+7250	be bad for	phrase	\N	\N	1	A2	\N	\N
+7251	be born	verb	\N	\N	1	A1	\N	\N
+7252	be changed	verb	\N	\N	1	B1	\N	\N
+7253	be different	phrase	\N	\N	1	A1	\N	\N
+7254	bedroll	noun	\N	\N	1	B1	\N	\N
+7255	be late	phrase	\N	\N	1	A1	\N	\N
+7256	bell pepper	noun	\N	\N	1	A2	\N	\N
+7257	be located	verb	\N	\N	1	B1	\N	\N
+7258	belong to s.b.	verb	\N	\N	1	A2	\N	\N
+7259	be placed	verb	\N	\N	1	B1	\N	\N
+7260	be put	verb	\N	\N	1	A2	\N	\N
+7261	be related to	phrase	\N	\N	1	B1	\N	\N
+7262	be there	phrase	\N	\N	1	A1	\N	\N
+7263	be used	verb	\N	\N	1	A2	\N	\N
+7264	be windy	phrase	\N	\N	1	A1	\N	\N
+7265	bike	noun	\N	\N	1	A1	\N	\N
+7266	biking	noun	\N	\N	1	A1	\N	\N
+7267	bird	noun	\N	\N	1	A1	\N	\N
+7268	birthday	noun	\N	\N	1	A1	\N	\N
+7269	black	adjective	\N	\N	1	A1	\N	\N
+7270	blouse	noun	\N	\N	1	A2	\N	\N
+7271	blue	adjective	\N	\N	1	A1	\N	\N
+7272	body building	noun	\N	\N	1	A2	\N	\N
+7273	booklet	noun	\N	\N	1	B1	\N	\N
+7274	book store	noun	\N	\N	1	A1	\N	\N
+7275	boot	noun	\N	\N	1	A1	\N	\N
+7276	boot chukka	noun	\N	\N	1	B2	\N	\N
+7277	boring	adjective	\N	\N	1	A1	\N	\N
+7278	bottle	noun	\N	\N	1	A1	\N	\N
+7279	box	noun	\N	\N	1	A1	\N	\N
+7280	boy	noun	\N	\N	1	A1	\N	\N
+7281	bread	noun	\N	\N	1	A1	\N	\N
+7282	brother	noun	\N	\N	1	A1	\N	\N
+7283	brown	adjective	\N	\N	1	A1	\N	\N
+7284	brunette	noun	\N	\N	1	B1	\N	\N
+7285	building	noun	\N	\N	1	A1	\N	\N
+7286	bulb	noun	\N	\N	1	A2	\N	\N
+7287	bus	noun	\N	\N	1	A1	\N	\N
+7288	business card	noun	\N	\N	1	B1	\N	\N
+7289	butter	noun	\N	\N	1	A1	\N	\N
+7290	buy	verb	\N	\N	1	A1	\N	\N
+7291	by the way	adverb	\N	\N	1	A2	\N	\N
+7292	cable-car	noun	\N	\N	1	B1	\N	\N
+7293	café	noun	\N	\N	1	A1	\N	\N
+7294	cage	noun	\N	\N	1	A2	\N	\N
+7295	calender	noun	\N	\N	1	A1	\N	\N
+7296	capital	noun	\N	\N	1	A2	\N	\N
+7297	cardboard	noun	\N	\N	1	B1	\N	\N
+7298	carpentry	noun	\N	\N	1	B1	\N	\N
+7299	cast a shadow on s.th	verb	\N	\N	1	B2	\N	\N
+7300	cellphone	noun	\N	\N	1	A1	\N	\N
+7301	cherry	noun	\N	\N	1	A1	\N	\N
+7302	circle s.th	verb	\N	\N	1	A2	\N	\N
+7303	clap	verb	\N	\N	1	A2	\N	\N
+7304	classmate	noun	\N	\N	1	A1	\N	\N
+7305	cloudy	adjective	\N	\N	1	A1	\N	\N
+7306	coffeeshop	noun	\N	\N	1	A1	\N	\N
+7307	color	noun	\N	\N	1	A1	\N	\N
+7308	come and go	verb	\N	\N	1	A2	\N	\N
+7309	come in	verb	\N	\N	1	A1	\N	\N
+7310	come over	verb	\N	\N	1	A2	\N	\N
+7311	communicate with	verb	\N	\N	1	B1	\N	\N
+7312	comparative adjective	noun	\N	\N	1	A2	\N	\N
+7313	comprehension	noun	\N	\N	1	B1	\N	\N
+7314	counting	noun	\N	\N	1	A1	\N	\N
+7315	crossing	noun	\N	\N	1	A2	\N	\N
+7316	crossroads	noun	\N	\N	1	A2	\N	\N
+7317	crowded	adjective	\N	\N	1	A2	\N	\N
+7318	cube	noun	\N	\N	1	B1	\N	\N
+7319	curly	adjective	\N	\N	1	A2	\N	\N
+7320	customer	noun	\N	\N	1	A2	\N	\N
+7321	cut	verb	\N	\N	1	A1	\N	\N
+7322	cylindrical	adjective	\N	\N	1	B2	\N	\N
+7323	demonstrative pronoun	noun	\N	\N	1	B1	\N	\N
+7324	descriptive compound	noun	\N	\N	1	C1	\N	\N
+7325	dim	adjective	\N	\N	1	B1	\N	\N
+7326	dish/platter	noun	\N	\N	1	A2	\N	\N
+7327	divide into	verb	\N	\N	1	B1	\N	\N
+7328	doll	noun	\N	\N	1	A1	\N	\N
+7329	dormitory	noun	\N	\N	1	B1	\N	\N
+7330	dotted	adjective	\N	\N	1	A2	\N	\N
+7331	drawer	noun	\N	\N	1	A2	\N	\N
+7332	drive s.th out	verb	\N	\N	1	B2	\N	\N
+7333	dulcimer	noun	\N	\N	1	B2	\N	\N
+7334	duster	noun	\N	\N	1	A2	\N	\N
+7335	dusting	noun	\N	\N	1	A2	\N	\N
+7336	each other	pronoun	\N	\N	1	A2	\N	\N
+7337	edible	adjective	\N	\N	1	B2	\N	\N
+7338	education consultant	noun	\N	\N	1	B2	\N	\N
+7339	elementary school	noun	\N	\N	1	A1	\N	\N
+7340	evening meal	noun	\N	\N	1	A1	\N	\N
+7341	excuse-me!	phrase	\N	\N	1	A1	\N	\N
+7342	fair-haired	adjective	\N	\N	1	B1	\N	\N
+7343	familiarity	noun	\N	\N	1	B2	\N	\N
+7344	family name	noun	\N	\N	1	A1	\N	\N
+7345	far away	adverb	\N	\N	1	A2	\N	\N
+7346	far from	preposition	\N	\N	1	A2	\N	\N
+7347	fatigue	noun	\N	\N	1	B2	\N	\N
+7348	fill in	verb	\N	\N	1	A1	\N	\N
+7349	five hundred	number	\N	\N	1	A1	\N	\N
+7350	footboard	noun	\N	\N	1	B2	\N	\N
+7351	footstool	noun	\N	\N	1	B1	\N	\N
+7352	fried eggs	noun	\N	\N	1	A1	\N	\N
+7353	fruit seller	noun	\N	\N	1	A2	\N	\N
+7354	fruit shop	noun	\N	\N	1	A1	\N	\N
+7355	garbage	noun	\N	\N	1	A2	\N	\N
+7356	get lost	verb	\N	\N	1	A2	\N	\N
+7357	get off s.th	verb	\N	\N	1	A2	\N	\N
+7358	get on s.th	verb	\N	\N	1	A2	\N	\N
+7359	get ready	verb	\N	\N	1	A2	\N	\N
+7360	give time	phrase	\N	\N	1	B1	\N	\N
+7361	glasses	noun	\N	\N	1	A1	\N	\N
+7362	gloves	noun	\N	\N	1	A1	\N	\N
+7363	go mount climbing	verb	\N	\N	1	A2	\N	\N
+7364	good....	adjective	\N	\N	1	A1	\N	\N
+7365	go out	verb	\N	\N	1	A1	\N	\N
+7366	gram	noun	\N	\N	1	A2	\N	\N
+7367	grandchild	noun	\N	\N	1	A2	\N	\N
+7368	gray	adjective	\N	\N	1	A1	\N	\N
+7369	greeting	noun	\N	\N	1	A1	\N	\N
+7370	grouping	noun	\N	\N	1	B1	\N	\N
+7371	guinness	noun	\N	\N	1	B1	\N	\N
+7372	gum	noun	\N	\N	1	A2	\N	\N
+7373	hair dresser	noun	\N	\N	1	A2	\N	\N
+7374	hair dressing	noun	\N	\N	1	B1	\N	\N
+7375	hairdryer	noun	\N	\N	1	A2	\N	\N
+7376	hairstyle	noun	\N	\N	1	A2	\N	\N
+7377	handicapped	adjective	\N	\N	1	B1	\N	\N
+7378	harm s.th or s.b	verb	\N	\N	1	B1	\N	\N
+7379	have breakfast	verb	\N	\N	1	A1	\N	\N
+7380	have dinner	verb	\N	\N	1	A1	\N	\N
+7381	have time	phrase	\N	\N	1	A1	\N	\N
+7382	heat up	verb	\N	\N	1	A2	\N	\N
+7383	here you are	phrase	\N	\N	1	A1	\N	\N
+7384	he/she	pronoun	\N	\N	1	A1	\N	\N
+7385	highschool	noun	\N	\N	1	A2	\N	\N
+7386	hive	noun	\N	\N	1	B1	\N	\N
+7387	hot and humid	adjective	\N	\N	1	B1	\N	\N
+7388	household chores	noun	\N	\N	1	A2	\N	\N
+7389	housekeeping	noun	\N	\N	1	B1	\N	\N
+7390	housewife	noun	\N	\N	1	A1	\N	\N
+7391	how much	phrase	\N	\N	1	A1	\N	\N
+7392	ice-cream	noun	\N	\N	1	A1	\N	\N
+7393	imitate	verb	\N	\N	1	B1	\N	\N
+7394	imitation	noun	\N	\N	1	B2	\N	\N
+7395	impretive verb	noun	\N	\N	1	B1	\N	\N
+7396	in a hurry	phrase	\N	\N	1	A2	\N	\N
+7397	infinitive	noun	\N	\N	1	B2	\N	\N
+7398	intelligence test	noun	\N	\N	1	B1	\N	\N
+7399	intonation	noun	\N	\N	1	B2	\N	\N
+7400	islands	noun	\N	\N	1	A2	\N	\N
+7401	join all	verb	\N	\N	1	B1	\N	\N
+7402	kilo	noun	\N	\N	1	A1	\N	\N
+7403	kilometer	noun	\N	\N	1	A2	\N	\N
+7404	kitchen cabinet	noun	\N	\N	1	A2	\N	\N
+7405	kiwi	noun	\N	\N	1	A1	\N	\N
+7406	laugh at	verb	\N	\N	1	A2	\N	\N
+7407	little boy	noun	\N	\N	1	A1	\N	\N
+7408	look after	verb	\N	\N	1	A2	\N	\N
+7409	look at	verb	\N	\N	1	A1	\N	\N
+7410	looking after	noun	\N	\N	1	A2	\N	\N
+7411	lotion	noun	\N	\N	1	B1	\N	\N
+7412	low	adjective	\N	\N	1	A2	\N	\N
+7413	manteau	noun	\N	\N	1	B1	\N	\N
+7414	members	noun	\N	\N	1	A2	\N	\N
+7415	(men's) coat	noun	\N	\N	1	A1	\N	\N
+7416	meter	noun	\N	\N	1	A2	\N	\N
+7417	middle-east	noun	\N	\N	1	B1	\N	\N
+7418	mom	noun	\N	\N	1	A1	\N	\N
+7419	money purse	noun	\N	\N	1	A2	\N	\N
+7420	most of the time	adverb	\N	\N	1	A2	\N	\N
+7421	mother tongue	noun	\N	\N	1	B1	\N	\N
+7422	mr.	noun	\N	\N	1	A1	\N	\N
+7423	myna	noun	\N	\N	1	B2	\N	\N
+7424	nap	noun	\N	\N	1	A2	\N	\N
+7425	nationality	noun	\N	\N	1	A2	\N	\N
+7426	navy blue	adjective	\N	\N	1	A2	\N	\N
+7427	negative imperative	noun	\N	\N	1	B2	\N	\N
+7428	neighbor	noun	\N	\N	1	A2	\N	\N
+7429	nephew	noun	\N	\N	1	A2	\N	\N
+7430	niece	noun	\N	\N	1	A2	\N	\N
+7431	nominative compound	noun	\N	\N	1	C1	\N	\N
+7432	noun \\ name	noun	\N	\N	1	A1	\N	\N
+7433	nowruz	noun	\N	\N	1	A2	\N	\N
+7434	numbers	noun	\N	\N	1	A1	\N	\N
+7435	nurse	noun	\N	\N	1	A1	\N	\N
+7436	only child	noun	\N	\N	1	A2	\N	\N
+7437	ophthalmology	noun	\N	\N	1	C1	\N	\N
+7438	ordinal	adjective	\N	\N	1	B1	\N	\N
+7439	other than	preposition	\N	\N	1	B1	\N	\N
+7440	outside of s.th	preposition	\N	\N	1	A2	\N	\N
+7441	overcoat	noun	\N	\N	1	B1	\N	\N
+7442	pairs	noun	\N	\N	1	A1	\N	\N
+7443	parents	noun	\N	\N	1	A1	\N	\N
+7444	parking lot	noun	\N	\N	1	A1	\N	\N
+7445	part/section	noun	\N	\N	1	A2	\N	\N
+7446	pay for s.th	verb	\N	\N	1	A2	\N	\N
+7447	pencilcase	noun	\N	\N	1	A1	\N	\N
+7448	penguin	noun	\N	\N	1	A1	\N	\N
+7449	persian language	noun	\N	\N	1	A1	\N	\N
+7450	personal belongings	noun	\N	\N	1	B1	\N	\N
+7451	personal ending	noun	\N	\N	1	B2	\N	\N
+7452	picnic	noun	\N	\N	1	A1	\N	\N
+7453	pictures	noun	\N	\N	1	A1	\N	\N
+7454	pilates	noun	\N	\N	1	A2	\N	\N
+7455	pineapple	noun	\N	\N	1	A1	\N	\N
+7456	ping-pong	noun	\N	\N	1	A1	\N	\N
+7457	pizza	noun	\N	\N	1	A1	\N	\N
+7458	pleased to meet you!	phrase	\N	\N	1	A1	\N	\N
+7459	plural	adjective	\N	\N	1	A2	\N	\N
+7460	polluted	adjective	\N	\N	1	B1	\N	\N
+7461	populated	adjective	\N	\N	1	B1	\N	\N
+7462	populous	adjective	\N	\N	1	B2	\N	\N
+7463	possessive	adjective	\N	\N	1	A2	\N	\N
+7464	preposition	noun	\N	\N	1	A2	\N	\N
+7465	previous	adjective	\N	\N	1	B1	\N	\N
+7466	pronunciation	noun	\N	\N	1	B1	\N	\N
+7467	properly	adverb	\N	\N	1	B1	\N	\N
+7468	protecting	verb	\N	\N	1	B1	\N	\N
+7469	provide	verb	\N	\N	1	B1	\N	\N
+7470	public place	noun	\N	\N	1	A2	\N	\N
+7471	quarter	noun	\N	\N	1	A2	\N	\N
+7472	question word	noun	\N	\N	1	A1	\N	\N
+7473	rail way	noun	\N	\N	1	A2	\N	\N
+7474	rain	noun	\N	\N	1	A1	\N	\N
+7475	rain	verb	\N	\N	1	A1	\N	\N
+7476	read	verb	\N	\N	1	A1	\N	\N
+7477	reading	noun	\N	\N	1	A1	\N	\N
+7478	really	adverb	\N	\N	1	A2	\N	\N
+7479	red	adjective	\N	\N	1	A1	\N	\N
+7480	remain	verb	\N	\N	1	B1	\N	\N
+7481	repairer	noun	\N	\N	1	B1	\N	\N
+7482	repairman	noun	\N	\N	1	A2	\N	\N
+7483	repeat	verb	\N	\N	1	A1	\N	\N
+7484	research institution	noun	\N	\N	1	B2	\N	\N
+7485	residents	noun	\N	\N	1	B1	\N	\N
+7486	respond	verb	\N	\N	1	B1	\N	\N
+7487	restaurant	noun	\N	\N	1	A1	\N	\N
+7488	return	verb	\N	\N	1	A2	\N	\N
+7489	riddle	noun	\N	\N	1	B1	\N	\N
+7490	right	adjective	\N	\N	1	A1	\N	\N
+7491	room	noun	\N	\N	1	A1	\N	\N
+7492	rule	noun	\N	\N	1	B1	\N	\N
+7493	ruler	noun	\N	\N	1	A1	\N	\N
+7494	sales clerk	noun	\N	\N	1	A2	\N	\N
+7495	saturday	noun	\N	\N	1	A1	\N	\N
+7496	sauna	noun	\N	\N	1	B1	\N	\N
+7497	say	verb	\N	\N	1	A1	\N	\N
+7498	scales	noun	\N	\N	1	B1	\N	\N
+7499	scarf	noun	\N	\N	1	A1	\N	\N
+7500	scarf (men & women)	noun	\N	\N	1	A1	\N	\N
+7501	school	noun	\N	\N	1	A1	\N	\N
+7502	sea	noun	\N	\N	1	A1	\N	\N
+7503	security guard	noun	\N	\N	1	A2	\N	\N
+7504	see	verb	\N	\N	1	A1	\N	\N
+7505	sentence	noun	\N	\N	1	A1	\N	\N
+7506	set (an alarm)	verb	\N	\N	1	A2	\N	\N
+7507	seven	number	\N	\N	1	A1	\N	\N
+7508	shawl (women)	noun	\N	\N	1	A2	\N	\N
+7509	shirt	noun	\N	\N	1	A1	\N	\N
+7510	shoe	noun	\N	\N	1	A1	\N	\N
+7511	shop	noun	\N	\N	1	A1	\N	\N
+7512	shopping	noun	\N	\N	1	A1	\N	\N
+7513	shop window	noun	\N	\N	1	A2	\N	\N
+7514	short	adjective	\N	\N	1	A1	\N	\N
+7515	shower	noun	\N	\N	1	A1	\N	\N
+7516	sing	verb	\N	\N	1	A1	\N	\N
+7517	singer	noun	\N	\N	1	A2	\N	\N
+7518	sister	noun	\N	\N	1	A1	\N	\N
+7519	sit	verb	\N	\N	1	A1	\N	\N
+7520	situation	noun	\N	\N	1	B1	\N	\N
+7521	six	number	\N	\N	1	A1	\N	\N
+7522	skirt	noun	\N	\N	1	A1	\N	\N
+7523	sleep	verb	\N	\N	1	A1	\N	\N
+7524	sleep	noun	\N	\N	1	A1	\N	\N
+7525	slow	adjective	\N	\N	1	A1	\N	\N
+7526	small	adjective	\N	\N	1	A1	\N	\N
+7527	sneakers	noun	\N	\N	1	A1	\N	\N
+7528	socks	noun	\N	\N	1	A1	\N	\N
+7529	some times	adverb	\N	\N	1	A1	\N	\N
+7530	sore throat	noun	\N	\N	1	A2	\N	\N
+7531	souvenir	noun	\N	\N	1	B1	\N	\N
+7532	specially	adverb	\N	\N	1	B1	\N	\N
+7533	spoken language	noun	\N	\N	1	B1	\N	\N
+7534	sponge	noun	\N	\N	1	A2	\N	\N
+7535	sportsman	noun	\N	\N	1	A1	\N	\N
+7536	stay alive	verb	\N	\N	1	B1	\N	\N
+7537	stay at home	verb	\N	\N	1	A1	\N	\N
+7538	stove	noun	\N	\N	1	A2	\N	\N
+7539	studying	noun	\N	\N	1	A1	\N	\N
+7540	subject pronoun	noun	\N	\N	1	B1	\N	\N
+7541	subway	noun	\N	\N	1	A1	\N	\N
+7542	sun cap	noun	\N	\N	1	A1	\N	\N
+7543	sunglasses	noun	\N	\N	1	A1	\N	\N
+7544	sun hat	noun	\N	\N	1	A1	\N	\N
+7545	sunny	adjective	\N	\N	1	A1	\N	\N
+7546	sunrise	noun	\N	\N	1	A2	\N	\N
+7547	sunset	noun	\N	\N	1	A2	\N	\N
+7548	superlative adjective	noun	\N	\N	1	A2	\N	\N
+7549	surfing the net	noun	\N	\N	1	A2	\N	\N
+7550	surf the net	verb	\N	\N	1	A2	\N	\N
+7551	tailoring	noun	\N	\N	1	B1	\N	\N
+7552	take a shower	verb	\N	\N	1	A1	\N	\N
+7553	take part	verb	\N	\N	1	B1	\N	\N
+7554	take time	verb	\N	\N	1	A2	\N	\N
+7555	talk to s.o	verb	\N	\N	1	A1	\N	\N
+7556	tense	noun	\N	\N	1	B1	\N	\N
+7557	thanks!	phrase	\N	\N	1	A1	\N	\N
+7558	thanks god!	phrase	\N	\N	1	A1	\N	\N
+7559	thank you	phrase	\N	\N	1	A1	\N	\N
+7560	thank you!	phrase	\N	\N	1	A1	\N	\N
+7561	theater	noun	\N	\N	1	A2	\N	\N
+7562	the eighth month	noun	\N	\N	1	B1	\N	\N
+7563	the eleventh month	noun	\N	\N	1	B1	\N	\N
+7564	the fifth month	noun	\N	\N	1	B1	\N	\N
+7565	the first month	noun	\N	\N	1	B1	\N	\N
+7566	the following	adjective	\N	\N	1	B1	\N	\N
+7567	the fourth month	noun	\N	\N	1	B1	\N	\N
+7568	the last month	noun	\N	\N	1	B1	\N	\N
+7569	the ninth month	noun	\N	\N	1	B1	\N	\N
+7570	the other	pronoun	\N	\N	1	A2	\N	\N
+7571	these	pronoun	\N	\N	1	A1	\N	\N
+7572	the second month	noun	\N	\N	1	B1	\N	\N
+7573	the seventh month	noun	\N	\N	1	B1	\N	\N
+7574	the sixth month	noun	\N	\N	1	B1	\N	\N
+7575	the tenth month	noun	\N	\N	1	B1	\N	\N
+7576	the third	adjective	\N	\N	1	A1	\N	\N
+7577	the third month	noun	\N	\N	1	B1	\N	\N
+7578	things	noun	\N	\N	1	A1	\N	\N
+7579	throw s.th away	verb	\N	\N	1	A2	\N	\N
+7580	tidy up	verb	\N	\N	1	A2	\N	\N
+7581	time-consuming	adjective	\N	\N	1	B2	\N	\N
+7582	tiring	adjective	\N	\N	1	A2	\N	\N
+7583	(to be) worried	adjective	\N	\N	1	A2	\N	\N
+7584	toman	noun	\N	\N	1	A1	\N	\N
+7585	tools	noun	\N	\N	1	A2	\N	\N
+7586	toothbrush	noun	\N	\N	1	A1	\N	\N
+7587	toothpaste	noun	\N	\N	1	A1	\N	\N
+7588	translator	noun	\N	\N	1	A2	\N	\N
+7589	transportation	noun	\N	\N	1	B1	\N	\N
+7590	traveler	noun	\N	\N	1	A2	\N	\N
+7591	triangle	noun	\N	\N	1	A2	\N	\N
+7592	underline s.th	verb	\N	\N	1	A1	\N	\N
+7593	university student	noun	\N	\N	1	A2	\N	\N
+7594	untidy	adjective	\N	\N	1	A2	\N	\N
+7595	vacuum cleaner	noun	\N	\N	1	A2	\N	\N
+7596	vase	noun	\N	\N	1	A2	\N	\N
+7597	verb	noun	\N	\N	1	A1	\N	\N
+7598	villa	noun	\N	\N	1	B1	\N	\N
+7599	wake up	verb	\N	\N	1	A1	\N	\N
+7600	wardrobe	noun	\N	\N	1	A2	\N	\N
+7601	wheelchair	noun	\N	\N	1	A2	\N	\N
+7602	which one	phrase	\N	\N	1	A1	\N	\N
+7603	white skinned	adjective	\N	\N	1	B1	\N	\N
+7604	wordmaking	noun	\N	\N	1	B2	\N	\N
+7605	yoga	noun	\N	\N	1	A2	\N	\N
+7606	yoghurt	noun	\N	\N	1	A1	\N	\N
+7607	you're welcome	phrase	\N	\N	1	A1	\N	\N
+7608	proper	adjective	\N	\N	1	B1	\N	\N
+7609	instruments	noun	\N	\N	1	A2	\N	\N
+7610	things	noun	\N	\N	1	A1	\N	\N
+7611	transportation	noun	\N	\N	1	B1	\N	\N
+200000	الف	letter	\N	\N	3	N	\N	\N
+200001	ب	letter	\N	\N	3	N	\N	\N
+200002	پ	letter	\N	\N	3	N	\N	\N
+200003	ت	letter	\N	\N	3	N	\N	\N
+200004	ث	letter	\N	\N	3	N	\N	\N
+200005	ج	letter	\N	\N	3	N	\N	\N
+200006	چ	letter	\N	\N	3	N	\N	\N
+200007	ح	letter	\N	\N	3	N	\N	\N
+200008	خ	letter	\N	\N	3	N	\N	\N
+200009	د	letter	\N	\N	3	N	\N	\N
+200010	ذ	letter	\N	\N	3	N	\N	\N
+200011	ر	letter	\N	\N	3	N	\N	\N
+200012	ز	letter	\N	\N	3	N	\N	\N
+200013	ژ	letter	\N	\N	3	N	\N	\N
+200014	س	letter	\N	\N	3	N	\N	\N
+200015	ش	letter	\N	\N	3	N	\N	\N
+200016	ص	letter	\N	\N	3	N	\N	\N
+200017	ض	letter	\N	\N	3	N	\N	\N
+200018	ط	letter	\N	\N	3	N	\N	\N
+200019	ظ	letter	\N	\N	3	N	\N	\N
+200020	ع	letter	\N	\N	3	N	\N	\N
+200021	غ	letter	\N	\N	3	N	\N	\N
+200022	ف	letter	\N	\N	3	N	\N	\N
+200023	ق	letter	\N	\N	3	N	\N	\N
+200024	ک	letter	\N	\N	3	N	\N	\N
+200025	گ	letter	\N	\N	3	N	\N	\N
+200026	ل	letter	\N	\N	3	N	\N	\N
+200027	م	letter	\N	\N	3	N	\N	\N
+200028	ن	letter	\N	\N	3	N	\N	\N
+200029	و	letter	\N	\N	3	N	\N	\N
+200030	ه	letter	\N	\N	3	N	\N	\N
+200031	ی	letter	\N	\N	3	N	\N	\N
+200400	اِبتِدا	noun	\N	\N	3	AB	\N	\N
+200401	اِبتِدایِ	preposition	\N	\N	3	AB	\N	\N
+200402	آب	noun	\N	\N	3	AB	\N	\N
+200403	آبان	noun	\N	\N	3	AB	\N	\N
+200404	آب‌میوه	noun	\N	\N	3	AB	\N	\N
+200405	آب‌وهوا	noun	\N	\N	3	AB	\N	\N
+200406	آبی	adjective	\N	\N	3	AB	\N	\N
+200407	آخَر	adjective	\N	\N	3	AB	\N	\N
+200408	آداس	noun	\N	\N	3	AB	\N	\N
+200409	آدرِس	noun	\N	\N	3	AB	\N	\N
+200410	آذَر	noun	\N	\N	3	AB	\N	\N
+200411	آرایِشگاه	noun	\N	\N	3	AB	\N	\N
+200412	آرایِشگَر	noun	\N	\N	3	AB	\N	\N
+200413	آرایِشگَری	noun	\N	\N	3	AB	\N	\N
+200414	آره	adverb	\N	\N	3	AB	\N	\N
+200415	آزمایش	noun	\N	\N	3	AB	\N	\N
+200416	آزمون	noun	\N	\N	3	AB	\N	\N
+200417	آژانس	noun	\N	\N	3	AB	\N	\N
+200418	آسیب زَدَن به	verb	\N	\N	3	AB	\N	\N
+200419	آشپَزخانه	noun	\N	\N	3	AB	\N	\N
+200420	آشپَزی کَردَن	verb	\N	\N	3	AB	\N	\N
+200421	آشنایی	noun	\N	\N	3	AB	\N	\N
+200422	آشیانه	noun	\N	\N	3	AB	\N	\N
+200423	آفتاب	noun	\N	\N	3	AB	\N	\N
+200424	آفتابی	adjective	\N	\N	3	AB	\N	\N
+200425	آقا	noun	\N	\N	3	AB	\N	\N
+200426	آلبوم	noun	\N	\N	3	AB	\N	\N
+200427	آلوده	adjective	\N	\N	3	AB	\N	\N
+200428	آماده شُدَن	verb	\N	\N	3	AB	\N	\N
+200429	آمَدَن	verb	\N	\N	3	AB	\N	\N
+200430	آن	pronoun	\N	\N	3	AB	\N	\N
+200431	آناناس	noun	\N	\N	3	AB	\N	\N
+200432	آنها	pronoun	\N	\N	3	AB	\N	\N
+200433	آوازخواندَن	verb	\N	\N	3	AB	\N	\N
+200434	آوریل	noun	\N	\N	3	AB	\N	\N
+200435	آهِسته	adverb	\N	\N	3	AB	\N	\N
+200436	آهن	noun	\N	\N	3	AB	\N	\N
+200437	آهنگ	noun	\N	\N	3	AB	\N	\N
+200438	آینه	noun	\N	\N	3	AB	\N	\N
+200439	اَبر	noun	\N	\N	3	AB	\N	\N
+200440	اَبری	adjective	\N	\N	3	AB	\N	\N
+200441	اِتاق	noun	\N	\N	3	AB	\N	\N
+200442	اُتو	noun	\N	\N	3	AB	\N	\N
+200443	اُتوبوس	noun	\N	\N	3	AB	\N	\N
+200444	اُتو کَردَن	verb	\N	\N	3	AB	\N	\N
+200445	اُجاق گاز	noun	\N	\N	3	AB	\N	\N
+200446	اِجتِماعی	adjective	\N	\N	3	AB	\N	\N
+200447	اِحتِرام	noun	\N	\N	3	AB	\N	\N
+200448	اَحوال‌پُرسی	noun	\N	\N	3	AB	\N	\N
+200449	اِداره	noun	\N	\N	3	AB	\N	\N
+200450	اِدامه	noun	\N	\N	3	AB	\N	\N
+200451	اِدامه دادَن	verb	\N	\N	3	AB	\N	\N
+200452	اَدَبیّات	noun	\N	\N	3	AB	\N	\N
+200453	اِرتِباط بَرقَرار کَردَن	verb	\N	\N	3	AB	\N	\N
+200454	اُردیبِهِشت	noun	\N	\N	3	AB	\N	\N
+200455	اَرزان	adjective	\N	\N	3	AB	\N	\N
+200456	اَز آشنایی‌تون خوشوَقتَم	phrase	\N	\N	3	AB	\N	\N
+200457	اَز چیزی ترسیدَن	verb	\N	\N	3	AB	\N	\N
+200458	اَساسی	adjective	\N	\N	3	AB	\N	\N
+200459	اَسباب‌بازی	noun	\N	\N	3	AB	\N	\N
+200460	اُستاد	noun	\N	\N	3	AB	\N	\N
+200461	اُستان	noun	\N	\N	3	AB	\N	\N
+200462	اِستَخر	noun	\N	\N	3	AB	\N	\N
+200463	اِستِراحَت کَردَن	verb	\N	\N	3	AB	\N	\N
+200464	اِستِفاده	noun	\N	\N	3	AB	\N	\N
+200465	اِستِفاده شُدَن	verb	\N	\N	3	AB	\N	\N
+200466	اِستِمراری	adjective	\N	\N	3	AB	\N	\N
+200467	استوانه‌ای	adjective	\N	\N	3	AB	\N	\N
+200468	اِسفَند	noun	\N	\N	3	AB	\N	\N
+200469	اِسکاج	noun	\N	\N	3	AB	\N	\N
+200470	اِسکی	noun	\N	\N	3	AB	\N	\N
+200471	اِسم	noun	\N	\N	3	AB	\N	\N
+200472	اِشتِباه	noun	\N	\N	3	AB	\N	\N
+200473	اَشک	noun	\N	\N	3	AB	\N	\N
+200474	اَشیاء	noun	\N	\N	3	AB	\N	\N
+200475	اِضافه کَردَن	verb	\N	\N	3	AB	\N	\N
+200476	اَطرافِ	preposition	\N	\N	3	AB	\N	\N
+200477	اِطّلاعات	noun	\N	\N	3	AB	\N	\N
+200478	اَعداد	noun	\N	\N	3	AB	\N	\N
+200479	اَعضا	noun	\N	\N	3	AB	\N	\N
+200480	اَغلَب	adverb	\N	\N	3	AB	\N	\N
+200481	اَفراد	noun	\N	\N	3	AB	\N	\N
+200482	اُکتُبر	noun	\N	\N	3	AB	\N	\N
+200483	اَگَر	conjunction	\N	\N	3	AB	\N	\N
+200484	اَلان	adverb	\N	\N	3	AB	\N	\N
+200485	اَلگو	noun	\N	\N	3	AB	\N	\N
+200486	اَمّا	conjunction	\N	\N	3	AB	\N	\N
+200487	اِمتِحان	noun	\N	\N	3	AB	\N	\N
+200488	اِمتیاز	noun	\N	\N	3	AB	\N	\N
+200489	اِمروز	noun	\N	\N	3	AB	\N	\N
+200490	اَمن	adjective	\N	\N	3	AB	\N	\N
+200491	اِنتِخاب کَردَن	verb	\N	\N	3	AB	\N	\N
+200492	اِنتِهایِ	preposition	\N	\N	3	AB	\N	\N
+200493	اَنجام‌دادَن	verb	\N	\N	3	AB	\N	\N
+200494	اَندازه‌گیری	noun	\N	\N	3	AB	\N	\N
+200495	اِنسان	noun	\N	\N	3	AB	\N	\N
+200496	اِنشا	noun	\N	\N	3	AB	\N	\N
+200497	او	pronoun	\N	\N	3	AB	\N	\N
+200498	اَوَّل	adjective	\N	\N	3	AB	\N	\N
+200499	اَهلی	adjective	\N	\N	3	AB	\N	\N
+200500	ایروبیک	noun	\N	\N	3	AB	\N	\N
+200501	ایستگاه	noun	\N	\N	3	AB	\N	\N
+200502	ایشان	pronoun	\N	\N	3	AB	\N	\N
+200503	ایمِنی	noun	\N	\N	3	AB	\N	\N
+200504	ایمِیل	noun	\N	\N	3	AB	\N	\N
+200505	این	pronoun	\N	\N	3	AB	\N	\N
+200506	اینتِرنِت	noun	\N	\N	3	AB	\N	\N
+200507	اینجا	adverb	\N	\N	3	AB	\N	\N
+200508	اینها	pronoun	\N	\N	3	AB	\N	\N
+200509	با هَم	adverb	\N	\N	3	AB	\N	\N
+200510	باد	noun	\N	\N	3	AB	\N	\N
+200511	باد آمَدَن	verb	\N	\N	3	AB	\N	\N
+200512	بار	noun	\N	\N	3	AB	\N	\N
+200513	باران	noun	\N	\N	3	AB	\N	\N
+200514	باران آمَدَن	verb	\N	\N	3	AB	\N	\N
+200515	بازار	noun	\N	\N	3	AB	\N	\N
+200516	بازی	noun	\N	\N	3	AB	\N	\N
+200517	باشگاه	noun	\N	\N	3	AB	\N	\N
+200518	باعَجَله	adverb	\N	\N	3	AB	\N	\N
+200519	باغ	noun	\N	\N	3	AB	\N	\N
+200520	باقی ماندَن	verb	\N	\N	3	AB	\N	\N
+200521	بالایِ	preposition	\N	\N	3	AB	\N	\N
+200522	بالِغ	adjective	\N	\N	3	AB	\N	\N
+200523	بانِک	noun	\N	\N	3	AB	\N	\N
+200524	باهوش	adjective	\N	\N	3	AB	\N	\N
+200525	بَبخشید!	phrase	\N	\N	3	AB	\N	\N
+200526	بَچّگی	noun	\N	\N	3	AB	\N	\N
+200527	بَچّه	noun	\N	\N	3	AB	\N	\N
+200528	بَخش	noun	\N	\N	3	AB	\N	\N
+200529	بَد اَخلاق	adjective	\N	\N	3	AB	\N	\N
+200530	بَدَن‌سازی	noun	\N	\N	3	AB	\N	\N
+200531	بِدون	preposition	\N	\N	3	AB	\N	\N
+200532	بَرادَر	noun	\N	\N	3	AB	\N	\N
+200533	بَرادَرزاده	noun	\N	\N	3	AB	\N	\N
+200534	بَراساسِ	preposition	\N	\N	3	AB	\N	\N
+200535	بَررِسی کَردَن	verb	\N	\N	3	AB	\N	\N
+200536	بُرِس	noun	\N	\N	3	AB	\N	\N
+200537	بُرش دادَن	verb	\N	\N	3	AB	\N	\N
+200538	بَرف	noun	\N	\N	3	AB	\N	\N
+200539	بَرف آمَدَن	verb	\N	\N	3	AB	\N	\N
+200540	بَرق	noun	\N	\N	3	AB	\N	\N
+200541	بَرگَشتَن	verb	\N	\N	3	AB	\N	\N
+200542	بَرگه	noun	\N	\N	3	AB	\N	\N
+200543	بَرنامه	noun	\N	\N	3	AB	\N	\N
+200544	بُزُرگ	adjective	\N	\N	3	AB	\N	\N
+200545	بُزُرگ کَردَن	verb	\N	\N	3	AB	\N	\N
+200546	بَستَنی	noun	\N	\N	3	AB	\N	\N
+200547	بَسته	noun	\N	\N	3	AB	\N	\N
+200548	بُشقاب	noun	\N	\N	3	AB	\N	\N
+200549	شُستَن	verb	\N	\N	3	AB	\N	\N
+200550	بُطری	noun	\N	\N	3	AB	\N	\N
+200551	بَعد	adverb	\N	\N	3	AB	\N	\N
+200552	بَعد اَز	preposition	\N	\N	3	AB	\N	\N
+200553	بَعد اَظُهر	noun	\N	\N	3	AB	\N	\N
+200554	بَعضی	adjective	\N	\N	3	AB	\N	\N
+200555	بَعضی وَقتها	adverb	\N	\N	3	AB	\N	\N
+200556	بَفَرمایید	phrase	\N	\N	3	AB	\N	\N
+200557	بُلَند	adjective	\N	\N	3	AB	\N	\N
+200558	بُلَند شُدَن	verb	\N	\N	3	AB	\N	\N
+200559	بُلوز	noun	\N	\N	3	AB	\N	\N
+200560	بَله	adverb	\N	\N	3	AB	\N	\N
+200561	بلیط	noun	\N	\N	3	AB	\N	\N
+200562	بَند (پارارگراف)	noun	\N	\N	3	AB	\N	\N
+200563	بَنَفش	adjective	\N	\N	3	AB	\N	\N
+200564	بودَن	verb	\N	\N	3	AB	\N	\N
+200565	بور	adjective	\N	\N	3	AB	\N	\N
+200566	به پیکنیک رَفتَن	verb	\N	\N	3	AB	\N	\N
+200567	به خِیر	phrase	\N	\N	3	AB	\N	\N
+200568	به سَمتِ	preposition	\N	\N	3	AB	\N	\N
+200569	به کوه رَفتَن	verb	\N	\N	3	AB	\N	\N
+200570	بَهار	noun	\N	\N	3	AB	\N	\N
+200571	به دُرُستی	adverb	\N	\N	3	AB	\N	\N
+200572	به دُنیا آمَدَن	verb	\N	\N	3	AB	\N	\N
+200573	بَهمَن	noun	\N	\N	3	AB	\N	\N
+200574	به نُدرَت	adverb	\N	\N	3	AB	\N	\N
+200575	بی‌اَدَب	adjective	\N	\N	3	AB	\N	\N
+200576	بیان کَردَن	verb	\N	\N	3	AB	\N	\N
+200577	بیدار شُدَن	verb	\N	\N	3	AB	\N	\N
+200578	بیرونِ	preposition	\N	\N	3	AB	\N	\N
+200579	بیرون آمَدَن	verb	\N	\N	3	AB	\N	\N
+200580	بیرون رَفتَن	verb	\N	\N	3	AB	\N	\N
+200581	بیرون کَردَن	verb	\N	\N	3	AB	\N	\N
+200582	بیست	number	\N	\N	3	AB	\N	\N
+200583	بیشتَر	adjective	\N	\N	3	AB	\N	\N
+200584	بیشتَرِ اوقات	adverb	\N	\N	3	AB	\N	\N
+200585	بیمارِستان	noun	\N	\N	3	AB	\N	\N
+200586	بیمه	noun	\N	\N	3	AB	\N	\N
+200587	بَینِ	preposition	\N	\N	3	AB	\N	\N
+200588	پَر	noun	\N	\N	3	AB	\N	\N
+200589	پُر	adjective	\N	\N	3	AB	\N	\N
+200590	پُر کَردَن	verb	\N	\N	3	AB	\N	\N
+200591	پارچه	noun	\N	\N	3	AB	\N	\N
+200592	پارک	noun	\N	\N	3	AB	\N	\N
+200593	پارک کَردَن	verb	\N	\N	3	AB	\N	\N
+200594	پارکینگ	noun	\N	\N	3	AB	\N	\N
+200595	پاساژ	noun	\N	\N	3	AB	\N	\N
+200596	پاسُخ	noun	\N	\N	3	AB	\N	\N
+200597	پاسُخ دادَن	verb	\N	\N	3	AB	\N	\N
+200598	پالتو	noun	\N	\N	3	AB	\N	\N
+200599	پانزده	number	\N	\N	3	AB	\N	\N
+200600	پانصَد	number	\N	\N	3	AB	\N	\N
+200601	پایتَخت	noun	\N	\N	3	AB	\N	\N
+200602	پاییز	noun	\N	\N	3	AB	\N	\N
+200603	پِدَر	noun	\N	\N	3	AB	\N	\N
+200604	پِدَربُزُرگ	noun	\N	\N	3	AB	\N	\N
+200605	پَدیده	noun	\N	\N	3	AB	\N	\N
+200606	پُرتِقال	noun	\N	\N	3	AB	\N	\N
+200607	پُرجمعیت	adjective	\N	\N	3	AB	\N	\N
+200608	پَرْده	noun	\N	\N	3	AB	\N	\N
+200609	پَرَستار	noun	\N	\N	3	AB	\N	\N
+200610	پُرسِش	noun	\N	\N	3	AB	\N	\N
+200611	پُرسِش‌واژه	noun	\N	\N	3	AB	\N	\N
+200612	پُرسیدَن	verb	\N	\N	3	AB	\N	\N
+200613	پُرطَرَفدار	adjective	\N	\N	3	AB	\N	\N
+200614	پَرَنده	noun	\N	\N	3	AB	\N	\N
+200615	پُرنور	adjective	\N	\N	3	AB	\N	\N
+200616	پِزِشک	noun	\N	\N	3	AB	\N	\N
+200617	پِسَر	noun	\N	\N	3	AB	\N	\N
+200618	پِسَر (فرزند)	noun	\N	\N	3	AB	\N	\N
+200619	پِسَرچّه	noun	\N	\N	3	AB	\N	\N
+200620	پُشتِ	preposition	\N	\N	3	AB	\N	\N
+200621	پُشتِ‌بام	noun	\N	\N	3	AB	\N	\N
+200622	پِلاک	noun	\N	\N	3	AB	\N	\N
+200623	پلیس	noun	\N	\N	3	AB	\N	\N
+200624	پَنج	number	\N	\N	3	AB	\N	\N
+200625	پَنجاه	number	\N	\N	3	AB	\N	\N
+200626	پَنجِره	noun	\N	\N	3	AB	\N	\N
+200627	پَنج‌شَنبه	noun	\N	\N	3	AB	\N	\N
+200628	پَنجُم	adjective	\N	\N	3	AB	\N	\N
+200629	پَنگوئن	noun	\N	\N	3	AB	\N	\N
+200630	پَنیر	noun	\N	\N	3	AB	\N	\N
+200631	پوتین	noun	\N	\N	3	AB	\N	\N
+200632	پوست	noun	\N	\N	3	AB	\N	\N
+200633	پوشاک	noun	\N	\N	3	AB	\N	\N
+200634	پوشیدَن	verb	\N	\N	3	AB	\N	\N
+200635	پول	noun	\N	\N	3	AB	\N	\N
+200636	پَهْن	adjective	\N	\N	3	AB	\N	\N
+200637	پیاده‌رَفتَن	verb	\N	\N	3	AB	\N	\N
+200638	پیاده‌شُدَن اَز	verb	\N	\N	3	AB	\N	\N
+200639	پیاز	noun	\N	\N	3	AB	\N	\N
+200640	پیانو	noun	\N	\N	3	AB	\N	\N
+200641	پیتزا	noun	\N	\N	3	AB	\N	\N
+200642	پیچیدَن	verb	\N	\N	3	AB	\N	\N
+200643	پیدا کَردَن	verb	\N	\N	3	AB	\N	\N
+200644	پیر	adjective	\N	\N	3	AB	\N	\N
+200645	پیراهَن	noun	\N	\N	3	AB	\N	\N
+200646	پیش اَز	preposition	\N	\N	3	AB	\N	\N
+200647	پیشخِدمَت	noun	\N	\N	3	AB	\N	\N
+200648	پیلاتِس	noun	\N	\N	3	AB	\N	\N
+200649	پینگ‌پُنگ	noun	\N	\N	3	AB	\N	\N
+200650	پِیوَسته	adjective	\N	\N	3	AB	\N	\N
+200651	تِئاتر	noun	\N	\N	3	AB	\N	\N
+200652	تابِستان	noun	\N	\N	3	AB	\N	\N
+200653	تابلو	noun	\N	\N	3	AB	\N	\N
+200654	تاجِر	noun	\N	\N	3	AB	\N	\N
+200655	تاریخ	noun	\N	\N	3	AB	\N	\N
+200656	تاریک	adjective	\N	\N	3	AB	\N	\N
+200657	تاکسی	noun	\N	\N	3	AB	\N	\N
+200658	تَبدیل	noun	\N	\N	3	AB	\N	\N
+200659	تَبدیل شُدَن	verb	\N	\N	3	AB	\N	\N
+200660	تَبدیل کَردَن	verb	\N	\N	3	AB	\N	\N
+200661	تَجرُبه	noun	\N	\N	3	AB	\N	\N
+200662	تَختِخواب	noun	\N	\N	3	AB	\N	\N
+200663	تَخته	noun	\N	\N	3	AB	\N	\N
+200664	تُخمِ‌مُرغ	noun	\N	\N	3	AB	\N	\N
+200665	تَدریس کَردَن	verb	\N	\N	3	AB	\N	\N
+200666	ترازو	noun	\N	\N	3	AB	\N	\N
+200667	ترافیک	noun	\N	\N	3	AB	\N	\N
+200668	تَرتیبی (عَدَد)	adjective	\N	\N	3	AB	\N	\N
+200669	تَرکیب اِضافی	noun	\N	\N	3	AB	\N	\N
+200670	تَرکیب وَصفی	noun	\N	\N	3	AB	\N	\N
+200671	تِستِ هوش	noun	\N	\N	3	AB	\N	\N
+200672	تَشَکُّر! مِرسی!	phrase	\N	\N	3	AB	\N	\N
+200673	تَصاویر	noun	\N	\N	3	AB	\N	\N
+200674	تَصویر	noun	\N	\N	3	AB	\N	\N
+200675	تِعداد	noun	\N	\N	3	AB	\N	\N
+200676	تَعطیل	adjective	\N	\N	3	AB	\N	\N
+200677	تَعلیم‌دادَن	verb	\N	\N	3	AB	\N	\N
+200678	تَعمیرکار	noun	\N	\N	3	AB	\N	\N
+200679	تَعین کَردَن	verb	\N	\N	3	AB	\N	\N
+200680	تَفاوُت	noun	\N	\N	3	AB	\N	\N
+200681	تَفاوُت داشتَن	verb	\N	\N	3	AB	\N	\N
+200682	تَقدیم کَردَن	verb	\N	\N	3	AB	\N	\N
+200683	تَقسیم شُدَن	verb	\N	\N	3	AB	\N	\N
+200684	تَقلید	noun	\N	\N	3	AB	\N	\N
+200685	تَقلید کَردَن	verb	\N	\N	3	AB	\N	\N
+200686	تَقویم	noun	\N	\N	3	AB	\N	\N
+200687	تِکرار کَردَن	verb	\N	\N	3	AB	\N	\N
+200688	تَک‌فَرزَند	noun	\N	\N	3	AB	\N	\N
+200689	تَکلیف	noun	\N	\N	3	AB	\N	\N
+200690	تِکنیک	noun	\N	\N	3	AB	\N	\N
+200691	تِکّه	noun	\N	\N	3	AB	\N	\N
+200692	تَلَفُّظ	noun	\N	\N	3	AB	\N	\N
+200693	تِلِفُن	noun	\N	\N	3	AB	\N	\N
+200694	تِلِکابین	noun	\N	\N	3	AB	\N	\N
+200695	تِلِویزیون	noun	\N	\N	3	AB	\N	\N
+200696	تماشا کَردَن	verb	\N	\N	3	AB	\N	\N
+200697	تَمرین	noun	\N	\N	3	AB	\N	\N
+200698	تَمـیز	adjective	\N	\N	3	AB	\N	\N
+200699	تَمـیز کَردَن	verb	\N	\N	3	AB	\N	\N
+200700	تَنها	adjective	\N	\N	3	AB	\N	\N
+200701	تَنها / فَقَط	adverb	\N	\N	3	AB	\N	\N
+200702	تُو	pronoun	\N	\N	3	AB	\N	\N
+200703	تَوانایی	noun	\N	\N	3	AB	\N	\N
+200704	تَوانِستَن	verb	\N	\N	3	AB	\N	\N
+200705	توپ	noun	\N	\N	3	AB	\N	\N
+200706	تَوَجُّه	noun	\N	\N	3	AB	\N	\N
+200707	توسی	adjective	\N	\N	3	AB	\N	\N
+200708	تَوصیف	noun	\N	\N	3	AB	\N	\N
+200709	تَوصیف کَردَن	verb	\N	\N	3	AB	\N	\N
+200710	تَوصیه کَردَن	verb	\N	\N	3	AB	\N	\N
+200711	طوفان (توفان)	noun	\N	\N	3	AB	\N	\N
+200712	تَوَلُّد	noun	\N	\N	3	AB	\N	\N
+200713	تُومان	noun	\N	\N	3	AB	\N	\N
+200714	تویِ	preposition	\N	\N	3	AB	\N	\N
+200715	تَهیِه کَردَن	verb	\N	\N	3	AB	\N	\N
+200716	تیر	noun	\N	\N	3	AB	\N	\N
+200717	تی‌شِرت	noun	\N	\N	3	AB	\N	\N
+200718	ثانیِه	noun	\N	\N	3	AB	\N	\N
+200719	جاروبرقی	noun	\N	\N	3	AB	\N	\N
+200720	جاروکِشیدَن	verb	\N	\N	3	AB	\N	\N
+200721	جالِب	adjective	\N	\N	3	AB	\N	\N
+200722	جامِدادی	noun	\N	\N	3	AB	\N	\N
+200723	جاندار	adjective	\N	\N	3	AB	\N	\N
+200724	جایِ خالی	noun	\N	\N	3	AB	\N	\N
+200725	جُدا	adjective	\N	\N	3	AB	\N	\N
+200726	جِدّاً	adverb	\N	\N	3	AB	\N	\N
+200727	جُدا کَردَن	verb	\N	\N	3	AB	\N	\N
+200728	جَدول	noun	\N	\N	3	AB	\N	\N
+200729	جَدید	adjective	\N	\N	3	AB	\N	\N
+200730	جَزایِر	noun	\N	\N	3	AB	\N	\N
+200731	جِسم	noun	\N	\N	3	AB	\N	\N
+200732	جَعبه	noun	\N	\N	3	AB	\N	\N
+200733	جُفت	noun	\N	\N	3	AB	\N	\N
+200734	جِلویِ	preposition	\N	\N	3	AB	\N	\N
+200735	جَمع	noun	\N	\N	3	AB	\N	\N
+200736	جَمع کَردَن	verb	\N	\N	3	AB	\N	\N
+200737	جَمع‌بَستَن	verb	\N	\N	3	AB	\N	\N
+200738	جُمعِه	noun	\N	\N	3	AB	\N	\N
+200739	جَمعیَّت	noun	\N	\N	3	AB	\N	\N
+200740	جُملِه	noun	\N	\N	3	AB	\N	\N
+200741	جَنگَل	noun	\N	\N	3	AB	\N	\N
+200742	جَنوب	noun	\N	\N	3	AB	\N	\N
+200743	جَواب	noun	\N	\N	3	AB	\N	\N
+200744	جَوان	adjective	\N	\N	3	AB	\N	\N
+200745	جوجه	noun	\N	\N	3	AB	\N	\N
+200746	جوراب	noun	\N	\N	3	AB	\N	\N
+200747	جَهان	noun	\N	\N	3	AB	\N	\N
+200748	جَهانی	adjective	\N	\N	3	AB	\N	\N
+200749	جِهَت	noun	\N	\N	3	AB	\N	\N
+200750	جِیب	noun	\N	\N	3	AB	\N	\N
+200751	جین	noun	\N	\N	3	AB	\N	\N
+200752	چادُرزَدَن	verb	\N	\N	3	AB	\N	\N
+200753	چاق	adjective	\N	\N	3	AB	\N	\N
+200754	چای	noun	\N	\N	3	AB	\N	\N
+200755	چَتر	noun	\N	\N	3	AB	\N	\N
+200756	چِراغ	noun	\N	\N	3	AB	\N	\N
+200757	چُرت‌زَدَن	verb	\N	\N	3	AB	\N	\N
+200758	چَشم	noun	\N	\N	3	AB	\N	\N
+200759	چَشم‌پِزِشکی	noun	\N	\N	3	AB	\N	\N
+200760	چِطور	adverb	\N	\N	3	AB	\N	\N
+200761	چِقَدر	adverb	\N	\N	3	AB	\N	\N
+200762	چِک‌کَردَن	verb	\N	\N	3	AB	\N	\N
+200763	چِگونه	adverb	\N	\N	3	AB	\N	\N
+200764	چوب	noun	\N	\N	3	AB	\N	\N
+200765	چوبی	adjective	\N	\N	3	AB	\N	\N
+200766	چه/ چی	pronoun	\N	\N	3	AB	\N	\N
+200767	چَهار	number	\N	\N	3	AB	\N	\N
+200768	چَهارراه	noun	\N	\N	3	AB	\N	\N
+200769	چَهارشَنبِه	noun	\N	\N	3	AB	\N	\N
+200770	چَهارُم	adjective	\N	\N	3	AB	\N	\N
+200771	چیدَن	verb	\N	\N	3	AB	\N	\N
+200772	چیز	noun	\N	\N	3	AB	\N	\N
+200773	حالا	adverb	\N	\N	3	AB	\N	\N
+200774	حَتماً	adverb	\N	\N	3	AB	\N	\N
+200775	حَدس	noun	\N	\N	3	AB	\N	\N
+200776	حَدس‌زَدَن	verb	\N	\N	3	AB	\N	\N
+200777	حُدود	adverb	\N	\N	3	AB	\N	\N
+200778	حَرف	noun	\N	\N	3	AB	\N	\N
+200779	حَرفِ اِضافه	noun	\N	\N	3	AB	\N	\N
+200780	حَرف‌زَدَن با	verb	\N	\N	3	AB	\N	\N
+200781	حِسابدار	noun	\N	\N	3	AB	\N	\N
+200782	حَسّاس	adjective	\N	\N	3	AB	\N	\N
+200783	حَشَره	noun	\N	\N	3	AB	\N	\N
+200784	حُکومت	noun	\N	\N	3	AB	\N	\N
+200785	حَمّام	noun	\N	\N	3	AB	\N	\N
+200786	حوله	noun	\N	\N	3	AB	\N	\N
+200787	حَیاط	noun	\N	\N	3	AB	\N	\N
+200788	خارِج	noun	\N	\N	3	AB	\N	\N
+200789	خارِجی	adjective	\N	\N	3	AB	\N	\N
+200790	خاص	adjective	\N	\N	3	AB	\N	\N
+200791	خاله	noun	\N	\N	3	AB	\N	\N
+200792	خالی	adjective	\N	\N	3	AB	\N	\N
+200793	خانُم	noun	\N	\N	3	AB	\N	\N
+200794	خانِوادِگی	adjective	\N	\N	3	AB	\N	\N
+200795	خانِواده	noun	\N	\N	3	AB	\N	\N
+200796	خانه	noun	\N	\N	3	AB	\N	\N
+200797	خانه‌دار	noun	\N	\N	3	AB	\N	\N
+200798	خانه‌داری	noun	\N	\N	3	AB	\N	\N
+200799	خاورمیانِه	noun	\N	\N	3	AB	\N	\N
+200800	خُب	adverb	\N	\N	3	AB	\N	\N
+200801	خَبَرنگار	noun	\N	\N	3	AB	\N	\N
+200802	خُدا رو شُکر	phrase	\N	\N	3	AB	\N	\N
+200803	خُداحافظ	phrase	\N	\N	3	AB	\N	\N
+200804	خُرداد	noun	\N	\N	3	AB	\N	\N
+200805	خَرید	noun	\N	\N	3	AB	\N	\N
+200806	خَریدار	noun	\N	\N	3	AB	\N	\N
+200807	خَرید کَردَن	verb	\N	\N	3	AB	\N	\N
+200808	خَریدَن	verb	\N	\N	3	AB	\N	\N
+200809	خَستِگی	noun	\N	\N	3	AB	\N	\N
+200810	خَسته	adjective	\N	\N	3	AB	\N	\N
+200811	خَسته‌کُننده	adjective	\N	\N	3	AB	\N	\N
+200812	خَط	noun	\N	\N	3	AB	\N	\N
+200813	خَط کِشیدَن	verb	\N	\N	3	AB	\N	\N
+200814	خَطَرناک	adjective	\N	\N	3	AB	\N	\N
+200815	خَط‌کِش	noun	\N	\N	3	AB	\N	\N
+200816	خَلَبان	noun	\N	\N	3	AB	\N	\N
+200817	خَلوَت	adjective	\N	\N	3	AB	\N	\N
+200818	خَمیردَندان	noun	\N	\N	3	AB	\N	\N
+200819	خَنیدَن به	verb	\N	\N	3	AB	\N	\N
+200820	خُنَک	adjective	\N	\N	3	AB	\N	\N
+200821	خواب	noun	\N	\N	3	AB	\N	\N
+200822	خوابگاه	noun	\N	\N	3	AB	\N	\N
+200823	خوابیدَن	verb	\N	\N	3	AB	\N	\N
+200824	خواستَن	verb	\N	\N	3	AB	\N	\N
+200825	خواستَن (درخواست)	verb	\N	\N	3	AB	\N	\N
+200826	خواندَن	verb	\N	\N	3	AB	\N	\N
+200827	خواننده	noun	\N	\N	3	AB	\N	\N
+200828	خواهر	noun	\N	\N	3	AB	\N	\N
+200829	خواهِش می‌کُنم	phrase	\N	\N	3	AB	\N	\N
+200830	خوب (صِفَت)	adjective	\N	\N	3	AB	\N	\N
+200831	خوب (قِید)	adverb	\N	\N	3	AB	\N	\N
+200832	خود	pronoun	\N	\N	3	AB	\N	\N
+200833	خودرو	noun	\N	\N	3	AB	\N	\N
+200834	خودکار	noun	\N	\N	3	AB	\N	\N
+200835	خوراکی	noun	\N	\N	3	AB	\N	\N
+200836	خورشید	noun	\N	\N	3	AB	\N	\N
+200837	خورشیدی	adjective	\N	\N	3	AB	\N	\N
+200838	خوش آمَدید!	phrase	\N	\N	3	AB	\N	\N
+200839	خوشحال	adjective	\N	\N	3	AB	\N	\N
+200840	خوشمزه	adjective	\N	\N	3	AB	\N	\N
+200841	خیابان	noun	\N	\N	3	AB	\N	\N
+200842	خیاطی	noun	\N	\N	3	AB	\N	\N
+200843	دَر	noun	\N	\N	3	AB	\N	\N
+200844	دَه	number	\N	\N	3	AB	\N	\N
+200845	داخِل	noun	\N	\N	3	AB	\N	\N
+200846	دادَن	verb	\N	\N	3	AB	\N	\N
+200847	داشتَن	verb	\N	\N	3	AB	\N	\N
+200848	دامَن	noun	\N	\N	3	AB	\N	\N
+200849	دانِستَن	verb	\N	\N	3	AB	\N	\N
+200850	دانش‌آموز	noun	\N	\N	3	AB	\N	\N
+200851	دانشجو	noun	\N	\N	3	AB	\N	\N
+200852	دانشکده	noun	\N	\N	3	AB	\N	\N
+200853	دانشگاه	noun	\N	\N	3	AB	\N	\N
+200854	دایی	noun	\N	\N	3	AB	\N	\N
+200855	دبیرستان	noun	\N	\N	3	AB	\N	\N
+200856	دُختَر	noun	\N	\N	3	AB	\N	\N
+200857	دُختَر (فرزند)	noun	\N	\N	3	AB	\N	\N
+200858	در پایانِ ...	preposition	\N	\N	3	AB	\N	\N
+200859	در خانه ماندَن	verb	\N	\N	3	AB	\N	\N
+200860	در موردِ	preposition	\N	\N	3	AB	\N	\N
+200861	دَرآمَد	noun	\N	\N	3	AB	\N	\N
+200862	دَرباره	preposition	\N	\N	3	AB	\N	\N
+200863	دَرخت	noun	\N	\N	3	AB	\N	\N
+200864	دَرس	noun	\N	\N	3	AB	\N	\N
+200865	دُرُست	adjective	\N	\N	3	AB	\N	\N
+200866	دُرُست کَردَن	verb	\N	\N	3	AB	\N	\N
+200867	دَرس خواندَن	verb	\N	\N	3	AB	\N	\N
+200868	دَرس دادَن	verb	\N	\N	3	AB	\N	\N
+200869	دَرکِ مَطلَب	noun	\N	\N	3	AB	\N	\N
+200870	دَرون	preposition	\N	\N	3	AB	\N	\N
+200871	دَریا	noun	\N	\N	3	AB	\N	\N
+200872	دَست	noun	\N	\N	3	AB	\N	\N
+200873	دَست زَدَن به	verb	\N	\N	3	AB	\N	\N
+200874	دَست زَدَن برای	verb	\N	\N	3	AB	\N	\N
+200875	دَستکِش	noun	\N	\N	3	AB	\N	\N
+200876	دَستمال	noun	\N	\N	3	AB	\N	\N
+200877	دَسته	noun	\N	\N	3	AB	\N	\N
+200878	دَسته‌بَندی	noun	\N	\N	3	AB	\N	\N
+200879	دَشت	noun	\N	\N	3	AB	\N	\N
+200880	دَفتَر	noun	\N	\N	3	AB	\N	\N
+200881	دَفتَرچه	noun	\N	\N	3	AB	\N	\N
+200882	دَفتَرِ کار	noun	\N	\N	3	AB	\N	\N
+200883	دقیقاً	adverb	\N	\N	3	AB	\N	\N
+200884	دقیقه	noun	\N	\N	3	AB	\N	\N
+200885	دُکتُر	noun	\N	\N	3	AB	\N	\N
+200886	دُنیا	noun	\N	\N	3	AB	\N	\N
+200887	دو	number	\N	\N	3	AB	\N	\N
+200888	دوباره	adverb	\N	\N	3	AB	\N	\N
+200889	دوچَرخه	noun	\N	\N	3	AB	\N	\N
+200890	دوچَرخه‌سَواری	noun	\N	\N	3	AB	\N	\N
+200891	دور اَز	preposition	\N	\N	3	AB	\N	\N
+200892	دور اَنداختَن	verb	\N	\N	3	AB	\N	\N
+200893	دور ریختَن	verb	\N	\N	3	AB	\N	\N
+200894	دورِ چیزی خَط کِشیدَن	verb	\N	\N	3	AB	\N	\N
+200895	دوست	noun	\N	\N	3	AB	\N	\N
+200896	دوستانه	adjective	\N	\N	3	AB	\N	\N
+200897	دوست داشتَن	verb	\N	\N	3	AB	\N	\N
+200898	دوش	noun	\N	\N	3	AB	\N	\N
+200899	دوش گِرِفتَن	verb	\N	\N	3	AB	\N	\N
+200900	دوشَنبه	noun	\N	\N	3	AB	\N	\N
+200901	دوقُلو	noun	\N	\N	3	AB	\N	\N
+200902	دُوُم	adjective	\N	\N	3	AB	\N	\N
+200903	دونَفره	adjective	\N	\N	3	AB	\N	\N
+200904	دوییدَن	verb	\N	\N	3	AB	\N	\N
+200905	دی	noun	\N	\N	3	AB	\N	\N
+200906	دیدَن	verb	\N	\N	3	AB	\N	\N
+200907	دیر رَسیدَن	verb	\N	\N	3	AB	\N	\N
+200908	دیس	noun	\N	\N	3	AB	\N	\N
+200909	دیگر	adjective	\N	\N	3	AB	\N	\N
+200910	دیگری	pronoun	\N	\N	3	AB	\N	\N
+200911	دیوار	noun	\N	\N	3	AB	\N	\N
+200912	ذَخیره کَردَن	verb	\N	\N	3	AB	\N	\N
+200913	راحَت	adjective	\N	\N	3	AB	\N	\N
+200914	راستی	adverb	\N	\N	3	AB	\N	\N
+200915	راضی	adjective	\N	\N	3	AB	\N	\N
+200916	رانَندگی	noun	\N	\N	3	AB	\N	\N
+200917	رانَندگی کَردَن	verb	\N	\N	3	AB	\N	\N
+200918	راننده	noun	\N	\N	3	AB	\N	\N
+200919	راه‌آهَن	noun	\N	\N	3	AB	\N	\N
+200920	راهنما	noun	\N	\N	3	AB	\N	\N
+200921	رُبع	noun	\N	\N	3	AB	\N	\N
+200922	رَختِخواب	noun	\N	\N	3	AB	\N	\N
+200923	رِستوران	noun	\N	\N	3	AB	\N	\N
+200924	رَسمی	adjective	\N	\N	3	AB	\N	\N
+200925	رَسیدَن	verb	\N	\N	3	AB	\N	\N
+200926	رِشته	noun	\N	\N	3	AB	\N	\N
+200927	رَفتَن	verb	\N	\N	3	AB	\N	\N
+200928	رَفت‌وآمَد	noun	\N	\N	3	AB	\N	\N
+200929	رِکورد	noun	\N	\N	3	AB	\N	\N
+200930	رَنگ	noun	\N	\N	3	AB	\N	\N
+200931	روان‌شِناسی	noun	\N	\N	3	AB	\N	\N
+200932	روبه‌رویِ	preposition	\N	\N	3	AB	\N	\N
+200933	روز	noun	\N	\N	3	AB	\N	\N
+200934	روزانه	adjective	\N	\N	3	AB	\N	\N
+200935	روزنامه	noun	\N	\N	3	AB	\N	\N
+200936	روستا	noun	\N	\N	3	AB	\N	\N
+200937	روسَری	noun	\N	\N	3	AB	\N	\N
+200938	روشَن	adjective	\N	\N	3	AB	\N	\N
+200939	رویِ	preposition	\N	\N	3	AB	\N	\N
+200940	رویداد	noun	\N	\N	3	AB	\N	\N
+200941	ریاضی	noun	\N	\N	3	AB	\N	\N
+200942	ریشه	noun	\N	\N	3	AB	\N	\N
+200943	زُباله	noun	\N	\N	3	AB	\N	\N
+200944	زَبان	noun	\N	\N	3	AB	\N	\N
+200945	زَبانِ فارسی	noun	\N	\N	3	AB	\N	\N
+200946	زَبانِ گُفتار	noun	\N	\N	3	AB	\N	\N
+200947	زَبانِ مادری	noun	\N	\N	3	AB	\N	\N
+200948	زِبِر	adjective	\N	\N	3	AB	\N	\N
+200949	زَرد	adjective	\N	\N	3	AB	\N	\N
+200950	زِشت	adjective	\N	\N	3	AB	\N	\N
+200951	زَمان	noun	\N	\N	3	AB	\N	\N
+200952	زِمِستان	noun	\N	\N	3	AB	\N	\N
+200953	زَمـین	noun	\N	\N	3	AB	\N	\N
+200954	زَن	noun	\N	\N	3	AB	\N	\N
+200955	زَنبورِعَسَل	noun	\N	\N	3	AB	\N	\N
+200956	زِندگی	noun	\N	\N	3	AB	\N	\N
+200957	زِندگی کَردَن	verb	\N	\N	3	AB	\N	\N
+200958	زِنده مـاندَن	verb	\N	\N	3	AB	\N	\N
+200959	زَنگ زَدَن	verb	\N	\N	3	AB	\N	\N
+200960	زَنگ (ساعَت)	noun	\N	\N	3	AB	\N	\N
+200961	زود (صِفَت)	adjective	\N	\N	3	AB	\N	\N
+200962	زود (قِید)	adverb	\N	\N	3	AB	\N	\N
+200963	زیبا	adjective	\N	\N	3	AB	\N	\N
+200964	زیر	preposition	\N	\N	3	AB	\N	\N
+200965	زیرپایی	noun	\N	\N	3	AB	\N	\N
+200966	زیرِچیزی‌خَط کِشیدَن	verb	\N	\N	3	AB	\N	\N
+200967	زیستگاه	noun	\N	\N	3	AB	\N	\N
+200968	ژاکِت	noun	\N	\N	3	AB	\N	\N
+200969	سُؤال	noun	\N	\N	3	AB	\N	\N
+200970	ساخْتِمان	noun	\N	\N	3	AB	\N	\N
+200971	ساخْتَن	verb	\N	\N	3	AB	\N	\N
+200972	ساعَت	noun	\N	\N	3	AB	\N	\N
+200973	ساعَت دیواری	noun	\N	\N	3	AB	\N	\N
+200974	ساعَت مُچی	noun	\N	\N	3	AB	\N	\N
+200975	ساکِنان	noun	\N	\N	3	AB	\N	\N
+200976	سال	noun	\N	\N	3	AB	\N	\N
+200977	سالُنِ وَرزِشی	noun	\N	\N	3	AB	\N	\N
+200978	سایز	noun	\N	\N	3	AB	\N	\N
+200979	سایه	noun	\N	\N	3	AB	\N	\N
+200980	سایه‌اَنداخْتَن رویِ	verb	\N	\N	3	AB	\N	\N
+200981	سَبز	adjective	\N	\N	3	AB	\N	\N
+200982	سَبزه	noun	\N	\N	3	AB	\N	\N
+200983	سَبزی	noun	\N	\N	3	AB	\N	\N
+200984	سَبُک	adjective	\N	\N	3	AB	\N	\N
+200985	سِپَس	adverb	\N	\N	3	AB	\N	\N
+200986	سُتون	noun	\N	\N	3	AB	\N	\N
+200987	سَخت	adjective	\N	\N	3	AB	\N	\N
+200988	سَرد	adjective	\N	\N	3	AB	\N	\N
+200989	سَرزِنده	adjective	\N	\N	3	AB	\N	\N
+200990	سَرگَرمی	noun	\N	\N	3	AB	\N	\N
+200991	سُرمِه‌ای	adjective	\N	\N	3	AB	\N	\N
+200992	سَر‌وصِدا	noun	\N	\N	3	AB	\N	\N
+200993	سِرویس	noun	\N	\N	3	AB	\N	\N
+200994	سَریع	adjective	\N	\N	3	AB	\N	\N
+200995	سِشوار	noun	\N	\N	3	AB	\N	\N
+200996	سَطْل	noun	\N	\N	3	AB	\N	\N
+200997	سَفَر	noun	\N	\N	3	AB	\N	\N
+200998	سَفید	adjective	\N	\N	3	AB	\N	\N
+200999	سَفید‌پوسْت	adjective	\N	\N	3	AB	\N	\N
+201000	سِکّه	noun	\N	\N	3	AB	\N	\N
+201001	سَلام	noun	\N	\N	3	AB	\N	\N
+201002	سَلامَت	noun	\N	\N	3	AB	\N	\N
+201003	سِن	noun	\N	\N	3	AB	\N	\N
+201004	سَنتور	noun	\N	\N	3	AB	\N	\N
+201005	سَنگین	adjective	\N	\N	3	AB	\N	\N
+201006	سَوارشُدَن	verb	\N	\N	3	AB	\N	\N
+201007	سوپ	noun	\N	\N	3	AB	\N	\N
+201008	سوپِرمارکِت	noun	\N	\N	3	AB	\N	\N
+201009	سوراخ	noun	\N	\N	3	AB	\N	\N
+201010	سوغاتی	noun	\N	\N	3	AB	\N	\N
+201011	سِوُّم	adjective	\N	\N	3	AB	\N	\N
+201012	سونا	noun	\N	\N	3	AB	\N	\N
+201013	سه	number	\N	\N	3	AB	\N	\N
+201014	سه‌شَنبه	noun	\N	\N	3	AB	\N	\N
+201015	سیاه	adjective	\N	\N	3	AB	\N	\N
+201016	سیب	noun	\N	\N	3	AB	\N	\N
+201017	سیب‌زَمـینی	noun	\N	\N	3	AB	\N	\N
+201018	سی‌دی	noun	\N	\N	3	AB	\N	\N
+201019	سیگارکِشیدَن	verb	\N	\N	3	AB	\N	\N
+201020	سینِما	noun	\N	\N	3	AB	\N	\N
+201021	شَدید	adjective	\N	\N	3	AB	\N	\N
+201022	شاد	adjective	\N	\N	3	AB	\N	\N
+201023	شاگِرد(وَردَسْت)	noun	\N	\N	3	AB	\N	\N
+201024	شال	noun	\N	\N	3	AB	\N	\N
+201025	شالِ گَردَن	noun	\N	\N	3	AB	\N	\N
+201026	شام	noun	\N	\N	3	AB	\N	\N
+201027	شام‌خوردَن	verb	\N	\N	3	AB	\N	\N
+201028	شَب	noun	\N	\N	3	AB	\N	\N
+201029	شَبَکه	noun	\N	\N	3	AB	\N	\N
+201030	شَبیه	adjective	\N	\N	3	AB	\N	\N
+201031	شُدَن	verb	\N	\N	3	AB	\N	\N
+201032	شَرجی	adjective	\N	\N	3	AB	\N	\N
+201033	شَرق	noun	\N	\N	3	AB	\N	\N
+201034	شِرکَت	noun	\N	\N	3	AB	\N	\N
+201035	شِرکَت کَردَن	verb	\N	\N	3	AB	\N	\N
+201036	شُروع	noun	\N	\N	3	AB	\N	\N
+201037	شُروع‌شُدَن	verb	\N	\N	3	AB	\N	\N
+201038	شُستَشو	noun	\N	\N	3	AB	\N	\N
+201039	شُستَن	verb	\N	\N	3	AB	\N	\N
+201040	شِش	number	\N	\N	3	AB	\N	\N
+201041	شِعر	noun	\N	\N	3	AB	\N	\N
+201042	شُغل	noun	\N	\N	3	AB	\N	\N
+201043	شِکَر	noun	\N	\N	3	AB	\N	\N
+201044	شِکل	noun	\N	\N	3	AB	\N	\N
+201045	شُکُلات	noun	\N	\N	3	AB	\N	\N
+201046	شَلْوار	noun	\N	\N	3	AB	\N	\N
+201047	شُلوغ	adjective	\N	\N	3	AB	\N	\N
+201048	شُما	pronoun	\N	\N	3	AB	\N	\N
+201049	شُمارِش	noun	\N	\N	3	AB	\N	\N
+201050	شُماره	noun	\N	\N	3	AB	\N	\N
+201051	شُمال	noun	\N	\N	3	AB	\N	\N
+201052	شِمُردَن	verb	\N	\N	3	AB	\N	\N
+201053	شَمسی	adjective	\N	\N	3	AB	\N	\N
+201054	شَن	noun	\N	\N	3	AB	\N	\N
+201055	شِناخْتَن	verb	\N	\N	3	AB	\N	\N
+201056	شِناسه	noun	\N	\N	3	AB	\N	\N
+201057	شَنبه	noun	\N	\N	3	AB	\N	\N
+201058	شِنیدَن	verb	\N	\N	3	AB	\N	\N
+201059	شوهَر	noun	\N	\N	3	AB	\N	\N
+201060	شَهْر	noun	\N	\N	3	AB	\N	\N
+201061	شَهْریوَر	noun	\N	\N	3	AB	\N	\N
+201062	شیر(نوشیدنی)	noun	\N	\N	3	AB	\N	\N
+201063	شیمیایی	adjective	\N	\N	3	AB	\N	\N
+201064	صاف	adjective	\N	\N	3	AB	\N	\N
+201065	صُبْح	noun	\N	\N	3	AB	\N	\N
+201066	صُبْحانه‌خوردَن	verb	\N	\N	3	AB	\N	\N
+201067	صَبْرکَردَن	verb	\N	\N	3	AB	\N	\N
+201068	صُحْبَت	noun	\N	\N	3	AB	\N	\N
+201069	صُحْبَت کَردَن	verb	\N	\N	3	AB	\N	\N
+201070	صَد	number	\N	\N	3	AB	\N	\N
+201071	صِدا	noun	\N	\N	3	AB	\N	\N
+201072	صِفَت	noun	\N	\N	3	AB	\N	\N
+201073	صِفَتِ بَرتَر	noun	\N	\N	3	AB	\N	\N
+201074	صِفَتِ بَرتَرین	noun	\N	\N	3	AB	\N	\N
+201075	صَفْحه	noun	\N	\N	3	AB	\N	\N
+201076	صَنْدَلی	noun	\N	\N	3	AB	\N	\N
+201077	صورَت	noun	\N	\N	3	AB	\N	\N
+201078	صورَتی	adjective	\N	\N	3	AB	\N	\N
+201079	ضَرَر داشتَن بَرایِ	verb	\N	\N	3	AB	\N	\N
+201080	ضَعیف(نورِضَعیف)	adjective	\N	\N	3	AB	\N	\N
+201081	ضَمیرِاِشاره	noun	\N	\N	3	AB	\N	\N
+201082	ضَمیرِفاعِلی	noun	\N	\N	3	AB	\N	\N
+201083	طِبْقِ	preposition	\N	\N	3	AB	\N	\N
+201084	طَبَقه	noun	\N	\N	3	AB	\N	\N
+201085	طَبیعَت	noun	\N	\N	3	AB	\N	\N
+201086	طُلوع	noun	\N	\N	3	AB	\N	\N
+201087	طول	noun	\N	\N	3	AB	\N	\N
+201088	ظَرف	noun	\N	\N	3	AB	\N	\N
+201089	ظُهْر	noun	\N	\N	3	AB	\N	\N
+201090	عادَت	noun	\N	\N	3	AB	\N	\N
+201091	عِبارَت	noun	\N	\N	3	AB	\N	\N
+201092	عُبور	noun	\N	\N	3	AB	\N	\N
+201093	عَجَله	noun	\N	\N	3	AB	\N	\N
+201094	عَدَد	noun	\N	\N	3	AB	\N	\N
+201095	عَرْض	noun	\N	\N	3	AB	\N	\N
+201096	عَروسَک	noun	\N	\N	3	AB	\N	\N
+201097	عَروسی	noun	\N	\N	3	AB	\N	\N
+201098	عِشْق	noun	\N	\N	3	AB	\N	\N
+201099	عَصَبانی	adjective	\N	\N	3	AB	\N	\N
+201100	عَصْرانه	noun	\N	\N	3	AB	\N	\N
+201101	عُضْو	noun	\N	\N	3	AB	\N	\N
+201102	عَکْس	noun	\N	\N	3	AB	\N	\N
+201103	عَلاقه	noun	\N	\N	3	AB	\N	\N
+201104	علاقه‌مَنْد	adjective	\N	\N	3	AB	\N	\N
+201105	عَلامَت	noun	\N	\N	3	AB	\N	\N
+201106	عَلامَت‌زَدَن	verb	\N	\N	3	AB	\N	\N
+201107	عُمْر کَردَن	verb	\N	\N	3	AB	\N	\N
+201108	عَمـو	noun	\N	\N	3	AB	\N	\N
+201109	عَمّه	noun	\N	\N	3	AB	\N	\N
+201110	عُنْوان	noun	\N	\N	3	AB	\N	\N
+201111	عِینَک	noun	\N	\N	3	AB	\N	\N
+201112	عِینَکِ آفتابی	noun	\N	\N	3	AB	\N	\N
+201113	غِذا	noun	\N	\N	3	AB	\N	\N
+201114	غَرْب	noun	\N	\N	3	AB	\N	\N
+201115	غُروب	noun	\N	\N	3	AB	\N	\N
+201116	غَریبه	noun	\N	\N	3	AB	\N	\N
+201117	غِیر اَز	preposition	\N	\N	3	AB	\N	\N
+201118	فِر(مویِ فِر)	noun	\N	\N	3	AB	\N	\N
+201119	فَراغَت	noun	\N	\N	3	AB	\N	\N
+201120	فَرد	noun	\N	\N	3	AB	\N	\N
+201121	فَردا	noun	\N	\N	3	AB	\N	\N
+201122	فَرْزَنْد	noun	\N	\N	3	AB	\N	\N
+201123	فَرْش	noun	\N	\N	3	AB	\N	\N
+201124	فُرصَت	noun	\N	\N	3	AB	\N	\N
+201125	فَرْض کَردَن	verb	\N	\N	3	AB	\N	\N
+201126	فَرْق	noun	\N	\N	3	AB	\N	\N
+201127	فُروخْتَن	verb	\N	\N	3	AB	\N	\N
+201128	فُرودگاه	noun	\N	\N	3	AB	\N	\N
+201129	فَرْوَرْدین	noun	\N	\N	3	AB	\N	\N
+201130	فُروشگاه	noun	\N	\N	3	AB	\N	\N
+201131	فُروشَنْده	noun	\N	\N	3	AB	\N	\N
+201132	فَرْهَنْگ	noun	\N	\N	3	AB	\N	\N
+201133	فَصْل	noun	\N	\N	3	AB	\N	\N
+201134	فَعالیَّت	noun	\N	\N	3	AB	\N	\N
+201135	فِعْل	noun	\N	\N	3	AB	\N	\N
+201136	فِعْلِ اَمْر	noun	\N	\N	3	AB	\N	\N
+201137	فَقَط	adverb	\N	\N	3	AB	\N	\N
+201138	فِکْر کَردَن	verb	\N	\N	3	AB	\N	\N
+201139	فِلفِل	noun	\N	\N	3	AB	\N	\N
+201140	فِلفِل‌دُلمه‌ای	noun	\N	\N	3	AB	\N	\N
+201141	فِنجان	noun	\N	\N	3	AB	\N	\N
+201142	فوریه	noun	\N	\N	3	AB	\N	\N
+201143	فِهْرِست کَردَن	verb	\N	\N	3	AB	\N	\N
+201144	فیزیک	noun	\N	\N	3	AB	\N	\N
+201145	قارِه	noun	\N	\N	3	AB	\N	\N
+201146	قاضی	noun	\N	\N	3	AB	\N	\N
+201147	قاعدِه	noun	\N	\N	3	AB	\N	\N
+201148	قَبْل	adjective	\N	\N	3	AB	\N	\N
+201149	قَبْل اَز	preposition	\N	\N	3	AB	\N	\N
+201150	قَد	noun	\N	\N	3	AB	\N	\N
+201151	قَدبُلَند	adjective	\N	\N	3	AB	\N	\N
+201152	قَدکوتاه	adjective	\N	\N	3	AB	\N	\N
+201153	قَدَم	noun	\N	\N	3	AB	\N	\N
+201154	قَدَم‌زَدَن	verb	\N	\N	3	AB	\N	\N
+201155	قَدیمـی	adjective	\N	\N	3	AB	\N	\N
+201156	قَرار دادَن	verb	\N	\N	3	AB	\N	\N
+201157	قَرار داشتَن	verb	\N	\N	3	AB	\N	\N
+201158	قَرار گِرِفتَن	verb	\N	\N	3	AB	\N	\N
+201159	قِرمِز	adjective	\N	\N	3	AB	\N	\N
+201160	قِطار	noun	\N	\N	3	AB	\N	\N
+201161	قَفَس	noun	\N	\N	3	AB	\N	\N
+201162	قَفَسه	noun	\N	\N	3	AB	\N	\N
+201163	قَول‌دادَن	verb	\N	\N	3	AB	\N	\N
+201164	قَهوه	noun	\N	\N	3	AB	\N	\N
+201165	قهوه‌ای	adjective	\N	\N	3	AB	\N	\N
+201166	قِید	noun	\N	\N	3	AB	\N	\N
+201167	قیمَت	noun	\N	\N	3	AB	\N	\N
+201168	کَرِه	noun	\N	\N	3	AB	\N	\N
+201169	کِرِم	noun	\N	\N	3	AB	\N	\N
+201170	کِرْم	noun	\N	\N	3	AB	\N	\N
+201171	کِشو	noun	\N	\N	3	AB	\N	\N
+201172	کابینِت	noun	\N	\N	3	AB	\N	\N
+201173	کار	noun	\N	\N	3	AB	\N	\N
+201174	کارت	noun	\N	\N	3	AB	\N	\N
+201175	کارتِ ویزیت	noun	\N	\N	3	AB	\N	\N
+201176	کارخانه	noun	\N	\N	3	AB	\N	\N
+201177	کارشِناس	noun	\N	\N	3	AB	\N	\N
+201178	کارکَردَن	verb	\N	\N	3	AB	\N	\N
+201179	کارگَر	noun	\N	\N	3	AB	\N	\N
+201180	کارمَنْد	noun	\N	\N	3	AB	\N	\N
+201181	کارهایِ خانه	noun	\N	\N	3	AB	\N	\N
+201182	کافه	noun	\N	\N	3	AB	\N	\N
+201183	کافی شاپ	noun	\N	\N	3	AB	\N	\N
+201184	کامپیوتر	noun	\N	\N	3	AB	\N	\N
+201185	کامِل	adjective	\N	\N	3	AB	\N	\N
+201186	کامِل کَردَن	verb	\N	\N	3	AB	\N	\N
+201187	کُت	noun	\N	\N	3	AB	\N	\N
+201188	کِتاب	noun	\N	\N	3	AB	\N	\N
+201189	کِتاب‌فُروشی	noun	\N	\N	3	AB	\N	\N
+201190	کَتانی	noun	\N	\N	3	AB	\N	\N
+201191	کَثیف	adjective	\N	\N	3	AB	\N	\N
+201192	کُجا	adverb	\N	\N	3	AB	\N	\N
+201193	کُد	noun	\N	\N	3	AB	\N	\N
+201194	کُدام/که	pronoun	\N	\N	3	AB	\N	\N
+201195	کُدام‌یِک	pronoun	\N	\N	3	AB	\N	\N
+201196	کِشتی	noun	\N	\N	3	AB	\N	\N
+201197	کَشْف	noun	\N	\N	3	AB	\N	\N
+201198	کِشوَر	noun	\N	\N	3	AB	\N	\N
+201199	کَفْش	noun	\N	\N	3	AB	\N	\N
+201200	کِلاس	noun	\N	\N	3	AB	\N	\N
+201201	کُلاه	noun	\N	\N	3	AB	\N	\N
+201202	کُلاهِ آفتابی	noun	\N	\N	3	AB	\N	\N
+201203	کِلید	noun	\N	\N	3	AB	\N	\N
+201204	کَم	adjective	\N	\N	3	AB	\N	\N
+201205	کُمُد	noun	\N	\N	3	AB	\N	\N
+201206	کَمَربَند	noun	\N	\N	3	AB	\N	\N
+201207	کُمُک	noun	\N	\N	3	AB	\N	\N
+201208	کَمـی	adverb	\N	\N	3	AB	\N	\N
+201209	کِنار	preposition	\N	\N	3	AB	\N	\N
+201210	کَندو	noun	\N	\N	3	AB	\N	\N
+201211	کوتاه	adjective	\N	\N	3	AB	\N	\N
+201212	کوچَک	adjective	\N	\N	3	AB	\N	\N
+201213	کودَک	noun	\N	\N	3	AB	\N	\N
+201214	کوک‌کَردَن(ساعَت)	verb	\N	\N	3	AB	\N	\N
+201215	کوله‌پُشتی	noun	\N	\N	3	AB	\N	\N
+201216	کَویر	noun	\N	\N	3	AB	\N	\N
+201217	کُهنه	adjective	\N	\N	3	AB	\N	\N
+201218	کیف	noun	\N	\N	3	AB	\N	\N
+201219	کیفِ پول	noun	\N	\N	3	AB	\N	\N
+201220	کِیک	noun	\N	\N	3	AB	\N	\N
+201221	کیلو	noun	\N	\N	3	AB	\N	\N
+201222	کیلومِتر	noun	\N	\N	3	AB	\N	\N
+201223	کیوی	noun	\N	\N	3	AB	\N	\N
+201224	گَرْم	adjective	\N	\N	3	AB	\N	\N
+201225	گُل	noun	\N	\N	3	AB	\N	\N
+201226	گَرَم	noun	\N	\N	3	AB	\N	\N
+201227	گُذَرگاه	noun	\N	\N	3	AB	\N	\N
+201228	گِران	adjective	\N	\N	3	AB	\N	\N
+201229	گَرد و غُبار	noun	\N	\N	3	AB	\N	\N
+201230	گَردگیری	noun	\N	\N	3	AB	\N	\N
+201231	گَردگیری کَردَن	verb	\N	\N	3	AB	\N	\N
+201232	گَردَن	noun	\N	\N	3	AB	\N	\N
+201233	گِرِفتَن	verb	\N	\N	3	AB	\N	\N
+201234	گَرْم کَردَن	verb	\N	\N	3	AB	\N	\N
+201235	گُروه	noun	\N	\N	3	AB	\N	\N
+201236	گُزینه	noun	\N	\N	3	AB	\N	\N
+201237	گُفتاری	adjective	\N	\N	3	AB	\N	\N
+201238	گُفتُگو	noun	\N	\N	3	AB	\N	\N
+201239	گُفتُگوکَردَن	verb	\N	\N	3	AB	\N	\N
+201240	گُفتَن	verb	\N	\N	3	AB	\N	\N
+201241	گُلدان	noun	\N	\N	3	AB	\N	\N
+201242	گَلودَرد	noun	\N	\N	3	AB	\N	\N
+201243	گُم‌شُدَن	verb	\N	\N	3	AB	\N	\N
+201244	گوجه‌فَرَنگی	noun	\N	\N	3	AB	\N	\N
+201245	گوش	noun	\N	\N	3	AB	\N	\N
+201246	گوش‌دادَن	verb	\N	\N	3	AB	\N	\N
+201247	گوش‌کَردَن	verb	\N	\N	3	AB	\N	\N
+201248	گوشی	noun	\N	\N	3	AB	\N	\N
+201249	گیتار	noun	\N	\N	3	AB	\N	\N
+201250	گیج	adjective	\N	\N	3	AB	\N	\N
+201251	گیلاس	noun	\N	\N	3	AB	\N	\N
+201252	گینِس	noun	\N	\N	3	AB	\N	\N
+201253	لاغَر	adjective	\N	\N	3	AB	\N	\N
+201254	لامپ	noun	\N	\N	3	AB	\N	\N
+201255	لانه	noun	\N	\N	3	AB	\N	\N
+201256	لِباس	noun	\N	\N	3	AB	\N	\N
+201257	لَبَنیات	noun	\N	\N	3	AB	\N	\N
+201258	لَپ‌تاپ	noun	\N	\N	3	AB	\N	\N
+201259	لُطْفاً	adverb	\N	\N	3	AB	\N	\N
+201260	لیوان	noun	\N	\N	3	AB	\N	\N
+201261	مُؤدَبانه	adverb	\N	\N	3	AB	\N	\N
+201262	مُؤسَسۀ‌تَحقـیقاتی	noun	\N	\N	3	AB	\N	\N
+201263	مادَر	noun	\N	\N	3	AB	\N	\N
+201264	مادَربُزُرگ	noun	\N	\N	3	AB	\N	\N
+201265	مادّه	noun	\N	\N	3	AB	\N	\N
+201266	ماژیک	noun	\N	\N	3	AB	\N	\N
+201267	ماست	noun	\N	\N	3	AB	\N	\N
+201268	ماشین	noun	\N	\N	3	AB	\N	\N
+201269	مالِ کِسی بودَن	verb	\N	\N	3	AB	\N	\N
+201270	مالِکیَّت	noun	\N	\N	3	AB	\N	\N
+201271	مالیدَن	verb	\N	\N	3	AB	\N	\N
+201272	مامان	noun	\N	\N	3	AB	\N	\N
+201273	مانتو	noun	\N	\N	3	AB	\N	\N
+201274	مانندِ	preposition	\N	\N	3	AB	\N	\N
+201275	ماه	noun	\N	\N	3	AB	\N	\N
+201276	مبل	noun	\N	\N	3	AB	\N	\N
+201277	متأهل	adjective	\N	\N	3	AB	\N	\N
+201278	متر	noun	\N	\N	3	AB	\N	\N
+201279	مترجم	noun	\N	\N	3	AB	\N	\N
+201280	مترو	noun	\N	\N	3	AB	\N	\N
+201281	متشکرم	phrase	\N	\N	3	AB	\N	\N
+201282	متن	noun	\N	\N	3	AB	\N	\N
+201283	متنفر بودن	verb	\N	\N	3	AB	\N	\N
+201284	مثال	noun	\N	\N	3	AB	\N	\N
+201285	مثبت	adjective	\N	\N	3	AB	\N	\N
+201286	مثل	preposition	\N	\N	3	AB	\N	\N
+201287	مثلث	noun	\N	\N	3	AB	\N	\N
+201288	مجرد	adjective	\N	\N	3	AB	\N	\N
+201289	مجری	noun	\N	\N	3	AB	\N	\N
+201290	محافظت	noun	\N	\N	3	AB	\N	\N
+201291	محل کار	noun	\N	\N	3	AB	\N	\N
+201292	مختلف	adjective	\N	\N	3	AB	\N	\N
+201293	مخصوصاً	adverb	\N	\N	3	AB	\N	\N
+201294	مدرسه	noun	\N	\N	3	AB	\N	\N
+201295	مدرسه ابتدایی	noun	\N	\N	3	AB	\N	\N
+201296	مدرک	noun	\N	\N	3	AB	\N	\N
+201297	مدل (مدل مو)	noun	\N	\N	3	AB	\N	\N
+201298	مدیر	noun	\N	\N	3	AB	\N	\N
+201299	مراقبت	noun	\N	\N	3	AB	\N	\N
+201300	مربوط	adjective	\N	\N	3	AB	\N	\N
+201301	مربی	noun	\N	\N	3	AB	\N	\N
+201302	مرتب	adjective	\N	\N	3	AB	\N	\N
+201303	مرتب کردن	verb	\N	\N	3	AB	\N	\N
+201304	مرحله	noun	\N	\N	3	AB	\N	\N
+201305	مرد	noun	\N	\N	3	AB	\N	\N
+201306	مرداد	noun	\N	\N	3	AB	\N	\N
+201307	مرغ مینا	noun	\N	\N	3	AB	\N	\N
+201308	مسابقه	noun	\N	\N	3	AB	\N	\N
+201309	مسافر	noun	\N	\N	3	AB	\N	\N
+201310	مسافرت	noun	\N	\N	3	AB	\N	\N
+201311	مسافرت رفتن	verb	\N	\N	3	AB	\N	\N
+201312	مستقیم	adjective	\N	\N	3	AB	\N	\N
+201313	مستند	noun	\N	\N	3	AB	\N	\N
+201314	مسجد	noun	\N	\N	3	AB	\N	\N
+201315	مسواک	noun	\N	\N	3	AB	\N	\N
+201316	مسیر	noun	\N	\N	3	AB	\N	\N
+201317	مشاور تحصیلی	noun	\N	\N	3	AB	\N	\N
+201318	مشتری	noun	\N	\N	3	AB	\N	\N
+201319	مشخص کردن	verb	\N	\N	3	AB	\N	\N
+201320	مشکی	adjective	\N	\N	3	AB	\N	\N
+201321	مشهور	adjective	\N	\N	3	AB	\N	\N
+201322	مصدر	noun	\N	\N	3	AB	\N	\N
+201323	مضر	adjective	\N	\N	3	AB	\N	\N
+201324	مطالعه	noun	\N	\N	3	AB	\N	\N
+201325	مطالعه کردن	verb	\N	\N	3	AB	\N	\N
+201326	مطب	noun	\N	\N	3	AB	\N	\N
+201327	معتدل	adjective	\N	\N	3	AB	\N	\N
+201328	معرفی	noun	\N	\N	3	AB	\N	\N
+201329	معرفی کردن	verb	\N	\N	3	AB	\N	\N
+201330	معروف	adjective	\N	\N	3	AB	\N	\N
+201331	معلم	noun	\N	\N	3	AB	\N	\N
+201332	معلول	adjective	\N	\N	3	AB	\N	\N
+201333	معما	noun	\N	\N	3	AB	\N	\N
+201334	معمولاً	adverb	\N	\N	3	AB	\N	\N
+201335	معمولی	adjective	\N	\N	3	AB	\N	\N
+201336	مغازه	noun	\N	\N	3	AB	\N	\N
+201337	مفرد	adjective	\N	\N	3	AB	\N	\N
+201338	مفصل	adjective	\N	\N	3	AB	\N	\N
+201339	مفید	adjective	\N	\N	3	AB	\N	\N
+201340	مقاله	noun	\N	\N	3	AB	\N	\N
+201341	مقایسه	noun	\N	\N	3	AB	\N	\N
+201342	مقایسه کردن	verb	\N	\N	3	AB	\N	\N
+201343	مقصد	noun	\N	\N	3	AB	\N	\N
+201344	مقوایی	adjective	\N	\N	3	AB	\N	\N
+201345	مکالمه	noun	\N	\N	3	AB	\N	\N
+201346	مکان	noun	\N	\N	3	AB	\N	\N
+201347	مکان عمومی	noun	\N	\N	3	AB	\N	\N
+201348	مکعب	noun	\N	\N	3	AB	\N	\N
+201349	ملکی	adjective	\N	\N	3	AB	\N	\N
+201350	ملی	adjective	\N	\N	3	AB	\N	\N
+201351	ملیت	noun	\N	\N	3	AB	\N	\N
+201352	ممنون!	phrase	\N	\N	3	AB	\N	\N
+201353	من	pronoun	\N	\N	3	AB	\N	\N
+201354	مناسب	adjective	\N	\N	3	AB	\N	\N
+201355	منزل	noun	\N	\N	3	AB	\N	\N
+201356	منشی	noun	\N	\N	3	AB	\N	\N
+201357	منفی	adjective	\N	\N	3	AB	\N	\N
+201358	مو	noun	\N	\N	3	AB	\N	\N
+201359	مواد	noun	\N	\N	3	AB	\N	\N
+201360	موبایل (تلفن همراه)	noun	\N	\N	3	AB	\N	\N
+201361	موجود	noun	\N	\N	3	AB	\N	\N
+201362	موز	noun	\N	\N	3	AB	\N	\N
+201363	موسیقی	noun	\N	\N	3	AB	\N	\N
+201364	موضوع	noun	\N	\N	3	AB	\N	\N
+201365	موقع	noun	\N	\N	3	AB	\N	\N
+201366	موقعیت	noun	\N	\N	3	AB	\N	\N
+201367	مهر	noun	\N	\N	3	AB	\N	\N
+201368	مهربان	adjective	\N	\N	3	AB	\N	\N
+201369	مهم	adjective	\N	\N	3	AB	\N	\N
+201370	مهمان	noun	\N	\N	3	AB	\N	\N
+201371	مهمانی	noun	\N	\N	3	AB	\N	\N
+201372	مهندس	noun	\N	\N	3	AB	\N	\N
+201373	میدان	noun	\N	\N	3	AB	\N	\N
+201374	میز	noun	\N	\N	3	AB	\N	\N
+201375	میزبان	noun	\N	\N	3	AB	\N	\N
+201376	میز تحریر	noun	\N	\N	3	AB	\N	\N
+201377	میلیون	number	\N	\N	3	AB	\N	\N
+201378	میوه	noun	\N	\N	3	AB	\N	\N
+201379	میوه فروش	noun	\N	\N	3	AB	\N	\N
+201380	میوه فروشی	noun	\N	\N	3	AB	\N	\N
+201381	نابغه	noun	\N	\N	3	AB	\N	\N
+201382	نابینا	adjective	\N	\N	3	AB	\N	\N
+201383	نادرست	adjective	\N	\N	3	AB	\N	\N
+201384	نارنجی	adjective	\N	\N	3	AB	\N	\N
+201385	نام	noun	\N	\N	3	AB	\N	\N
+201386	نام خانوادگی	noun	\N	\N	3	AB	\N	\N
+201387	نامرتب	adjective	\N	\N	3	AB	\N	\N
+201388	نان	noun	\N	\N	3	AB	\N	\N
+201389	ناهار	noun	\N	\N	3	AB	\N	\N
+201390	نبش	noun	\N	\N	3	AB	\N	\N
+201391	نجاری	noun	\N	\N	3	AB	\N	\N
+201392	نرم	adjective	\N	\N	3	AB	\N	\N
+201393	نرمال	adjective	\N	\N	3	AB	\N	\N
+201394	نزدیک	adjective	\N	\N	3	AB	\N	\N
+201395	نزدیک شدن	verb	\N	\N	3	AB	\N	\N
+201396	نسبت	noun	\N	\N	3	AB	\N	\N
+201397	نسبت داشتن با	verb	\N	\N	3	AB	\N	\N
+201398	نشانه	noun	\N	\N	3	AB	\N	\N
+201399	نشانی	noun	\N	\N	3	AB	\N	\N
+201400	نشستن	verb	\N	\N	3	AB	\N	\N
+201401	نظر	noun	\N	\N	3	AB	\N	\N
+201402	نفت	noun	\N	\N	3	AB	\N	\N
+201403	نفر	noun	\N	\N	3	AB	\N	\N
+201404	نقشه	noun	\N	\N	3	AB	\N	\N
+201405	نقطه	noun	\N	\N	3	AB	\N	\N
+201406	نقطه چین	noun	\N	\N	3	AB	\N	\N
+201407	نگاه کردن	verb	\N	\N	3	AB	\N	\N
+201408	نگران (بودن)	verb	\N	\N	3	AB	\N	\N
+201409	نگهبان	noun	\N	\N	3	AB	\N	\N
+201410	نگهبانی	noun	\N	\N	3	AB	\N	\N
+201411	نگهبانی دادن	verb	\N	\N	3	AB	\N	\N
+201412	نگهداری کردن	verb	\N	\N	3	AB	\N	\N
+201413	نماد	noun	\N	\N	3	AB	\N	\N
+201414	نمره	noun	\N	\N	3	AB	\N	\N
+201415	نمونه	noun	\N	\N	3	AB	\N	\N
+201416	نوبت	noun	\N	\N	3	AB	\N	\N
+201417	نور	noun	\N	\N	3	AB	\N	\N
+201418	نوروز	noun	\N	\N	3	AB	\N	\N
+201419	نوشابه	noun	\N	\N	3	AB	\N	\N
+201420	نوشتاری	adjective	\N	\N	3	AB	\N	\N
+201421	نوشتن	verb	\N	\N	3	AB	\N	\N
+201422	نوشیدنی	noun	\N	\N	3	AB	\N	\N
+201423	نوه	noun	\N	\N	3	AB	\N	\N
+201424	نویسنده	noun	\N	\N	3	AB	\N	\N
+201425	نه	number	\N	\N	3	AB	\N	\N
+201426	نهایی	adjective	\N	\N	3	AB	\N	\N
+201427	نهی	noun	\N	\N	3	AB	\N	\N
+201428	نیاز	noun	\N	\N	3	AB	\N	\N
+201429	نیم	noun	\N	\N	3	AB	\N	\N
+201430	نیمرو	noun	\N	\N	3	AB	\N	\N
+201431	نیمه شب	noun	\N	\N	3	AB	\N	\N
+201432	وارد کردن	verb	\N	\N	3	AB	\N	\N
+201433	واژه	noun	\N	\N	3	AB	\N	\N
+201434	واژه سازی	noun	\N	\N	3	AB	\N	\N
+201435	والدین	noun	\N	\N	3	AB	\N	\N
+201436	وبگردی	noun	\N	\N	3	AB	\N	\N
+201437	وبگردی کردن	verb	\N	\N	3	AB	\N	\N
+201438	وجود داشتن	verb	\N	\N	3	AB	\N	\N
+201439	وحشی	adjective	\N	\N	3	AB	\N	\N
+201440	ورزش	noun	\N	\N	3	AB	\N	\N
+201441	ورزشکار	noun	\N	\N	3	AB	\N	\N
+201442	ورزش کردن	verb	\N	\N	3	AB	\N	\N
+201443	وزن	noun	\N	\N	3	AB	\N	\N
+201444	وسایل	noun	\N	\N	3	AB	\N	\N
+201445	وسایل شخصی	noun	\N	\N	3	AB	\N	\N
+201446	وسط	noun	\N	\N	3	AB	\N	\N
+201447	وسیله	noun	\N	\N	3	AB	\N	\N
+201448	وسیله نقلیه	noun	\N	\N	3	AB	\N	\N
+201449	وصل کردن	verb	\N	\N	3	AB	\N	\N
+201450	وقت	noun	\N	\N	3	AB	\N	\N
+201451	وقت دادن	verb	\N	\N	3	AB	\N	\N
+201452	وقت داشتن	verb	\N	\N	3	AB	\N	\N
+201453	وقت گرفتن	verb	\N	\N	3	AB	\N	\N
+201454	وقت گیر	adjective	\N	\N	3	AB	\N	\N
+201455	وقتی	conjunction	\N	\N	3	AB	\N	\N
+201456	وکیل	noun	\N	\N	3	AB	\N	\N
+201457	ولی	conjunction	\N	\N	3	AB	\N	\N
+201458	ویترین	noun	\N	\N	3	AB	\N	\N
+201459	ویژگی	noun	\N	\N	3	AB	\N	\N
+201460	ویلا	noun	\N	\N	3	AB	\N	\N
+201461	ویلچر	noun	\N	\N	3	AB	\N	\N
+201462	هتل	noun	\N	\N	3	AB	\N	\N
+201463	هرگز	adverb	\N	\N	3	AB	\N	\N
+201464	هزار	number	\N	\N	3	AB	\N	\N
+201465	هشت	number	\N	\N	3	AB	\N	\N
+201466	هفت	number	\N	\N	3	AB	\N	\N
+201467	هفتگی	adjective	\N	\N	3	AB	\N	\N
+201468	هفته	noun	\N	\N	3	AB	\N	\N
+201469	همچنین	adverb	\N	\N	3	AB	\N	\N
+201470	همدیگر	pronoun	\N	\N	3	AB	\N	\N
+201471	همسایه	noun	\N	\N	3	AB	\N	\N
+201472	همسر	noun	\N	\N	3	AB	\N	\N
+201473	همکار	noun	\N	\N	3	AB	\N	\N
+201474	هم کلاسی	noun	\N	\N	3	AB	\N	\N
+201475	همه	pronoun	\N	\N	3	AB	\N	\N
+201476	همه چیز	noun	\N	\N	3	AB	\N	\N
+201477	همیشه	adverb	\N	\N	3	AB	\N	\N
+201478	همین طور	adverb	\N	\N	3	AB	\N	\N
+201479	هنر	noun	\N	\N	3	AB	\N	\N
+201480	هوا	noun	\N	\N	3	AB	\N	\N
+201481	هواپیما	noun	\N	\N	3	AB	\N	\N
+201482	هویج	noun	\N	\N	3	AB	\N	\N
+201483	هیچ کس	pronoun	\N	\N	3	AB	\N	\N
+201484	هیچ وقت	adverb	\N	\N	3	AB	\N	\N
+201485	یاد گرفتن	verb	\N	\N	3	AB	\N	\N
+201486	یادگیری	noun	\N	\N	3	AB	\N	\N
+201487	یک/یکی	number	\N	\N	3	AB	\N	\N
+201488	یکشنبه	noun	\N	\N	3	AB	\N	\N
+201489	یوگا	noun	\N	\N	3	AB	\N	\N
+201490	یک	det	\N	\N	3	A1	\N	\N
+201491	یک	det	\N	\N	3	A1	\N	\N
+201492	درباره	prep	\N	\N	3	A1	\N	\N
+201493	بالای	prep	\N	\N	3	A1	\N	\N
+201494	آن طرف	prep	\N	\N	3	A1	\N	\N
+201495	عمل	n	\N	\N	3	A1	\N	\N
+201496	فعالیت	n	\N	\N	3	A1	\N	\N
+201497	بازیگر	n	\N	\N	3	A1	\N	\N
+201498	بازیگر زن	n	\N	\N	3	A1	\N	\N
+201499	اضافه کردن	v	\N	\N	3	A1	\N	\N
+201500	آدرس	n	\N	\N	3	A1	\N	\N
+201501	بزرگسال	n	\N	\N	3	A1	\N	\N
+201502	ترسیده	adj	\N	\N	3	A1	\N	\N
+201503	بعد از	prep	\N	\N	3	A1	\N	\N
+201504	بعد از ظهر	n	\N	\N	3	A1	\N	\N
+201505	دوباره	adv	\N	\N	3	A1	\N	\N
+201506	سن	n	\N	\N	3	A1	\N	\N
+201507	پیش	adv	\N	\N	3	A1	\N	\N
+201508	هوا	n	\N	\N	3	A1	\N	\N
+201509	فرودگاه	n	\N	\N	3	A1	\N	\N
+201510	همه	det	\N	\N	3	A1	\N	\N
+201511	خوب است	adj	\N	\N	3	A1	\N	\N
+201512	همچنین	adv	\N	\N	3	A1	\N	\N
+201513	همیشه	adv	\N	\N	3	A1	\N	\N
+201514	شگفت‌انگیز	adj	\N	\N	3	A1	\N	\N
+201515	و	conj	\N	\N	3	A1	\N	\N
+201516	عصبانی	adj	\N	\N	3	A1	\N	\N
+201517	حیوان	n	\N	\N	3	A1	\N	\N
+201518	دیگری	det	\N	\N	3	A1	\N	\N
+201519	جواب	n	\N	\N	3	A1	\N	\N
+201520	هر	det	\N	\N	3	A1	\N	\N
+201521	هر کسی	pron	\N	\N	3	A1	\N	\N
+201522	هر چیزی	pron	\N	\N	3	A1	\N	\N
+201523	آپارتمان	n	\N	\N	3	A1	\N	\N
+201524	سیب	n	\N	\N	3	A1	\N	\N
+201525	آوریل	n	\N	\N	3	A1	\N	\N
+201526	منطقه	n	\N	\N	3	A1	\N	\N
+201527	بازو	n	\N	\N	3	A1	\N	\N
+201528	اطراف	prep	\N	\N	3	A1	\N	\N
+201529	رسیدن	v	\N	\N	3	A1	\N	\N
+201530	هنر	n	\N	\N	3	A1	\N	\N
+201531	مقاله	n	\N	\N	3	A1	\N	\N
+201532	هنرمند	n	\N	\N	3	A1	\N	\N
+201533	مثل	prep	\N	\N	3	A1	\N	\N
+201534	پرسیدن	v	\N	\N	3	A1	\N	\N
+201535	در	prep	\N	\N	3	A1	\N	\N
+201536	اوت	n	\N	\N	3	A1	\N	\N
+201537	عمه	n	\N	\N	3	A1	\N	\N
+201538	پاییز	n	\N	\N	3	A1	\N	\N
+201539	دور	adv	\N	\N	3	A1	\N	\N
+201540	نوزاد	n	\N	\N	3	A1	\N	\N
+201541	پشت	adv	\N	\N	3	A1	\N	\N
+201542	بد	adj	\N	\N	3	A1	\N	\N
+201543	کیف	n	\N	\N	3	A1	\N	\N
+201544	توپ	n	\N	\N	3	A1	\N	\N
+201545	موز	n	\N	\N	3	A1	\N	\N
+201546	گروه موسیقی	n	\N	\N	3	A1	\N	\N
+201547	بانک	n	\N	\N	3	A1	\N	\N
+201548	بار	n	\N	\N	3	A1	\N	\N
+201549	حمام	n	\N	\N	3	A1	\N	\N
+201550	دستشویی	n	\N	\N	3	A1	\N	\N
+201551	بودن	v	\N	\N	3	A1	\N	\N
+201552	ساحل	n	\N	\N	3	A1	\N	\N
+201553	زیبا	adj	\N	\N	3	A1	\N	\N
+201554	چون	conj	\N	\N	3	A1	\N	\N
+201555	شدن	v	\N	\N	3	A1	\N	\N
+201556	تخت	n	\N	\N	3	A1	\N	\N
+201557	اتاق خواب	n	\N	\N	3	A1	\N	\N
+201558	آبجو	n	\N	\N	3	A1	\N	\N
+201559	قبل از	prep	\N	\N	3	A1	\N	\N
+201560	شروع کردن	v	\N	\N	3	A1	\N	\N
+201561	ابتدا	n	\N	\N	3	A1	\N	\N
+201562	پشت سر	prep	\N	\N	3	A1	\N	\N
+201563	باور کردن	v	\N	\N	3	A1	\N	\N
+201564	زیر	prep	\N	\N	3	A1	\N	\N
+201565	بهترین	adj	\N	\N	3	A1	\N	\N
+201566	بهتر	adj	\N	\N	3	A1	\N	\N
+201567	بین	prep	\N	\N	3	A1	\N	\N
+201568	دوچرخه	n	\N	\N	3	A1	\N	\N
+201569	بزرگ	adj	\N	\N	3	A1	\N	\N
+201570	کافه	n	\N	\N	3	A1	\N	\N
+201571	کیک	n	\N	\N	3	A1	\N	\N
+201572	زنگ زدن	v	\N	\N	3	A1	\N	\N
+201573	دوربین	n	\N	\N	3	A1	\N	\N
+201574	توانستن	v	\N	\N	3	A1	\N	\N
+201575	ماشین	n	\N	\N	3	A1	\N	\N
+201576	کارت	n	\N	\N	3	A1	\N	\N
+201577	هویج	n	\N	\N	3	A1	\N	\N
+201578	حمل کردن	v	\N	\N	3	A1	\N	\N
+201579	گربه	n	\N	\N	3	A1	\N	\N
+201580	سی‌دی	n	\N	\N	3	A1	\N	\N
+201581	سنت	n	\N	\N	3	A1	\N	\N
+201582	مرکز	n	\N	\N	3	A1	\N	\N
+201583	صندلی	n	\N	\N	3	A1	\N	\N
+201584	تغییر دادن	v	\N	\N	3	A1	\N	\N
+201585	نمودار	n	\N	\N	3	A1	\N	\N
+201586	ارزان	adj	\N	\N	3	A1	\N	\N
+201587	بررسی کردن	v	\N	\N	3	A1	\N	\N
+201588	پنیر	n	\N	\N	3	A1	\N	\N
+201589	مرغ	n	\N	\N	3	A1	\N	\N
+201590	بچه	n	\N	\N	3	A1	\N	\N
+201591	شکلات	n	\N	\N	3	A1	\N	\N
+201592	انتخاب کردن	v	\N	\N	3	A1	\N	\N
+201593	سینما	n	\N	\N	3	A1	\N	\N
+201594	شهر	n	\N	\N	3	A1	\N	\N
+201595	کلاس	n	\N	\N	3	A1	\N	\N
+201596	کلاس درس	n	\N	\N	3	A1	\N	\N
+201597	تمیز	adj	\N	\N	3	A1	\N	\N
+201598	بالا رفتن	v	\N	\N	3	A1	\N	\N
+201599	ساعت	n	\N	\N	3	A1	\N	\N
+201600	بستن	v	\N	\N	3	A1	\N	\N
+201601	لباس	n	\N	\N	3	A1	\N	\N
+201602	باشگاه	n	\N	\N	3	A1	\N	\N
+201603	کت	n	\N	\N	3	A1	\N	\N
+201604	قهوه	n	\N	\N	3	A1	\N	\N
+201605	سرد	adj	\N	\N	3	A1	\N	\N
+201606	دانشکده	n	\N	\N	3	A1	\N	\N
+201607	رنگ	n	\N	\N	3	A1	\N	\N
+201608	آمدن	v	\N	\N	3	A1	\N	\N
+201609	شرکت	n	\N	\N	3	A1	\N	\N
+201610	تکمیل کردن	v	\N	\N	3	A1	\N	\N
+201611	کامپیوتر	n	\N	\N	3	A1	\N	\N
+201612	کنسرت	n	\N	\N	3	A1	\N	\N
+201613	آشپزی کردن	v	\N	\N	3	A1	\N	\N
+201614	آشپزی	n	\N	\N	3	A1	\N	\N
+201615	خنک	adj	\N	\N	3	A1	\N	\N
+201616	درست	adj	\N	\N	3	A1	\N	\N
+201617	قیمت داشتن	v	\N	\N	3	A1	\N	\N
+201618	می‌توانست	v	\N	\N	3	A1	\N	\N
+201619	کشور	n	\N	\N	3	A1	\N	\N
+201620	دوره	n	\N	\N	3	A1	\N	\N
+201621	پسرعمو	n	\N	\N	3	A1	\N	\N
+201622	گاو	n	\N	\N	3	A1	\N	\N
+201623	خامه	n	\N	\N	3	A1	\N	\N
+201624	فنجان	n	\N	\N	3	A1	\N	\N
+201625	بابا	n	\N	\N	3	A1	\N	\N
+201626	روزانه	adj	\N	\N	3	A1	\N	\N
+201627	رقصیدن	v	\N	\N	3	A1	\N	\N
+201628	رقصنده	n	\N	\N	3	A1	\N	\N
+201629	رقص	n	\N	\N	3	A1	\N	\N
+201630	خطرناک	adj	\N	\N	3	A1	\N	\N
+201631	تاریک	adj	\N	\N	3	A1	\N	\N
+201632	تاریخ	n	\N	\N	3	A1	\N	\N
+201633	دختر	n	\N	\N	3	A1	\N	\N
+201634	روز	n	\N	\N	3	A1	\N	\N
+201635	عزیز	adj	\N	\N	3	A1	\N	\N
+201636	دسامبر	n	\N	\N	3	A1	\N	\N
+201637	تصمیم گرفتن	v	\N	\N	3	A1	\N	\N
+201638	خوشمزه	adj	\N	\N	3	A1	\N	\N
+201639	میز	n	\N	\N	3	A1	\N	\N
+201640	جزئیات	n	\N	\N	3	A1	\N	\N
+201641	گفتگو	n	\N	\N	3	A1	\N	\N
+201642	فرهنگ لغت	n	\N	\N	3	A1	\N	\N
+201643	مردن	v	\N	\N	3	A1	\N	\N
+201644	رژیم غذایی	n	\N	\N	3	A1	\N	\N
+201645	متفاوت	adj	\N	\N	3	A1	\N	\N
+201646	دشوار	adj	\N	\N	3	A1	\N	\N
+201647	شام	n	\N	\N	3	A1	\N	\N
+201648	کثیف	adj	\N	\N	3	A1	\N	\N
+201649	ظرف	n	\N	\N	3	A1	\N	\N
+201650	انجام دادن	v	\N	\N	3	A1	\N	\N
+201651	دکتر	n	\N	\N	3	A1	\N	\N
+201652	سگ	n	\N	\N	3	A1	\N	\N
+201653	دلار	n	\N	\N	3	A1	\N	\N
+201654	در	n	\N	\N	3	A1	\N	\N
+201655	پایین	adv	\N	\N	3	A1	\N	\N
+201656	طبقه پایین	adv	\N	\N	3	A1	\N	\N
+201657	کشیدن	v	\N	\N	3	A1	\N	\N
+201658	لباس	n	\N	\N	3	A1	\N	\N
+201659	نوشیدن	v	\N	\N	3	A1	\N	\N
+201660	رانندگی کردن	v	\N	\N	3	A1	\N	\N
+201661	راننده	n	\N	\N	3	A1	\N	\N
+201662	رانندگی	n	\N	\N	3	A1	\N	\N
+201663	در طول	prep	\N	\N	3	A1	\N	\N
+201664	دی‌وی‌دی	n	\N	\N	3	A1	\N	\N
+201665	هر	det	\N	\N	3	A1	\N	\N
+201666	گوش	n	\N	\N	3	A1	\N	\N
+201667	زود	adj	\N	\N	3	A1	\N	\N
+201668	شرق	n	\N	\N	3	A1	\N	\N
+201669	آسان	adj	\N	\N	3	A1	\N	\N
+201670	خوردن	v	\N	\N	3	A1	\N	\N
+201671	تخم مرغ	n	\N	\N	3	A1	\N	\N
+201672	هشت	num	\N	\N	3	A1	\N	\N
+201673	هجده	num	\N	\N	3	A1	\N	\N
+201674	هشتاد	num	\N	\N	3	A1	\N	\N
+201675	فیل	n	\N	\N	3	A1	\N	\N
+201676	یازده	num	\N	\N	3	A1	\N	\N
+201677	دیگر	adv	\N	\N	3	A1	\N	\N
+201678	ایمیل	n	\N	\N	3	A1	\N	\N
+201679	پایان	n	\N	\N	3	A1	\N	\N
+201680	لذت بردن	v	\N	\N	3	A1	\N	\N
+201681	کافی	det	\N	\N	3	A1	\N	\N
+201682	یورو	n	\N	\N	3	A1	\N	\N
+201683	حتی	adv	\N	\N	3	A1	\N	\N
+201684	عصر	n	\N	\N	3	A1	\N	\N
+201685	تا به حال	adv	\N	\N	3	A1	\N	\N
+201686	هر	det	\N	\N	3	A1	\N	\N
+201687	همه کس	pron	\N	\N	3	A1	\N	\N
+201688	همه	pron	\N	\N	3	A1	\N	\N
+201689	همه چیز	pron	\N	\N	3	A1	\N	\N
+201690	امتحان	n	\N	\N	3	A1	\N	\N
+201691	مثال	n	\N	\N	3	A1	\N	\N
+201692	هیجان‌زده	adj	\N	\N	3	A1	\N	\N
+201693	هیجان‌انگیز	adj	\N	\N	3	A1	\N	\N
+201694	تمرین	n	\N	\N	3	A1	\N	\N
+201695	گران	adj	\N	\N	3	A1	\N	\N
+201696	توضیح دادن	v	\N	\N	3	A1	\N	\N
+201697	اضافه	adj	\N	\N	3	A1	\N	\N
+201698	چشم	n	\N	\N	3	A1	\N	\N
+201699	صورت	n	\N	\N	3	A1	\N	\N
+201700	افتادن	v	\N	\N	3	A1	\N	\N
+201701	غلط	adj	\N	\N	3	A1	\N	\N
+201702	خانواده	n	\N	\N	3	A1	\N	\N
+201703	مشهور	adj	\N	\N	3	A1	\N	\N
+201704	فوق‌العاده	adj	\N	\N	3	A1	\N	\N
+201705	دور	adv	\N	\N	3	A1	\N	\N
+201706	مزرعه	n	\N	\N	3	A1	\N	\N
+201707	کشاورز	n	\N	\N	3	A1	\N	\N
+201708	سریع	adj	\N	\N	3	A1	\N	\N
+201709	چاق	adj	\N	\N	3	A1	\N	\N
+201710	پدر	n	\N	\N	3	A1	\N	\N
+201711	مورد علاقه	adj	\N	\N	3	A1	\N	\N
+201712	فوریه	n	\N	\N	3	A1	\N	\N
+201713	احساس کردن	v	\N	\N	3	A1	\N	\N
+201714	جشنواره	n	\N	\N	3	A1	\N	\N
+201715	چند	det	\N	\N	3	A1	\N	\N
+201716	پانزده	num	\N	\N	3	A1	\N	\N
+201717	پنجم	num	\N	\N	3	A1	\N	\N
+201718	پنجاه	num	\N	\N	3	A1	\N	\N
+201719	پر کردن	v	\N	\N	3	A1	\N	\N
+201720	فیلم	n	\N	\N	3	A1	\N	\N
+201721	نهایی	adj	\N	\N	3	A1	\N	\N
+201722	پیدا کردن	v	\N	\N	3	A1	\N	\N
+201723	خوب	adj	\N	\N	3	A1	\N	\N
+201724	تمام کردن	v	\N	\N	3	A1	\N	\N
+201725	آتش	n	\N	\N	3	A1	\N	\N
+201726	اول	num	\N	\N	3	A1	\N	\N
+201727	ماهی	n	\N	\N	3	A1	\N	\N
+201728	پنج	num	\N	\N	3	A1	\N	\N
+201729	درست کردن	v	\N	\N	3	A1	\N	\N
+201730	آپارتمان	n	\N	\N	3	A1	\N	\N
+201731	پرواز	n	\N	\N	3	A1	\N	\N
+201732	کف	n	\N	\N	3	A1	\N	\N
+201733	گل	n	\N	\N	3	A1	\N	\N
+201734	پرواز کردن	v	\N	\N	3	A1	\N	\N
+201735	دنبال کردن	v	\N	\N	3	A1	\N	\N
+201736	غذا	n	\N	\N	3	A1	\N	\N
+201737	پا	n	\N	\N	3	A1	\N	\N
+201738	فوتبال	n	\N	\N	3	A1	\N	\N
+201739	برای	prep	\N	\N	3	A1	\N	\N
+201740	فراموش کردن	v	\N	\N	3	A1	\N	\N
+201741	فرم	n	\N	\N	3	A1	\N	\N
+201742	چهل	num	\N	\N	3	A1	\N	\N
+201743	چهار	num	\N	\N	3	A1	\N	\N
+201744	چهارده	num	\N	\N	3	A1	\N	\N
+201745	چهارم	num	\N	\N	3	A1	\N	\N
+201746	رایگان	adj	\N	\N	3	A1	\N	\N
+201747	جمعه	n	\N	\N	3	A1	\N	\N
+201748	دوست	n	\N	\N	3	A1	\N	\N
+201749	دوستانه	adj	\N	\N	3	A1	\N	\N
+201750	از	prep	\N	\N	3	A1	\N	\N
+201751	جلو	n	\N	\N	3	A1	\N	\N
+201752	میوه	n	\N	\N	3	A1	\N	\N
+201753	پر	adj	\N	\N	3	A1	\N	\N
+201754	سرگرمی	n	\N	\N	3	A1	\N	\N
+201755	خنده‌دار	adj	\N	\N	3	A1	\N	\N
+201756	آینده	n	\N	\N	3	A1	\N	\N
+201757	بازی	n	\N	\N	3	A1	\N	\N
+201758	باغ	n	\N	\N	3	A1	\N	\N
+201759	جغرافیا	n	\N	\N	3	A1	\N	\N
+201760	گرفتن	v	\N	\N	3	A1	\N	\N
+201761	دختر	n	\N	\N	3	A1	\N	\N
+201762	دوست دختر	n	\N	\N	3	A1	\N	\N
+201763	دادن	v	\N	\N	3	A1	\N	\N
+201764	لیوان	n	\N	\N	3	A1	\N	\N
+201765	رفتن	v	\N	\N	3	A1	\N	\N
+201766	خوب	adj	\N	\N	3	A1	\N	\N
+201767	خداحافظ	interj	\N	\N	3	A1	\N	\N
+201768	پدربزرگ	n	\N	\N	3	A1	\N	\N
+201769	مادربزرگ	n	\N	\N	3	A1	\N	\N
+201770	پدر یا مادربزرگ	n	\N	\N	3	A1	\N	\N
+201771	عالی	adj	\N	\N	3	A1	\N	\N
+201772	سبز	adj	\N	\N	3	A1	\N	\N
+201773	خاکستری	adj	\N	\N	3	A1	\N	\N
+201774	گروه	n	\N	\N	3	A1	\N	\N
+201775	رشد کردن	v	\N	\N	3	A1	\N	\N
+201776	حدس زدن	v	\N	\N	3	A1	\N	\N
+201777	گیتار	n	\N	\N	3	A1	\N	\N
+201778	باشگاه	n	\N	\N	3	A1	\N	\N
+201779	مو	n	\N	\N	3	A1	\N	\N
+201780	نصف	n	\N	\N	3	A1	\N	\N
+201781	دست	n	\N	\N	3	A1	\N	\N
+201782	اتفاق افتادن	v	\N	\N	3	A1	\N	\N
+201783	خوشحال	adj	\N	\N	3	A1	\N	\N
+201784	سخت	adj	\N	\N	3	A1	\N	\N
+201785	کلاه	n	\N	\N	3	A1	\N	\N
+201786	متنفر بودن	v	\N	\N	3	A1	\N	\N
+201787	داشتن	v	\N	\N	3	A1	\N	\N
+201788	باید	v	\N	\N	3	A1	\N	\N
+201789	او	pron	\N	\N	3	A1	\N	\N
+201790	سر	n	\N	\N	3	A1	\N	\N
+201791	سلامت	n	\N	\N	3	A1	\N	\N
+201792	سالم	adj	\N	\N	3	A1	\N	\N
+201793	شنیدن	v	\N	\N	3	A1	\N	\N
+201794	سلام	interj	\N	\N	3	A1	\N	\N
+201795	کمک کردن	v	\N	\N	3	A1	\N	\N
+201796	او را	pron	\N	\N	3	A1	\N	\N
+201797	اینجا	adv	\N	\N	3	A1	\N	\N
+201798	هی	interj	\N	\N	3	A1	\N	\N
+201799	سلام	interj	\N	\N	3	A1	\N	\N
+201800	بلند	adj	\N	\N	3	A1	\N	\N
+201801	به او	pron	\N	\N	3	A1	\N	\N
+201802	مال او	det	\N	\N	3	A1	\N	\N
+201803	تاریخ	n	\N	\N	3	A1	\N	\N
+201804	سرگرمی	n	\N	\N	3	A1	\N	\N
+201805	تعطیلات	n	\N	\N	3	A1	\N	\N
+201806	خانه	n	\N	\N	3	A1	\N	\N
+201807	تکلیف	n	\N	\N	3	A1	\N	\N
+201808	امیدوار بودن	v	\N	\N	3	A1	\N	\N
+201809	اسب	n	\N	\N	3	A1	\N	\N
+201810	بیمارستان	n	\N	\N	3	A1	\N	\N
+201811	گرم	adj	\N	\N	3	A1	\N	\N
+201812	هتل	n	\N	\N	3	A1	\N	\N
+201813	ساعت	n	\N	\N	3	A1	\N	\N
+201814	خانه	n	\N	\N	3	A1	\N	\N
+201815	چطور	adv	\N	\N	3	A1	\N	\N
+201816	صد	num	\N	\N	3	A1	\N	\N
+201817	گرسنه	adj	\N	\N	3	A1	\N	\N
+201818	شوهر	n	\N	\N	3	A1	\N	\N
+201819	من	pron	\N	\N	3	A1	\N	\N
+201820	یخ	n	\N	\N	3	A1	\N	\N
+201821	بستنی	n	\N	\N	3	A1	\N	\N
+201822	ایده	n	\N	\N	3	A1	\N	\N
+201823	اگر	conj	\N	\N	3	A1	\N	\N
+201824	مهم	adj	\N	\N	3	A1	\N	\N
+201825	در	prep	\N	\N	3	A1	\N	\N
+201826	شامل بودن	v	\N	\N	3	A1	\N	\N
+201827	اطلاعات	n	\N	\N	3	A1	\N	\N
+201828	علاقه	n	\N	\N	3	A1	\N	\N
+201829	علاقه‌مند	adj	\N	\N	3	A1	\N	\N
+201830	جالب	adj	\N	\N	3	A1	\N	\N
+201831	اینترنت	n	\N	\N	3	A1	\N	\N
+201832	مصاحبه	n	\N	\N	3	A1	\N	\N
+201833	داخل	prep	\N	\N	3	A1	\N	\N
+201834	معرفی کردن	v	\N	\N	3	A1	\N	\N
+201835	جزیره	n	\N	\N	3	A1	\N	\N
+201836	آن	pron	\N	\N	3	A1	\N	\N
+201837	مال آن	det	\N	\N	3	A1	\N	\N
+201838	ژاکت	n	\N	\N	3	A1	\N	\N
+201839	ژانویه	n	\N	\N	3	A1	\N	\N
+201840	شلوار جین	n	\N	\N	3	A1	\N	\N
+201841	شغل	n	\N	\N	3	A1	\N	\N
+201842	پیوستن	v	\N	\N	3	A1	\N	\N
+201843	سفر	n	\N	\N	3	A1	\N	\N
+201844	آب میوه	n	\N	\N	3	A1	\N	\N
+201845	نگه داشتن	v	\N	\N	3	A1	\N	\N
+201846	کلید	n	\N	\N	3	A1	\N	\N
+201847	کیلومتر	n	\N	\N	3	A1	\N	\N
+201848	نوع	n	\N	\N	3	A1	\N	\N
+201849	آشپزخانه	n	\N	\N	3	A1	\N	\N
+201850	دانستن	v	\N	\N	3	A1	\N	\N
+201851	زمین	n	\N	\N	3	A1	\N	\N
+201852	زبان	n	\N	\N	3	A1	\N	\N
+201853	بزرگ	adj	\N	\N	3	A1	\N	\N
+201854	آخر	adj	\N	\N	3	A1	\N	\N
+201855	دیر	adj	\N	\N	3	A1	\N	\N
+201856	بعداً	adv	\N	\N	3	A1	\N	\N
+201857	خندیدن	v	\N	\N	3	A1	\N	\N
+201858	یاد گرفتن	v	\N	\N	3	A1	\N	\N
+201859	رفتن	v	\N	\N	3	A1	\N	\N
+201860	چپ	adj	\N	\N	3	A1	\N	\N
+201861	پا	n	\N	\N	3	A1	\N	\N
+201862	درس	n	\N	\N	3	A1	\N	\N
+201863	اجازه دادن	v	\N	\N	3	A1	\N	\N
+201864	نامه	n	\N	\N	3	A1	\N	\N
+201865	کتابخانه	n	\N	\N	3	A1	\N	\N
+201866	دروغ گفتن	v	\N	\N	3	A1	\N	\N
+201867	زندگی	n	\N	\N	3	A1	\N	\N
+201868	نور	n	\N	\N	3	A1	\N	\N
+201869	دوست داشتن	v	\N	\N	3	A1	\N	\N
+201870	خط	n	\N	\N	3	A1	\N	\N
+201871	شیر	n	\N	\N	3	A1	\N	\N
+201872	لیست	n	\N	\N	3	A1	\N	\N
+201873	گوش دادن	v	\N	\N	3	A1	\N	\N
+201874	کوچک	adj	\N	\N	3	A1	\N	\N
+201875	زندگی کردن	v	\N	\N	3	A1	\N	\N
+201876	طولانی	adj	\N	\N	3	A1	\N	\N
+201877	نگاه کردن	v	\N	\N	3	A1	\N	\N
+201878	گم کردن	v	\N	\N	3	A1	\N	\N
+201879	زیاد	n	\N	\N	3	A1	\N	\N
+201880	عاشق بودن	v	\N	\N	3	A1	\N	\N
+201881	ناهار	n	\N	\N	3	A1	\N	\N
+201882	ماشین	n	\N	\N	3	A1	\N	\N
+201883	مجله	n	\N	\N	3	A1	\N	\N
+201884	اصلی	adj	\N	\N	3	A1	\N	\N
+201885	ساختن	v	\N	\N	3	A1	\N	\N
+201886	مرد	n	\N	\N	3	A1	\N	\N
+201887	خیلی	det	\N	\N	3	A1	\N	\N
+201888	نقشه	n	\N	\N	3	A1	\N	\N
+201889	مارس	n	\N	\N	3	A1	\N	\N
+201890	بازار	n	\N	\N	3	A1	\N	\N
+201891	متاهل	adj	\N	\N	3	A1	\N	\N
+201892	مسابقه	n	\N	\N	3	A1	\N	\N
+201893	مه	n	\N	\N	3	A1	\N	\N
+201894	شاید	adv	\N	\N	3	A1	\N	\N
+201895	من را	pron	\N	\N	3	A1	\N	\N
+201896	وعده غذایی	n	\N	\N	3	A1	\N	\N
+201897	معنی داشتن	v	\N	\N	3	A1	\N	\N
+201898	معنی	n	\N	\N	3	A1	\N	\N
+201899	گوشت	n	\N	\N	3	A1	\N	\N
+201900	ملاقات کردن	v	\N	\N	3	A1	\N	\N
+201901	جلسه	n	\N	\N	3	A1	\N	\N
+201902	عضو	n	\N	\N	3	A1	\N	\N
+201903	منو	n	\N	\N	3	A1	\N	\N
+201904	پیام	n	\N	\N	3	A1	\N	\N
+201905	متر	n	\N	\N	3	A1	\N	\N
+201906	نیمه شب	n	\N	\N	3	A1	\N	\N
+201907	مایل	n	\N	\N	3	A1	\N	\N
+201908	شیر	n	\N	\N	3	A1	\N	\N
+201909	میلیون	num	\N	\N	3	A1	\N	\N
+201910	دقیقه	n	\N	\N	3	A1	\N	\N
+201911	دلتنگ شدن	v	\N	\N	3	A1	\N	\N
+201912	اشتباه	n	\N	\N	3	A1	\N	\N
+201913	مدل	n	\N	\N	3	A1	\N	\N
+201914	مدرن	adj	\N	\N	3	A1	\N	\N
+201915	لحظه	n	\N	\N	3	A1	\N	\N
+201916	دوشنبه	n	\N	\N	3	A1	\N	\N
+201917	پول	n	\N	\N	3	A1	\N	\N
+201918	ماه	n	\N	\N	3	A1	\N	\N
+201919	بیشتر	det	\N	\N	3	A1	\N	\N
+201920	صبح	n	\N	\N	3	A1	\N	\N
+201921	بیشترین	det	\N	\N	3	A1	\N	\N
+201922	مادر	n	\N	\N	3	A1	\N	\N
+201923	کوه	n	\N	\N	3	A1	\N	\N
+201924	موش	n	\N	\N	3	A1	\N	\N
+201925	دهان	n	\N	\N	3	A1	\N	\N
+201926	حرکت کردن	v	\N	\N	3	A1	\N	\N
+201927	فیلم	n	\N	\N	3	A1	\N	\N
+201928	خیلی	det	\N	\N	3	A1	\N	\N
+201929	مامان	n	\N	\N	3	A1	\N	\N
+201930	موزه	n	\N	\N	3	A1	\N	\N
+201931	موسیقی	n	\N	\N	3	A1	\N	\N
+201932	باید	v	\N	\N	3	A1	\N	\N
+201933	مال من	det	\N	\N	3	A1	\N	\N
+201934	نام	n	\N	\N	3	A1	\N	\N
+201935	نزدیک	prep	\N	\N	3	A1	\N	\N
+201936	نیاز داشتن	v	\N	\N	3	A1	\N	\N
+201937	همسایه	n	\N	\N	3	A1	\N	\N
+201938	هرگز	adv	\N	\N	3	A1	\N	\N
+201939	جدید	adj	\N	\N	3	A1	\N	\N
+201940	اخبار	n	\N	\N	3	A1	\N	\N
+201941	روزنامه	n	\N	\N	3	A1	\N	\N
+201942	بعدی	adj	\N	\N	3	A1	\N	\N
+201943	کنار	prep	\N	\N	3	A1	\N	\N
+201944	خوب	adj	\N	\N	3	A1	\N	\N
+201945	شب	n	\N	\N	3	A1	\N	\N
+201946	نه	num	\N	\N	3	A1	\N	\N
+201947	نوزده	num	\N	\N	3	A1	\N	\N
+201948	نود	num	\N	\N	3	A1	\N	\N
+201949	نه	det	\N	\N	3	A1	\N	\N
+201950	هیچ کس	pron	\N	\N	3	A1	\N	\N
+201951	هیچ کس	pron	\N	\N	3	A1	\N	\N
+201952	ظهر	n	\N	\N	3	A1	\N	\N
+201953	شمال	n	\N	\N	3	A1	\N	\N
+201954	بینی	n	\N	\N	3	A1	\N	\N
+201955	نه	adv	\N	\N	3	A1	\N	\N
+201956	یادداشت	n	\N	\N	3	A1	\N	\N
+201957	هیچ چیز	pron	\N	\N	3	A1	\N	\N
+201958	نوامبر	n	\N	\N	3	A1	\N	\N
+201959	الان	adv	\N	\N	3	A1	\N	\N
+201960	شماره	n	\N	\N	3	A1	\N	\N
+201961	ساعت	adv	\N	\N	3	A1	\N	\N
+201962	اکتبر	n	\N	\N	3	A1	\N	\N
+201963	از	prep	\N	\N	3	A1	\N	\N
+201964	خاموش	adv	\N	\N	3	A1	\N	\N
+201965	دفتر	n	\N	\N	3	A1	\N	\N
+201966	اغلب	adv	\N	\N	3	A1	\N	\N
+201967	اوه	interj	\N	\N	3	A1	\N	\N
+201968	باشه	adj	\N	\N	3	A1	\N	\N
+201969	پیر	adj	\N	\N	3	A1	\N	\N
+201970	روی	prep	\N	\N	3	A1	\N	\N
+201971	یک بار	adv	\N	\N	3	A1	\N	\N
+201972	یک	num	\N	\N	3	A1	\N	\N
+201973	پیاز	n	\N	\N	3	A1	\N	\N
+201974	آنلاین	adj	\N	\N	3	A1	\N	\N
+201975	فقط	adv	\N	\N	3	A1	\N	\N
+201976	باز کردن	v	\N	\N	3	A1	\N	\N
+201977	روبرو	adj	\N	\N	3	A1	\N	\N
+201978	یا	conj	\N	\N	3	A1	\N	\N
+201979	پرتقال	n	\N	\N	3	A1	\N	\N
+201980	سفارش دادن	v	\N	\N	3	A1	\N	\N
+201981	دیگر	adj	\N	\N	3	A1	\N	\N
+201982	مال ما	det	\N	\N	3	A1	\N	\N
+201983	بیرون	adv	\N	\N	3	A1	\N	\N
+201984	بیرون	adv	\N	\N	3	A1	\N	\N
+201985	بالای	prep	\N	\N	3	A1	\N	\N
+201986	داشتن	v	\N	\N	3	A1	\N	\N
+201987	صفحه	n	\N	\N	3	A1	\N	\N
+201988	رنگ آمیزی کردن	v	\N	\N	3	A1	\N	\N
+201989	نقاشی	n	\N	\N	3	A1	\N	\N
+201990	جفت	n	\N	\N	3	A1	\N	\N
+201991	کاغذ	n	\N	\N	3	A1	\N	\N
+201992	پاراگراف	n	\N	\N	3	A1	\N	\N
+201993	والدین	n	\N	\N	3	A1	\N	\N
+201994	پارک	n	\N	\N	3	A1	\N	\N
+201995	قسمت	n	\N	\N	3	A1	\N	\N
+201996	شریک	n	\N	\N	3	A1	\N	\N
+201997	مهمانی	n	\N	\N	3	A1	\N	\N
+201998	پاسپورت	n	\N	\N	3	A1	\N	\N
+201999	گذشته	adj	\N	\N	3	A1	\N	\N
+202000	پرداخت کردن	v	\N	\N	3	A1	\N	\N
+202001	خودکار	n	\N	\N	3	A1	\N	\N
+202002	مداد	n	\N	\N	3	A1	\N	\N
+202003	مردم	n	\N	\N	3	A1	\N	\N
+202004	فلفل	n	\N	\N	3	A1	\N	\N
+202005	کامل	adj	\N	\N	3	A1	\N	\N
+202006	دوره	n	\N	\N	3	A1	\N	\N
+202007	شخص	n	\N	\N	3	A1	\N	\N
+202008	شخصی	adj	\N	\N	3	A1	\N	\N
+202009	تلفن	n	\N	\N	3	A1	\N	\N
+202010	عکس	n	\N	\N	3	A1	\N	\N
+202011	عکس	n	\N	\N	3	A1	\N	\N
+202012	عبارت	n	\N	\N	3	A1	\N	\N
+202013	پیانو	n	\N	\N	3	A1	\N	\N
+202014	تصویر	n	\N	\N	3	A1	\N	\N
+202015	تکه	n	\N	\N	3	A1	\N	\N
+202016	خوک	n	\N	\N	3	A1	\N	\N
+202017	صورتی	adj	\N	\N	3	A1	\N	\N
+202018	مکان	n	\N	\N	3	A1	\N	\N
+202019	برنامه	n	\N	\N	3	A1	\N	\N
+202020	هواپیما	n	\N	\N	3	A1	\N	\N
+202021	گیاه	n	\N	\N	3	A1	\N	\N
+202022	بازی کردن	v	\N	\N	3	A1	\N	\N
+202023	بازیکن	n	\N	\N	3	A1	\N	\N
+202024	لطفاً	interj	\N	\N	3	A1	\N	\N
+202025	نقطه	n	\N	\N	3	A1	\N	\N
+202026	پلیس	n	\N	\N	3	A1	\N	\N
+202027	پلیس	n	\N	\N	3	A1	\N	\N
+202028	استخر	n	\N	\N	3	A1	\N	\N
+202029	فقیر	adj	\N	\N	3	A1	\N	\N
+202030	پاپ	n	\N	\N	3	A1	\N	\N
+202031	محبوب	adj	\N	\N	3	A1	\N	\N
+202032	ممکن	adj	\N	\N	3	A1	\N	\N
+202033	پست	n	\N	\N	3	A1	\N	\N
+202034	سیب زمینی	n	\N	\N	3	A1	\N	\N
+202035	پوند	n	\N	\N	3	A1	\N	\N
+202036	تمرین	n	\N	\N	3	A1	\N	\N
+202037	تمرین کردن	v	\N	\N	3	A1	\N	\N
+202038	هدیه	n	\N	\N	3	A1	\N	\N
+202039	قشنگ	adj	\N	\N	3	A1	\N	\N
+202040	قیمت	n	\N	\N	3	A1	\N	\N
+202041	مشکل	n	\N	\N	3	A1	\N	\N
+202042	برنامه	n	\N	\N	3	A1	\N	\N
+202043	پروژه	n	\N	\N	3	A1	\N	\N
+202044	بنفش	adj	\N	\N	3	A1	\N	\N
+202045	گذاشتن	v	\N	\N	3	A1	\N	\N
+202046	مار	n	\N	\N	3	A1	\N	\N
+202047	برف	n	\N	\N	3	A1	\N	\N
+202048	پس	conj	\N	\N	3	A1	\N	\N
+202049	کمی	det	\N	\N	3	A1	\N	\N
+202050	یک نفر	pron	\N	\N	3	A1	\N	\N
+202051	کسی	pron	\N	\N	3	A1	\N	\N
+202052	چیزی	pron	\N	\N	3	A1	\N	\N
+202053	گاهی	adv	\N	\N	3	A1	\N	\N
+202054	پسر	n	\N	\N	3	A1	\N	\N
+202055	آهنگ	n	\N	\N	3	A1	\N	\N
+202056	به زودی	adv	\N	\N	3	A1	\N	\N
+202057	متاسف	adj	\N	\N	3	A1	\N	\N
+202058	صدا	n	\N	\N	3	A1	\N	\N
+202059	سوپ	n	\N	\N	3	A1	\N	\N
+202060	جنوب	n	\N	\N	3	A1	\N	\N
+202061	فضا	n	\N	\N	3	A1	\N	\N
+202062	صحبت کردن	v	\N	\N	3	A1	\N	\N
+202063	خاص	adj	\N	\N	3	A1	\N	\N
+202064	هجی کردن	v	\N	\N	3	A1	\N	\N
+202065	هجی	n	\N	\N	3	A1	\N	\N
+202066	خرج کردن	v	\N	\N	3	A1	\N	\N
+202067	ورزش	n	\N	\N	3	A1	\N	\N
+202068	بهار	n	\N	\N	3	A1	\N	\N
+202069	ایستادن	v	\N	\N	3	A1	\N	\N
+202070	شروع کردن	v	\N	\N	3	A1	\N	\N
+202071	ایستگاه	n	\N	\N	3	A1	\N	\N
+202072	متوقف کردن	v	\N	\N	3	A1	\N	\N
+202073	داستان	n	\N	\N	3	A1	\N	\N
+202074	خیابان	n	\N	\N	3	A1	\N	\N
+202075	قوی	adj	\N	\N	3	A1	\N	\N
+202076	دانش آموز	n	\N	\N	3	A1	\N	\N
+202077	درس خواندن	v	\N	\N	3	A1	\N	\N
+202078	سبک	n	\N	\N	3	A1	\N	\N
+202079	موضوع	n	\N	\N	3	A1	\N	\N
+202080	شکر	n	\N	\N	3	A1	\N	\N
+202081	تابستان	n	\N	\N	3	A1	\N	\N
+202082	خورشید	n	\N	\N	3	A1	\N	\N
+202083	یکشنبه	n	\N	\N	3	A1	\N	\N
+202084	سوپرمارکت	n	\N	\N	3	A1	\N	\N
+202085	مطمئن	adj	\N	\N	3	A1	\N	\N
+202086	ژاکت	n	\N	\N	3	A1	\N	\N
+202087	شنا کردن	v	\N	\N	3	A1	\N	\N
+202088	شنا	n	\N	\N	3	A1	\N	\N
+202089	میز	n	\N	\N	3	A1	\N	\N
+202090	گرفتن	v	\N	\N	3	A1	\N	\N
+202091	صحبت کردن	v	\N	\N	3	A1	\N	\N
+202092	بلند قد	adj	\N	\N	3	A1	\N	\N
+202093	تاکسی	n	\N	\N	3	A1	\N	\N
+202094	چای	n	\N	\N	3	A1	\N	\N
+202095	تدریس کردن	v	\N	\N	3	A1	\N	\N
+202096	معلم	n	\N	\N	3	A1	\N	\N
+202097	تیم	n	\N	\N	3	A1	\N	\N
+202098	نوجوان	n	\N	\N	3	A1	\N	\N
+202099	تلفن	n	\N	\N	3	A1	\N	\N
+202100	تلویزیون	n	\N	\N	3	A1	\N	\N
+202101	گفتن	v	\N	\N	3	A1	\N	\N
+202102	ده	num	\N	\N	3	A1	\N	\N
+202103	تنیس	n	\N	\N	3	A1	\N	\N
+202104	وحشتناک	adj	\N	\N	3	A1	\N	\N
+202105	آزمون	n	\N	\N	3	A1	\N	\N
+202106	متن	n	\N	\N	3	A1	\N	\N
+202107	از	conj	\N	\N	3	A1	\N	\N
+202108	تشکر کردن	v	\N	\N	3	A1	\N	\N
+202109	ممنون	interj	\N	\N	3	A1	\N	\N
+202110	آن	det	\N	\N	3	A1	\N	\N
+202111	ـ	det	\N	\N	3	A1	\N	\N
+202112	تئاتر	n	\N	\N	3	A1	\N	\N
+202113	مال آنها	det	\N	\N	3	A1	\N	\N
+202114	آنها را	pron	\N	\N	3	A1	\N	\N
+202115	سپس	adv	\N	\N	3	A1	\N	\N
+202116	آنجا	adv	\N	\N	3	A1	\N	\N
+202117	آنها	pron	\N	\N	3	A1	\N	\N
+202118	چیز	n	\N	\N	3	A1	\N	\N
+202119	فکر کردن	v	\N	\N	3	A1	\N	\N
+202120	سوم	num	\N	\N	3	A1	\N	\N
+202121	تشنه	adj	\N	\N	3	A1	\N	\N
+202122	سیزده	num	\N	\N	3	A1	\N	\N
+202123	سی	num	\N	\N	3	A1	\N	\N
+202124	این	det	\N	\N	3	A1	\N	\N
+202125	هزار	num	\N	\N	3	A1	\N	\N
+202126	سه	num	\N	\N	3	A1	\N	\N
+202127	از طریق	prep	\N	\N	3	A1	\N	\N
+202128	پنجشنبه	n	\N	\N	3	A1	\N	\N
+202129	بلیط	n	\N	\N	3	A1	\N	\N
+202130	زمان	n	\N	\N	3	A1	\N	\N
+202131	خسته	adj	\N	\N	3	A1	\N	\N
+202132	عنوان	n	\N	\N	3	A1	\N	\N
+202133	به	prep	\N	\N	3	A1	\N	\N
+202134	امروز	adv	\N	\N	3	A1	\N	\N
+202135	با هم	adv	\N	\N	3	A1	\N	\N
+202136	توالت	n	\N	\N	3	A1	\N	\N
+202137	گوجه فرنگی	n	\N	\N	3	A1	\N	\N
+202138	فردا	adv	\N	\N	3	A1	\N	\N
+202139	امشب	adv	\N	\N	3	A1	\N	\N
+202140	هم	adv	\N	\N	3	A1	\N	\N
+202141	بالا	n	\N	\N	3	A1	\N	\N
+202142	دندان	n	\N	\N	3	A1	\N	\N
+202143	توریست	n	\N	\N	3	A1	\N	\N
+202144	شهر کوچک	n	\N	\N	3	A1	\N	\N
+202145	ترافیک	n	\N	\N	3	A1	\N	\N
+202146	قطار	n	\N	\N	3	A1	\N	\N
+202147	سفر کردن	v	\N	\N	3	A1	\N	\N
+202148	درخت	n	\N	\N	3	A1	\N	\N
+202149	سفر	n	\N	\N	3	A1	\N	\N
+202150	شلوار	n	\N	\N	3	A1	\N	\N
+202151	درست	adj	\N	\N	3	A1	\N	\N
+202152	تلاش کردن	v	\N	\N	3	A1	\N	\N
+202153	تی‌شرت	n	\N	\N	3	A1	\N	\N
+202154	سه‌شنبه	n	\N	\N	3	A1	\N	\N
+202155	چرخیدن	v	\N	\N	3	A1	\N	\N
+202156	تلویزیون	n	\N	\N	3	A1	\N	\N
+202157	دوازده	num	\N	\N	3	A1	\N	\N
+202158	بیست	num	\N	\N	3	A1	\N	\N
+202159	دو بار	adv	\N	\N	3	A1	\N	\N
+202160	دو	num	\N	\N	3	A1	\N	\N
+202161	نوع	n	\N	\N	3	A1	\N	\N
+202162	چتر	n	\N	\N	3	A1	\N	\N
+202163	عمو	n	\N	\N	3	A1	\N	\N
+202164	زیر	prep	\N	\N	3	A1	\N	\N
+202165	فهمیدن	v	\N	\N	3	A1	\N	\N
+202166	دانشگاه	n	\N	\N	3	A1	\N	\N
+202167	تا	conj	\N	\N	3	A1	\N	\N
+202168	بالا	adv	\N	\N	3	A1	\N	\N
+202169	طبقه بالا	adv	\N	\N	3	A1	\N	\N
+202170	ما را	pron	\N	\N	3	A1	\N	\N
+202171	استفاده کردن	v	\N	\N	3	A1	\N	\N
+202172	معمولاً	adv	\N	\N	3	A1	\N	\N
+202173	تعطیلات	n	\N	\N	3	A1	\N	\N
+202174	سبزیجات	n	\N	\N	3	A1	\N	\N
+202175	خیلی	adv	\N	\N	3	A1	\N	\N
+202176	ویدئو	n	\N	\N	3	A1	\N	\N
+202177	روستا	n	\N	\N	3	A1	\N	\N
+202178	بازدید کردن	v	\N	\N	3	A1	\N	\N
+202179	بازدیدکننده	n	\N	\N	3	A1	\N	\N
+202180	صبر کردن	v	\N	\N	3	A1	\N	\N
+202181	گارسون	n	\N	\N	3	A1	\N	\N
+202182	بیدار شدن	v	\N	\N	3	A1	\N	\N
+202183	پیاده روی کردن	v	\N	\N	3	A1	\N	\N
+202184	دیوار	n	\N	\N	3	A1	\N	\N
+202185	خواستن	v	\N	\N	3	A1	\N	\N
+202186	گرم	adj	\N	\N	3	A1	\N	\N
+202187	شستن	v	\N	\N	3	A1	\N	\N
+202188	تماشا کردن	v	\N	\N	3	A1	\N	\N
+202189	آب	n	\N	\N	3	A1	\N	\N
+202190	راه	n	\N	\N	3	A1	\N	\N
+202191	ما	pron	\N	\N	3	A1	\N	\N
+202192	پوشیدن	v	\N	\N	3	A1	\N	\N
+202193	آب و هوا	n	\N	\N	3	A1	\N	\N
+202194	وب‌سایت	n	\N	\N	3	A1	\N	\N
+202195	چهارشنبه	n	\N	\N	3	A1	\N	\N
+202196	هفته	n	\N	\N	3	A1	\N	\N
+202197	آخر هفته	n	\N	\N	3	A1	\N	\N
+202198	خوش آمدید	interj	\N	\N	3	A1	\N	\N
+202199	خوب	adv	\N	\N	3	A1	\N	\N
+202200	غرب	n	\N	\N	3	A1	\N	\N
+202201	چه	pron	\N	\N	3	A1	\N	\N
+202202	چه وقت	adv	\N	\N	3	A1	\N	\N
+202203	کجا	adv	\N	\N	3	A1	\N	\N
+202204	کدام	pron	\N	\N	3	A1	\N	\N
+202205	سفید	adj	\N	\N	3	A1	\N	\N
+202206	که	pron	\N	\N	3	A1	\N	\N
+202207	چرا	adv	\N	\N	3	A1	\N	\N
+202208	همسر	n	\N	\N	3	A1	\N	\N
+202209	خواهد	v	\N	\N	3	A1	\N	\N
+202210	برنده شدن	v	\N	\N	3	A1	\N	\N
+202211	پنجره	n	\N	\N	3	A1	\N	\N
+202212	شراب	n	\N	\N	3	A1	\N	\N
+202213	زمستان	n	\N	\N	3	A1	\N	\N
+202214	با	prep	\N	\N	3	A1	\N	\N
+202215	بدون	prep	\N	\N	3	A1	\N	\N
+202216	زن	n	\N	\N	3	A1	\N	\N
+202217	شگفت‌انگیز	adj	\N	\N	3	A1	\N	\N
+202218	کلمه	n	\N	\N	3	A1	\N	\N
+202219	کار	n	\N	\N	3	A1	\N	\N
+202220	کارگر	n	\N	\N	3	A1	\N	\N
+202221	جهان	n	\N	\N	3	A1	\N	\N
+202222	می‌خواست	v	\N	\N	3	A1	\N	\N
+202223	نوشتن	v	\N	\N	3	A1	\N	\N
+202224	نویسنده	n	\N	\N	3	A1	\N	\N
+202225	نوشتن	n	\N	\N	3	A1	\N	\N
+202226	اشتباه	adj	\N	\N	3	A1	\N	\N
+202227	آره	interj	\N	\N	3	A1	\N	\N
+202228	سال	n	\N	\N	3	A1	\N	\N
+202229	زرد	adj	\N	\N	3	A1	\N	\N
+202230	بله	interj	\N	\N	3	A1	\N	\N
+202231	دیروز	adv	\N	\N	3	A1	\N	\N
+202232	تو	pron	\N	\N	3	A1	\N	\N
+202233	جوان	adj	\N	\N	3	A1	\N	\N
+202234	مال تو	det	\N	\N	3	A1	\N	\N
+202235	خودت	pron	\N	\N	3	A1	\N	\N
+202236	او	pron	\N	\N	3	A1	\N	\N
+202237	مال من	pron	\N	\N	3	A1	\N	\N
+202238	مال تو	pron	\N	\N	3	A1	\N	\N
+202239	مال او	pron	\N	\N	3	A1	\N	\N
+202240	مال ما	pron	\N	\N	3	A1	\N	\N
+202241	مال آنها	pron	\N	\N	3	A1	\N	\N
+202242	هستم	v	\N	\N	3	A1	\N	\N
+202243	است	v	\N	\N	3	A1	\N	\N
+202244	هستند	v	\N	\N	3	A1	\N	\N
+202245	بود	v	\N	\N	3	A1	\N	\N
+202246	بودند	v	\N	\N	3	A1	\N	\N
+202247	بوده	v	\N	\N	3	A1	\N	\N
+202248	بودن	v	\N	\N	3	A1	\N	\N
+202249	دارد	v	\N	\N	3	A1	\N	\N
+202250	داشت	v	\N	\N	3	A1	\N	\N
+202251	خواهم	v	\N	\N	3	A1	\N	\N
+202252	ممکن است	v	\N	\N	3	A1	\N	\N
+202253	شاید	v	\N	\N	3	A1	\N	\N
+202254	من هستم	contr	\N	\N	3	A1	\N	\N
+202255	تو هستی	contr	\N	\N	3	A1	\N	\N
+202256	او هست	contr	\N	\N	3	A1	\N	\N
+202257	او هست	contr	\N	\N	3	A1	\N	\N
+202258	آن هست	contr	\N	\N	3	A1	\N	\N
+202259	ما هستیم	contr	\N	\N	3	A1	\N	\N
+202260	آنها هستند	contr	\N	\N	3	A1	\N	\N
+202261	من داشتم	contr	\N	\N	3	A1	\N	\N
+202262	تو داشتی	contr	\N	\N	3	A1	\N	\N
+202263	ما داشتیم	contr	\N	\N	3	A1	\N	\N
+202264	آنها داشتند	contr	\N	\N	3	A1	\N	\N
+202265	من خواهم	contr	\N	\N	3	A1	\N	\N
+202266	تو خواهی	contr	\N	\N	3	A1	\N	\N
+202267	او خواهد	contr	\N	\N	3	A1	\N	\N
+202268	او خواهد	contr	\N	\N	3	A1	\N	\N
+202269	ما خواهیم	contr	\N	\N	3	A1	\N	\N
+202270	آنها خواهند	contr	\N	\N	3	A1	\N	\N
+202271	نمی‌کنم	contr	\N	\N	3	A1	\N	\N
+202272	نمی‌کند	contr	\N	\N	3	A1	\N	\N
+202273	نکرد	contr	\N	\N	3	A1	\N	\N
+202274	نمی‌توانم	contr	\N	\N	3	A1	\N	\N
+202275	نمی‌توانست	contr	\N	\N	3	A1	\N	\N
+202276	نخواهم	contr	\N	\N	3	A1	\N	\N
+202277	نباید	contr	\N	\N	3	A1	\N	\N
+202278	نمی‌خواست	contr	\N	\N	3	A1	\N	\N
+202279	نیست	contr	\N	\N	3	A1	\N	\N
+202280	نیستند	contr	\N	\N	3	A1	\N	\N
+202281	نبود	contr	\N	\N	3	A1	\N	\N
+202282	نبودند	contr	\N	\N	3	A1	\N	\N
+202283	نداشتم	contr	\N	\N	3	A1	\N	\N
+202284	ندارد	contr	\N	\N	3	A1	\N	\N
+202285	نداشت	contr	\N	\N	3	A1	\N	\N
+202286	کنار	prep	\N	\N	3	A1	\N	\N
+202287	جلوی	prep	\N	\N	3	A1	\N	\N
+202288	روی	prep	\N	\N	3	A1	\N	\N
+202289	در حالی که	conj	\N	\N	3	A1	\N	\N
+202290	فقط	adv	\N	\N	3	A1	\N	\N
 \.
 
 
@@ -19990,7 +20002,7 @@ SELECT pg_catalog.setval('public.user_languages_id_seq', 127, true);
 -- Name: user_vocabulary_id_seq; Type: SEQUENCE SET; Schema: public; Owner: root
 --
 
-SELECT pg_catalog.setval('public.user_vocabulary_id_seq', 17915, true);
+SELECT pg_catalog.setval('public.user_vocabulary_id_seq', 17927, true);
 
 
 --
@@ -20407,5 +20419,5 @@ ALTER TABLE ONLY public.words
 -- PostgreSQL database dump complete
 --
 
-\unrestrict GHMBG3hv2JhNAty2jJdjRFmPGvTrApXNuDmCfCPYIv5jduAwXr7lQ2Rqyh59wES
+\unrestrict jTpNYw2RsUXxXOd1peuskAW9wkO1syjn1HfNdQjaDhXlNgHwI0vxxLaEyOmEwhC
 
