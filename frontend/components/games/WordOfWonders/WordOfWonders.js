@@ -245,10 +245,9 @@ export default function WordOfWonders({ boxData: initialBoxData, gridWords: init
             useNativeDriver: false,
         }).start();
 
-        // Update Coins
-        const newCoins = coins - 40;
-        setCoins(newCoins);
-        setUserProgress((prev) => ({ ...prev, coins: newCoins }));
+        setCoins(prev => prev - 40);
+        
+
         Vibration.vibrate(30);
     }, [coins, gameFinished, filledBoxes, boxAnimations]);    // Helper function to get grid box dimensions and position
 
@@ -302,6 +301,19 @@ export default function WordOfWonders({ boxData: initialBoxData, gridWords: init
     useEffect(() => {
         coinsRef.current = coins;
     }, [coins]);
+
+    // Sync coins to context on unmount or game finish
+    useEffect(() => {
+        if (gameFinished) {
+            setUserProgress((prev) => ({ ...prev, coins: coinsRef.current }));
+        }
+    }, [gameFinished]);
+
+    useEffect(() => {
+        return () => {
+            setUserProgress((prev) => ({ ...prev, coins: coinsRef.current }));
+        };
+    }, []);
 
     useEffect(() => {
         filledBoxesRef.current = filledBoxes;
@@ -379,9 +391,7 @@ export default function WordOfWonders({ boxData: initialBoxData, gridWords: init
                         }
 
                         // update coins
-                        const newCoins = coinsRef.current - 80;
-                        setCoins(newCoins);
-                        setUserProgress((prev) => ({ ...prev, coins: newCoins }));
+                        setCoins(coinsRef.current - 80);
                     }
                 }                // Animate hammer: rotate 90 degrees and then disappear
                 Animated.sequence([
