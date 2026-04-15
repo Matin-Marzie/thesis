@@ -130,6 +130,7 @@ const Grid = memo(({ boxData, gridWords, foundWords, filledBoxes, boxAnimations,
     // Set the pressed box index
     setPressedBoxIndex(boxIndex);
 
+    // When user presses a grid cell(box), the box shrinks and the pop-ups/SeeMeaningPopup.js Modal appears with the words that include this box. The user can then see the meaning of these words in their native language.
     // Animate the box shrink
     Animated.sequence([
       Animated.timing(pressScaleAnimation, {
@@ -150,10 +151,11 @@ const Grid = memo(({ boxData, gridWords, foundWords, filledBoxes, boxAnimations,
     });
 
     
-    // only proceed if the box is filled
+    // only proceed if the box is filled, otherwise it means that either vertical nor horizontal word has been found.
     if (!filledBoxes.includes(boxIndex)) return;
 
     // find vertical or horizontal word at this position
+    // O(n), n: grid words count, very small number (<=20)
     const SeeMeaningWords = Object.keys(gridWords).filter((word) => {
       const wordData = gridWords[word];
       const [startRow, startCol] = wordData.pos;

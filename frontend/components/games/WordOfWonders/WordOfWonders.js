@@ -39,6 +39,11 @@ export default function WordOfWonders({ boxData: initialBoxData, gridWords: init
     const { userVocabulary, userProgress, setUserProgress } = useAppContext();
     const { dictionary } = useDictionaryContext();
 
+    const dictionarySet = useMemo(() => {
+        if (!dictionary?.words) return new Set();
+        return new Set(dictionary.words.map(w => w.written_form.toLowerCase()));
+    }, [dictionary?.words]);
+
     const [boxData, setBoxData] = useState(initialBoxData);
     const [gridWords, setGridWords] = useState(initialGridWords);
     const [letters, setLetters] = useState(initialLetters);
@@ -240,7 +245,7 @@ export default function WordOfWonders({ boxData: initialBoxData, gridWords: init
             useNativeDriver: false,
         }).start();
 
-        // Decrease coins
+        // Update Coins
         const newCoins = coins - 40;
         setCoins(newCoins);
         setUserProgress((prev) => ({ ...prev, coins: newCoins }));
@@ -373,7 +378,7 @@ export default function WordOfWonders({ boxData: initialBoxData, gridWords: init
                             }).start();
                         }
 
-                        // Decrease coins
+                        // update coins
                         const newCoins = coinsRef.current - 80;
                         setCoins(newCoins);
                         setUserProgress((prev) => ({ ...prev, coins: newCoins }));
@@ -502,7 +507,7 @@ export default function WordOfWonders({ boxData: initialBoxData, gridWords: init
                 setFoundWords((prev) => [...prev, word]);
                 setSelectedLetters([]);
             }
-        } else if (dictionary?.words?.find(w => w.written_form.toLowerCase() === word)) {
+        } else if (dictionarySet.has(word)) {
             // Check if word is in dictionary (extra word)
             if (foundWords.includes(word)) {
                 // Extra word already found - animate score board
@@ -681,27 +686,27 @@ export default function WordOfWonders({ boxData: initialBoxData, gridWords: init
                 <View style={styles.lettersCycleContainer}>
 
                     {/* Hammer Button */}
-                <View
-                    style={styles.hammerButton}
-                >
                     <View
-                        style={{
-                            backgroundColor: coins >= 80 ? (hammerActive ? '#FFE5B4' : '#fff') : '#ccc',
-                            borderColor: hammerActive ? '#FF6347' : '#ddd',
-                            padding: 5,
-                            borderRadius: 10,
-                            borderWidth: hammerActive ? 3 : 2,
-                            flexDirection: 'row',
-                            alignItems: 'center',
-                            gap: 5,
-                        }}
+                        style={styles.hammerButton}
                     >
-                        <FontAwesome5 name="hammer" size={20} color={coins >= 80 ? "#FF6347" : "#888"} />
-                        <Text style={[styles.scoreText, { color: coins >= 80 ? '#000' : '#888' }]}>
-                            80
-                        </Text>
+                        <View
+                            style={{
+                                backgroundColor: coins >= 80 ? (hammerActive ? '#FFE5B4' : '#fff') : '#ccc',
+                                borderColor: hammerActive ? '#FF6347' : '#ddd',
+                                padding: 5,
+                                borderRadius: 10,
+                                borderWidth: hammerActive ? 3 : 2,
+                                flexDirection: 'row',
+                                alignItems: 'center',
+                                gap: 5,
+                            }}
+                        >
+                            <FontAwesome5 name="hammer" size={20} color={coins >= 80 ? "#FF6347" : "#888"} />
+                            <Text style={[styles.scoreText, { color: coins >= 80 ? '#000' : '#888' }]}>
+                                80
+                            </Text>
+                        </View>
                     </View>
-                </View>
 
                     {/* Floating Hammer Pointer */}
                     {hammerActive && hammerPosition && (
@@ -810,10 +815,10 @@ export default function WordOfWonders({ boxData: initialBoxData, gridWords: init
 
                 {/* Extra Words Popup */}
                 <ExtraWordsPopup
-                        visible={extraWordsVisible}
-                        onClose={() => setExtraWordsVisible(false)}
-                        extraWords={foundWords.filter(w => dictionary?.words?.some(dw => dw.written_form.toLowerCase() === w) && !gridWords[w])}
-                        score={extraWordsScore}
+                    visible={extraWordsVisible}
+                    onClose={() => setExtraWordsVisible(false)}
+                    extraWords={foundWords.filter(w => dictionarySet.has(w) && !gridWords[w])}
+                    score={extraWordsScore}
                 />
 
                 {/* Finish Screen (moved to component) */}
