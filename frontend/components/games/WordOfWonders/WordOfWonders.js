@@ -24,7 +24,7 @@ import { useDictionaryContext } from '@/context/DictionaryContext';
 
 const HAMMER_HEIGHT = height * 0.69;
 
-// Fisher-Yates shuffle algorithm
+// Fisher-Yates shuffle algorithm for shuffling letters
 const shuffleArray = (array) => {
     const shuffled = [...array];
     for (let i = shuffled.length - 1; i > 0; i--) {
@@ -34,7 +34,7 @@ const shuffleArray = (array) => {
     return shuffled;
 };
 
-export default function WordOfWonders({ boxData: initialBoxData, gridWords: initialGridWords, letters: initialLetters }) {
+export default function WordOfWonders({ boxData: initialBoxData, gridWords: initialGridWords, letters: initialLetters, onPlayAgain }) {
 
     const { userVocabulary, userProgress, setUserProgress } = useAppContext();
     const { dictionary } = useDictionaryContext();
@@ -45,7 +45,7 @@ export default function WordOfWonders({ boxData: initialBoxData, gridWords: init
     }, [dictionary?.words]);
 
     const [boxData, setBoxData] = useState(initialBoxData);
-    const [gridWords, setGridWords] = useState(initialGridWords);
+    const [gridWords] = useState(initialGridWords);
     const [letters, setLetters] = useState(initialLetters);
 
 
@@ -62,6 +62,8 @@ export default function WordOfWonders({ boxData: initialBoxData, gridWords: init
     const [animatingWord, setAnimatingWord] = useState(null);
     const [shakeWord, setShakeWord] = useState(null);
     const [coins, setCoins] = useState(userProgress.coins || 0);
+    const [coinTarget, setCoinTarget] = useState(null);
+    const coinsViewRef = useRef(null);
     const [hammerActive, setHammerActive] = useState(false);
     const [hammerPosition, setHammerPosition] = useState(null);
     const [extraWordsVisible, setExtraWordsVisible] = useState(false);
@@ -464,6 +466,14 @@ export default function WordOfWonders({ boxData: initialBoxData, gridWords: init
         router.back();
     }, [router]);
 
+    const handleCollect = useCallback(() => {
+        const newCoins = coinsRef.current + 10;
+        coinsRef.current = newCoins;
+        setCoins(newCoins);
+        setUserProgress(prev => ({ ...prev, coins: newCoins }));
+        onPlayAgain?.();
+    }, [onPlayAgain, setUserProgress]);
+
     const handleLetterRelease = useCallback(() => {
         if (selectedLetters.length === 0) return;
         if (selectedLetters.length < 3) {
@@ -667,7 +677,15 @@ export default function WordOfWonders({ boxData: initialBoxData, gridWords: init
                     >
                         <FontAwesome5 name="arrow-left" size={20} color="#333" />
                     </TouchableOpacity>
-                    <View style={styles.coinsContainer}>
+                    <View
+                        ref={coinsViewRef}
+                        style={styles.coinsContainer}
+                        onLayout={() => {
+                            coinsViewRef.current?.measure((_x, _y, w, h, pageX, pageY) => {
+                                setCoinTarget({ x: pageX + w / 2, y: pageY + h / 2 });
+                            });
+                        }}
+                    >
                         <FontAwesome5 name="coins" size={25} color="#FFD700" />
                         <Text style={styles.coinsText}>{coins}</Text>
                     </View>
@@ -834,7 +852,9 @@ export default function WordOfWonders({ boxData: initialBoxData, gridWords: init
                 {/* Finish Screen (moved to component) */}
                 <FinishScreen
                     visible={gameFinished}
-                    onHome={handleFinishHome}
+                    onCollect={handleCollect}
+                    coinTarget={coinTarget}
+                    gridWords={gridWords}
                 />
 
                 {/* Settings Popup */}
