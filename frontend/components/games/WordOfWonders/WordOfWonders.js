@@ -501,11 +501,11 @@ export default function WordOfWonders({ boxData: initialBoxData, gridWords: init
                 setShakeWord(word);
                 shakeAnimation.setValue(0);
                 Animated.sequence([
-                    Animated.timing(shakeAnimation, { toValue: 3, duration: 50, useNativeDriver: true }),
-                    Animated.timing(shakeAnimation, { toValue: -3, duration: 50, useNativeDriver: true }),
-                    Animated.timing(shakeAnimation, { toValue: 3, duration: 50, useNativeDriver: true }),
-                    Animated.timing(shakeAnimation, { toValue: -3, duration: 50, useNativeDriver: true }),
-                    Animated.timing(shakeAnimation, { toValue: 0, duration: 50, useNativeDriver: true }),
+                    Animated.timing(shakeAnimation, { toValue: 3, duration: 50, useNativeDriver: false }),
+                    Animated.timing(shakeAnimation, { toValue: -3, duration: 50, useNativeDriver: false }),
+                    Animated.timing(shakeAnimation, { toValue: 3, duration: 50, useNativeDriver: false }),
+                    Animated.timing(shakeAnimation, { toValue: -3, duration: 50, useNativeDriver: false }),
+                    Animated.timing(shakeAnimation, { toValue: 0, duration: 50, useNativeDriver: false }),
                 ]).start(() => {
                     setShakeWord(null);
                 });
