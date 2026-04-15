@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, ImageBackground } from 'react-native';
 import { useDictionaryContext } from '@/context/DictionaryContext';
 import GenerateWordOfWonderLevel from './LevelGenerator';
 import WordOfWonders from './WordOfWonders';
-import { BACKGROUND_IMAGE_URI, width, height, MAX_WIDTH } from './gameConstants';
+import { BACKGROUND_IMAGE_URI, width, MAX_WIDTH } from './gameConstants';
 
 export default function GameLoader() {
     const { dictionary } = useDictionaryContext();
@@ -16,17 +16,19 @@ export default function GameLoader() {
 
         setIsGenerating(true);
 
-        // Generate level
-        const [board, words, generatedLetters] = GenerateWordOfWonderLevel(dictionary.words);
+        // Defer heavy generation until after the screen transition paints,
+        // so the loading spinner is visible before the JS thread is blocked.
+        const timer = setTimeout(() => {
+            const [board, words, generatedLetters] = GenerateWordOfWonderLevel(dictionary.words);
+            setLevelData({
+                boxData: board,
+                gridWords: words,
+                letters: generatedLetters
+            });
+            setIsGenerating(false);
+        }, 0);
 
-        // Set the generated data
-        setLevelData({
-            boxData: board,
-            gridWords: words,
-            letters: generatedLetters
-        });
-
-        setIsGenerating(false);
+        return () => clearTimeout(timer);
     }, [dictionary]);
 
     // Show loading screen while generating
