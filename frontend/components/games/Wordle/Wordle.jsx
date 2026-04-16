@@ -8,6 +8,7 @@ import {
     Alert,
     ActivityIndicator,
     Vibration,
+    BackHandler,
 } from 'react-native';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { useAppContext } from '@/context/AppContext';
@@ -15,6 +16,7 @@ import { useDictionaryContext } from '@/context/DictionaryContext';
 import Keyboard from './Keyboard';
 import WordleGrid from './WordleGrid';
 import GameOverModal from './GameOverModal';
+import ConfirmationPopup from '../ConfirmationPopup';
 import { PRIMARY_COLOR } from '@/constants/App';
 import { getWordleConfig } from '@/constants/wordleConfig';
 import WordleCellPopup from './WordleCellPopup';
@@ -48,10 +50,20 @@ export default function Wordle({ onClose }) {
     const [loading, setLoading] = useState(true);
     const [cellPopupVisible, setCellPopupVisible] = useState(false);
     const [invalidTrigger, setInvalidTrigger] = useState(0);
+    const [confirmVisible, setConfirmVisible] = useState(false);
 
     useEffect(() => {
         initializeGame();
     }, [dictionary, config]);
+
+    useEffect(() => {
+        const subscription = BackHandler.addEventListener('hardwareBackPress', () => {
+            if (confirmVisible) return false;
+            setConfirmVisible(true);
+            return true;
+        });
+        return () => subscription.remove();
+    }, [confirmVisible]);
 
     const initializeGame = useCallback(() => {
         if (!dictionary?.words || dictionary.words.length === 0) {
@@ -173,7 +185,7 @@ export default function Wordle({ onClose }) {
             <View style={styles.container}>
                 {/* Header */}
                 <View style={styles.header}>
-                    <TouchableOpacity onPress={onClose}>
+                    <TouchableOpacity onPress={() => setConfirmVisible(true)}>
                         <FontAwesome5 name="chevron-left" size={24} color="#333" />
                     </TouchableOpacity>
                     <Text style={styles.headerTitle}>WORDLE</Text>
@@ -217,6 +229,15 @@ export default function Wordle({ onClose }) {
                 <WordleCellPopup
                     visible={cellPopupVisible}
                     onClose={() => setCellPopupVisible(false)}
+                />
+
+                {/* Exit Confirmation Popup */}
+                <ConfirmationPopup
+                    visible={confirmVisible}
+                    title="Quit Game"
+                    message="Are you sure you want to leave? Your progress will be lost."
+                    onConfirm={onClose}
+                    onCancel={() => setConfirmVisible(false)}
                 />
 
                 {/* Game Over Modal */}

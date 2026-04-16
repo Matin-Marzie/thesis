@@ -1,11 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { View, Text, StyleSheet, ImageBackground, Animated, Easing, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, ImageBackground, Animated, Easing, BackHandler } from 'react-native';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import { useDictionaryContext } from '@/context/DictionaryContext';
 import { useAppContext } from '@/context/AppContext';
 import GenerateWordOfWonderLevel from './LevelGenerator';
 import WordOfWonders from './WordOfWonders';
+import ConfirmationPopup from '../ConfirmationPopup';
 import { BACKGROUND_IMAGE_URI, width, MAX_WIDTH, height } from './gameConstants';
 
 export default function GameLoader() {
@@ -14,7 +15,17 @@ export default function GameLoader() {
     const router = useRouter();
     const [levelData, setLevelData] = useState(null);
     const [isGenerating, setIsGenerating] = useState(true);
+    const [confirmVisible, setConfirmVisible] = useState(false);
     const spinValue = useRef(new Animated.Value(0)).current;
+
+    useEffect(() => {
+        const subscription = BackHandler.addEventListener('hardwareBackPress', () => {
+            if (confirmVisible) return false;
+            setConfirmVisible(true);
+            return true;
+        });
+        return () => subscription.remove();
+    }, [confirmVisible]);
 
     useEffect(() => {
         const anim = Animated.loop(
@@ -59,18 +70,6 @@ export default function GameLoader() {
                     style={styles.container}
                     resizeMode="cover"
                 >
-                    <View style={styles.HeaderBar}>
-                        <TouchableOpacity style={styles.backButton} onPress={() => router.back()}>
-                            <FontAwesome5 name="arrow-left" size={20} color="#333" />
-                        </TouchableOpacity>
-                        <View style={styles.coinsContainer}>
-                            <FontAwesome5 name="coins" size={25} color="#FFD700" />
-                            <Text style={styles.coinsText}>{userProgress.coins ?? 0}</Text>
-                        </View>
-                        <View style={styles.settingsButton}>
-                            <FontAwesome5 name="cog" size={22} color="#333" />
-                        </View>
-                    </View>
 
                     <View style={{ alignItems: 'center', marginBottom: height * 0.20 }}>
                         <Animated.View style={{ transform: [{ rotate: spin }], marginBottom: 16 }}>
@@ -79,6 +78,14 @@ export default function GameLoader() {
                         <Text style={{ color: '#fff', fontSize: 18 }}>Generating Level...</Text>
                     </View>
                 </ImageBackground>
+
+                <ConfirmationPopup
+                    visible={confirmVisible}
+                    title="Quit Game"
+                    message="Are you sure you want to leave?"
+                    onConfirm={() => router.back()}
+                    onCancel={() => setConfirmVisible(false)}
+                />
             </View>
         );
     }
@@ -116,22 +123,13 @@ const styles = StyleSheet.create({
         height: 40,
         flexDirection: 'row',
         alignItems: 'center',
-        justifyContent: 'space-between',
+        justifyContent: 'center',
         paddingHorizontal: width * 0.02,
         zIndex: 10,
-    },
-    backButton: {
-        width: 35,
-        height: 35,
-        alignItems: 'center',
-        justifyContent: 'center',
-        backgroundColor: '#FFF',
-        borderRadius: 20,
     },
     coinsContainer: {
         flexDirection: 'row',
         alignItems: 'center',
-        gap: 8,
         backgroundColor: '#FFF',
         borderRadius: 20,
         paddingHorizontal: 10,
@@ -141,13 +139,5 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         color: '#333',
         padding: 5,
-    },
-    settingsButton: {
-        width: 35,
-        height: 35,
-        alignItems: 'center',
-        justifyContent: 'center',
-        backgroundColor: '#FFF',
-        borderRadius: 20,
     },
 });

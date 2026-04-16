@@ -8,6 +8,7 @@ import {
     Vibration,
     ImageBackground,
     PanResponder,
+    BackHandler,
 } from 'react-native';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
@@ -17,6 +18,7 @@ import LettersCycle from './LettersCycle';
 import SettingsPopup from './pop-ups/SettingsPopup';
 import ExtraWordsPopup from './pop-ups/ExtraWordsPopup';
 import FinishScreen from './pop-ups/FinishScreen';
+import ConfirmationPopup from '../ConfirmationPopup';
 import { GREEN, MAX_WIDTH, width, height, horizontalOffset, BACKGROUND_IMAGE_URI, BACKGROUND_OVERLAY_OPACITY } from './gameConstants';
 import { useAppContext } from '@/context/AppContext';
 import { useDictionaryContext } from '@/context/DictionaryContext';
@@ -68,6 +70,7 @@ export default function WordOfWonders({ boxData: initialBoxData, gridWords: init
     const [hammerPosition, setHammerPosition] = useState(null);
     const [extraWordsVisible, setExtraWordsVisible] = useState(false);
     const [settingsVisible, setSettingsVisible] = useState(false);
+    const [confirmVisible, setConfirmVisible] = useState(false);
 
     // Create or update boxAnimations when grid dimensions change
     const boxAnimations = useMemo(() =>
@@ -303,6 +306,16 @@ export default function WordOfWonders({ boxData: initialBoxData, gridWords: init
     useEffect(() => {
         coinsRef.current = coins;
     }, [coins]);
+
+    // Hardware back button shows confirmation popup
+    useEffect(() => {
+        const subscription = BackHandler.addEventListener('hardwareBackPress', () => {
+            if (confirmVisible) return false;
+            setConfirmVisible(true);
+            return true;
+        });
+        return () => subscription.remove();
+    }, [confirmVisible]);
 
     // Sync coins to context on unmount or game finish
     useEffect(() => {
@@ -673,7 +686,7 @@ export default function WordOfWonders({ boxData: initialBoxData, gridWords: init
                 <View style={styles.HeaderBar}>
                     <TouchableOpacity
                         style={styles.backButton}
-                        onPress={() => router.back()}
+                        onPress={() => setConfirmVisible(true)}
                     >
                         <FontAwesome5 name="arrow-left" size={20} color="#333" />
                     </TouchableOpacity>
@@ -861,6 +874,15 @@ export default function WordOfWonders({ boxData: initialBoxData, gridWords: init
                 <SettingsPopup
                     visible={settingsVisible}
                     onClose={() => setSettingsVisible(false)}
+                />
+
+                {/* Exit Confirmation Popup */}
+                <ConfirmationPopup
+                    visible={confirmVisible}
+                    title="Quit Game"
+                    message="Are you sure you want to leave? Your progress will be lost."
+                    onConfirm={() => router.back()}
+                    onCancel={() => setConfirmVisible(false)}
                 />
             </ImageBackground>
         </View>
