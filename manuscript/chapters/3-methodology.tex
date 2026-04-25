@@ -1,0 +1,46 @@
+% \section{Learning Theory Background}
+% Language acquisition in this project draws upon naturalistic and contextual learning principles, similar to how \textbf{children acquire their first language}. Learners build vocabulary through repeated exposure to words across diverse, meaningful contexts. The system aims to ensure that each target word appears in multiple contexts to strengthen memory retention and contextual understanding.
+
+% \section{Data Collection Methods}
+% Users can upload short video clips that serve as authentic learning materials. Using the \textit{Glaudia API} (LLM-based transcription), the system automatically generates subtitles. Users are then able to review, correct, and approve these transcriptions before final submission, ensuring data quality and linguistic accuracy.
+
+% \section{Multi-Stage Recommendation System}
+% The proposed system employs a multi-stage recommendation architecture, similar to large-scale personalized content delivery models, consisting of three main components:
+
+% \subsection{Preprocessing / Filtering}
+% In this stage, the system filters and selects candidate videos based on lexical and cognitive principles such as the Ebbinghaus forgetting curve. To optimize retention, previously learned vocabulary is periodically reintroduced at strategic intervals.  
+% A relational database maintains user-word relationships (\texttt{user\_words} table), containing fields such as:
+% \begin{itemize}
+%     \item Word mastery level (1-5 level)
+%     \item Date of last exposure
+%     \item Number of successful recalls
+% \end{itemize}
+% Content is filtered according to two key criteria:
+% \begin{enumerate}
+%     \item The learner should already know at least 98\% of the words in a given video.
+%     \item The text difficulty is adjusted dynamically to match the learner’s proficiency.
+% \end{enumerate}
+
+% \subsection{Cosine Similarity / Scoring}
+% Once filtered, content vectors (representing linguistic and semantic features) are compared using cosine similarity to identify videos most aligned with the user’s learning profile and interests.
+
+% \subsection{Re-Ranking / Blending}
+% The top-ranked candidates are blended with exploration-based recommendations to prevent overfitting and promote broader linguistic exposure. This hybrid approach ensures a balance between relevance and novelty.
+
+% \section{Development Stack}
+% The system will consist of:
+% \begin{itemize}
+%     \item \textbf{Database:} Relational database (e.g., PostgreSQL) for storing user data, word progress, and content metadata.
+%     \item \textbf{Backend:} Python-based server (e.g., Flask or Django) for API logic, user management, and recommendation pipeline.
+%     \item \textbf{Frontend:} Mobile application built with React Native for cross-platform deployment.
+% \end{itemize}
+% \newpage
+
+\section{Technology Stack}
+    Rationale for selected databases, backend, and frontend frameworks.
+
+\section{The Personalized Recommendation Engine}
+    How the system selects "Reels" based on the user's proficiency and past vocabulary review needs.
+
+\section{Gamification Integration}
+    Logic for adapting hypercasual game levels to the learner's vocabulary state.
