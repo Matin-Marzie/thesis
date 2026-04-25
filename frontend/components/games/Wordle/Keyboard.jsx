@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { View, TouchableOpacity, StyleSheet, Text, Vibration } from 'react-native';
+import { View, TouchableOpacity, StyleSheet, Text, Vibration, Dimensions } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { getWordleConfig } from '@/constants/wordleConfig';
 
@@ -23,6 +23,15 @@ export default function Keyboard({
 
   // Use compact sizing when any row has more than 10 keys
   const isCompact = keyboardRows.some(row => row.length > 10);
+
+  // Fixed key width based on the longest row so all keys are the same size
+  const keyWidth = useMemo(() => {
+    const maxKeys = Math.max(...keyboardRows.map(r => r.length));
+    const KEYBOARD_PADDING = 8; // paddingHorizontal: 4 on each side
+    const GAP = 3;
+    const screenWidth = Dimensions.get('window').width;
+    return (screenWidth - KEYBOARD_PADDING - GAP * (maxKeys - 1)) / maxKeys;
+  }, [keyboardRows]);
 
   const getKeyColor = useMemo(() => {
     return (letter) => {
@@ -59,7 +68,7 @@ export default function Keyboard({
         style={[
           styles.key,
           isCompact && styles.keyCompact,
-          { backgroundColor },
+          { backgroundColor, width: keyWidth },
         ]}
       >
         <Text style={[styles.keyText, isCompact && styles.keyTextCompact]}>{letter}</Text>
@@ -105,32 +114,29 @@ export default function Keyboard({
 const styles = StyleSheet.create({
   keyboard: {
     backgroundColor: '#f5f5f5',
-    padding: 6,
+    paddingVertical: 6,
+    paddingHorizontal: 4,
     borderTopWidth: 1,
     borderTopColor: '#e0e0e0',
-
   },
   row: {
     flexDirection: 'row',
     justifyContent: 'center',
-    marginBottom: 8,
-    gap: 4,
+    marginBottom: 6,
+    gap: 3,
   },
   specialKeysRow: {
     marginBottom: 0,
   },
   key: {
     paddingVertical: 14,
-    paddingHorizontal: 8,
     borderRadius: 4,
-    minWidth: 40,
     justifyContent: 'center',
     alignItems: 'center',
   },
   keyCompact: {
     paddingVertical: 8,
-    paddingHorizontal: 4,
-    minWidth: 30,
+    paddingHorizontal: 1,
   },
   specialKey: {
     paddingVertical: 6,
@@ -150,6 +156,7 @@ const styles = StyleSheet.create({
     color: '#fff',
   },
   keyTextCompact: {
-    fontSize: 22,
+    fontSize: 16,
+    paddingVertical: 3,
   },
 });
