@@ -1,4 +1,5 @@
 // ================== Crossword Generator ==================
+import { normalizeWord, isValidWordForLang } from './languageUtils';
 
 /* Utils */
 function randomInt(min, max) {
@@ -206,7 +207,7 @@ function wordPriority(word) {
 
 
 // ================== RUN ==================
-export default function GenerateWordOfWonderLevel(dictionary) {
+export default function GenerateWordOfWonderLevel(dictionary, langCode = 'en') {
     // Reset global variables to prevent accumulation across multiple calls
     board = Array.from({ length: BOARD_SIZE }, () =>
         Array(BOARD_SIZE).fill(0)
@@ -214,10 +215,11 @@ export default function GenerateWordOfWonderLevel(dictionary) {
     placedWords = [];
     usedLetters = {};
 
-    // Extract written_form from word objects
+    // Normalize written_form for the target language (strip diacritics for Greek,
+    // strip harakat for Farsi, uppercase for Latin-based scripts).
     let wordList = dictionary
-        .map((w) => w.written_form.trim().toUpperCase())
-        .filter((w) => w.length > 2 && w.length <= 8 && /^[A-Z]+$/.test(w));
+        .map((w) => normalizeWord(w.written_form.trim(), langCode))
+        .filter((w) => w.length > 2 && w.length <= 8 && isValidWordForLang(w, langCode));
 
     // Pick a random practice word (already uppercase from wordList)
     const practiceWord = wordList[Math.floor(Math.random() * wordList.length)];

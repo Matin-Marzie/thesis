@@ -1,9 +1,11 @@
 import React, { memo, useState, useRef, useEffect } from 'react';
 import { View, Text, Animated, StyleSheet } from 'react-native';
 import { GREEN, MAX_GRID_WIDTH, width, height } from './gameConstants';
+import { isRTL } from './languageUtils';
 import SeeMeaningPopUp from './pop-ups/SeeMeaningPopUp';
 
-const Grid = memo(({ boxData, gridWords, foundWords, filledBoxes, boxAnimations, shakeWord, shakeAnimation }) => {
+const Grid = memo(({ boxData, gridWords, foundWords, filledBoxes, boxAnimations, shakeWord, shakeAnimation, langCode = 'en' }) => {
+  const rtl = isRTL(langCode);
   const [seeMeaningVisible, setSeeMeaningVisible] = useState(false);
   const [seeMeaningWords, setSeeMeaningWords] = useState([]);
   const [pressedBoxIndex, setPressedBoxIndex] = useState(null);
@@ -229,7 +231,7 @@ const Grid = memo(({ boxData, gridWords, foundWords, filledBoxes, boxAnimations,
                 {
                   width: boxSize,
                   height: boxSize,
-                  left: gridLeft + colIndex * boxSize,
+                  left: gridLeft + (rtl ? (columns - 1 - colIndex) : colIndex) * boxSize,
                   top: gridTop + rowIndex * boxSize,
                   backgroundColor,
                   borderColor: '#ddd',

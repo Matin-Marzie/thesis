@@ -18,6 +18,9 @@ export default function GameLoader() {
     const [confirmVisible, setConfirmVisible] = useState(false);
     const spinValue = useRef(new Animated.Value(0)).current;
 
+    const currentLang = userProgress?.languages?.find(l => l.is_current_language);
+    const learningLangCode = currentLang?.learning_language?.code || 'en';
+
     useEffect(() => {
         const subscription = BackHandler.addEventListener('hardwareBackPress', () => {
             if (confirmVisible) return false;
@@ -43,7 +46,7 @@ export default function GameLoader() {
     const generateLevel = (words) => {
         setIsGenerating(true);
         setTimeout(() => {
-            const [board, gridWords, generatedLetters] = GenerateWordOfWonderLevel(words);
+            const [board, gridWords, generatedLetters] = GenerateWordOfWonderLevel(words, learningLangCode);
             setLevelData({
                 boxData: board,
                 gridWords: gridWords,
@@ -96,6 +99,7 @@ export default function GameLoader() {
             boxData={levelData.boxData}
             gridWords={levelData.gridWords}
             letters={levelData.letters}
+            langCode={learningLangCode}
             onPlayAgain={() => generateLevel(dictionary.words)}
         />
     );

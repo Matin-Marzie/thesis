@@ -22,6 +22,7 @@ import ConfirmationPopup from '../ConfirmationPopup';
 import { GREEN, MAX_WIDTH, width, height, horizontalOffset, BACKGROUND_IMAGE_URI, BACKGROUND_OVERLAY_OPACITY } from './gameConstants';
 import { useAppContext } from '@/context/AppContext';
 import { useDictionaryContext } from '@/context/DictionaryContext';
+import { normalizeWord, isRTL } from './languageUtils';
 
 
 const HAMMER_HEIGHT = height * 0.69;
@@ -36,15 +37,17 @@ const shuffleArray = (array) => {
     return shuffled;
 };
 
-export default function WordOfWonders({ boxData: initialBoxData, gridWords: initialGridWords, letters: initialLetters, onPlayAgain }) {
+export default function WordOfWonders({ boxData: initialBoxData, gridWords: initialGridWords, letters: initialLetters, onPlayAgain, langCode = 'en' }) {
 
     const { userVocabulary, userProgress, setUserProgress } = useAppContext();
     const { dictionary } = useDictionaryContext();
 
+    // Normalize written_form the same way LevelGenerator did so lookups always match
+    // (e.g. Greek "αδελφός" → "αδελφος", Farsi "بَرادَر" → "برادر")
     const dictionarySet = useMemo(() => {
         if (!dictionary?.words) return new Set();
-        return new Set(dictionary.words.map(w => w.written_form.toLowerCase()));
-    }, [dictionary?.words]);
+        return new Set(dictionary.words.map(w => normalizeWord(w.written_form, langCode).toLowerCase()));
+    }, [dictionary?.words, langCode]);
 
     const [boxData, setBoxData] = useState(initialBoxData);
     const [gridWords] = useState(initialGridWords);
@@ -280,9 +283,12 @@ export default function WordOfWonders({ boxData: initialBoxData, gridWords: init
             return null; // Outside grid
         }
 
-        // Calculate which box was hit
-        const col = Math.floor((x - gridLeft) / boxSize);
+        // visual column (0 = leftmost on screen)
+        const visualCol = Math.floor((x - gridLeft) / boxSize);
         const row = Math.floor((y - gridTop) / boxSize);
+
+        // For RTL the display is mirrored: visual col 0 is internal col (columns-1)
+        const col = isRTL(langCode) ? (columns - 1 - visualCol) : visualCol;
 
         if (col < 0 || col >= columns || row < 0 || row >= rows) {
             return null;
@@ -295,7 +301,7 @@ export default function WordOfWonders({ boxData: initialBoxData, gridWords: init
 
         const boxIndex = row * columns + col;
         return boxIndex;
-    }, [getGridBoxInfo]);
+    }, [getGridBoxInfo, langCode, columns, rows, boxData]);
 
     // Hammer PanResponder
     const hammerActiveRef = useRef(false);
@@ -632,7 +638,9 @@ export default function WordOfWonders({ boxData: initialBoxData, gridWords: init
         if (selectedLetters.length === 0 && !animatingWord) return null;
 
         const word = animatingWord || selectedLetters.map((i) => shuffledLetters[i]).join('');
+        // toUpperCase is a no-op for Farsi/Arabic scripts; works as expected for Latin/Greek
         const displayWord = word.toUpperCase();
+        const rtlStyle = isRTL(langCode) ? { writingDirection: 'rtl' } : null;
 
         // If animating, use animated view
         if (animatingWord) {
@@ -650,7 +658,7 @@ export default function WordOfWonders({ boxData: initialBoxData, gridWords: init
                         }
                     ]}
                 >
-                    <Text style={styles.selectedLetterText}>{displayWord}</Text>
+                    <Text style={[styles.selectedLetterText, rtlStyle]}>{displayWord}</Text>
                 </Animated.View>
             );
         }
@@ -659,11 +667,9 @@ export default function WordOfWonders({ boxData: initialBoxData, gridWords: init
             <View style={styles.selectedWordContainer}>
                 <Animated.Text
                     style={[
-
                         styles.selectedLetterText,
-                        {
-                            transform: [{ translateX: selectedWordShakeAnimation }],
-                        }
+                        rtlStyle,
+                        { transform: [{ translateX: selectedWordShakeAnimation }] },
                     ]}
                 >
                     {displayWord}
@@ -720,6 +726,7 @@ export default function WordOfWonders({ boxData: initialBoxData, gridWords: init
                     boxAnimations={boxAnimations}
                     shakeWord={shakeWord}
                     shakeAnimation={shakeAnimation}
+                    langCode={langCode}
                 />
 
 
