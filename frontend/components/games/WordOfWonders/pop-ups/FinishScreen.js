@@ -1,6 +1,7 @@
 import React, { useRef, useEffect, useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Modal, Animated, Easing, Dimensions, SectionList } from 'react-native';
 import { FontAwesome5 } from '@expo/vector-icons';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { popupStyles } from './popupStyles';
 import { GREEN } from '../gameConstants';
 import VocabularyListItem from '../../../vocabulary/VocabularyListItem';
@@ -168,6 +169,7 @@ export default function FinishScreen({ visible = false, onCollect, coinTarget, g
 
     return (
         <Modal visible={visible} transparent animationType="none" onRequestClose={() => { }}>
+            <GestureHandlerRootView style={{ flex: 1 }}>
             <Animated.View style={[popupStyles.overlay, { opacity: overlayOpacity }]}>
                 <Animated.View style={[popupStyles.popup, styles.popup, { transform: [{ scale: cardScale }] }]}>
 
@@ -199,6 +201,7 @@ export default function FinishScreen({ visible = false, onCollect, coinTarget, g
                         nestedScrollEnabled={true}
                         keyboardShouldPersistTaps="handled"
                         stickySectionHeadersEnabled={false}
+                        showsVerticalScrollIndicator={false}
                     />
 
                     <View style={styles.divider} />
@@ -249,13 +252,14 @@ export default function FinishScreen({ visible = false, onCollect, coinTarget, g
                     ))}
                 </View>
             </Animated.View>
+            </GestureHandlerRootView>
         </Modal>
     );
 }
 
 const styles = StyleSheet.create({
     popup: {
-        height: screenHeight * 0.60,
+        height: screenHeight * 0.70,
     },
     rewardRow: {
         flexDirection: 'row',

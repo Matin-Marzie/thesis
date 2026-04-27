@@ -5,19 +5,14 @@ import {
     StyleSheet,
     TouchableOpacity,
     Modal,
-    Dimensions,
-    Animated,
 } from 'react-native';
 import { FontAwesome5 } from '@expo/vector-icons';
+import { GestureHandlerRootView, FlatList } from 'react-native-gesture-handler';
 import { GREEN } from '../gameConstants';
-import { useDictionaryContext } from '@/context/DictionaryContext';
 import { popupStyles } from './popupStyles';
 import VocabularyListItem from '../../../vocabulary/VocabularyListItem';
 
-const SCREEN_WIDTH = Dimensions.get('window').width;
-
 export default function ExtraWordsPopup({ visible, onClose, extraWords = [], score = 0 }) {
-    const { dictionary } = useDictionaryContext();
     return (
         <Modal
             visible={visible}
@@ -26,49 +21,52 @@ export default function ExtraWordsPopup({ visible, onClose, extraWords = [], sco
             onRequestClose={onClose}
             statusBarTranslucent={true}
         >
-            <TouchableOpacity
-                style={popupStyles.overlay}
-                activeOpacity={1}
-                onPress={onClose}
-            >
+            <GestureHandlerRootView style={{ flex: 1 }}>
                 <TouchableOpacity
+                    style={popupStyles.overlay}
                     activeOpacity={1}
-                    onPress={(e) => e.stopPropagation()}
+                    onPress={onClose}
                 >
-                    <View style={popupStyles.popup}>
-                        {/* Header */}
-                        <View style={popupStyles.popupHeader}>
-                            <View style={popupStyles.placeholder} />
-                            <Text style={popupStyles.headerText}>EXTRA WORDS</Text>
-                            <TouchableOpacity
-                                style={popupStyles.closeButton}
-                                onPress={onClose}
-                            >
-                                <FontAwesome5 name="times" size={popupStyles.closeButton.size} style={popupStyles.closeButton} />
-                            </TouchableOpacity>
-                        </View>
+                    <TouchableOpacity
+                        activeOpacity={1}
+                        onPress={(e) => e.stopPropagation()}
+                    >
+                        <View style={popupStyles.popup}>
+                            {/* Header */}
+                            <View style={popupStyles.popupHeader}>
+                                <View style={popupStyles.placeholder} />
+                                <Text style={popupStyles.headerText}>EXTRA WORDS</Text>
+                                <TouchableOpacity
+                                    style={popupStyles.closeButton}
+                                    onPress={onClose}
+                                >
+                                    <FontAwesome5 name="times" size={popupStyles.closeButton.size} style={popupStyles.closeButton} />
+                                </TouchableOpacity>
+                            </View>
 
-                        {/* Content */}
-                        <View style={popupStyles.content}>
-                            <Text style={styles.scoreText}>Score: {score}</Text>
-                                <Animated.FlatList
-                                    style={{flex: 1}}
+                            {/* Content */}
+                            <View style={popupStyles.content}>
+                                <Text style={styles.scoreText}>
+                                    You found {score} {score === 1 ? 'word' : 'words'} outside the grid!
+                                </Text>
+                                <FlatList
+                                    style={{ flex: 1 }}
                                     data={extraWords}
                                     keyExtractor={(item, index) => `${item}-${index}`}
                                     renderItem={({ item }) => (
-                                        <VocabularyListItem
-                                            item={item}
-                                        />
+                                        <VocabularyListItem item={item} />
                                     )}
                                     ListEmptyComponent={<Text style={styles.emptyText}>No extra words yet.</Text>}
                                     scrollEnabled={true}
                                     nestedScrollEnabled={true}
                                     keyboardShouldPersistTaps="handled"
+                                    showsVerticalScrollIndicator={false}
                                 />
+                            </View>
                         </View>
-                    </View>
+                    </TouchableOpacity>
                 </TouchableOpacity>
-            </TouchableOpacity>
+            </GestureHandlerRootView>
         </Modal>
     );
 }
@@ -78,7 +76,7 @@ const styles = StyleSheet.create({
         fontSize: 16,
         fontWeight: '600',
         color: GREEN,
-        marginBottom: 12,
+        padding: 5,
     },
     emptyText: {
         color: '#888',

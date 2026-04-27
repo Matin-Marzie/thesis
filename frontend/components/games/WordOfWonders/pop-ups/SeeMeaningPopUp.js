@@ -8,6 +8,7 @@ import {
     Animated,
 } from 'react-native';
 import { FontAwesome5 } from '@expo/vector-icons';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { popupStyles } from './popupStyles';
 import { useDictionaryContext } from '@/context/DictionaryContext';
 import VocabularyListItem from '../../../vocabulary/VocabularyListItem';
@@ -23,48 +24,50 @@ export default function SeeMeaningPopUp({ visible, onClose, foundWords = [] }) {
             onRequestClose={onClose}
             statusBarTranslucent={true}
         >
-            <TouchableOpacity
-                style={popupStyles.overlay}
-                activeOpacity={1}
-                onPress={onClose}
-            >
+            <GestureHandlerRootView style={{ flex: 1 }}>
                 <TouchableOpacity
+                    style={popupStyles.overlay}
                     activeOpacity={1}
-                    onPress={(e) => e.stopPropagation()}
+                    onPress={onClose}
                 >
-                    <View style={popupStyles.popup}>
-                        {/* Header */}
-                        <View style={popupStyles.popupHeader}>
-                            <View style={popupStyles.placeholder} />
-                            <Text style={popupStyles.headerText}>MEANINGS</Text>
-                            <TouchableOpacity
-                                style={popupStyles.closeButton}
-                                onPress={onClose}
-                            >
-                                <FontAwesome5 name="times" size={popupStyles.closeButton.size} style={popupStyles.closeButton} />
-                            </TouchableOpacity>
-                        </View>
+                    <TouchableOpacity
+                        activeOpacity={1}
+                        onPress={(e) => e.stopPropagation()}
+                    >
+                        <View style={popupStyles.popup}>
+                            {/* Header */}
+                            <View style={popupStyles.popupHeader}>
+                                <View style={popupStyles.placeholder} />
+                                <Text style={popupStyles.headerText}>MEANINGS</Text>
+                                <TouchableOpacity
+                                    style={popupStyles.closeButton}
+                                    onPress={onClose}
+                                >
+                                    <FontAwesome5 name="times" size={popupStyles.closeButton.size} style={popupStyles.closeButton} />
+                                </TouchableOpacity>
+                            </View>
 
-                        {/* Content */}
-                        <View style={popupStyles.content}>
-                            <Animated.FlatList
-                                style={{flex: 1}}
-                                data={foundWords}
-                                keyExtractor={(item, index) => `${item}-${index}`}
-                                renderItem={({ item }) => (
-                                    <VocabularyListItem
-                                        item={item}
-                                    />
-                                )}
-                                ListEmptyComponent={<Text style={styles.emptyText}>No words found.</Text>}
-                                scrollEnabled={true}
-                                nestedScrollEnabled={true}
-                                keyboardShouldPersistTaps="handled"
-                            />
+                            {/* Content */}
+                            <View style={popupStyles.content}>
+                                <Animated.FlatList
+                                    style={{flex: 1}}
+                                    data={foundWords}
+                                    keyExtractor={(item, index) => `${item}-${index}`}
+                                    renderItem={({ item }) => (
+                                        <VocabularyListItem
+                                            item={item}
+                                        />
+                                    )}
+                                    ListEmptyComponent={<Text style={styles.emptyText}>No words found.</Text>}
+                                    scrollEnabled={true}
+                                    nestedScrollEnabled={true}
+                                    keyboardShouldPersistTaps="handled"
+                                />
+                            </View>
                         </View>
-                    </View>
+                    </TouchableOpacity>
                 </TouchableOpacity>
-            </TouchableOpacity>
+            </GestureHandlerRootView>
         </Modal>
     );
 }

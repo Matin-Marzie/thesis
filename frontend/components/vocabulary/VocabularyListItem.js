@@ -28,7 +28,7 @@ function WordItem({ item }) {
 
     const article = word && word.article ? word.article : '';
     const written_form = word && word.written_form;
-    const translations = word && word.translations ? word.translations.join(', ') : '';
+    const translations = word?.translations?.join(', ') ?? '';
     const level = word && word.level ? word.level : null;
 
     // Get language code from current learning language
@@ -151,7 +151,7 @@ function WordItem({ item }) {
         >
         <View style={styles.row}>
             <View style={[styles.wordRow]}>
-                <View style={{ flexDirection: 'row' }}>
+                <View style={{ flexDirection: 'row', flex: 1 }}>
                     <Text style={{ marginTop: 2, marginRight: 12 }}>{article || ''}</Text>
                     <View style={styles.written_formTranslationRow}>
                         <Text style={[styles.written_form]}>{written_form}</Text>
@@ -171,7 +171,7 @@ function WordItem({ item }) {
                             </TouchableOpacity>
                         )}
                         {/* wiktionary icon */}
-                        {isOnline && (
+                        {isOnline && language_code === 'en' && (
                             <TouchableOpacity
                                 style={styles.dictionaryButton}
                                 onPress={handleDictionaryLookup}
@@ -198,7 +198,7 @@ function WordItem({ item }) {
             </View>
             {/* Wikimedia dictionary section */}
             {isExpanded && isOnline && (
-                <ScrollView style={styles.wikimediaDictionarySection}>
+                <ScrollView style={styles.wikimediaDictionarySection} showsVerticalScrollIndicator={false}>
                     {loading && (
                         <View style={styles.loadingContainer}>
                             <ActivityIndicator size="small" color="#007bff" />
@@ -266,6 +266,7 @@ const styles = StyleSheet.create({
     written_formTranslationRow: {
         flexDirection: 'column',
         alignItems: 'flex-start',
+        flexShrink: 1,
     },
     written_form: {
         fontSize: 16,
@@ -307,13 +308,14 @@ const styles = StyleSheet.create({
         backgroundColor: '#f9f9f9',
         borderTopLeftRadius: 8,
         borderBottomLeftRadius: 8,
-        marginBottom: 10,
+        marginBottom: 5,
         maxHeight: 250,
-        borderTopWidth: 2,
-        borderLeftWidth: 5,
-        borderRightWidth: 0,
-        borderBottomWidth: 2,
+        borderTopWidth: 3,
+        borderLeftWidth: 3,
+        borderRightWidth: 3,
+        borderBottomWidth: 3,
         borderLeftColor: "#EBD0A3",
+        padding: 6,
     },
     loadingContainer: {
         alignItems: 'center',
