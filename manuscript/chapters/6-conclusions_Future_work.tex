@@ -1,6 +1,38 @@
-\section{Summary of Contributions}
+\section{Contributions}
 
-\section{Limitations of the Study}
+This thesis has presented GloReels, a personalised mobile language learning application that combines authentic short-form video content with a word-level vocabulary tracking model and gamified reinforcement. The following contributions were made:
 
-\section{Future Directions}
-    AI-driven real-time interaction, multi-language expansion, etc.
+\begin{enumerate}
+    \item \textbf{A three-service system architecture} comprising a React Native/Expo mobile frontend, a Node.js/Express REST API backend, and a Python FastAPI reels microservice, all sharing a PostgreSQL 16 database. The architecture is containerised with Docker Compose and production-ready in its authentication and data management components.
+    \item \textbf{A relational vocabulary model} that tracks each learner's mastery of individual words across a six-level scale, recording mastery level and last-review timestamp per (user, word, language pair) tuple. This model provides the data substrate for spaced-repetition scheduling and CEFR-based comprehensibility filtering.
+    \item \textbf{A proficiency-aware registration pipeline} that bulk-initialises a new user's vocabulary model by pre-populating all words below their stated CEFR level, eliminating the cold-start problem that affects systems relying on incremental word encounters.
+    \item \textbf{An offline-first vocabulary synchronisation mechanism} (\texttt{POST /api/v1/user/sync}) that batches client-side mastery updates and propagates them to the server in a single round trip, enabling continued game-based reinforcement without network connectivity.
+    \item \textbf{Two vocabulary-driven hypercasual games} (Wordle and Word of Wonders) whose target words are drawn from the learner's active vocabulary model, creating a closed loop between reel-based contextual exposure and active game-based recall.
+    \item \textbf{A design specification for a three-stage recommendation engine} (comprehensibility filtering, Ebbinghaus scoring, exploration blending), grounded in Vygotsky's ZPD and the forgetting curve, which serves as the roadmap for future development.
+\end{enumerate}
+
+\section{Limitations}
+
+The work presented in this thesis has several limitations that must be acknowledged honestly.
+
+\textbf{Incomplete recommendation pipeline.} The personalized recommendation engine described in Chapter~\ref{methodology} is designed and specified but not fully implemented. The current release serves randomly selected reels within the correct learning language. The system therefore demonstrates the architecture for personalised delivery but does not yet realise its learning-theoretic benefits.
+
+\textbf{No empirical user study.} The pedagogical effectiveness of the system has not been evaluated in a controlled experiment. The evaluation in Chapter~\ref{chapter:evaluation_results} is design-level and heuristic. Whether GloReels produces measurable vocabulary gains relative to a control condition is an open empirical question.
+
+\textbf{Limited content library.} The system requires a curated library of reels with complete linguistic annotation (tokenisation, CEFR-level word tagging, timestamped sentence alignment, and translation). Building and maintaining such a library at scale requires either significant manual curation effort or an automated annotation pipeline that is outside the scope of this work.
+
+\textbf{Single-platform gamification.} The current energy and coins system incentivises engagement at a surface level. Whether these mechanics sustain long-term vocabulary practice—rather than producing the ``drilling masquerading as gamification'' pattern identified in Chapter~\ref{chapter:related_work}—has not been tested.
+
+\section{Future Work}
+
+The most immediate priority for future work is completing the recommendation pipeline. Stage 2 (Ebbinghaus-based review urgency scoring) requires implementing the scheduling function that computes review priority from \texttt{mastery\_level} and \texttt{last\_review}, and integrating it into \texttt{reel\_service.py} as the currently commented-out \texttt{get\_personalized\_reels()} method. Stage 3 (exploration blending) is architecturally straightforward once Stage 2 is in place.
+
+Beyond the recommendation engine, the following directions are identified as high-value:
+
+\begin{itemize}
+    \item \textbf{Automated content annotation pipeline:} A pipeline that ingests a raw video URL, transcribes speech using a large language model, aligns the transcript to video timestamps, tokenises and POS-tags the output, maps tokens to the word database, and produces a fully annotated reel record—reducing the per-reel curation cost from hours to minutes.
+    \item \textbf{Empirical evaluation:} A randomised controlled study measuring vocabulary gain, retention at one week and one month, and learner engagement metrics, comparing GloReels against a no-game control condition and against Duolingo.
+    \item \textbf{Multi-language expansion:} The schema and service layer are language-agnostic (language is a foreign key throughout); adding a new language requires only content ingestion, not code changes.
+    \item \textbf{Collaborative learning features:} Shared vocabulary challenges, leaderboards scoped to friend groups, and comment-driven vocabulary discussion on individual reels, supporting the social dimension of Vygotsky's theory.
+    \item \textbf{Vocabulary synchronisation performance:} Replacing the serial per-word UPDATE loop in \texttt{syncController.js} with a bulk \texttt{INSERT ... ON CONFLICT DO UPDATE} statement to support large offline sessions without latency degradation.
+\end{itemize}

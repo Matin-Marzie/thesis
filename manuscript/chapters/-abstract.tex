@@ -1,9 +1,15 @@
 % Abstract
 
-Language Learning has become ...
-
-\textbf{Key words:} [KEYWORD-1], [KEYWORD-2], [KEYWORD-3]
-
 \selectlanguage{english}
 
-This thesis proposes a Personalized Language Learning (PLL) application that leverages \textbf{short-video} content (Reels) to enhance second language acquisition. The platform integrates authentic audiovisual materials, adaptive scaffolding, and cultural explanations to promote both linguistic competence and cultural understanding. Drawing on naturalistic and contextual learning principles, the system ensures repeated exposure to target vocabulary across meaningful contexts, guided by memory retention strategies such as the \textbf{Ebbinghaus forgetting curve}. Users can upload videos, which are automatically transcribed using an LLM-based API and curated for difficulty and relevance through a multi-stage \textbf{recommendation system} involving preprocessing, scoring, and re-ranking. The application is built with a React Native frontend, a Python-based backend, and a relational database, providing a cross-platform \textbf{mobile} experience. This work addresses gaps in current language learning platforms—including lack of authentic content, insufficient multimedia integration, and limited support for advanced learners—while combining educational value with engaging, gamified interactions inspired by hypercasual games. The project also builds upon prior coursework in entertainment software technologies and mobile application development, ensuring technical rigor and scalability.
+This thesis presents GloReels, a personalised Mobile-Assisted Language Learning (MALL) application that leverages authentic short-form video content—referred to as Reels—to support second language acquisition. The system addresses three persistent gaps in existing language learning platforms: the absence of authentic, culturally contextualised content; the lack of word-level learner modelling grounded in memory theory; and the prevalence of extrinsic gamification that does not engage active recall.
+
+GloReels is implemented as a three-service microarchitecture: a cross-platform React Native/Expo mobile frontend, a Node.js/Express REST API backend responsible for authentication and vocabulary management, and a Python FastAPI reels microservice that serves linguistically annotated video content. All services share a PostgreSQL 16 relational database whose schema encodes a six-level vocabulary mastery model tracking each learner's knowledge of individual words alongside a timestamp of last review.
+
+The system draws on three theoretical frameworks. Vygotsky's Zone of Proximal Development informs the comprehensibility threshold used to filter reels: content is presented only when the learner already knows at least 98\% of its vocabulary. The Ebbinghaus forgetting curve provides the basis for a three-stage recommendation pipeline—comprehensibility filtering, spaced-repetition scoring, and exploration blending—designed to surface reels containing vocabulary that is contextually overdue for review. Cognitive Load Theory guides the session design of the two integrated hypercasual games, Wordle and Word of Wonders, whose target words are drawn directly from each learner's vocabulary model.
+
+The thesis documents the full system architecture, the relational schema, the API design, and the implementation of both game modules. A functional evaluation confirms that the authentication, vocabulary initialisation, reel-serving, and game modules are fully operational. The personalised recommendation pipeline is designed and specified but not yet fully deployed; current reel selection is randomised within the correct learning language. Limitations, including the absence of a longitudinal user study, are discussed alongside a prioritised roadmap for future work.
+
+\bigskip
+\textbf{Keywords:} mobile-assisted language learning, second language acquisition, spaced repetition, authentic materials, personalised recommendation, gamification, React Native
+

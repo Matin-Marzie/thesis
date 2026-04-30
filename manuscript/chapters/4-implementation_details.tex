@@ -1,15 +1,78 @@
-\section{Data Modeling}
-    Schema design for vocabulary tracking and progress.
+\section{Database Schema}
 
-\section{The "Reels" Pipeline}
-    Content ingestion, transcript processing, and metadata tagging.
+The database schema (\texttt{database/thesis\_db.sql}) defines fourteen tables across three domains. The core vocabulary tables are reproduced schematically in Table~\ref{tab:schema_core}.
 
-\section{Game Module Implementation}
+\begin{table}[h!]
+\centering
+\begin{tabular}{|l|l|}
+\hline
+\textbf{Table} & \textbf{Key columns} \\
+\hline
+\texttt{words} & \texttt{id}, \texttt{written\_form}, \texttt{part\_of\_speech}, \texttt{level} (CEFR), \texttt{language\_id}, \texttt{audio\_url}, \texttt{image\_url} \\
+\texttt{user\_vocabulary} & \texttt{user\_id}, \texttt{word\_id}, \texttt{user\_languages\_id}, \texttt{mastery\_level} (1--6), \texttt{last\_review} \\
+\texttt{user\_languages} & \texttt{user\_id}, \texttt{native\_language\_id}, \texttt{learning\_language\_id}, \texttt{proficiency\_level}, \texttt{experience} \\
+\texttt{reels} & \texttt{id}, \texttt{url}, \texttt{thumbnail\_url}, \texttt{dialogue\_id}, \texttt{language\_id}, \texttt{duration} \\
+\texttt{sentence\_tokens} & \texttt{sentence\_id}, \texttt{word\_id}, \texttt{position}, \texttt{part\_of\_speech} \\
+\hline
+\end{tabular}
+\caption{Core tables of the GloReels PostgreSQL schema.}
+\label{tab:schema_core}
+\end{table}
+
+The \texttt{user\_vocabulary.mastery\_level} column is constrained to the range 1–6 via a \texttt{CHECK} constraint. A database trigger function (\texttt{update\_last\_login\_on\_refresh\_token}) automatically records the \texttt{last\_login} timestamp whenever the refresh token is updated, removing the need to handle this in application code.
+
+\section{Reels Service}
+
+\subsection{Service Architecture}
+The reels microservice (\texttt{reels-service/}) is a FastAPI application backed by an async SQLAlchemy session. Its single primary endpoint, \texttt{GET /api/v1/reels}, accepts three parameters: \texttt{native\_language\_code}, \texttt{learning\_language\_code}, and \texttt{limit} (1–50, default 10). The endpoint validates that the two language codes are distinct, resolves them to database language IDs, and delegates to \texttt{ReelService.get\_random\_reels()} (\texttt{app/services/reel\_service.py}).
+
+\subsection{Dialogue Enrichment}
+Each reel response embeds the full dialogue associated with the reel's video content. The \texttt{build\_dialogue\_response()} method in \texttt{reel\_service.py} assembles this structure via a single SQLAlchemy query that eager-loads \texttt{DialogueSentence} $\rightarrow$ \texttt{Sentence} $\rightarrow$ \texttt{SentenceToken} $\rightarrow$ \texttt{Word} in one round trip, ordered by sentence position. For each sentence, a separate query resolves the native-language translation via \texttt{sentence\_translations}. The resulting response carries per-token word data (written form, CEFR level, part of speech, audio URL, image URL) alongside sentence-level timestamps, enabling the frontend to render synchronised word-level subtitles.
+
+\subsection{Personalisation Implementation Status}
+The \texttt{GET /api/v1/reels} endpoint includes an optional Bearer token header. When a valid JWT is present, the router is designed to invoke a personalised recommendation method; in the current release this path falls through to the same random-selection logic as unauthenticated requests (see \texttt{reels.py} lines 87–98). Full personalisation via the scoring pipeline described in Chapter~\ref{methodology} is planned for a future release.
+
+\section{Backend API}
+
+\subsection{Authentication Module}
+The backend (\texttt{backend/}) implements a dual-token authentication scheme. On successful login or registration, the server issues a short-lived JWT access token (default: 15 minutes, configurable via \texttt{ACCESS\_TOKEN\_EXPIRES\_IN}) and a long-lived refresh token (default: 30 days). The refresh token is persisted in the \texttt{users.refresh\_token} column and returned to the client as an HTTP-only cookie. The \texttt{GET /api/v1/refresh} endpoint validates the cookie, verifies the stored token, and issues a new access token without requiring the user to re-authenticate.
+
+Google OAuth 2.0 is supported via the \texttt{google-auth-library} package. The \texttt{POST /api/v1/auth/google} endpoint verifies the Google ID token using \texttt{OAuth2Client.verifyIdToken()}, extracts the user profile, and either retrieves an existing account or creates a new one, then issues the same token pair.
+
+\subsection{Registration and Vocabulary Initialisation}
+The registration endpoint (\texttt{controllers/registerController.js}) performs the following operations atomically:
+
+\begin{enumerate}
+    \item Validates the request body against a Joi schema (\texttt{validation/RegisterSchema.js}).
+    \item Checks for duplicate email addresses.
+    \item Hashes the password using bcrypt.
+    \item Creates the user record with up to three username variants derived from the email prefix.
+    \item Creates the \texttt{user\_languages} record for the selected language pair.
+    \item Bulk-inserts all \texttt{words} whose CEFR level is strictly below the user's stated proficiency into \texttt{user\_vocabulary} at mastery level 3 (``understood''), using a single parameterised \texttt{INSERT~...~SELECT} query against the \texttt{words} table.
+    \item Merges any additional vocabulary changes submitted during onboarding.
+\end{enumerate}
+
+Step 6 is implemented in \texttt{models/userVocabularyModel.js} as the \texttt{addByProficiencyLevel()} method. The CEFR levels are ordered as \texttt{['N', 'A1', 'A2', 'B1', 'B2', 'C1', 'C2']}; the method slices all levels below the user's stated level and passes them as a PostgreSQL array parameter to the \texttt{ANY(\$5)} clause, avoiding a variable-length \texttt{IN} clause.
+
+\subsection{Vocabulary Synchronisation}
+The \texttt{PATCH /api/v1/user/sync} endpoint (\texttt{controllers/syncController.js}) provides an offline-first synchronisation mechanism. The client accumulates vocabulary changes locally and pushes them as a single batch: inserts (new word encounters), updates (mastery level changes following game outcomes), and deletes (words removed from the model). The server processes deletes first, then updates, then inserts, ensuring that concurrent local changes do not create phantom records.
+
+\section{Game Modules}
+
 \subsection{Word of Wonders}
-    Grid generation and difficulty scaling.
+Word of Wonders is a grid-based word-construction game in which the player must identify hidden words from a set of provided letters. Each game level is associated with a set of target words. In GloReels, these target words are drawn from the player's active vocabulary model, prioritising words at lower mastery levels. The grid is generated by computing all valid arrangements of the target words' letters into a crossword-style grid.
 
-\subsection{Wordle-style Module}
-        Algorithm for randomized word selection and user assessment.
+\subsection{Wordle}
+The Wordle implementation presents the player with a fixed number of attempts to guess a hidden word of known length. Each guess is evaluated for exact matches (correct letter, correct position) and partial matches (correct letter, wrong position), with colour feedback consistent with the original game's conventions. The target word is selected from the player's vocabulary model in the same manner as Word of Wonders.
+
+Both games post vocabulary state updates to the sync endpoint upon session completion, propagating mastery changes to the server and closing the reinforcement loop.
 
 \section{Complexity Analysis}
-    Efficiency of the recommendation and grid-generation algorithms.
+
+\textbf{Vocabulary initialisation} (\texttt{addByProficiencyLevel}): The dominant operation is a single \texttt{INSERT~...~SELECT} query whose cost is $O(|W_L|)$, where $|W_L|$ is the number of words in the learning language at levels below the user's proficiency. For a language with a vocabulary of $n$ words, this is bounded by $O(n)$.
+
+\textbf{Reel retrieval} (\texttt{get\_random\_reels}): The query performs a filtered table scan on \texttt{reels} ($O(|R_L|)$, where $|R_L|$ is the number of reels in the learning language), followed by a \texttt{func.random()} sort ($O(|R_L| \log |R_L|)$) and a \texttt{LIMIT}. For each returned reel, the dialogue enrichment requires $O(|D|)$ where $|D|$ is the number of tokens in the dialogue. In practice, $|R_L|$ is small relative to full-text indices, so the dominant cost is the join graph traversal.
+
+\textbf{Vocabulary synchronisation}: The sync operation processes inserts, updates, and deletes in serial loops within a single request. For a batch of $k$ changes, the cost is $O(k)$ database round trips in the worst case. For large offline sessions this could become significant; batching all updates into a single parameterised statement is identified as a performance improvement for future work.
+
+\newpage

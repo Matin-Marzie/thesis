@@ -1,45 +1,59 @@
-\section{The Landscape of Mobile-Assisted Language Learning (MALL)} A critical review of current platforms (Duolingo, Memrise, LingQ).
+\section{Mobile-Assisted Language Learning}
 
-Digital language learning platforms (LLPs) have become dominant in foreign language education, with over 70 applications serving millions of users through Mobile-Assisted Language Learning (MALL)\cite{karasimos2022battle}. The global market size for these platforms was valued at USD 5.8 billion in 2025, growing further to USD 21.1 billion by 2034 at an estimated CAGR of 15.43\% from 2025 to 2034 by Duolingo commanding over 50\% of global downloads in 2023 \cite{businessresearch2024languageapps}. This rapid expansion has been further driven with the advent of Large Language Models (LLMs), enhancing personalization and the generation of rich learning content. While it took 12 years to create 100 language courses for Duolingo with the use of AI they added 148 new courses in early 2025\cite{duolingo2025launch148}.
+Digital language learning platforms (LLPs) have become dominant in foreign language education, with over 70 applications serving millions of users through Mobile-Assisted Language Learning (MALL) \cite{karasimos2022battle}. The global market size for these platforms was valued at USD 5.8 billion in 2025, projected to grow to USD 21.1 billion by 2034 at a CAGR of 15.43\% \cite{businessResearch2024language}. This rapid expansion has been further accelerated by Large Language Models (LLMs): Duolingo—which commands over 50\% of global downloads \cite{statista2025langapps}—required 12 years to create its first 100 language courses, yet added 148 new courses in early 2025 alone, citing AI-driven content generation as the primary enabler \cite{duolingo2025launch}.
 
-    
-\section{Identifying Limitations}
+\section{Limitations of Current Platforms}
 
-However there are significant gaps persist in current language learning platforms\footnote{in this chapter when we refer to current language learning platforms we mean the five applications that Karasimos has examined in his work\cite{karasimos2022battle} with criteria depicted in Chapter 3.2.}:
+Karasimos \cite{karasimos2022battle} conducted a systematic cross-platform review of five representative LLPs—Duolingo, Memrise, Busuu, Rosetta Stone, and LingQ—against a set of pedagogical and usability criteria. While all five platforms demonstrate strengths in structured vocabulary delivery and habit formation, the review reveals consistent gaps that motivate the present work.\footnote{Throughout this chapter, ``current language learning platforms'' refers to the five applications examined by Karasimos \cite{karasimos2022battle}, unless otherwise specified.}
 
-\subsection{Uniform content}
-    All platforms present uniform content regardless of user demographics (children, Gen Z, adults, elderly), interests, or sociocultural perspectives, as well as the cultural differences inherent in languages other than English.\\
-    With over 500 million learners, Duolingo is using Machine Learning algorithms to provide learning material, only for the difficulty level \cite{duolingo2025approach}.
-    
-\subsection{Insufficient multimedia}
-    Duolingo content is limited to text and audio based on translation. Hence it is not utilizing the image memory recall
-    
-\subsection{Lack of authentic, real-world content}
-Most language learning platforms—Duolingo, Busuu, Memrise, and Rosetta Stone—lack authentic, real-world materials in their instructional design. LingQ partially integrates such content; however, as noted by Karasimos \cite{karasimos2022battle}, it is not recommended for learning a new language.
-As Gilmore in 2007 concludes that authentic material are crucial for developing comunitative competence and to boost learners motivation\cite{Gilmore_2007}. However it is undeniable that authentic language materials are filled with a range of features that are present in authentic improvised conversations that creates difficulties for students' comprehension due to a lack of certain cultural background\cite{LiuDong2024AuthenticLanguageModelsClassrooms}. In this proposed application, authenticity will be central to content design: users will be exposed to genuine audiovisual materials contextualized with cultural explanations and adaptive scaffolding, aiming to combine \textbf{linguistic acquisition} with \textbf{cultural competence}.
+\subsection{Uniform Content Regardless of Learner Demographics}
+All five platforms present uniform content regardless of user demographics (children, Generation Z, adults, elderly), personal interests, or sociocultural context. Duolingo employs machine learning algorithms to adjust content difficulty, but personalisation is limited to the difficulty dimension alone \cite{duolingo2025approach}; topic, domain, and cultural framing remain fixed.
 
-In this proposed application, authenticity will be central to content design: users will be exposed to genuine audiovisual materials contextualized with cultural explanations and adaptive scaffolding, aiming to combine linguistic acquisition with cultural competence.
+\subsection{Insufficient Multimedia Integration}
+Duolingo's primary instructional mode is text and audio built around translation exercises. This approach does not exploit visual memory—a well-documented channel for vocabulary retention—nor does it expose learners to the prosodic and paralinguistic cues present in natural speech.
 
-\subsection{Drilling and masquaradilng as gamification}
+\subsection{Lack of Authentic, Real-World Content}
+Most platforms—Duolingo, Busuu, Memrise, and Rosetta Stone—lack authentic, real-world materials in their instructional design. LingQ partially integrates such content; however, as noted by Karasimos \cite{karasimos2022battle}, it is not recommended as a starting point for beginners. Gilmore \cite{gilmore2007authentic} demonstrates that authentic materials are crucial for developing communicative competence and for sustaining learner motivation. At the same time, Liu and Dong \cite{liu2024authentic} caution that authentic language materials can create comprehension difficulties for learners who lack the cultural background knowledge assumed by native-speaker communication. In GloReels, this tension is addressed by pairing authentic video content with cultural annotations and adaptive vocabulary scaffolding, ensuring that exposure to real-world language does not exceed the learner's Zone of Proximal Development (ZPD).
 
-\subsection{Lack of advanced proficiency development}
-Inadequate support for advanced proficiency development (All platforms except LingQ)
+\subsection{Shallow Gamification Mechanics}
+The gamification elements present in most LLPs—streaks, point tallies, and leaderboards—do not constitute genuine game design. They are motivational overlays applied to repetitive translation drills. This distinction matters because research in game-based learning distinguishes between extrinsic reward structures, which are fragile and dependency-forming, and intrinsic challenge loops, which sustain engagement through meaningful problem-solving \cite{munday2017duolingo}.
 
-\subsection{Ignoring sociocultural theory of Vygotsky}
-As we are going to discuss in the next section...
+\subsection{Lack of Support for Advanced Proficiency Development}
+With the exception of LingQ, no platform in Karasimos's review provides adequate support for learners at B2 level and above. Advanced learners require exposure to authentic idiomatic usage, domain-specific vocabulary, and complex syntactic structures—precisely the content available in user-generated short-form video but absent from structured drills.
 
+\subsection{Absence of Sociocultural Context}
+Language is inseparable from culture. The five reviewed platforms treat vocabulary and grammar as context-free systems, ignoring the sociocultural theory articulated by Vygotsky, which holds that language development is fundamentally mediated by social interaction and cultural context.
 
-\section{Pedagogical Foundations:}
-\subsection{Sociocultural Theory (Vygotsky)} The "Zone of Proximal Development."
+\section{Pedagogical Foundations}
 
-\subsection{Cognitive Load Theory \& Spaced Repetition} Implementing the forgetting curve.
+\subsection{Vygotsky's Sociocultural Theory}
 
+Lev Vygotsky's Sociocultural Theory \cite{vygotsky1978mind} holds that cognitive development arises through social interaction mediated by cultural tools, of which language is the primary instrument. Central to the theory is the concept of the \textbf{Zone of Proximal Development (ZPD)}: the distance between what a learner can accomplish independently and what they can achieve under guidance or in collaboration. Effective instruction operates within the ZPD—content that is too easy provides no developmental stimulus, while content that is too difficult cannot be processed without first establishing prerequisite knowledge.
 
-\section{The Role of Short-Form Media in Second Language Acquisition (SLA)}
-    connects with the previous section of sociocultural theory of Vygotsky
-    Effectiveness of micro-learning.
+In GloReels, the ZPD is operationalised through the comprehensibility threshold of the recommendation engine. A reel is considered suitable for a given learner when that learner already knows at least 98\% of its vocabulary—a threshold informed by Nation's \cite{nation2001learning} research on the vocabulary coverage required for unassisted reading comprehension. The remaining 2\% constitutes the ``i+1'' challenge (one step beyond the learner's current knowledge), which falls squarely within the ZPD.
 
+\subsection{Spaced Repetition and Memory Retention}
 
-\section{Gamification in Education} From hypercasual gaming to "serious games."
+Hermann Ebbinghaus's empirical research demonstrated that memory retention decays exponentially over time in the absence of review \cite{ebbinghaus1885memory}. The resulting \textbf{forgetting curve} underpins all modern spaced-repetition systems (SRS): by scheduling review of a word at increasing intervals timed to precede the moment of forgetting, the system converts short-term exposure into durable long-term memory.
+
+GloReels implements a six-level mastery model in the \texttt{user\_vocabulary} table. Each word entry records a \texttt{mastery\_level} (1–6) and a \texttt{last\_review} timestamp. The recommendation engine uses these values to prioritise reels containing words whose review is overdue, ensuring that vocabulary resurfaces at intervals calibrated to each learner's individual retention rate.
+
+\subsection{Cognitive Load Theory}
+
+Cognitive Load Theory (CLT), introduced by Sweller \cite{sweller1988cognitive}, distinguishes between \textit{intrinsic load} (the inherent complexity of the material), \textit{extraneous load} (demands imposed by poor instructional design), and \textit{germane load} (cognitive effort invested in schema formation). Effective instruction minimises extraneous load while preserving germane load.
+
+In GloReels, CLT informs two design decisions. First, each reel is accompanied by timestamped sentence-level captions and per-token translations, allowing learners to direct their attention to the target vocabulary without being overwhelmed by unknown words. Second, game sessions are capped and paced through an energy system, preventing fatigue-induced cognitive overload.
+
+\section{Short-Form Media in Second Language Acquisition}
+
+Authentic audiovisual materials have long been recognised as valuable in Second Language Acquisition (SLA) research. Short-form video, in particular, provides a dense multimodal signal: spoken language, prosodic variation, facial expression, gesture, and cultural context are all co-present, reinforcing one another in ways that text-based instruction cannot replicate.
+
+The challenge is retention. Without active processing, vocabulary encountered during video viewing follows the Ebbinghaus forgetting curve as surely as any other exposure. GloReels addresses this by treating each reel not as a standalone learning event but as a contextualised encounter with target vocabulary in the learner's personal vocabulary model. Words seen in a reel are subsequently reinforced in game sessions, and the recommendation engine surfaces those words again in future reels, creating a multi-context learning loop that supports durable acquisition.
+
+\section{Gamification in Education}
+
+Genuine gamification—as opposed to the point-and-streak overlays critiqued in Section~2.2.4—involves embedding core game mechanics into the learning activity itself, such that the challenge of the game is inseparable from the learning objective \cite{munday2017duolingo}. Hypercasual games are well suited to this purpose: their short session length, immediate feedback loops, and escalating difficulty can be parametrically linked to a learner's vocabulary model.
+
+GloReels integrates two hypercasual game formats: a Wordle variant, in which the target word is drawn from the learner's vocabulary model, and Word of Wonders, a grid-based word-construction game whose level vocabulary is similarly personalised. In both cases, success requires active recall rather than passive recognition, engaging a fundamentally different and more durable memory process than translation drills.
 
 \newpage

@@ -1,0 +1,76 @@
+\babel@toc {english}{}\relax 
+\babel@toc {greek}{}\relax 
+\babel@toc {english}{}\relax 
+\babel@toc {greek}{}\relax 
+\babel@toc {english}{}\relax 
+\babel@toc {greek}{}\relax 
+\babel@toc {english}{}\relax 
+\babel@toc {greek}{}\relax 
+\babel@toc {english}{}\relax 
+\babel@toc {english}{}\relax 
+\babel@toc {greek}{}\relax 
+\babel@toc {greek}{}\relax 
+\babel@toc {english}{}\relax 
+\babel@toc {english}{}\relax 
+\contentsline {chapter}{\numberline {A}Introduction}{1}{}%
+\contentsline {section}{\numberline {A.1}Motivation}{1}{}%
+\contentsline {section}{\numberline {A.2}Background}{2}{}%
+\contentsline {subsection}{\numberline {A.2.1}Short-Form Video}{2}{}%
+\contentsline {subsection}{\numberline {A.2.2}Hypercasual Games}{2}{}%
+\contentsline {section}{\numberline {A.3}Problem Statement and Research Questions}{2}{}%
+\contentsline {section}{\numberline {A.4}Significance}{3}{}%
+\contentsline {section}{\numberline {A.5}Thesis Structure}{3}{}%
+\contentsline {chapter}{\numberline {B}Literature Review}{4}{}%
+\contentsline {section}{\numberline {B.1}Mobile-Assisted Language Learning}{4}{}%
+\contentsline {section}{\numberline {B.2}Limitations of Current Platforms}{4}{}%
+\contentsline {subsection}{\numberline {B.2.1}Uniform Content Regardless of Learner Demographics}{5}{}%
+\contentsline {subsection}{\numberline {B.2.2}Insufficient Multimedia Integration}{5}{}%
+\contentsline {subsection}{\numberline {B.2.3}Lack of Authentic, Real-World Content}{5}{}%
+\contentsline {subsection}{\numberline {B.2.4}Shallow Gamification Mechanics}{5}{}%
+\contentsline {subsection}{\numberline {B.2.5}Lack of Support for Advanced Proficiency Development}{6}{}%
+\contentsline {subsection}{\numberline {B.2.6}Absence of Sociocultural Context}{6}{}%
+\contentsline {section}{\numberline {B.3}Pedagogical Foundations}{6}{}%
+\contentsline {subsection}{\numberline {B.3.1}Vygotsky's Sociocultural Theory}{6}{}%
+\contentsline {subsection}{\numberline {B.3.2}Spaced Repetition and Memory Retention}{7}{}%
+\contentsline {subsection}{\numberline {B.3.3}Cognitive Load Theory}{7}{}%
+\contentsline {section}{\numberline {B.4}Short-Form Media in Second Language Acquisition}{7}{}%
+\contentsline {section}{\numberline {B.5}Gamification in Education}{8}{}%
+\contentsline {chapter}{\numberline {C}System Architecture and Methodology}{9}{}%
+\contentsline {section}{\numberline {C.1}System Overview}{9}{}%
+\contentsline {section}{\numberline {C.2}Technology Stack}{10}{}%
+\contentsline {subsection}{\numberline {C.2.1}Frontend — React Native / Expo}{10}{}%
+\contentsline {subsection}{\numberline {C.2.2}Backend — Node.js / Express}{10}{}%
+\contentsline {subsection}{\numberline {C.2.3}Reels Service — Python / FastAPI}{10}{}%
+\contentsline {subsection}{\numberline {C.2.4}Database — PostgreSQL 16}{10}{}%
+\contentsline {section}{\numberline {C.3}Data Modelling}{11}{}%
+\contentsline {section}{\numberline {C.4}Recommendation Engine Design}{11}{}%
+\contentsline {subsection}{\numberline {C.4.1}Stage 1: Comprehensibility Filtering}{11}{}%
+\contentsline {subsection}{\numberline {C.4.2}Stage 2: Spaced-Repetition Scoring}{12}{}%
+\contentsline {subsection}{\numberline {C.4.3}Stage 3: Re-Ranking and Exploration}{12}{}%
+\contentsline {section}{\numberline {C.5}Gamification Design}{12}{}%
+\contentsline {chapter}{\numberline {D}Implementation Details}{14}{}%
+\contentsline {section}{\numberline {D.1}Database Schema}{14}{}%
+\contentsline {section}{\numberline {D.2}Reels Service}{15}{}%
+\contentsline {subsection}{\numberline {D.2.1}Service Architecture}{15}{}%
+\contentsline {subsection}{\numberline {D.2.2}Dialogue Enrichment}{15}{}%
+\contentsline {subsection}{\numberline {D.2.3}Personalisation Implementation Status}{15}{}%
+\contentsline {section}{\numberline {D.3}Backend API}{16}{}%
+\contentsline {subsection}{\numberline {D.3.1}Authentication Module}{16}{}%
+\contentsline {subsection}{\numberline {D.3.2}Registration and Vocabulary Initialisation}{16}{}%
+\contentsline {subsection}{\numberline {D.3.3}Vocabulary Synchronisation}{17}{}%
+\contentsline {section}{\numberline {D.4}Game Modules}{17}{}%
+\contentsline {subsection}{\numberline {D.4.1}Word of Wonders}{17}{}%
+\contentsline {subsection}{\numberline {D.4.2}Wordle}{17}{}%
+\contentsline {section}{\numberline {D.5}Complexity Analysis}{18}{}%
+\contentsline {chapter}{\numberline {E}Evaluation and Results}{19}{}%
+\contentsline {section}{\numberline {E.1}Evaluation Approach}{19}{}%
+\contentsline {section}{\numberline {E.2}Functional Evaluation}{19}{}%
+\contentsline {section}{\numberline {E.3}Performance Analysis}{19}{}%
+\contentsline {section}{\numberline {E.4}Pedagogical Alignment}{21}{}%
+\contentsline {section}{\numberline {E.5}Limitations}{22}{}%
+\contentsline {chapter}{\numberline {F}Conclusions and Future Work}{23}{}%
+\contentsline {section}{\numberline {F.1}Contributions}{23}{}%
+\contentsline {section}{\numberline {F.2}Limitations}{24}{}%
+\contentsline {section}{\numberline {F.3}Future Work}{25}{}%
+\contentsline {chapter}{Abbreviations}{28}{}%
+\contentsline {chapter}{Glossary}{30}{}%

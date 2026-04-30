@@ -1,46 +1,63 @@
-% \section{Learning Theory Background}
-% Language acquisition in this project draws upon naturalistic and contextual learning principles, similar to how \textbf{children acquire their first language}. Learners build vocabulary through repeated exposure to words across diverse, meaningful contexts. The system aims to ensure that each target word appears in multiple contexts to strengthen memory retention and contextual understanding.
+\section{System Overview}
 
-% \section{Data Collection Methods}
-% Users can upload short video clips that serve as authentic learning materials. Using the \textit{Glaudia API} (LLM-based transcription), the system automatically generates subtitles. Users are then able to review, correct, and approve these transcriptions before final submission, ensuring data quality and linguistic accuracy.
+GloReels is designed as a three-service architecture in which a mobile frontend, a primary REST API backend, and a dedicated reels microservice each handle a well-defined subset of the system's responsibilities. Figure~\ref{fig:architecture} illustrates the high-level interaction between these components. All services share a single PostgreSQL database instance and are co-ordinated in development via Docker Compose.
 
-% \section{Multi-Stage Recommendation System}
-% The proposed system employs a multi-stage recommendation architecture, similar to large-scale personalized content delivery models, consisting of three main components:
-
-% \subsection{Preprocessing / Filtering}
-% In this stage, the system filters and selects candidate videos based on lexical and cognitive principles such as the Ebbinghaus forgetting curve. To optimize retention, previously learned vocabulary is periodically reintroduced at strategic intervals.  
-% A relational database maintains user-word relationships (\texttt{user\_words} table), containing fields such as:
-% \begin{itemize}
-%     \item Word mastery level (1-5 level)
-%     \item Date of last exposure
-%     \item Number of successful recalls
-% \end{itemize}
-% Content is filtered according to two key criteria:
-% \begin{enumerate}
-%     \item The learner should already know at least 98\% of the words in a given video.
-%     \item The text difficulty is adjusted dynamically to match the learner’s proficiency.
-% \end{enumerate}
-
-% \subsection{Cosine Similarity / Scoring}
-% Once filtered, content vectors (representing linguistic and semantic features) are compared using cosine similarity to identify videos most aligned with the user’s learning profile and interests.
-
-% \subsection{Re-Ranking / Blending}
-% The top-ranked candidates are blended with exploration-based recommendations to prevent overfitting and promote broader linguistic exposure. This hybrid approach ensures a balance between relevance and novelty.
-
-% \section{Development Stack}
-% The system will consist of:
-% \begin{itemize}
-%     \item \textbf{Database:} Relational database (e.g., PostgreSQL) for storing user data, word progress, and content metadata.
-%     \item \textbf{Backend:} Python-based server (e.g., Flask or Django) for API logic, user management, and recommendation pipeline.
-%     \item \textbf{Frontend:} Mobile application built with React Native for cross-platform deployment.
-% \end{itemize}
-% \newpage
+\begin{itemize}
+    \item \textbf{Frontend:} A cross-platform mobile application built with React Native (Expo SDK 54), targeting Android and iOS from a single TypeScript codebase.
+    \item \textbf{Backend API:} A Node.js/Express service (ESM modules, port 3500) responsible for user authentication, vocabulary management, progress synchronisation, and the dictionary.
+    \item \textbf{Reels Service:} A Python FastAPI microservice responsible for serving reels enriched with structured dialogue data—sentences, timestamped tokens, and translations.
+    \item \textbf{Database:} PostgreSQL 16, whose schema encodes the vocabulary model, user progress, content metadata, and engagement signals.
+\end{itemize}
 
 \section{Technology Stack}
-    Rationale for selected databases, backend, and frontend frameworks.
 
-\section{The Personalized Recommendation Engine}
-    How the system selects "Reels" based on the user's proficiency and past vocabulary review needs.
+\subsection{Frontend — React Native / Expo}
+React Native was selected to enable cross-platform deployment from a single codebase without sacrificing the native rendering performance required for smooth video playback. Expo SDK 54 provides managed native modules for video (\texttt{expo-video}), secure credential storage (\texttt{expo-secure-store}), and build tooling (\texttt{eas-cli}). The application uses Expo Router (file-system-based navigation) and React Native Reanimated for gesture-driven animations in the game interfaces.
 
-\section{Gamification Integration}
-    Logic for adapting hypercasual game levels to the learner's vocabulary state.
+\subsection{Backend — Node.js / Express}
+The backend is implemented as an ES-module Node.js application using Express 4. This choice reflects the project's existing expertise in JavaScript and the maturity of the Express ecosystem for REST API development. Authentication is handled with JSON Web Tokens (JWT): a short-lived access token (15 minutes) and a long-lived refresh token (30 days) follow the standard rotation pattern. Google OAuth 2.0 is supported alongside email/password authentication via the \texttt{google-auth-library}. Input validation uses Joi schemas for every endpoint, and the API is documented with Swagger (OpenAPI 3.0) accessible at \texttt{/swagger}.
+
+\subsection{Reels Service — Python / FastAPI}
+The reels microservice is implemented in Python using FastAPI and SQLAlchemy (async). The separation from the main backend is motivated by the richer data-processing requirements of the reels pipeline: joining reels with their associated dialogues, sentences, per-token word data, and sentence translations in a single query is better expressed in SQLAlchemy's ORM than in raw SQL via the Node.js \texttt{pg} client.
+
+\subsection{Database — PostgreSQL 16}
+PostgreSQL was chosen for its support of complex relational queries, array operators, and procedural functions—all of which are used in the vocabulary bulk-initialisation and the planned recommendation engine. The full schema is maintained in \texttt{database/thesis\_db.sql}.
+
+\section{Data Modelling}
+
+The database schema models the domain along three axes: linguistic content, user state, and engagement signals.
+
+\textbf{Linguistic content} is organised hierarchically. A \texttt{word} entry stores the written form, part of speech, CEFR level (N, A1, A2, B1, B2, C1, C2), optional article, audio URL, and image URL. Words are grouped into \texttt{sentences} via the \texttt{sentence\_tokens} join table, which also records the token's position and part of speech in context. Sentences are grouped into \texttt{dialogues} via \texttt{dialogue\_sentences}, which adds per-sentence timestamps (\texttt{start\_time\_ms}, \texttt{end\_time\_ms}) to enable synchronised subtitle rendering. Each \texttt{reel} references one dialogue, tying video content to its full linguistic annotation.
+
+\textbf{User state} is captured in two tables. \texttt{user\_languages} records each language pair a user is studying, their CEFR proficiency level, and accumulated experience points. \texttt{user\_vocabulary} is the core of the learner model: each row binds a user to a word and records a \texttt{mastery\_level} (1–6) and a \texttt{last\_review} timestamp. The mastery scale encodes qualitative stages from initial encounter (1) through active recall (6), and it is updated both by game outcomes and by reel interaction events.
+
+\textbf{Engagement signals} are stored in \texttt{reel\_interactions}, which records views, likes, saves, comments, shares, and reports per (user, reel) pair. These signals are reserved for the personalised recommendation pipeline described in Section~\ref{sec:recommendation}.
+
+\section{Recommendation Engine Design}
+\label{sec:recommendation}
+
+The recommendation engine is the theoretical core of the system. Its goal is to select, from the pool of available reels, those that are simultaneously \textit{comprehensible} (the learner knows enough vocabulary to follow the content) and \textit{pedagogically productive} (the reel contains words that are due for review or represent the next developmental step). The design follows a three-stage pipeline.
+
+\subsection{Stage 1: Comprehensibility Filtering}
+
+For each candidate reel, the engine computes the proportion of the reel's unique word tokens that are present in the learner's vocabulary model at mastery level $\geq 1$. A reel passes the filter only if this proportion meets or exceeds 98\%, corresponding to Nation's \cite{nation2001learning} threshold for unassisted reading comprehension. This criterion implements the ZPD operationally: the learner encounters real language while remaining within a comprehensible range.
+
+\subsection{Stage 2: Spaced-Repetition Scoring}
+
+Each reel is scored according to the review urgency of the vocabulary it contains. For each word $w$ in the reel with mastery level $m$ and days since last review $d$, the system computes an urgency score based on the Ebbinghaus forgetting function. The reel's aggregate score is the mean urgency across its target vocabulary. This stage ensures that reels containing words the learner is about to forget are ranked above reels containing words that were recently reviewed.
+
+\subsection{Stage 3: Re-Ranking and Exploration}
+
+The top-ranked candidates from Stage 2 are blended with a random sample of unseen reels to prevent the recommendation feed from collapsing into a narrow subset of the content library. This exploration component is essential for exposing learners to new vocabulary and cultural contexts, broadening their ZPD over time.
+
+\textbf{Implementation status:} The current release implements Stage 1 as a CEFR-level pre-filter applied at registration (words below the user's stated proficiency are bulk-added to the vocabulary model at mastery level 3). Stages 2 and 3 are designed and specified but not yet fully implemented in the reels service; the service currently returns randomised reels filtered by learning language. Full implementation of the scoring pipeline is identified as future work in Chapter~\ref{chapter:conclusions}.
+
+\section{Gamification Design}
+
+The gamification layer consists of two components: a progression system and two vocabulary-driven games.
+
+The \textbf{progression system} awards experience points (XP) for completed game rounds and reel interactions, advancing the user's CEFR proficiency level in \texttt{user\_languages.experience}. Alongside XP, an energy mechanism limits the number of game rounds per session, preventing fatigue-induced cognitive overload consistent with Cognitive Load Theory. Coins provide a secondary reward currency redeemable for in-app benefits.
+
+The two games—\textbf{Wordle} and \textbf{Word of Wonders}—share the same word selection principle: each game round draws its target vocabulary from the learner's active vocabulary model, prioritising words that are due for spaced-repetition review. Correct recall triggers a mastery-level increment in \texttt{user\_vocabulary}; incorrect attempts either maintain or decrement the mastery level, scheduling the word for earlier re-exposure. This closes the loop between reel-based exposure and active game-based recall.
+
+\newpage
