@@ -19,6 +19,7 @@ export default function WordleGrid({
   isRTL = false,
   onCellPress,
   invalidTrigger = 0,
+  onInvalidAnimationEnd,
 }) {
   const flashOpacity = useRef(new Animated.Value(0)).current;
 
@@ -33,7 +34,7 @@ export default function WordleGrid({
       Animated.timing(flashOpacity, { toValue: 0,   duration: 60, useNativeDriver: true }),
       Animated.timing(flashOpacity, { toValue: 0.9, duration: 60, useNativeDriver: true }),
       Animated.timing(flashOpacity, { toValue: 0,   duration: 150, useNativeDriver: true }),
-    ]).start();
+    ]).start(() => onInvalidAnimationEnd?.());
   }, [invalidTrigger]);
 
   const renderCell = (letter, rowIndex, colIndex, guess, isCurrentGuess = false) => {

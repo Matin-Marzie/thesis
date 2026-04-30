@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, useMemo } from 'react';
+import React, { useState, useEffect, useCallback, useMemo, useRef } from 'react';
 import {
     View,
     Text,
@@ -15,11 +15,11 @@ import { useAppContext } from '@/context/AppContext';
 import { useDictionaryContext } from '@/context/DictionaryContext';
 import Keyboard from './Keyboard';
 import WordleGrid from './WordleGrid';
-import GameOverModal from './GameOverModal';
+import GameOverModal from './pop-ups/GameOverModal';
 import ConfirmationPopup from '../ConfirmationPopup';
 import { PRIMARY_COLOR } from '@/constants/App';
 import { getWordleConfig } from '@/constants/wordleConfig';
-import WordleCellPopup from './WordleCellPopup';
+import WordleCellPopup from './pop-ups/WordleCellPopup';
 
 const COLORS = {
     correct: '#6aaa64',
@@ -30,7 +30,7 @@ const COLORS = {
 };
 
 export default function Wordle({ onClose }) {
-    const { userProgress } = useAppContext();
+    const { userProgress, setUserProgress } = useAppContext();
     const { dictionary } = useDictionaryContext();
 
     // Derive language code from the user's current learning language
@@ -49,8 +49,12 @@ export default function Wordle({ onClose }) {
     const [won, setWon] = useState(false);
     const [loading, setLoading] = useState(true);
     const [cellPopupVisible, setCellPopupVisible] = useState(false);
+    const [selectedWord, setSelectedWord] = useState(null);
     const [invalidTrigger, setInvalidTrigger] = useState(0);
     const [confirmVisible, setConfirmVisible] = useState(false);
+    const [coins, setCoins] = useState(userProgress?.coins || 0);
+    const [coinTarget, setCoinTarget] = useState(null);
+    const coinsViewRef = useRef(null);
 
     useEffect(() => {
         initializeGame();
@@ -117,6 +121,12 @@ export default function Wordle({ onClose }) {
         if (secretChars.includes(guessChars[index])) return COLORS.present;
         return COLORS.absent;
     }, [secretWord]);
+
+    const handleCollect = useCallback(() => {
+        setCoins(prev => prev + 5);
+        setUserProgress(prev => ({ ...prev, coins: (prev.coins || 0) + 5 }));
+        initializeGame();
+    }, [setUserProgress, initializeGame]);
 
     const handleKeyPress = useCallback((letter) => {
         if (gameOver || won) return;
@@ -189,7 +199,18 @@ export default function Wordle({ onClose }) {
                         <FontAwesome5 name="chevron-left" size={24} color="#333" />
                     </TouchableOpacity>
                     <Text style={styles.headerTitle}>WORDLE</Text>
-                    <View style={{ width: 24 }} />
+                    <View
+                        ref={coinsViewRef}
+                        style={styles.coinsContainer}
+                        onLayout={() => {
+                            coinsViewRef.current?.measureInWindow((x, y, w, h) => {
+                                setCoinTarget({ x: x + w / 2, y: y + h / 2 });
+                            });
+                        }}
+                    >
+                        <Text style={styles.coinsText}>{coins}</Text>
+                        <FontAwesome5 name="coins" size={18} color="#FFD700" />
+                    </View>
                 </View>
 
                 {/* Game Content */}
@@ -202,8 +223,14 @@ export default function Wordle({ onClose }) {
                         secretWord={secretWord}
                         getLetterColor={getLetterColor}
                         isRTL={config.isRTL}
-                        onCellPress={() => setCellPopupVisible(true)}
+                        onCellPress={(rowIndex) => {
+                            const word = guesses[rowIndex];
+                            if (!word) return;
+                            setSelectedWord(word);
+                            setCellPopupVisible(true);
+                        }}
                         invalidTrigger={invalidTrigger}
+                        onInvalidAnimationEnd={() => setCurrentGuess('')}
                     />
 
                     {gameOver && (
@@ -228,7 +255,8 @@ export default function Wordle({ onClose }) {
                 {/* Cell Popup */}
                 <WordleCellPopup
                     visible={cellPopupVisible}
-                    onClose={() => setCellPopupVisible(false)}
+                    onClose={() => { setCellPopupVisible(false); setSelectedWord(null); }}
+                    word={selectedWord}
                 />
 
                 {/* Exit Confirmation Popup */}
@@ -247,9 +275,10 @@ export default function Wordle({ onClose }) {
                     secretWord={secretWord}
                     guessCount={guesses.length}
                     maxAttempts={config.maxAttempts}
-                    onPlayAgain={initializeGame}
+                    onPlayAgain={handleCollect}
                     onClose={onClose}
                     isRTL={config.isRTL}
+                    coinTarget={coinTarget}
                 />
             </View>
         </View>
@@ -279,6 +308,20 @@ const styles = StyleSheet.create({
     },
     headerTitle: {
         fontSize: 24,
+        fontWeight: 'bold',
+        color: '#333',
+    },
+    coinsContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        gap: 6,
+        backgroundColor: '#ffffff21',
+        borderRadius: 20,
+        paddingHorizontal: 10,
+        paddingVertical: 4,
+    },
+    coinsText: {
+        fontSize: 16,
         fontWeight: 'bold',
         color: '#333',
     },

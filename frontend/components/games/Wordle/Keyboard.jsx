@@ -129,7 +129,7 @@ const styles = StyleSheet.create({
     marginBottom: 0,
   },
   key: {
-    paddingVertical: 14,
+    paddingVertical: 10, // works for en, doesn't work for fa
     borderRadius: 4,
     justifyContent: 'center',
     alignItems: 'center',
@@ -156,7 +156,6 @@ const styles = StyleSheet.create({
     color: '#fff',
   },
   keyTextCompact: {
-    fontSize: 16,
-    paddingVertical: 3,
+    fontSize: 28, 
   },
 });
