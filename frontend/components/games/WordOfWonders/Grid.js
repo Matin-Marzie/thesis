@@ -17,24 +17,105 @@ const Grid = memo(({ boxData, gridWords, foundWords, filledBoxes, boxAnimations,
   const columns = boxData[0].length;
   const rows = boxData.length;
 
-  // Create a map of grid positions to letters
+  const SHORT_VOWELS = /[\u064B-\u0652\u0670]/;
+  const SHORT_VOWELS_GLOBAL = /[\u064B-\u0652\u0670]/g;
+
+  // Split a word into display letters where short vowels are attached to the
+  // previous base letter. Example: بَرادَر -> ["بَ", "ر", "ا", "دَ", "ر"]
+  const splitWithShortVowels = (text) => {
+    const letters = [];
+    if (!text) return letters;
+
+    for (const ch of text) {
+      if (SHORT_VOWELS.test(ch) && letters.length > 0) {
+        letters[letters.length - 1] += ch;
+      } else {
+        letters.push(ch);
+      }
+    }
+
+    return letters;
+  };
+
+  // Remove short vowels, used at intersections to avoid clashes.
+  // Example: "شَ" -> "ش".
+  const stripShortVowels = (text) => {
+    if (!text) return text;
+    return text.replace(SHORT_VOWELS_GLOBAL, '');
+  };
+
+  // Resolve the original dictionary written_form so we can show diacritics(shor vowels).
+  // Falls back to the normalized grid word when no dictionary match exists.
+  const getDisplayLetters = (word) => {
+    const items = dictionarySet[word] ?? [];
+    let writtenForm = items[0]?.written_form ?? word;
+
+    // Each word of gridWords has dictionaryId which is the id of corresponding word in the dictionary.
+    const dictionaryId = gridWords[word]?.DictionaryId;
+    if (dictionaryId != null) {
+      const match = items.find((item) => item?.id === dictionaryId);
+      if (match?.written_form) writtenForm = match.written_form;
+    }
+
+    const letters = splitWithShortVowels(String(writtenForm).trim());
+
+    // If the dictionary string does not align with the normalized length,
+    // fall back to the normalized grid word to keep layout consistent.
+    if (letters.length !== word.length) return word.split('');
+    return letters;
+  };
+
+  // Build two grids:
+  // - directionGrid marks if a cell is part of a horizontal word (1), vertical word (2), or both (3).
+  // - letterGrid stores the actual display letters with short vowels applied where allowed.
   const createLetterGrid = () => {
     const letterGrid = Array(rows).fill(null).map(() => Array(columns).fill(''));
-    
+    const directionGrid = Array(rows).fill(null).map(() => Array(columns).fill(0));
+
+    // First pass: mark directions for each occupied cell.
     Object.keys(gridWords).forEach((word) => {
       const wordData = gridWords[word];
       const [startRow, startCol] = wordData.pos;
-      const wordLetters = word.split('');
-      
-      wordLetters.forEach((letter, index) => {
+      const wordLength = word.length;
+      const directionFlag = wordData.direction === 'H' ? 1 : 2;
+
+      for (let index = 0; index < wordLength; index += 1) {
         if (wordData.direction === 'H') {
-          letterGrid[startRow][startCol + index] = letter.toUpperCase();
+          directionGrid[startRow][startCol + index] |= directionFlag;
         } else {
-          letterGrid[startRow + index][startCol] = letter.toUpperCase();
+          directionGrid[startRow + index][startCol] |= directionFlag;
         }
-      });
+      }
     });
-    
+
+    // Second pass: place display letters, stripping vowels only at intersections(if they are different)
+    // where the two crossing letters are different.
+    Object.keys(gridWords).forEach((word) => {
+      const wordData = gridWords[word];
+      const [startRow, startCol] = wordData.pos;
+      const wordLength = word.length;
+      const wordLetters = getDisplayLetters(word);
+
+      for (let index = 0; index < wordLength; index += 1) {
+        const row = wordData.direction === 'H' ? startRow : startRow + index;
+        const col = wordData.direction === 'H' ? startCol + index : startCol;
+        const isIntersection = directionGrid[row][col] === 3;
+
+        let letter = wordLetters[index] ?? word[index] ?? '';
+        if (isIntersection) {
+          const existing = letterGrid[row][col];
+          // Keep the short vowel only if both crossing letters are identical.
+          // Example: horizontal "شَ" crossing vertical "شَ" keeps the vowel, شَخص and شَخصی
+          // but "شَ" crossing "شِ" strips to avoid conflicting marks. شَهر and شِعر
+          if (existing && existing !== letter) {
+            letter = stripShortVowels(letter);
+          }
+        }
+
+        letterGrid[row][col] = letter.toUpperCase();
+      }
+    });
+
     return letterGrid;
   };
 
