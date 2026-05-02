@@ -4,7 +4,7 @@ import { GREEN, MAX_GRID_WIDTH, width, height } from './gameConstants';
 import { isRTL } from './languageUtils';
 import SeeMeaningPopUp from './pop-ups/SeeMeaningPopUp';
 
-const Grid = memo(({ boxData, gridWords, foundWords, filledBoxes, boxAnimations, shakeWord, shakeAnimation, langCode = 'en' }) => {
+const Grid = memo(({ boxData, gridWords, foundWords, filledBoxes, boxAnimations, shakeWord, shakeAnimation, langCode = 'en', dictionarySet = {} }) => {
   const rtl = isRTL(langCode);
   const [seeMeaningVisible, setSeeMeaningVisible] = useState(false);
   const [seeMeaningWords, setSeeMeaningWords] = useState([]);
@@ -132,6 +132,32 @@ const Grid = memo(({ boxData, gridWords, foundWords, filledBoxes, boxAnimations,
     // Set the pressed box index
     setPressedBoxIndex(boxIndex);
 
+    const foundSeeMeaningWords = (() => {
+      if (!filledBoxes.includes(boxIndex)) return [];
+
+      // Find vertical or horizontal word at this position
+      // O(n), n: grid words count, very small number (<=20)
+      const seeMeaningWords = Object.keys(gridWords).filter((word) => {
+        const wordData = gridWords[word];
+        const [startRow, startCol] = wordData.pos;
+        const wordLength = word.length;
+
+        if (wordData.direction === 'H') {
+          return rowIndex === startRow && colIndex >= startCol && colIndex < startCol + wordLength;
+        }
+
+        return colIndex === startCol && rowIndex >= startRow && rowIndex < startRow + wordLength;
+      });
+
+      return seeMeaningWords.filter((word) => gridWords[word].isFound);
+    })();
+
+    const foundSeeMeaningItems = foundSeeMeaningWords.flatMap((word) => {
+      const items = dictionarySet[word] ?? [];
+      if (!items.length) return [];
+      return items;
+    });
+
     // When user presses a grid cell(box), the box shrinks and the pop-ups/SeeMeaningPopup.js Modal appears with the words that include this box. The user can then see the meaning of these words in their native language.
     // Animate the box shrink
     Animated.sequence([
@@ -146,37 +172,13 @@ const Grid = memo(({ boxData, gridWords, foundWords, filledBoxes, boxAnimations,
         useNativeDriver: false,
       }),
     ]).start(() => {
-      // After animation, show the popup
-      setSeeMeaningWords(foundSeeMeaningWords);
-      setSeeMeaningVisible(true);
+      // After animation, show the popup only when there are found words
+      if (foundSeeMeaningItems.length > 0) {
+        setSeeMeaningWords(foundSeeMeaningItems);
+        setSeeMeaningVisible(true);
+      }
       setPressedBoxIndex(null);
     });
-
-    
-    // only proceed if the box is filled, otherwise it means that either vertical nor horizontal word has been found.
-    if (!filledBoxes.includes(boxIndex)) return;
-
-    // find vertical or horizontal word at this position
-    // O(n), n: grid words count, very small number (<=20)
-    const SeeMeaningWords = Object.keys(gridWords).filter((word) => {
-      const wordData = gridWords[word];
-      const [startRow, startCol] = wordData.pos;
-      const wordLength = word.length;
-
-      if (wordData.direction === 'H') {
-        // horizontal
-        return rowIndex === startRow && colIndex >= startCol && colIndex < startCol + wordLength;
-      }
-      else {
-        // vertical
-        return colIndex === startCol && rowIndex >= startRow && rowIndex < startRow + wordLength;
-      }
-    });
-    
-    // check if any of these words are found
-    const foundSeeMeaningWords = SeeMeaningWords.filter((word) => gridWords[word].isFound);
-
-    if (foundSeeMeaningWords.length === 0) return;
   };
       
 

@@ -4,7 +4,7 @@ import VocabularyListItem from '@/components/vocabulary/VocabularyListItem';
 
 export default function VocabularyList({ words }) {
   const renderWordItem = useCallback(
-    ({ item }) => <VocabularyListItem item={item.written_form} />,
+    ({ item }) => <VocabularyListItem item={item} />,
     []
   );
 

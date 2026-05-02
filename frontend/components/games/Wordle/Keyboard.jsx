@@ -14,7 +14,6 @@ const COLORS = {
 export default function Keyboard({
   onKeyPress,
   guesses,
-  secretWord,
   getLetterColor,
   disabled,
   langCode = 'en',

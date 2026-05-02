@@ -10,12 +10,9 @@ import {
 import { FontAwesome5 } from '@expo/vector-icons';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { popupStyles } from './popupStyles';
-import { useDictionaryContext } from '@/context/DictionaryContext';
 import VocabularyListItem from '../../../vocabulary/VocabularyListItem';
 
 export default function SeeMeaningPopUp({ visible, onClose, foundWords = [] }) {
-    const { dictionary } = useDictionaryContext();
-
     return (
         <Modal
             visible={visible}
@@ -52,7 +49,7 @@ export default function SeeMeaningPopUp({ visible, onClose, foundWords = [] }) {
                                 <Animated.FlatList
                                     style={{flex: 1}}
                                     data={foundWords}
-                                    keyExtractor={(item, index) => `${item}-${index}`}
+                                    keyExtractor={(item, index) => String(item?.id ?? item?.written_form ?? index)}
                                     renderItem={({ item }) => (
                                         <VocabularyListItem
                                             item={item}

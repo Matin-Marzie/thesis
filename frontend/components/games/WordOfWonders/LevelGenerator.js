@@ -218,29 +218,32 @@ export default function GenerateWordOfWonderLevel(dictionary, langCode = 'en') {
     // Normalize written_form for the target language (strip diacritics for Greek,
     // strip harakat for Farsi, uppercase for Latin-based scripts).
     let wordList = dictionary
-        .map((w) => normalizeWord(w.written_form.trim(), langCode))
-        .filter((w) => w.length > 2 && w.length <= 8 && isValidWordForLang(w, langCode));
+        .map((w) => ({
+            id: w.id,
+            normalized: normalizeWord(w.written_form.trim(), langCode),
+        }))
+        .filter(({ normalized }) => normalized.length > 2 && normalized.length <= 8 && isValidWordForLang(normalized, langCode));
 
-    // Pick a random practice word (already uppercase from wordList)
+    // Pick a random practice word (already normalized from wordList)
     const practiceWord = wordList[Math.floor(Math.random() * wordList.length)];
 
     const startRow = randomInt(2, 5);
-    const startCol = randomInt(0, BOARD_SIZE - practiceWord.length);
+    const startCol = randomInt(0, BOARD_SIZE - practiceWord.normalized.length);
 
-    placeWord(board, practiceWord, startRow, startCol, "H");
+    placeWord(board, practiceWord.normalized, startRow, startCol, "H");
 
     const shuffled = [...wordList].sort(() => Math.random() - 0.5);
     shuffled.sort(
         (a, b) =>
-            wordPriority(b)[0] - wordPriority(a)[0] ||
-            wordPriority(b)[1] - wordPriority(a)[1]
+            wordPriority(b.normalized)[0] - wordPriority(a.normalized)[0] ||
+            wordPriority(b.normalized)[1] - wordPriority(a.normalized)[1]
     );
 
     for (const word of shuffled) {
         if (placedWords.length >= MAX_WORDS) break;
-        if (word === practiceWord) continue; // Skip the practice word
-        if (placedWords.some(pw => pw.word === word)) continue; // Skip if already in placedWords, dictionary may have duplicate for now.To Do: remove duplicate in dicrionary
-        tryPlaceWord(board, word)
+        if (word.normalized === practiceWord.normalized) continue; // Skip the practice word
+        if (placedWords.some(pw => pw.word === word.normalized)) continue; // Skip if already in placedWords
+        tryPlaceWord(board, word.normalized)
     }
 
     board = board.map(row => row.map(cell => (cell === 0 ? 0 : 1)));
@@ -248,8 +251,10 @@ export default function GenerateWordOfWonderLevel(dictionary, langCode = 'en') {
 
     const gridWords = placedWords.reduce((acc, { row, col, word, dir }, index) => {
         const key = word.toLowerCase(); // using word as key
+        const sourceItem = wordList.find((item) => item.normalized === word);
         acc[key] = {
             id: index + 1,
+            DictionaryId: sourceItem?.id ?? null,
             written_form: word.toLowerCase(),
             direction: dir,
             pos: [row, col],

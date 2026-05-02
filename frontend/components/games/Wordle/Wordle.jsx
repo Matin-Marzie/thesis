@@ -20,6 +20,7 @@ import ConfirmationPopup from '../ConfirmationPopup';
 import { PRIMARY_COLOR } from '@/constants/App';
 import { getWordleConfig } from '@/constants/wordleConfig';
 import WordleCellPopup from './pop-ups/WordleCellPopup';
+import { formatCompactNumber } from '@/utils/formatCompactNumber';
 
 const COLORS = {
     correct: '#6aaa64',
@@ -28,6 +29,7 @@ const COLORS = {
     empty: '#d3d6da',
     border: '#ccc',
 };
+
 
 export default function Wordle({ onClose }) {
     const { userProgress, setUserProgress } = useAppContext();
@@ -41,7 +43,34 @@ export default function Wordle({ onClose }) {
 
     const config = useMemo(() => getWordleConfig(langCode), [langCode]);
 
-    const [secretWord, setSecretWord] = useState('');
+    // Only Persian (fa) needs normalization (diacritics/variants). Other languages compare as-is.
+    const normalizeKey = useCallback((word) => {
+        const raw = (word ?? '').trim();
+        if (!raw) return '';
+        return langCode === 'fa' ? config.normalize(raw) : raw;
+    }, [langCode, config]);
+
+    // Hash: normalized written_form -> [wordItem, wordItem, ...]
+    // Includes only words with length == config.wordLength (length is computed AFTER normalization).
+    const wordleDictionary = useMemo(() => {
+        const map = Object.create(null);
+        const words = dictionary?.words;
+        if (!Array.isArray(words) || words.length === 0) return map;
+
+        for (const item of words) {
+            const key = normalizeKey(item?.written_form);
+            if (!key) continue;
+            if (!config.letterRegex.test(key)) continue;
+            if ([...key].length !== config.wordLength) continue;
+
+            if (!map[key]) map[key] = [];
+            map[key].push(item);
+        }
+
+        return map;
+    }, [dictionary, normalizeKey, config]);
+
+    const [secretWordItem, setSecretWordItem] = useState(null);
     const [wordLength, setWordLength] = useState(config.wordLength);
     const [guesses, setGuesses] = useState([]);
     const [currentGuess, setCurrentGuess] = useState('');
@@ -49,7 +78,7 @@ export default function Wordle({ onClose }) {
     const [won, setWon] = useState(false);
     const [loading, setLoading] = useState(true);
     const [cellPopupVisible, setCellPopupVisible] = useState(false);
-    const [selectedWord, setSelectedWord] = useState(null);
+    const [selectedWordItems, setSelectedWordItems] = useState([]);
     const [invalidTrigger, setInvalidTrigger] = useState(0);
     const [confirmVisible, setConfirmVisible] = useState(false);
     const [coins, setCoins] = useState(userProgress?.coins || 0);
@@ -58,7 +87,7 @@ export default function Wordle({ onClose }) {
 
     useEffect(() => {
         initializeGame();
-    }, [dictionary, config]);
+    }, [wordleDictionary, config.wordLength]);
 
     useEffect(() => {
         const subscription = BackHandler.addEventListener('hardwareBackPress', () => {
@@ -70,50 +99,34 @@ export default function Wordle({ onClose }) {
     }, [confirmVisible]);
 
     const initializeGame = useCallback(() => {
-        if (!dictionary?.words || dictionary.words.length === 0) {
+        const keys = Object.keys(wordleDictionary);
+        if (keys.length === 0) {
             setLoading(false);
             return;
         }
 
-        // Normalize all words and keep only those matching this language's script
-        const normalized = dictionary.words
-            .map(w => config.normalize(w.written_form))
-            .filter(w => config.letterRegex.test(w));
+        const randomKey = keys[Math.floor(Math.random() * keys.length)];
+        const candidates = wordleDictionary[randomKey] ?? [];
+        const randomItem = candidates[Math.floor(Math.random() * candidates.length)] ?? null;
 
-        // Try the preferred word length; fall back to the most common length if too few words
-        let targetLength = config.wordLength;
-        let validWords = normalized.filter(w => [...w].length === targetLength);
-
-        if (validWords.length < 3) {
-            const counts = {};
-            for (const w of normalized) {
-                const len = [...w].length;
-                if (len >= 3) counts[len] = (counts[len] || 0) + 1;
-            }
-            const best = Object.entries(counts).sort(([, a], [, b]) => b - a)[0];
-            if (best) {
-                targetLength = parseInt(best[0]);
-                validWords = normalized.filter(w => [...w].length === targetLength);
-            }
-        }
-
-        if (validWords.length === 0) {
+        if (!randomItem) {
             setLoading(false);
             Alert.alert('Error', 'No valid words found for Wordle');
             return;
         }
 
-        const randomWord = validWords[Math.floor(Math.random() * validWords.length)];
-        setSecretWord(randomWord);
-        setWordLength(targetLength);
+        setSecretWordItem(randomItem);
+        setWordLength(config.wordLength);
         setGuesses([]);
         setCurrentGuess('');
         setGameOver(false);
         setWon(false);
         setLoading(false);
-    }, [dictionary, config]);
+    }, [wordleDictionary, config.wordLength]);
 
-    // Guesses are stored already-normalized; use spread to correctly index Unicode chars
+    // Guesses are stored as hash keys (FA-normalized; others as-is). Use spread to index Unicode chars.
+    const secretWord = secretWordItem ? normalizeKey(secretWordItem.written_form) : '';
+
     const getLetterColor = useCallback((_letter, index, guess) => {
         const guessChars = [...guess];
         const secretChars = [...secretWord];
@@ -122,9 +135,12 @@ export default function Wordle({ onClose }) {
         return COLORS.absent;
     }, [secretWord]);
 
-    const handleCollect = useCallback(() => {
-        setCoins(prev => prev + 5);
-        setUserProgress(prev => ({ ...prev, coins: (prev.coins || 0) + 5 }));
+    const handleCollect = useCallback((reward = 1) => {
+        const add = Number(reward) || 0;
+        if (add > 0) {
+            setCoins(prev => prev + add);
+            setUserProgress(prev => ({ ...prev, coins: (prev.coins || 0) + add }));
+        }
         initializeGame();
     }, [setUserProgress, initializeGame]);
 
@@ -142,16 +158,15 @@ export default function Wordle({ onClose }) {
         }
 
         if (letter === 'ENTER') {
-            if ([...currentGuess].length !== wordLength) {
+            const normalizedGuess = normalizeKey(currentGuess);
+
+            if ([...normalizedGuess].length !== wordLength) {
                 Alert.alert('Invalid', `Word must be ${wordLength} letters`);
                 return;
             }
 
-            const normalizedGuess = config.normalize(currentGuess);
-
-            const wordExists = dictionary.words.some(
-                w => config.normalize(w.written_form) === normalizedGuess
-            );
+            const matches = wordleDictionary[normalizedGuess];
+            const wordExists = Array.isArray(matches) && matches.length > 0;
 
             if (!wordExists) {
                 Vibration.vibrate([0, 80, 60, 80, 60, 80]);
@@ -180,7 +195,7 @@ export default function Wordle({ onClose }) {
         if ([...currentGuess].length < wordLength) {
             setCurrentGuess(prev => prev + letter);
         }
-    }, [currentGuess, gameOver, won, guesses, secretWord, dictionary, config, wordLength]);
+    }, [currentGuess, gameOver, won, guesses, secretWord, wordleDictionary, normalizeKey, config.maxAttempts, wordLength]);
 
     if (loading) {
         return (
@@ -195,10 +210,17 @@ export default function Wordle({ onClose }) {
             <View style={styles.container}>
                 {/* Header */}
                 <View style={styles.header}>
-                    <TouchableOpacity onPress={() => setConfirmVisible(true)}>
-                        <FontAwesome5 name="chevron-left" size={24} color="#333" />
+                    <TouchableOpacity
+                        onPress={() => setConfirmVisible(true)}
+                        style={styles.backButton}
+                    >
+                        <FontAwesome5 name="chevron-left" size={22} color="#333" />
                     </TouchableOpacity>
-                    <Text style={styles.headerTitle}>WORDLE</Text>
+
+                    <View pointerEvents="none" style={styles.headerTitleWrap}>
+                        <Text style={styles.headerTitle}>WORDLE</Text>
+                    </View>
+
                     <View
                         ref={coinsViewRef}
                         style={styles.coinsContainer}
@@ -208,8 +230,8 @@ export default function Wordle({ onClose }) {
                             });
                         }}
                     >
-                        <Text style={styles.coinsText}>{coins}</Text>
                         <FontAwesome5 name="coins" size={18} color="#FFD700" />
+                        <Text style={styles.coinsText}>{formatCompactNumber(coins)}</Text>
                     </View>
                 </View>
 
@@ -224,9 +246,10 @@ export default function Wordle({ onClose }) {
                         getLetterColor={getLetterColor}
                         isRTL={config.isRTL}
                         onCellPress={(rowIndex) => {
-                            const word = guesses[rowIndex];
-                            if (!word) return;
-                            setSelectedWord(word);
+                            const normalizedGuess = guesses[rowIndex];
+                            if (!normalizedGuess) return;
+                            const candidates = wordleDictionary[normalizedGuess];
+                            setSelectedWordItems(Array.isArray(candidates) ? candidates : []);
                             setCellPopupVisible(true);
                         }}
                         invalidTrigger={invalidTrigger}
@@ -255,8 +278,8 @@ export default function Wordle({ onClose }) {
                 {/* Cell Popup */}
                 <WordleCellPopup
                     visible={cellPopupVisible}
-                    onClose={() => { setCellPopupVisible(false); setSelectedWord(null); }}
-                    word={selectedWord}
+                    onClose={() => { setCellPopupVisible(false); setSelectedWordItems([]); }}
+                    words={selectedWordItems}
                 />
 
                 {/* Exit Confirmation Popup */}
@@ -272,7 +295,7 @@ export default function Wordle({ onClose }) {
                 <GameOverModal
                     visible={gameOver}
                     won={won}
-                    secretWord={secretWord}
+                    secretWordItem={secretWordItem}
                     guessCount={guesses.length}
                     maxAttempts={config.maxAttempts}
                     onPlayAgain={handleCollect}
@@ -288,7 +311,7 @@ export default function Wordle({ onClose }) {
 const styles = StyleSheet.create({
     layout: {
         backgroundColor: PRIMARY_COLOR,
-        paddingTop: 20,
+        paddingTop: 35,
         paddingBottom: 50,
         flex: 1,
     },
@@ -297,19 +320,35 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
     },
     header: {
+        position: 'relative',
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        paddingHorizontal: 20,
-        paddingVertical: 15,
+        paddingHorizontal: 10,
+        paddingVertical: 5,
         borderBottomWidth: 1,
         borderBottomColor: '#e0e0e0',
         backgroundColor: PRIMARY_COLOR,
+    },
+    headerTitleWrap: {
+        position: 'absolute',
+        left: 0,
+        right: 0,
+        top: 0,
+        bottom: 0,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    backButton: {
+        paddingHorizontal: 15,
+        paddingVertical: 10,
+        borderRadius: 999,
     },
     headerTitle: {
         fontSize: 24,
         fontWeight: 'bold',
         color: '#333',
+        textAlign: 'center',
     },
     coinsContainer: {
         flexDirection: 'row',

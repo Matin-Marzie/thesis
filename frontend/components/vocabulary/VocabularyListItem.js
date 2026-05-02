@@ -6,12 +6,10 @@ import { getWikimediaDictionary, extractDefinitions } from '@/api/dictionary';
 import MasteryLevelButton from '@/components/vocabulary/MasteryLevelButton';
 import { Swipeable, ScrollView } from 'react-native-gesture-handler';
 import { Ionicons } from '@expo/vector-icons';
-import { useDictionaryContext } from '@/context/DictionaryContext';
 import { VOCABULARY_ACTIONS } from '@/hooks/useVocabulary';
 
 function WordItem({ item }) {
     
-    const { dictionary } = useDictionaryContext();
     const { userVocabulary, vocabularyDispatch, isOnline, userProgress } = useAppContext();
     const [isExpanded, setIsExpanded] = useState(false);
     const [meanings, setMeanings] = useState(null);
@@ -22,14 +20,11 @@ function WordItem({ item }) {
     // Cache for Wikimedia results
     const cache = useMemo(() => ({}), []);
 
-    const word = dictionary?.words?.find(
-        (w) => w.written_form.toLowerCase() === item.toLowerCase()
-    ) || null;
-
-    const article = word && word.article ? word.article : '';
-    const written_form = word && word.written_form;
-    const translations = word?.translations?.join(', ') ?? '';
-    const level = word && word.level ? word.level : null;
+    const word = item;
+    const article = item.article ?? '';
+    const written_form = item.written_form;
+    const translations = item.translations?.join(', ') ?? '';
+    const level = item.level ?? null;
 
     // Get language code from current learning language
     const current_language = userProgress?.languages?.find(lang => lang.is_current_language);

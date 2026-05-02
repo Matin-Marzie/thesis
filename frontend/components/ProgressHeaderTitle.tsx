@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { useAppContext } from '@/context/AppContext';
 import { LANGUAGES_META } from '@/constants/SupportedLanguages';
+import { formatCompactNumber } from '@/utils/formatCompactNumber';
 
 export default function ProgressHeaderTitle() {
   const { userProgress } = useAppContext();
@@ -32,7 +33,7 @@ export default function ProgressHeaderTitle() {
       {/* Coins */}
       <View style={styles.item}>
         <Text style={styles.icon}>🪙</Text>
-        <Text style={styles.text}>{userProgress?.coins || 0}</Text>
+        <Text style={styles.text}>{formatCompactNumber(userProgress?.coins || 0)}</Text>
       </View>
 
       {/* Energy */}

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import {
     View,
     Text,
@@ -12,7 +12,12 @@ import { GREEN } from '../gameConstants';
 import { popupStyles } from './popupStyles';
 import VocabularyListItem from '../../../vocabulary/VocabularyListItem';
 
-export default function ExtraWordsPopup({ visible, onClose, extraWords = [], score = 0 }) {
+export default function ExtraWordsPopup({ visible, onClose, extraWords = [], dictionarySet = {}, score = 0 }) {
+    const extraWordItems = useMemo(() => {
+        if (!extraWords.length) return [];
+        return extraWords.flatMap((word) => dictionarySet[word] ?? []);
+    }, [extraWords, dictionarySet]);
+
     return (
         <Modal
             visible={visible}
@@ -51,8 +56,8 @@ export default function ExtraWordsPopup({ visible, onClose, extraWords = [], sco
                                 </Text>
                                 <FlatList
                                     style={{ flex: 1 }}
-                                    data={extraWords}
-                                    keyExtractor={(item, index) => `${item}-${index}`}
+                                    data={extraWordItems}
+                                    keyExtractor={(item, index) => String(item?.id ?? item?.written_form ?? index)}
                                     renderItem={({ item }) => (
                                         <VocabularyListItem item={item} />
                                     )}

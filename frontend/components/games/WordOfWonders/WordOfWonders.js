@@ -23,6 +23,7 @@ import { GREEN, MAX_WIDTH, width, height, horizontalOffset, BACKGROUND_IMAGE_URI
 import { useAppContext } from '@/context/AppContext';
 import { useDictionaryContext } from '@/context/DictionaryContext';
 import { normalizeWord, isRTL } from './languageUtils';
+import { formatCompactNumber } from '@/utils/formatCompactNumber';
 
 
 const HAMMER_HEIGHT = height * 0.69;
@@ -45,8 +46,18 @@ export default function WordOfWonders({ boxData: initialBoxData, gridWords: init
     // Normalize written_form the same way LevelGenerator did so lookups always match
     // (e.g. Greek "αδελφός" → "αδελφος", Farsi "بَرادَر" → "برادر")
     const dictionarySet = useMemo(() => {
-        if (!dictionary?.words) return new Set();
-        return new Set(dictionary.words.map(w => normalizeWord(w.written_form, langCode).toLowerCase()));
+        const map = Object.create(null);
+        if (!Array.isArray(dictionary?.words)) return map;
+
+        for (const item of dictionary.words) {
+            const key = normalizeWord(item?.written_form, langCode).toLowerCase();
+            if (!key) continue;
+
+            if (!map[key]) map[key] = [];
+            map[key].push(item);
+        }
+
+        return map;
     }, [dictionary?.words, langCode]);
 
     const [boxData, setBoxData] = useState(initialBoxData);
@@ -546,7 +557,7 @@ export default function WordOfWonders({ boxData: initialBoxData, gridWords: init
                 setFoundWords((prev) => [...prev, word]);
                 setSelectedLetters([]);
             }
-        } else if (dictionarySet.has(word)) {
+        } else if (selectedLetters.length > 1 && dictionarySet[word]?.length) {
             // Check if word is in dictionary (extra word)
             if (foundWords.includes(word)) {
                 // Extra word already found - animate score board
@@ -706,7 +717,7 @@ export default function WordOfWonders({ boxData: initialBoxData, gridWords: init
                         }}
                     >
                         <FontAwesome5 name="coins" size={25} color="#FFD700" />
-                        <Text style={styles.coinsText}>{coins}</Text>
+                        <Text style={styles.coinsText}>{formatCompactNumber(coins)}</Text>
                     </View>
                     <TouchableOpacity
                         style={styles.settingsButton}
@@ -727,6 +738,7 @@ export default function WordOfWonders({ boxData: initialBoxData, gridWords: init
                     shakeWord={shakeWord}
                     shakeAnimation={shakeAnimation}
                     langCode={langCode}
+                    dictionarySet={dictionarySet}
                 />
 
 
@@ -865,7 +877,8 @@ export default function WordOfWonders({ boxData: initialBoxData, gridWords: init
                 <ExtraWordsPopup
                     visible={extraWordsVisible}
                     onClose={() => setExtraWordsVisible(false)}
-                    extraWords={foundWords.filter(w => dictionarySet.has(w) && !gridWords[w])}
+                    extraWords={foundWords.filter(w => dictionarySet[w]?.length && !gridWords[w])}
+                    dictionarySet={dictionarySet}
                     score={extraWordsScore}
                 />
 
@@ -875,6 +888,7 @@ export default function WordOfWonders({ boxData: initialBoxData, gridWords: init
                     onCollect={handleCollect}
                     coinTarget={coinTarget}
                     gridWords={gridWords}
+                    dictionarySet={dictionarySet}
                 />
 
                 {/* Settings Popup */}

@@ -8,6 +8,7 @@ import {
     Animated,
     Easing,
     Dimensions,
+    Vibration,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { FontAwesome5 } from '@expo/vector-icons';
@@ -19,7 +20,6 @@ const COLORS = {
 };
 
 const COIN_COUNT = 6;
-const REWARD = 5;
 const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
 
 const PATHS = [
@@ -34,7 +34,7 @@ const PATHS = [
 export default function GameOverModal({
     visible,
     won,
-    secretWord,
+    secretWordItem,
     guessCount,
     maxAttempts,
     onPlayAgain,
@@ -42,6 +42,7 @@ export default function GameOverModal({
     isRTL = false,
     coinTarget,
 }) {
+    const reward = won ? 5 : 1;
     const rtlText = isRTL ? { writingDirection: 'rtl', textAlign: 'center' } : {};
 
     const badgeScale   = useRef(new Animated.Value(0)).current;
@@ -101,6 +102,8 @@ export default function GameOverModal({
         }).start();
 
         const { x: ox, y: oy } = originRef.current;
+
+        // Match WordOfWonders approach: measure true center, then tweak the final landing point.
         const targetX = (coinTarget ? coinTarget.x - ox : screenWidth * 0.5 - ox) - 50;
         const targetY = (coinTarget ? coinTarget.y - oy : -(screenHeight * 0.8)) - 12;
 
@@ -131,14 +134,26 @@ export default function GameOverModal({
             ]);
         });
 
-        Animated.parallel(anims).start(() => {
+        let finishedCoins = 0;
+        const totalCoins = anims.length;
+
+        const closeAfterAllCoins = () => {
             Animated.parallel([
                 Animated.sequence([
                     Animated.timing(cardScale, { toValue: 1.08, duration: 120, easing: Easing.out(Easing.cubic), useNativeDriver: true }),
                     Animated.timing(cardScale, { toValue: 0,    duration: 200, easing: Easing.in(Easing.cubic),  useNativeDriver: true }),
                 ]),
                 Animated.timing(overlayOpacity, { toValue: 0, duration: 320, useNativeDriver: true }),
-            ]).start(() => onPlayAgain?.());
+            ]).start(() => onPlayAgain?.(reward));
+        };
+
+        anims.forEach((anim) => {
+            anim.start(({ finished }) => {
+                if (!finished) return;
+                Vibration.vibrate(20);
+                finishedCoins += 1;
+                if (finishedCoins === totalCoins) closeAfterAllCoins();
+            });
         });
     };
 
@@ -171,13 +186,15 @@ export default function GameOverModal({
                     ) : (
                         <View style={styles.statsContainer}>
                             <Text style={styles.statsLabel}>The word was:</Text>
-                            <Text style={[styles.secretWord, rtlText]}>{secretWord}</Text>
+                            <Text style={[styles.secretWord, rtlText]}>{secretWordItem?.written_form}</Text>
                         </View>
                     )}
 
-                    <View style={{ width: '100%', marginBottom: 20 }}>
-                        <VocabularyListItem item={secretWord} />
-                    </View>
+                    {secretWordItem && (
+                        <View style={{ width: '100%', marginBottom: 20 }}>
+                            <VocabularyListItem item={secretWordItem} />
+                        </View>
+                    )}
 
                     <View style={styles.divider} />
 
@@ -186,7 +203,7 @@ export default function GameOverModal({
                         <View ref={badgeRef} onLayout={onBadgeLayout}>
                             <Animated.View style={[styles.rewardBadge, { transform: [{ scale: badgeScale }], opacity: badgeOpacity }]}>
                                 <FontAwesome5 name="coins" size={22} color="#FFD700" />
-                                <Text style={styles.rewardText}>+{REWARD}</Text>
+                                <Text style={styles.rewardText}>+{reward}</Text>
                             </Animated.View>
                         </View>
 

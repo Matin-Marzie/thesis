@@ -37,18 +37,25 @@ export default function WordleGrid({
     ]).start(() => onInvalidAnimationEnd?.());
   }, [invalidTrigger]);
 
-  const renderCell = (letter, rowIndex, colIndex, guess, isCurrentGuess = false) => {
-    const isEmpty = !letter;
+  const renderCell = (
+    displayText,
+    rowIndex,
+    colIndex,
+    guessKey,
+    isCurrentGuess = false,
+    colorLetter = displayText
+  ) => {
+    const isEmpty = !displayText;
     const backgroundColor = isEmpty || isCurrentGuess
-      ? (isCurrentGuess && letter ? COLORS.absent : '#fff')
-      : getLetterColor(letter, colIndex, guess);
+      ? (isCurrentGuess && displayText ? COLORS.absent : '#fff')
+      : getLetterColor(colorLetter, colIndex, guessKey);
     const borderColor = isEmpty ? COLORS.border : backgroundColor;
 
     return (
       <TouchableOpacity
         key={`${rowIndex}-${colIndex}`}
         activeOpacity={0.75}
-        onPress={() => onCellPress?.(rowIndex, colIndex, letter)}
+        onPress={() => onCellPress?.(rowIndex, colIndex, displayText)}
         style={[styles.cell, { backgroundColor, borderColor }]}
       >
         {/* Red flash overlay — only on the active row */}
@@ -57,7 +64,7 @@ export default function WordleGrid({
             style={[StyleSheet.absoluteFill, styles.flashOverlay, { opacity: flashOpacity }]}
           />
         )}
-        {!!letter && <Text style={styles.cellText}>{letter}</Text>}
+        {!!displayText && <Text style={styles.cellText}>{displayText}</Text>}
       </TouchableOpacity>
     );
   };
@@ -65,13 +72,17 @@ export default function WordleGrid({
   const renderRow = (rowIndex) => {
     const cells = [];
 
+    const isPastGuess = rowIndex < guesses.length;
+    const isActiveRow = rowIndex === guesses.length;
+
+    const rowKey = isPastGuess ? (guesses[rowIndex] ?? '') : (isActiveRow ? currentGuess : '');
+    const rowChars = [...rowKey];
+
     for (let i = 0; i < wordLength; i++) {
-      if (rowIndex < guesses.length) {
-        const chars = [...guesses[rowIndex]];
-        cells.push(renderCell(chars[i] ?? '', rowIndex, i, guesses[rowIndex], false));
-      } else if (rowIndex === guesses.length) {
-        const chars = [...currentGuess];
-        cells.push(renderCell(chars[i] ?? '', rowIndex, i, currentGuess, true));
+      if (isPastGuess) {
+        cells.push(renderCell(rowChars[i] ?? '', rowIndex, i, rowKey, false));
+      } else if (isActiveRow) {
+        cells.push(renderCell(rowChars[i] ?? '', rowIndex, i, rowKey, true));
       } else {
         cells.push(renderCell('', rowIndex, i, '', false));
       }

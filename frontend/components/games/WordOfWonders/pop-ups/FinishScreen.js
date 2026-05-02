@@ -1,5 +1,5 @@
 import React, { useRef, useEffect, useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Modal, Animated, Easing, Dimensions, SectionList } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Modal, Animated, Easing, Dimensions, SectionList, Vibration } from 'react-native';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { popupStyles } from './popupStyles';
@@ -21,7 +21,7 @@ const PATHS = [
     {  midX: 90, midY:  -30, p1: 0.35 }, // hard right, slight rise
 ];
 
-export default function FinishScreen({ visible = false, onCollect, coinTarget, gridWords = {} }) {
+export default function FinishScreen({ visible = false, onCollect, coinTarget, gridWords = {}, dictionarySet = {} }) {
     const badgeScale = useRef(new Animated.Value(0)).current;
     const badgeOpacity = useRef(new Animated.Value(1)).current;
     const cardScale = useRef(new Animated.Value(1)).current;
@@ -49,10 +49,23 @@ export default function FinishScreen({ visible = false, onCollect, coinTarget, g
     ).current;
 
     const foundWords = Object.keys(gridWords).filter(w => gridWords[w].isFound);
-    const missedWords = Object.keys(gridWords).filter(w => !gridWords[w].isFound);
+    const foundWordItems = foundWords
+        .map((word) => {
+            const items = dictionarySet[word] ?? [];
+            if (!items.length) return null;
+
+            const dictionaryId = gridWords[word]?.DictionaryId;
+            if (dictionaryId != null) {
+                const match = items.find((item) => item?.id === dictionaryId);
+                if (match) return match;
+            }
+
+            return items[0];
+        })
+        .filter(Boolean);
+
     const sections = [
-        { title: `Found  ${foundWords.length}/${Object.keys(gridWords).length}`, data: foundWords },
-        ...(missedWords.length > 0 ? [{ title: `Missed  ${missedWords.length}`, data: missedWords, missed: true }] : []),
+        { title: `Found  ${foundWords.length}/${Object.keys(gridWords).length}`, data: foundWordItems },
     ];
 
     useEffect(() => {
@@ -140,7 +153,10 @@ export default function FinishScreen({ visible = false, onCollect, coinTarget, g
             ]);
         });
 
-        Animated.parallel(anims).start(() => {
+        let finishedCoins = 0;
+        const totalCoins = anims.length;
+
+        const closeAfterAllCoins = () => {
             Animated.parallel([
                 Animated.sequence([
                     Animated.timing(cardScale, {
@@ -162,6 +178,15 @@ export default function FinishScreen({ visible = false, onCollect, coinTarget, g
                     useNativeDriver: true,
                 }),
             ]).start(() => onCollect?.());
+        };
+
+        anims.forEach((anim) => {
+            anim.start(({ finished }) => {
+                if (!finished) return;
+                Vibration.vibrate(20);
+                finishedCoins += 1;
+                if (finishedCoins === totalCoins) closeAfterAllCoins();
+            });
         });
     };
 
@@ -184,7 +209,7 @@ export default function FinishScreen({ visible = false, onCollect, coinTarget, g
                     <SectionList
                         style={styles.list}
                         sections={sections}
-                        keyExtractor={(item) => item}
+                        keyExtractor={(item, index) => String(item?.id ?? item?.written_form ?? index)}
                         renderSectionHeader={({ section }) => (
                             <View style={[styles.sectionHeader, section.missed && styles.sectionHeaderMissed]}>
                                 <Text style={[styles.sectionHeaderText, section.missed && styles.sectionHeaderTextMissed]}>

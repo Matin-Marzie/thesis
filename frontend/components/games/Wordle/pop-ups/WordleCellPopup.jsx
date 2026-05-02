@@ -6,7 +6,9 @@ import { Animated } from 'react-native';
 import { popupStyles } from '../../WordOfWonders/pop-ups/popupStyles';
 import VocabularyListItem from '../../../vocabulary/VocabularyListItem';
 
-export default function WordleCellPopup({ visible, onClose, word }) {
+export default function WordleCellPopup({ visible, onClose, words }) {
+    const list = Array.isArray(words) ? words : [];
+
     return (
         <Modal
             visible={visible}
@@ -46,8 +48,8 @@ export default function WordleCellPopup({ visible, onClose, word }) {
                             <View style={popupStyles.content}>
                                 <Animated.FlatList
                                     style={{ flex: 1 }}
-                                    data={word ? [word] : []}
-                                    keyExtractor={(item, index) => `${item}-${index}`}
+                                    data={list}
+                                    keyExtractor={(item, index) => `word-${item?.id ?? 'noid'}-${index}`}
                                     renderItem={({ item }) => (
                                         <VocabularyListItem item={item} />
                                     )}
