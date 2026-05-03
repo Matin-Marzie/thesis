@@ -43,7 +43,7 @@ export const WORDLE_LANGUAGE_CONFIG = {
     maxAttempts: 6,
     isRTL: false,
     letterRegex: /^[A-Za-z]+$/,
-    normalize: (word) => (word ?? '').trim(),
+    normalize: (word) => (word ?? '').trim().toUpperCase(),
     keyboardRows: [
       ['Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P'],
       ['A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L'],
@@ -57,7 +57,7 @@ export const WORDLE_LANGUAGE_CONFIG = {
     isRTL: false,
     // Greek (U+0370–U+03FF) + Greek Extended (U+1F00–U+1FFF)
     letterRegex: /^[\u0370-\u03FF\u1F00-\u1FFF]+$/,
-    normalize: (word) => (word ?? '').trim(),
+    normalize: normalizeGreek,
     keyboardRows: [
       ['Ε', 'Ρ', 'Τ', 'Υ', 'Θ', 'Ι', 'Ο', 'Π'],
       ['Α', 'Σ', 'Δ', 'Φ', 'Γ', 'Η', 'Ξ', 'Κ', 'Λ'],

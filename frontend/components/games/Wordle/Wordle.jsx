@@ -17,10 +17,12 @@ import Keyboard from './Keyboard';
 import WordleGrid from './WordleGrid';
 import GameOverModal from './pop-ups/GameOverModal';
 import ConfirmationPopup from '../ConfirmationPopup';
+import WordleInfoPopup from './pop-ups/WordleInfoPopup';
 import { PRIMARY_COLOR } from '@/constants/App';
 import { getWordleConfig } from '@/constants/wordleConfig';
 import WordleCellPopup from './pop-ups/WordleCellPopup';
 import { formatCompactNumber } from '@/utils/formatCompactNumber';
+import { SCREEN_WIDTH } from '@gorhom/bottom-sheet';
 
 const COLORS = {
     correct: '#6aaa64',
@@ -43,12 +45,11 @@ export default function Wordle({ onClose }) {
 
     const config = useMemo(() => getWordleConfig(langCode), [langCode]);
 
-    // Only Persian (fa) needs normalization (diacritics/variants). Other languages compare as-is.
     const normalizeKey = useCallback((word) => {
         const raw = (word ?? '').trim();
         if (!raw) return '';
-        return langCode === 'fa' ? config.normalize(raw) : raw;
-    }, [langCode, config]);
+        return config.normalize(raw);
+    }, [config]);
 
     // Hash: normalized written_form -> [wordItem, wordItem, ...]
     // Includes only words with length == config.wordLength (length is computed AFTER normalization).
@@ -83,6 +84,7 @@ export default function Wordle({ onClose }) {
     const [confirmVisible, setConfirmVisible] = useState(false);
     const [coins, setCoins] = useState(userProgress?.coins || 0);
     const [coinTarget, setCoinTarget] = useState(null);
+    const [infoVisible, setInfoVisible] = useState(false);
     const coinsViewRef = useRef(null);
 
     useEffect(() => {
@@ -265,6 +267,19 @@ export default function Wordle({ onClose }) {
                     )}
                 </ScrollView>
 
+                {/* Info Button */}
+                <View style={styles.infoButtonContainer}>
+                    <TouchableOpacity
+                        onPress={() => {
+                            Vibration.vibrate(10);
+                            setInfoVisible(true);
+                        }}
+                        style={styles.infoButton}
+                    >
+                        <FontAwesome5 name="info-circle" size={36} color="#0f859091" />
+                    </TouchableOpacity>
+                </View>
+
                 {/* Keyboard */}
                 <Keyboard
                     onKeyPress={handleKeyPress}
@@ -280,6 +295,13 @@ export default function Wordle({ onClose }) {
                     visible={cellPopupVisible}
                     onClose={() => { setCellPopupVisible(false); setSelectedWordItems([]); }}
                     words={selectedWordItems}
+                />
+
+                {/* Info Popup */}
+                <WordleInfoPopup
+                    visible={infoVisible}
+                    onClose={() => setInfoVisible(false)}
+                    nativeLanguage={userProgress?.languages?.find(l => l.is_current_language)?.native_language?.code}
                 />
 
                 {/* Exit Confirmation Popup */}
@@ -378,4 +400,9 @@ const styles = StyleSheet.create({
         color: '#666',
         fontWeight: '600',
     },
+    infoButtonContainer: {
+        paddingHorizontal: SCREEN_WIDTH * 0.03,
+        paddingVertical: 10,
+        alignItems: 'flex-end'
+    }
 });
