@@ -13,11 +13,13 @@ import {
 import { FontAwesome5 } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import Grid from './Grid';
 import LettersCycle from './LettersCycle';
 import SettingsPopup from './pop-ups/SettingsPopup';
 import ExtraWordsPopup from './pop-ups/ExtraWordsPopup';
 import FinishScreen from './pop-ups/FinishScreen';
+import TutorialOverlay from './pop-ups/TutorialOverlay';
 import ConfirmationPopup from '../ConfirmationPopup';
 import { GREEN, MAX_WIDTH, width, height, horizontalOffset, BACKGROUND_IMAGE_URI, BACKGROUND_OVERLAY_OPACITY } from './gameConstants';
 import { useAppContext } from '@/context/AppContext';
@@ -85,6 +87,15 @@ export default function WordOfWonders({ boxData: initialBoxData, gridWords: init
     const [extraWordsVisible, setExtraWordsVisible] = useState(false);
     const [settingsVisible, setSettingsVisible] = useState(false);
     const [confirmVisible, setConfirmVisible] = useState(false);
+    /** Whether the first-time tutorial overlay should be visible. */
+    const [showTutorial, setShowTutorial] = useState(false);
+    /**
+     * Absolute screen coordinates of the LettersCycle letters, forwarded by
+     * LettersCycle via onLetterCentersReady.  Null until the first render of
+     * LettersCycle completes.  The overlay waits for this before mounting so
+     * the finger animation lands precisely on the actual letter circles.
+     */
+    const [tutorialLetterCenters, setTutorialLetterCenters] = useState(null);
 
     // Create or update boxAnimations when grid dimensions change
     const boxAnimations = useMemo(() =>
@@ -184,6 +195,49 @@ export default function WordOfWonders({ boxData: initialBoxData, gridWords: init
         });
     }, [filledBoxes]);
 
+
+    /**
+     * First-time tutorial gate.
+     *
+     * On mount we read the 'wow_tutorial_seen' key from AsyncStorage.
+     * If the key is absent (null), the user has never completed the tutorial,
+     * so we set `showTutorial` to true.  The overlay will then render as soon
+     * as `tutorialLetterCenters` is populated by `handleLetterCentersReady`.
+     *
+     * The empty dependency array ensures this check runs only once per
+     * component mount, not on every re-render.
+     */
+    useEffect(() => {
+        AsyncStorage.getItem('wow_tutorial_seen').then(value => {
+            if (!value) setShowTutorial(true);
+        });
+    }, []);
+
+    /**
+     * Receives the array of letter screen-coordinates from LettersCycle
+     * immediately after its first render, and stores them in state so the
+     * TutorialOverlay can position the animated finger accurately.
+     *
+     * Wrapped in `useCallback` with an empty dependency array so the
+     * reference is stable — this prevents LettersCycle's onLetterCentersReady
+     * effect from firing more than once.
+     */
+    const handleLetterCentersReady = useCallback((centers) => {
+        setTutorialLetterCenters(centers);
+    }, []);
+
+    /**
+     * Dismisses the tutorial overlay and persists the "seen" flag so it is
+     * never shown again across app sessions.
+     *
+     * AsyncStorage.setItem is fire-and-forget here; a write failure would
+     * only mean the tutorial reappears on the next cold launch, which is
+     * an acceptable degradation.
+     */
+    const handleTutorialDismiss = useCallback(() => {
+        setShowTutorial(false);
+        AsyncStorage.setItem('wow_tutorial_seen', 'true');
+    }, []);
 
     const handleLetterPress = useCallback((index) => {
         if (gameFinished) return;
@@ -869,6 +923,7 @@ export default function WordOfWonders({ boxData: initialBoxData, gridWords: init
                         letterAnimations={letterAnimations}
                         onShuffle={handleShuffle}
                         shuffledLetters={shuffledLetters}
+                        onLetterCentersReady={handleLetterCentersReady}
                     />
                 </View>
 
@@ -905,6 +960,31 @@ export default function WordOfWonders({ boxData: initialBoxData, gridWords: init
                     onConfirm={() => router.back()}
                     onCancel={() => setConfirmVisible(false)}
                 />
+
+                {/*
+                  * First-time tutorial overlay.
+                  *
+                  * Rendered only when both conditions are true:
+                  *   1. `showTutorial` — the user has not yet dismissed it
+                  *      (determined via AsyncStorage on mount).
+                  *   2. `tutorialLetterCenters` — LettersCycle has reported
+                  *      its letter positions, so the animated finger can be
+                  *      placed correctly.
+                  *
+                  * `langCode` is resolved from the active language entry in
+                  * userProgress and controls the instruction text language.
+                  * Falls back to 'en' if the language data is not yet loaded.
+                  */}
+                {showTutorial && tutorialLetterCenters && (
+                    <TutorialOverlay
+                        letterCenters={tutorialLetterCenters}
+                        onDismiss={handleTutorialDismiss}
+                        langCode={
+                            userProgress?.languages?.find(l => l.is_current_language)
+                                ?.native_language?.code ?? 'en'
+                        }
+                    />
+                )}
             </ImageBackground>
         </View>
     );

@@ -11,13 +11,14 @@ if (Platform.OS !== 'web') {
   Line = SvgModule.Line;
 }
 
-const LettersCycle = memo(({ 
-  selectedLetters, 
-  onLetterPress, 
+const LettersCycle = memo(({
+  selectedLetters,
+  onLetterPress,
   onLetterRelease,
   letterAnimations,
   onShuffle,
-  shuffledLetters
+  shuffledLetters,
+  onLetterCentersReady,
 }) => {
   const [currentPointer, setCurrentPointer] = useState(null);
   const [isTouch, setIsTouch] = useState(false);
@@ -25,6 +26,27 @@ const LettersCycle = memo(({
   const selectedLettersRef = useRef(selectedLetters);
   const onLetterPressRef = useRef(onLetterPress);
   const onLetterReleaseRef = useRef(onLetterRelease);
+
+  /**
+   * Notify the parent component that letter positions are available.
+   *
+   * Letter centres are computed analytically from screen dimensions and
+   * `shuffledLetters.length` inside `renderLetters`, which runs during the
+   * render phase.  By the time this effect fires (after the first commit),
+   * `letterCenters.current` is fully populated.
+   *
+   * `onLetterCentersReady` is created with `useCallback([], [])` in the
+   * parent, so it has a stable reference and this effect runs exactly once —
+   * on mount — which is the desired behaviour for the tutorial overlay.
+   */
+  useEffect(() => {
+    if (onLetterCentersReady) {
+      // Pass a shallow copy so the parent holds an independent snapshot;
+      // mutations to letterCenters.current on subsequent renders won't
+      // silently update the array the tutorial overlay is reading.
+      onLetterCentersReady(letterCenters.current.slice());
+    }
+  }, [onLetterCentersReady]);
 
   // Keep refs in sync with props
   useEffect(() => {
