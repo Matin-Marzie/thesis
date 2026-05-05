@@ -1,1094 +1,402 @@
 INSERT INTO words (id, written_form, part_of_speech, image_url, audio_url, language_id, level, article)
 VALUES
-(200400, 'اِبتِدا', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200401, 'اِبتِدایِ', 'preposition', NULL, NULL, 3, 'AB', NULL),
-(200402, 'آب', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200403, 'آبان', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200404, 'آب‌میوه', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200405, 'آب‌وهوا', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200406, 'آبی', 'adjective', NULL, NULL, 3, 'AB', NULL),
-(200407, 'آخَر', 'adjective', NULL, NULL, 3, 'AB', NULL),
-(200408, 'آداس', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200409, 'آدرِس', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200410, 'آذَر', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200411, 'آرایِشگاه', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200412, 'آرایِشگَر', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200413, 'آرایِشگَری', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200414, 'آره', 'adverb', NULL, NULL, 3, 'AB', NULL),
-(200415, 'آزمایش', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200416, 'آزمون', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200417, 'آژانس', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200418, 'آسیب زَدَن به', 'verb', NULL, NULL, 3, 'AB', NULL),
-(200419, 'آشپَزخانه', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200420, 'آشپَزی کَردَن', 'verb', NULL, NULL, 3, 'AB', NULL),
-(200421, 'آشنایی', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200422, 'آشیانه', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200423, 'آفتاب', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200424, 'آفتابی', 'adjective', NULL, NULL, 3, 'AB', NULL),
-(200425, 'آقا', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200426, 'آلبوم', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200427, 'آلوده', 'adjective', NULL, NULL, 3, 'AB', NULL),
-(200428, 'آماده شُدَن', 'verb', NULL, NULL, 3, 'AB', NULL),
-(200429, 'آمَدَن', 'verb', NULL, NULL, 3, 'AB', NULL),
-(200430, 'آن', 'pronoun', NULL, NULL, 3, 'AB', NULL),
-(200431, 'آناناس', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200432, 'آنها', 'pronoun', NULL, NULL, 3, 'AB', NULL),
-(200433, 'آوازخواندَن', 'verb', NULL, NULL, 3, 'AB', NULL),
-(200434, 'آوریل', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200435, 'آهِسته', 'adverb', NULL, NULL, 3, 'AB', NULL),
-(200436, 'آهن', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200437, 'آهنگ', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200438, 'آینه', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200439, 'اَبر', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200440, 'اَبری', 'adjective', NULL, NULL, 3, 'AB', NULL),
-(200441, 'اِتاق', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200442, 'اُتو', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200443, 'اُتوبوس', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200444, 'اُتو کَردَن', 'verb', NULL, NULL, 3, 'AB', NULL),
-(200445, 'اُجاق گاز', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200446, 'اِجتِماعی', 'adjective', NULL, NULL, 3, 'AB', NULL),
-(200447, 'اِحتِرام', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200448, 'اَحوال‌پُرسی', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200449, 'اِداره', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200450, 'اِدامه', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200451, 'اِدامه دادَن', 'verb', NULL, NULL, 3, 'AB', NULL),
-(200452, 'اَدَبیّات', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200453, 'اِرتِباط بَرقَرار کَردَن', 'verb', NULL, NULL, 3, 'AB', NULL),
-(200454, 'اُردیبِهِشت', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200455, 'اَرزان', 'adjective', NULL, NULL, 3, 'AB', NULL),
-(200456, 'اَز آشنایی‌تون خوشوَقتَم', 'phrase', NULL, NULL, 3, 'AB', NULL),
-(200457, 'اَز چیزی ترسیدَن', 'verb', NULL, NULL, 3, 'AB', NULL),
-(200458, 'اَساسی', 'adjective', NULL, NULL, 3, 'AB', NULL),
-(200459, 'اَسباب‌بازی', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200460, 'اُستاد', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200461, 'اُستان', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200462, 'اِستَخر', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200463, 'اِستِراحَت کَردَن', 'verb', NULL, NULL, 3, 'AB', NULL),
-(200464, 'اِستِفاده', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200465, 'اِستِفاده شُدَن', 'verb', NULL, NULL, 3, 'AB', NULL),
-(200466, 'اِستِمراری', 'adjective', NULL, NULL, 3, 'AB', NULL),
-(200467, 'استوانه‌ای', 'adjective', NULL, NULL, 3, 'AB', NULL),
-(200468, 'اِسفَند', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200469, 'اِسکاج', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200470, 'اِسکی', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200471, 'اِسم', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200472, 'اِشتِباه', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200473, 'اَشک', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200474, 'اَشیاء', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200475, 'اِضافه کَردَن', 'verb', NULL, NULL, 3, 'AB', NULL),
-(200476, 'اَطرافِ', 'preposition', NULL, NULL, 3, 'AB', NULL),
-(200477, 'اِطّلاعات', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200478, 'اَعداد', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200479, 'اَعضا', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200480, 'اَغلَب', 'adverb', NULL, NULL, 3, 'AB', NULL),
-(200481, 'اَفراد', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200482, 'اُکتُبر', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200483, 'اَگَر', 'conjunction', NULL, NULL, 3, 'AB', NULL),
-(200484, 'اَلان', 'adverb', NULL, NULL, 3, 'AB', NULL),
-(200485, 'اَلگو', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200486, 'اَمّا', 'conjunction', NULL, NULL, 3, 'AB', NULL),
-(200487, 'اِمتِحان', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200488, 'اِمتیاز', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200489, 'اِمروز', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200490, 'اَمن', 'adjective', NULL, NULL, 3, 'AB', NULL),
-(200491, 'اِنتِخاب کَردَن', 'verb', NULL, NULL, 3, 'AB', NULL),
-(200492, 'اِنتِهایِ', 'preposition', NULL, NULL, 3, 'AB', NULL),
-(200493, 'اَنجام‌دادَن', 'verb', NULL, NULL, 3, 'AB', NULL),
-(200494, 'اَندازه‌گیری', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200495, 'اِنسان', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200496, 'اِنشا', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200497, 'او', 'pronoun', NULL, NULL, 3, 'AB', NULL),
-(200498, 'اَوَّل', 'adjective', NULL, NULL, 3, 'AB', NULL),
-(200499, 'اَهلی', 'adjective', NULL, NULL, 3, 'AB', NULL),
-(200500, 'ایروبیک', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200501, 'ایستگاه', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200502, 'ایشان', 'pronoun', NULL, NULL, 3, 'AB', NULL),
-(200503, 'ایمِنی', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200504, 'ایمِیل', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200505, 'این', 'pronoun', NULL, NULL, 3, 'AB', NULL),
-(200506, 'اینتِرنِت', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200507, 'اینجا', 'adverb', NULL, NULL, 3, 'AB', NULL),
-(200508, 'اینها', 'pronoun', NULL, NULL, 3, 'AB', NULL),
-(200509, 'با هَم', 'adverb', NULL, NULL, 3, 'AB', NULL),
-(200510, 'باد', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200511, 'باد آمَدَن', 'verb', NULL, NULL, 3, 'AB', NULL),
-(200512, 'بار', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200513, 'باران', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200514, 'باران آمَدَن', 'verb', NULL, NULL, 3, 'AB', NULL),
-(200515, 'بازار', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200516, 'بازی', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200517, 'باشگاه', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200518, 'باعَجَله', 'adverb', NULL, NULL, 3, 'AB', NULL),
-(200519, 'باغ', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200520, 'باقی ماندَن', 'verb', NULL, NULL, 3, 'AB', NULL),
-(200521, 'بالایِ', 'preposition', NULL, NULL, 3, 'AB', NULL),
-(200522, 'بالِغ', 'adjective', NULL, NULL, 3, 'AB', NULL),
-(200523, 'بانِک', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200524, 'باهوش', 'adjective', NULL, NULL, 3, 'AB', NULL),
-(200525, 'بَبخشید!', 'phrase', NULL, NULL, 3, 'AB', NULL),
-(200526, 'بَچّگی', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200527, 'بَچّه', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200528, 'بَخش', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200529, 'بَد اَخلاق', 'adjective', NULL, NULL, 3, 'AB', NULL),
-(200530, 'بَدَن‌سازی', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200531, 'بِدون', 'preposition', NULL, NULL, 3, 'AB', NULL),
-(200532, 'بَرادَر', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200533, 'بَرادَرزاده', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200534, 'بَراساسِ', 'preposition', NULL, NULL, 3, 'AB', NULL),
-(200535, 'بَررِسی کَردَن', 'verb', NULL, NULL, 3, 'AB', NULL),
-(200536, 'بُرِس', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200537, 'بُرش دادَن', 'verb', NULL, NULL, 3, 'AB', NULL),
-(200538, 'بَرف', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200539, 'بَرف آمَدَن', 'verb', NULL, NULL, 3, 'AB', NULL),
-(200540, 'بَرق', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200541, 'بَرگَشتَن', 'verb', NULL, NULL, 3, 'AB', NULL),
-(200542, 'بَرگه', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200543, 'بَرنامه', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200544, 'بُزُرگ', 'adjective', NULL, NULL, 3, 'AB', NULL),
-(200545, 'بُزُرگ کَردَن', 'verb', NULL, NULL, 3, 'AB', NULL),
-(200546, 'بَستَنی', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200547, 'بَسته', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200548, 'بُشقاب', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200549, 'شُستَن', 'verb', NULL, NULL, 3, 'AB', NULL),
-(200550, 'بُطری', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200551, 'بَعد', 'adverb', NULL, NULL, 3, 'AB', NULL),
-(200552, 'بَعد اَز', 'preposition', NULL, NULL, 3, 'AB', NULL),
-(200553, 'بَعد اَظُهر', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200554, 'بَعضی', 'adjective', NULL, NULL, 3, 'AB', NULL),
-(200555, 'بَعضی وَقتها', 'adverb', NULL, NULL, 3, 'AB', NULL),
-(200556, 'بَفَرمایید', 'phrase', NULL, NULL, 3, 'AB', NULL),
-(200557, 'بُلَند', 'adjective', NULL, NULL, 3, 'AB', NULL),
-(200558, 'بُلَند شُدَن', 'verb', NULL, NULL, 3, 'AB', NULL),
-(200559, 'بُلوز', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200560, 'بَله', 'adverb', NULL, NULL, 3, 'AB', NULL),
-(200561, 'بلیط', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200562, 'بَند (پارارگراف)', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200563, 'بَنَفش', 'adjective', NULL, NULL, 3, 'AB', NULL),
-(200564, 'بودَن', 'verb', NULL, NULL, 3, 'AB', NULL),
-(200565, 'بور', 'adjective', NULL, NULL, 3, 'AB', NULL),
-(200566, 'به پیکنیک رَفتَن', 'verb', NULL, NULL, 3, 'AB', NULL),
-(200567, 'به خِیر', 'phrase', NULL, NULL, 3, 'AB', NULL),
-(200568, 'به سَمتِ', 'preposition', NULL, NULL, 3, 'AB', NULL),
-(200569, 'به کوه رَفتَن', 'verb', NULL, NULL, 3, 'AB', NULL),
-(200570, 'بَهار', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200571, 'به دُرُستی', 'adverb', NULL, NULL, 3, 'AB', NULL),
-(200572, 'به دُنیا آمَدَن', 'verb', NULL, NULL, 3, 'AB', NULL),
-(200573, 'بَهمَن', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200574, 'به نُدرَت', 'adverb', NULL, NULL, 3, 'AB', NULL),
-(200575, 'بی‌اَدَب', 'adjective', NULL, NULL, 3, 'AB', NULL),
-(200576, 'بیان کَردَن', 'verb', NULL, NULL, 3, 'AB', NULL),
-(200577, 'بیدار شُدَن', 'verb', NULL, NULL, 3, 'AB', NULL),
-(200578, 'بیرونِ', 'preposition', NULL, NULL, 3, 'AB', NULL),
-(200579, 'بیرون آمَدَن', 'verb', NULL, NULL, 3, 'AB', NULL),
-(200580, 'بیرون رَفتَن', 'verb', NULL, NULL, 3, 'AB', NULL),
-(200581, 'بیرون کَردَن', 'verb', NULL, NULL, 3, 'AB', NULL),
-(200582, 'بیست', 'number', NULL, NULL, 3, 'AB', NULL),
-(200583, 'بیشتَر', 'adjective', NULL, NULL, 3, 'AB', NULL),
-(200584, 'بیشتَرِ اوقات', 'adverb', NULL, NULL, 3, 'AB', NULL),
-(200585, 'بیمارِستان', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200586, 'بیمه', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200587, 'بَینِ', 'preposition', NULL, NULL, 3, 'AB', NULL),
-(200588, 'پَر', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200589, 'پُر', 'adjective', NULL, NULL, 3, 'AB', NULL),
-(200590, 'پُر کَردَن', 'verb', NULL, NULL, 3, 'AB', NULL),
-(200591, 'پارچه', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200592, 'پارک', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200593, 'پارک کَردَن', 'verb', NULL, NULL, 3, 'AB', NULL),
-(200594, 'پارکینگ', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200595, 'پاساژ', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200596, 'پاسُخ', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200597, 'پاسُخ دادَن', 'verb', NULL, NULL, 3, 'AB', NULL),
-(200598, 'پالتو', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200599, 'پانزده', 'number', NULL, NULL, 3, 'AB', NULL),
-(200600, 'پانصَد', 'number', NULL, NULL, 3, 'AB', NULL),
-(200601, 'پایتَخت', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200602, 'پاییز', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200603, 'پِدَر', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200604, 'پِدَربُزُرگ', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200605, 'پَدیده', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200606, 'پُرتِقال', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200607, 'پُرجمعیت', 'adjective', NULL, NULL, 3, 'AB', NULL),
-(200608, 'پَرْده', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200609, 'پَرَستار', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200610, 'پُرسِش', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200611, 'پُرسِش‌واژه', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200612, 'پُرسیدَن', 'verb', NULL, NULL, 3, 'AB', NULL),
-(200613, 'پُرطَرَفدار', 'adjective', NULL, NULL, 3, 'AB', NULL),
-(200614, 'پَرَنده', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200615, 'پُرنور', 'adjective', NULL, NULL, 3, 'AB', NULL),
-(200616, 'پِزِشک', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200617, 'پِسَر', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200618, 'پِسَر (فرزند)', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200619, 'پِسَرچّه', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200620, 'پُشتِ', 'preposition', NULL, NULL, 3, 'AB', NULL),
-(200621, 'پُشتِ‌بام', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200622, 'پِلاک', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200623, 'پلیس', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200624, 'پَنج', 'number', NULL, NULL, 3, 'AB', NULL),
-(200625, 'پَنجاه', 'number', NULL, NULL, 3, 'AB', NULL),
-(200626, 'پَنجِره', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200627, 'پَنج‌شَنبه', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200628, 'پَنجُم', 'adjective', NULL, NULL, 3, 'AB', NULL),
-(200629, 'پَنگوئن', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200630, 'پَنیر', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200631, 'پوتین', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200632, 'پوست', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200633, 'پوشاک', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200634, 'پوشیدَن', 'verb', NULL, NULL, 3, 'AB', NULL),
-(200635, 'پول', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200636, 'پَهْن', 'adjective', NULL, NULL, 3, 'AB', NULL),
-(200637, 'پیاده‌رَفتَن', 'verb', NULL, NULL, 3, 'AB', NULL),
-(200638, 'پیاده‌شُدَن اَز', 'verb', NULL, NULL, 3, 'AB', NULL),
-(200639, 'پیاز', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200640, 'پیانو', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200641, 'پیتزا', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200642, 'پیچیدَن', 'verb', NULL, NULL, 3, 'AB', NULL),
-(200643, 'پیدا کَردَن', 'verb', NULL, NULL, 3, 'AB', NULL),
-(200644, 'پیر', 'adjective', NULL, NULL, 3, 'AB', NULL),
-(200645, 'پیراهَن', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200646, 'پیش اَز', 'preposition', NULL, NULL, 3, 'AB', NULL),
-(200647, 'پیشخِدمَت', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200648, 'پیلاتِس', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200649, 'پینگ‌پُنگ', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200650, 'پِیوَسته', 'adjective', NULL, NULL, 3, 'AB', NULL),
-(200651, 'تِئاتر', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200652, 'تابِستان', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200653, 'تابلو', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200654, 'تاجِر', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200655, 'تاریخ', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200656, 'تاریک', 'adjective', NULL, NULL, 3, 'AB', NULL),
-(200657, 'تاکسی', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200658, 'تَبدیل', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200659, 'تَبدیل شُدَن', 'verb', NULL, NULL, 3, 'AB', NULL),
-(200660, 'تَبدیل کَردَن', 'verb', NULL, NULL, 3, 'AB', NULL),
-(200661, 'تَجرُبه', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200662, 'تَختِخواب', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200663, 'تَخته', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200664, 'تُخمِ‌مُرغ', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200665, 'تَدریس کَردَن', 'verb', NULL, NULL, 3, 'AB', NULL),
-(200666, 'ترازو', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200667, 'ترافیک', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200668, 'تَرتیبی (عَدَد)', 'adjective', NULL, NULL, 3, 'AB', NULL),
-(200669, 'تَرکیب اِضافی', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200670, 'تَرکیب وَصفی', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200671, 'تِستِ هوش', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200672, 'تَشَکُّر! مِرسی!', 'phrase', NULL, NULL, 3, 'AB', NULL),
-(200673, 'تَصاویر', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200674, 'تَصویر', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200675, 'تِعداد', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200676, 'تَعطیل', 'adjective', NULL, NULL, 3, 'AB', NULL),
-(200677, 'تَعلیم‌دادَن', 'verb', NULL, NULL, 3, 'AB', NULL),
-(200678, 'تَعمیرکار', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200679, 'تَعین کَردَن', 'verb', NULL, NULL, 3, 'AB', NULL),
-(200680, 'تَفاوُت', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200681, 'تَفاوُت داشتَن', 'verb', NULL, NULL, 3, 'AB', NULL),
-(200682, 'تَقدیم کَردَن', 'verb', NULL, NULL, 3, 'AB', NULL),
-(200683, 'تَقسیم شُدَن', 'verb', NULL, NULL, 3, 'AB', NULL),
-(200684, 'تَقلید', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200685, 'تَقلید کَردَن', 'verb', NULL, NULL, 3, 'AB', NULL),
-(200686, 'تَقویم', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200687, 'تِکرار کَردَن', 'verb', NULL, NULL, 3, 'AB', NULL),
-(200688, 'تَک‌فَرزَند', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200689, 'تَکلیف', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200690, 'تِکنیک', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200691, 'تِکّه', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200692, 'تَلَفُّظ', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200693, 'تِلِفُن', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200694, 'تِلِکابین', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200695, 'تِلِویزیون', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200696, 'تماشا کَردَن', 'verb', NULL, NULL, 3, 'AB', NULL),
-(200697, 'تَمرین', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200698, 'تَمـیز', 'adjective', NULL, NULL, 3, 'AB', NULL),
-(200699, 'تَمـیز کَردَن', 'verb', NULL, NULL, 3, 'AB', NULL),
-(200700, 'تَنها', 'adjective', NULL, NULL, 3, 'AB', NULL),
-(200701, 'تَنها / فَقَط', 'adverb', NULL, NULL, 3, 'AB', NULL),
-(200702, 'تُو', 'pronoun', NULL, NULL, 3, 'AB', NULL),
-(200703, 'تَوانایی', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200704, 'تَوانِستَن', 'verb', NULL, NULL, 3, 'AB', NULL),
-(200705, 'توپ', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200706, 'تَوَجُّه', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200707, 'توسی', 'adjective', NULL, NULL, 3, 'AB', NULL),
-(200708, 'تَوصیف', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200709, 'تَوصیف کَردَن', 'verb', NULL, NULL, 3, 'AB', NULL),
-(200710, 'تَوصیه کَردَن', 'verb', NULL, NULL, 3, 'AB', NULL),
-(200711, 'طوفان (توفان)', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200712, 'تَوَلُّد', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200713, 'تُومان', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200714, 'تویِ', 'preposition', NULL, NULL, 3, 'AB', NULL),
-(200715, 'تَهیِه کَردَن', 'verb', NULL, NULL, 3, 'AB', NULL),
-(200716, 'تیر', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200717, 'تی‌شِرت', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200718, 'ثانیِه', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200719, 'جاروبرقی', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200720, 'جاروکِشیدَن', 'verb', NULL, NULL, 3, 'AB', NULL),
-(200721, 'جالِب', 'adjective', NULL, NULL, 3, 'AB', NULL),
-(200722, 'جامِدادی', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200723, 'جاندار', 'adjective', NULL, NULL, 3, 'AB', NULL),
-(200724, 'جایِ خالی', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200725, 'جُدا', 'adjective', NULL, NULL, 3, 'AB', NULL),
-(200726, 'جِدّاً', 'adverb', NULL, NULL, 3, 'AB', NULL),
-(200727, 'جُدا کَردَن', 'verb', NULL, NULL, 3, 'AB', NULL),
-(200728, 'جَدول', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200729, 'جَدید', 'adjective', NULL, NULL, 3, 'AB', NULL),
-(200730, 'جَزایِر', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200731, 'جِسم', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200732, 'جَعبه', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200733, 'جُفت', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200734, 'جِلویِ', 'preposition', NULL, NULL, 3, 'AB', NULL),
-(200735, 'جَمع', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200736, 'جَمع کَردَن', 'verb', NULL, NULL, 3, 'AB', NULL),
-(200737, 'جَمع‌بَستَن', 'verb', NULL, NULL, 3, 'AB', NULL),
-(200738, 'جُمعِه', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200739, 'جَمعیَّت', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200740, 'جُملِه', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200741, 'جَنگَل', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200742, 'جَنوب', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200743, 'جَواب', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200744, 'جَوان', 'adjective', NULL, NULL, 3, 'AB', NULL),
-(200745, 'جوجه', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200746, 'جوراب', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200747, 'جَهان', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200748, 'جَهانی', 'adjective', NULL, NULL, 3, 'AB', NULL),
-(200749, 'جِهَت', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200750, 'جِیب', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200751, 'جین', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200752, 'چادُرزَدَن', 'verb', NULL, NULL, 3, 'AB', NULL),
-(200753, 'چاق', 'adjective', NULL, NULL, 3, 'AB', NULL),
-(200754, 'چای', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200755, 'چَتر', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200756, 'چِراغ', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200757, 'چُرت‌زَدَن', 'verb', NULL, NULL, 3, 'AB', NULL),
-(200758, 'چَشم', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200759, 'چَشم‌پِزِشکی', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200760, 'چِطور', 'adverb', NULL, NULL, 3, 'AB', NULL),
-(200761, 'چِقَدر', 'adverb', NULL, NULL, 3, 'AB', NULL),
-(200762, 'چِک‌کَردَن', 'verb', NULL, NULL, 3, 'AB', NULL),
-(200763, 'چِگونه', 'adverb', NULL, NULL, 3, 'AB', NULL),
-(200764, 'چوب', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200765, 'چوبی', 'adjective', NULL, NULL, 3, 'AB', NULL),
-(200766, 'چه/ چی', 'pronoun', NULL, NULL, 3, 'AB', NULL),
-(200767, 'چَهار', 'number', NULL, NULL, 3, 'AB', NULL),
-(200768, 'چَهارراه', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200769, 'چَهارشَنبِه', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200770, 'چَهارُم', 'adjective', NULL, NULL, 3, 'AB', NULL),
-(200771, 'چیدَن', 'verb', NULL, NULL, 3, 'AB', NULL),
-(200772, 'چیز', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200773, 'حالا', 'adverb', NULL, NULL, 3, 'AB', NULL),
-(200774, 'حَتماً', 'adverb', NULL, NULL, 3, 'AB', NULL),
-(200775, 'حَدس', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200776, 'حَدس‌زَدَن', 'verb', NULL, NULL, 3, 'AB', NULL),
-(200777, 'حُدود', 'adverb', NULL, NULL, 3, 'AB', NULL),
-(200778, 'حَرف', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200779, 'حَرفِ اِضافه', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200780, 'حَرف‌زَدَن با', 'verb', NULL, NULL, 3, 'AB', NULL),
-(200781, 'حِسابدار', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200782, 'حَسّاس', 'adjective', NULL, NULL, 3, 'AB', NULL),
-(200783, 'حَشَره', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200784, 'حُکومت', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200785, 'حَمّام', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200786, 'حوله', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200787, 'حَیاط', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200788, 'خارِج', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200789, 'خارِجی', 'adjective', NULL, NULL, 3, 'AB', NULL),
-(200790, 'خاص', 'adjective', NULL, NULL, 3, 'AB', NULL),
-(200791, 'خاله', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200792, 'خالی', 'adjective', NULL, NULL, 3, 'AB', NULL),
-(200793, 'خانُم', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200794, 'خانِوادِگی', 'adjective', NULL, NULL, 3, 'AB', NULL),
-(200795, 'خانِواده', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200796, 'خانه', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200797, 'خانه‌دار', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200798, 'خانه‌داری', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200799, 'خاورمیانِه', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200800, 'خُب', 'adverb', NULL, NULL, 3, 'AB', NULL),
-(200801, 'خَبَرنگار', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200802, 'خُدا رو شُکر', 'phrase', NULL, NULL, 3, 'AB', NULL),
-(200803, 'خُداحافظ', 'phrase', NULL, NULL, 3, 'AB', NULL),
-(200804, 'خُرداد', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200805, 'خَرید', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200806, 'خَریدار', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200807, 'خَرید کَردَن', 'verb', NULL, NULL, 3, 'AB', NULL),
-(200808, 'خَریدَن', 'verb', NULL, NULL, 3, 'AB', NULL),
-(200809, 'خَستِگی', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200810, 'خَسته', 'adjective', NULL, NULL, 3, 'AB', NULL),
-(200811, 'خَسته‌کُننده', 'adjective', NULL, NULL, 3, 'AB', NULL),
-(200812, 'خَط', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200813, 'خَط کِشیدَن', 'verb', NULL, NULL, 3, 'AB', NULL),
-(200814, 'خَطَرناک', 'adjective', NULL, NULL, 3, 'AB', NULL),
-(200815, 'خَط‌کِش', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200816, 'خَلَبان', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200817, 'خَلوَت', 'adjective', NULL, NULL, 3, 'AB', NULL),
-(200818, 'خَمیردَندان', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200819, 'خَنیدَن به', 'verb', NULL, NULL, 3, 'AB', NULL),
-(200820, 'خُنَک', 'adjective', NULL, NULL, 3, 'AB', NULL),
-(200821, 'خواب', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200822, 'خوابگاه', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200823, 'خوابیدَن', 'verb', NULL, NULL, 3, 'AB', NULL),
-(200824, 'خواستَن', 'verb', NULL, NULL, 3, 'AB', NULL),
-(200825, 'خواستَن (درخواست)', 'verb', NULL, NULL, 3, 'AB', NULL),
-(200826, 'خواندَن', 'verb', NULL, NULL, 3, 'AB', NULL),
-(200827, 'خواننده', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200828, 'خواهر', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200829, 'خواهِش می‌کُنم', 'phrase', NULL, NULL, 3, 'AB', NULL),
-(200830, 'خوب (صِفَت)', 'adjective', NULL, NULL, 3, 'AB', NULL),
-(200831, 'خوب (قِید)', 'adverb', NULL, NULL, 3, 'AB', NULL),
-(200832, 'خود', 'pronoun', NULL, NULL, 3, 'AB', NULL),
-(200833, 'خودرو', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200834, 'خودکار', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200835, 'خوراکی', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200836, 'خورشید', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200837, 'خورشیدی', 'adjective', NULL, NULL, 3, 'AB', NULL),
-(200838, 'خوش آمَدید!', 'phrase', NULL, NULL, 3, 'AB', NULL),
-(200839, 'خوشحال', 'adjective', NULL, NULL, 3, 'AB', NULL),
-(200840, 'خوشمزه', 'adjective', NULL, NULL, 3, 'AB', NULL),
-(200841, 'خیابان', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200842, 'خیاطی', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200843, 'دَر', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200844, 'دَه', 'number', NULL, NULL, 3, 'AB', NULL),
-(200845, 'داخِل', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200846, 'دادَن', 'verb', NULL, NULL, 3, 'AB', NULL),
-(200847, 'داشتَن', 'verb', NULL, NULL, 3, 'AB', NULL),
-(200848, 'دامَن', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200849, 'دانِستَن', 'verb', NULL, NULL, 3, 'AB', NULL),
-(200850, 'دانش‌آموز', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200851, 'دانشجو', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200852, 'دانشکده', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200853, 'دانشگاه', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200854, 'دایی', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200855, 'دبیرستان', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200856, 'دُختَر', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200857, 'دُختَر (فرزند)', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200858, 'در پایانِ ...', 'preposition', NULL, NULL, 3, 'AB', NULL),
-(200859, 'در خانه ماندَن', 'verb', NULL, NULL, 3, 'AB', NULL),
-(200860, 'در موردِ', 'preposition', NULL, NULL, 3, 'AB', NULL),
-(200861, 'دَرآمَد', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200862, 'دَرباره', 'preposition', NULL, NULL, 3, 'AB', NULL),
-(200863, 'دَرخت', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200864, 'دَرس', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200865, 'دُرُست', 'adjective', NULL, NULL, 3, 'AB', NULL),
-(200866, 'دُرُست کَردَن', 'verb', NULL, NULL, 3, 'AB', NULL),
-(200867, 'دَرس خواندَن', 'verb', NULL, NULL, 3, 'AB', NULL),
-(200868, 'دَرس دادَن', 'verb', NULL, NULL, 3, 'AB', NULL),
-(200869, 'دَرکِ مَطلَب', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200870, 'دَرون', 'preposition', NULL, NULL, 3, 'AB', NULL),
-(200871, 'دَریا', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200872, 'دَست', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200873, 'دَست زَدَن به', 'verb', NULL, NULL, 3, 'AB', NULL),
-(200874, 'دَست زَدَن برای', 'verb', NULL, NULL, 3, 'AB', NULL),
-(200875, 'دَستکِش', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200876, 'دَستمال', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200877, 'دَسته', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200878, 'دَسته‌بَندی', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200879, 'دَشت', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200880, 'دَفتَر', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200881, 'دَفتَرچه', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200882, 'دَفتَرِ کار', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200883, 'دقیقاً', 'adverb', NULL, NULL, 3, 'AB', NULL),
-(200884, 'دقیقه', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200885, 'دُکتُر', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200886, 'دُنیا', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200887, 'دو', 'number', NULL, NULL, 3, 'AB', NULL),
-(200888, 'دوباره', 'adverb', NULL, NULL, 3, 'AB', NULL),
-(200889, 'دوچَرخه', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200890, 'دوچَرخه‌سَواری', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200891, 'دور اَز', 'preposition', NULL, NULL, 3, 'AB', NULL),
-(200892, 'دور اَنداختَن', 'verb', NULL, NULL, 3, 'AB', NULL),
-(200893, 'دور ریختَن', 'verb', NULL, NULL, 3, 'AB', NULL),
-(200894, 'دورِ چیزی خَط کِشیدَن', 'verb', NULL, NULL, 3, 'AB', NULL),
-(200895, 'دوست', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200896, 'دوستانه', 'adjective', NULL, NULL, 3, 'AB', NULL),
-(200897, 'دوست داشتَن', 'verb', NULL, NULL, 3, 'AB', NULL),
-(200898, 'دوش', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200899, 'دوش گِرِفتَن', 'verb', NULL, NULL, 3, 'AB', NULL),
-(200900, 'دوشَنبه', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200901, 'دوقُلو', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200902, 'دُوُم', 'adjective', NULL, NULL, 3, 'AB', NULL),
-(200903, 'دونَفره', 'adjective', NULL, NULL, 3, 'AB', NULL),
-(200904, 'دوییدَن', 'verb', NULL, NULL, 3, 'AB', NULL),
-(200905, 'دی', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200906, 'دیدَن', 'verb', NULL, NULL, 3, 'AB', NULL),
-(200907, 'دیر رَسیدَن', 'verb', NULL, NULL, 3, 'AB', NULL),
-(200908, 'دیس', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200909, 'دیگر', 'adjective', NULL, NULL, 3, 'AB', NULL),
-(200910, 'دیگری', 'pronoun', NULL, NULL, 3, 'AB', NULL),
-(200911, 'دیوار', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200912, 'ذَخیره کَردَن', 'verb', NULL, NULL, 3, 'AB', NULL),
-(200913, 'راحَت', 'adjective', NULL, NULL, 3, 'AB', NULL),
-(200914, 'راستی', 'adverb', NULL, NULL, 3, 'AB', NULL),
-(200915, 'راضی', 'adjective', NULL, NULL, 3, 'AB', NULL),
-(200916, 'رانَندگی', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200917, 'رانَندگی کَردَن', 'verb', NULL, NULL, 3, 'AB', NULL),
-(200918, 'راننده', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200919, 'راه‌آهَن', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200920, 'راهنما', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200921, 'رُبع', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200922, 'رَختِخواب', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200923, 'رِستوران', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200924, 'رَسمی', 'adjective', NULL, NULL, 3, 'AB', NULL),
-(200925, 'رَسیدَن', 'verb', NULL, NULL, 3, 'AB', NULL),
-(200926, 'رِشته', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200927, 'رَفتَن', 'verb', NULL, NULL, 3, 'AB', NULL),
-(200928, 'رَفت‌وآمَد', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200929, 'رِکورد', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200930, 'رَنگ', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200931, 'روان‌شِناسی', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200932, 'روبه‌رویِ', 'preposition', NULL, NULL, 3, 'AB', NULL),
-(200933, 'روز', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200934, 'روزانه', 'adjective', NULL, NULL, 3, 'AB', NULL),
-(200935, 'روزنامه', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200936, 'روستا', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200937, 'روسَری', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200938, 'روشَن', 'adjective', NULL, NULL, 3, 'AB', NULL),
-(200939, 'رویِ', 'preposition', NULL, NULL, 3, 'AB', NULL),
-(200940, 'رویداد', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200941, 'ریاضی', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200942, 'ریشه', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200943, 'زُباله', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200944, 'زَبان', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200945, 'زَبانِ فارسی', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200946, 'زَبانِ گُفتار', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200947, 'زَبانِ مادری', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200948, 'زِبِر', 'adjective', NULL, NULL, 3, 'AB', NULL),
-(200949, 'زَرد', 'adjective', NULL, NULL, 3, 'AB', NULL),
-(200950, 'زِشت', 'adjective', NULL, NULL, 3, 'AB', NULL),
-(200951, 'زَمان', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200952, 'زِمِستان', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200953, 'زَمـین', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200954, 'زَن', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200955, 'زَنبورِعَسَل', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200956, 'زِندگی', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200957, 'زِندگی کَردَن', 'verb', NULL, NULL, 3, 'AB', NULL),
-(200958, 'زِنده مـاندَن', 'verb', NULL, NULL, 3, 'AB', NULL),
-(200959, 'زَنگ زَدَن', 'verb', NULL, NULL, 3, 'AB', NULL),
-(200960, 'زَنگ (ساعَت)', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200961, 'زود (صِفَت)', 'adjective', NULL, NULL, 3, 'AB', NULL),
-(200962, 'زود (قِید)', 'adverb', NULL, NULL, 3, 'AB', NULL),
-(200963, 'زیبا', 'adjective', NULL, NULL, 3, 'AB', NULL),
-(200964, 'زیر', 'preposition', NULL, NULL, 3, 'AB', NULL),
-(200965, 'زیرپایی', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200966, 'زیرِچیزی‌خَط کِشیدَن', 'verb', NULL, NULL, 3, 'AB', NULL),
-(200967, 'زیستگاه', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200968, 'ژاکِت', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200969, 'سُؤال', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200970, 'ساخْتِمان', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200971, 'ساخْتَن', 'verb', NULL, NULL, 3, 'AB', NULL),
-(200972, 'ساعَت', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200973, 'ساعَت دیواری', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200974, 'ساعَت مُچی', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200975, 'ساکِنان', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200976, 'سال', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200977, 'سالُنِ وَرزِشی', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200978, 'سایز', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200979, 'سایه', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200980, 'سایه‌اَنداخْتَن رویِ', 'verb', NULL, NULL, 3, 'AB', NULL),
-(200981, 'سَبز', 'adjective', NULL, NULL, 3, 'AB', NULL),
-(200982, 'سَبزه', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200983, 'سَبزی', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200984, 'سَبُک', 'adjective', NULL, NULL, 3, 'AB', NULL),
-(200985, 'سِپَس', 'adverb', NULL, NULL, 3, 'AB', NULL),
-(200986, 'سُتون', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200987, 'سَخت', 'adjective', NULL, NULL, 3, 'AB', NULL),
-(200988, 'سَرد', 'adjective', NULL, NULL, 3, 'AB', NULL),
-(200989, 'سَرزِنده', 'adjective', NULL, NULL, 3, 'AB', NULL),
-(200990, 'سَرگَرمی', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200991, 'سُرمِه‌ای', 'adjective', NULL, NULL, 3, 'AB', NULL),
-(200992, 'سَر‌وصِدا', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200993, 'سِرویس', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200994, 'سَریع', 'adjective', NULL, NULL, 3, 'AB', NULL),
-(200995, 'سِشوار', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200996, 'سَطْل', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200997, 'سَفَر', 'noun', NULL, NULL, 3, 'AB', NULL),
-(200998, 'سَفید', 'adjective', NULL, NULL, 3, 'AB', NULL),
-(200999, 'سَفید‌پوسْت', 'adjective', NULL, NULL, 3, 'AB', NULL),
-(201000, 'سِکّه', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201001, 'سَلام', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201002, 'سَلامَت', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201003, 'سِن', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201004, 'سَنتور', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201005, 'سَنگین', 'adjective', NULL, NULL, 3, 'AB', NULL),
-(201006, 'سَوارشُدَن', 'verb', NULL, NULL, 3, 'AB', NULL),
-(201007, 'سوپ', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201008, 'سوپِرمارکِت', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201009, 'سوراخ', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201010, 'سوغاتی', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201011, 'سِوُّم', 'adjective', NULL, NULL, 3, 'AB', NULL),
-(201012, 'سونا', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201013, 'سه', 'number', NULL, NULL, 3, 'AB', NULL),
-(201014, 'سه‌شَنبه', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201015, 'سیاه', 'adjective', NULL, NULL, 3, 'AB', NULL),
-(201016, 'سیب', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201017, 'سیب‌زَمـینی', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201018, 'سی‌دی', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201019, 'سیگارکِشیدَن', 'verb', NULL, NULL, 3, 'AB', NULL),
-(201020, 'سینِما', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201021, 'شَدید', 'adjective', NULL, NULL, 3, 'AB', NULL),
-(201022, 'شاد', 'adjective', NULL, NULL, 3, 'AB', NULL),
-(201023, 'شاگِرد(وَردَسْت)', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201024, 'شال', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201025, 'شالِ گَردَن', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201026, 'شام', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201027, 'شام‌خوردَن', 'verb', NULL, NULL, 3, 'AB', NULL),
-(201028, 'شَب', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201029, 'شَبَکه', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201030, 'شَبیه', 'adjective', NULL, NULL, 3, 'AB', NULL),
-(201031, 'شُدَن', 'verb', NULL, NULL, 3, 'AB', NULL),
-(201032, 'شَرجی', 'adjective', NULL, NULL, 3, 'AB', NULL),
-(201033, 'شَرق', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201034, 'شِرکَت', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201035, 'شِرکَت کَردَن', 'verb', NULL, NULL, 3, 'AB', NULL),
-(201036, 'شُروع', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201037, 'شُروع‌شُدَن', 'verb', NULL, NULL, 3, 'AB', NULL),
-(201038, 'شُستَشو', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201039, 'شُستَن', 'verb', NULL, NULL, 3, 'AB', NULL),
-(201040, 'شِش', 'number', NULL, NULL, 3, 'AB', NULL),
-(201041, 'شِعر', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201042, 'شُغل', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201043, 'شِکَر', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201044, 'شِکل', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201045, 'شُکُلات', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201046, 'شَلْوار', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201047, 'شُلوغ', 'adjective', NULL, NULL, 3, 'AB', NULL),
-(201048, 'شُما', 'pronoun', NULL, NULL, 3, 'AB', NULL),
-(201049, 'شُمارِش', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201050, 'شُماره', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201051, 'شُمال', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201052, 'شِمُردَن', 'verb', NULL, NULL, 3, 'AB', NULL),
-(201053, 'شَمسی', 'adjective', NULL, NULL, 3, 'AB', NULL),
-(201054, 'شَن', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201055, 'شِناخْتَن', 'verb', NULL, NULL, 3, 'AB', NULL),
-(201056, 'شِناسه', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201057, 'شَنبه', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201058, 'شِنیدَن', 'verb', NULL, NULL, 3, 'AB', NULL),
-(201059, 'شوهَر', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201060, 'شَهْر', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201061, 'شَهْریوَر', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201062, 'شیر(نوشیدنی)', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201063, 'شیمیایی', 'adjective', NULL, NULL, 3, 'AB', NULL),
-(201064, 'صاف', 'adjective', NULL, NULL, 3, 'AB', NULL),
-(201065, 'صُبْح', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201066, 'صُبْحانه‌خوردَن', 'verb', NULL, NULL, 3, 'AB', NULL),
-(201067, 'صَبْرکَردَن', 'verb', NULL, NULL, 3, 'AB', NULL),
-(201068, 'صُحْبَت', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201069, 'صُحْبَت کَردَن', 'verb', NULL, NULL, 3, 'AB', NULL),
-(201070, 'صَد', 'number', NULL, NULL, 3, 'AB', NULL),
-(201071, 'صِدا', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201072, 'صِفَت', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201073, 'صِفَتِ بَرتَر', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201074, 'صِفَتِ بَرتَرین', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201075, 'صَفْحه', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201076, 'صَنْدَلی', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201077, 'صورَت', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201078, 'صورَتی', 'adjective', NULL, NULL, 3, 'AB', NULL),
-(201079, 'ضَرَر داشتَن بَرایِ', 'verb', NULL, NULL, 3, 'AB', NULL),
-(201080, 'ضَعیف(نورِضَعیف)', 'adjective', NULL, NULL, 3, 'AB', NULL),
-(201081, 'ضَمیرِاِشاره', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201082, 'ضَمیرِفاعِلی', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201083, 'طِبْقِ', 'preposition', NULL, NULL, 3, 'AB', NULL),
-(201084, 'طَبَقه', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201085, 'طَبیعَت', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201086, 'طُلوع', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201087, 'طول', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201088, 'ظَرف', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201089, 'ظُهْر', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201090, 'عادَت', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201091, 'عِبارَت', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201092, 'عُبور', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201093, 'عَجَله', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201094, 'عَدَد', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201095, 'عَرْض', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201096, 'عَروسَک', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201097, 'عَروسی', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201098, 'عِشْق', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201099, 'عَصَبانی', 'adjective', NULL, NULL, 3, 'AB', NULL),
-(201100, 'عَصْرانه', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201101, 'عُضْو', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201102, 'عَکْس', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201103, 'عَلاقه', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201104, 'علاقه‌مَنْد', 'adjective', NULL, NULL, 3, 'AB', NULL),
-(201105, 'عَلامَت', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201106, 'عَلامَت‌زَدَن', 'verb', NULL, NULL, 3, 'AB', NULL),
-(201107, 'عُمْر کَردَن', 'verb', NULL, NULL, 3, 'AB', NULL),
-(201108, 'عَمـو', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201109, 'عَمّه', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201110, 'عُنْوان', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201111, 'عِینَک', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201112, 'عِینَکِ آفتابی', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201113, 'غِذا', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201114, 'غَرْب', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201115, 'غُروب', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201116, 'غَریبه', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201117, 'غِیر اَز', 'preposition', NULL, NULL, 3, 'AB', NULL),
-(201118, 'فِر(مویِ فِر)', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201119, 'فَراغَت', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201120, 'فَرد', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201121, 'فَردا', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201122, 'فَرْزَنْد', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201123, 'فَرْش', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201124, 'فُرصَت', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201125, 'فَرْض کَردَن', 'verb', NULL, NULL, 3, 'AB', NULL),
-(201126, 'فَرْق', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201127, 'فُروخْتَن', 'verb', NULL, NULL, 3, 'AB', NULL),
-(201128, 'فُرودگاه', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201129, 'فَرْوَرْدین', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201130, 'فُروشگاه', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201131, 'فُروشَنْده', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201132, 'فَرْهَنْگ', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201133, 'فَصْل', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201134, 'فَعالیَّت', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201135, 'فِعْل', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201136, 'فِعْلِ اَمْر', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201137, 'فَقَط', 'adverb', NULL, NULL, 3, 'AB', NULL),
-(201138, 'فِکْر کَردَن', 'verb', NULL, NULL, 3, 'AB', NULL),
-(201139, 'فِلفِل', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201140, 'فِلفِل‌دُلمه‌ای', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201141, 'فِنجان', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201142, 'فوریه', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201143, 'فِهْرِست کَردَن', 'verb', NULL, NULL, 3, 'AB', NULL),
-(201144, 'فیزیک', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201145, 'قارِه', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201146, 'قاضی', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201147, 'قاعدِه', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201148, 'قَبْل', 'adjective', NULL, NULL, 3, 'AB', NULL),
-(201149, 'قَبْل اَز', 'preposition', NULL, NULL, 3, 'AB', NULL),
-(201150, 'قَد', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201151, 'قَدبُلَند', 'adjective', NULL, NULL, 3, 'AB', NULL),
-(201152, 'قَدکوتاه', 'adjective', NULL, NULL, 3, 'AB', NULL),
-(201153, 'قَدَم', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201154, 'قَدَم‌زَدَن', 'verb', NULL, NULL, 3, 'AB', NULL),
-(201155, 'قَدیمـی', 'adjective', NULL, NULL, 3, 'AB', NULL),
-(201156, 'قَرار دادَن', 'verb', NULL, NULL, 3, 'AB', NULL),
-(201157, 'قَرار داشتَن', 'verb', NULL, NULL, 3, 'AB', NULL),
-(201158, 'قَرار گِرِفتَن', 'verb', NULL, NULL, 3, 'AB', NULL),
-(201159, 'قِرمِز', 'adjective', NULL, NULL, 3, 'AB', NULL),
-(201160, 'قِطار', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201161, 'قَفَس', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201162, 'قَفَسه', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201163, 'قَول‌دادَن', 'verb', NULL, NULL, 3, 'AB', NULL),
-(201164, 'قَهوه', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201165, 'قهوه‌ای', 'adjective', NULL, NULL, 3, 'AB', NULL),
-(201166, 'قِید', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201167, 'قیمَت', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201168, 'کَرِه', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201169, 'کِرِم', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201170, 'کِرْم', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201171, 'کِشو', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201172, 'کابینِت', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201173, 'کار', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201174, 'کارت', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201175, 'کارتِ ویزیت', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201176, 'کارخانه', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201177, 'کارشِناس', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201178, 'کارکَردَن', 'verb', NULL, NULL, 3, 'AB', NULL),
-(201179, 'کارگَر', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201180, 'کارمَنْد', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201181, 'کارهایِ خانه', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201182, 'کافه', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201183, 'کافی شاپ', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201184, 'کامپیوتر', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201185, 'کامِل', 'adjective', NULL, NULL, 3, 'AB', NULL),
-(201186, 'کامِل کَردَن', 'verb', NULL, NULL, 3, 'AB', NULL),
-(201187, 'کُت', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201188, 'کِتاب', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201189, 'کِتاب‌فُروشی', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201190, 'کَتانی', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201191, 'کَثیف', 'adjective', NULL, NULL, 3, 'AB', NULL),
-(201192, 'کُجا', 'adverb', NULL, NULL, 3, 'AB', NULL),
-(201193, 'کُد', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201194, 'کُدام/که', 'pronoun', NULL, NULL, 3, 'AB', NULL),
-(201195, 'کُدام‌یِک', 'pronoun', NULL, NULL, 3, 'AB', NULL),
-(201196, 'کِشتی', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201197, 'کَشْف', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201198, 'کِشوَر', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201199, 'کَفْش', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201200, 'کِلاس', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201201, 'کُلاه', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201202, 'کُلاهِ آفتابی', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201203, 'کِلید', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201204, 'کَم', 'adjective', NULL, NULL, 3, 'AB', NULL),
-(201205, 'کُمُد', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201206, 'کَمَربَند', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201207, 'کُمُک', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201208, 'کَمـی', 'adverb', NULL, NULL, 3, 'AB', NULL),
-(201209, 'کِنار', 'preposition', NULL, NULL, 3, 'AB', NULL),
-(201210, 'کَندو', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201211, 'کوتاه', 'adjective', NULL, NULL, 3, 'AB', NULL),
-(201212, 'کوچَک', 'adjective', NULL, NULL, 3, 'AB', NULL),
-(201213, 'کودَک', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201214, 'کوک‌کَردَن(ساعَت)', 'verb', NULL, NULL, 3, 'AB', NULL),
-(201215, 'کوله‌پُشتی', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201216, 'کَویر', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201217, 'کُهنه', 'adjective', NULL, NULL, 3, 'AB', NULL),
-(201218, 'کیف', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201219, 'کیفِ پول', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201220, 'کِیک', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201221, 'کیلو', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201222, 'کیلومِتر', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201223, 'کیوی', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201224, 'گَرْم', 'adjective', NULL, NULL, 3, 'AB', NULL),
-(201225, 'گُل', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201226, 'گَرَم', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201227, 'گُذَرگاه', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201228, 'گِران', 'adjective', NULL, NULL, 3, 'AB', NULL),
-(201229, 'گَرد و غُبار', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201230, 'گَردگیری', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201231, 'گَردگیری کَردَن', 'verb', NULL, NULL, 3, 'AB', NULL),
-(201232, 'گَردَن', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201233, 'گِرِفتَن', 'verb', NULL, NULL, 3, 'AB', NULL),
-(201234, 'گَرْم کَردَن', 'verb', NULL, NULL, 3, 'AB', NULL),
-(201235, 'گُروه', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201236, 'گُزینه', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201237, 'گُفتاری', 'adjective', NULL, NULL, 3, 'AB', NULL),
-(201238, 'گُفتُگو', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201239, 'گُفتُگوکَردَن', 'verb', NULL, NULL, 3, 'AB', NULL),
-(201240, 'گُفتَن', 'verb', NULL, NULL, 3, 'AB', NULL),
-(201241, 'گُلدان', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201242, 'گَلودَرد', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201243, 'گُم‌شُدَن', 'verb', NULL, NULL, 3, 'AB', NULL),
-(201244, 'گوجه‌فَرَنگی', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201245, 'گوش', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201246, 'گوش‌دادَن', 'verb', NULL, NULL, 3, 'AB', NULL),
-(201247, 'گوش‌کَردَن', 'verb', NULL, NULL, 3, 'AB', NULL),
-(201248, 'گوشی', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201249, 'گیتار', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201250, 'گیج', 'adjective', NULL, NULL, 3, 'AB', NULL),
-(201251, 'گیلاس', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201252, 'گینِس', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201253, 'لاغَر', 'adjective', NULL, NULL, 3, 'AB', NULL),
-(201254, 'لامپ', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201255, 'لانه', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201256, 'لِباس', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201257, 'لَبَنیات', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201258, 'لَپ‌تاپ', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201259, 'لُطْفاً', 'adverb', NULL, NULL, 3, 'AB', NULL),
-(201260, 'لیوان', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201261, 'مُؤدَبانه', 'adverb', NULL, NULL, 3, 'AB', NULL),
-(201262, 'مُؤسَسۀ‌تَحقـیقاتی', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201263, 'مادَر', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201264, 'مادَربُزُرگ', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201265, 'مادّه', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201266, 'ماژیک', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201267, 'ماست', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201268, 'ماشین', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201269, 'مالِ کِسی بودَن', 'verb', NULL, NULL, 3, 'AB', NULL),
-(201270, 'مالِکیَّت', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201271, 'مالیدَن', 'verb', NULL, NULL, 3, 'AB', NULL),
-(201272, 'مامان', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201273, 'مانتو', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201274, 'مانندِ', 'preposition', NULL, NULL, 3, 'AB', NULL),
-(201275, 'ماه', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201276, 'مبل', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201277, 'متأهل', 'adjective', NULL, NULL, 3, 'AB', NULL),
-(201278, 'متر', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201279, 'مترجم', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201280, 'مترو', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201281, 'متشکرم', 'phrase', NULL, NULL, 3, 'AB', NULL),
-(201282, 'متن', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201283, 'متنفر بودن', 'verb', NULL, NULL, 3, 'AB', NULL),
-(201284, 'مثال', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201285, 'مثبت', 'adjective', NULL, NULL, 3, 'AB', NULL),
-(201286, 'مثل', 'preposition', NULL, NULL, 3, 'AB', NULL),
-(201287, 'مثلث', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201288, 'مجرد', 'adjective', NULL, NULL, 3, 'AB', NULL),
-(201289, 'مجری', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201290, 'محافظت', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201291, 'محل کار', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201292, 'مختلف', 'adjective', NULL, NULL, 3, 'AB', NULL),
-(201293, 'مخصوصاً', 'adverb', NULL, NULL, 3, 'AB', NULL),
-(201294, 'مدرسه', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201295, 'مدرسه ابتدایی', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201296, 'مدرک', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201297, 'مدل (مدل مو)', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201298, 'مدیر', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201299, 'مراقبت', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201300, 'مربوط', 'adjective', NULL, NULL, 3, 'AB', NULL),
-(201301, 'مربی', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201302, 'مرتب', 'adjective', NULL, NULL, 3, 'AB', NULL),
-(201303, 'مرتب کردن', 'verb', NULL, NULL, 3, 'AB', NULL),
-(201304, 'مرحله', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201305, 'مرد', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201306, 'مرداد', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201307, 'مرغ مینا', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201308, 'مسابقه', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201309, 'مسافر', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201310, 'مسافرت', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201311, 'مسافرت رفتن', 'verb', NULL, NULL, 3, 'AB', NULL),
-(201312, 'مستقیم', 'adjective', NULL, NULL, 3, 'AB', NULL),
-(201313, 'مستند', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201314, 'مسجد', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201315, 'مسواک', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201316, 'مسیر', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201317, 'مشاور تحصیلی', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201318, 'مشتری', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201319, 'مشخص کردن', 'verb', NULL, NULL, 3, 'AB', NULL),
-(201320, 'مشکی', 'adjective', NULL, NULL, 3, 'AB', NULL),
-(201321, 'مشهور', 'adjective', NULL, NULL, 3, 'AB', NULL),
-(201322, 'مصدر', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201323, 'مضر', 'adjective', NULL, NULL, 3, 'AB', NULL),
-(201324, 'مطالعه', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201325, 'مطالعه کردن', 'verb', NULL, NULL, 3, 'AB', NULL),
-(201326, 'مطب', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201327, 'معتدل', 'adjective', NULL, NULL, 3, 'AB', NULL),
-(201328, 'معرفی', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201329, 'معرفی کردن', 'verb', NULL, NULL, 3, 'AB', NULL),
-(201330, 'معروف', 'adjective', NULL, NULL, 3, 'AB', NULL),
-(201331, 'معلم', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201332, 'معلول', 'adjective', NULL, NULL, 3, 'AB', NULL),
-(201333, 'معما', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201334, 'معمولاً', 'adverb', NULL, NULL, 3, 'AB', NULL),
-(201335, 'معمولی', 'adjective', NULL, NULL, 3, 'AB', NULL),
-(201336, 'مغازه', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201337, 'مفرد', 'adjective', NULL, NULL, 3, 'AB', NULL),
-(201338, 'مفصل', 'adjective', NULL, NULL, 3, 'AB', NULL),
-(201339, 'مفید', 'adjective', NULL, NULL, 3, 'AB', NULL),
-(201340, 'مقاله', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201341, 'مقایسه', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201342, 'مقایسه کردن', 'verb', NULL, NULL, 3, 'AB', NULL),
-(201343, 'مقصد', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201344, 'مقوایی', 'adjective', NULL, NULL, 3, 'AB', NULL),
-(201345, 'مکالمه', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201346, 'مکان', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201347, 'مکان عمومی', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201348, 'مکعب', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201349, 'ملکی', 'adjective', NULL, NULL, 3, 'AB', NULL),
-(201350, 'ملی', 'adjective', NULL, NULL, 3, 'AB', NULL),
-(201351, 'ملیت', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201352, 'ممنون!', 'phrase', NULL, NULL, 3, 'AB', NULL),
-(201353, 'من', 'pronoun', NULL, NULL, 3, 'AB', NULL),
-(201354, 'مناسب', 'adjective', NULL, NULL, 3, 'AB', NULL),
-(201355, 'منزل', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201356, 'منشی', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201357, 'منفی', 'adjective', NULL, NULL, 3, 'AB', NULL),
-(201358, 'مو', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201359, 'مواد', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201360, 'موبایل (تلفن همراه)', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201361, 'موجود', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201362, 'موز', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201363, 'موسیقی', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201364, 'موضوع', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201365, 'موقع', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201366, 'موقعیت', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201367, 'مهر', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201368, 'مهربان', 'adjective', NULL, NULL, 3, 'AB', NULL),
-(201369, 'مهم', 'adjective', NULL, NULL, 3, 'AB', NULL),
-(201370, 'مهمان', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201371, 'مهمانی', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201372, 'مهندس', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201373, 'میدان', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201374, 'میز', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201375, 'میزبان', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201376, 'میز تحریر', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201377, 'میلیون', 'number', NULL, NULL, 3, 'AB', NULL),
-(201378, 'میوه', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201379, 'میوه فروش', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201380, 'میوه فروشی', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201381, 'نابغه', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201382, 'نابینا', 'adjective', NULL, NULL, 3, 'AB', NULL),
-(201383, 'نادرست', 'adjective', NULL, NULL, 3, 'AB', NULL),
-(201384, 'نارنجی', 'adjective', NULL, NULL, 3, 'AB', NULL),
-(201385, 'نام', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201386, 'نام خانوادگی', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201387, 'نامرتب', 'adjective', NULL, NULL, 3, 'AB', NULL),
-(201388, 'نان', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201389, 'ناهار', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201390, 'نبش', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201391, 'نجاری', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201392, 'نرم', 'adjective', NULL, NULL, 3, 'AB', NULL),
-(201393, 'نرمال', 'adjective', NULL, NULL, 3, 'AB', NULL),
-(201394, 'نزدیک', 'adjective', NULL, NULL, 3, 'AB', NULL),
-(201395, 'نزدیک شدن', 'verb', NULL, NULL, 3, 'AB', NULL),
-(201396, 'نسبت', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201397, 'نسبت داشتن با', 'verb', NULL, NULL, 3, 'AB', NULL),
-(201398, 'نشانه', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201399, 'نشانی', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201400, 'نشستن', 'verb', NULL, NULL, 3, 'AB', NULL),
-(201401, 'نظر', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201402, 'نفت', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201403, 'نفر', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201404, 'نقشه', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201405, 'نقطه', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201406, 'نقطه چین', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201407, 'نگاه کردن', 'verb', NULL, NULL, 3, 'AB', NULL),
-(201408, 'نگران (بودن)', 'verb', NULL, NULL, 3, 'AB', NULL),
-(201409, 'نگهبان', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201410, 'نگهبانی', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201411, 'نگهبانی دادن', 'verb', NULL, NULL, 3, 'AB', NULL),
-(201412, 'نگهداری کردن', 'verb', NULL, NULL, 3, 'AB', NULL),
-(201413, 'نماد', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201414, 'نمره', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201415, 'نمونه', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201416, 'نوبت', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201417, 'نور', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201418, 'نوروز', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201419, 'نوشابه', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201420, 'نوشتاری', 'adjective', NULL, NULL, 3, 'AB', NULL),
-(201421, 'نوشتن', 'verb', NULL, NULL, 3, 'AB', NULL),
-(201422, 'نوشیدنی', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201423, 'نوه', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201424, 'نویسنده', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201425, 'نه', 'number', NULL, NULL, 3, 'AB', NULL),
-(201426, 'نهایی', 'adjective', NULL, NULL, 3, 'AB', NULL),
-(201427, 'نهی', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201428, 'نیاز', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201429, 'نیم', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201430, 'نیمرو', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201431, 'نیمه شب', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201432, 'وارد کردن', 'verb', NULL, NULL, 3, 'AB', NULL),
-(201433, 'واژه', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201434, 'واژه سازی', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201435, 'والدین', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201436, 'وبگردی', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201437, 'وبگردی کردن', 'verb', NULL, NULL, 3, 'AB', NULL),
-(201438, 'وجود داشتن', 'verb', NULL, NULL, 3, 'AB', NULL),
-(201439, 'وحشی', 'adjective', NULL, NULL, 3, 'AB', NULL),
-(201440, 'ورزش', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201441, 'ورزشکار', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201442, 'ورزش کردن', 'verb', NULL, NULL, 3, 'AB', NULL),
-(201443, 'وزن', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201444, 'وسایل', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201445, 'وسایل شخصی', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201446, 'وسط', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201447, 'وسیله', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201448, 'وسیله نقلیه', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201449, 'وصل کردن', 'verb', NULL, NULL, 3, 'AB', NULL),
-(201450, 'وقت', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201451, 'وقت دادن', 'verb', NULL, NULL, 3, 'AB', NULL),
-(201452, 'وقت داشتن', 'verb', NULL, NULL, 3, 'AB', NULL),
-(201453, 'وقت گرفتن', 'verb', NULL, NULL, 3, 'AB', NULL),
-(201454, 'وقت گیر', 'adjective', NULL, NULL, 3, 'AB', NULL),
-(201455, 'وقتی', 'conjunction', NULL, NULL, 3, 'AB', NULL),
-(201456, 'وکیل', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201457, 'ولی', 'conjunction', NULL, NULL, 3, 'AB', NULL),
-(201458, 'ویترین', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201459, 'ویژگی', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201460, 'ویلا', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201461, 'ویلچر', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201462, 'هتل', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201463, 'هرگز', 'adverb', NULL, NULL, 3, 'AB', NULL),
-(201464, 'هزار', 'number', NULL, NULL, 3, 'AB', NULL),
-(201465, 'هشت', 'number', NULL, NULL, 3, 'AB', NULL),
-(201466, 'هفت', 'number', NULL, NULL, 3, 'AB', NULL),
-(201467, 'هفتگی', 'adjective', NULL, NULL, 3, 'AB', NULL),
-(201468, 'هفته', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201469, 'همچنین', 'adverb', NULL, NULL, 3, 'AB', NULL),
-(201470, 'همدیگر', 'pronoun', NULL, NULL, 3, 'AB', NULL),
-(201471, 'همسایه', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201472, 'همسر', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201473, 'همکار', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201474, 'هم کلاسی', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201475, 'همه', 'pronoun', NULL, NULL, 3, 'AB', NULL),
-(201476, 'همه چیز', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201477, 'همیشه', 'adverb', NULL, NULL, 3, 'AB', NULL),
-(201478, 'همین طور', 'adverb', NULL, NULL, 3, 'AB', NULL),
-(201479, 'هنر', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201480, 'هوا', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201481, 'هواپیما', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201482, 'هویج', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201483, 'هیچ کس', 'pronoun', NULL, NULL, 3, 'AB', NULL),
-(201484, 'هیچ وقت', 'adverb', NULL, NULL, 3, 'AB', NULL),
-(201485, 'یاد گرفتن', 'verb', NULL, NULL, 3, 'AB', NULL),
-(201486, 'یادگیری', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201487, 'یک/یکی', 'number', NULL, NULL, 3, 'AB', NULL),
-(201488, 'یکشنبه', 'noun', NULL, NULL, 3, 'AB', NULL),
-(201489, 'یوگا', 'noun', NULL, NULL, 3, 'AB', NULL);
--- ON CONFLICT ON CONSTRAINT words_unique_combination
--- DO NOTHING;
+(200400, 'اِبتِدا', 'noun', NULL, NULL, 3, 'A2', NULL),          -- first / beginning
+(200401, 'اِبتِدایِ', 'preposition', NULL, NULL, 3, 'A2', NULL), -- at the beginning of
+(200402, 'آب', 'noun', NULL, NULL, 3, 'A1', NULL),               -- water
+(200403, 'آبان', 'noun', NULL, NULL, 3, 'A2', NULL),             -- The eighth month of the solar year
+(200404, 'آب‌میوه', 'noun', NULL, NULL, 3, 'A1', NULL),          -- juice
+(200405, 'آب‌وَهَوا', 'noun', NULL, NULL, 3, 'A1', NULL),        -- weather
+(200406, 'آبی', 'adjective', NULL, NULL, 3, 'A1', NULL),         -- blue
+(200407, 'آخَر', 'adjective', NULL, NULL, 3, 'A1', NULL),        -- final
+(200408, 'آدامس', 'noun', NULL, NULL, 3, 'A1', NULL),            -- gum
+(200409, 'آدرِس', 'noun', NULL, NULL, 3, 'A1', NULL),            -- address
+(200410, 'آذَر', 'noun', NULL, NULL, 3, 'A2', NULL),             -- The ninth month of the solar year
+(200411, 'آرایِشگاه', 'noun', NULL, NULL, 3, 'A2', NULL),        -- beauty salon
+(200412, 'آرایِشگَر', 'noun', NULL, NULL, 3, 'A2', NULL),        -- hair dresser
+(200413, 'آرایِشگَری', 'noun', NULL, NULL, 3, 'A2', NULL),       -- hair dressing
+(200414, 'آره', 'adverb', NULL, NULL, 3, 'A1', NULL),            -- yeah
+(200415, 'آزمایِش', 'noun', NULL, NULL, 3, 'A2', NULL),          -- experiment
+(200416, 'آزمون', 'noun', NULL, NULL, 3, 'A2', NULL),            -- test
+(200417, 'آژانس', 'noun', NULL, NULL, 3, 'A2', NULL),            -- agency
+(200418, 'آسیب زَدَن به', 'verb', NULL, NULL, 3, 'A2', NULL),    -- to harm s.th or s.b, to damage
+(200419, 'آشپَزخانه', 'noun', NULL, NULL, 3, 'A1', NULL),        -- kitchen
+(200420, 'آشپَزی کَردَن', 'verb', NULL, NULL, 3, 'A1', NULL),    -- to cook
+(200421, 'آشنایی', 'noun', NULL, NULL, 3, 'A2', NULL),           -- familiarity
+(200422, 'آشیانِه', 'noun', NULL, NULL, 3, 'A2', NULL),          -- nest
+(200423, 'آفتاب', 'noun', NULL, NULL, 3, 'A1', NULL),            -- sun
+(200424, 'آفتابی', 'adjective', NULL, NULL, 3, 'A1', NULL),      -- sunny
+(200425, 'آقا', 'noun', NULL, NULL, 3, 'A1', NULL),              -- Mr. / man
+(200426, 'آلبوم', 'noun', NULL, NULL, 3, 'A2', NULL),            -- album
+(200427, 'آلودِه', 'adjective', NULL, NULL, 3, 'A2', NULL),      -- polluted
+(200428, 'آمادِه شُدَن', 'verb', NULL, NULL, 3, 'A1', NULL),     -- to get ready
+(200429, 'آمَدَن', 'verb', NULL, NULL, 3, 'A1', NULL),           -- to come
+(200430, 'آن', 'pronoun', NULL, NULL, 3, 'A1', NULL),            -- that
+(200431, 'آناناس', 'noun', NULL, NULL, 3, 'A1', NULL),           -- pineapple
+(200432, 'آنها', 'pronoun', NULL, NULL, 3, 'A1', NULL),          -- they
+(200433, 'آوازخواندَن', 'verb', NULL, NULL, 3, 'A2', NULL),      -- to sing
+(200434, 'آوریل', 'noun', NULL, NULL, 3, 'A2', NULL),            -- April
+(200435, 'آهِستِه', 'adverb', NULL, NULL, 3, 'A1', NULL),        -- slow
+(200436, 'آهَن', 'noun', NULL, NULL, 3, 'A2', NULL),             -- iron
+(200437, 'آهَنگ', 'noun', NULL, NULL, 3, 'A1', NULL),            -- song / intonation
+(200438, 'آیِنِه', 'noun', NULL, NULL, 3, 'A1', NULL),           -- mirror
+(200439, 'اَبر', 'noun', NULL, NULL, 3, 'A1', NULL),             -- cloud
+(200440, 'اَبری', 'adjective', NULL, NULL, 3, 'A1', NULL),       -- cloudy
+(200441, 'اِتاق', 'noun', NULL, NULL, 3, 'A1', NULL),            -- room
+(200442, 'اُتو', 'noun', NULL, NULL, 3, 'A1', NULL),             -- iron
+(200443, 'اُتوبوس', 'noun', NULL, NULL, 3, 'A1', NULL),          -- bus
+(200444, 'اُتو کَردَن', 'verb', NULL, NULL, 3, 'A1', NULL),      -- to iron
+(200445, 'اُجاق گاز', 'noun', NULL, NULL, 3, 'A1', NULL),        -- stove
+(200446, 'اِجتِماعی', 'adjective', NULL, NULL, 3, 'A2', NULL),   -- social
+(200447, 'اِحتِرام', 'noun', NULL, NULL, 3, 'A2', NULL),         -- respect
+(200448, 'اَحوال‌پُرسی', 'noun', NULL, NULL, 3, 'A1', NULL),     -- greeting
+(200449, 'اِدارِه', 'noun', NULL, NULL, 3, 'A1', NULL),          -- office
+(200450, 'اِدامِه', 'noun', NULL, NULL, 3, 'A2', NULL),          -- the following / continuation
+(200451, 'اِدامِه دادَن', 'verb', NULL, NULL, 3, 'A2', NULL),    -- to continue
+(200452, 'اَدَبیّات', 'noun', NULL, NULL, 3, 'A2', NULL),        -- literature
+(200453, 'اِرتِباط بَرقَرار کَردَن', 'verb', NULL, NULL, 3, 'A2', NULL), -- to communicate with
+(200454, 'اُردیبِهِشت', 'noun', NULL, NULL, 3, 'A2', NULL),     -- The second month of the solar year
+(200455, 'اَرزان', 'adjective', NULL, NULL, 3, 'A1', NULL),      -- cheap
+(200456, 'اَز آشنایی‌تون خوشوَقتَم', 'phrase', NULL, NULL, 3, 'A1', NULL), -- pleased to meet you!
+(200457, 'اَز چیزی تَرسیدَن', 'verb', NULL, NULL, 3, 'A2', NULL), -- to be afraid of s.th
+(200458, 'اَساسی', 'adjective', NULL, NULL, 3, 'A2', NULL),      -- basic
+(200459, 'اَسباب‌بازی', 'noun', NULL, NULL, 3, 'A1', NULL),      -- toy
+(200460, 'اُستاد', 'noun', NULL, NULL, 3, 'A1', NULL),           -- professor
+(200461, 'اُستان', 'noun', NULL, NULL, 3, 'A2', NULL),           -- province
+(200462, 'اِستَخر', 'noun', NULL, NULL, 3, 'A1', NULL),          -- pool
+(200463, 'اِستِراحَت کَردَن', 'verb', NULL, NULL, 3, 'A1', NULL), -- to rest
+(200464, 'اِستِفادِه', 'noun', NULL, NULL, 3, 'A1', NULL),       -- use
+(200465, 'اِستِفادِه شُدَن', 'verb', NULL, NULL, 3, 'A1', NULL), -- to be used
+(200466, 'اِستِمراری', 'adjective', NULL, NULL, 3, 'A2', NULL),  -- continuous
+(200467, 'اُستُوانِه‌ای', 'adjective', NULL, NULL, 3, 'A2', NULL), -- cylindrical
+(200468, 'اِسفَند', 'noun', NULL, NULL, 3, 'A2', NULL),          -- The last month of the solar year
+(200469, 'اِسکاج', 'noun', NULL, NULL, 3, 'A1', NULL),           -- sponge
+(200470, 'اِسکی', 'noun', NULL, NULL, 3, 'A2', NULL),            -- skiing
+(200471, 'اِسم', 'noun', NULL, NULL, 3, 'A1', NULL),             -- noun / name
+(200472, 'اِشتِباه', 'noun', NULL, NULL, 3, 'A1', NULL),         -- wrong / incorrect
+(200473, 'اَشک', 'noun', NULL, NULL, 3, 'A2', NULL),             -- tear
+(200474, 'اَشیاء', 'noun', NULL, NULL, 3, 'A2', NULL),           -- things
+(200475, 'اِضافِه کَردَن', 'verb', NULL, NULL, 3, 'A2', NULL),   -- to add
+(200476, 'اَطرافِ', 'preposition', NULL, NULL, 3, 'A1', NULL),   -- around s.th
+(200477, 'اِطّلاعات', 'noun', NULL, NULL, 3, 'A2', NULL),        -- information
+(200478, 'اَعداد', 'noun', NULL, NULL, 3, 'A1', NULL),           -- numbers
+(200479, 'اَعضا', 'noun', NULL, NULL, 3, 'A2', NULL),            -- members
+(200480, 'اَغلَب', 'adverb', NULL, NULL, 3, 'A2', NULL),         -- often
+(200481, 'اَفراد', 'noun', NULL, NULL, 3, 'A2', NULL),           -- people
+(200482, 'اُکتُبر', 'noun', NULL, NULL, 3, 'A2', NULL),          -- October
+(200483, 'اَگَر', 'conjunction', NULL, NULL, 3, 'A1', NULL),     -- if
+(200484, 'اَلان', 'adverb', NULL, NULL, 3, 'A1', NULL),          -- now
+(200485, 'اَلگو', 'noun', NULL, NULL, 3, 'A2', NULL),            -- pattern
+(200486, 'اَمّا', 'conjunction', NULL, NULL, 3, 'A1', NULL),     -- but
+(200487, 'اِمتِحان', 'noun', NULL, NULL, 3, 'A2', NULL),         -- exam
+(200488, 'اِمتیاز', 'noun', NULL, NULL, 3, 'A2', NULL),          -- point
+(200489, 'اِمروز', 'noun', NULL, NULL, 3, 'A1', NULL),           -- today
+(200490, 'اَمن', 'adjective', NULL, NULL, 3, 'A2', NULL),        -- safe
+(200491, 'اِنتِخاب کَردَن', 'verb', NULL, NULL, 3, 'A2', NULL),  -- to choose
+(200492, 'اِنتِهایِ', 'preposition', NULL, NULL, 3, 'A2', NULL), -- at the end of
+(200493, 'اَنجام‌دادَن', 'verb', NULL, NULL, 3, 'A1', NULL),     -- to do
+(200494, 'اَندازِه‌گیری', 'noun', NULL, NULL, 3, 'A2', NULL),    -- measurement
+(200495, 'اِنسان', 'noun', NULL, NULL, 3, 'A2', NULL),           -- human
+(200496, 'اِنشا', 'noun', NULL, NULL, 3, 'A2', NULL),            -- composition
+(200497, 'او', 'pronoun', NULL, NULL, 3, 'A1', NULL),            -- he / she
+(200498, 'اَوَّل', 'adjective', NULL, NULL, 3, 'A1', NULL),      -- first
+(200499, 'اَهلی', 'adjective', NULL, NULL, 3, 'A2', NULL),       -- domestic
+(200500, 'ایروبیک', 'noun', NULL, NULL, 3, 'A2', NULL),          -- aerobics
+(200501, 'ایستگاه', 'noun', NULL, NULL, 3, 'A1', NULL),          -- station
+(200502, 'ایشان', 'pronoun', NULL, NULL, 3, 'A2', NULL),         -- they (formal)
+(200503, 'ایمِنی', 'noun', NULL, NULL, 3, 'A2', NULL),           -- security
+(200504, 'ایمِیل', 'noun', NULL, NULL, 3, 'A1', NULL),           -- email
+(200505, 'این', 'pronoun', NULL, NULL, 3, 'A1', NULL),           -- this
+(200506, 'اینتِرنِت', 'noun', NULL, NULL, 3, 'A1', NULL),        -- internet
+(200507, 'اینجا', 'adverb', NULL, NULL, 3, 'A1', NULL),          -- here
+(200508, 'اینها', 'pronoun', NULL, NULL, 3, 'A1', NULL),         -- these
+(200509, 'با هَم', 'adverb', NULL, NULL, 3, 'A1', NULL),         -- together
+(200510, 'باد', 'noun', NULL, NULL, 3, 'A1', NULL),              -- wind
+(200511, 'باد آمَدَن', 'verb', NULL, NULL, 3, 'A1', NULL),       -- to be windy
+(200512, 'بار', 'noun', NULL, NULL, 3, 'A1', NULL),              -- time / occasion
+(200513, 'باران', 'noun', NULL, NULL, 3, 'A1', NULL),            -- rain
+(200514, 'باران آمَدَن', 'verb', NULL, NULL, 3, 'A1', NULL),     -- to rain
+(200515, 'بازار', 'noun', NULL, NULL, 3, 'A1', NULL),            -- bazaar
+(200516, 'بازی', 'noun', NULL, NULL, 3, 'A1', NULL),             -- game
+(200517, 'باشگاه', 'noun', NULL, NULL, 3, 'A2', NULL),           -- club / gym
+(200518, 'باعَجَله', 'adverb', NULL, NULL, 3, 'A2', NULL),       -- in a hurry
+(200519, 'باغ', 'noun', NULL, NULL, 3, 'A1', NULL),              -- garden
+(200520, 'باقی ماندَن', 'verb', NULL, NULL, 3, 'A2', NULL),      -- to remain
+(200521, 'بالایِ', 'preposition', NULL, NULL, 3, 'A1', NULL),    -- up / above
+(200522, 'بالِغ', 'adjective', NULL, NULL, 3, 'A2', NULL),       -- adult
+(200523, 'بانِک', 'noun', NULL, NULL, 3, 'A1', NULL),            -- bank
+(200524, 'باهوش', 'adjective', NULL, NULL, 3, 'A1', NULL),       -- smart
+(200525, 'بَبَخشید!', 'phrase', NULL, NULL, 3, 'A1', NULL),      -- excuse me!
+(200526, 'بَچّگی', 'noun', NULL, NULL, 3, 'A2', NULL),           -- childhood
+(200527, 'بَچّه', 'noun', NULL, NULL, 3, 'A1', NULL),            -- child
+(200528, 'بَخش', 'noun', NULL, NULL, 3, 'A2', NULL),             -- part / section
+(200529, 'بَد اَخلاق', 'adjective', NULL, NULL, 3, 'A2', NULL),  -- bad-tempered
+(200530, 'بَدَن‌سازی', 'noun', NULL, NULL, 3, 'A2', NULL),       -- body building
+(200531, 'بِدون', 'preposition', NULL, NULL, 3, 'A1', NULL),     -- without
+(200532, 'بَرادَر', 'noun', NULL, NULL, 3, 'A1', NULL),          -- brother
+(200533, 'بَرادَرزادِه', 'noun', NULL, NULL, 3, 'A1', NULL),     -- nephew / niece / brother's child
+(200534, 'بَراساسِ', 'preposition', NULL, NULL, 3, 'A2', NULL),  -- according to
+(200535, 'بَررِسی کَردَن', 'verb', NULL, NULL, 3, 'A2', NULL),   -- to check
+(200536, 'بُرِس', 'noun', NULL, NULL, 3, 'A1', NULL),            -- brush
+(200537, 'بُرش دادَن', 'verb', NULL, NULL, 3, 'A2', NULL),       -- to cut
+(200538, 'بَرف', 'noun', NULL, NULL, 3, 'A1', NULL),             -- snow
+(200539, 'بَرف آمَدَن', 'verb', NULL, NULL, 3, 'A1', NULL),      -- to snow
+(200540, 'بَرق', 'noun', NULL, NULL, 3, 'A1', NULL),             -- electricity
+(200541, 'بَرگَشتَن', 'verb', NULL, NULL, 3, 'A1', NULL),        -- to return
+(200542, 'بَرگِه', 'noun', NULL, NULL, 3, 'A2', NULL),           -- sheet
+(200543, 'بَرنامِه', 'noun', NULL, NULL, 3, 'A1', NULL),         -- plan / program
+(200544, 'بُزُرگ', 'adjective', NULL, NULL, 3, 'A1', NULL),      -- big
+(200545, 'بُزُرگ کَردَن', 'verb', NULL, NULL, 3, 'A2', NULL),    -- to raise
+(200546, 'بَستَنی', 'noun', NULL, NULL, 3, 'A1', NULL),          -- ice-cream
+(200547, 'بَستِه', 'noun', NULL, NULL, 3, 'A1', NULL),           -- pack
+(200548, 'بُشقاب', 'noun', NULL, NULL, 3, 'A1', NULL),           -- plate
+(200549, 'شُستَن', 'verb', NULL, NULL, 3, 'A1', NULL),           -- to wash
+(200550, 'بُطری', 'noun', NULL, NULL, 3, 'A1', NULL),            -- bottle
+(200551, 'بَعد', 'adverb', NULL, NULL, 3, 'A1', NULL),           -- then
+(200552, 'بَعد اَز', 'preposition', NULL, NULL, 3, 'A1', NULL),  -- after
+(200553, 'بَعد اَظُهر', 'noun', NULL, NULL, 3, 'A1', NULL),      -- afternoon
+(200554, 'بَعضی', 'adjective', NULL, NULL, 3, 'A1', NULL),       -- some
+(200555, 'بَعضی وَقتها', 'adverb', NULL, NULL, 3, 'A1', NULL),   -- sometimes
+(200556, 'بَفَرمایید', 'phrase', NULL, NULL, 3, 'A1', NULL),     -- here you are / please
+(200557, 'بُلَند', 'adjective', NULL, NULL, 3, 'A1', NULL),      -- high / long / tall
+(200558, 'بُلَند شُدَن', 'verb', NULL, NULL, 3, 'A1', NULL),     -- to wake up / get up
+(200559, 'بُلوز', 'noun', NULL, NULL, 3, 'A1', NULL),            -- blouse
+(200560, 'بَله', 'adverb', NULL, NULL, 3, 'A1', NULL),           -- yes
+(200561, 'بِلیط', 'noun', NULL, NULL, 3, 'A1', NULL),            -- ticket
+(200562, 'بَند (پارارگراف)', 'noun', NULL, NULL, 3, 'A2', NULL), -- paragraph
+(200563, 'بَنَفش', 'adjective', NULL, NULL, 3, 'A1', NULL),      -- purple
+(200564, 'بودَن', 'verb', NULL, NULL, 3, 'A1', NULL),            -- to be
+(200565, 'بور', 'adjective', NULL, NULL, 3, 'A1', NULL),         -- fair-haired
+(200566, 'به پیکنیک رَفتَن', 'verb', NULL, NULL, 3, 'A1', NULL), -- to go on a picnic
+(200567, 'به خِیر', 'phrase', NULL, NULL, 3, 'A1', NULL),        -- good... / farewell
+(200568, 'به سَمتِ', 'preposition', NULL, NULL, 3, 'A1', NULL),  -- towards
+(200569, 'به کوه رَفتَن', 'verb', NULL, NULL, 3, 'A1', NULL),    -- to go mountain climbing
+(200570, 'بَهار', 'noun', NULL, NULL, 3, 'A1', NULL),            -- Spring
+(200571, 'به دُرُستی', 'adverb', NULL, NULL, 3, 'A2', NULL),     -- properly
+(200572, 'به دُنیا آمَدَن', 'verb', NULL, NULL, 3, 'A1', NULL),  -- to be born
+(200573, 'بَهمَن', 'noun', NULL, NULL, 3, 'A2', NULL),           -- The eleventh month of the solar year
+(200574, 'به نُدرَت', 'adverb', NULL, NULL, 3, 'A2', NULL),      -- rarely
+(200575, 'بی‌اَدَب', 'adjective', NULL, NULL, 3, 'A2', NULL),    -- rude
+(200576, 'بیان کَردَن', 'verb', NULL, NULL, 3, 'A2', NULL),      -- to express
+(200577, 'بیدار شُدَن', 'verb', NULL, NULL, 3, 'A1', NULL),      -- to wake up
+(200578, 'بیرونِ', 'preposition', NULL, NULL, 3, 'A1', NULL),    -- outside of
+(200579, 'بیرون آمَدَن', 'verb', NULL, NULL, 3, 'A1', NULL),     -- to leave / come out
+(200580, 'بیرون رَفتَن', 'verb', NULL, NULL, 3, 'A1', NULL),     -- to go out
+(200581, 'بیرون کَردَن', 'verb', NULL, NULL, 3, 'A2', NULL),     -- to drive s.th out
+(200582, 'بیست', 'number', NULL, NULL, 3, 'A1', NULL),           -- twenty
+(200583, 'بیشتَر', 'adjective', NULL, NULL, 3, 'A1', NULL),      -- more
+(200584, 'بیشتَرِ اوقات', 'adverb', NULL, NULL, 3, 'A2', NULL),  -- most of the time
+(200585, 'بیمارِستان', 'noun', NULL, NULL, 3, 'A1', NULL),       -- hospital
+(200586, 'بیمِه', 'noun', NULL, NULL, 3, 'A2', NULL),            -- insurance
+(200587, 'بَینِ', 'preposition', NULL, NULL, 3, 'A1', NULL),     -- between
+(200588, 'پَر', 'noun', NULL, NULL, 3, 'A2', NULL),              -- feather
+(200589, 'پُر', 'adjective', NULL, NULL, 3, 'A1', NULL),         -- full
+(200590, 'پُر کَردَن', 'verb', NULL, NULL, 3, 'A1', NULL),       -- to fill in
+(200591, 'پارچِه', 'noun', NULL, NULL, 3, 'A1', NULL),           -- fabric
+(200592, 'پارک', 'noun', NULL, NULL, 3, 'A1', NULL),             -- park
+(200593, 'پارک کَردَن', 'verb', NULL, NULL, 3, 'A1', NULL),      -- to park
+(200594, 'پارکینگ', 'noun', NULL, NULL, 3, 'A1', NULL),          -- parking lot
+(200595, 'پاساژ', 'noun', NULL, NULL, 3, 'A2', NULL),            -- mall
+(200596, 'پاسُخ', 'noun', NULL, NULL, 3, 'A1', NULL),            -- response
+(200597, 'پاسُخ دادَن', 'verb', NULL, NULL, 3, 'A1', NULL),      -- to respond
+(200598, 'پالتو', 'noun', NULL, NULL, 3, 'A1', NULL),            -- coat / overcoat
+(200599, 'پانزدَه', 'number', NULL, NULL, 3, 'A1', NULL),        -- fifteen
+(200600, 'پانصَد', 'number', NULL, NULL, 3, 'A1', NULL),         -- five hundred
+(200601, 'پایتَخت', 'noun', NULL, NULL, 3, 'A2', NULL),          -- capital
+(200602, 'پاییز', 'noun', NULL, NULL, 3, 'A1', NULL),            -- Fall / Autumn
+(200603, 'پِدَر', 'noun', NULL, NULL, 3, 'A1', NULL),            -- father
+(200604, 'پِدَربُزُرگ', 'noun', NULL, NULL, 3, 'A1', NULL),      -- grandfather
+(200605, 'پَدیدِه', 'noun', NULL, NULL, 3, 'A2', NULL),          -- phenomenon
+(200606, 'پُرتِقال', 'noun', NULL, NULL, 3, 'A1', NULL),         -- orange
+(200607, 'پُرجَمعیَّت', 'adjective', NULL, NULL, 3, 'A2', NULL), -- populated / populous
+(200608, 'پَردِه', 'noun', NULL, NULL, 3, 'A1', NULL),          -- curtain
+(200609, 'پَرَستار', 'noun', NULL, NULL, 3, 'A1', NULL),         -- nurse
+(201300, 'مَربوط', 'adjective', NULL, NULL, 3, 'A2', NULL),      -- relevant
+(201301, 'مُرَبّی', 'noun', NULL, NULL, 3, 'A2', NULL),          -- coach
+(201302, 'مُرَتَّب', 'adjective', NULL, NULL, 3, 'A1', NULL),    -- tidy
+(201303, 'مُرَتَّب کَردَن', 'verb', NULL, NULL, 3, 'A1', NULL),  -- to tidy up
+(201304, 'مَرحَلِه', 'noun', NULL, NULL, 3, 'A2', NULL),         -- stage
+(201305, 'مَرد', 'noun', NULL, NULL, 3, 'A1', NULL),             -- man
+(201306, 'مُرداد', 'noun', NULL, NULL, 3, 'A2', NULL),           -- The fifth month of the solar year
+(201307, 'مُرغِ مینا', 'noun', NULL, NULL, 3, 'A2', NULL),       -- Myna (bird)
+(201308, 'مُسابَقِه', 'noun', NULL, NULL, 3, 'A2', NULL),        -- competition
+(201309, 'مُسافِر', 'noun', NULL, NULL, 3, 'A1', NULL),          -- passenger / traveler
+(201310, 'مُسافِرَت', 'noun', NULL, NULL, 3, 'A1', NULL),        -- trip
+(201311, 'مُسافِرَت رَفتَن', 'verb', NULL, NULL, 3, 'A1', NULL), -- to travel
+(201312, 'مُستَقیم', 'adjective', NULL, NULL, 3, 'A1', NULL),    -- straight
+(201313, 'مُستَنَد', 'noun', NULL, NULL, 3, 'A2', NULL),         -- documentary
+(201314, 'مَسجِد', 'noun', NULL, NULL, 3, 'A1', NULL),           -- mosque
+(201315, 'مِسواک', 'noun', NULL, NULL, 3, 'A1', NULL),           -- toothbrush
+(201316, 'مَسیر', 'noun', NULL, NULL, 3, 'A2', NULL),            -- direction / route
+(201317, 'مُشاوِرِ تَحصیلی', 'noun', NULL, NULL, 3, 'A2', NULL), -- education consultant
+(201318, 'مُشتَری', 'noun', NULL, NULL, 3, 'A2', NULL),          -- customer
+(201319, 'مُشَخَّص کَردَن', 'verb', NULL, NULL, 3, 'A2', NULL),  -- to mark / to state
+(201320, 'مُشکی', 'adjective', NULL, NULL, 3, 'A1', NULL),       -- black
+(201321, 'مَشهور', 'adjective', NULL, NULL, 3, 'A2', NULL),      -- famous
+(201322, 'مَصدَر', 'noun', NULL, NULL, 3, 'A2', NULL),           -- infinitive
+(201323, 'مُضِر', 'adjective', NULL, NULL, 3, 'A2', NULL),       -- harmful
+(201324, 'مُطالِعِه', 'noun', NULL, NULL, 3, 'A1', NULL),        -- studying / reading
+(201325, 'مُطالِعِه کَردَن', 'verb', NULL, NULL, 3, 'A1', NULL), -- to study
+(201326, 'مَطَب', 'noun', NULL, NULL, 3, 'A2', NULL),            -- doctor's office
+(201327, 'مُعتَدِل', 'adjective', NULL, NULL, 3, 'A2', NULL),    -- mild
+(201328, 'مُعَرِّفی', 'noun', NULL, NULL, 3, 'A1', NULL),        -- introduction
+(201329, 'مُعَرِّفی کَردَن', 'verb', NULL, NULL, 3, 'A1', NULL), -- to introduce
+(201330, 'مَعروف', 'adjective', NULL, NULL, 3, 'A1', NULL),      -- famous
+(201331, 'مُعَلِّم', 'noun', NULL, NULL, 3, 'A1', NULL),         -- teacher
+(201332, 'مَعلول', 'adjective', NULL, NULL, 3, 'A2', NULL),      -- handicapped
+(201333, 'مُعَمّا', 'noun', NULL, NULL, 3, 'A2', NULL),          -- riddle
+(201334, 'مَعمولاً', 'adverb', NULL, NULL, 3, 'A1', NULL),       -- usually
+(201335, 'مَعمولی', 'adjective', NULL, NULL, 3, 'A1', NULL),     -- normal
+(201336, 'مَغازِه', 'noun', NULL, NULL, 3, 'A1', NULL),          -- store
+(201337, 'مُفرَد', 'adjective', NULL, NULL, 3, 'A2', NULL),      -- singular
+(201338, 'مُفَصَّل', 'adjective', NULL, NULL, 3, 'A2', NULL),    -- full / detailed
+(201339, 'مُفید', 'adjective', NULL, NULL, 3, 'A2', NULL),       -- useful / helpful
+(201340, 'مَقالِه', 'noun', NULL, NULL, 3, 'A2', NULL),          -- paper / article
+(201341, 'مُقایِسِه', 'noun', NULL, NULL, 3, 'A2', NULL),        -- comparison
+(201342, 'مُقایِسِه کَردَن', 'verb', NULL, NULL, 3, 'A2', NULL), -- to compare
+(201343, 'مَقصَد', 'noun', NULL, NULL, 3, 'A2', NULL),           -- destination
+(201344, 'مُقَوّایی', 'adjective', NULL, NULL, 3, 'A2', NULL),   -- cardboard
+(201345, 'مُکالِمِه', 'noun', NULL, NULL, 3, 'A1', NULL),        -- conversation
+(201346, 'مَکان', 'noun', NULL, NULL, 3, 'A1', NULL),            -- place
+(201347, 'مَکانِ عُمومی', 'noun', NULL, NULL, 3, 'A1', NULL),    -- public place
+(201348, 'مُکَعَّب', 'noun', NULL, NULL, 3, 'A2', NULL),         -- cube
+(201349, 'مِلکی', 'adjective', NULL, NULL, 3, 'A2', NULL),       -- possessive
+(201350, 'مِلّی', 'adjective', NULL, NULL, 3, 'A2', NULL),       -- national
+(201351, 'مِلّیَّت', 'noun', NULL, NULL, 3, 'A1', NULL),         -- nationality
+(201352, 'مَمنون!', 'phrase', NULL, NULL, 3, 'A1', NULL),        -- thank you!
+(201353, 'مَن', 'pronoun', NULL, NULL, 3, 'A1', NULL),           -- I
+(201354, 'مُناسِب', 'adjective', NULL, NULL, 3, 'A2', NULL),     -- suitable / correct / proper
+(201355, 'مَنزِل', 'noun', NULL, NULL, 3, 'A1', NULL),           -- home
+(201356, 'مُنشی', 'noun', NULL, NULL, 3, 'A1', NULL),            -- secretary
+(201357, 'مَنفی', 'adjective', NULL, NULL, 3, 'A2', NULL),       -- negative
+(201358, 'مو', 'noun', NULL, NULL, 3, 'A1', NULL),               -- hair
+(201359, 'مَواد', 'noun', NULL, NULL, 3, 'A2', NULL),            -- material / substances
+(201360, 'موبایِل (تِلِفُنِ هَمراه)', 'noun', NULL, NULL, 3, 'A1', NULL), -- cellphone
+(201361, 'مُوجود', 'noun', NULL, NULL, 3, 'A2', NULL),           -- creature
+(201362, 'موز', 'noun', NULL, NULL, 3, 'A1', NULL),              -- banana
+(201363, 'موسیقی', 'noun', NULL, NULL, 3, 'A1', NULL),           -- music
+(201364, 'موضوع', 'noun', NULL, NULL, 3, 'A2', NULL),            -- subject / topic
+(201365, 'موقِع', 'noun', NULL, NULL, 3, 'A1', NULL),            -- time / occasion
+(201366, 'موقِعیَّت', 'noun', NULL, NULL, 3, 'A2', NULL),        -- situation
+(201367, 'مِهر', 'noun', NULL, NULL, 3, 'A2', NULL),             -- The seventh month of the solar year
+(201368, 'مِهربان', 'adjective', NULL, NULL, 3, 'A1', NULL),     -- kind
+(201369, 'مُهِم', 'adjective', NULL, NULL, 3, 'A1', NULL),       -- important
+(201370, 'مِهمان', 'noun', NULL, NULL, 3, 'A1', NULL),           -- guest
+(201371, 'مِهمانی', 'noun', NULL, NULL, 3, 'A1', NULL),          -- party
+(201372, 'مُهَندِس', 'noun', NULL, NULL, 3, 'A1', NULL),         -- engineer
+(201373, 'میدان', 'noun', NULL, NULL, 3, 'A1', NULL),            -- square
+(201374, 'میز', 'noun', NULL, NULL, 3, 'A1', NULL),              -- desk / table
+(201375, 'میزبان', 'noun', NULL, NULL, 3, 'A2', NULL),           -- host
+(201376, 'میزِ تَحریر', 'noun', NULL, NULL, 3, 'A1', NULL),      -- desk
+(201377, 'میلیون', 'number', NULL, NULL, 3, 'A1', NULL),         -- million
+(201378, 'میوِه', 'noun', NULL, NULL, 3, 'A1', NULL),            -- fruit
+(201379, 'میوِه‌فُروش', 'noun', NULL, NULL, 3, 'A1', NULL),      -- fruit seller
+(201380, 'میوِه‌فُروشی', 'noun', NULL, NULL, 3, 'A1', NULL),     -- fruit shop
+(201381, 'نابِغِه', 'noun', NULL, NULL, 3, 'A2', NULL),          -- genius
+(201382, 'نابینا', 'adjective', NULL, NULL, 3, 'A2', NULL),      -- blind
+(201383, 'نادُرُست', 'adjective', NULL, NULL, 3, 'A1', NULL),    -- false / incorrect
+(201384, 'نارِنجی', 'adjective', NULL, NULL, 3, 'A1', NULL),     -- orange (color)
+(201385, 'نام', 'noun', NULL, NULL, 3, 'A1', NULL),              -- name
+(201386, 'نامِ خانِوادِگی', 'noun', NULL, NULL, 3, 'A1', NULL),  -- family name
+(201387, 'نامُرَتَّب', 'adjective', NULL, NULL, 3, 'A1', NULL),  -- untidy
+(201388, 'نان', 'noun', NULL, NULL, 3, 'A1', NULL),              -- bread
+(201389, 'ناهار', 'noun', NULL, NULL, 3, 'A1', NULL),            -- lunch
+(201390, 'نَبش', 'noun', NULL, NULL, 3, 'A2', NULL),             -- corner
+(201391, 'نَجّاری', 'noun', NULL, NULL, 3, 'A2', NULL),          -- carpentry
+(201392, 'نَرم', 'adjective', NULL, NULL, 3, 'A2', NULL),        -- soft
+(201393, 'نُرمال', 'adjective', NULL, NULL, 3, 'A2', NULL),      -- normal
+(201394, 'نَزدیک', 'adjective', NULL, NULL, 3, 'A1', NULL),      -- near
+(201395, 'نَزدیک شُدَن', 'verb', NULL, NULL, 3, 'A2', NULL),     -- to approach
+(201396, 'نِسبَت', 'noun', NULL, NULL, 3, 'A2', NULL),           -- relation
+(201397, 'نِسبَت داشتَن با', 'verb', NULL, NULL, 3, 'A2', NULL), -- to be related to
+(201398, 'نِشانِه', 'noun', NULL, NULL, 3, 'A2', NULL),          -- sign / affix
+(201399, 'نِشانی', 'noun', NULL, NULL, 3, 'A1', NULL),           -- address
+(201400, 'نِشَستَن', 'verb', NULL, NULL, 3, 'A1', NULL),         -- to sit
+(201401, 'نَظَر', 'noun', NULL, NULL, 3, 'A2', NULL),            -- comment / opinion
+(201402, 'نَفت', 'noun', NULL, NULL, 3, 'A2', NULL),             -- oil
+(201403, 'نَفَر', 'noun', NULL, NULL, 3, 'A1', NULL),            -- individual / person
+(201404, 'نَقشِه', 'noun', NULL, NULL, 3, 'A1', NULL),           -- map
+(201405, 'نُقطِه', 'noun', NULL, NULL, 3, 'A1', NULL),           -- point / dot / period
+(201406, 'نُقطِه چـین', 'noun', NULL, NULL, 3, 'A2', NULL),      -- dotted
+(201407, 'نِگاه کَردَن', 'verb', NULL, NULL, 3, 'A1', NULL),     -- to look at
+(201408, 'نِگَران (بودَن)', 'verb', NULL, NULL, 3, 'A1', NULL),  -- (to be) worried
+(201409, 'نِگَهبان', 'noun', NULL, NULL, 3, 'A2', NULL),         -- security guard
+(201410, 'نِگَهبانی', 'noun', NULL, NULL, 3, 'A2', NULL),        -- security duty
+(201411, 'نِگَهبانی دادَن', 'verb', NULL, NULL, 3, 'A2', NULL),  -- to guard
+(201412, 'نِگَهداري کَردَن', 'verb', NULL, NULL, 3, 'A2', NULL), -- to look after
+(201413, 'نَماد', 'noun', NULL, NULL, 3, 'A2', NULL),            -- symbol
+(201414, 'نُمرِه', 'noun', NULL, NULL, 3, 'A1', NULL),           -- grade
+(201415, 'نَمونِه', 'noun', NULL, NULL, 3, 'A2', NULL),          -- sample
+(201416, 'نوبَت', 'noun', NULL, NULL, 3, 'A2', NULL),            -- turn
+(201417, 'نور', 'noun', NULL, NULL, 3, 'A1', NULL),              -- light
+(201418, 'نوروز', 'noun', NULL, NULL, 3, 'A1', NULL),            -- Nowruz (Persian New Year)
+(201419, 'نوشابِه', 'noun', NULL, NULL, 3, 'A1', NULL),          -- soft drink / beverage
+(201420, 'نوشتاری', 'adjective', NULL, NULL, 3, 'A2', NULL),     -- written
+(201421, 'نوشتَن', 'verb', NULL, NULL, 3, 'A1', NULL),           -- to write
+(201422, 'نوشیدَنی', 'noun', NULL, NULL, 3, 'A1', NULL),         -- drink
+(201423, 'نِوِه', 'noun', NULL, NULL, 3, 'A1', NULL),            -- grandchild
+(201424, 'نِویسَندِه', 'noun', NULL, NULL, 3, 'A1', NULL),       -- author
+(201425, 'نُه', 'number', NULL, NULL, 3, 'A1', NULL),            -- nine
+(201426, 'نَهایی', 'adjective', NULL, NULL, 3, 'A2', NULL),      -- final
+(201427, 'نَهی', 'noun', NULL, NULL, 3, 'A2', NULL),             -- negative imperative
+(201428, 'نیاز', 'noun', NULL, NULL, 3, 'A2', NULL),             -- need
+(201429, 'نیم', 'noun', NULL, NULL, 3, 'A1', NULL),              -- half
+(201430, 'نیمرو', 'noun', NULL, NULL, 3, 'A1', NULL),            -- fried eggs
+(201431, 'نیمِه شَب', 'noun', NULL, NULL, 3, 'A1', NULL),        -- midnight
+(201432, 'وارِد کَردَن', 'verb', NULL, NULL, 3, 'A2', NULL),     -- to enter
+(201433, 'واژِه', 'noun', NULL, NULL, 3, 'A1', NULL),            -- word
+(201434, 'واژِه سازی', 'noun', NULL, NULL, 3, 'A2', NULL),       -- wordmaking
+(201435, 'والِدِین', 'noun', NULL, NULL, 3, 'A1', NULL),         -- parents
+(201436, 'وِبگَردی', 'noun', NULL, NULL, 3, 'A2', NULL),         -- surfing the Net
+(201437, 'وِبگَردی کَردَن', 'verb', NULL, NULL, 3, 'A2', NULL),  -- to surf the Net
+(201438, 'وُجود داشتَن', 'verb', NULL, NULL, 3, 'A1', NULL),     -- to exist / to be there
+(201439, 'وَحشی', 'adjective', NULL, NULL, 3, 'A2', NULL),       -- wild
+(201440, 'وَرزِش', 'noun', NULL, NULL, 3, 'A1', NULL),           -- sport
+(201441, 'وَرزِشکار', 'noun', NULL, NULL, 3, 'A1', NULL),        -- sportsman
+(201442, 'وَرزِش کَردَن', 'verb', NULL, NULL, 3, 'A1', NULL),    -- to exercise
+(201443, 'وَزن', 'noun', NULL, NULL, 3, 'A1', NULL),             -- weight
+(201444, 'وَسایِل', 'noun', NULL, NULL, 3, 'A1', NULL),          -- tools / belongings / things
+(201445, 'وَسایِلِ شَخصی', 'noun', NULL, NULL, 3, 'A1', NULL),   -- personal belongings
+(201446, 'وَسَط', 'noun', NULL, NULL, 3, 'A1', NULL),            -- middle
+(201447, 'وَسیلِه', 'noun', NULL, NULL, 3, 'A1', NULL),          -- tool / instrument
+(201448, 'وَسیلِه نَقلیِه', 'noun', NULL, NULL, 3, 'A1', NULL),  -- transportation
+(201449, 'وَصل کَردَن', 'verb', NULL, NULL, 3, 'A2', NULL),      -- to connect / match
+(201450, 'وَقت', 'noun', NULL, NULL, 3, 'A1', NULL),             -- time
+(201451, 'وَقت دادَن', 'verb', NULL, NULL, 3, 'A2', NULL),       -- to give time
+(201452, 'وَقت داشتَن', 'verb', NULL, NULL, 3, 'A1', NULL),      -- to have time
+(201453, 'وَقت گِرِفتَن', 'verb', NULL, NULL, 3, 'A2', NULL),    -- to take time
+(201454, 'وَقت‌گیر', 'adjective', NULL, NULL, 3, 'A2', NULL),    -- time-consuming
+(201455, 'وَقتی', 'conjunction', NULL, NULL, 3, 'A1', NULL),     -- when
+(201456, 'وَکیل', 'noun', NULL, NULL, 3, 'A1', NULL),            -- lawyer
+(201457, 'وَلی', 'conjunction', NULL, NULL, 3, 'A1', NULL),      -- but
+(201458, 'ویتِرین', 'noun', NULL, NULL, 3, 'A2', NULL),          -- shop window
+(201459, 'ویژگی', 'noun', NULL, NULL, 3, 'A2', NULL),            -- feature
+(201460, 'ویلا', 'noun', NULL, NULL, 3, 'A1', NULL),             -- villa
+(201461, 'ویلچِر', 'noun', NULL, NULL, 3, 'A2', NULL),           -- wheelchair
+(201462, 'هُتِل', 'noun', NULL, NULL, 3, 'A1', NULL),            -- hotel
+(201463, 'هَرگِز', 'adverb', NULL, NULL, 3, 'A2', NULL),         -- never
+(201464, 'هِزار', 'number', NULL, NULL, 3, 'A1', NULL),          -- thousand
+(201465, 'هَشت', 'number', NULL, NULL, 3, 'A1', NULL),           -- eight
+(201466, 'هَفت', 'number', NULL, NULL, 3, 'A1', NULL),           -- seven
+(201467, 'هَفتِگی', 'adjective', NULL, NULL, 3, 'A2', NULL),     -- weekly
+(201468, 'هَفتِه', 'noun', NULL, NULL, 3, 'A1', NULL),           -- week
+(201469, 'هَمچنین', 'adverb', NULL, NULL, 3, 'A2', NULL),        -- also
+(201470, 'هَمدیگَر', 'pronoun', NULL, NULL, 3, 'A1', NULL),      -- each other
+(201471, 'هَمسایِه', 'noun', NULL, NULL, 3, 'A1', NULL),         -- neighbor
+(201472, 'هَمسَر', 'noun', NULL, NULL, 3, 'A1', NULL),           -- spouse
+(201473, 'هَمکار', 'noun', NULL, NULL, 3, 'A1', NULL),           -- colleague
+(201474, 'هَم‌کِلاسی', 'noun', NULL, NULL, 3, 'A1', NULL),       -- classmate
+(201475, 'هَمِه', 'pronoun', NULL, NULL, 3, 'A1', NULL),         -- all
+(201476, 'هَمِه چـیز', 'noun', NULL, NULL, 3, 'A1', NULL),       -- everything
+(201477, 'هَمیشِه', 'adverb', NULL, NULL, 3, 'A1', NULL),        -- always
+(201478, 'هَمین طور', 'adverb', NULL, NULL, 3, 'A1', NULL),      -- too / likewise
+(201479, 'هُنَر', 'noun', NULL, NULL, 3, 'A1', NULL),            -- art
+(201480, 'هَوا', 'noun', NULL, NULL, 3, 'A1', NULL),             -- weather / air
+(201481, 'هَواپیما', 'noun', NULL, NULL, 3, 'A1', NULL),         -- airplane
+(201482, 'هَویج', 'noun', NULL, NULL, 3, 'A1', NULL),            -- carrot
+(201483, 'هیچ‌کَس', 'pronoun', NULL, NULL, 3, 'A1', NULL),       -- no one
+(201484, 'هیچ‌وَقت', 'adverb', NULL, NULL, 3, 'A2', NULL),       -- never
+(201485, 'یاد گِرِفتَن', 'verb', NULL, NULL, 3, 'A1', NULL),     -- to learn
+(201486, 'یادگیری', 'noun', NULL, NULL, 3, 'A2', NULL),          -- learning
+(201487, 'یِک/یَکی', 'number', NULL, NULL, 3, 'A1', NULL),       -- one
+(201488, 'یِکشَنبِه', 'noun', NULL, NULL, 3, 'A1', NULL),        -- Sunday
+(201489, 'یوگا', 'noun', NULL, NULL, 3, 'A2', NULL);             -- yoga
