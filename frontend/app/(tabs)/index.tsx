@@ -5,6 +5,7 @@ import { useDictionaryContext } from '@/context/DictionaryContext';
 import FilterBottomSheetModal from '@/components/vocabulary/FilterBottomSheetModal';
 import VocabularySearchField from '@/components/vocabulary/VocabularySearchField';
 import VocabularyList from '@/components/vocabulary/VocabularyList';
+import { normalizeQuery } from '@/utils/normalize';
 
 export default function HomeScreen() {
   const { userVocabulary } = useAppContext();
@@ -35,7 +36,7 @@ export default function HomeScreen() {
     if (debounceTimeout.current) clearTimeout(debounceTimeout.current);
 
     debounceTimeout.current = setTimeout(() => {
-      const query = search.trim().toLowerCase();
+      const query = normalizeQuery(search);
       if (!query) {
         // Show user's vocabulary words when search is empty, sorted by created_at (newest first)
         const vocabularyWords = words
@@ -52,7 +53,7 @@ export default function HomeScreen() {
       // Filter words by search query and sort by created_at (newest first)
       const filtered = words
         .filter(word => {
-          const writtenMatch = word.written_form?.toLowerCase().startsWith(query);
+          const writtenMatch = normalizeQuery(word.written_form ?? '').startsWith(query);
           // const translationMatch = word.translations?.some(t => t?.toLowerCase().includes(query));
           // return writtenMatch || translationMatch;
           return writtenMatch;
