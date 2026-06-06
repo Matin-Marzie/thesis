@@ -1,4 +1,4 @@
-# Developing a Mobile-Assisted Language Learning Application Utilizing Short-Form Video Reels and Gamified Interaction
+# Developing a Mobile-Assisted Language Learning Application Utilizing Short-Form Video Reels and Hypercasual games
 
 ## Prerequisites
 
