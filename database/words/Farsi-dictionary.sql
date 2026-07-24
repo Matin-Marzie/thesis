@@ -916,7 +916,7 @@ VALUES
 (200913, 'نیم', 'noun', NULL, NULL, 3, 'A1', NULL),              -- half
 (200914, 'نیمرو', 'noun', NULL, NULL, 3, 'A1', NULL),            -- fried eggs
 (200915, 'نیمِه شَب', 'noun', NULL, NULL, 3, 'A1', NULL),        -- midnight
-(200916, 'هَدیِه', 'noun', NULL, NULL, 3, 'A1', NULL),                 -- gift / present
+(200916, 'هِدیِه', 'noun', NULL, NULL, 3, 'A1', NULL),                 -- gift / present
 (200917, 'هَر', 'adjective/pronoun', NULL, NULL, 3, 'A1', NULL), -- each/every
 (200918, 'هَرروز', 'adverb', NULL, NULL, 3, 'A1', NULL),       -- everyday
 (200919, 'هَشت', 'number', NULL, NULL, 3, 'A1', NULL),           -- eight
@@ -2485,10 +2485,8 @@ VALUES
 (202482, 'مَسئول', 'noun', NULL, NULL, 3, 'B1', NULL),         -- responsible
 (202483, 'مَسئولِ فُروش', 'noun', NULL, NULL, 3, 'B1', NULL),    -- Salesperson
 (202484, 'مَسئولیَّت', 'noun', NULL, NULL, 3, 'B1', NULL),             -- responsibility
-(202485, 'مَسئولیَّت', 'noun', NULL, NULL, 3, 'B1', NULL),      -- responsibility
 (202486, 'مَسخَرِه‌کَردَن', 'verb', NULL, NULL, 3, 'B1', NULL),   -- to make fun
 (202487, 'مَشوَرَت‌کَردَن', 'verb', NULL, NULL, 3, 'B1', NULL),   -- to consult
-(202488, 'مَشوِرَت کَردَن', 'verb', NULL, NULL, 3, 'B1', NULL),        -- to consult
 (202489, 'مَعدَنی', 'adjective', NULL, NULL, 3, 'B1', NULL),     -- minerals
 (202490, 'مَقاله', 'noun', NULL, NULL, 3, 'B1', NULL),          -- article
 (202491, 'مَقطَع', 'noun', NULL, NULL, 3, 'B1', NULL),                 -- level (education) / section
@@ -3232,3 +3230,9 @@ VALUES
 (203229, 'نُخبه', 'noun', NULL, NULL, 3, 'C1', NULL),          -- elite
 (203230, 'ویرانگَر', 'adjective', NULL, NULL, 3, 'C1', NULL),    -- destructive
 (203231, 'پُرفَریب', 'adjective', NULL, NULL, 3, 'C1', NULL);   -- sly/tricky
+
+--  تف کردن - to spit
+-- فُرمِ ثَبتِ نام - registration form
+-- لِباس فُرم - uniform
+-- قُم - city of Qom
+-- غُر زَدَن - to grumble
