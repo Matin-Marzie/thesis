@@ -1,4 +1,4 @@
-# Personalized Language Learning Application
+# Developing a Mobile-Assisted Language Learning Application Utilizing Short-Form Video Reels and Hypercasual games
 
 ## Prerequisites
 
