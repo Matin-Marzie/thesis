@@ -10,18 +10,22 @@ const userVocabularyModel = {
             user_languages_id,
             mastery_level,
             last_review,
-            created_at
+            created_at,
+            review_count,
+            next_review_at
         FROM user_vocabulary
         WHERE user_id = $1 AND user_languages_id = $2
     `;
 
         const result = await pool.query(query, [userId, userLanguagesId]);
-        // reshape → { wordId: { mastery_level, last_review, created_at } }
+        // reshape → { wordId: { mastery_level, last_review, created_at, review_count, next_review_at } }
         return result.rows.reduce((acc, row) => {
             acc[row.word_id] = {
                 mastery_level: row.mastery_level,
                 last_review: row.last_review,
                 created_at: row.created_at,
+                review_count: row.review_count,
+                next_review_at: row.next_review_at,
             };
             return acc;
         }, {});
@@ -31,42 +35,48 @@ const userVocabularyModel = {
     async add(userId, userVocabulary, currentUserLanguagesId) {
         const values = [];
         const placeholders = userVocabulary.map(([wordId, data], i) => {
-            const base = i * 6;
+            const base = i * 8;
             values.push(
                 userId,
                 Number(wordId),
                 currentUserLanguagesId,
                 data.mastery_level,
                 data.last_review,
-                data.created_at
+                data.created_at,
+                data.review_count ?? 0,
+                data.next_review_at ?? data.created_at
             );
-            return `($${base + 1}, $${base + 2}, $${base + 3}, $${base + 4}, $${base + 5}, $${base + 6})`;
+            return `($${base + 1}, $${base + 2}, $${base + 3}, $${base + 4}, $${base + 5}, $${base + 6}, $${base + 7}, $${base + 8})`;
         }).join(',');
         // Add filter param
         values.push(currentUserLanguagesId);
         const query = `
             WITH inserted AS (
             INSERT INTO user_vocabulary
-                (user_id, word_id, user_languages_id, mastery_level, last_review, created_at)
+                (user_id, word_id, user_languages_id, mastery_level, last_review, created_at, review_count, next_review_at)
             VALUES ${placeholders}
             RETURNING *
             )
-            SELECT 
+            SELECT
                 word_id,
                 user_languages_id,
                 mastery_level,
                 last_review,
-                created_at
+                created_at,
+                review_count,
+                next_review_at
             FROM inserted
             WHERE user_languages_id = $${values.length};
         `;
         const result = await pool.query(query, values);
-        // reshape → { wordId: { mastery_level, last_review, created_at } }
+        // reshape → { wordId: { mastery_level, last_review, created_at, review_count, next_review_at } }
         return result.rows.reduce((acc, row) => {
             acc[row.word_id] = {
                 mastery_level: row.mastery_level,
                 last_review: row.last_review,
                 created_at: row.created_at,
+                review_count: row.review_count,
+                next_review_at: row.next_review_at,
             };
             return acc;
         }, {});
@@ -87,19 +97,31 @@ const userVocabularyModel = {
                 values.push(data.mastery_level);
                 paramCount++;
             }
-            
+
             if (data.last_review !== undefined) {
                 fields.push(`last_review = $${paramCount}`);
                 values.push(data.last_review);
                 paramCount++;
             }
-            
+
+            if (data.review_count !== undefined) {
+                fields.push(`review_count = $${paramCount}`);
+                values.push(data.review_count);
+                paramCount++;
+            }
+
+            if (data.next_review_at !== undefined) {
+                fields.push(`next_review_at = $${paramCount}`);
+                values.push(data.next_review_at);
+                paramCount++;
+            }
+
             if (fields.length > 0) {
                 const query = `
-                    UPDATE user_vocabulary 
+                    UPDATE user_vocabulary
                     SET ${fields.join(', ')}
                     WHERE user_id = $1 AND word_id = $2 AND user_languages_id = $3
-                    RETURNING word_id, user_languages_id, mastery_level, last_review, created_at
+                    RETURNING word_id, user_languages_id, mastery_level, last_review, created_at, review_count, next_review_at
                 `;
                 
                 const result = await pool.query(query, values);
@@ -115,6 +137,8 @@ const userVocabularyModel = {
                 mastery_level: row.mastery_level,
                 last_review: row.last_review,
                 created_at: row.created_at,
+                review_count: row.review_count,
+                next_review_at: row.next_review_at,
             };
             return acc;
         }, {});
@@ -160,12 +184,12 @@ const userVocabularyModel = {
         const dateValue = joinedDate || new Date().toISOString();
         
         const query = `
-            INSERT INTO user_vocabulary (user_id, word_id, user_languages_id, mastery_level, last_review, created_at)
-            SELECT $1, w.id, $2, $3, $6, $6
+            INSERT INTO user_vocabulary (user_id, word_id, user_languages_id, mastery_level, last_review, created_at, review_count, next_review_at)
+            SELECT $1, w.id, $2, $3, $6, $6, 0, $6
             FROM words w
             WHERE w.language_id = $4
               AND w.level = ANY($5)
-            RETURNING word_id, mastery_level, last_review, created_at
+            RETURNING word_id, mastery_level, last_review, created_at, review_count, next_review_at
         `;
         
         const result = await pool.query(query, [
@@ -177,12 +201,14 @@ const userVocabularyModel = {
             dateValue
         ]);
         
-        // Reshape to { wordId: { mastery_level, last_review, created_at } }
+        // Reshape to { wordId: { mastery_level, last_review, created_at, review_count, next_review_at } }
         return result.rows.reduce((acc, row) => {
             acc[row.word_id] = {
                 mastery_level: row.mastery_level,
                 last_review: row.last_review,
                 created_at: row.created_at,
+                review_count: row.review_count,
+                next_review_at: row.next_review_at,
             };
             return acc;
         }, {});
