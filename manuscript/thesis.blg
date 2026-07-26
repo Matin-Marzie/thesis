@@ -3,46 +3,51 @@ Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
 The top-level auxiliary file: thesis.aux
 The style file: plain.bst
 Database file #1: references.bib
-Warning--can't use both author and editor fields in vygotsky1978mind
-You've used 14 entries,
+Warning--I didn't find a database entry for "businessResearch2024language"
+Warning--I didn't find a database entry for "vygotsky1978mind"
+Warning--I didn't find a database entry for "nation2001learning"
+Warning--I didn't find a database entry for "ebbinghaus1885memory"
+Warning--I didn't find a database entry for "gilmore2007authentic"
+Warning--I didn't find a database entry for "liu2024authentic"
+You've used 5 entries,
             2118 wiz_defined-function locations,
-            580 strings with 5987 characters,
-and the built_in function-call counts, 3486 in all, are:
-= -- 351
-> -- 104
+            533 strings with 4835 characters,
+and the built_in function-call counts, 1258 in all, are:
+= -- 127
+> -- 35
 < -- 0
-+ -- 45
-- -- 30
-* -- 185
-:= -- 597
-add.period$ -- 48
-call.type$ -- 14
-change.case$ -- 54
++ -- 16
+- -- 10
+* -- 66
+:= -- 215
+add.period$ -- 17
+call.type$ -- 5
+change.case$ -- 20
 chr.to.int$ -- 0
-cite$ -- 15
-duplicate$ -- 133
-empty$ -- 331
-format.name$ -- 30
-if$ -- 735
+cite$ -- 5
+duplicate$ -- 43
+empty$ -- 121
+format.name$ -- 10
+if$ -- 264
 int.to.chr$ -- 0
-int.to.str$ -- 14
-missing$ -- 11
-newline$ -- 79
-num.names$ -- 28
-pop$ -- 79
+int.to.str$ -- 5
+missing$ -- 2
+newline$ -- 30
+num.names$ -- 10
+pop$ -- 29
 preamble$ -- 1
-purify$ -- 43
+purify$ -- 15
 quote$ -- 0
-skip$ -- 90
+skip$ -- 33
 stack$ -- 0
-substring$ -- 187
-swap$ -- 15
+substring$ -- 76
+swap$ -- 5
 text.length$ -- 0
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 50
-warning$ -- 1
-while$ -- 38
-width$ -- 16
-write$ -- 162
-(There was 1 warning)
+type$ -- 20
+warning$ -- 0
+while$ -- 14
+width$ -- 6
+write$ -- 58
+(There were 6 warnings)
