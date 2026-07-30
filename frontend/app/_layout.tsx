@@ -75,15 +75,17 @@ function RootLayoutNav() {
   const segments = useSegments();
   const router = useRouter();
 
+  // 
   useEffect(() => {
     if (isLoading) return;
 
+    // 
     const inOnboardingGroup = segments[0] === 'onboarding';
     const inTabsGroup = segments[0] === '(tabs)';
     const inMoreScreen = segments[0] === 'more';
     const inModal = segments[0] === 'modal';
     const inGames = segments[0] === 'games';
-    const inLoginOrRegister = segments[1] === 'login' || segments[1] === 'register';
+    const inLoginOrRegister = segments[1] === 'login' || segments[1] === 'register' || segments[1] === 'verify-email';
 
     // [2] Check: onboardingComplete? — if NO, redirect to onboarding
     if (!hasCompletedOnboarding) {
@@ -91,7 +93,7 @@ function RootLayoutNav() {
         router.replace('/onboarding/landing');
       }
     } else {
-      // Onboarding complete — allow access to app (tabs, more, modal, games)
+      // [] Main app — allow access to app (tabs, more, modal, games)
       // Also allow access to login/register for guest users
       if (!inTabsGroup && !inMoreScreen && !inModal && !inGames && !inLoginOrRegister) {
         router.replace('/(tabs)');

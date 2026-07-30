@@ -15,9 +15,7 @@ import { useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 // import { GoogleSigninButton, GoogleSignin, statusCodes, User as GoogleUser } from '@react-native-google-signin/google-signin';
 import { PRIMARY_COLOR } from '@/constants/App';
-import { registerUser,  } from '../../api/auth';
-import { useAppContext } from '../../context/AppContext';
-import { VOCABULARY_ACTIONS } from '@/hooks/useVocabulary';
+import { requestVerificationCode } from '../../api/auth';
 
 
 // Hardcoded client IDs for Google Sign-In
@@ -32,6 +30,8 @@ interface RegisterScreenProps {
 const FIRST_NAME_REGEX = /^[A-Za-z]{1,35}$/;
 // Email: basic email format
 const EMAIL_REGEX = /^\S+@\S+\.\S+$/;
+// Must match the backend's resend cooldown (backend/utils/verificationRateLimit.js)
+const RESEND_COOLDOWN_SECONDS = 60;
 
 
 export default function RegisterScreen({ onRegisterSuccess }: RegisterScreenProps = {}) {
@@ -47,7 +47,6 @@ export default function RegisterScreen({ onRegisterSuccess }: RegisterScreenProp
   //   });
   // }, []);
 
-  const { vocabularyChanges, userProfile, userProgress, updateUserProfile, setUserProgress, vocabularyDispatch, setIsAuthenticated } = useAppContext();
   const router = useRouter();
 
   const [firstName, setFirstName] = useState('');
@@ -56,6 +55,14 @@ export default function RegisterScreen({ onRegisterSuccess }: RegisterScreenProp
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState({});
+
+  // Remembers when we last sent a code for which email, so that if the user
+  // goes back from verify-email.tsx and presses REGISTER again for the same
+  // email within the resend cooldown, we skip calling send-code again instead
+  // of hitting the backend's cooldown error - the pending code is already
+  // sitting in the DB server-side, no need to resend or track a token for it.
+  const [lastSentEmail, setLastSentEmail] = useState<string | null>(null);
+  const [lastSentAt, setLastSentAt] = useState<number | null>(null);
 
   const validateForm = () => {
     const newErrors = {};
@@ -84,30 +91,35 @@ export default function RegisterScreen({ onRegisterSuccess }: RegisterScreenProp
     setErrors({}); // reset previous errors
 
     try {
-      const payload = {
-        password,
-        user_profile: {
-          ...userProfile,
-          first_name: firstName.trim(),
-          email: email.trim(),
-        },
-        user_progress: userProgress,
-        vocabulary_changes: vocabularyChanges
-      };
-      
-      const response = await registerUser(payload);
-      
-      if (response.status === 201) {
-        setIsAuthenticated(true); // we have set the token previously in auth.js
+      const trimmedEmail = email.trim();
+      const trimmedFirstName = firstName.trim();
 
-        // update user data
-        if (response.data) {
-          await updateUserProfile(response.data?.user_profile);
-          await setUserProgress(response.data?.user_progress);
-          vocabularyDispatch({ type: VOCABULARY_ACTIONS.SET, payload: response.data?.user_vocabulary });
-        }
-        router.replace('/(tabs)');
+      // In case user register.tsx <- verify-email.tsx and presses REGISTER again with the same email,
+      // Don't send another code to email 
+      const stillCoolingDown =
+        lastSentEmail === trimmedEmail &&
+        lastSentAt !== null &&
+        Date.now() - lastSentAt < RESEND_COOLDOWN_SECONDS * 1000;
+
+      let sentAt = lastSentAt;
+
+      if (!stillCoolingDown) {
+        // Check if email is already registered + request 6-digit code
+        await requestVerificationCode(trimmedEmail);
+        sentAt = Date.now();
+        setLastSentEmail(trimmedEmail);
+        setLastSentAt(sentAt);
       }
+
+      router.push({
+        pathname: '/onboarding/verify-email',
+        params: {
+          email: trimmedEmail,
+          firstName: trimmedFirstName,
+          password,
+          lastSentAt: String(sentAt),
+        },
+      });
     } catch (error: any) {
       setErrors({ general: error.message });
     } finally {
@@ -166,7 +178,7 @@ export default function RegisterScreen({ onRegisterSuccess }: RegisterScreenProp
         <View style={styles.header}>
           <TouchableOpacity
             style={styles.backButton}
-            onPress={() => router.push('/onboarding/landing')}
+            onPress={() => router.back()}
           >
             <Ionicons name="arrow-back" size={32} color={PRIMARY_COLOR} />
           </TouchableOpacity>

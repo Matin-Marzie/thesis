@@ -6,6 +6,8 @@ import RegisterSchema from '../validation/RegisterSchema.js';
 import usersModel from '../models/usersModel.js';
 import userLanguagesModel from '../models/userLanguagesModel.js';
 import userVocabularyModel from '../models/userVocabularyModel.js';
+import emailVerificationModel from '../models/emailVerificationModel.js';
+import { verifyCode, attemptsExceeded } from '../utils/EmailVerificationCode.js';
 
 const registerController = async (req, res) => {
   try {
@@ -21,18 +23,42 @@ const registerController = async (req, res) => {
     // Extract all validated fields from RegistrationSchema
     const {
       password,
+      email_verification_code,
       user_profile,
       user_progress,
       vocabulary_changes,
     } = value;
 
-    // Check if email already exists
-    const emailExists = await usersModel.findByEmail(user_profile.email);
-    if (emailExists) {
-      return res.status(409).json({
-        message: 'Email already in use',
+    // Verify the pending code stored server-side, before creating any user row
+    const pending = await emailVerificationModel.getByEmail(user_profile.email);
+
+    if (!pending) {
+      return res.status(400).json({
+        message: 'No verification code found for this email. Please request a new code.\n(Resend code)',
       });
     }
+
+    if (new Date(pending.expires_at).getTime() < Date.now()) {
+      return res.status(400).json({
+        message: 'Verification code has expired. Please request a new one.\n(Resend code)',
+      });
+    }
+
+    if (attemptsExceeded(pending.attempts)) {
+      return res.status(429).json({
+        message: 'Too many incorrect attempts. Please request a new code.\n(Resend code)',
+      });
+    }
+
+    if (!verifyCode(email_verification_code, pending.code_hash)) {
+      await emailVerificationModel.incrementAttempts(user_profile.email);
+      return res.status(400).json({
+        message: 'Incorrect verification code',
+      });
+    }
+
+    // Verification succeeded - the pending code is single-use
+    await emailVerificationModel.deleteByEmail(user_profile.email);
 
     // Hash password
     const password_hash = await hashPassword(password);
@@ -57,6 +83,7 @@ const registerController = async (req, res) => {
           notifications: user_profile.notifications,
           energy: user_progress.energy,
           coins: user_progress.coins,
+          email_verified: true,
         });
         // If successful, break out of loop
         break;

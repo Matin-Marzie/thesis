@@ -15,15 +15,16 @@ const usersModel = {
       preferences,
       energy,
       coins,
+      email_verified,
     } = userData;
     const query = `
       INSERT INTO users (
-        email, password_hash, username, age, preferences, first_name, last_name, 
-        google_id, profile_picture, energy, coins
+        email, password_hash, username, age, preferences, first_name, last_name,
+        google_id, profile_picture, energy, coins, email_verified
       )
-      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)
-      RETURNING id, email, username, first_name, last_name, 
-                google_id, profile_picture, joined_date, energy, coins, age, preferences
+      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)
+      RETURNING id, email, username, first_name, last_name,
+                google_id, profile_picture, joined_date, energy, coins, age, preferences, email_verified
     `;
     const values = [
       email,
@@ -37,6 +38,7 @@ const usersModel = {
       profile_picture || null,
       energy,
       coins,
+      email_verified ?? false,
     ];
     const result = await pool.query(query, values);
     return result.rows[0];
@@ -53,9 +55,9 @@ const usersModel = {
   // Find user by ID
   async get(id) {
     const query = `
-      SELECT id, email, username, first_name, last_name, 
-             profile_picture, joined_date, last_login, energy, coins, google_id
-      FROM users 
+      SELECT id, email, username, first_name, last_name,
+             profile_picture, joined_date, last_login, energy, coins, google_id, email_verified
+      FROM users
       WHERE id = $1
     `;
     const result = await pool.query(query, [id]);

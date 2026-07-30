@@ -31,6 +31,29 @@ export const registerUser = async (newUser) => {
 };
 
 
+/**
+ * Request a 6-digit email verification code to be sent to the given address.
+ * Does NOT create a user or return tokens. The code itself is verified
+ * server-side (stored hashed in the DB, keyed by email) - just resubmit the
+ * same email + the code the user typed to registerUser().
+ * @param {string} email
+ * @returns {Promise<Object>} - full axios response; response.data = { message, expires_in_minutes }
+ */
+export const requestVerificationCode = async (email) => {
+  try {
+    const response = await apiClient.post('/register/send-code', { email });
+    return response;
+  } catch (error) {
+    const message =
+      error.response?.data?.message ||
+      error.message ||
+      'Failed to send verification code';
+
+    throw new Error(message);
+  }
+};
+
+
 
 
 /**
