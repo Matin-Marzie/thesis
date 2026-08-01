@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-nati
 import { Ionicons } from '@expo/vector-icons';
 import { PRIMARY_COLOR } from '@/constants/App';
 import { SUPPORTED_LANGUAGES, LANGUAGES_META } from '@/constants/SupportedLanguages';
+import { useColorScheme } from '@/components/useColorScheme';
 
 // Language type
 interface Language {
@@ -28,6 +29,8 @@ export default function LanguageSelectionSlide({
   setSelectedTarget: setSelectedTargetLanguage,
 }: LanguageSelectionSlideProps) {
 
+  const isDark = useColorScheme() === 'dark';
+
   // Accordion state - which language group is expanded
   const [expanded, setExpanded] = useState<string | null>('english');
 
@@ -47,21 +50,21 @@ export default function LanguageSelectionSlide({
     <View style={styles.slideContainer}>
       <ScrollView style={styles.scrollContent} showsVerticalScrollIndicator={false}>
         {/* Slide title */}
-        <Text style={styles.title}>What would you like to learn?</Text>
+        <Text style={[styles.title, isDark && { color: '#fff' }]}>What would you like to learn?</Text>
 
         {/* Render accordion for each supported language group */}
         {Object.entries(SUPPORTED_LANGUAGES).map(([key, lang]) => (
-          <View key={key} style={styles.accordionContainer}>
+          <View key={key} style={[styles.accordionContainer, isDark && { borderColor: '#333' }]}>
             {/* Accordion header */}
             <TouchableOpacity
-              style={styles.accordionHeader}
+              style={[styles.accordionHeader, isDark && { backgroundColor: '#1c1c1c' }]}
               onPress={() => setExpanded(expanded === key ? null : key)}
             >
               <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}>
                 {/* Native Language Flag */}
                 <Text style={styles.flagEmoji}>{LANGUAGES_META[key].flag}</Text>
                 {/* Native Language Label */}
-                <Text style={styles.accordionTitle}>{lang.label}</Text>
+                <Text style={[styles.accordionTitle, isDark && { color: '#fff' }]}>{lang.label}</Text>
               </View>
               <Ionicons
                 name={expanded === key ? 'chevron-up' : 'chevron-down'}
@@ -79,6 +82,7 @@ export default function LanguageSelectionSlide({
                     key={option.id}
                     style={[
                       styles.optionButton,
+                      isDark && { backgroundColor: '#2a2a2a' },
                       selectedNativeLanguage?.id === option.native.id &&
                       selectedTargetLanguage?.id === option.target.id &&
                       styles.optionButtonSelected,
@@ -92,6 +96,7 @@ export default function LanguageSelectionSlide({
                       <Text
                         style={[
                           styles.optionText,
+                          isDark && { color: '#eee' },
                           selectedNativeLanguage?.id === option.native.id &&
                           selectedTargetLanguage?.id === option.target.id &&
                           styles.optionTextSelected,
@@ -112,7 +117,8 @@ export default function LanguageSelectionSlide({
       <TouchableOpacity
         style={[
           styles.continueButton,
-          (!selectedNativeLanguage || !selectedTargetLanguage) && styles.continueButtonDisabled,
+          (!selectedNativeLanguage || !selectedTargetLanguage) &&
+            (isDark ? { backgroundColor: '#444' } : styles.continueButtonDisabled),
         ]}
         onPress={onNext}
         disabled={!selectedNativeLanguage || !selectedTargetLanguage}
@@ -157,7 +163,7 @@ const styles = StyleSheet.create({
   accordionContainer: {
     marginBottom: 12,
     borderWidth: 1,
-    borderColor: '#ddd',
+    borderColor: '#bbb',
     borderRadius: 12,
     overflow: 'hidden',
   },
@@ -174,12 +180,12 @@ const styles = StyleSheet.create({
     color: '#333',
   },
   accordionContent: {
-    padding: 12,
+    padding: 12,  
   },
   optionButton: {
     padding: 10,
     borderRadius: 8,
-    backgroundColor: '#f0f0f0',
+    backgroundColor: '#f9f9f9',
     marginBottom: 8,
   },
   optionButtonSelected: {

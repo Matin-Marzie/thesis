@@ -1,21 +1,24 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import { PRIMARY_COLOR } from '@/constants/App';
+import { useColorScheme } from '@/components/useColorScheme';
 
 interface WelcomeSlideProps {
   onNext: () => void;
 }
 
 export default function WelcomeSlide({ onNext }: WelcomeSlideProps) {
+  const isDark = useColorScheme() === 'dark';
+
   return (
     <View style={styles.slideContainer}>
       <View style={styles.content}>
-        <Image 
-          source={require('../../../assets/images/cat.png')} 
+        <Image
+          source={require('../../../assets/images/cat-no-bg.png')}
           style={styles.catImage}
           resizeMode="contain"
         />
-        <Text style={styles.title}>4 quick questions before we start</Text>
+        <Text style={[styles.title, isDark && { color: '#fff' }]}>4 quick questions before we start</Text>
         <Text style={styles.subtitle}>Help us personalize your learning experience</Text>
       </View>
       <TouchableOpacity style={styles.continueButton} onPress={onNext}>
@@ -43,12 +46,11 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 28,
     fontWeight: 'bold',
-    color: '#333',
     textAlign: 'center',
   },
   subtitle: {
     fontSize: 16,
-    color: '#666',
+    color: '#777',
     textAlign: 'center',
     marginBottom: 20,
   },

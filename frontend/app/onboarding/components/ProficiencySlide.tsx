@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
 import { PRIMARY_COLOR } from '@/constants/App';
+import { useColorScheme } from '@/components/useColorScheme';
 
 // Language type
 interface Language {
@@ -23,6 +24,8 @@ export default function ProficiencySlide({
   setSelectedLevel,
   selectedLearningLanguage,
 }: ProficiencySlideProps) {
+  const isDark = useColorScheme() === 'dark';
+
   // Get language name directly from the selected language object
   const languageName = selectedLearningLanguage?.name ?? '';
 
@@ -53,6 +56,7 @@ export default function ProficiencySlide({
             style={[
               styles.bar,
               { height },
+              isDark && { backgroundColor: '#3a3a3a' },
               index < filledCount && (isSelected ? styles.barFilledSelected : styles.barFilled),
             ]}
           />
@@ -64,10 +68,10 @@ export default function ProficiencySlide({
   return (
     <View style={styles.slideContainer}>
       {/* Slide title */}
-      <Text style={styles.title}>
+      <Text style={[styles.title, isDark && { color: '#fff' }]}>
         How much <Text style={styles.languageNameUnderline}>{languageName}</Text> do you know?
       </Text>
-      <Text style={styles.subtitle}>Select your current level</Text>
+      <Text style={[styles.subtitle, isDark && { color: '#aaa' }]}>Select your current level</Text>
 
       <ScrollView style={styles.scrollContent} showsVerticalScrollIndicator={false}>
         {/* Render each proficiency level */}
@@ -76,6 +80,7 @@ export default function ProficiencySlide({
             key={level.value}
             style={[
               styles.levelButton,
+              isDark && { backgroundColor: '#1c1c1c' },
               selectedLevel === level.value && styles.levelButtonSelected,
             ]}
             onPress={() => setSelectedLevel(level.value)}
@@ -87,6 +92,7 @@ export default function ProficiencySlide({
             <Text
               style={[
                 styles.levelText,
+                isDark && { color: '#eee' },
                 selectedLevel === level.value && styles.levelTextSelected,
               ]}
             >
@@ -97,6 +103,7 @@ export default function ProficiencySlide({
             <Text
               style={[
                 styles.levelSublabel,
+                isDark && { color: '#aaa' },
                 selectedLevel === level.value && styles.levelSublabelSelected,
               ]}
             >
@@ -108,7 +115,10 @@ export default function ProficiencySlide({
 
       {/* Continue button */}
       <TouchableOpacity
-        style={[styles.continueButton, !selectedLevel && styles.continueButtonDisabled]}
+        style={[
+          styles.continueButton,
+          !selectedLevel && (isDark ? { backgroundColor: '#444' } : styles.continueButtonDisabled),
+        ]}
         onPress={onNext}
         disabled={!selectedLevel}
       >

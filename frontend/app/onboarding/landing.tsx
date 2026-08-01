@@ -4,14 +4,15 @@ import {
   Text,
   StyleSheet,
   TouchableOpacity,
-  StatusBar,
   Image,
 } from 'react-native';
 import { useRouter } from 'expo-router';
 import { APP_NAME, APP_TAGLINE, PRIMARY_COLOR } from '../../constants/App';
+import { useColorScheme } from '@/components/useColorScheme';
 
 export default function LandingScreen() {
   const router = useRouter();
+  const colorScheme = useColorScheme();
 
   const handleGetStarted = () => {
     // New users go to onboarding questions first
@@ -24,8 +25,12 @@ export default function LandingScreen() {
   };
 
   return (
-    <View style={styles.container}>
-      <StatusBar barStyle="dark-content" />
+    <View
+      style={[
+        styles.container,
+        { backgroundColor: colorScheme !== 'dark' ? '#e9e7e8' : '' },
+      ]}
+    >
 
       {/* Content Overlay */}
       <View style={styles.overlay}>
@@ -33,7 +38,11 @@ export default function LandingScreen() {
         <View style={styles.logoContainer}>
           {/* GIF */}
           <Image
-            source={require('../../assets/gifs/tail-moving.gif')}
+            source={
+              colorScheme === 'dark'
+                ? require('../../assets/gifs/tail-moving-bg-black.gif')
+                : require('../../assets/gifs/tail-moving.gif')
+            }
             style={styles.gif}
             resizeMode="contain"
           />
@@ -68,7 +77,6 @@ export default function LandingScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#e8e8e8',
   },
   overlay: {
     flex: 1,
@@ -94,7 +102,7 @@ const styles = StyleSheet.create({
   },
   sublogo: {
     fontSize: 18,
-    color: '#333',
+    color: '#999',
     textAlign: 'center',
     marginTop: 8,
   },

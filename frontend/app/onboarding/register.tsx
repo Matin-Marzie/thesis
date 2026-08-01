@@ -16,6 +16,7 @@ import { Ionicons } from '@expo/vector-icons';
 // import { GoogleSigninButton, GoogleSignin, statusCodes, User as GoogleUser } from '@react-native-google-signin/google-signin';
 import { PRIMARY_COLOR } from '@/constants/App';
 import { requestVerificationCode } from '../../api/auth';
+import { useColorScheme } from '@/components/useColorScheme';
 
 
 // Hardcoded client IDs for Google Sign-In
@@ -48,6 +49,8 @@ export default function RegisterScreen({ onRegisterSuccess }: RegisterScreenProp
   // }, []);
 
   const router = useRouter();
+  const colorScheme = useColorScheme();
+  const isDark = colorScheme === 'dark';
 
   const [firstName, setFirstName] = useState('');
   const [email, setEmail] = useState('');
@@ -165,7 +168,8 @@ export default function RegisterScreen({ onRegisterSuccess }: RegisterScreenProp
 
   return (
     <KeyboardAvoidingView
-      style={styles.container}
+      key={colorScheme}
+      style={[styles.container]}
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : 20}
     >
@@ -182,7 +186,7 @@ export default function RegisterScreen({ onRegisterSuccess }: RegisterScreenProp
           >
             <Ionicons name="arrow-back" size={32} color={PRIMARY_COLOR} />
           </TouchableOpacity>
-          <Text style={styles.title}>Creat Account</Text>
+          <Text style={[styles.title, isDark && { color: '#fff' }]}>Create Account</Text>
         </View>
 
         {/* Form */}
@@ -190,8 +194,14 @@ export default function RegisterScreen({ onRegisterSuccess }: RegisterScreenProp
           {/* First Name Input */}
           <View style={{ marginBottom: 0 }}>
             <TextInput
-              style={[styles.input, styles.firstNameInput, errors.firstName && styles.inputError]}
+              style={[
+                styles.input,
+                styles.firstNameInput,
+                isDark && { backgroundColor: '#1c1c1c', borderColor: '#333', color: '#fff' },
+                errors.firstName && styles.inputError,
+              ]}
               placeholder="First Name"
+              placeholderTextColor={isDark ? '#888' : undefined}
               value={firstName}
               onChangeText={(text) => {
                 setFirstName(text);
@@ -208,8 +218,14 @@ export default function RegisterScreen({ onRegisterSuccess }: RegisterScreenProp
           {/* Email Input */}
           <View style={{ marginBottom: 0 }}>
             <TextInput
-              style={[styles.input, styles.emailInput, errors.email && styles.inputError]}
+              style={[
+                styles.input,
+                styles.emailInput,
+                isDark && { backgroundColor: '#1c1c1c', borderColor: '#333', color: '#fff' },
+                errors.email && styles.inputError,
+              ]}
               placeholder="Email"
+              placeholderTextColor={isDark ? '#888' : undefined}
               value={email}
               onChangeText={(text) => {
                 setEmail(text);
@@ -229,8 +245,13 @@ export default function RegisterScreen({ onRegisterSuccess }: RegisterScreenProp
           <View style={{ marginBottom: 0 }}>
             <View style={styles.passwordContainer}>
               <TextInput
-                style={[styles.passwordInput, errors.password && styles.inputError]}
+                style={[
+                  styles.passwordInput,
+                  isDark && { backgroundColor: '#1c1c1c', borderColor: '#333', color: '#fff' },
+                  errors.password && styles.inputError,
+                ]}
                 placeholder="Password"
+                placeholderTextColor={isDark ? '#888' : undefined}
                 value={password}
                 onChangeText={(text) => {
                   setPassword(text);
@@ -248,7 +269,7 @@ export default function RegisterScreen({ onRegisterSuccess }: RegisterScreenProp
                 <Ionicons
                   name={showPassword ? 'eye-off' : 'eye'}
                   size={24}
-                  color="#666"
+                  color={isDark ? '#aaa' : '#666'}
                 />
               </TouchableOpacity>
             </View>
@@ -283,20 +304,13 @@ export default function RegisterScreen({ onRegisterSuccess }: RegisterScreenProp
                 <Text style={styles.registerButtonText}>Registering...</Text>
               </View>
             ) : (
-              <Text
-                style={[
-                  styles.registerButtonText,
-                  (loading || firstName.trim() === '' || email.trim() === '' || password.trim() === '') && styles.registerButtonTextDisabled,
-                ]}
-              >
-                REGISTER
-              </Text>
+              <Text style={styles.registerButtonText}>REGISTER</Text>
             )}
           </TouchableOpacity>
 
           {/* Login Link */}
           <View style={styles.footer}>
-            <Text style={styles.footerText}>Already have an account? </Text>
+            <Text style={[styles.footerText, isDark && { color: '#aaa' }]}>Already have an account? </Text>
             <TouchableOpacity onPress={() => router.push('/onboarding/login')}>
               <Text style={styles.footerLink}>Login</Text>
             </TouchableOpacity>
@@ -321,7 +335,6 @@ export default function RegisterScreen({ onRegisterSuccess }: RegisterScreenProp
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
   },
   scrollContent: {
     flexGrow: 1,
@@ -412,14 +425,10 @@ const styles = StyleSheet.create({
   registerButtonText: {
     color: '#fff',
     fontSize: 16,
-    fontWeight: 'bold',
+    fontWeight: 'bold'
   },
-  buttonDisabled: {
-    backgroundColor: '#ccc',
-    opacity: 1,
-  },
-  registerButtonTextDisabled: {
-    color: '#888',
+  buttonDisabled: { 
+    opacity: 0.6 
   },
   footer: {
     flexDirection: 'row',

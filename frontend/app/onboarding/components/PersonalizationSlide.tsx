@@ -2,6 +2,7 @@ import React, { useRef, useEffect, useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Vibration } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { PRIMARY_COLOR } from '@/constants/App';
+import { useColorScheme } from '@/components/useColorScheme';
 
 interface PersonalizationSlideProps {
   onNext: () => void;
@@ -18,7 +19,8 @@ export default function PersonalizationSlide({
   selectedAge,
   setSelectedAge,
 }: PersonalizationSlideProps) {
-  
+  const isDark = useColorScheme() === 'dark';
+
   const preferences = [
     'Movies', 'Sports', 'Anime', 'Make up', 'Cartoons', 'Video games', 'News', 'Politics'
   ];
@@ -64,18 +66,19 @@ export default function PersonalizationSlide({
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.scrollContentContainer}
       >
-        <Text style={styles.title}>Personalization</Text>
+        <Text style={[styles.title, isDark && { color: '#fff' }]}>Personalization</Text>
 
         {/* Preferences */}
         <View style={styles.preferencesSection}>
-          <Text style={styles.sectionTitle}>Preferences</Text>
-          <Text style={styles.sectionSubtitle}>Select topics you're interested in</Text>
+          <Text style={[styles.sectionTitle, isDark && { color: '#fff' }]}>Preferences</Text>
+          <Text style={[styles.sectionSubtitle, isDark && { color: '#aaa' }]}>Select topics you're interested in</Text>
           <View style={styles.preferencesGrid}>
             {preferences.map((pref) => (
               <TouchableOpacity
                 key={pref}
                 style={[
                   styles.preferenceChip,
+                  isDark && { backgroundColor: '#1c1c1c', borderColor: '#333' },
                   selectedPreferences.includes(pref) && styles.preferenceChipSelected,
                 ]}
                 onPress={() => togglePreference(pref)}
@@ -83,6 +86,7 @@ export default function PersonalizationSlide({
                 <Text
                   style={[
                     styles.preferenceText,
+                    isDark && { color: '#eee' },
                     selectedPreferences.includes(pref) && styles.preferenceTextSelected,
                   ]}
                 >
@@ -95,16 +99,16 @@ export default function PersonalizationSlide({
 
         {/* Age Picker */}
         <View style={styles.ageSection}>
-          <Text style={styles.sectionTitle}>Age</Text>
-          <Text style={styles.sectionSubtitle}>Your age won't be shown publicly.</Text>
-          <View style={styles.pickerContainer}>
+          <Text style={[styles.sectionTitle, isDark && { color: '#fff' }]}>Age</Text>
+          <Text style={[styles.sectionSubtitle, isDark && { color: '#aaa' }]}>Your age won't be shown publicly.</Text>
+          <View style={[styles.pickerContainer, isDark && { backgroundColor: '#1c1c1c' }]}>
             {/* Inner shadows */}
             <LinearGradient
-              colors={['#FFF', 'transparent']}
+              colors={isDark ? ['#1c1c1c', 'transparent'] : ['transparent', 'transparent']} // Add gradient later
               style={styles.innerShadowTop}
             />
             <LinearGradient
-              colors={['transparent', '#FFF']}
+              colors={isDark ? ['transparent', '#1c1c1c'] : ['transparent', 'transparent']} // Add gradient later
               style={styles.innerShadowBottom}
             />
 
@@ -135,6 +139,7 @@ export default function PersonalizationSlide({
                   <Text
                     style={[
                       styles.pickerItemText,
+                      isDark && { color: '#aaa' },
                       currentAge === age && styles.pickerItemTextSelected,
                     ]}
                   >
@@ -148,7 +153,10 @@ export default function PersonalizationSlide({
       </ScrollView>
 
       <TouchableOpacity
-        style={[styles.continueButton, !canContinue && styles.continueButtonDisabled]}
+        style={[
+          styles.continueButton,
+          !canContinue && (isDark ? { backgroundColor: '#444' } : styles.continueButtonDisabled),
+        ]}
         onPress={onNext}
         disabled={!canContinue}
       >

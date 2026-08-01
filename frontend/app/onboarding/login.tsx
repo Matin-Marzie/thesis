@@ -18,6 +18,7 @@ import { loginUser } from '../../api/auth';
 import { PRIMARY_COLOR } from '@/constants/App';
 import { useAppContext } from '@/context/AppContext';
 import { VOCABULARY_ACTIONS } from '@/hooks/useVocabulary';
+import { useColorScheme } from '@/components/useColorScheme';
 // import { GoogleSigninButton, GoogleSignin, statusCodes, User as GoogleUser, isSuccessResponse, isErrorWithCode } from '@react-native-google-signin/google-signin';
 
 const USERNAME_REGEX = /^[a-zA-Z][a-zA-Z0-9._-]{3,30}$/;
@@ -44,6 +45,8 @@ export default function LoginScreen() {
 
   const { updateUserProfile, setUserProgress, vocabularyDispatch, setIsAuthenticated, setHasCompletedOnboarding, hasCompletedOnboarding } = useAppContext();
   const router = useRouter();
+  const colorScheme = useColorScheme();
+  const isDark = colorScheme === 'dark';
 
   const [usernameOrEmail, setUsernameOrEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -104,15 +107,15 @@ export default function LoginScreen() {
     try {
       // await GoogleSignin.hasPlayServices({ showPlayServicesUpdateDialog: true });
       // const response = await GoogleSignin.signIn();
-      
+
       // if (isSuccessResponse(response)) {
       //   response
       //   Alert.alert('Google Sign-In Success', `Welcome, ${response.user.name || response.user.email}`);
       // }
-    
-    
-    
-    
+
+
+
+
       // const userInfo: GoogleUser = await GoogleSignin.signIn();
       // You can send userInfo.idToken to your backend for authentication
       // console.log('Google User Info:', userInfo);
@@ -153,8 +156,7 @@ export default function LoginScreen() {
 
   return (
     <KeyboardAvoidingView
-      style={styles.container}
-      behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+      style={[styles.container]}
     >
       <ScrollView
         contentContainerStyle={styles.scrollContent}
@@ -168,13 +170,18 @@ export default function LoginScreen() {
           >
             <Ionicons name="arrow-back" size={32} color={PRIMARY_COLOR} />
           </TouchableOpacity>
-          <Text style={styles.title}>Welcome Back</Text>
+          <Text style={[styles.title, isDark && { color: '#eee' }]}>Welcome Back</Text>
         </View>
 
         <View style={styles.form}>
           <TextInput
-            style={[styles.input, styles.emailUsernameInput]}
+            style={[
+              styles.input,
+              styles.emailUsernameInput,
+              isDark && { backgroundColor: '#1c1c1c', borderColor: '#333', color: '#fff' },
+            ]}
             placeholder="Username or Email"
+            placeholderTextColor={isDark ? '#888' : undefined}
             value={usernameOrEmail}
             onChangeText={setUsernameOrEmail}
             autoCapitalize="none"
@@ -184,8 +191,12 @@ export default function LoginScreen() {
 
           <View style={styles.passwordContainer}>
             <TextInput
-              style={styles.passwordInput}
+              style={[
+                styles.passwordInput,
+                isDark && { backgroundColor: '#1c1c1c', borderColor: '#333', color: '#fff' },
+              ]}
               placeholder="Password"
+              placeholderTextColor={isDark ? '#888' : undefined}
               value={password}
               onChangeText={setPassword}
               secureTextEntry={!showPassword}
@@ -200,7 +211,7 @@ export default function LoginScreen() {
               <Ionicons
                 name={showPassword ? 'eye-off' : 'eye'}
                 size={24}
-                color="#666"
+                color={isDark ? '#aaa' : '#666'}
               />
             </TouchableOpacity>
           </View>
@@ -223,14 +234,20 @@ export default function LoginScreen() {
           </TouchableOpacity>
 
           {/* SIGN UP */}
-          {hasCompletedOnboarding && (
-            <View style={styles.registerLink}>
-              <Text style={styles.registerLinkText}>Don't have an account? </Text>
+          <View style={styles.registerLink}>
+            <Text style={[styles.registerLinkText, isDark && { color: '#aaa' }]}>Don't have an account? </Text>
+
+            {hasCompletedOnboarding ? (
               <TouchableOpacity onPress={() => router.push('/onboarding/register')}>
                 <Text style={styles.registerLinkLink}>Sign up</Text>
               </TouchableOpacity>
-            </View>
-          )}
+            ) : (
+              <TouchableOpacity onPress={() => router.push('/onboarding/questions')}>
+                <Text style={styles.registerLinkLink}>Get Started</Text>
+              </TouchableOpacity>
+            )}
+
+          </View>
         </View>
 
         {/* Google Sign-In Button */}
@@ -243,20 +260,19 @@ export default function LoginScreen() {
               disabled={loading}
             />
         </View> */}
-        
+
       </ScrollView>
     </KeyboardAvoidingView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#fff' },
+  container: { flex: 1 },
   scrollContent: {
     flexGrow: 1,
     paddingHorizontal: 20,
     paddingTop: 10,
     paddingBottom: 5,
-    marginBottom: 50, // temporary space
   },
   header: {
     flexDirection: 'row',
@@ -315,14 +331,23 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     gap: 8,
   },
-  loginButtonText: { color: '#fff', fontSize: 16, fontWeight: 'bold' },
-  buttonDisabled: { opacity: 0.6 },
+  loginButtonText: {
+    color: '#fff',
+    fontSize: 16,
+    fontWeight: 'bold'
+  },
+  buttonDisabled: { 
+    opacity: 0.6 
+  },
   registerLink: {
     flexDirection: 'row',
     justifyContent: 'center',
     marginTop: 16,
   },
-  registerLinkText: { color: '#666', fontSize: 16 },
+  registerLinkText: {
+    color: '#666',
+    fontSize: 16,
+  },
   registerLinkLink: {
     color: PRIMARY_COLOR,
     fontSize: 16,

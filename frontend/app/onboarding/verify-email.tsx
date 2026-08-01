@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {
   View,
   Text,
@@ -16,11 +16,15 @@ import { PRIMARY_COLOR } from '@/constants/App';
 import { registerUser, requestVerificationCode } from '../../api/auth';
 import { useAppContext } from '../../context/AppContext';
 import { VOCABULARY_ACTIONS } from '@/hooks/useVocabulary';
+import { useColorScheme } from '@/components/useColorScheme';
 
 const RESEND_COOLDOWN_SECONDS = 60;
+const CODE_LENGTH = 6;
 
 export default function VerifyEmailScreen() {
   const router = useRouter();
+  const colorScheme = useColorScheme();
+  const isDark = colorScheme === 'dark';
   // Carried forward as route params from register.tsx (in-memory navigation
   // state only, lost if the app is killed).
   const params = useLocalSearchParams<{
@@ -42,6 +46,8 @@ export default function VerifyEmailScreen() {
   } = useAppContext();
 
   const [sixDigitCode, setSixDigitCode] = useState('');
+  const [isCodeInputFocused, setIsCodeInputFocused] = useState(false);
+  const codeInputRef = useRef<TextInput>(null);
   const [loading, setLoading] = useState(false);
   const [resending, setResending] = useState(false);
   // Kept in sync with register.tsx's own lastSentAt: if the code was actually
@@ -125,7 +131,8 @@ export default function VerifyEmailScreen() {
 
   return (
     <KeyboardAvoidingView
-      style={styles.container}
+      key={colorScheme}
+      style={[styles.container, { backgroundColor: isDark ? '#000' : '#fff' }]}
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : 20}
     >
@@ -145,28 +152,60 @@ export default function VerifyEmailScreen() {
         </View>
 
         <View style={styles.form}>
-          <Text style={styles.subtitle}>
-            Enter the 6-digit code sent to {email}
-          </Text>
+          <View style={styles.subtitleWrap}>
+            <Text style={[styles.subtitle, isDark && { color: '#aaa' }]}>Enter the 6-digit code sent to </Text>
+            <Text style={[styles.subtitle, styles.emailText, isDark && { color: '#fff' }]}>{email}</Text>
+          </View>
 
-          <TextInput
-            style={[styles.input, errors.general && styles.inputError]}
-            placeholder="000000"
-            value={sixDigitCode}
-            onChangeText={(text) => {
-              setSixDigitCode(text.replace(/[^0-9]/g, '').slice(0, 6));
-              if (errors.general) setErrors({});
-            }}
-            keyboardType="number-pad"
-            maxLength={6}
-            editable={!loading}
-            textAlign="center"
-          />
+          <TouchableOpacity
+            activeOpacity={1}
+            style={styles.codeBoxesRow}
+            onPress={() => codeInputRef.current?.focus()}
+          >
+            {Array.from({ length: CODE_LENGTH }).map((_, i) => {
+              const isActive = isCodeInputFocused && i === sixDigitCode.length;
+              return (
+                <View
+                  key={i}
+                  style={[
+                    styles.codeBox,
+                    isDark && { backgroundColor: '#1c1c1c', borderColor: '#333' },
+                    isActive && styles.codeBoxActive,
+                    errors.general && styles.codeBoxError,
+                  ]}
+                >
+                  <Text style={[styles.codeBoxText, isDark && { color: '#fff' }]}>{sixDigitCode[i] ?? ''}</Text>
+                </View>
+              );
+            })}
+
+            <TextInput
+              ref={codeInputRef}
+              style={styles.hiddenInput}
+              pointerEvents="none"
+              value={sixDigitCode}
+              onChangeText={(text) => {
+                setSixDigitCode(text.replace(/[^0-9]/g, '').slice(0, CODE_LENGTH));
+                if (errors.general) setErrors({});
+              }}
+              onFocus={() => setIsCodeInputFocused(true)}
+              onBlur={() => setIsCodeInputFocused(false)}
+              keyboardType="number-pad"
+              maxLength={CODE_LENGTH}
+              editable={!loading}
+              caretHidden
+              autoFocus
+            />
+          </TouchableOpacity>
 
           {errors.general && <Text style={styles.errorText}>{errors.general}</Text>}
 
           <TouchableOpacity
-            style={[styles.registerButton, (loading || sixDigitCode.length !== 6) && styles.buttonDisabled]}
+            style={[
+              styles.registerButton,
+              (loading || sixDigitCode.length !== 6) &&
+                (isDark ? { backgroundColor: '#444', opacity: 1 } : styles.buttonDisabled),
+            ]}
             onPress={handleVerify}
             disabled={loading || sixDigitCode.length !== 6}
           >
@@ -182,7 +221,11 @@ export default function VerifyEmailScreen() {
 
           <View style={styles.footer}>
             <TouchableOpacity onPress={handleResend} disabled={cooldown > 0 || resending}>
-              <Text style={[styles.footerLink, (cooldown > 0 || resending) && styles.registerButtonTextDisabled]}>
+              <Text
+                style={[
+                  styles.footerLink,
+                  (cooldown > 0 || resending) && (isDark ? { color: '#aaa' } : styles.registerButtonTextDisabled),
+                ]}>
                 {resending
                   ? 'Sending...'
                   : cooldown > 0
@@ -200,7 +243,6 @@ export default function VerifyEmailScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
   },
   scrollContent: {
     flexGrow: 1,
@@ -226,24 +268,59 @@ const styles = StyleSheet.create({
   form: {
     flex: 1,
   },
+  subtitleWrap: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'center',
+    marginBottom: 20,
+  },
   subtitle: {
     fontSize: 14,
     color: '#666',
-    marginBottom: 20,
     textAlign: 'center',
   },
-  input: {
+  emailText: {
+    fontWeight: '600',
+    color: '#333',
+  },
+  codeBoxesRow: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    gap: 10,
+    position: 'relative',
+  },
+  codeBox: {
+    width: 44,
+    height: 52,
     borderWidth: 1,
     borderColor: '#ddd',
     borderRadius: 8,
-    paddingHorizontal: 16,
-    paddingVertical: 14,
-    fontSize: 24,
-    letterSpacing: 8,
+    justifyContent: 'center',
+    alignItems: 'center',
     backgroundColor: '#fff',
   },
-  inputError: {
+  codeBoxActive: {
+    borderColor: PRIMARY_COLOR,
+    borderWidth: 2,
+  },
+  codeBoxError: {
     borderColor: '#ff3b30',
+  },
+  codeBoxText: {
+    fontSize: 24,
+    fontWeight: '600',
+    color: '#333',
+  },
+  hiddenInput: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    // opacity: 0 exactly makes RN treat the view as non-interactive for hit
+    // testing on iOS, so a blurred input can't be tapped to refocus - use a
+    // barely-nonzero value instead, visually identical but still tappable.
+    opacity: 0.01,
   },
   errorText: {
     color: '#ff3b30',

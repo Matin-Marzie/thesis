@@ -2,12 +2,15 @@ import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { PRIMARY_COLOR } from '@/constants/App';
+import { useColorScheme } from '@/components/useColorScheme';
 
 interface NotificationsSlideProps {
   onNext: () => void;
 }
 
 export default function NotificationsSlide({ onNext }: NotificationsSlideProps) {
+  const isDark = useColorScheme() === 'dark';
+
   const handleRemindMe = async () => {
     // Request notification permissions
     // For now, just continue
@@ -22,7 +25,7 @@ export default function NotificationsSlide({ onNext }: NotificationsSlideProps) 
     <View style={styles.slideContainer}>
       <View style={styles.content}>
         <Ionicons name="notifications-outline" size={80} color={PRIMARY_COLOR} />
-        <Text style={styles.title}>I'll remind you to practice</Text>
+        <Text style={[styles.title, isDark && { color: '#fff' }]}>I'll remind you to practice</Text>
         <Text style={styles.subtitle}>
           Allow notifications to help you stay on track with your learning goals
         </Text>
@@ -50,7 +53,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    paddingHorizontal: 20,
   },
   title: {
     fontSize: 28,
