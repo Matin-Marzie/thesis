@@ -4,12 +4,15 @@ import { useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { useAppContext } from '../context/AppContext';
 import { useLogout } from '../hooks/useLogout';
+import { useDeleteAccount } from '../hooks/useDeleteAccount';
 
 export default function MoreScreen() {
   const router = useRouter();
   const { isAuthenticated } = useAppContext();
   const { logout } = useLogout();
+  const { deleteAccount } = useDeleteAccount();
   const [isLoggingOut, setIsLoggingOut] = useState(false);
+  const [isDeletingAccount, setIsDeletingAccount] = useState(false);
 
   const handleLogout = () => {
     Alert.alert(
@@ -33,6 +36,38 @@ export default function MoreScreen() {
             } finally {
               setIsLoggingOut(false);
               router.replace('/onboarding/login');
+            }
+          },
+        },
+      ]
+    );
+  };
+
+  const handleDeleteAccount = () => {
+    Alert.alert(
+      'Delete Account',
+      'This will permanently delete your account and all your data. This action cannot be undone.',
+      [
+        {
+          text: 'Cancel',
+          style: 'cancel',
+        },
+        {
+          text: 'Delete',
+          style: 'destructive',
+          onPress: async () => {
+            setIsDeletingAccount(true);
+            try {
+              await deleteAccount();
+              router.replace('/onboarding/login');
+            } catch (error) {
+              console.error('Delete account error:', error);
+              Alert.alert(
+                'Delete Failed',
+                error instanceof Error ? error.message : 'Could not delete your account. Please try again.'
+              );
+            } finally {
+              setIsDeletingAccount(false);
             }
           },
         },
@@ -85,6 +120,27 @@ export default function MoreScreen() {
             <Text style={styles.logoutText}>{isLoggingOut ? 'Logging out...' : 'Logout'}</Text>
           </TouchableOpacity>
         )}
+
+        {/* Danger Zone */}
+        {isAuthenticated && (
+          <View style={styles.dangerZone}>
+            <Text style={styles.dangerZoneTitle}>Danger Zone</Text>
+            <TouchableOpacity
+              style={[styles.deleteAccountButton, isDeletingAccount && styles.logoutButtonDisabled]}
+              onPress={handleDeleteAccount}
+              disabled={isDeletingAccount}
+            >
+              {isDeletingAccount ? (
+                <ActivityIndicator size="small" color="#dc3545" />
+              ) : (
+                <Ionicons name="trash-outline" size={22} color="#dc3545" />
+              )}
+              <Text style={styles.deleteAccountText}>
+                {isDeletingAccount ? 'Deleting account...' : 'Delete Account'}
+              </Text>
+            </TouchableOpacity>
+          </View>
+        )}
       </View>
     </ScrollView>
   );
@@ -133,5 +189,32 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '600',
     color: '#fff',
+  },
+  dangerZone: {
+    marginTop: 24,
+  },
+  dangerZoneTitle: {
+    fontSize: 13,
+    fontWeight: '600',
+    color: '#999',
+    textTransform: 'uppercase',
+    marginBottom: 8,
+    marginLeft: 4,
+  },
+  deleteAccountButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#fff',
+    paddingVertical: 16,
+    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: '#dc3545',
+    gap: 8,
+  },
+  deleteAccountText: {
+    fontSize: 16,
+    fontWeight: '600',
+    color: '#dc3545',
   },
 });

@@ -70,3 +70,21 @@ export const updateUserProfile = async (userData) => {
     throw error;
   }
 };
+
+
+/**
+ * Permanently delete the current user's account and all associated data
+ * @returns {Promise<Object>} - { message }
+ */
+export const deleteAccount = async () => {
+  try {
+    const response = await apiClient.delete('/user/me');
+    return response.data;
+  } catch (error) {
+    const message =
+      error.response?.data?.message ||
+      error.message ||
+      'Failed to delete account';
+    throw new Error(message);
+  }
+};

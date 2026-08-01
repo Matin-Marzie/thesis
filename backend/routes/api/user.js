@@ -147,6 +147,48 @@ router.get('/:id', userController.getUserById);
  */
 router.patch('/profile', verifyJWT, userController.updateProfile);
 
+/**
+ * @swagger
+ * /user/me:
+ *   delete:
+ *     summary: Delete current user's account
+ *     description: Permanently delete the authenticated user's account and all associated data (languages, vocabulary progress). This action is irreversible.
+ *     tags: [User]
+ *     security:
+ *       - bearerAuth: []
+ *       - cookieAuth: []
+ *     responses:
+ *       200:
+ *         description: Account deleted successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: 'Account deleted successfully'
+ *       401:
+ *         description: Unauthorized - Missing or invalid token
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error'
+ *       404:
+ *         description: User not found
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error'
+ *       500:
+ *         description: Internal server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error'
+ */
+router.delete('/me', verifyJWT, userController.deleteAccount);
+
 
 /**
  * @swagger

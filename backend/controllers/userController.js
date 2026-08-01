@@ -2,6 +2,7 @@ import UserProfileSchema from '../validation/UserProfileSchema.js';
 import usersModel from '../models/usersModel.js';
 import userLanguagesModel from '../models/userLanguagesModel.js';
 import userVocabularyModel from '../models/userVocabularyModel.js';
+import { logEvents } from '../middleware/logEvents.js';
 
 
 const userController = {
@@ -57,6 +58,35 @@ const userController = {
       });
     }
   },
+
+
+
+  // Permanently delete current user's account and all associated data
+  async deleteAccount(req, res) {
+    try {
+      const userId = req.user.id;
+
+      const deletedUser = await usersModel.delete(userId);
+
+      if (!deletedUser) {
+        return res.status(404).json({
+          message: 'User not found',
+        });
+      }
+
+      logEvents(`User deleted account: ${deletedUser.email}`, 'authLog.log');
+
+      res.status(200).json({
+        message: 'Account deleted successfully',
+      });
+    } catch (error) {
+      console.error('Delete account error:', error);
+      res.status(500).json({
+        message: 'Internal server error',
+      });
+    }
+  },
+
 
 
 

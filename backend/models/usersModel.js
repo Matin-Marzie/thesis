@@ -103,6 +103,20 @@ const usersModel = {
   },
 
 
+  // Permanently delete a user (hard delete). Related rows (user_languages,
+  // user_vocabulary, reel_interactions, ...) are removed via ON DELETE CASCADE.
+  async delete(userId) {
+    const query = 'DELETE FROM users WHERE id = $1 RETURNING id, email';
+    const result = await pool.query(query, [userId]);
+    return result.rows[0];
+  },
+
+
+
+
+  
+
+
   // Update user profile, energy, or coins
   async updateProfile(userId, updates) {
     const allowedFields = ['first_name', 'last_name', 'username', 'profile_picture', 'energy', 'coins'];
