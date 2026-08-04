@@ -7,7 +7,7 @@ const syncController = {
   async sync(req, res) {
     try {
       const userId = req.user.id;
-      
+
       // Validate request data
       const { error, value } = SyncSchema.validate(req.body);
       if (error) {

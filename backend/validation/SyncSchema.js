@@ -45,6 +45,14 @@ const SyncSchema = Joi.object({
           'date.base': 'created_at must be a valid date',
           'any.required': 'created_at is required for inserts',
         }),
+        review_count: Joi.number().integer().min(0).messages({
+          'number.base': 'review_count must be a number',
+          'number.integer': 'review_count must be an integer',
+          'number.min': 'review_count must be at least 0',
+        }),
+        next_review_at: Joi.date().allow(null).messages({
+          'date.base': 'next_review_at must be a valid date or null',
+        }),
       })
     ).default({}).messages({
       'object.base': 'inserts must be an object',
