@@ -1,4 +1,4 @@
-import { createContext, useContext } from 'react';
+import { createContext, useContext, useMemo } from 'react';
 import { usePersistedState } from '../hooks/usePersistedState';
 import { DEFAULT_VIBRATION_SETTINGS, STORAGE_KEYS, validators } from '../constants/defaults';
 
@@ -19,10 +19,10 @@ export const VibrationProvider = ({ children }) => {
     isLoaded: isVibrationSettingsLoaded,
   } = usePersistedState(STORAGE_KEYS.VIBRATION_SETTINGS, DEFAULT_VIBRATION_SETTINGS, validators.vibrationSettings);
 
-  const value = {
+  const value = useMemo(() => ({
     vibrationSettings, setVibrationSettings,
     isVibrationSettingsLoaded,
-  };
+  }), [vibrationSettings, setVibrationSettings, isVibrationSettingsLoaded]);
 
   return <VibrationContext.Provider value={value}>{children}</VibrationContext.Provider>;
 };

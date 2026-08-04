@@ -1,4 +1,4 @@
-import { createContext, useState, useContext, useEffect } from 'react';
+import { createContext, useState, useContext, useEffect, useMemo } from 'react';
 import { useNetworkStatus } from '../hooks/useNetworkStatus';
 import { apiEvents, API_EVENTS } from '../api/apiEvents';
 
@@ -34,10 +34,10 @@ export const NetworkProvider = ({ children }) => {
     };
   }, []);
 
-  const value = {
+  const value = useMemo(() => ({
     isOnline,
     isBackendServerReachable, setIsBackendServerReachable,
-  };
+  }), [isOnline, isBackendServerReachable]);
 
   return <NetworkContext.Provider value={value}>{children}</NetworkContext.Provider>;
 };

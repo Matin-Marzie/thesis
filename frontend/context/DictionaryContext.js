@@ -133,13 +133,13 @@ export const DictionaryProvider = ({ children }) => {
     fetchDictionary,
   ]);
 
-  const value = {
+  const value = useMemo(() => ({
     dictionary,
     dictionaryLoading: loading,
     dictionaryError: error,
     fetchDictionary,
     reload,
-  };
+  }), [dictionary, loading, error, fetchDictionary, reload]);
 
   return (
     <DictionaryContext.Provider value={value}>

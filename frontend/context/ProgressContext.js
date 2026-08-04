@@ -1,4 +1,4 @@
-import { createContext, useContext } from 'react';
+import { createContext, useContext, useMemo } from 'react';
 import { usePersistedState } from '../hooks/usePersistedState';
 import { DEFAULT_USER_PROGRESS, STORAGE_KEYS, validators } from '../constants/defaults';
 
@@ -19,10 +19,10 @@ export const ProgressProvider = ({ children }) => {
     isLoaded: isProgressLoaded,
   } = usePersistedState(STORAGE_KEYS.USER_PROGRESS, DEFAULT_USER_PROGRESS, validators.userProgress);
 
-  const value = {
+  const value = useMemo(() => ({
     userProgress, setUserProgress,
     isProgressLoaded,
-  };
+  }), [userProgress, setUserProgress, isProgressLoaded]);
 
   return <ProgressContext.Provider value={value}>{children}</ProgressContext.Provider>;
 };

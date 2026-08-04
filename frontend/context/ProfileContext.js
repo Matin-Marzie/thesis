@@ -1,4 +1,4 @@
-import { createContext, useContext, useCallback } from 'react';
+import { createContext, useContext, useCallback, useMemo } from 'react';
 import { usePersistedState } from '../hooks/usePersistedState';
 import { DEFAULT_USER_PROFILE, STORAGE_KEYS, validators } from '../constants/defaults';
 
@@ -28,10 +28,10 @@ export const ProfileProvider = ({ children }) => {
     }));
   }, [setUserProfile]);
 
-  const value = {
+  const value = useMemo(() => ({
     userProfile, setUserProfile, updateUserProfile,
     isProfileLoaded,
-  };
+  }), [userProfile, setUserProfile, updateUserProfile, isProfileLoaded]);
 
   return <ProfileContext.Provider value={value}>{children}</ProfileContext.Provider>;
 };

@@ -1,4 +1,4 @@
-import { createContext, useContext, useCallback } from 'react';
+import { createContext, useContext, useCallback, useMemo } from 'react';
 import { usePersistedState } from '../hooks/usePersistedState';
 import { vocabularyReducer, vocabularyChangesReducer, DEFAULT_VOCABULARY_CHANGES, VOCABULARY_ACTIONS } from '../hooks/useVocabulary';
 import { DEFAULT_USER_VOCABULARY, STORAGE_KEYS, validators } from '../constants/defaults';
@@ -48,11 +48,15 @@ export const VocabularyProvider = ({ children }) => {
     // Note: We do NOT update vocabularyChanges here - these are not synced to backend
   }, [setUserVocabulary]);
 
-  const value = {
+  const value = useMemo(() => ({
     userVocabulary, setUserVocabulary, vocabularyDispatch, bulkAddVocabulary,
     vocabularyChanges, setVocabularyChanges,
     isVocabularyLoaded, isVocabularyChangesLoaded,
-  };
+  }), [
+    userVocabulary, setUserVocabulary, vocabularyDispatch, bulkAddVocabulary,
+    vocabularyChanges, setVocabularyChanges,
+    isVocabularyLoaded, isVocabularyChangesLoaded,
+  ]);
 
   return <VocabularyContext.Provider value={value}>{children}</VocabularyContext.Provider>;
 };

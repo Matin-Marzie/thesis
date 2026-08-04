@@ -1,4 +1,4 @@
-import { createContext, useState, useEffect, useContext, useCallback } from 'react';
+import { createContext, useState, useEffect, useContext, useCallback, useMemo } from 'react';
 import { getRefreshToken } from '../api/tokens';
 import { refreshAccessToken } from '../api/auth';
 import { usePersistedState } from '../hooks/usePersistedState';
@@ -109,12 +109,17 @@ export const AuthProvider = ({ children }) => {
     }
   }, [isProfileLoaded, isProgressLoaded, isVocabularyLoaded, isVocabularyChangesLoaded, isOnboardingLoaded, isVibrationSettingsLoaded, initApp, isOnline]);
 
-  const value = {
+  const value = useMemo(() => ({
     isAuthenticated, setIsAuthenticated, initApp,
     hasCompletedOnboarding, setHasCompletedOnboarding,
     isLoading, setIsLoading,
     forceSync,
-  };
+  }), [
+    isAuthenticated, setIsAuthenticated, initApp,
+    hasCompletedOnboarding, setHasCompletedOnboarding,
+    isLoading, setIsLoading,
+    forceSync,
+  ]);
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
