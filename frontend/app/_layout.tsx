@@ -86,7 +86,13 @@ function RootLayoutNav() {
     const inSettingsScreen = segments[0] === 'settings';
     const inModal = segments[0] === 'modal';
     const inGames = segments[0] === 'games';
-    const inLoginOrRegister = segments[1] === 'login' || segments[1] === 'register' || segments[1] === 'verify-email';
+    const inLoginOrRegister =
+      segments[1] === 'login' ||
+      segments[1] === 'register' ||
+      segments[1] === 'verify-email' ||
+      segments[1] === 'forgot-password' ||
+      segments[1] === 'verify-reset-code' ||
+      segments[1] === 'reset-password';
 
     // [2] Check: onboardingComplete? — if NO, redirect to onboarding
     if (!hasCompletedOnboarding) {

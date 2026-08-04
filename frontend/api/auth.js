@@ -57,6 +57,77 @@ export const requestVerificationCode = async (email) => {
 
 
 /**
+ * Request a 6-digit password reset code to be sent to the given address.
+ * Always resolves the same way regardless of whether the email is
+ * registered (server response is generic to prevent account enumeration) -
+ * submit the same email + the code the user typed to resetPassword().
+ * @param {string} email
+ * @returns {Promise<Object>} - full axios response; response.data = { message }
+ */
+export const requestPasswordReset = async (email) => {
+  try {
+    const response = await apiClient.post('/auth/forgot-password', { email });
+    return response;
+  } catch (error) {
+    const message =
+      error.response?.data?.message ||
+      error.message ||
+      'Failed to request password reset';
+
+    throw new Error(message);
+  }
+};
+
+
+/**
+ * Verify a password reset code without resetting the password yet.
+ * Does not consume the code - resetPassword() still re-verifies it as the
+ * real, single-use gate before changing anything.
+ * @param {Object} data - { email, code }
+ * @returns {Promise<Object>} - full axios response; response.data = { message }
+ */
+export const verifyResetCode = async ({ email, code }) => {
+  try {
+    const response = await apiClient.post('/auth/verify-reset-code', { email, code });
+    return response;
+  } catch (error) {
+    const message =
+      error.response?.data?.message ||
+      error.message ||
+      'Failed to verify code';
+
+    // status is attached so the UI can tell a 429 (too many attempts, needs
+    // a resend) apart from a plain wrong-code 400 without string-matching
+    const normalizedError = new Error(message);
+    normalizedError.status = error.response?.status;
+    throw normalizedError;
+  }
+};
+
+
+/**
+ * Reset password using the code sent by requestPasswordReset().
+ * Does not log the user in - no tokens are returned, the caller should
+ * redirect to login.
+ * @param {Object} data - { email, code, password }
+ * @returns {Promise<Object>} - full axios response; response.data = { message }
+ */
+export const resetPassword = async ({ email, code, new_password }) => {
+  try {
+    const response = await apiClient.post('/auth/reset-password', { email, code, new_password });
+    return response;
+  } catch (error) {
+    const message =
+      error.response?.data?.message ||
+      error.message ||
+      'Failed to reset password';
+
+    throw new Error(message);
+  }
+};
+
+
+/**
  * Login with username and password
  * @param {Object} credentials - { username, password }
  * @returns {Promise<Object>} - { success, data: { user, accessToken, refreshToken } }

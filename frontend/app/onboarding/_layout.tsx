@@ -13,6 +13,9 @@ export default function OnboardingLayout() {
           <Stack.Screen name="login" />
           <Stack.Screen name="register" />
           <Stack.Screen name="verify-email" />
+          <Stack.Screen name="forgot-password" />
+          <Stack.Screen name="verify-reset-code" />
+          <Stack.Screen name="reset-password" />
         </Stack>
       </SafeAreaView>
     </SafeAreaProvider>

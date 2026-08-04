@@ -103,6 +103,20 @@ const usersModel = {
   },
 
 
+  // Set a new password hash and invalidate any existing session (refresh_token),
+  // since a password reset should log out other devices.
+  async updatePassword(userId, passwordHash) {
+    const query = `
+      UPDATE users
+      SET password_hash = $1, refresh_token = NULL
+      WHERE id = $2
+      RETURNING id, email
+    `;
+    const result = await pool.query(query, [passwordHash, userId]);
+    return result.rows[0];
+  },
+
+
   // Permanently delete a user (hard delete). Related rows (user_languages,
   // user_vocabulary, reel_interactions, ...) are removed via ON DELETE CASCADE.
   async delete(userId) {

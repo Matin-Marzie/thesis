@@ -517,6 +517,22 @@ CREATE TABLE public.email_verification_codes (
 ALTER TABLE public.email_verification_codes OWNER TO root;
 
 --
+-- Name: password_reset_codes; Type: TABLE; Schema: public; Owner: root
+--
+
+CREATE TABLE public.password_reset_codes (
+    email character varying(255) NOT NULL,
+    code_hash text NOT NULL,
+    expires_at timestamp with time zone NOT NULL,
+    attempts integer DEFAULT 0 NOT NULL,
+    created_at timestamp with time zone DEFAULT now() NOT NULL,
+    CONSTRAINT password_reset_codes_pkey PRIMARY KEY (email)
+);
+
+
+ALTER TABLE public.password_reset_codes OWNER TO root;
+
+--
 -- Name: users; Type: TABLE; Schema: public; Owner: root
 --
 

@@ -216,6 +216,20 @@ export default function LoginScreen() {
             </TouchableOpacity>
           </View>
 
+          <TouchableOpacity
+            style={styles.forgotPasswordLink}
+            onPress={() =>
+              router.push({
+                pathname: '/onboarding/forgot-password',
+                // Only carry it over if what's typed actually looks like an
+                // email - usernameOrEmail may hold a username instead.
+                params: usernameOrEmail.includes('@') ? { email: usernameOrEmail.trim() } : {},
+              })
+            }
+          >
+            <Text style={styles.forgotPasswordLinkText}>Forgot password?</Text>
+          </TouchableOpacity>
+
           {error ? <Text style={styles.errorText}>{error}</Text> : null}
 
           <TouchableOpacity
@@ -314,6 +328,15 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
   eyeIcon: { position: 'absolute', right: 12, padding: 4 },
+  forgotPasswordLink: {
+    alignSelf: 'flex-end',
+    marginTop: 12,
+  },
+  forgotPasswordLinkText: {
+    color: PRIMARY_COLOR,
+    fontSize: 14,
+    fontWeight: '600',
+  },
   errorText: {
     color: '#ff3b30',
     fontSize: 16,
