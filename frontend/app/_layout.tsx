@@ -83,6 +83,7 @@ function RootLayoutNav() {
     const inOnboardingGroup = segments[0] === 'onboarding';
     const inTabsGroup = segments[0] === '(tabs)';
     const inMoreScreen = segments[0] === 'more';
+    const inSettingsScreen = segments[0] === 'settings';
     const inModal = segments[0] === 'modal';
     const inGames = segments[0] === 'games';
     const inLoginOrRegister = segments[1] === 'login' || segments[1] === 'register' || segments[1] === 'verify-email';
@@ -93,9 +94,9 @@ function RootLayoutNav() {
         router.replace('/onboarding/landing');
       }
     } else {
-      // [] Main app — allow access to app (tabs, more, modal, games)
+      // [] Main app — allow access to app (tabs, more, settings, modal, games)
       // Also allow access to login/register for guest users
-      if (!inTabsGroup && !inMoreScreen && !inModal && !inGames && !inLoginOrRegister) {
+      if (!inTabsGroup && !inMoreScreen && !inSettingsScreen && !inModal && !inGames && !inLoginOrRegister) {
         router.replace('/(tabs)');
       }
     }
@@ -121,6 +122,20 @@ function RootLayoutNav() {
             presentation: 'modal',
             headerShown: true,
             title: 'More',
+            headerStyle: {
+              backgroundColor: PRIMARY_COLOR,
+            },
+            headerTintColor: '#fff',
+            headerTitleStyle: {
+              fontWeight: 'bold',
+            },
+          }}
+        />
+        <Stack.Screen
+          name="settings"
+          options={{
+            headerShown: true,
+            title: 'Settings',
             headerStyle: {
               backgroundColor: PRIMARY_COLOR,
             },

@@ -1,7 +1,8 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, StyleProp, ViewStyle } from 'react-native';
+import { View, Text, StyleSheet, StyleProp, ViewStyle } from 'react-native';
 import { FontAwesome, MaterialIcons } from '@expo/vector-icons';
 import Animated, { AnimatedStyle } from 'react-native-reanimated';
+import TouchableOpacity from '@/components/TouchableOpacity';
 
 interface ReelActionsProps {
   isLiked: boolean;

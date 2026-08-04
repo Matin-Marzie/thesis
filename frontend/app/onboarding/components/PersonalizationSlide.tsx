@@ -1,8 +1,10 @@
 import React, { useRef, useEffect, useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Vibration } from 'react-native';
+import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { PRIMARY_COLOR } from '@/constants/App';
 import { useColorScheme } from '@/components/useColorScheme';
+import { useVibration } from '@/hooks/useVibration';
+import TouchableOpacity from '@/components/TouchableOpacity';
 
 interface PersonalizationSlideProps {
   onNext: () => void;
@@ -20,6 +22,7 @@ export default function PersonalizationSlide({
   setSelectedAge,
 }: PersonalizationSlideProps) {
   const isDark = useColorScheme() === 'dark';
+  const vibrate = useVibration();
 
   const preferences = [
     'Movies', 'Sports', 'Anime', 'Make up', 'Cartoons', 'Video games', 'News', 'Politics'
@@ -45,11 +48,10 @@ export default function PersonalizationSlide({
       setCurrentAge(age);
       setSelectedAge(age);
     }
-    Vibration.vibrate(10);
+    vibrate(10, { type: 'button' });
   };
 
   const togglePreference = (pref: string) => {
-    Vibration.vibrate(10);
     setSelectedPreferences(
       selectedPreferences.includes(pref)
         ? selectedPreferences.filter((p) => p !== pref)
@@ -132,7 +134,6 @@ export default function PersonalizationSlide({
                   onPress={() => {
                     setCurrentAge(age);
                     setSelectedAge(age);
-                    Vibration.vibrate(10);
                     scrollViewRef.current?.scrollTo({ y: (parseInt(age) - 1) * ITEM_HEIGHT, animated: true });
                   }}
                 >

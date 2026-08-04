@@ -4,10 +4,10 @@ import {
   Text,
   StyleSheet,
   TextInput,
-  TouchableOpacity,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { PRIMARY_COLOR } from '@/constants/App';
+import TouchableOpacity from '@/components/TouchableOpacity';
 
 export default function VocabularySearchField({ search, onSearchChange, onFilterPress, editable }) {
   return (

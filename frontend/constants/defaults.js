@@ -41,6 +41,14 @@ export const DEFAULT_USER_PROGRESS = {
 
 export const DEFAULT_USER_VOCABULARY = {};
 
+export const DEFAULT_VIBRATION_SETTINGS = {
+  enabled: true,
+  buttons: true,
+  animations: true,
+  wordOfWonders: true,
+  wordle: true,
+};
+
 // AsyncStorage keys
 export const STORAGE_KEYS = {
   USER_PROFILE: 'user_profile',
@@ -48,6 +56,7 @@ export const STORAGE_KEYS = {
   USER_VOCABULARY: 'user_vocabulary',
   USER_VOCABULARY_CHANGES: 'user_vocabulary_changes',
   ONBOARDING_COMPLETE: 'onboarding_complete',
+  VIBRATION_SETTINGS: 'vibration_settings',
 };
 
 // Validators for loaded data
@@ -71,4 +80,12 @@ export const validators = {
 
   onboardingComplete: (data) =>
     typeof data === 'boolean',
+
+  vibrationSettings: (data) =>
+    data && typeof data === 'object' &&
+    typeof data.enabled === 'boolean' &&
+    typeof data.buttons === 'boolean' &&
+    typeof data.animations === 'boolean' &&
+    typeof data.wordOfWonders === 'boolean' &&
+    typeof data.wordle === 'boolean',
 };

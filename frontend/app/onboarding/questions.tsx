@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { View, StyleSheet, TouchableOpacity, BackHandler } from 'react-native';
+import { View, StyleSheet, BackHandler } from 'react-native';
 import { useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
+import TouchableOpacity from '@/components/TouchableOpacity';
 import WelcomeSlide from './components/WelcomeSlide';
 import LanguageSelectionSlide from './components/LanguageSelectionSlide';
 import ProficiencySlide from './components/ProficiencySlide';

@@ -3,7 +3,6 @@ import {
     View,
     Text,
     StyleSheet,
-    TouchableOpacity,
     Dimensions,
     Modal,
     Switch,
@@ -11,10 +10,17 @@ import {
 import { FontAwesome5 } from '@expo/vector-icons';
 import { GREEN } from '../gameConstants';
 import { popupStyles } from './popupStyles';
+import { useAppContext } from '@/context/AppContext';
+import TouchableOpacity from '@/components/TouchableOpacity';
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
 export default function SettingsPopup({ visible, onClose }) {
     const [letterSoundEnabled, setLetterSoundEnabled] = React.useState(true);
+    const { vibrationSettings, setVibrationSettings } = useAppContext();
+
+    const setWordOfWondersVibration = (value) => {
+        setVibrationSettings((prev) => ({ ...prev, wordOfWonders: value }));
+    };
 
     return (
         <Modal
@@ -28,6 +34,7 @@ export default function SettingsPopup({ visible, onClose }) {
                 style={popupStyles.overlay}
                 activeOpacity={1}
                 onPress={onClose}
+                game="wordOfWonders"
             >
                 <TouchableOpacity
                     activeOpacity={1}
@@ -41,6 +48,7 @@ export default function SettingsPopup({ visible, onClose }) {
                             <TouchableOpacity
                                 style={popupStyles.closeButton}
                                 onPress={onClose}
+                                game="wordOfWonders"
                             >
                                 <FontAwesome5 name="times" size={popupStyles.closeButton.size} style={popupStyles.closeButton} />
                             </TouchableOpacity>
@@ -52,41 +60,35 @@ export default function SettingsPopup({ visible, onClose }) {
                             <View style={styles.section}>
                                 <View style={styles.sectionRow}>
                                     <Text style={styles.settingLabel}>Letters</Text>
-                                    <View style={styles.switchWrapper}>
-                                        <View
-                                            style={[
-                                                styles.customTrack,
-                                                { backgroundColor: letterSoundEnabled ? GREEN : '#ccc' },
-                                            ]}
-                                        />
-                                        <Switch
-                                            value={letterSoundEnabled}
-                                            onValueChange={setLetterSoundEnabled}
-                                            trackColor={{ false: 'transparent', true: 'transparent' }}
-                                            thumbColor={'#fff'}
-                                            ios_backgroundColor={'transparent'}
-
-                                        />
-                                    </View>
+                                    <Switch
+                                        value={letterSoundEnabled}
+                                        onValueChange={setLetterSoundEnabled}
+                                        trackColor={{ false: '#ccc', true: GREEN }}
+                                        thumbColor={'#fff'}
+                                    />
                                 </View>
                                 <View style={styles.sectionRow}>
                                     <Text style={styles.settingLabel}>Words</Text>
-                                    <View style={styles.switchWrapper}>
-                                        <View
-                                            style={[
-                                                styles.customTrack,
-                                                { backgroundColor: letterSoundEnabled ? GREEN : '#ccc' },
-                                            ]}
-                                        />
-                                        <Switch
-                                            value={letterSoundEnabled}
-                                            onValueChange={setLetterSoundEnabled}
-                                            trackColor={{ false: 'transparent', true: 'transparent' }}
-                                            thumbColor={'#fff'}
-                                            ios_backgroundColor={'transparent'}
+                                    <Switch
+                                        value={letterSoundEnabled}
+                                        onValueChange={setLetterSoundEnabled}
+                                        trackColor={{ false: '#ccc', true: GREEN }}
+                                        thumbColor={'#fff'}
+                                    />
+                                </View>
+                            </View>
 
-                                        />
-                                    </View>
+                            <Text style={[styles.sectionTitle, styles.sectionTitleSpaced]}>Vibration</Text>
+                            <View style={styles.section}>
+                                <View style={styles.sectionRow}>
+                                    <Text style={[styles.settingLabel, !vibrationSettings.enabled && styles.settingLabelDisabled]}>Vibration</Text>
+                                    <Switch
+                                        value={vibrationSettings.wordOfWonders}
+                                        onValueChange={setWordOfWondersVibration}
+                                        disabled={!vibrationSettings.enabled}
+                                        trackColor={{ false: '#ccc', true: vibrationSettings.enabled ? GREEN : '#ccc' }}
+                                        thumbColor={'#fff'}
+                                    />
                                 </View>
                             </View>
                         </View>
@@ -112,6 +114,9 @@ const styles = StyleSheet.create({
         color: '#333',
         marginBottom: 10,
     },
+    sectionTitleSpaced: {
+        marginTop: 15,
+    },
     sectionRow: {
         flexDirection: 'row',
         alignItems: 'center',
@@ -120,16 +125,7 @@ const styles = StyleSheet.create({
     },
     settingLabel: {
     },
-    switchWrapper: {
-        justifyContent: 'center',
-        alignItems: 'center',
-        width: 48,
-        height: 30,
-    },
-    customTrack: {
-        position: 'absolute',
-        width: 48,
-        height: 30,
-        borderRadius: 20,
+    settingLabelDisabled: {
+        color: '#aaa',
     },
 });

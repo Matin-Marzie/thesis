@@ -4,7 +4,6 @@ import {
   Text,
   StyleSheet,
   TextInput,
-  TouchableOpacity,
   ScrollView,
   ActivityIndicator,
   KeyboardAvoidingView,
@@ -17,6 +16,7 @@ import { registerUser, requestVerificationCode } from '../../api/auth';
 import { useAppContext } from '../../context/AppContext';
 import { VOCABULARY_ACTIONS } from '@/hooks/useVocabulary';
 import { useColorScheme } from '@/components/useColorScheme';
+import TouchableOpacity from '@/components/TouchableOpacity';
 
 const RESEND_COOLDOWN_SECONDS = 60;
 const CODE_LENGTH = 6;

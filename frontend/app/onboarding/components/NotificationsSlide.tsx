@@ -1,8 +1,9 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { PRIMARY_COLOR } from '@/constants/App';
 import { useColorScheme } from '@/components/useColorScheme';
+import TouchableOpacity from '@/components/TouchableOpacity';
 
 interface NotificationsSlideProps {
   onNext: () => void;

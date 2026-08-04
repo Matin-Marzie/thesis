@@ -1,7 +1,8 @@
 import React, { memo, useRef, useCallback, useState, useEffect } from 'react';
-import { View, Text, Animated, PanResponder, StyleSheet, Platform, TouchableOpacity } from 'react-native';
+import { View, Text, Animated, PanResponder, StyleSheet, Platform } from 'react-native';
 import { Entypo } from '@expo/vector-icons';
 import { GREEN, width, height, MAX_CIRCLE_RADIUS } from './gameConstants';
+import TouchableOpacity from '@/components/TouchableOpacity';
 
 // Only import SVG on native platforms
 let Svg, Line;
@@ -264,6 +265,7 @@ const LettersCycle = memo(({
           ]}
           onPress={onShuffle}
           activeOpacity={0.7}
+          game="wordOfWonders"
         >
           <Entypo name="shuffle" size={24} color="#333" />
         </TouchableOpacity>

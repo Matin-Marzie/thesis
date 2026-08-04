@@ -3,7 +3,6 @@ import {
   View,
   Text,
   FlatList,
-  TouchableOpacity,
   ActivityIndicator,
   StyleSheet,
   Dimensions,
@@ -14,6 +13,7 @@ import { FontAwesome } from '@expo/vector-icons';
 import { useReelsContext } from '@/context/ReelsContext';
 import { PRIMARY_COLOR } from '@/constants/App';
 import { ReelItem } from './ReelItem';
+import TouchableOpacity from '@/components/TouchableOpacity';
 
 const { height: SCREEN_HEIGHT } = Dimensions.get('window');
 

@@ -1,10 +1,12 @@
 import React, { useRef, useEffect, useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Modal, Animated, Easing, Dimensions, SectionList, Vibration } from 'react-native';
+import { View, Text, StyleSheet, Modal, Animated, Easing, Dimensions, SectionList } from 'react-native';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { popupStyles } from './popupStyles';
 import { GREEN } from '../gameConstants';
 import VocabularyListItem from '../../../vocabulary/VocabularyListItem';
+import { useVibration } from '@/hooks/useVibration';
+import TouchableOpacity from '@/components/TouchableOpacity';
 
 const COIN_COUNT = 6;
 const REWARD = 10;
@@ -22,6 +24,7 @@ const PATHS = [
 ];
 
 export default function FinishScreen({ visible = false, onCollect, coinTarget, gridWords = {}, dictionarySet = {} }) {
+    const vibrate = useVibration();
     const badgeScale = useRef(new Animated.Value(0)).current;
     const badgeOpacity = useRef(new Animated.Value(1)).current;
     const cardScale = useRef(new Animated.Value(1)).current;
@@ -183,7 +186,7 @@ export default function FinishScreen({ visible = false, onCollect, coinTarget, g
         anims.forEach((anim) => {
             anim.start(({ finished }) => {
                 if (!finished) return;
-                Vibration.vibrate(20);
+                vibrate(20, { type: 'animation', game: 'wordOfWonders' });
                 finishedCoins += 1;
                 if (finishedCoins === totalCoins) closeAfterAllCoins();
             });
@@ -250,6 +253,7 @@ export default function FinishScreen({ visible = false, onCollect, coinTarget, g
                             onPress={handleCollect}
                             disabled={collecting}
                             accessibilityRole="button"
+                            game="wordOfWonders"
                         >
                             <Text style={styles.actionText}>Collect</Text>
                         </TouchableOpacity>

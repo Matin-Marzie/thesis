@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from 'react';
-import { View, StyleSheet, Text, TouchableOpacity, Animated } from 'react-native';
+import { View, StyleSheet, Text, Animated } from 'react-native';
+import TouchableOpacity from '@/components/TouchableOpacity';
 
 const COLORS = {
   correct: '#6aaa64',
@@ -57,6 +58,7 @@ export default function WordleGrid({
         activeOpacity={0.75}
         onPress={() => onCellPress?.(rowIndex, colIndex, displayText)}
         style={[styles.cell, { backgroundColor, borderColor }]}
+        game="wordle"
       >
         {/* Red flash overlay — only on the active row */}
         {isCurrentGuess && (

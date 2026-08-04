@@ -3,16 +3,16 @@ import {
     View,
     Text,
     StyleSheet,
-    TouchableOpacity,
     ScrollView,
     Alert,
     ActivityIndicator,
-    Vibration,
     BackHandler,
 } from 'react-native';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { useAppContext } from '@/context/AppContext';
 import { useDictionaryContext } from '@/context/DictionaryContext';
+import { useVibration } from '@/hooks/useVibration';
+import TouchableOpacity from '@/components/TouchableOpacity';
 import Keyboard from './Keyboard';
 import WordleGrid from './WordleGrid';
 import GameOverModal from './pop-ups/GameOverModal';
@@ -36,6 +36,7 @@ const COLORS = {
 export default function Wordle({ onClose }) {
     const { userProgress, setUserProgress } = useAppContext();
     const { dictionary } = useDictionaryContext();
+    const vibrate = useVibration();
 
     // Derive language code from the user's current learning language
     const langCode = useMemo(() => {
@@ -171,7 +172,7 @@ export default function Wordle({ onClose }) {
             const wordExists = Array.isArray(matches) && matches.length > 0;
 
             if (!wordExists) {
-                Vibration.vibrate([0, 80, 60, 80, 60, 80]);
+                vibrate([0, 80, 60, 80, 60, 80], { type: 'animation', game: 'wordle' });
                 setInvalidTrigger(prev => prev + 1);
                 return;
             }
@@ -197,7 +198,7 @@ export default function Wordle({ onClose }) {
         if ([...currentGuess].length < wordLength) {
             setCurrentGuess(prev => prev + letter);
         }
-    }, [currentGuess, gameOver, won, guesses, secretWord, wordleDictionary, normalizeKey, config.maxAttempts, wordLength]);
+    }, [currentGuess, gameOver, won, guesses, secretWord, wordleDictionary, normalizeKey, config.maxAttempts, wordLength, vibrate]);
 
     if (loading) {
         return (
@@ -215,6 +216,7 @@ export default function Wordle({ onClose }) {
                     <TouchableOpacity
                         onPress={() => setConfirmVisible(true)}
                         style={styles.backButton}
+                        game="wordle"
                     >
                         <FontAwesome5 name="chevron-left" size={22} color="#333" />
                     </TouchableOpacity>
@@ -270,11 +272,9 @@ export default function Wordle({ onClose }) {
                 {/* Info Button */}
                 <View style={styles.infoButtonContainer}>
                     <TouchableOpacity
-                        onPress={() => {
-                            Vibration.vibrate(10);
-                            setInfoVisible(true);
-                        }}
+                        onPress={() => setInfoVisible(true)}
                         style={styles.infoButton}
+                        game="wordle"
                     >
                         <FontAwesome5 name="info-circle" size={36} color="#0f859091" />
                     </TouchableOpacity>

@@ -1,16 +1,19 @@
 import { useAppContext } from '@/context/AppContext';
 import { FontAwesome5 } from '@expo/vector-icons';
 import React, { useState, useCallback, useMemo, useRef, memo } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, ActivityIndicator, Image, Animated, Vibration, Dimensions } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, ActivityIndicator, Image, Animated, Dimensions } from 'react-native';
 import { getWikimediaDictionary, extractDefinitions } from '@/api/dictionary';
 import MasteryLevelButton from '@/components/vocabulary/MasteryLevelButton';
 import { Swipeable, ScrollView } from 'react-native-gesture-handler';
 import { Ionicons } from '@expo/vector-icons';
 import { VOCABULARY_ACTIONS } from '@/hooks/useVocabulary';
+import { useVibration } from '@/hooks/useVibration';
+import VibrantTouchableOpacity from '@/components/TouchableOpacity';
 
 function WordItem({ item }) {
     
     const { userVocabulary, vocabularyDispatch, isOnline, userProgress } = useAppContext();
+    const vibrate = useVibration();
     const [isExpanded, setIsExpanded] = useState(false);
     const [meanings, setMeanings] = useState(null);
     const [loading, setLoading] = useState(false);
@@ -41,7 +44,7 @@ function WordItem({ item }) {
     const handleRemoveWord = useCallback(() => {
         if (!word || isDeleting) return;
         setIsDeleting(true);
-        Vibration.vibrate(20);
+        vibrate(20, { type: 'button' });
         vocabularyDispatch({
             type: VOCABULARY_ACTIONS.REMOVE,
             payload: { wordId: word.id },
@@ -87,7 +90,6 @@ function WordItem({ item }) {
     const handleDictionaryLookup = useCallback(async () => {
         if (language_code !== 'en') return; // SUPPORT ONLY ENGLISH FOR NOW, TO DO: ADD OTHER LANGUAGES
         if (!isExpanded) {
-            Vibration.vibrate(20);
             // Opening - fetch if not cached
             setIsExpanded(true);
 
@@ -161,13 +163,13 @@ function WordItem({ item }) {
                             <MasteryLevelButton masteryLevel={UserVocabularyEntry?.mastery_level} wordId={word.id} vocabularyDispatch={vocabularyDispatch} />
                         ) : (
                             // Add new Vocabulary word
-                            <TouchableOpacity style={styles.addButton} onPress={handleAddWord}>
+                            <VibrantTouchableOpacity style={styles.addButton} onPress={handleAddWord}>
                                 <Text style={styles.addButtonText}>+</Text>
-                            </TouchableOpacity>
+                            </VibrantTouchableOpacity>
                         )}
                         {/* wiktionary icon */}
                         {isOnline && language_code === 'en' && (
-                            <TouchableOpacity
+                            <VibrantTouchableOpacity
                                 style={styles.dictionaryButton}
                                 onPress={handleDictionaryLookup}
                             >
@@ -186,7 +188,7 @@ function WordItem({ item }) {
                                         }}
                                     />
                                 )}
-                            </TouchableOpacity>
+                            </VibrantTouchableOpacity>
                         )}
                     </View>
                 </View>

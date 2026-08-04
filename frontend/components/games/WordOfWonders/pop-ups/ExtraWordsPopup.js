@@ -3,7 +3,6 @@ import {
     View,
     Text,
     StyleSheet,
-    TouchableOpacity,
     Modal,
 } from 'react-native';
 import { FontAwesome5 } from '@expo/vector-icons';
@@ -11,6 +10,7 @@ import { GestureHandlerRootView, FlatList } from 'react-native-gesture-handler';
 import { GREEN } from '../gameConstants';
 import { popupStyles } from './popupStyles';
 import VocabularyListItem from '../../../vocabulary/VocabularyListItem';
+import TouchableOpacity from '@/components/TouchableOpacity';
 
 export default function ExtraWordsPopup({ visible, onClose, extraWords = [], dictionarySet = {}, score = 0 }) {
     const extraWordItems = useMemo(() => {
@@ -31,6 +31,7 @@ export default function ExtraWordsPopup({ visible, onClose, extraWords = [], dic
                     style={popupStyles.overlay}
                     activeOpacity={1}
                     onPress={onClose}
+                    game="wordOfWonders"
                 >
                     <TouchableOpacity
                         activeOpacity={1}
@@ -44,6 +45,7 @@ export default function ExtraWordsPopup({ visible, onClose, extraWords = [], dic
                                 <TouchableOpacity
                                     style={popupStyles.closeButton}
                                     onPress={onClose}
+                                    game="wordOfWonders"
                                 >
                                     <FontAwesome5 name="times" size={popupStyles.closeButton.size} style={popupStyles.closeButton} />
                                 </TouchableOpacity>

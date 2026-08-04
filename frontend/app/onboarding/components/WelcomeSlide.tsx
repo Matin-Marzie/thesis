@@ -1,7 +1,8 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
+import { View, Text, StyleSheet, Image } from 'react-native';
 import { PRIMARY_COLOR } from '@/constants/App';
 import { useColorScheme } from '@/components/useColorScheme';
+import TouchableOpacity from '@/components/TouchableOpacity';
 
 interface WelcomeSlideProps {
   onNext: () => void;

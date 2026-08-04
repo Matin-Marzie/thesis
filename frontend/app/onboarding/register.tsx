@@ -4,7 +4,6 @@ import {
   Text,
   StyleSheet,
   TextInput,
-  TouchableOpacity,
   ScrollView,
   ActivityIndicator,
   KeyboardAvoidingView,
@@ -17,6 +16,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { PRIMARY_COLOR } from '@/constants/App';
 import { requestVerificationCode } from '../../api/auth';
 import { useColorScheme } from '@/components/useColorScheme';
+import TouchableOpacity from '@/components/TouchableOpacity';
 
 
 // Hardcoded client IDs for Google Sign-In

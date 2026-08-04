@@ -1,17 +1,18 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Alert, ActivityIndicator } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, Alert, ActivityIndicator } from 'react-native';
 import { useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { useAppContext } from '../context/AppContext';
 import { useLogout } from '../hooks/useLogout';
 import { useDeleteAccount } from '../hooks/useDeleteAccount';
+import TouchableOpacity from '../components/TouchableOpacity';
 
 export default function MoreScreen() {
   const router = useRouter();
   const { isAuthenticated } = useAppContext();
   const { logout } = useLogout();
-  const { deleteAccount } = useDeleteAccount();
   const [isLoggingOut, setIsLoggingOut] = useState(false);
+  const { deleteAccount } = useDeleteAccount();
   const [isDeletingAccount, setIsDeletingAccount] = useState(false);
 
   const handleLogout = () => {
@@ -80,7 +81,7 @@ export default function MoreScreen() {
       <View style={styles.content}>
         {/* Menu Items */}
         <View style={styles.menuSection}>
-          <TouchableOpacity style={styles.menuItem}>
+          <TouchableOpacity style={styles.menuItem} onPress={() => router.push('/settings')}>
             <Ionicons name="settings-outline" size={24} color="#333" />
             <Text style={styles.menuText}>Settings</Text>
             <Ionicons name="chevron-forward" size={20} color="#999" />

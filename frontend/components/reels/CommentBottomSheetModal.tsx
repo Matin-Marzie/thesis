@@ -5,7 +5,6 @@ import {
   StyleSheet,
   Image,
   TextInput,
-  TouchableOpacity,
   Platform,
   BackHandler,
 } from 'react-native';
@@ -20,6 +19,7 @@ import type { SharedValue } from 'react-native-reanimated';
 import { withSpring } from 'react-native-reanimated';
 import { Dimensions } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
+import TouchableOpacity from '@/components/TouchableOpacity';
 
 const { height: SCREEN_HEIGHT } = Dimensions.get('window');
 

@@ -5,7 +5,6 @@ import {
     StyleSheet,
     TouchableOpacity,
     Animated,
-    Vibration,
     ImageBackground,
     PanResponder,
     BackHandler,
@@ -26,6 +25,8 @@ import { useAppContext } from '@/context/AppContext';
 import { useDictionaryContext } from '@/context/DictionaryContext';
 import { normalizeWord, isRTL } from './languageUtils';
 import { formatCompactNumber } from '@/utils/formatCompactNumber';
+import { useVibration } from '@/hooks/useVibration';
+import VibrantTouchableOpacity from '@/components/TouchableOpacity';
 
 
 const HAMMER_HEIGHT = height * 0.69;
@@ -44,6 +45,7 @@ export default function WordOfWonders({ boxData: initialBoxData, gridWords: init
 
     const { userVocabulary, userProgress, setUserProgress } = useAppContext();
     const { dictionary } = useDictionaryContext();
+    const vibrate = useVibration();
 
     // Normalize written_form the same way LevelGenerator did so lookups always match
     // (e.g. Greek "αδελφός" → "αδελφος", Farsi "بَرادَر" → "برادر")
@@ -254,14 +256,14 @@ export default function WordOfWonders({ boxData: initialBoxData, gridWords: init
             if (prev.includes(index)) return prev;
 
             // Vibrate when new letter is selected
-            Vibration.vibrate(10);
+            vibrate(10, { type: 'button', game: 'wordOfWonders' });
 
             // Set letter to selected state (no animation)
             letterAnimations[index].setValue(1);
 
             return [...prev, index];
         });
-    }, [gameFinished, letterAnimations]);
+    }, [gameFinished, letterAnimations, vibrate]);
 
     const handleShuffle = useCallback(() => {
         if (gameFinished || selectedLetters.length > 0) return;
@@ -274,8 +276,8 @@ export default function WordOfWonders({ boxData: initialBoxData, gridWords: init
         }
         setShuffledLetters(shuffled);
 
-        Vibration.vibrate(20);
-    }, [gameFinished, selectedLetters, shuffledLetters]);
+        vibrate(20, { type: 'button', game: 'wordOfWonders' });
+    }, [gameFinished, selectedLetters, shuffledLetters, vibrate]);
 
     const handleHint = useCallback(() => {
         if (coins < 40 || gameFinished) return;
@@ -319,10 +321,10 @@ export default function WordOfWonders({ boxData: initialBoxData, gridWords: init
         }).start();
 
         setCoins(prev => prev - 40);
-        
 
-        Vibration.vibrate(30);
-    }, [coins, gameFinished, filledBoxes, boxAnimations]);    // Helper function to get grid box dimensions and position
+
+        vibrate(30, { type: 'button', game: 'wordOfWonders' });
+    }, [coins, gameFinished, filledBoxes, boxAnimations, vibrate]);    // Helper function to get grid box dimensions and position
 
     const getGridBoxInfo = useCallback(() => {
         const horizontalMargin = width * 0.02;
@@ -372,6 +374,8 @@ export default function WordOfWonders({ boxData: initialBoxData, gridWords: init
     const hammerActiveRef = useRef(false);
     const coinsRef = useRef(coins);
     const filledBoxesRef = useRef(filledBoxes);
+    const vibrateRef = useRef(vibrate);
+    vibrateRef.current = vibrate;
 
     // Keep refs in sync
     useEffect(() => {
@@ -440,7 +444,7 @@ export default function WordOfWonders({ boxData: initialBoxData, gridWords: init
                     // Reset animations
                     hammerOpacity.setValue(1);
                     hammerScale.setValue(1);
-                    Vibration.vibrate(30);
+                    vibrateRef.current(30, { type: 'button', game: 'wordOfWonders' });
                 }
             },
             onPanResponderMove: (evt) => {
@@ -506,7 +510,7 @@ export default function WordOfWonders({ boxData: initialBoxData, gridWords: init
                     });
                 });
 
-                Vibration.vibrate(20);
+                vibrateRef.current(20, { type: 'button', game: 'wordOfWonders' });
             },
         })
     ).current;
@@ -562,7 +566,7 @@ export default function WordOfWonders({ boxData: initialBoxData, gridWords: init
         if (selectedLetters.length === 0) return;
         if (selectedLetters.length < 3) {
             // Invalid word - shake the selected word
-            Vibration.vibrate([0, 50, 50, 50]);
+            vibrate([0, 50, 50, 50], { type: 'animation', game: 'wordOfWonders' });
 
             // Don't clear selected letters immediately, let the shake finish
             setTimeout(() => {
@@ -591,7 +595,7 @@ export default function WordOfWonders({ boxData: initialBoxData, gridWords: init
         if (gridWords[word]) {
             if (foundWords.includes(word)) {
                 // Already found - shake animation
-                Vibration.vibrate([0, 50, 50, 50]); // Vibrate pattern for shake
+                vibrate([0, 50, 50, 50], { type: 'animation', game: 'wordOfWonders' }); // Vibrate pattern for shake
                 setShakeWord(word);
                 shakeAnimation.setValue(0);
                 Animated.sequence([
@@ -615,7 +619,7 @@ export default function WordOfWonders({ boxData: initialBoxData, gridWords: init
             // Check if word is in dictionary (extra word)
             if (foundWords.includes(word)) {
                 // Extra word already found - animate score board
-                Vibration.vibrate(50);
+                vibrate(50, { type: 'animation', game: 'wordOfWonders' });
 
                 // Expand and shrink animation
                 scoreScaleAnimation.setValue(1);
@@ -679,7 +683,7 @@ export default function WordOfWonders({ boxData: initialBoxData, gridWords: init
             }
         } else {
             // Invalid word - shake the selected word
-            Vibration.vibrate([0, 50, 50, 50]);
+            vibrate([0, 50, 50, 50], { type: 'animation', game: 'wordOfWonders' });
 
             // Don't clear selected letters immediately, let the shake finish
             setTimeout(() => {
@@ -696,7 +700,7 @@ export default function WordOfWonders({ boxData: initialBoxData, gridWords: init
             ]).start();
 
         }
-    }, [selectedLetters, letterAnimations, foundWords, handleGridWord, shuffledLetters, wordAnimationPosition, wordAnimationOpacity, wordAnimationScale]);
+    }, [selectedLetters, letterAnimations, foundWords, handleGridWord, shuffledLetters, wordAnimationPosition, wordAnimationOpacity, wordAnimationScale, vibrate]);
 
 
     const renderSelectedWord = () => {
@@ -755,12 +759,13 @@ export default function WordOfWonders({ boxData: initialBoxData, gridWords: init
 
                 {/* HEADER */}
                 <View style={styles.HeaderBar}>
-                    <TouchableOpacity
+                    <VibrantTouchableOpacity
                         style={styles.backButton}
                         onPress={() => setConfirmVisible(true)}
+                        game="wordOfWonders"
                     >
                         <FontAwesome5 name="arrow-left" size={20} color="#333" />
-                    </TouchableOpacity>
+                    </VibrantTouchableOpacity>
                     <View
                         ref={coinsViewRef}
                         style={styles.coinsContainer}
@@ -773,12 +778,13 @@ export default function WordOfWonders({ boxData: initialBoxData, gridWords: init
                         <FontAwesome5 name="coins" size={25} color="#FFD700" />
                         <Text style={styles.coinsText}>{formatCompactNumber(coins)}</Text>
                     </View>
-                    <TouchableOpacity
+                    <VibrantTouchableOpacity
                         style={styles.settingsButton}
                         onPress={() => setSettingsVisible(true)}
+                        game="wordOfWonders"
                     >
                         <FontAwesome5 name="cog" size={22} color="#333" />
-                    </TouchableOpacity>
+                    </VibrantTouchableOpacity>
                 </View>
 
 
@@ -874,13 +880,14 @@ export default function WordOfWonders({ boxData: initialBoxData, gridWords: init
                     </TouchableOpacity>
 
                     {/* Extra Words Button */}
-                    <TouchableOpacity
+                    <VibrantTouchableOpacity
                         style={styles.ExtraWordsButton}
                         onPress={() => setExtraWordsVisible(true)}
                         activeOpacity={0.30}
                         hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
                         accessibilityRole="button"
                         accessibilityLabel="Open extra words"
+                        game="wordOfWonders"
                     >
                         <Animated.View
                             style={[
@@ -910,7 +917,7 @@ export default function WordOfWonders({ boxData: initialBoxData, gridWords: init
                                 </Text>
                             </View>
                         </Animated.View>
-                    </TouchableOpacity>
+                    </VibrantTouchableOpacity>
 
                     {/* Selected Word Display */}
                     {renderSelectedWord()}

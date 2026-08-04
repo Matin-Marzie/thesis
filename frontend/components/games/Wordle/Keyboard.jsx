@@ -1,7 +1,8 @@
 import React, { useMemo } from 'react';
-import { View, TouchableOpacity, StyleSheet, Text, Vibration, Dimensions } from 'react-native';
+import { View, TouchableOpacity, StyleSheet, Text, Dimensions } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { getWordleConfig } from '@/constants/wordleConfig';
+import { useVibration } from '@/hooks/useVibration';
 
 const COLORS = {
   correct: '#6aaa64',
@@ -18,6 +19,7 @@ export default function Keyboard({
   disabled,
   langCode = 'en',
 }) {
+  const vibrate = useVibration();
   const { keyboardRows, isRTL } = useMemo(() => getWordleConfig(langCode), [langCode]);
 
   // Use compact sizing when any row has more than 10 keys
@@ -53,7 +55,7 @@ export default function Keyboard({
   }, [guesses, getLetterColor]);
 
   const pressKey = (letter) => {
-    Vibration.vibrate(10);
+    vibrate(10, { type: 'button', game: 'wordle' });
     onKeyPress(letter);
   };
 

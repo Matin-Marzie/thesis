@@ -1,7 +1,8 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { PRIMARY_COLOR } from '@/constants/App';
 import { useColorScheme } from '@/components/useColorScheme';
+import TouchableOpacity from '@/components/TouchableOpacity';
 
 // Language type
 interface Language {

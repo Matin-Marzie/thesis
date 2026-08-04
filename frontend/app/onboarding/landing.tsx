@@ -3,12 +3,12 @@ import {
   View,
   Text,
   StyleSheet,
-  TouchableOpacity,
   Image,
 } from 'react-native';
 import { useRouter } from 'expo-router';
 import { APP_NAME, APP_TAGLINE, PRIMARY_COLOR } from '../../constants/App';
 import { useColorScheme } from '@/components/useColorScheme';
+import TouchableOpacity from '@/components/TouchableOpacity';
 
 export default function LandingScreen() {
   const router = useRouter();

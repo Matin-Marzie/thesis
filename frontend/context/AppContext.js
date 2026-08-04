@@ -16,6 +16,7 @@ import {
   DEFAULT_USER_PROFILE,
   DEFAULT_USER_PROGRESS,
   DEFAULT_USER_VOCABULARY,
+  DEFAULT_VIBRATION_SETTINGS,
   STORAGE_KEYS,
   validators,
 } from '../constants/defaults';
@@ -34,6 +35,8 @@ import {
  * @property {(wordIds: number[], mastery_level?: number) => void} bulkAddVocabulary
  * @property {Object} vocabularyChanges
  * @property {Function} setVocabularyChanges
+ * @property {Object} vibrationSettings
+ * @property {Function} setVibrationSettings
  * @property {boolean} isAuthenticated
  * @property {Function} setIsAuthenticated
  * @property {boolean} hasCompletedOnboarding
@@ -51,6 +54,7 @@ import {
 const AppContext = createContext({});
 
 export const AppProvider = ({ children }) => {
+
   // UI state
   const [isLoading, setIsLoading] = useState(true);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -84,12 +88,17 @@ export const AppProvider = ({ children }) => {
     isLoaded: isVocabularyLoaded,
   } = usePersistedState(STORAGE_KEYS.USER_VOCABULARY, DEFAULT_USER_VOCABULARY, validators.userVocabulary);
 
-  // Persisted vocabulary changes for offline sync tracking
   const {
     value: vocabularyChanges,
     setValue: setVocabularyChanges,
     isLoaded: isVocabularyChangesLoaded,
   } = usePersistedState(STORAGE_KEYS.USER_VOCABULARY_CHANGES, DEFAULT_VOCABULARY_CHANGES, validators.vocabularyChanges);
+
+  const {
+    value: vibrationSettings,
+    setValue: setVibrationSettings,
+    isLoaded: isVibrationSettingsLoaded,
+  } = usePersistedState(STORAGE_KEYS.VIBRATION_SETTINGS, DEFAULT_VIBRATION_SETTINGS, validators.vibrationSettings);
 
   // Dispatch that applies reducer logic, tracks changes, and persists both
   const vocabularyDispatch = useCallback((action) => {
@@ -175,12 +184,12 @@ export const AppProvider = ({ children }) => {
   // 1. Wait for persisted state to load
   // 2. Check auth status and if dirty data needs to be synced
   useEffect(() => {
-    if (isProfileLoaded && isProgressLoaded && isVocabularyLoaded && isVocabularyChangesLoaded && isOnboardingLoaded && isOnline !== null) {
+    if (isProfileLoaded && isProgressLoaded && isVocabularyLoaded && isVocabularyChangesLoaded && isOnboardingLoaded && isVibrationSettingsLoaded && isOnline !== null) {
       // [1] All persisted state is loaded - check the code above
       // [2] reroute to /onboarding/landing if user hasn't completed onboarding - check /app/_layout.js
       initApp(); // (check auth, sync dirty data if online, etc)
     }
-  }, [isProfileLoaded, isProgressLoaded, isVocabularyLoaded, isVocabularyChangesLoaded, isOnboardingLoaded, initApp, isOnline]);
+  }, [isProfileLoaded, isProgressLoaded, isVocabularyLoaded, isVocabularyChangesLoaded, isOnboardingLoaded, isVibrationSettingsLoaded, initApp, isOnline]);
 
   // Listen for API server errors (5xx or network errors)
   useEffect(() => {
@@ -203,6 +212,7 @@ export const AppProvider = ({ children }) => {
     userProgress, setUserProgress,
     userVocabulary, setUserVocabulary, vocabularyDispatch, bulkAddVocabulary,
     vocabularyChanges, setVocabularyChanges,
+    vibrationSettings, setVibrationSettings,
     isAuthenticated, setIsAuthenticated, initApp,
     hasCompletedOnboarding, setHasCompletedOnboarding,
     isLoading, setIsLoading,

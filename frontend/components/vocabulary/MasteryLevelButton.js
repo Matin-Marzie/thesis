@@ -1,8 +1,9 @@
 import React, { useState, useRef, useMemo } from 'react';
-import { Text, StyleSheet, View, Modal, PanResponder, Vibration, Platform } from 'react-native';
+import { Text, StyleSheet, View, Modal, PanResponder, Platform } from 'react-native';
 import { MASTERY_LEVELS } from '@/constants/Vocabulary';
 import { VOCABULARY_ACTIONS } from '@/hooks/useVocabulary';
 import { PRIMARY_COLOR } from '@/constants/App';
+import { useVibration } from '@/hooks/useVibration';
 
 // While trying to change the mastery_level:
 // We show mastery_level(s) with gradient colors from "white" to "PRIMARY_COLOR".
@@ -43,6 +44,7 @@ const ITEM_HEIGHT = 40;
 const PICKER_WIDTH = 130;
 
 export default function MasteryLevelButton({ masteryLevel, wordId, vocabularyDispatch, onPress }) {
+    const vibrate = useVibration();
     const [showPicker, setShowPicker] = useState(false);
     const [hoveredLevel, setHoveredLevel] = useState(null);
     const [pickerPosition, setPickerPosition] = useState({ top: 0, left: 0 });
@@ -62,6 +64,8 @@ export default function MasteryLevelButton({ masteryLevel, wordId, vocabularyDis
     onPressRef.current = onPress;
     const masteryLevelRef = useRef(masteryLevel);
     masteryLevelRef.current = masteryLevel;
+    const vibrateRef = useRef(vibrate);
+    vibrateRef.current = vibrate;
 
     // PanResponder for handling long press and drag to select mastery level
     const panResponder = useMemo(() => {
@@ -81,7 +85,7 @@ export default function MasteryLevelButton({ masteryLevel, wordId, vocabularyDis
                 isLongPress.current = false;
                 hoveredLevelRef.current = null;
                     isLongPress.current = true;
-                    Vibration.vibrate(20);
+                    vibrateRef.current(20, { type: 'button' });
                     buttonRef.current?.measureInWindow((x, y, width, height) => {
                         // min: Don't let the picker go below 575 (where the bottom tab bar starts)
                         // max: Don't let the picker go above 153 (where the header ends)

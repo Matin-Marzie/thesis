@@ -3,17 +3,17 @@ import {
     Modal,
     View,
     Text,
-    TouchableOpacity,
     StyleSheet,
     Animated,
     Easing,
     Dimensions,
-    Vibration,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { PRIMARY_COLOR } from '@/constants/App';
 import VocabularyListItem from '@/components/vocabulary/VocabularyListItem.js';
+import { useVibration } from '@/hooks/useVibration';
+import TouchableOpacity from '@/components/TouchableOpacity';
 
 const COLORS = {
     correct: '#6aaa64',
@@ -42,6 +42,7 @@ export default function GameOverModal({
     isRTL = false,
     coinTarget,
 }) {
+    const vibrate = useVibration();
     const reward = won ? 5 : 1;
     const rtlText = isRTL ? { writingDirection: 'rtl', textAlign: 'center' } : {};
 
@@ -150,7 +151,7 @@ export default function GameOverModal({
         anims.forEach((anim) => {
             anim.start(({ finished }) => {
                 if (!finished) return;
-                Vibration.vibrate(20);
+                vibrate(20, { type: 'animation', game: 'wordle' });
                 finishedCoins += 1;
                 if (finishedCoins === totalCoins) closeAfterAllCoins();
             });
@@ -211,6 +212,7 @@ export default function GameOverModal({
                             style={[styles.playAgainButton, collecting && { opacity: 0.6 }]}
                             onPress={handleCollect}
                             disabled={collecting}
+                            game="wordle"
                         >
                             <Text style={styles.buttonText}>Collect</Text>
                         </TouchableOpacity>

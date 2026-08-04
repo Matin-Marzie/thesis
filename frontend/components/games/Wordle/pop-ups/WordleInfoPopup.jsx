@@ -1,8 +1,9 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Modal, ScrollView, Animated } from 'react-native';
+import { View, Text, StyleSheet, Modal, ScrollView, Animated } from 'react-native';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { popupStyles } from '../../WordOfWonders/pop-ups/popupStyles';
+import TouchableOpacity from '@/components/TouchableOpacity';
 
 const TILE_COLORS = {
     green: '#6aaa64',
@@ -160,12 +161,13 @@ export default function WordleInfoPopup({ visible, onClose, nativeLanguage = 'en
                         style={StyleSheet.absoluteFill}
                         activeOpacity={1}
                         onPress={onClose}
+                        game="wordle"
                     />
                     <Animated.View style={popupStyles.popup}>
                         <View style={popupStyles.popupHeader}>
                             <View style={popupStyles.placeholder} />
                             <Text style={popupStyles.headerText}>{t.title}</Text>
-                            <TouchableOpacity style={popupStyles.closeButton} onPress={onClose}>
+                            <TouchableOpacity style={popupStyles.closeButton} onPress={onClose} game="wordle">
                                 <FontAwesome5
                                     name="times"
                                     size={popupStyles.closeButton.size}

@@ -25,11 +25,11 @@ import {
   View,
   Text,
   Animated,
-  TouchableOpacity,
   StyleSheet,
   Platform,
 } from 'react-native';
 import { GREEN, width, height } from '../gameConstants';
+import TouchableOpacity from '@/components/TouchableOpacity';
 
 // ---------------------------------------------------------------------------
 // Localised UI strings
@@ -393,7 +393,7 @@ export default function TutorialOverlay({ letterCenters, onDismiss, langCode = '
 
         {/* Tapping this button calls onDismiss in the parent, which persists
             the "tutorial seen" flag to AsyncStorage and unmounts this overlay. */}
-        <TouchableOpacity style={styles.gotItBtn} onPress={onDismiss} activeOpacity={0.85}>
+        <TouchableOpacity style={styles.gotItBtn} onPress={onDismiss} activeOpacity={0.85} game="wordOfWonders">
           <Text style={styles.gotItText}>{strings.dismiss}</Text>
         </TouchableOpacity>
       </View>

@@ -3,7 +3,6 @@ import {
     View,
     Text,
     StyleSheet,
-    TouchableOpacity,
     Modal,
     Animated,
 } from 'react-native';
@@ -11,6 +10,7 @@ import { FontAwesome5 } from '@expo/vector-icons';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { popupStyles } from './popupStyles';
 import VocabularyListItem from '../../../vocabulary/VocabularyListItem';
+import TouchableOpacity from '@/components/TouchableOpacity';
 
 export default function SeeMeaningPopUp({ visible, onClose, foundWords = [] }) {
     return (
@@ -26,6 +26,7 @@ export default function SeeMeaningPopUp({ visible, onClose, foundWords = [] }) {
                     style={popupStyles.overlay}
                     activeOpacity={1}
                     onPress={onClose}
+                    game="wordOfWonders"
                 >
                     <TouchableOpacity
                         activeOpacity={1}
@@ -39,6 +40,7 @@ export default function SeeMeaningPopUp({ visible, onClose, foundWords = [] }) {
                                 <TouchableOpacity
                                     style={popupStyles.closeButton}
                                     onPress={onClose}
+                                    game="wordOfWonders"
                                 >
                                     <FontAwesome5 name="times" size={popupStyles.closeButton.size} style={popupStyles.closeButton} />
                                 </TouchableOpacity>

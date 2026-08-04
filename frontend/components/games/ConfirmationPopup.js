@@ -3,12 +3,12 @@ import {
     View,
     Text,
     StyleSheet,
-    TouchableOpacity,
     Modal,
 } from 'react-native';
 import { PRIMARY_COLOR } from '@/constants/App';
 import { popupStyles } from './WordOfWonders/pop-ups/popupStyles';
 import { height } from './WordOfWonders/gameConstants';
+import TouchableOpacity from '@/components/TouchableOpacity';
 
 export default function ConfirmationPopup({ visible, onConfirm, onCancel, title = 'Confirm', message = 'Are you sure?' }) {
     return (

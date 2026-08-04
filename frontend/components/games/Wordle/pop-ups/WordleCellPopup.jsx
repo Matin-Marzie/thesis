@@ -1,10 +1,11 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Modal } from 'react-native';
+import { View, Text, StyleSheet, Modal } from 'react-native';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { Animated } from 'react-native';
 import { popupStyles } from '../../WordOfWonders/pop-ups/popupStyles';
 import VocabularyListItem from '../../../vocabulary/VocabularyListItem';
+import TouchableOpacity from '@/components/TouchableOpacity';
 
 export default function WordleCellPopup({ visible, onClose, words }) {
     const list = Array.isArray(words) ? words : [];
@@ -22,6 +23,7 @@ export default function WordleCellPopup({ visible, onClose, words }) {
                     style={popupStyles.overlay}
                     activeOpacity={1}
                     onPress={onClose}
+                    game="wordle"
                 >
                     <TouchableOpacity
                         activeOpacity={1}
@@ -35,6 +37,7 @@ export default function WordleCellPopup({ visible, onClose, words }) {
                                 <TouchableOpacity
                                     style={popupStyles.closeButton}
                                     onPress={onClose}
+                                    game="wordle"
                                 >
                                     <FontAwesome5
                                         name="times"

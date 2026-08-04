@@ -4,7 +4,6 @@ import {
   Text,
   StyleSheet,
   TextInput,
-  TouchableOpacity,
   ScrollView,
   ActivityIndicator,
   KeyboardAvoidingView,
@@ -19,6 +18,7 @@ import { PRIMARY_COLOR } from '@/constants/App';
 import { useAppContext } from '@/context/AppContext';
 import { VOCABULARY_ACTIONS } from '@/hooks/useVocabulary';
 import { useColorScheme } from '@/components/useColorScheme';
+import TouchableOpacity from '@/components/TouchableOpacity';
 // import { GoogleSigninButton, GoogleSignin, statusCodes, User as GoogleUser, isSuccessResponse, isErrorWithCode } from '@react-native-google-signin/google-signin';
 
 const USERNAME_REGEX = /^[a-zA-Z][a-zA-Z0-9._-]{3,30}$/;

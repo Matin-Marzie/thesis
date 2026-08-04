@@ -1,9 +1,10 @@
 import React, { useCallback, useEffect } from 'react';
-import { View, Text, TouchableOpacity, ActivityIndicator, StyleSheet, StatusBar } from 'react-native';
+import { View, Text, ActivityIndicator, StyleSheet, StatusBar } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
 import { useReelsContext } from '@/context/ReelsContext';
 import { PRIMARY_COLOR } from '@/constants/App';
 import { ReelsList } from '@/components/reels/ReelsList';
+import TouchableOpacity from '@/components/TouchableOpacity';
 
 // Entry-point screen for the Reels tab.
 // Owns only the global loading / error states; the list itself lives in ReelsList.
