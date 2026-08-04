@@ -3,6 +3,7 @@ import { ProfileProvider } from './ProfileContext';
 import { ProgressProvider } from './ProgressContext';
 import { VocabularyProvider } from './VocabularyContext';
 import { VibrationProvider } from './VibrationContext';
+import { ReminderProvider } from './ReminderContext';
 import { AuthProvider } from './AuthContext';
 
 /**
@@ -16,7 +17,9 @@ export const AppProviders = ({ children }) => (
       <ProgressProvider>
         <VocabularyProvider>
           <VibrationProvider>
-            <AuthProvider>{children}</AuthProvider>
+            <ReminderProvider>
+              <AuthProvider>{children}</AuthProvider>
+            </ReminderProvider>
           </VibrationProvider>
         </VocabularyProvider>
       </ProgressProvider>

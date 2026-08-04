@@ -4,6 +4,8 @@ import { Ionicons } from '@expo/vector-icons';
 import { PRIMARY_COLOR } from '@/constants/App';
 import { useColorScheme } from '@/components/useColorScheme';
 import TouchableOpacity from '@/components/TouchableOpacity';
+import { useReminderSettings } from '@/context/ReminderContext';
+import { requestNotificationPermission } from '@/utils/notifications';
 
 interface NotificationsSlideProps {
   onNext: () => void;
@@ -11,10 +13,13 @@ interface NotificationsSlideProps {
 
 export default function NotificationsSlide({ onNext }: NotificationsSlideProps) {
   const isDark = useColorScheme() === 'dark';
+  const { setReminderSettings } = useReminderSettings();
 
   const handleRemindMe = async () => {
-    // Request notification permissions
-    // For now, just continue
+    const granted = await requestNotificationPermission();
+    if (granted) {
+      setReminderSettings((prev: any) => ({ ...prev, enabled: true }));
+    }
     onNext();
   };
 

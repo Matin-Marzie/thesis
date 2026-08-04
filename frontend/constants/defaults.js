@@ -49,6 +49,13 @@ export const DEFAULT_VIBRATION_SETTINGS = {
   wordle: true,
 };
 
+// Default reminder time is 8:00 PM, matching what onboarding schedules on first grant
+export const DEFAULT_REMINDER_SETTINGS = {
+  enabled: false,
+  hour: 20,
+  minute: 0,
+};
+
 // AsyncStorage keys
 export const STORAGE_KEYS = {
   USER_PROFILE: 'user_profile',
@@ -57,6 +64,7 @@ export const STORAGE_KEYS = {
   USER_VOCABULARY_CHANGES: 'user_vocabulary_changes',
   ONBOARDING_COMPLETE: 'onboarding_complete',
   VIBRATION_SETTINGS: 'vibration_settings',
+  REMINDER_SETTINGS: 'reminder_settings',
 };
 
 // Validators for loaded data
@@ -88,4 +96,10 @@ export const validators = {
     typeof data.animations === 'boolean' &&
     typeof data.wordOfWonders === 'boolean' &&
     typeof data.wordle === 'boolean',
+
+  reminderSettings: (data) =>
+    data && typeof data === 'object' &&
+    typeof data.enabled === 'boolean' &&
+    Number.isInteger(data.hour) && data.hour >= 0 && data.hour <= 23 &&
+    Number.isInteger(data.minute) && data.minute >= 0 && data.minute <= 59,
 };

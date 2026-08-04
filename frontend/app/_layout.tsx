@@ -3,12 +3,14 @@ import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native
 import { useFonts } from 'expo-font';
 import { Stack, useRouter, useSegments } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
+import * as Notifications from 'expo-notifications';
 import { useEffect } from 'react';
 import { View, ActivityIndicator } from 'react-native';
 import 'react-native-reanimated';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { SafeAreaProvider, initialWindowMetrics } from 'react-native-safe-area-context';
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
+import { REMINDER_NOTIFICATION_ID } from '@/utils/notifications';
 
 import { useColorScheme } from '@/components/useColorScheme';
 import { AppProviders } from '../context/AppProviders';
@@ -108,6 +110,27 @@ function RootLayoutNav() {
       }
     }
   }, [hasCompletedOnboarding, isLoading, segments]);
+
+  // Deep-link into the Reels tab when the practice reminder notification is tapped
+  useEffect(() => {
+    if (isLoading || !hasCompletedOnboarding) return;
+
+    const goToReels = (identifier: string) => {
+      if (identifier === REMINDER_NOTIFICATION_ID) {
+        router.push('/(tabs)/reels');
+      }
+    };
+
+    Notifications.getLastNotificationResponseAsync().then((response) => {
+      if (response) goToReels(response.notification.request.identifier);
+    });
+
+    const subscription = Notifications.addNotificationResponseReceivedListener((response) => {
+      goToReels(response.notification.request.identifier);
+    });
+
+    return () => subscription.remove();
+  }, [isLoading, hasCompletedOnboarding, router]);
 
   if (isLoading) {
     return (

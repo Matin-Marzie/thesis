@@ -10,6 +10,7 @@ import { useProfile } from './ProfileContext';
 import { useProgress } from './ProgressContext';
 import { useVocabularyContext } from './VocabularyContext';
 import { useVibrationSettings } from './VibrationContext';
+import { useReminderSettings } from './ReminderContext';
 
 /**
  * @typedef {Object} AuthContextType
@@ -32,6 +33,7 @@ export const AuthProvider = ({ children }) => {
   const { userProgress, isProgressLoaded } = useProgress();
   const { userVocabulary, isVocabularyLoaded, isVocabularyChangesLoaded, setVocabularyChanges } = useVocabularyContext();
   const { isVibrationSettingsLoaded } = useVibrationSettings();
+  const { isReminderSettingsLoaded } = useReminderSettings();
 
   // UI state
   const [isLoading, setIsLoading] = useState(true);
@@ -102,12 +104,12 @@ export const AuthProvider = ({ children }) => {
   // 1. Wait for persisted state to load
   // 2. Check auth status and if dirty data needs to be synced
   useEffect(() => {
-    if (isProfileLoaded && isProgressLoaded && isVocabularyLoaded && isVocabularyChangesLoaded && isOnboardingLoaded && isVibrationSettingsLoaded && isOnline !== null) {
+    if (isProfileLoaded && isProgressLoaded && isVocabularyLoaded && isVocabularyChangesLoaded && isOnboardingLoaded && isVibrationSettingsLoaded && isReminderSettingsLoaded && isOnline !== null) {
       // [1] All persisted state is loaded - check the code above
       // [2] reroute to /onboarding/landing if user hasn't completed onboarding - check /app/_layout.js
       initApp(); // (check auth, sync dirty data if online, etc)
     }
-  }, [isProfileLoaded, isProgressLoaded, isVocabularyLoaded, isVocabularyChangesLoaded, isOnboardingLoaded, isVibrationSettingsLoaded, initApp, isOnline]);
+  }, [isProfileLoaded, isProgressLoaded, isVocabularyLoaded, isVocabularyChangesLoaded, isOnboardingLoaded, isVibrationSettingsLoaded, isReminderSettingsLoaded, initApp, isOnline]);
 
   const value = useMemo(() => ({
     isAuthenticated, setIsAuthenticated, initApp,
