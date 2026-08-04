@@ -21,7 +21,8 @@ import FinishScreen from './pop-ups/FinishScreen';
 import TutorialOverlay from './pop-ups/TutorialOverlay';
 import ConfirmationPopup from '../ConfirmationPopup';
 import { GREEN, MAX_WIDTH, width, height, horizontalOffset, BACKGROUND_IMAGE_URI, BACKGROUND_OVERLAY_OPACITY } from './gameConstants';
-import { useAppContext } from '@/context/AppContext';
+import { useVocabularyContext } from '@/context/VocabularyContext';
+import { useProgress } from '@/context/ProgressContext';
 import { useDictionaryContext } from '@/context/DictionaryContext';
 import { normalizeWord, isRTL } from './languageUtils';
 import { formatCompactNumber } from '@/utils/formatCompactNumber';
@@ -43,7 +44,8 @@ const shuffleArray = (array) => {
 
 export default function WordOfWonders({ boxData: initialBoxData, gridWords: initialGridWords, letters: initialLetters, onPlayAgain, langCode = 'en' }) {
 
-    const { userVocabulary, userProgress, setUserProgress } = useAppContext();
+    const { userVocabulary } = useVocabularyContext();
+    const { userProgress, setUserProgress } = useProgress();
     const { dictionary } = useDictionaryContext();
     const vibrate = useVibration();
 

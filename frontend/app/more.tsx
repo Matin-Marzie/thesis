@@ -2,14 +2,14 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, Alert, ActivityIndicator } from 'react-native';
 import { useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
-import { useAppContext } from '../context/AppContext';
+import { useAuth } from '../context/AuthContext';
 import { useLogout } from '../hooks/useLogout';
 import { useDeleteAccount } from '../hooks/useDeleteAccount';
 import TouchableOpacity from '../components/TouchableOpacity';
 
 export default function MoreScreen() {
   const router = useRouter();
-  const { isAuthenticated } = useAppContext();
+  const { isAuthenticated } = useAuth();
   const { logout } = useLogout();
   const [isLoggingOut, setIsLoggingOut] = useState(false);
   const { deleteAccount } = useDeleteAccount();

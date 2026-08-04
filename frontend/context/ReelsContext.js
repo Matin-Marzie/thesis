@@ -1,6 +1,7 @@
 import { createContext, useState, useContext, useCallback, useMemo } from 'react';
 import { fetchReels as fetchReelsApi } from '../api/reels';
-import { useAppContext } from './AppContext';
+import { useProgress } from './ProgressContext';
+import { useAuth } from './AuthContext';
 import { REELS_LIMIT } from '../constants/Reels';
 
 /**
@@ -33,7 +34,8 @@ import { REELS_LIMIT } from '../constants/Reels';
 const ReelsContext = createContext({});
 
 export const ReelsProvider = ({ children }) => {
-  const { userProgress, isAuthenticated } = useAppContext();
+  const { userProgress } = useProgress();
+  const { isAuthenticated } = useAuth();
   
   // State
   const [reels, setReels] = useState([]);

@@ -9,13 +9,19 @@ import ProficiencySlide from './components/ProficiencySlide';
 import NotificationsSlide from './components/NotificationsSlide';
 import PersonalizationSlide from './components/PersonalizationSlide';
 import { PRIMARY_COLOR } from '@/constants/App';
-import { useAppContext } from '@/context/AppContext';
+import { useProfile } from '@/context/ProfileContext';
+import { useProgress } from '@/context/ProgressContext';
+import { useVocabularyContext } from '@/context/VocabularyContext';
+import { useAuth } from '@/context/AuthContext';
 import { useDictionaryContext } from '@/context/DictionaryContext';
 import { getLevelsBelowProficiency } from '@/constants/Vocabulary';
 
 export default function OnboardingQuestions() {
   const router = useRouter();
-  const { setHasCompletedOnboarding, updateUserProfile, setUserProgress, bulkAddVocabulary } = useAppContext();
+  const { updateUserProfile } = useProfile();
+  const { setUserProgress } = useProgress();
+  const { bulkAddVocabulary } = useVocabularyContext();
+  const { setHasCompletedOnboarding } = useAuth();
   const { fetchDictionary } = useDictionaryContext();
   const [currentSlide, setCurrentSlide] = useState(0);
 

@@ -13,7 +13,10 @@ import { useRouter, useLocalSearchParams } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { PRIMARY_COLOR } from '@/constants/App';
 import { registerUser, requestVerificationCode } from '../../api/auth';
-import { useAppContext } from '../../context/AppContext';
+import { useProfile } from '../../context/ProfileContext';
+import { useProgress } from '../../context/ProgressContext';
+import { useVocabularyContext } from '../../context/VocabularyContext';
+import { useAuth } from '../../context/AuthContext';
 import { VOCABULARY_ACTIONS } from '@/hooks/useVocabulary';
 import { useColorScheme } from '@/components/useColorScheme';
 import TouchableOpacity from '@/components/TouchableOpacity';
@@ -35,15 +38,10 @@ export default function VerifyEmailScreen() {
   }>();
   const { email, firstName, password } = params;
 
-  const {
-    userProfile,
-    userProgress,
-    vocabularyChanges,
-    updateUserProfile,
-    setUserProgress,
-    vocabularyDispatch,
-    setIsAuthenticated,
-  } = useAppContext();
+  const { userProfile, updateUserProfile } = useProfile();
+  const { userProgress, setUserProgress } = useProgress();
+  const { vocabularyChanges, vocabularyDispatch } = useVocabularyContext();
+  const { setIsAuthenticated } = useAuth();
 
   const [sixDigitCode, setSixDigitCode] = useState('');
   const [isCodeInputFocused, setIsCodeInputFocused] = useState(false);
@@ -132,9 +130,7 @@ export default function VerifyEmailScreen() {
   return (
     <KeyboardAvoidingView
       key={colorScheme}
-      style={[styles.container, { backgroundColor: isDark ? '#000' : '#fff' }]}
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-      keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : 20}
+      style={styles.container}
     >
       <ScrollView
         contentContainerStyle={styles.scrollContent}

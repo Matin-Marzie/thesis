@@ -1,10 +1,10 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView, Switch } from 'react-native';
-import { useAppContext } from '@/context/AppContext';
+import { useVibrationSettings } from '@/context/VibrationContext';
 import { PRIMARY_COLOR } from '@/constants/App';
 
 export default function SettingsScreen() {
-  const { vibrationSettings, setVibrationSettings } = useAppContext();
+  const { vibrationSettings, setVibrationSettings } = useVibrationSettings();
 
   const toggle = (key: string) => (value: boolean) => {
     setVibrationSettings((prev: typeof vibrationSettings) => ({ ...prev, [key]: value }));

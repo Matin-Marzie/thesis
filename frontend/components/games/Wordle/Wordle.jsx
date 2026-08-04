@@ -9,7 +9,7 @@ import {
     BackHandler,
 } from 'react-native';
 import { FontAwesome5 } from '@expo/vector-icons';
-import { useAppContext } from '@/context/AppContext';
+import { useProgress } from '@/context/ProgressContext';
 import { useDictionaryContext } from '@/context/DictionaryContext';
 import { useVibration } from '@/hooks/useVibration';
 import TouchableOpacity from '@/components/TouchableOpacity';
@@ -34,7 +34,7 @@ const COLORS = {
 
 
 export default function Wordle({ onClose }) {
-    const { userProgress, setUserProgress } = useAppContext();
+    const { userProgress, setUserProgress } = useProgress();
     const { dictionary } = useDictionaryContext();
     const vibrate = useVibration();
 

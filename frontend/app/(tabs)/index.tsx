@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef, useMemo, useCallback } from 'react';
 import { View, StyleSheet, Keyboard } from 'react-native';
-import { useAppContext } from '@/context/AppContext';
+import { useVocabularyContext } from '@/context/VocabularyContext';
 import { useDictionaryContext } from '@/context/DictionaryContext';
 import FilterBottomSheetModal from '@/components/vocabulary/FilterBottomSheetModal';
 import VocabularySearchField from '@/components/vocabulary/VocabularySearchField';
@@ -8,7 +8,7 @@ import VocabularyList from '@/components/vocabulary/VocabularyList';
 import { normalizeQuery } from '@/utils/normalize';
 
 export default function HomeScreen() {
-  const { userVocabulary } = useAppContext();
+  const { userVocabulary } = useVocabularyContext();
   const { dictionary } = useDictionaryContext();
   const [search, setSearch] = useState('');
   const [filteredWords, setFilteredWords] = useState([]); // To Do: don't duplicate state, remove filteredWords

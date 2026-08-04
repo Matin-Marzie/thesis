@@ -6,7 +6,7 @@ import {
   Animated,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { useAppContext } from '../context/AppContext';
+import { useNetwork } from '../context/NetworkContext';
 import TouchableOpacity from './TouchableOpacity';
 
 type BannerType = 'error' | 'success' | null;
@@ -16,7 +16,7 @@ type BannerType = 'error' | 'success' | null;
  * or when it recovers. Auto-dismisses after a few seconds or can be manually dismissed.
  */
 export default function ServerErrorBanner() {
-  const { isBackendServerReachable } = useAppContext();
+  const { isBackendServerReachable } = useNetwork();
   const [visible, setVisible] = useState(false);
   const [bannerType, setBannerType] = useState<BannerType>(null);
   const slideAnim = useState(new Animated.Value(-100))[0];
