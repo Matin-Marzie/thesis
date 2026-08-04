@@ -10,13 +10,13 @@ import {
 import { FontAwesome5 } from '@expo/vector-icons';
 import { GREEN } from '../gameConstants';
 import { popupStyles } from './popupStyles';
-import { useAppContext } from '@/context/AppContext';
+import { useVibrationSettings } from '@/context/VibrationContext';
 import TouchableOpacity from '@/components/TouchableOpacity';
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
 export default function SettingsPopup({ visible, onClose }) {
     const [letterSoundEnabled, setLetterSoundEnabled] = React.useState(true);
-    const { vibrationSettings, setVibrationSettings } = useAppContext();
+    const { vibrationSettings, setVibrationSettings } = useVibrationSettings();
 
     const setWordOfWondersVibration = (value) => {
         setVibrationSettings((prev) => ({ ...prev, wordOfWonders: value }));

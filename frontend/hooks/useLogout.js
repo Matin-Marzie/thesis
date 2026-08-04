@@ -4,7 +4,10 @@ import { clearTokens } from '../api/tokens';
 import { logoutUser } from '../api/auth';
 import { clearAllPersistedData } from './usePersistedState';
 import { resetSyncState } from './useBackendSync';
-import { useAppContext } from '../context/AppContext';
+import { useProfile } from '../context/ProfileContext';
+import { useProgress } from '../context/ProgressContext';
+import { useVocabularyContext } from '../context/VocabularyContext';
+import { useAuth } from '../context/AuthContext';
 import {
   DEFAULT_USER_PROFILE,
   DEFAULT_USER_PROGRESS,
@@ -15,20 +18,15 @@ import { DEFAULT_VOCABULARY_CHANGES } from './useVocabulary';
 
 /**
  * Custom hook that encapsulates all logout and data-clearing logic.
- * Pulls dependencies directly from AppContext.
+ * Pulls dependencies directly from the domain contexts.
  *
  * @returns {{ logout: (clearAllData?: boolean) => Promise<void>, clearAllOfflineData: () => Promise<void> }}
  */
 export function useLogout() {
-  const {
-    setUserProfile,
-    setUserProgress,
-    setUserVocabulary,
-    setVocabularyChanges,
-    setIsAuthenticated,
-    setHasCompletedOnboarding,
-    forceSync,
-  } = useAppContext();
+  const { setUserProfile } = useProfile();
+  const { setUserProgress } = useProgress();
+  const { setUserVocabulary, setVocabularyChanges } = useVocabularyContext();
+  const { setIsAuthenticated, setHasCompletedOnboarding, forceSync } = useAuth();
 
   const logout = useCallback(async (clearAllData = false) => {
     try {

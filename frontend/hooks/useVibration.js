@@ -1,7 +1,7 @@
 import { useCallback } from 'react';
 import { Platform, Vibration } from 'react-native';
 import * as Haptics from 'expo-haptics';
-import { useAppContext } from '@/context/AppContext';
+import { useVibrationSettings } from '@/context/VibrationContext';
 
 /**
  * iOS's Vibration.vibrate() ignores whatever duration/pattern you pass it and
@@ -33,7 +33,7 @@ const fireIosHaptic = (pattern) => {
  * @param {{ type?: 'button'|'animation', game?: 'wordOfWonders'|'wordle' }} [options]
  */
 export function useVibration() {
-  const { vibrationSettings } = useAppContext();
+  const { vibrationSettings } = useVibrationSettings();
 
   const vibrate = useCallback((pattern, options = {}) => {
     const { type, game } = options;

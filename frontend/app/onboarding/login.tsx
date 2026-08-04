@@ -15,7 +15,10 @@ import { useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { loginUser } from '../../api/auth';
 import { PRIMARY_COLOR } from '@/constants/App';
-import { useAppContext } from '@/context/AppContext';
+import { useProfile } from '@/context/ProfileContext';
+import { useProgress } from '@/context/ProgressContext';
+import { useVocabularyContext } from '@/context/VocabularyContext';
+import { useAuth } from '@/context/AuthContext';
 import { VOCABULARY_ACTIONS } from '@/hooks/useVocabulary';
 import { useColorScheme } from '@/components/useColorScheme';
 import TouchableOpacity from '@/components/TouchableOpacity';
@@ -43,7 +46,10 @@ export default function LoginScreen() {
   const width = Dimensions.get('window').width;
   const height = Dimensions.get('window').height;
 
-  const { updateUserProfile, setUserProgress, vocabularyDispatch, setIsAuthenticated, setHasCompletedOnboarding, hasCompletedOnboarding } = useAppContext();
+  const { updateUserProfile } = useProfile();
+  const { setUserProgress } = useProgress();
+  const { vocabularyDispatch } = useVocabularyContext();
+  const { setIsAuthenticated, setHasCompletedOnboarding, hasCompletedOnboarding } = useAuth();
   const router = useRouter();
   const colorScheme = useColorScheme();
   const isDark = colorScheme === 'dark';

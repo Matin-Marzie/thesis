@@ -1,11 +1,11 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import { useAppContext } from '@/context/AppContext';
+import { useProgress } from '@/context/ProgressContext';
 import { LANGUAGES_META } from '@/constants/SupportedLanguages';
 import { formatCompactNumber } from '@/utils/formatCompactNumber';
 
 export default function ProgressHeaderTitle() {
-  const { userProgress } = useAppContext();
+  const { userProgress } = useProgress();
 
   // Find the current language object
   const currentLang = userProgress?.languages?.find(l => l.is_current_language);

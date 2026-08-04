@@ -1,7 +1,9 @@
 import { createContext, useState, useEffect, useContext, useCallback, useRef, useMemo } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { getDictionaryByCodes } from '../api/dictionary';
-import { useAppContext } from './AppContext';
+import { useProgress } from './ProgressContext';
+import { useNetwork } from './NetworkContext';
+import { useAuth } from './AuthContext';
 
 const DICTIONARY_TTL = 7 * 24 * 60 * 60 * 1000; // 7 days in milliseconds
 
@@ -18,7 +20,9 @@ const DICTIONARY_TTL = 7 * 24 * 60 * 60 * 1000; // 7 days in milliseconds
 const DictionaryContext = createContext({});
 
 export const DictionaryProvider = ({ children }) => {
-  const { userProgress, isOnline, hasCompletedOnboarding } = useAppContext();
+  const { userProgress } = useProgress();
+  const { isOnline } = useNetwork();
+  const { hasCompletedOnboarding } = useAuth();
 
   const [dictionary, setDictionary] = useState(null);
   const [loading, setLoading] = useState(false);

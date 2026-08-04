@@ -11,7 +11,8 @@ import { SafeAreaProvider, initialWindowMetrics } from 'react-native-safe-area-c
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 
 import { useColorScheme } from '@/components/useColorScheme';
-import { AppProvider, useAppContext } from '../context/AppContext';
+import { AppProviders } from '../context/AppProviders';
+import { useAuth } from '../context/AuthContext';
 import { DictionaryProvider } from '../context/DictionaryContext';
 import { ReelsProvider } from '../context/ReelsContext';
 import { PRIMARY_COLOR } from '@/constants/App';
@@ -51,11 +52,11 @@ export default function RootLayout() {
     return null;
   }
 
-  {/* Render the app with the AppProvider to provide context */ }
+  {/* Render the app wrapped in the domain context providers */ }
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <SafeAreaProvider initialMetrics={initialWindowMetrics}>
-      <AppProvider>
+      <AppProviders>
         <DictionaryProvider>
           <ReelsProvider>
             <BottomSheetModalProvider>
@@ -63,7 +64,7 @@ export default function RootLayout() {
             </BottomSheetModalProvider>
           </ReelsProvider>
         </DictionaryProvider>
-      </AppProvider>
+      </AppProviders>
       </SafeAreaProvider>
     </GestureHandlerRootView>
   );
@@ -71,7 +72,7 @@ export default function RootLayout() {
 
 function RootLayoutNav() {
   const colorScheme = useColorScheme();
-  const { isLoading, hasCompletedOnboarding } = useAppContext();
+  const { isLoading, hasCompletedOnboarding } = useAuth();
   const segments = useSegments();
   const router = useRouter();
 

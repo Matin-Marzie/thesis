@@ -3,7 +3,10 @@ import { deleteAccount as deleteAccountRequest } from '../api/user';
 import { clearTokens } from '../api/tokens';
 import { clearAllPersistedData } from './usePersistedState';
 import { resetSyncState } from './useBackendSync';
-import { useAppContext } from '../context/AppContext';
+import { useProfile } from '../context/ProfileContext';
+import { useProgress } from '../context/ProgressContext';
+import { useVocabularyContext } from '../context/VocabularyContext';
+import { useAuth } from '../context/AuthContext';
 import {
   DEFAULT_USER_PROFILE,
   DEFAULT_USER_PROGRESS,
@@ -19,14 +22,10 @@ import { DEFAULT_VOCABULARY_CHANGES } from './useVocabulary';
  * @returns {{ deleteAccount: () => Promise<void> }}
  */
 export function useDeleteAccount() {
-  const {
-    setUserProfile,
-    setUserProgress,
-    setUserVocabulary,
-    setVocabularyChanges,
-    setIsAuthenticated,
-    setHasCompletedOnboarding,
-  } = useAppContext();
+  const { setUserProfile } = useProfile();
+  const { setUserProgress } = useProgress();
+  const { setUserVocabulary, setVocabularyChanges } = useVocabularyContext();
+  const { setIsAuthenticated, setHasCompletedOnboarding } = useAuth();
 
   const deleteAccount = useCallback(async () => {
     // Let this throw on failure - only clear local session once the account is actually gone

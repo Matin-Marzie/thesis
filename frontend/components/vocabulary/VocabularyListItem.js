@@ -1,4 +1,6 @@
-import { useAppContext } from '@/context/AppContext';
+import { useVocabularyContext } from '@/context/VocabularyContext';
+import { useNetwork } from '@/context/NetworkContext';
+import { useProgress } from '@/context/ProgressContext';
 import { FontAwesome5 } from '@expo/vector-icons';
 import React, { useState, useCallback, useMemo, useRef, memo } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, ActivityIndicator, Image, Animated, Dimensions } from 'react-native';
@@ -12,7 +14,9 @@ import VibrantTouchableOpacity from '@/components/TouchableOpacity';
 
 function WordItem({ item }) {
     
-    const { userVocabulary, vocabularyDispatch, isOnline, userProgress } = useAppContext();
+    const { userVocabulary, vocabularyDispatch } = useVocabularyContext();
+    const { isOnline } = useNetwork();
+    const { userProgress } = useProgress();
     const vibrate = useVibration();
     const [isExpanded, setIsExpanded] = useState(false);
     const [meanings, setMeanings] = useState(null);

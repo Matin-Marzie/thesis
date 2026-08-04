@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, ImageBackground, Animated, Easing, BackHandler 
 import { FontAwesome5 } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import { useDictionaryContext } from '@/context/DictionaryContext';
-import { useAppContext } from '@/context/AppContext';
+import { useProgress } from '@/context/ProgressContext';
 import GenerateWordOfWonderLevel from './LevelGenerator';
 import WordOfWonders from './WordOfWonders';
 import ConfirmationPopup from '../ConfirmationPopup';
@@ -11,7 +11,7 @@ import { BACKGROUND_IMAGE_URI, width, MAX_WIDTH, height } from './gameConstants'
 
 export default function GameLoader() {
     const { dictionary } = useDictionaryContext();
-    const { userProgress } = useAppContext();
+    const { userProgress } = useProgress();
     const router = useRouter();
     const [levelData, setLevelData] = useState(null);
     const [isGenerating, setIsGenerating] = useState(true);

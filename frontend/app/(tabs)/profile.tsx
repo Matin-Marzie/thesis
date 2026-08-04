@@ -2,12 +2,14 @@ import React from 'react';
 import { View, Text, StyleSheet, ScrollView, Image } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
-import { useAppContext } from '@/context/AppContext';
+import { useProfile } from '@/context/ProfileContext';
+import { useAuth } from '@/context/AuthContext';
 import { PRIMARY_COLOR } from '@/constants/App';
 import TouchableOpacity from '@/components/TouchableOpacity';
 
 export default function ProfileScreen() {
-  const { userProfile, isAuthenticated } = useAppContext();
+  const { userProfile } = useProfile();
+  const { isAuthenticated } = useAuth();
   const router = useRouter();
 
   return (
