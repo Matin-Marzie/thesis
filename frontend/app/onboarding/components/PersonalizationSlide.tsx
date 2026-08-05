@@ -1,6 +1,6 @@
-import React, { useRef, useEffect, useState } from 'react';
-import { View, Text, StyleSheet, ScrollView } from 'react-native';
-import { LinearGradient } from 'expo-linear-gradient';
+import React from 'react';
+import { View, Text, StyleSheet, ScrollView, Platform } from 'react-native';
+import { Picker } from '@react-native-picker/picker';
 import { PRIMARY_COLOR } from '@/constants/App';
 import { useColorScheme } from '@/components/useColorScheme';
 import { useVibration } from '@/hooks/useVibration';
@@ -29,25 +29,9 @@ export default function PersonalizationSlide({
   ];
 
   const ageData = Array.from({ length: 100 }, (_, i) => (i + 1).toString());
-  const scrollViewRef = useRef<ScrollView>(null);
-  const ITEM_HEIGHT = 40;
-  const [currentAge, setCurrentAge] = useState(selectedAge);
 
-  useEffect(() => {
-    if (selectedAge && scrollViewRef.current) {
-      const index = parseInt(selectedAge) - 1;
-      scrollViewRef.current.scrollTo({ y: index * ITEM_HEIGHT, animated: false });
-    }
-  }, []);
-
-  const handleScroll = (event: any) => {
-    const offsetY = event.nativeEvent.contentOffset.y;
-    const index = Math.round(offsetY / ITEM_HEIGHT);
-    const age = (index + 1).toString();
-    if (age !== currentAge && index >= 0 && index < 100) {
-      setCurrentAge(age);
-      setSelectedAge(age);
-    }
+  const handleAgeChange = (age: string) => {
+    setSelectedAge(age);
     vibrate(10, { type: 'button' });
   };
 
@@ -103,52 +87,29 @@ export default function PersonalizationSlide({
         <View style={styles.ageSection}>
           <Text style={[styles.sectionTitle, isDark && { color: '#fff' }]}>Age</Text>
           <Text style={[styles.sectionSubtitle, isDark && { color: '#aaa' }]}>Your age won't be shown publicly.</Text>
-          <View style={[styles.pickerContainer, isDark && { backgroundColor: '#1c1c1c' }]}>
-            {/* Inner shadows */}
-            <LinearGradient
-              colors={isDark ? ['#1c1c1c', 'transparent'] : ['transparent', 'transparent']} // Add gradient later
-              style={styles.innerShadowTop}
-            />
-            <LinearGradient
-              colors={isDark ? ['transparent', '#1c1c1c'] : ['transparent', 'transparent']} // Add gradient later
-              style={styles.innerShadowBottom}
-            />
-
-            <View style={styles.pickerOverlay}>
-              <View style={styles.pickerHighlight} />
-            </View>
-
-            <ScrollView
-              ref={scrollViewRef}
-              style={styles.pickerScroll}
-              showsVerticalScrollIndicator={false}
-              snapToInterval={ITEM_HEIGHT}
-              decelerationRate="fast"
-              onMomentumScrollEnd={handleScroll}
-              contentContainerStyle={{ paddingVertical: ITEM_HEIGHT * 2 }}
+          <View style={[styles.pickerContainer, isDark && { backgroundColor: '#1c1c1c', borderColor: '#333' }]}>
+            <Picker
+              selectedValue={selectedAge}
+              onValueChange={handleAgeChange}
+              style={[styles.picker, isDark && { color: '#fff' }]}
+              itemStyle={[styles.pickerItem, isDark && { color: '#fff' }]}
+              dropdownIconColor={isDark ? '#fff' : '#333'}
+              mode="dropdown"
             >
               {ageData.map((age) => (
-                <TouchableOpacity
+                <Picker.Item
                   key={age}
-                  style={styles.pickerItem}
-                  onPress={() => {
-                    setCurrentAge(age);
-                    setSelectedAge(age);
-                    scrollViewRef.current?.scrollTo({ y: (parseInt(age) - 1) * ITEM_HEIGHT, animated: true });
-                  }}
-                >
-                  <Text
-                    style={[
-                      styles.pickerItemText,
-                      isDark && { color: '#aaa' },
-                      currentAge === age && styles.pickerItemTextSelected,
-                    ]}
-                  >
-                    {age}
-                  </Text>
-                </TouchableOpacity>
+                  label={age}
+                  value={age}
+                  color={Platform.OS === 'android' ? (isDark ? '#fff' : '#333') : undefined}
+                  style={
+                    Platform.OS === 'android'
+                      ? { backgroundColor: isDark ? '#1c1c1c' : '#fff' }
+                      : undefined
+                  }
+                />
               ))}
-            </ScrollView>
+            </Picker>
           </View>
         </View>
       </ScrollView>
@@ -188,31 +149,10 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     overflow: 'hidden',
     marginBottom: 14,
-    height: 200,
-    position: 'relative',
+    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: '#ddd',
   },
-  innerShadowTop: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    height: 40,
-    zIndex: 2,
-    pointerEvents: 'none',
-  },
-  innerShadowBottom: {
-    position: 'absolute',
-    bottom: 0,
-    left: 0,
-    right: 0,
-    height: 40,
-    zIndex: 2,
-    pointerEvents: 'none',
-  },
-  pickerOverlay: { position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, justifyContent: 'center', zIndex: 1, pointerEvents: 'none' },
-  pickerHighlight: { height: 40, backgroundColor: 'rgba(101, 137, 255, 0.1)', borderTopWidth: 1, borderBottomWidth: 1, borderColor: PRIMARY_COLOR },
-  pickerScroll: { flex: 1 },
-  pickerItem: { height: 40, justifyContent: 'center', alignItems: 'center' },
-  pickerItemText: { fontSize: 18, color: '#999' },
-  pickerItemTextSelected: { fontSize: 22, fontWeight: 'bold', color: PRIMARY_COLOR },
+  picker: { color: '#333' },
+  pickerItem: { color: '#333' },
 });

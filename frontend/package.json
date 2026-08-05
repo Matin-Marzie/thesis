@@ -15,6 +15,7 @@
     "@react-native-community/datetimepicker": "8.4.4",
     "@react-native-community/netinfo": "^11.4.1",
     "@react-native-google-signin/google-signin": "^16.0.0",
+    "@react-native-picker/picker": "2.11.1",
     "@react-navigation/native": "^7.1.8",
     "axios": "^1.13.2",
     "eas-cli": "^16.28.0",
