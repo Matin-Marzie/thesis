@@ -17,6 +17,7 @@ export {
   registerUser,
   loginUser,
   loginWithGoogle,
+  registerWithGoogle,
   refreshAccessToken,
   logoutUser,
 } from './auth.js';

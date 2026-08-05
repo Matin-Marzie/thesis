@@ -1,6 +1,7 @@
 import express from 'express';
 import authController from '../controllers/authController.js';
-import googleAuthController from '../controllers/googleAuthController.js';
+import googleLoginController from '../controllers/googleLoginController.js';
+import googleRegisterController from '../controllers/googleRegisterController.js';
 import forgotPasswordController from '../controllers/forgotPasswordController.js';
 import verifyResetCodeController from '../controllers/verifyResetCodeController.js';
 import resetPasswordController from '../controllers/resetPasswordController.js';
@@ -75,20 +76,28 @@ router.post('/login', authController);
 
 /**
  * @swagger
- * /auth/google:
+ * /auth/google/login:
  *   post:
- *     summary: Login or register with Google OAuth
- *     description: Authenticate with Google ID token. Creates new account if user doesn't exist. Returns user profile, progress, vocabulary, and tokens.
+ *     summary: Login with an existing Google account
+ *     description: Authenticate with a Google ID token for an account that already exists. Does not create an account - if none is found, returns 404 with code GOOGLE_ACCOUNT_NOT_FOUND so the client can send the user through onboarding and call /auth/google/register instead.
  *     tags: [Authentication]
  *     requestBody:
  *       required: true
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/GoogleAuthRequest'
+ *             type: object
+ *             required: [idToken, platform]
+ *             properties:
+ *               idToken:
+ *                 type: string
+ *                 description: Google ID token from OAuth
+ *               platform:
+ *                 type: string
+ *                 enum: [android, ios, web]
  *     responses:
  *       200:
- *         description: Google authentication successful
+ *         description: Google login successful
  *         content:
  *           application/json:
  *             schema:
@@ -96,7 +105,7 @@ router.post('/login', authController);
  *               properties:
  *                 message:
  *                   type: string
- *                   example: 'Google authentication successful'
+ *                   example: 'Google login successful'
  *                 user_profile:
  *                   $ref: '#/components/schemas/UserProfile'
  *                 user_progress:
@@ -105,9 +114,6 @@ router.post('/login', authController);
  *                   type: array
  *                   items:
  *                     $ref: '#/components/schemas/UserVocabulary'
- *                 idToken:
- *                   type: string
- *                   description: Google ID token
  *                 accessToken:
  *                   type: string
  *                   description: JWT access token
@@ -120,8 +126,14 @@ router.post('/login', authController);
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/Error'
+ *       404:
+ *         description: No account found for this Google user (code GOOGLE_ACCOUNT_NOT_FOUND)
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error'
  *       409:
- *         description: Email already exists with different account
+ *         description: Email already exists with a non-Google account
  *         content:
  *           application/json:
  *             schema:
@@ -133,7 +145,80 @@ router.post('/login', authController);
  *             schema:
  *               $ref: '#/components/schemas/Error'
  */
-router.post('/google', verifyGoogleToken, googleAuthController);
+router.post('/google/login', verifyGoogleToken, googleLoginController);
+
+/**
+ * @swagger
+ * /auth/google/register:
+ *   post:
+ *     summary: Register a new account with Google OAuth
+ *     description: Creates an account using a Google ID token plus profile/progress data collected during onboarding. If the account already exists, responds the same way a login would instead of erroring, so a retried request stays safe.
+ *     tags: [Authentication]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required: [idToken, platform, user_profile, user_progress]
+ *             properties:
+ *               idToken:
+ *                 type: string
+ *                 description: Google ID token from OAuth
+ *               platform:
+ *                 type: string
+ *                 enum: [android, ios, web]
+ *               user_profile:
+ *                 $ref: '#/components/schemas/UserProfile'
+ *               user_progress:
+ *                 $ref: '#/components/schemas/UserProgress'
+ *     responses:
+ *       201:
+ *         description: Google registration successful
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: 'Google registration successful'
+ *                 user_profile:
+ *                   $ref: '#/components/schemas/UserProfile'
+ *                 user_progress:
+ *                   $ref: '#/components/schemas/UserProgress'
+ *                 user_vocabulary:
+ *                   type: array
+ *                   items:
+ *                     $ref: '#/components/schemas/UserVocabulary'
+ *                 accessToken:
+ *                   type: string
+ *                   description: JWT access token
+ *                 refreshToken:
+ *                   type: string
+ *                   description: Refresh token
+ *       200:
+ *         description: Account already existed - logged in instead
+ *       400:
+ *         description: Invalid token or missing/invalid onboarding data
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error'
+ *       409:
+ *         description: Email already exists with a non-Google account
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error'
+ *       500:
+ *         description: Server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error'
+ */
+router.post('/google/register', verifyGoogleToken, googleRegisterController);
 
 /**
  * @swagger

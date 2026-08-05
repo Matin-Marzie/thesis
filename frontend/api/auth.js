@@ -161,28 +161,65 @@ export const loginUser = async (credentials) => {
 
 
 /**
- * Login with Google OAuth
- * @param {Object} data - { idToken, platform, user } (Google ID token)
- * @returns {Promise<Object>} - { user, accessToken, refreshToken }
+ * Login with an existing Google account. Does not create an account - if
+ * none exists yet, rejects with a normalized Error whose .code is
+ * 'GOOGLE_ACCOUNT_NOT_FOUND', so the caller can route to onboarding and
+ * finish sign-up via registerWithGoogle instead.
+ * @param {Object} data - { idToken, platform }
+ * @returns {Promise<Object>} - full axios response; response.data = { user_profile, user_progress, user_vocabulary, accessToken, refreshToken }
  */
 export const loginWithGoogle = async (data) => {
   try {
-    const response = await apiClient.post('/auth/google', data);
+    const response = await apiClient.post('/auth/google/login', data);
 
     // Store tokens from response body
-    if (response.data?.data?.accessToken) {
-      setAccessToken(response.data.data.accessToken);
+    if (response.data?.accessToken) {
+      setAccessToken(response.data.accessToken);
     }
 
-    if (response.data?.data?.refreshToken) {
-      await storeRefreshToken(response.data.data.refreshToken);
+    if (response.data?.refreshToken) {
+      await storeRefreshToken(response.data.refreshToken);
     }
 
-    return response.data;
+    return response; // return full response (status + data)
   } catch (error) {
-    // Extract error message and throw clean error (not raw axios error)
+    // Extract error message and throw clean error (not raw axios error).
+    // status/code are attached so callers can tell a missing account
+    // (GOOGLE_ACCOUNT_NOT_FOUND) apart from other failures.
     const errorMessage = error.response?.data?.message || error.message || 'Google login failed';
-    throw new Error(errorMessage);
+    const normalizedError = new Error(errorMessage);
+    normalizedError.status = error.response?.status;
+    normalizedError.code = error.response?.data?.code;
+    throw normalizedError;
+  }
+};
+
+/**
+ * Register a new account with Google, using profile/progress data collected
+ * during onboarding. If the account already exists, the backend responds
+ * the same way a login would rather than erroring.
+ * @param {Object} data - { idToken, platform, user_profile, user_progress }
+ * @returns {Promise<Object>} - full axios response; response.data = { user_profile, user_progress, user_vocabulary, accessToken, refreshToken }
+ */
+export const registerWithGoogle = async (data) => {
+  try {
+    const response = await apiClient.post('/auth/google/register', data);
+
+    if (response.data?.accessToken) {
+      setAccessToken(response.data.accessToken);
+    }
+
+    if (response.data?.refreshToken) {
+      await storeRefreshToken(response.data.refreshToken);
+    }
+
+    return response; // return full response (status + data)
+  } catch (error) {
+    const errorMessage = error.response?.data?.message || error.message || 'Google registration failed';
+    const normalizedError = new Error(errorMessage);
+    normalizedError.status = error.response?.status;
+    normalizedError.code = error.response?.data?.code;
+    throw normalizedError;
   }
 };
 

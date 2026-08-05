@@ -1,16 +1,15 @@
 import { OAuth2Client } from 'google-auth-library';
-import GoogleAuthSchema from '../validation/GoogleAuthSchema.js';
+import GoogleTokenSchema from '../validation/GoogleTokenSchema.js';
 
 const clientIds = {
-  android: process.env.GOOGLE_CLIENT_ID_ANDROID,
+  android: process.env.GOOGLE_CLIENT_ID_WEB,
   ios: process.env.GOOGLE_CLIENT_ID_IOS,
-  // web: process.env.GOOGLE_CLIENT_ID_WEB,
 };
 
 const verifyGoogleToken = async (req, res, next) => {
 
   // Validate request body
-  const { error, value } = GoogleAuthSchema.validate({ idToken: req.body.idToken, platform: req.body.platform });
+  const { error, value } = GoogleTokenSchema.validate({ idToken: req.body.idToken, platform: req.body.platform });
   
   if (error) {
     return res.status(400).json({

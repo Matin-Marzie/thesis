@@ -5,6 +5,7 @@ import { logEvents } from '../middleware/logEvents.js';
 import usersModel from '../models/usersModel.js';
 import userLanguagesModel from '../models/userLanguagesModel.js';
 import userVocabularyModel from '../models/userVocabularyModel.js';
+import mergeGuestProgress from '../utils/mergeGuestProgress.js';
 
 const authController = async (req, res) => {
   try {
@@ -17,8 +18,7 @@ const authController = async (req, res) => {
       });
     }
 
-    const { username, email, password, user_progress, user_vocabulary } = value;
-    // TO Do: merge user_progress and user_vocabulary with existing data in DB
+    const { username, email, password, user_profile, user_progress, user_vocabulary } = value;
 
     // Find user by username or email
     let user;
@@ -85,9 +85,21 @@ const authController = async (req, res) => {
     await usersModel.updateRefreshToken(user.id, refreshToken);
 
     // Fetch user_languages from DB
-    const userLanguages = await userLanguagesModel.get(user.id);
+    let userLanguages = await userLanguagesModel.get(user.id);
+
+    // If the client sent local guest progress along with login, merge it
+    // into this account (see mergeGuestProgress.js for the exact rules)
+    if (user_profile || user_progress || user_vocabulary) {
+      const updatedUser = await mergeGuestProgress(user.id, { user_profile, user_progress, user_vocabulary }, userLanguages);
+      if (updatedUser) {
+        user = { ...user, ...updatedUser };
+      }
+      // Re-fetch - merge may have added a new language pair or bumped an existing one
+      userLanguages = await userLanguagesModel.get(user.id);
+    }
+
     const current_language = userLanguages.find(lang => lang.is_current_language);
-    
+
     // Fetch user vocabulary for current language
     const user_vocabulary_in_db = await userVocabularyModel.get(
       user.id,

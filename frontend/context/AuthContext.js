@@ -20,6 +20,8 @@ import { useReminderSettings } from './ReminderContext';
  * @property {Function} setHasCompletedOnboarding
  * @property {boolean} isLoading
  * @property {Function} setIsLoading
+ * @property {{ idToken: string, platform: string } | null} pendingGoogleAuth
+ * @property {Function} setPendingGoogleAuth
  * @property {() => Promise<void>} initApp
  * @property {() => Promise<void>} forceSync
  */
@@ -38,6 +40,13 @@ export const AuthProvider = ({ children }) => {
   // UI state
   const [isLoading, setIsLoading] = useState(true);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  // Holds { idToken, platform } for a brand-new Google sign-in that has no
+  // account yet - set while the user is routed through onboarding to collect
+  // real profile data, then consumed to finish creating the account.
+  // Intentionally in-memory only (not persisted): idTokens expire in ~1hr,
+  // so surviving an app restart isn't useful and just adds a stale value.
+  const [pendingGoogleAuth, setPendingGoogleAuth] = useState(null);
 
   const {
     value: hasCompletedOnboarding,
@@ -115,11 +124,13 @@ export const AuthProvider = ({ children }) => {
     isAuthenticated, setIsAuthenticated, initApp,
     hasCompletedOnboarding, setHasCompletedOnboarding,
     isLoading, setIsLoading,
+    pendingGoogleAuth, setPendingGoogleAuth,
     forceSync,
   }), [
     isAuthenticated, setIsAuthenticated, initApp,
     hasCompletedOnboarding, setHasCompletedOnboarding,
     isLoading, setIsLoading,
+    pendingGoogleAuth, setPendingGoogleAuth,
     forceSync,
   ]);
 

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, StyleSheet, BackHandler } from 'react-native';
+import { View, StyleSheet, BackHandler, Alert } from 'react-native';
 import { useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import TouchableOpacity from '@/components/TouchableOpacity';
@@ -9,19 +9,21 @@ import ProficiencySlide from './components/ProficiencySlide';
 import NotificationsSlide from './components/NotificationsSlide';
 import PersonalizationSlide from './components/PersonalizationSlide';
 import { PRIMARY_COLOR } from '@/constants/App';
+import { registerWithGoogle } from '../../api/auth';
 import { useProfile } from '@/context/ProfileContext';
 import { useProgress } from '@/context/ProgressContext';
 import { useVocabularyContext } from '@/context/VocabularyContext';
 import { useAuth } from '@/context/AuthContext';
 import { useDictionaryContext } from '@/context/DictionaryContext';
 import { getLevelsBelowProficiency } from '@/constants/Vocabulary';
+import { VOCABULARY_ACTIONS } from '@/hooks/useVocabulary';
 
 export default function OnboardingQuestions() {
   const router = useRouter();
   const { updateUserProfile } = useProfile();
-  const { setUserProgress } = useProgress();
-  const { bulkAddVocabulary } = useVocabularyContext();
-  const { setHasCompletedOnboarding } = useAuth();
+  const { userProgress, setUserProgress } = useProgress();
+  const { bulkAddVocabulary, vocabularyChanges, vocabularyDispatch } = useVocabularyContext();
+  const { setIsAuthenticated, setHasCompletedOnboarding, pendingGoogleAuth, setPendingGoogleAuth } = useAuth();
   const { fetchDictionary } = useDictionaryContext();
   const [currentSlide, setCurrentSlide] = useState(0);
 
@@ -65,36 +67,40 @@ export default function OnboardingQuestions() {
   const completeOnboarding = async () => {
     // Save onboarding data
 
-    // Store user profile
-    await updateUserProfile({
+    const newUserProfile = {
       joined_date: new Date().toISOString(),
       age: parseInt(selectedAge),
       preferences: selectedPreferences.join(','),
-      notifications: true
-    });
+      notifications: true,
+    };
+
+    const newLanguages = [
+      {
+        id: null,
+        is_current_language: true,
+        created_at: new Date().toISOString(),
+        proficiency_level: selectedLevel,
+        experience: 0,
+        native_language: {
+          id: selectedNativeLanguage?.id,
+          name: selectedNativeLanguage?.name,
+          code: selectedNativeLanguage?.code,
+        },
+        learning_language: {
+          id: selectedLearningLanguage?.id,
+          name: selectedLearningLanguage?.name,
+          code: selectedLearningLanguage?.code,
+        }
+      }
+    ];
+
+    // Store user profile
+    await updateUserProfile(newUserProfile);
 
     // Store user progress
     await setUserProgress((prev) => ({
       ...prev,
-      languages: [
-        {
-          id: null,
-          is_current_language: true,
-          created_at: new Date().toISOString(),
-          proficiency_level: selectedLevel,
-          experience: 0,
-          native_language: {
-            id: selectedNativeLanguage?.id,
-            name: selectedNativeLanguage?.name,
-            code: selectedNativeLanguage?.code,
-          },
-          learning_language: {
-            id: selectedLearningLanguage?.id,
-            name: selectedLearningLanguage?.name,
-            code: selectedLearningLanguage?.code,
-          }
-        }
-      ]
+      languages: newLanguages,
     }));
 
     // TODO: Fetch Reels sending native_language_id and learning_language_id and proficiency_level and preferences and age
@@ -102,17 +108,51 @@ export default function OnboardingQuestions() {
     // Fetch dictionary and add words below user's proficiency level to vocabulary
     if (selectedLearningLanguage?.code && selectedNativeLanguage?.code) {
       const dictionaryData = await fetchDictionary(selectedLearningLanguage.code, selectedNativeLanguage.code) as { words?: Array<{ id: number; level: string }> } | null;
-      
+
       // Add words below proficiency level to user's vocabulary with mastery_level 3
       if (dictionaryData?.words && selectedLevel) {
         const levelsBelowProficiency = getLevelsBelowProficiency(selectedLevel);
         const wordIdsToAdd = dictionaryData.words
           .filter((word) => levelsBelowProficiency.includes(word.level))
           .map((word) => word.id);
-        
+
         if (wordIdsToAdd.length > 0) {
           bulkAddVocabulary(wordIdsToAdd, 3);
         }
+      }
+    }
+
+    // If the user started signing up with Google, we now have real profile
+    // data to send - finish creating the account with the idToken stashed
+    // by login.tsx/register.tsx before routing here.
+    if (pendingGoogleAuth) {
+      try {
+        const apiResponse = await registerWithGoogle({
+          idToken: pendingGoogleAuth.idToken,
+          platform: pendingGoogleAuth.platform,
+          user_profile: newUserProfile,
+          user_progress: {
+            energy: userProgress.energy,
+            coins: userProgress.coins,
+            languages: newLanguages,
+          },
+          vocabulary_changes: vocabularyChanges,
+        });
+
+        if (apiResponse.status === 201 && apiResponse.data) {
+          setIsAuthenticated(true);
+          await updateUserProfile(apiResponse.data.user_profile);
+          await setUserProgress(apiResponse.data.user_progress);
+          vocabularyDispatch({ type: VOCABULARY_ACTIONS.SET, payload: apiResponse.data.user_vocabulary });
+        }
+      } catch (error: any) {
+        console.error('Failed to finish Google sign-up after onboarding:', error);
+        Alert.alert(
+          'Account creation failed',
+          error.message || 'Could not finish creating your account. You can try Google sign-in again from Login.'
+        );
+      } finally {
+        setPendingGoogleAuth(null);
       }
     }
 

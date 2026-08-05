@@ -8,6 +8,13 @@ const LoginSchema = Joi.object({
   username: UserProfileSchema.extract('username'),
   email: UserProfileSchema.extract('email'),
   password: PasswordSchema,
+  // Present only when the client is merging local guest progress into this
+  // account on login - see mergeGuestProgress.js
+  user_profile: UserProfileSchema.keys({
+    age: UserProfileSchema.extract('age').optional(),
+    preferences: UserProfileSchema.extract('preferences').optional(),
+    notifications: UserProfileSchema.extract('notifications').optional(),
+  }).optional(),
   user_progress: UserProgressSchema.keys({
     coins: UserProgressSchema.extract('coins').optional(),
     energy: UserProgressSchema.extract('energy').optional(),

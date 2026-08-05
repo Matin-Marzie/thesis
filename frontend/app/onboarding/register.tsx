@@ -12,15 +12,18 @@ import {
 } from 'react-native';
 import { useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
-// import { GoogleSigninButton, GoogleSignin, statusCodes, User as GoogleUser } from '@react-native-google-signin/google-signin';
+import { GoogleSigninButton, GoogleSignin, statusCodes, isSuccessResponse, isErrorWithCode } from '@react-native-google-signin/google-signin';
 import { PRIMARY_COLOR } from '@/constants/App';
-import { requestVerificationCode } from '../../api/auth';
+import { requestVerificationCode, registerWithGoogle } from '../../api/auth';
+import { useProfile } from '@/context/ProfileContext';
+import { useProgress } from '@/context/ProgressContext';
+import { useVocabularyContext } from '@/context/VocabularyContext';
+import { useAuth } from '@/context/AuthContext';
+import { VOCABULARY_ACTIONS } from '@/hooks/useVocabulary';
 import { useColorScheme } from '@/components/useColorScheme';
 import TouchableOpacity from '@/components/TouchableOpacity';
 
-
-// Hardcoded client IDs for Google Sign-In
-
+const GOOGLE_CLIENT_ID_WEB = process.env.EXPO_PUBLIC_GOOGLE_CLIENT_ID_WEB;
 
 interface RegisterScreenProps {
   onRegisterSuccess?: () => void;
@@ -41,13 +44,17 @@ export default function RegisterScreen({ onRegisterSuccess }: RegisterScreenProp
   const height = Dimensions.get('window').height;
 
   // Configure Google Sign-In on mount
-  // useEffect(() => {
-  //   GoogleSignin.configure({
-  //     webClientId: GOOGLE_CLIENT_ID_WEB,
-  //     offlineAccess: true,
-  //   });
-  // }, []);
+  useEffect(() => {
+    GoogleSignin.configure({
+      webClientId: GOOGLE_CLIENT_ID_WEB,
+      offlineAccess: true,
+    });
+  }, []);
 
+  const { userProfile, updateUserProfile } = useProfile();
+  const { userProgress, setUserProgress } = useProgress();
+  const { vocabularyChanges, vocabularyDispatch } = useVocabularyContext();
+  const { setIsAuthenticated, setHasCompletedOnboarding, hasCompletedOnboarding, setPendingGoogleAuth } = useAuth();
   const router = useRouter();
   const colorScheme = useColorScheme();
   const isDark = colorScheme === 'dark';
@@ -134,33 +141,63 @@ export default function RegisterScreen({ onRegisterSuccess }: RegisterScreenProp
   const handleGoogleSignIn = async () => {
     setLoading(true);
     setErrors({});
-    // try {
-    //   await GoogleSignin.hasPlayServices({ showPlayServicesUpdateDialog: true });
-    //   const userInfo: GoogleUser = await GoogleSignin.signIn();
-    //   console.log('Google User Info:', userInfo);
-    //   // Send userInfo.idToken to backend for authentication
-    //   // Example: await googleAuth(userInfo.idToken)
-    //   // For now, just show success and update context
-    //   // You should implement backend call here
-    //   Alert.alert('Google Sign-In Success', `Welcome, ${userInfo.user.name || userInfo.user.email}`);
-    //   // Optionally, update user context and navigate
-    //   // await userProfile, userProgress, updateUserProfile(userInfo.user);
-    //   // update user data
-    //   // setIsAuthenticated(true);
-    //   // router.replace('/(tabs)');
-    // } catch (error: any) {
-    //   if (error.code === statusCodes.SIGN_IN_CANCELLED) {
-    //     // user cancelled
-    //   } else if (error.code === statusCodes.IN_PROGRESS) {
-    //     setErrors({ general: 'Google Sign-In is in progress.' });
-    //   } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
-    //     setErrors({ general: 'Google Play Services not available or outdated.' });
-    //   } else {
-    //     setErrors({ general: error.message || 'Google Sign-In failed.' });
-    //   }
-    // } finally {
-    //   setLoading(false);
-    // }
+    try {
+      await GoogleSignin.hasPlayServices({ showPlayServicesUpdateDialog: true });
+      const response = await GoogleSignin.signIn();
+
+      if (!isSuccessResponse(response)) {
+        // user cancelled the native picker
+        return;
+      }
+
+      const { idToken } = response.data;
+      const platform = Platform.OS === 'ios' ? 'ios' : 'android';
+
+      // This is the Sign up screen - always register, never silently log
+      // in. If an account already exists, registerWithGoogle rejects with
+      // a clear "please login instead" message rather than this screen
+      // logging the user in on their behalf.
+      if (!hasCompletedOnboarding) {
+        // No real profile data yet - collect it via onboarding, then
+        // questions.tsx finishes registration with this idToken.
+        setPendingGoogleAuth({ idToken, platform });
+        router.push('/onboarding/questions');
+        return;
+      }
+
+      const apiResponse = await registerWithGoogle({
+        idToken,
+        platform,
+        user_profile: userProfile,
+        user_progress: userProgress,
+        vocabulary_changes: vocabularyChanges,
+      });
+
+      if (apiResponse.status === 201 && apiResponse.data) {
+        setIsAuthenticated(true);
+        setHasCompletedOnboarding(true); // runtime only
+        await updateUserProfile(apiResponse.data.user_profile);
+        await setUserProgress(apiResponse.data.user_progress);
+        vocabularyDispatch({ type: VOCABULARY_ACTIONS.SET, payload: apiResponse.data.user_vocabulary });
+        router.replace('/(tabs)');
+      }
+    } catch (error: any) {
+      if (isErrorWithCode(error)) {
+        if (error.code === statusCodes.SIGN_IN_CANCELLED) {
+          // user cancelled
+        } else if (error.code === statusCodes.IN_PROGRESS) {
+          setErrors({ general: 'Google Sign-In is in progress.' });
+        } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
+          setErrors({ general: 'Google Play Services not available or outdated.' });
+        } else {
+          setErrors({ general: error.message || 'Google Sign-In failed.' });
+        }
+      } else {
+        setErrors({ general: error.message || 'Google Sign-In failed.' });
+      }
+    } finally {
+      setLoading(false);
+    }
   };
 
 
@@ -318,7 +355,7 @@ export default function RegisterScreen({ onRegisterSuccess }: RegisterScreenProp
         </View>
 
         {/* Google Sign-In Button */}
-        {/* <View style={{ alignItems: 'center'}}>
+        <View style={{ alignItems: 'center' }}>
           <GoogleSigninButton
             style={{ width: width * 0.8, height: 56 }}
             size={GoogleSigninButton.Size.Wide}
@@ -326,7 +363,7 @@ export default function RegisterScreen({ onRegisterSuccess }: RegisterScreenProp
             onPress={handleGoogleSignIn}
             disabled={loading}
           />
-        </View> */}
+        </View>
       </ScrollView>
     </KeyboardAvoidingView>
   );

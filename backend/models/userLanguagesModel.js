@@ -102,6 +102,17 @@ const userLanguagesModel = {
 
 
 
+  // Set a single language as the user's current one (unsets all others in the same statement)
+  async setCurrent(userId, userLanguagesId) {
+    const query = `
+      UPDATE user_languages
+      SET is_current_language = (id = $2)
+      WHERE user_id = $1
+    `;
+    await pool.query(query, [userId, userLanguagesId]);
+  },
+
+
   // Delete a user language entry
   async delete(userId, native_language_id, learning_language_id) {
     const query = `

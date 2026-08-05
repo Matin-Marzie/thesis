@@ -8,48 +8,47 @@ import {
   ActivityIndicator,
   KeyboardAvoidingView,
   Platform,
-  Alert,
   Dimensions,
+  Alert,
 } from 'react-native';
 import { useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
-import { loginUser } from '../../api/auth';
+import { loginUser, loginWithGoogle } from '../../api/auth';
 import { PRIMARY_COLOR } from '@/constants/App';
 import { useProfile } from '@/context/ProfileContext';
 import { useProgress } from '@/context/ProgressContext';
 import { useVocabularyContext } from '@/context/VocabularyContext';
 import { useAuth } from '@/context/AuthContext';
-import { VOCABULARY_ACTIONS } from '@/hooks/useVocabulary';
+import { VOCABULARY_ACTIONS, DEFAULT_VOCABULARY_CHANGES } from '@/hooks/useVocabulary';
 import { useColorScheme } from '@/components/useColorScheme';
 import TouchableOpacity from '@/components/TouchableOpacity';
-// import { GoogleSigninButton, GoogleSignin, statusCodes, User as GoogleUser, isSuccessResponse, isErrorWithCode } from '@react-native-google-signin/google-signin';
+import { GoogleSigninButton, GoogleSignin, statusCodes, isSuccessResponse, isErrorWithCode } from '@react-native-google-signin/google-signin';
 
 const USERNAME_REGEX = /^[a-zA-Z][a-zA-Z0-9._-]{3,30}$/;
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-// const GOOGLE_CLIENT_ID_WEB = '749167384852-v7hhoooltfik3irda68r6j4plf82allp.apps.googleusercontent.com';
-// const GOOGLE_CLIENT_ID_ANDROID = '749167384852-m2bbpmr3dhnltq1sk0i3jkiu78k3pmkg.apps.googleusercontent.com';
-// const GOOGLE_CLIENT_ID_IOS = '749167384852-deptjfvib3mr44upckts5kbkec7vp3vl.apps.googleusercontent.com'; 
+const GOOGLE_CLIENT_ID_WEB = process.env.EXPO_PUBLIC_GOOGLE_CLIENT_ID_WEB;
+const GOOGLE_CLIENT_ID_ANDROID = process.env.EXPO_PUBLIC_GOOGLE_CLIENT_ID_ANDROID;
+const GOOGLE_CLIENT_ID_IOS = process.env.EXPO_PUBLIC_GOOGLE_CLIENT_ID_IOS;
 
 
 export default function LoginScreen() {
 
   // Configure Google Sign-In on mount
-  // useEffect(() => {
-  //     GoogleSignin.configure({
-  //       webClientId: GOOGLE_CLIENT_ID_ANDROID,
-  //       // iosClientId: GOOGLE_CLIENT_ID_IOS,
-  //       offlineAccess: true,
-  //     });
-  // }, []);
+  useEffect(() => {
+      GoogleSignin.configure({
+        webClientId: GOOGLE_CLIENT_ID_WEB,
+        offlineAccess: true,
+      });
+  }, []);
 
   const width = Dimensions.get('window').width;
   const height = Dimensions.get('window').height;
 
-  const { updateUserProfile } = useProfile();
-  const { setUserProgress } = useProgress();
-  const { vocabularyDispatch } = useVocabularyContext();
-  const { setIsAuthenticated, setHasCompletedOnboarding, hasCompletedOnboarding } = useAuth();
+  const { userProfile, updateUserProfile } = useProfile();
+  const { userProgress, setUserProgress } = useProgress();
+  const { userVocabulary, vocabularyDispatch, setVocabularyChanges } = useVocabularyContext();
+  const { setIsAuthenticated, setHasCompletedOnboarding, hasCompletedOnboarding, setPendingGoogleAuth } = useAuth();
   const router = useRouter();
   const colorScheme = useColorScheme();
   const isDark = colorScheme === 'dark';
@@ -62,102 +61,171 @@ export default function LoginScreen() {
 
   const hasInput = usernameOrEmail.trim().length > 3 && password.length > 7;
 
-  const handleLogin = async () => {
-    setLoading(true);
+  // If onboarding was already completed on this device (guest progress:
+  // energy, coins, language, vocabulary, all unlinked to any account), ask
+  // the user how logging in should handle it before proceeding - merge it
+  // into the account, overwrite it with the account's own saved progress,
+  // or cancel. Skips straight to `proceed(false)` when there's no local
+  // progress at stake.
+  const promptLoginStrategy = (proceed: (merge: boolean) => void) => {
+    if (!hasCompletedOnboarding) {
+      proceed(false);
+      return;
+    }
+    Alert.alert(
+      'You have progress on this device',
+      "This device has an active language-learning session - energy, coins, your selected language, and word progress - that isn't linked to any account yet.\n\n" +
+      "Merge combines it with the account's saved progress: whichever has more coins/energy is kept, any languages you have here that the account doesn't are added to it, and for words you've studied in both places, the better mastery level wins.\n\n" +
+      "Overwrite discards this device's current session entirely and replaces it with whatever is already saved on that account.\n\n" +
+      "This can't be undone once you continue.",
+      [
+        { text: 'Cancel', style: 'cancel' },
+        { text: 'Overwrite', style: 'destructive', onPress: () => proceed(false) },
+        { text: 'Merge', style: 'default', onPress: () => proceed(true) },
+      ]
+    );
+  };
+
+  const buildMergePayload = () => ({
+    user_profile: {
+      age: userProfile.age,
+      preferences: userProfile.preferences,
+      notifications: userProfile.notifications,
+    },
+    user_progress: userProgress,
+    user_vocabulary: userVocabulary,
+  });
+
+  const handleLogin = () => {
     setError('');
 
     const isEmail = usernameOrEmail.includes('@');
 
     if (isEmail && !EMAIL_REGEX.test(usernameOrEmail.trim())) {
       setError('Email is in wrong format');
-      setLoading(false);
       return;
     }
 
     if (!isEmail && !USERNAME_REGEX.test(usernameOrEmail.trim())) {
       setError('Username is in wrong format');
-      setLoading(false);
       return;
     }
 
-    try {
-      const credentials = isEmail
-        ? { email: usernameOrEmail.trim(), password: password.trim() }
-        : { username: usernameOrEmail.trim(), password: password.trim() };
+    promptLoginStrategy(async (merge) => {
+      setLoading(true);
+      try {
+        const credentials: any = isEmail
+          ? { email: usernameOrEmail.trim(), password: password.trim() }
+          : { username: usernameOrEmail.trim(), password: password.trim() };
 
-      // Backend login request
-      const response = await loginUser(credentials);
-      if (response.status === 200) {
-        setIsAuthenticated(true);
-        setHasCompletedOnboarding(true); // runtime only 
-
-        // update user data
-        if (response.data) {
-          await updateUserProfile(response.data?.user_profile);
-          await setUserProgress(response.data?.user_progress);
-          vocabularyDispatch({ type: VOCABULARY_ACTIONS.SET, payload: response.data?.user_vocabulary });
+        if (merge) {
+          Object.assign(credentials, buildMergePayload());
         }
-        router.replace('/(tabs)');
-      }
 
-    } catch (error: any) {
-      setError(error.message); // show error
-    } finally {
-      setLoading(false);
-    }
+        // Backend login request
+        const response = await loginUser(credentials);
+        if (response.status === 200) {
+          setIsAuthenticated(true);
+          setHasCompletedOnboarding(true); // runtime only
+
+          // update user data
+          if (response.data) {
+            await updateUserProfile(response.data?.user_profile);
+            await setUserProgress(response.data?.user_progress);
+            vocabularyDispatch({ type: VOCABULARY_ACTIONS.SET, payload: response.data?.user_vocabulary });
+          }
+          if (!merge) {
+            // Overwrite discarded the local session entirely
+            setVocabularyChanges(DEFAULT_VOCABULARY_CHANGES);
+          }
+          router.replace('/(tabs)');
+        }
+
+      } catch (error: any) {
+        setError(error.message); // show error
+      } finally {
+        setLoading(false);
+      }
+    });
   };
 
-  const handleGoogleSignIn = async () => {
-    setLoading(true);
+  const handleGoogleSignIn = () => {
     setError('');
-    try {
-      // await GoogleSignin.hasPlayServices({ showPlayServicesUpdateDialog: true });
-      // const response = await GoogleSignin.signIn();
+    promptLoginStrategy(async (merge) => {
+      setLoading(true);
+      try {
+        await GoogleSignin.hasPlayServices({ showPlayServicesUpdateDialog: true });
+        const response = await GoogleSignin.signIn();
 
-      // if (isSuccessResponse(response)) {
-      //   response
-      //   Alert.alert('Google Sign-In Success', `Welcome, ${response.user.name || response.user.email}`);
-      // }
+        if (!isSuccessResponse(response)) {
+          // user cancelled the native picker
+          return;
+        }
 
+        const { idToken } = response.data;
+        const platform = Platform.OS === 'ios' ? 'ios' : 'android';
 
+        try {
+          const payload: any = { idToken, platform };
+          if (merge) {
+            Object.assign(payload, buildMergePayload());
+          }
 
+          const apiResponse = await loginWithGoogle(payload);
 
-      // const userInfo: GoogleUser = await GoogleSignin.signIn();
-      // You can send userInfo.idToken to your backend for authentication
-      // console.log('Google User Info:', userInfo);
-      // Alert.alert('Google Sign-In Success', `Welcome, ${userInfo.user.name || userInfo.user.email}`);
-      // Optionally, update user context and navigate
-      // await updateUserProfile(userInfo.user);
-      // await setUserProgress();   // I DON'T KNOW
-      // await updateUserVocabulary(); // CHECK
-      // setIsAuthenticated(true);
-      // router.replace('/(tabs)');
-    } catch (error: any) {
-      // if (isErrorWithCode(error)) {
-      //   console.log(error.code)
-      // }
+          if (apiResponse.status === 200) {
+            setIsAuthenticated(true);
+            setHasCompletedOnboarding(true); // runtime only
 
-
-
-
-
-
-
-
-
-
-      // if (error.code === statusCodes.SIGN_IN_CANCELLED) {
-      //   // user cancelled
-      // } else if (error.code === statusCodes.IN_PROGRESS) {
-      //   setError('Google Sign-In is in progress.');
-      // } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
-      //   setError('Google Play Services not available or outdated.');
-      // } else {
-      //   setError(error.message || 'Google Sign-In failed.');
-      // }
-    } finally {
-      setLoading(false);
-    }
+            if (apiResponse.data) {
+              await updateUserProfile(apiResponse.data?.user_profile);
+              await setUserProgress(apiResponse.data?.user_progress);
+              vocabularyDispatch({ type: VOCABULARY_ACTIONS.SET, payload: apiResponse.data?.user_vocabulary });
+            }
+            if (!merge) {
+              // Overwrite discarded the local session entirely - clear any
+              // pending local vocabulary changes too, so a later background
+              // sync doesn't push the discarded guest data into this account.
+              setVocabularyChanges(DEFAULT_VOCABULARY_CHANGES);
+            }
+            router.replace('/(tabs)');
+          }
+        } catch (apiError: any) {
+          if (apiError.code === 'GOOGLE_ACCOUNT_NOT_FOUND') {
+            if (hasCompletedOnboarding) {
+              // Onboarding was already done on this device, but no backend
+              // account exists for this Google identity - the onboarding
+              // group is off-limits once onboarding is complete (see
+              // app/_layout.tsx), so point the user at Sign up instead.
+              setError('No account found for this Google login. Please Sign up first.');
+            } else {
+              // No profile data collected yet - collect it via onboarding,
+              // then questions.tsx finishes registration with this idToken.
+              setPendingGoogleAuth({ idToken, platform });
+              router.push('/onboarding/questions');
+            }
+            return;
+          }
+          throw apiError;
+        }
+      } catch (error: any) {
+        if (isErrorWithCode(error)) {
+          if (error.code === statusCodes.SIGN_IN_CANCELLED) {
+            // user cancelled
+          } else if (error.code === statusCodes.IN_PROGRESS) {
+            setError('Google Sign-In is in progress.');
+          } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
+            setError('Google Play Services not available or outdated.');
+          } else {
+            setError(error.message || 'Google Sign-In failed.');
+          }
+        } else {
+          setError(error.message || 'Google Sign-In failed.');
+        }
+      } finally {
+        setLoading(false);
+      }
+    });
   };
 
   return (
@@ -271,7 +339,7 @@ export default function LoginScreen() {
         </View>
 
         {/* Google Sign-In Button */}
-        {/* <View style={{ alignItems: 'center', marginTop: 24 }}>
+        <View style={{ alignItems: 'center', marginTop: 24 }}>
             <GoogleSigninButton
               style={{ width: width * 0.8, height: 56 }}
               size={GoogleSigninButton.Size.Wide}
@@ -279,7 +347,7 @@ export default function LoginScreen() {
               onPress={handleGoogleSignIn}
               disabled={loading}
             />
-        </View> */}
+        </View>
 
       </ScrollView>
     </KeyboardAvoidingView>

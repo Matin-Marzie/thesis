@@ -133,7 +133,7 @@ const usersModel = {
 
   // Update user profile, energy, or coins
   async updateProfile(userId, updates) {
-    const allowedFields = ['first_name', 'last_name', 'username', 'profile_picture', 'energy', 'coins'];
+    const allowedFields = ['first_name', 'last_name', 'username', 'profile_picture', 'energy', 'coins', 'age', 'preferences', 'notifications'];
     const fields = [];
     const values = [];
     let paramCount = 1;
@@ -152,11 +152,12 @@ const usersModel = {
 
     values.push(userId);
     const query = `
-      UPDATE users 
+      UPDATE users
       SET ${fields.join(', ')}
       WHERE id = $${paramCount}
-      RETURNING id, email, username, first_name, last_name, 
-                profile_picture, joined_date, last_login, energy, coins
+      RETURNING id, email, username, first_name, last_name,
+                profile_picture, joined_date, last_login, energy, coins,
+                age, preferences, notifications
     `;
 
     const result = await pool.query(query, values);
