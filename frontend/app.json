@@ -26,6 +26,11 @@
       "predictiveBackGestureEnabled": false,
       "package": "com.gloreels.app"
     },
+    "androidNavigationBar": {
+      "backgroundColor": "#0f8690",
+      "barStyle": "light-content",
+      "enforceContrast": false
+    },
     "web": {
       "bundler": "metro",
       "output": "static",

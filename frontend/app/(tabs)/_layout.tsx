@@ -17,12 +17,14 @@ export default function TabLayout() {
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: '#fff',
+        tabBarActiveTintColor: "#fff",
         tabBarActiveBackgroundColor: PRIMARY_COLOR,
-        tabBarInactiveTintColor: '#666',
+        tabBarInactiveTintColor: "#333",
+        tabBarStyle: {
+          backgroundColor: PRIMARY_COLOR,
+        },
         headerStyle: {
           backgroundColor: PRIMARY_COLOR,
-          height: 80,
         },
         headerTintColor: '#fff',
         headerTitleStyle: {
@@ -48,13 +50,13 @@ export default function TabLayout() {
           tabBarIcon: ({ color }) => <TabBarIcon name="film" color={color} />,
         }}
       />
-      {/* <Tabs.Screen
+      <Tabs.Screen
         name="create"
         options={{
           title: 'Create',
           tabBarIcon: ({ color }) => <TabBarIcon name="plus-circle" color={color} />,
         }}
-      /> */}
+      />
       <Tabs.Screen
         name="practice"
         options={{
