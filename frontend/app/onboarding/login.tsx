@@ -22,7 +22,12 @@ import { useAuth } from '@/context/AuthContext';
 import { VOCABULARY_ACTIONS, DEFAULT_VOCABULARY_CHANGES } from '@/hooks/useVocabulary';
 import { useColorScheme } from '@/components/useColorScheme';
 import TouchableOpacity from '@/components/TouchableOpacity';
-import { GoogleSigninButton, GoogleSignin, statusCodes, isSuccessResponse, isErrorWithCode } from '@react-native-google-signin/google-signin';
+// @react-native-google-signin/google-signin is a native module and isn't
+// available in Expo Go - commented out while developing there. See
+// register.tsx for the same treatment. Re-enable by uncommenting this
+// import, the GoogleSignin.configure() effect, handleGoogleSignIn, and the
+// GoogleSigninButton block below when running a dev client/EAS build again.
+// import { GoogleSigninButton, GoogleSignin, statusCodes, isSuccessResponse, isErrorWithCode } from '@react-native-google-signin/google-signin';
 
 const USERNAME_REGEX = /^[a-zA-Z][a-zA-Z0-9._-]{3,30}$/;
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -35,12 +40,12 @@ const GOOGLE_CLIENT_ID_IOS = process.env.EXPO_PUBLIC_GOOGLE_CLIENT_ID_IOS;
 export default function LoginScreen() {
 
   // Configure Google Sign-In on mount
-  useEffect(() => {
-      GoogleSignin.configure({
-        webClientId: GOOGLE_CLIENT_ID_WEB,
-        offlineAccess: true,
-      });
-  }, []);
+  // useEffect(() => {
+  //     GoogleSignin.configure({
+  //       webClientId: GOOGLE_CLIENT_ID_WEB,
+  //       offlineAccess: true,
+  //     });
+  // }, []);
 
   const width = Dimensions.get('window').width;
   const height = Dimensions.get('window').height;
@@ -153,83 +158,83 @@ export default function LoginScreen() {
     });
   };
 
-  const handleGoogleSignIn = () => {
-    setError('');
-    promptLoginStrategy(async (merge) => {
-      setLoading(true);
-      try {
-        await GoogleSignin.hasPlayServices({ showPlayServicesUpdateDialog: true });
-        const response = await GoogleSignin.signIn();
-
-        if (!isSuccessResponse(response)) {
-          // user cancelled the native picker
-          return;
-        }
-
-        const { idToken } = response.data;
-        const platform = Platform.OS === 'ios' ? 'ios' : 'android';
-
-        try {
-          const payload: any = { idToken, platform };
-          if (merge) {
-            Object.assign(payload, buildMergePayload());
-          }
-
-          const apiResponse = await loginWithGoogle(payload);
-
-          if (apiResponse.status === 200) {
-            setIsAuthenticated(true);
-            setHasCompletedOnboarding(true); // runtime only
-
-            if (apiResponse.data) {
-              await updateUserProfile(apiResponse.data?.user_profile);
-              await setUserProgress(apiResponse.data?.user_progress);
-              vocabularyDispatch({ type: VOCABULARY_ACTIONS.SET, payload: apiResponse.data?.user_vocabulary });
-            }
-            // Overwrite discarded the local session entirely; Merge already
-            // applied these changes server-side - either way, nothing local
-            // is left to resync, so clear it before a background sync can
-            // resend it and hit a duplicate-key error.
-            setVocabularyChanges(DEFAULT_VOCABULARY_CHANGES);
-            router.replace('/(tabs)');
-          }
-        } catch (apiError: any) {
-          if (apiError.code === 'GOOGLE_ACCOUNT_NOT_FOUND') {
-            if (hasCompletedOnboarding) {
-              // Onboarding was already done on this device, but no backend
-              // account exists for this Google identity - the onboarding
-              // group is off-limits once onboarding is complete (see
-              // app/_layout.tsx), so point the user at Sign up instead.
-              setError('No account found for this Google login. Please Sign up first.');
-            } else {
-              // No profile data collected yet - collect it via onboarding,
-              // then questions.tsx finishes registration with this idToken.
-              setPendingGoogleAuth({ idToken, platform });
-              router.push('/onboarding/questions');
-            }
-            return;
-          }
-          throw apiError;
-        }
-      } catch (error: any) {
-        if (isErrorWithCode(error)) {
-          if (error.code === statusCodes.SIGN_IN_CANCELLED) {
-            // user cancelled
-          } else if (error.code === statusCodes.IN_PROGRESS) {
-            setError('Google Sign-In is in progress.');
-          } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
-            setError('Google Play Services not available or outdated.');
-          } else {
-            setError(error.message || 'Google Sign-In failed.');
-          }
-        } else {
-          setError(error.message || 'Google Sign-In failed.');
-        }
-      } finally {
-        setLoading(false);
-      }
-    });
-  };
+  // const handleGoogleSignIn = () => {
+  //   setError('');
+  //   promptLoginStrategy(async (merge) => {
+  //     setLoading(true);
+  //     try {
+  //       await GoogleSignin.hasPlayServices({ showPlayServicesUpdateDialog: true });
+  //       const response = await GoogleSignin.signIn();
+  //
+  //       if (!isSuccessResponse(response)) {
+  //         // user cancelled the native picker
+  //         return;
+  //       }
+  //
+  //       const { idToken } = response.data;
+  //       const platform = Platform.OS === 'ios' ? 'ios' : 'android';
+  //
+  //       try {
+  //         const payload: any = { idToken, platform };
+  //         if (merge) {
+  //           Object.assign(payload, buildMergePayload());
+  //         }
+  //
+  //         const apiResponse = await loginWithGoogle(payload);
+  //
+  //         if (apiResponse.status === 200) {
+  //           setIsAuthenticated(true);
+  //           setHasCompletedOnboarding(true); // runtime only
+  //
+  //           if (apiResponse.data) {
+  //             await updateUserProfile(apiResponse.data?.user_profile);
+  //             await setUserProgress(apiResponse.data?.user_progress);
+  //             vocabularyDispatch({ type: VOCABULARY_ACTIONS.SET, payload: apiResponse.data?.user_vocabulary });
+  //           }
+  //           // Overwrite discarded the local session entirely; Merge already
+  //           // applied these changes server-side - either way, nothing local
+  //           // is left to resync, so clear it before a background sync can
+  //           // resend it and hit a duplicate-key error.
+  //           setVocabularyChanges(DEFAULT_VOCABULARY_CHANGES);
+  //           router.replace('/(tabs)');
+  //         }
+  //       } catch (apiError: any) {
+  //         if (apiError.code === 'GOOGLE_ACCOUNT_NOT_FOUND') {
+  //           if (hasCompletedOnboarding) {
+  //             // Onboarding was already done on this device, but no backend
+  //             // account exists for this Google identity - the onboarding
+  //             // group is off-limits once onboarding is complete (see
+  //             // app/_layout.tsx), so point the user at Sign up instead.
+  //             setError('No account found for this Google login. Please Sign up first.');
+  //           } else {
+  //             // No profile data collected yet - collect it via onboarding,
+  //             // then questions.tsx finishes registration with this idToken.
+  //             setPendingGoogleAuth({ idToken, platform });
+  //             router.push('/onboarding/questions');
+  //           }
+  //           return;
+  //         }
+  //         throw apiError;
+  //       }
+  //     } catch (error: any) {
+  //       if (isErrorWithCode(error)) {
+  //         if (error.code === statusCodes.SIGN_IN_CANCELLED) {
+  //           // user cancelled
+  //         } else if (error.code === statusCodes.IN_PROGRESS) {
+  //           setError('Google Sign-In is in progress.');
+  //         } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
+  //           setError('Google Play Services not available or outdated.');
+  //         } else {
+  //           setError(error.message || 'Google Sign-In failed.');
+  //         }
+  //       } else {
+  //         setError(error.message || 'Google Sign-In failed.');
+  //       }
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   });
+  // };
 
   return (
     <KeyboardAvoidingView
@@ -342,7 +347,7 @@ export default function LoginScreen() {
         </View>
 
         {/* Google Sign-In Button */}
-        <View style={{ alignItems: 'center', marginTop: 24 }}>
+        {/* <View style={{ alignItems: 'center', marginTop: 24 }}>
             <GoogleSigninButton
               style={{ width: width * 0.8, height: 56 }}
               size={GoogleSigninButton.Size.Wide}
@@ -350,7 +355,7 @@ export default function LoginScreen() {
               onPress={handleGoogleSignIn}
               disabled={loading}
             />
-        </View>
+        </View> */}
 
       </ScrollView>
     </KeyboardAvoidingView>
