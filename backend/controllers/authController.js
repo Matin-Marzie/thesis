@@ -18,7 +18,7 @@ const authController = async (req, res) => {
       });
     }
 
-    const { username, email, password, user_profile, user_progress, user_vocabulary } = value;
+    const { username, email, password, user_profile, user_progress, vocabulary_changes } = value;
 
     // Find user by username or email
     let user;
@@ -41,6 +41,7 @@ const authController = async (req, res) => {
       }
     }
 
+    // Security alert: Malicious user can find emails of registered users by trying to login with random emails.
     // Check if user registered with Google (no password)
     if (!user.password_hash && user.google_id) {
       return res.status(401).json({
@@ -89,8 +90,8 @@ const authController = async (req, res) => {
 
     // If the client sent local guest progress along with login, merge it
     // into this account (see mergeGuestProgress.js for the exact rules)
-    if (user_profile || user_progress || user_vocabulary) {
-      const updatedUser = await mergeGuestProgress(user.id, { user_profile, user_progress, user_vocabulary }, userLanguages);
+    if (user_profile || user_progress || vocabulary_changes) {
+      const updatedUser = await mergeGuestProgress(user.id, { user_profile, user_progress, vocabulary_changes }, userLanguages);
       if (updatedUser) {
         user = { ...user, ...updatedUser };
       }

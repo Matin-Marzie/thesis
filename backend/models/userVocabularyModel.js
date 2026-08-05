@@ -157,29 +157,34 @@ const userVocabularyModel = {
     },
 
     /**
-     * Bulk add vocabulary for words below a given proficiency level.
-     * Used during registration to auto-add words the user already "knows".
+     * Bulk add vocabulary for words below a given proficiency level (optionally
+     * starting above another level, to seed only the gap between two levels).
+     * Used during registration to auto-add words the user already "knows", and
+     * during login-merge to backfill the gap when a language's proficiency
+     * level gets bumped up without a fresh registration.
      * @param {number} userId - User's ID
      * @param {number} userLanguagesId - user_languages ID for the current language
      * @param {number} learningLanguageId - Learning language ID
-     * @param {string} proficiencyLevel - User's proficiency level (N, A1, A2, B1, B2, C1, C2)
+     * @param {string} proficiencyLevel - Level to seed up to (N, A1, A2, B1, B2, C1, C2)
      * @param {number} masteryLevel - Mastery level to assign (default: 3 = "Understood")
-     * @param {Date|string} joinedDate - User's joined date for created_at and last_review
+     * @param {Date|string} joinedDate - Date to use for created_at and last_review
+     * @param {string} fromProficiencyLevel - Level to seed from, exclusive (default 'N', i.e. seed everything below proficiencyLevel)
      * @returns {Object} Vocabulary object { wordId: { mastery_level, last_review, created_at } }
      */
-    async addByProficiencyLevel(userId, userLanguagesId, learningLanguageId, proficiencyLevel, masteryLevel = 3, joinedDate = null) {
-        // Proficiency levels in order - get all levels below the user's level
+    async addByProficiencyLevel(userId, userLanguagesId, learningLanguageId, proficiencyLevel, masteryLevel = 3, joinedDate = null, fromProficiencyLevel = 'N') {
+        // Proficiency levels in order - get all levels below the target level
         const PROFICIENCY_LEVELS = ['N', 'A1', 'A2', 'B1', 'B2', 'C1', 'C2'];
         const levelIndex = PROFICIENCY_LEVELS.indexOf(proficiencyLevel);
-        
-        // If level is 'N' (index 0) or not found, don't add any words
-        if (levelIndex <= 0) {
+        const fromIndex = Math.max(0, PROFICIENCY_LEVELS.indexOf(fromProficiencyLevel));
+
+        // If target level is at or below the starting level (or not found), there's no gap to seed
+        if (levelIndex <= fromIndex) {
             return {};
         }
-        
-        // Get levels below the user's proficiency
-        const levelsBelowProficiency = PROFICIENCY_LEVELS.slice(0, levelIndex);
-        
+
+        // Get levels in [fromProficiencyLevel, proficiencyLevel)
+        const levelsBelowProficiency = PROFICIENCY_LEVELS.slice(fromIndex, levelIndex);
+
         // Use joinedDate if provided, otherwise use NOW()
         const dateValue = joinedDate || new Date().toISOString();
         

@@ -21,16 +21,27 @@ const higherProficiency = (a, b) => {
  *   account's current language too, since that's what the login response
  *   (and the app right after login) actually shows vocabulary for - leaving
  *   it non-current would silently hide everything just merged into it
- * - vocabulary: merged word-by-word, higher mastery_level wins. Only
- *   applies to the guest's current local language, since that's the only
- *   language local vocabulary data is scoped to
+ * - vocabulary: only the guest's manually-tracked vocabulary_changes
+ *   (inserts/updates) are ever sent, not the full local vocabulary
+ *   and it's only scoped to the guest's current local language anyway.
+ *     - if the matched account pair's proficiency_level is the SAME as the
+ *       local one: merge word-by-word, higher mastery_level wins
+ *     - otherwise (levels differ, or the pair is brand new to the account):
+ *       apply the local changes outright (no comparison), and backfill the
+ *       vocabulary gap with the same proficiency-level auto-seed
+ *       registration uses, so the account's proficiency_level and its
+ *       actual known words stay consistent with each other. For an
+ *       existing pair this seeds only the gap between the account's old
+ *       level and the new (higher of local/account) one; for a brand new
+ *       pair it seeds everything below the local level, same as a fresh
+ *       registration would.
  *
  * @param {number} userId
- * @param {{ user_profile?: object, user_progress?: object, user_vocabulary?: object }} guestData
+ * @param {{ user_profile?: object, user_progress?: object, vocabulary_changes?: { inserts?: object, updates?: object } }} guestData
  * @param {Array} accountLanguages - the account's user_languages rows, fetched before merging
  * @returns {Promise<object|null>} the updated user row if profile/coins/energy changed, else null
  */
-const mergeGuestProgress = async (userId, { user_profile, user_progress, user_vocabulary }, accountLanguages) => {
+const mergeGuestProgress = async (userId, { user_profile, user_progress, vocabulary_changes }, accountLanguages) => {
   // --- Profile + coins/energy ---
   const profileUpdates = {};
 
@@ -61,6 +72,15 @@ const mergeGuestProgress = async (userId, { user_profile, user_progress, user_vo
     const localCurrentLanguage = localLanguages.find((l) => l.is_current_language) ?? localLanguages[0];
     let localCurrentLanguagesId = null;
 
+    // Manually-tracked local vocabulary changes (inserts + updates) - not
+    // the full vocabulary. Deletes aren't relevant here: the account has
+    // its own copy of any word the guest removed locally, and there's
+    // nothing to reconcile for a word that's gone on both sides.
+    const localWordChanges = {
+      ...(vocabulary_changes?.inserts || {}),
+      ...(vocabulary_changes?.updates || {}),
+    };
+
     for (const localLang of localLanguages) {
       // Coerce both sides to Number before comparing - Postgres/node-pg
       // returns integer id columns as strings, while the client sends them
@@ -71,16 +91,19 @@ const mergeGuestProgress = async (userId, { user_profile, user_progress, user_vo
              && Number(al.learning_language.id) === Number(localLang.learning_language.id)
       );
 
-      // Local vocabulary is only scoped to the guest's current local
-      // language - there's nothing to merge for any other local pair.
+      // Local vocabulary changes are only scoped to the guest's current
+      // local language - there's nothing to merge for any other local pair.
       const isLocalCurrent = localLang === localCurrentLanguage;
-      const localVocabForThisPair = isLocalCurrent ? (user_vocabulary || {}) : {};
-      const localWordIds = Object.keys(localVocabForThisPair);
+      const localWordIds = isLocalCurrent ? Object.keys(localWordChanges) : [];
 
       let userLanguagesId;
+      let levelsAreSame = false;
+      let seedFrom = null;
+      let seedUntil = null;
 
       if (matched) {
         userLanguagesId = matched.id;
+        levelsAreSame = localLang.proficiency_level === matched.proficiency_level;
 
         const newExperience = Math.max(localLang.experience ?? 0, matched.experience ?? 0);
         const newProficiency = higherProficiency(localLang.proficiency_level, matched.proficiency_level);
@@ -91,38 +114,72 @@ const mergeGuestProgress = async (userId, { user_profile, user_progress, user_vo
             proficiency_level: newProficiency,
           });
         }
+
+        if (!levelsAreSame) {
+          // Backfill the gap between the account's old level and the new
+          // (higher of local/account) one - a no-op if the account was
+          // already the higher side, since there'd be no gap.
+          seedFrom = matched.proficiency_level;
+          seedUntil = newProficiency;
+        }
       } else {
         // New language pair for this account - insert it (not current yet;
-        // whether it becomes current is decided once, after the loop).
+        // whether it becomes current is decided once, after the loop), and
+        // seed its vocabulary from scratch, same as a fresh registration
+        // for this language would.
         const [inserted] = await userLanguagesModel.add(userId, [{
           ...localLang,
           is_current_language: false,
         }]);
         userLanguagesId = inserted.id;
+        seedFrom = 'N';
+        seedUntil = localLang.proficiency_level;
       }
 
       if (isLocalCurrent) {
         localCurrentLanguagesId = userLanguagesId;
       }
 
+      if (seedUntil) {
+        await userVocabularyModel.addByProficiencyLevel(
+          userId,
+          userLanguagesId,
+          localLang.learning_language.id,
+          seedUntil,
+          3, // mastery_level = "Understood"
+          new Date().toISOString(),
+          seedFrom
+        );
+      }
+
       if (localWordIds.length > 0) {
-        const accountVocab = matched
-          ? await userVocabularyModel.get(userId, userLanguagesId)
-          : {};
+        // Re-fetch so the auto-seed above (if any) is reflected - avoids
+        // trying to insert a word that was just seeded a second time.
+        const accountVocab = await userVocabularyModel.get(userId, userLanguagesId);
 
         const toInsert = [];
         const toUpdate = {};
 
         for (const wordId of localWordIds) {
-          const localWord = localVocabForThisPair[wordId];
+          const localWord = localWordChanges[wordId];
+          // An update entry can carry only last_review with no
+          // mastery_level - nothing meaningful to compare or insert then.
+          if (localWord.mastery_level === undefined) continue;
+
           const accountWord = accountVocab[wordId];
 
           if (!accountWord) {
-            toInsert.push([wordId, localWord]);
-          } else if (localWord.mastery_level > accountWord.mastery_level) {
-            toUpdate[wordId] = localWord;
+            toInsert.push([wordId, {
+              mastery_level: localWord.mastery_level,
+              last_review: localWord.last_review ?? null,
+              created_at: localWord.created_at ?? localWord.last_review ?? new Date().toISOString(),
+            }]);
+          } else if (!levelsAreSame || localWord.mastery_level > accountWord.mastery_level) {
+            // Levels matched going in: only take the local value if it's
+            // actually better. Levels differed (or this is a new pair):
+            // trust the local session's tracked changes outright.
+            toUpdate[wordId] = { mastery_level: localWord.mastery_level, last_review: localWord.last_review };
           }
-          // else: the account's word already has an equal or higher mastery_level - keep it
         }
 
         if (toInsert.length > 0) {

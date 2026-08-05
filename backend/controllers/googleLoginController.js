@@ -19,8 +19,8 @@ const googleLoginController = async (req, res) => {
         message: error.details[0].message,
       });
     }
-    const { user_profile, user_progress, user_vocabulary } = value;
-    console.log('userVocabulary local', user_vocabulary);
+    const { user_profile, user_progress, vocabulary_changes } = value;
+    console.log('vocabulary_changes local', vocabulary_changes);
 
     // Check if user exists by Google ID
     let user = await usersModel.findByGoogleId(google_id);
@@ -49,8 +49,8 @@ const googleLoginController = async (req, res) => {
 
     // If the client sent local guest progress along with login, merge it
     // into this account (see mergeGuestProgress.js for the exact rules)
-    if (user_profile || user_progress || user_vocabulary) {
-      const updatedUser = await mergeGuestProgress(user.id, { user_profile, user_progress, user_vocabulary }, userLanguages);
+    if (user_profile || user_progress || vocabulary_changes) {
+      const updatedUser = await mergeGuestProgress(user.id, { user_profile, user_progress, vocabulary_changes }, userLanguages);
       if (updatedUser) {
         user = { ...user, ...updatedUser };
       }

@@ -47,7 +47,7 @@ export default function LoginScreen() {
 
   const { userProfile, updateUserProfile } = useProfile();
   const { userProgress, setUserProgress } = useProgress();
-  const { userVocabulary, vocabularyDispatch, setVocabularyChanges } = useVocabularyContext();
+  const { vocabularyChanges, vocabularyDispatch, setVocabularyChanges } = useVocabularyContext();
   const { setIsAuthenticated, setHasCompletedOnboarding, hasCompletedOnboarding, setPendingGoogleAuth } = useAuth();
   const router = useRouter();
   const colorScheme = useColorScheme();
@@ -93,7 +93,10 @@ export default function LoginScreen() {
       notifications: userProfile.notifications,
     },
     user_progress: userProgress,
-    user_vocabulary: userVocabulary,
+    // Only the manually-tracked changes, not the full vocabulary - the
+    // full vocabulary can be thousands of words and blow past Express's
+    // JSON body size limit. Mirrors what the register flows already send.
+    vocabulary_changes: vocabularyChanges,
   });
 
   const handleLogin = () => {
