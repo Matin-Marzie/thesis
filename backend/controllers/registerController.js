@@ -146,7 +146,6 @@ const registerController = async (req, res) => {
       current_language.id,
       learningLanguageId,
       proficiencyLevel,
-      3, // mastery_level = "Understood"
       newUser.joined_date
     );
 

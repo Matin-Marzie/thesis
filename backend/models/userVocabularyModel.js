@@ -162,16 +162,25 @@ const userVocabularyModel = {
      * Used during registration to auto-add words the user already "knows", and
      * during login-merge to backfill the gap when a language's proficiency
      * level gets bumped up without a fresh registration.
+     *
+     * mastery_level is derived per word from how many levels below the target
+     * proficiencyLevel the word's own level is (distance 1 = the level just below target):
+     *   distance 1  -> 3 (Understood)
+     *   distance 2  -> 4 (Usable)
+     *   distance 3+ -> 5 (Mastered), capped there
+     * The intuition: the closer a word's level is to the target, the more
+     * recently it would've been learned and the less reinforced it is;
+     * more foundational levels further below are assumed well-known.
+     *
      * @param {number} userId - User's ID
      * @param {number} userLanguagesId - user_languages ID for the current language
      * @param {number} learningLanguageId - Learning language ID
      * @param {string} proficiencyLevel - Level to seed up to (N, A1, A2, B1, B2, C1, C2)
-     * @param {number} masteryLevel - Mastery level to assign (default: 3 = "Understood")
      * @param {Date|string} joinedDate - Date to use for created_at and last_review
      * @param {string} fromProficiencyLevel - Level to seed from, exclusive (default 'N', i.e. seed everything below proficiencyLevel)
      * @returns {Object} Vocabulary object { wordId: { mastery_level, last_review, created_at } }
      */
-    async addByProficiencyLevel(userId, userLanguagesId, learningLanguageId, proficiencyLevel, masteryLevel = 3, joinedDate = null, fromProficiencyLevel = 'N') {
+    async addByProficiencyLevel(userId, userLanguagesId, learningLanguageId, proficiencyLevel, joinedDate = null, fromProficiencyLevel = 'N') {
         // Proficiency levels in order - get all levels below the target level
         const PROFICIENCY_LEVELS = ['N', 'A1', 'A2', 'B1', 'B2', 'C1', 'C2'];
         const levelIndex = PROFICIENCY_LEVELS.indexOf(proficiencyLevel);
@@ -185,27 +194,42 @@ const userVocabularyModel = {
         // Get levels in [fromProficiencyLevel, proficiencyLevel)
         const levelsBelowProficiency = PROFICIENCY_LEVELS.slice(fromIndex, levelIndex);
 
+        const masteryLevelForDistance = (distance) => {
+            if (distance <= 1) return 3; // Understood
+            if (distance === 2) return 4; // Usable
+            return 5; // Mastered
+        };
+
         // Use joinedDate if provided, otherwise use NOW()
         const dateValue = joinedDate || new Date().toISOString();
-        
+
+        // Build a CASE w.level WHEN ... THEN ... END so each word gets a
+        // mastery_level based on the distance of its own level from the
+        // target, instead of one flat value for everything seeded.
+        const values = [userId, userLanguagesId, learningLanguageId, dateValue];
+        const caseWhens = levelsBelowProficiency.map((level) => {
+            const distance = levelIndex - PROFICIENCY_LEVELS.indexOf(level);
+            values.push(level, masteryLevelForDistance(distance));
+            const levelParam = `$${values.length - 1}`;
+            const masteryParam = `$${values.length}`;
+            return `WHEN ${levelParam} THEN ${masteryParam}`;
+        }).join(' ');
+        values.push(levelsBelowProficiency);
+        const levelsArrayParam = `$${values.length}`;
+
         const query = `
             INSERT INTO user_vocabulary (user_id, word_id, user_languages_id, mastery_level, last_review, created_at, review_count, next_review_at)
-            SELECT $1, w.id, $2, $3, $6, $6, 0, $6
+            SELECT $1, w.id, $2,
+                (CASE w.level ${caseWhens} END)::smallint,
+                $4, $4, 0, $4
             FROM words w
-            WHERE w.language_id = $4
-              AND w.level = ANY($5)
+            WHERE w.language_id = $3
+              AND w.level = ANY(${levelsArrayParam})
             RETURNING word_id, mastery_level, last_review, created_at, review_count, next_review_at
         `;
-        
-        const result = await pool.query(query, [
-            userId,
-            userLanguagesId,
-            masteryLevel,
-            learningLanguageId,
-            levelsBelowProficiency,
-            dateValue
-        ]);
-        
+
+        const result = await pool.query(query, values);
+
         // Reshape to { wordId: { mastery_level, last_review, created_at, review_count, next_review_at } }
         return result.rows.reduce((acc, row) => {
             acc[row.word_id] = {

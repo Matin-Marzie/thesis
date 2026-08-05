@@ -15,7 +15,7 @@ import { useProgress } from '@/context/ProgressContext';
 import { useVocabularyContext } from '@/context/VocabularyContext';
 import { useAuth } from '@/context/AuthContext';
 import { useDictionaryContext } from '@/context/DictionaryContext';
-import { getLevelsBelowProficiency } from '@/constants/Vocabulary';
+import { getLevelsBelowProficiency, getMasteryLevelForWordLevel } from '@/constants/Vocabulary';
 import { VOCABULARY_ACTIONS, DEFAULT_VOCABULARY_CHANGES } from '@/hooks/useVocabulary';
 
 export default function OnboardingQuestions() {
@@ -109,15 +109,24 @@ export default function OnboardingQuestions() {
     if (selectedLearningLanguage?.code && selectedNativeLanguage?.code) {
       const dictionaryData = await fetchDictionary(selectedLearningLanguage.code, selectedNativeLanguage.code) as { words?: Array<{ id: number; level: string }> } | null;
 
-      // Add words below proficiency level to user's vocabulary with mastery_level 3
+      // Add words below proficiency level to user's vocabulary, with a
+      // mastery_level based on how far below the target level each word's
+      // own level is - mirrors the backend's auto-seed exactly (see
+      // getMasteryLevelForWordLevel / userVocabularyModel.addByProficiencyLevel)
       if (dictionaryData?.words && selectedLevel) {
         const levelsBelowProficiency = getLevelsBelowProficiency(selectedLevel);
-        const wordIdsToAdd = dictionaryData.words
-          .filter((word) => levelsBelowProficiency.includes(word.level))
-          .map((word) => word.id);
+        const wordIdsByMastery = new Map<number, number[]>();
 
-        if (wordIdsToAdd.length > 0) {
-          bulkAddVocabulary(wordIdsToAdd, 3);
+        for (const word of dictionaryData.words) {
+          if (!levelsBelowProficiency.includes(word.level)) continue;
+          const mastery = getMasteryLevelForWordLevel(selectedLevel, word.level);
+          const bucket = wordIdsByMastery.get(mastery) ?? [];
+          bucket.push(word.id);
+          wordIdsByMastery.set(mastery, bucket);
+        }
+
+        for (const [mastery, wordIds] of wordIdsByMastery) {
+          bulkAddVocabulary(wordIds, mastery);
         }
       }
     }

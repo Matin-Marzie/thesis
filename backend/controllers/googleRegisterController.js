@@ -85,7 +85,6 @@ const googleRegisterController = async (req, res) => {
       current_language.id,
       current_language.learning_language.id,
       current_language.proficiency_level,
-      3, // mastery_level = "Understood"
       user.joined_date
     );
 

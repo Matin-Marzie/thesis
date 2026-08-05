@@ -146,7 +146,6 @@ const mergeGuestProgress = async (userId, { user_profile, user_progress, vocabul
           userLanguagesId,
           localLang.learning_language.id,
           seedUntil,
-          3, // mastery_level = "Understood"
           new Date().toISOString(),
           seedFrom
         );
