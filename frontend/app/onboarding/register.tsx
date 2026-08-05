@@ -19,7 +19,7 @@ import { useProfile } from '@/context/ProfileContext';
 import { useProgress } from '@/context/ProgressContext';
 import { useVocabularyContext } from '@/context/VocabularyContext';
 import { useAuth } from '@/context/AuthContext';
-import { VOCABULARY_ACTIONS } from '@/hooks/useVocabulary';
+import { VOCABULARY_ACTIONS, DEFAULT_VOCABULARY_CHANGES } from '@/hooks/useVocabulary';
 import { useColorScheme } from '@/components/useColorScheme';
 import TouchableOpacity from '@/components/TouchableOpacity';
 
@@ -53,7 +53,7 @@ export default function RegisterScreen({ onRegisterSuccess }: RegisterScreenProp
 
   const { userProfile, updateUserProfile } = useProfile();
   const { userProgress, setUserProgress } = useProgress();
-  const { vocabularyChanges, vocabularyDispatch } = useVocabularyContext();
+  const { vocabularyChanges, vocabularyDispatch, setVocabularyChanges } = useVocabularyContext();
   const { setIsAuthenticated, setHasCompletedOnboarding, hasCompletedOnboarding, setPendingGoogleAuth } = useAuth();
   const router = useRouter();
   const colorScheme = useColorScheme();
@@ -179,6 +179,10 @@ export default function RegisterScreen({ onRegisterSuccess }: RegisterScreenProp
         await updateUserProfile(apiResponse.data.user_profile);
         await setUserProgress(apiResponse.data.user_progress);
         vocabularyDispatch({ type: VOCABULARY_ACTIONS.SET, payload: apiResponse.data.user_vocabulary });
+        // The manually-tracked changes just sent were already applied
+        // server-side - clear them so a later background sync doesn't
+        // try to re-insert them and hit a duplicate-key error.
+        setVocabularyChanges(DEFAULT_VOCABULARY_CHANGES);
         router.replace('/(tabs)');
       }
     } catch (error: any) {

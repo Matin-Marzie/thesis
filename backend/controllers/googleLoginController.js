@@ -20,7 +20,6 @@ const googleLoginController = async (req, res) => {
       });
     }
     const { user_profile, user_progress, vocabulary_changes } = value;
-    console.log('vocabulary_changes local', vocabulary_changes);
 
     // Check if user exists by Google ID
     let user = await usersModel.findByGoogleId(google_id);
@@ -60,7 +59,6 @@ const googleLoginController = async (req, res) => {
 
     const current_language = userLanguages.find(lang => lang.is_current_language);
     const userVocabulary = await userVocabularyModel.get(user.id, current_language.id);
-    console.log('userVocabulary after merge', userVocabulary);
 
     // Generate tokens
     const accessToken = jwt.sign(
@@ -108,7 +106,6 @@ const googleLoginController = async (req, res) => {
       refreshToken,
     });
   } catch (error) {
-    console.error('Google login error:', error);
     res.status(500).json({
       success: false,
       message: 'Internal server error during Google login',

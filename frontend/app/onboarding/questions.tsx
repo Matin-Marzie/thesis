@@ -16,13 +16,13 @@ import { useVocabularyContext } from '@/context/VocabularyContext';
 import { useAuth } from '@/context/AuthContext';
 import { useDictionaryContext } from '@/context/DictionaryContext';
 import { getLevelsBelowProficiency } from '@/constants/Vocabulary';
-import { VOCABULARY_ACTIONS } from '@/hooks/useVocabulary';
+import { VOCABULARY_ACTIONS, DEFAULT_VOCABULARY_CHANGES } from '@/hooks/useVocabulary';
 
 export default function OnboardingQuestions() {
   const router = useRouter();
   const { updateUserProfile } = useProfile();
   const { userProgress, setUserProgress } = useProgress();
-  const { bulkAddVocabulary, vocabularyChanges, vocabularyDispatch } = useVocabularyContext();
+  const { bulkAddVocabulary, vocabularyChanges, vocabularyDispatch, setVocabularyChanges } = useVocabularyContext();
   const { setIsAuthenticated, setHasCompletedOnboarding, pendingGoogleAuth, setPendingGoogleAuth } = useAuth();
   const { fetchDictionary } = useDictionaryContext();
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -144,6 +144,10 @@ export default function OnboardingQuestions() {
           await updateUserProfile(apiResponse.data.user_profile);
           await setUserProgress(apiResponse.data.user_progress);
           vocabularyDispatch({ type: VOCABULARY_ACTIONS.SET, payload: apiResponse.data.user_vocabulary });
+          // The manually-tracked changes just sent were already applied
+          // server-side - clear them so a later background sync doesn't
+          // try to re-insert them and hit a duplicate-key error.
+          setVocabularyChanges(DEFAULT_VOCABULARY_CHANGES);
         }
       } catch (error: any) {
         console.error('Failed to finish Google sign-up after onboarding:', error);
