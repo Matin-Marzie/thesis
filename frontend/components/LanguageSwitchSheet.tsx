@@ -1,6 +1,6 @@
 import React, { forwardRef, useCallback, useMemo, useState } from 'react';
 import { View, Text, StyleSheet, ActivityIndicator } from 'react-native';
-import { BottomSheetModal, BottomSheetScrollView, BottomSheetBackdrop } from '@gorhom/bottom-sheet';
+import { BottomSheetModal, BottomSheetScrollView, BottomSheetView, BottomSheetBackdrop } from '@gorhom/bottom-sheet';
 import type { BottomSheetBackdropProps } from '@gorhom/bottom-sheet';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { FontAwesome } from '@expo/vector-icons';
@@ -14,7 +14,9 @@ import { useNetwork } from '@/context/NetworkContext';
 import { useAuth } from '@/context/AuthContext';
 import { useVocabularyContext } from '@/context/VocabularyContext';
 import { VOCABULARY_ACTIONS, DEFAULT_VOCABULARY_CHANGES } from '@/hooks/useVocabulary';
-import { switchCurrentLanguage } from '@/api/user';
+import { switchCurrentLanguage, addLanguage as addLanguageApi } from '@/api/user';
+import LanguageSelectionSlide from '@/app/onboarding/components/LanguageSelectionSlide';
+import ProficiencySlide from '@/app/onboarding/components/ProficiencySlide';
 
 const renderBackdrop = (props: BottomSheetBackdropProps) => (
     <BottomSheetBackdrop
@@ -54,7 +56,7 @@ const ProficiencyBar = ({ level, isDark }) => {
 const LanguageSwitchSheet = forwardRef<BottomSheetModal>((_props, ref) => {
     const isDark = useColorScheme() === 'dark';
     const insets = useSafeAreaInsets();
-    const snapPoints = useMemo(() => ['50%' ], []);
+    const snapPoints = useMemo(() => ['50%', '90%'], []);
 
     const { userProgress, setUserProgress } = useProgress();
     const { isOnline } = useNetwork();
@@ -64,6 +66,15 @@ const LanguageSwitchSheet = forwardRef<BottomSheetModal>((_props, ref) => {
     const [switchingId, setSwitchingId] = useState<number | string | null>(null);
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
+    // 'list' shows the account's languages; 'select'/'level' are the two
+    // steps of the add-language flow, reusing the onboarding slides.
+    const [mode, setMode] = useState<'list' | 'select' | 'level'>('list');
+    const [addNative, setAddNative] = useState<{ id: number; name: string; code: string } | null>(null);
+    const [addTarget, setAddTarget] = useState<{ id: number; name: string; code: string } | null>(null);
+    const [addLevel, setAddLevel] = useState<string | null>('N');
+    const [isAddingLanguage, setIsAddingLanguage] = useState(false);
+    const [addError, setAddError] = useState<string | null>(null);
+
     // Newest-added language first
     const languages = useMemo(() => {
         const list = userProgress?.languages || [];
@@ -71,6 +82,16 @@ const LanguageSwitchSheet = forwardRef<BottomSheetModal>((_props, ref) => {
             (a, b) => new Date(b.created_at || 0).getTime() - new Date(a.created_at || 0).getTime()
         );
     }, [userProgress?.languages]);
+
+    const excludePairs = useMemo(
+        () => languages.map((l) => ({
+            nativeId: Number(l.native_language?.id),
+            targetId: Number(l.learning_language?.id),
+        })),
+        [languages]
+    );
+
+    const canAddLanguage = isAuthenticated && isOnline;
 
     const handleSelect = useCallback(async (language) => {
         if (language.is_current_language || switchingId !== null) return;
@@ -130,6 +151,78 @@ const LanguageSwitchSheet = forwardRef<BottomSheetModal>((_props, ref) => {
         }
     }, [switchingId, isOnline, isAuthenticated, forceSync, setUserProgress, vocabularyDispatch, setVocabularyChanges, ref]);
 
+    const handleOpenAddLanguage = useCallback(() => {
+        if (!canAddLanguage) return;
+        setAddError(null);
+        setAddNative(null);
+        setAddTarget(null);
+        setAddLevel('N');
+        setMode('select');
+        if (ref && 'current' in ref) {
+            ref.current?.snapToIndex(1);
+        }
+    }, [canAddLanguage, ref]);
+
+    const handleBackFromAdd = useCallback(() => {
+        if (mode === 'level') {
+            setMode('select');
+            return;
+        }
+        setMode('list');
+        if (ref && 'current' in ref) {
+            ref.current?.snapToIndex(0);
+        }
+    }, [mode, ref]);
+
+    const handleSubmitAddLanguage = useCallback(async () => {
+        if (!addNative || !addTarget || !addLevel || isAddingLanguage) return;
+
+        setAddError(null);
+        setIsAddingLanguage(true);
+
+        try {
+            // Flush pending changes for the CURRENT language before adding a
+            // new one - same reasoning as switching: once the new language
+            // becomes current, un-synced changes would be wrongly attributed.
+            const syncedOk = await forceSync();
+            if (!syncedOk) {
+                setAddError('Could not sync your progress. Please try again.');
+                return;
+            }
+
+            const response = await addLanguageApi({
+                native_language_id: addNative.id,
+                learning_language_id: addTarget.id,
+                proficiency_level: addLevel,
+            });
+
+            await setUserProgress((prev) => ({
+                ...prev,
+                languages: response.user_progress.languages,
+            }));
+            vocabularyDispatch({ type: VOCABULARY_ACTIONS.SET, payload: response.user_vocabulary });
+            await setVocabularyChanges(DEFAULT_VOCABULARY_CHANGES);
+
+            setMode('list');
+            if (ref && 'current' in ref) {
+                ref.current?.snapToIndex(0);
+            }
+        } catch (err) {
+            setAddError(err.message || 'Could not add language. Please try again.');
+        } finally {
+            setIsAddingLanguage(false);
+        }
+    }, [addNative, addTarget, addLevel, isAddingLanguage, forceSync, setUserProgress, vocabularyDispatch, setVocabularyChanges, ref]);
+
+    const handleDismiss = useCallback(() => {
+        setMode('list');
+        setAddNative(null);
+        setAddTarget(null);
+        setAddLevel('N');
+        setAddError(null);
+        setIsAddingLanguage(false);
+    }, []);
+
     return (
         <BottomSheetModal
             index={0}
@@ -140,60 +233,123 @@ const LanguageSwitchSheet = forwardRef<BottomSheetModal>((_props, ref) => {
             backdropComponent={renderBackdrop}
             backgroundStyle={isDark ? { backgroundColor: DARK_COLORS.surface } : undefined}
             handleIndicatorStyle={isDark ? { backgroundColor: DARK_COLORS.border } : undefined}
+            onDismiss={handleDismiss}
         >
-            <BottomSheetScrollView
-                contentContainerStyle={[styles.contentContainer, { paddingBottom: Math.max(32, insets.bottom + 16) }]}
-            >
-                <Text style={[styles.title, isDark && { color: DARK_COLORS.text }]}>Your Languages</Text>
+            {mode === 'list' ? (
+                <BottomSheetScrollView
+                    contentContainerStyle={[styles.contentContainer, { paddingBottom: Math.max(32, insets.bottom + 16) }]}
+                >
+                    <Text style={[styles.title, isDark && { color: DARK_COLORS.text }]}>Your Languages</Text>
 
-                {languages.map((language) => {
-                    const meta = getLanguageMeta(language.learning_language?.id);
-                    const nativeMeta = getLanguageMeta(language.native_language?.id);
-                    const isCurrent = language.is_current_language;
-                    const isSwitchingThis = switchingId === language.id;
-                    const disabled = switchingId !== null || (!isOnline && !isCurrent);
+                    {languages.map((language) => {
+                        const meta = getLanguageMeta(language.learning_language?.id);
+                        const nativeMeta = getLanguageMeta(language.native_language?.id);
+                        const isCurrent = language.is_current_language;
+                        const isSwitchingThis = switchingId === language.id;
+                        const disabled = switchingId !== null || (!isOnline && !isCurrent);
 
-                    return (
-                        <TouchableOpacity
-                            key={language.id ?? `${language.learning_language?.id}-${language.native_language?.id}`}
-                            style={[
-                                styles.row,
-                                isDark && { backgroundColor: DARK_COLORS.background, borderColor: DARK_COLORS.border },
-                                isCurrent && styles.rowSelected,
-                                disabled && !isCurrent && styles.rowDisabled,
-                            ]}
-                            disabled={disabled}
-                            onPress={() => handleSelect(language)}
-                        >
-                            <Text style={styles.flag}>{meta?.flag || '🏳️'}</Text>
+                        return (
+                            <TouchableOpacity
+                                key={language.id ?? `${language.learning_language?.id}-${language.native_language?.id}`}
+                                style={[
+                                    styles.row,
+                                    isDark && { backgroundColor: DARK_COLORS.background, borderColor: DARK_COLORS.border },
+                                    isCurrent && styles.rowSelected,
+                                    disabled && !isCurrent && styles.rowDisabled,
+                                ]}
+                                disabled={disabled}
+                                onPress={() => handleSelect(language)}
+                            >
+                                <Text style={styles.flag}>{meta?.flag || '🏳️'}</Text>
 
-                            <View style={styles.rowText}>
-                                <Text style={[styles.languageName, isDark && { color: DARK_COLORS.text }]}>
-                                    {meta?.name || language.learning_language?.name}
-                                </Text>
-                                <Text style={[styles.languageSub, isDark && { color: DARK_COLORS.textSecondary }]}>
-                                    from {nativeMeta?.name || language.native_language?.name} · {language.proficiency_level || 'N'}
-                                </Text>
-                                <ProficiencyBar level={language.proficiency_level} isDark={isDark} />
-                            </View>
+                                <View style={styles.rowText}>
+                                    <Text style={[styles.languageName, isDark && { color: DARK_COLORS.text }]}>
+                                        {meta?.name || language.learning_language?.name}
+                                    </Text>
+                                    <Text style={[styles.languageSub, isDark && { color: DARK_COLORS.textSecondary }]}>
+                                        from {nativeMeta?.name || language.native_language?.name} · {language.proficiency_level || 'N'}
+                                    </Text>
+                                    <ProficiencyBar level={language.proficiency_level} isDark={isDark} />
+                                </View>
 
-                            {isSwitchingThis ? (
-                                <ActivityIndicator size="small" color={PRIMARY_COLOR} />
-                            ) : isCurrent ? (
-                                <FontAwesome name="check-circle" size={22} color={PRIMARY_COLOR} />
-                            ) : null}
+                                {isSwitchingThis ? (
+                                    <ActivityIndicator size="small" color={PRIMARY_COLOR} />
+                                ) : isCurrent ? (
+                                    <FontAwesome name="check-circle" size={22} color={PRIMARY_COLOR} />
+                                ) : null}
+                            </TouchableOpacity>
+                        );
+                    })}
+
+                    <TouchableOpacity
+                        style={[
+                            styles.addButton,
+                            isDark && { borderColor: DARK_COLORS.border },
+                            !canAddLanguage && styles.rowDisabled,
+                        ]}
+                        disabled={!canAddLanguage}
+                        onPress={handleOpenAddLanguage}
+                    >
+                        <FontAwesome name="plus" size={16} color={PRIMARY_COLOR} />
+                        <Text style={[styles.addButtonText, isDark && { color: DARK_COLORS.text }]}>Add a language</Text>
+                    </TouchableOpacity>
+
+                    {!isAuthenticated ? (
+                        <Text style={[styles.note, isDark && { color: DARK_COLORS.textMuted }]}>
+                            Sign in to add another language.
+                        </Text>
+                    ) : !isOnline ? (
+                        <Text style={[styles.note, isDark && { color: DARK_COLORS.textMuted }]}>
+                            Connect to the internet to add a language.
+                        </Text>
+                    ) : null}
+
+                    {!isOnline && (
+                        <Text style={[styles.note, isDark && { color: DARK_COLORS.textMuted }]}>
+                            Connect to the internet to switch languages.
+                        </Text>
+                    )}
+
+                    {errorMessage && <Text style={styles.error}>{errorMessage}</Text>}
+                </BottomSheetScrollView>
+            ) : (
+                <BottomSheetView style={[styles.addFlowContainer, { paddingBottom: insets.bottom }]}>
+                    <View style={styles.addFlowHeader}>
+                        <TouchableOpacity onPress={handleBackFromAdd} style={styles.backButton}>
+                            <FontAwesome name="chevron-left" size={20} color={isDark ? DARK_COLORS.text : '#333'} />
                         </TouchableOpacity>
-                    );
-                })}
+                    </View>
 
-                {!isOnline && (
-                    <Text style={[styles.note, isDark && { color: DARK_COLORS.textMuted }]}>
-                        Connect to the internet to switch languages.
-                    </Text>
-                )}
+                    {addError && <Text style={styles.error}>{addError}</Text>}
 
-                {errorMessage && <Text style={styles.error}>{errorMessage}</Text>}
-            </BottomSheetScrollView>
+                    {mode === 'select' && (
+                        <LanguageSelectionSlide
+                            onNext={() => setMode('level')}
+                            selectedNative={addNative}
+                            selectedTarget={addTarget}
+                            setSelectedNative={setAddNative}
+                            setSelectedTarget={setAddTarget}
+                            excludePairs={excludePairs}
+                        />
+                    )}
+
+                    {mode === 'level' && (
+                        <View style={styles.addFlowStep}>
+                            <ProficiencySlide
+                                onNext={handleSubmitAddLanguage}
+                                selectedLevel={addLevel}
+                                setSelectedLevel={setAddLevel}
+                                selectedLearningLanguage={addTarget}
+                            />
+                            {isAddingLanguage && (
+                                <View style={[styles.addOverlay, isDark && { backgroundColor: 'rgba(18, 18, 18, 0.7)' }]}>
+                                    <ActivityIndicator size="large" color={PRIMARY_COLOR} />
+                                </View>
+                            )}
+                        </View>
+                    )}
+                </BottomSheetView>
+            )}
         </BottomSheetModal>
     );
 });
@@ -258,6 +414,23 @@ const styles = StyleSheet.create({
         borderRadius: 3,
         backgroundColor: '#e0e0e0',
     },
+    addButton: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+        gap: 8,
+        padding: 14,
+        borderRadius: 12,
+        borderWidth: 1,
+        borderStyle: 'dashed',
+        borderColor: '#c9c9c9',
+        marginBottom: 4,
+    },
+    addButtonText: {
+        fontSize: 15,
+        fontWeight: '600',
+        color: '#333',
+    },
     note: {
         fontSize: 13,
         color: '#888',
@@ -269,5 +442,29 @@ const styles = StyleSheet.create({
         color: '#d32f2f',
         textAlign: 'center',
         marginTop: 8,
+    },
+    addFlowContainer: {
+        flex: 1,
+    },
+    addFlowHeader: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        paddingHorizontal: 8,
+        paddingTop: 4,
+    },
+    backButton: {
+        width: 40,
+        height: 40,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    addFlowStep: {
+        flex: 1,
+    },
+    addOverlay: {
+        ...StyleSheet.absoluteFillObject,
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: 'rgba(255, 255, 255, 0.6)',
     },
 });

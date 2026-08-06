@@ -59,6 +59,29 @@ export const switchCurrentLanguage = async (userLanguagesId) => {
 
 
 /**
+ * Add a new language pair to the authenticated user's account, making it current.
+ * @param {Object} params
+ * @param {number} params.native_language_id
+ * @param {number} params.learning_language_id
+ * @param {string} params.proficiency_level - one of N, A1, A2, B1, B2, C1, C2
+ * @returns {Promise<Object>} - { message, user_progress: { languages }, user_vocabulary }
+ */
+export const addLanguage = async ({ native_language_id, learning_language_id, proficiency_level }) => {
+  try {
+    const response = await apiClient.post('/user/languages', {
+      native_language_id,
+      learning_language_id,
+      proficiency_level,
+    });
+    return response.data;
+  } catch (error) {
+    const message = error.response?.data?.message || error.message || 'Failed to add language';
+    throw new Error(message);
+  }
+};
+
+
+/**
  * Get user's vocabulary progress
  * @returns {Promise<Object>} - User's learned words and progress
  */

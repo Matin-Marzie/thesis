@@ -13,6 +13,12 @@ interface Language {
   code: string;
 }
 
+// A native/target pair to hide from the picker (e.g. one the user already has)
+interface LanguagePair {
+  nativeId: number;
+  targetId: number;
+}
+
 // Props for the slide component
 interface LanguageSelectionSlideProps {
   onNext: () => void; // Callback for "Continue" button
@@ -20,6 +26,7 @@ interface LanguageSelectionSlideProps {
   selectedTarget: Language | null; // Currently selected target language
   setSelectedNative: (val: Language) => void; // Update native language
   setSelectedTarget: (val: Language) => void; // Update target language
+  excludePairs?: LanguagePair[]; // Pairs to hide from the picker (e.g. already on the account)
 }
 
 export default function LanguageSelectionSlide({
@@ -28,6 +35,7 @@ export default function LanguageSelectionSlide({
   selectedTarget: selectedTargetLanguage,
   setSelectedNative: setSelectedNativeLanguage,
   setSelectedTarget: setSelectedTargetLanguage,
+  excludePairs = [],
 }: LanguageSelectionSlideProps) {
 
   const isDark = useColorScheme() === 'dark';
@@ -47,14 +55,29 @@ export default function LanguageSelectionSlide({
     setSelectedTargetLanguage(option.target);
   };
 
+  const isExcluded = (option: { native: Language; target: Language }) =>
+    excludePairs.some(
+      (p) => Number(p.nativeId) === Number(option.native.id) && Number(p.targetId) === Number(option.target.id)
+    );
+
+  const visibleGroups = Object.entries(SUPPORTED_LANGUAGES)
+    .map(([key, lang]) => [key, lang, lang.options.filter((option) => !isExcluded(option))] as const)
+    .filter(([, , options]) => options.length > 0);
+
   return (
     <View style={styles.slideContainer}>
       <ScrollView style={styles.scrollContent} showsVerticalScrollIndicator={false}>
         {/* Slide title */}
         <Text style={[styles.title, isDark && { color: '#fff' }]}>What would you like to learn?</Text>
 
-        {/* Render accordion for each supported language group */}
-        {Object.entries(SUPPORTED_LANGUAGES).map(([key, lang]) => (
+        {visibleGroups.length === 0 && (
+          <Text style={[styles.emptyText, isDark && { color: '#aaa' }]}>
+            You're already learning every available language!
+          </Text>
+        )}
+
+        {/* Render accordion for each supported language group with any pairs left to pick */}
+        {visibleGroups.map(([key, lang, options]) => (
           <View key={key} style={[styles.accordionContainer, isDark && { borderColor: '#333' }]}>
             {/* Accordion header */}
             <TouchableOpacity
@@ -78,7 +101,7 @@ export default function LanguageSelectionSlide({
             {/* Accordion content: language options */}
             {expanded === key && (
               <View style={styles.accordionContent}>
-                {lang.options.map((option) => (
+                {options.map((option) => (
                   <TouchableOpacity
                     key={option.id}
                     style={[
@@ -145,6 +168,12 @@ const styles = StyleSheet.create({
     color: '#333',
     textAlign: 'center',
     marginBottom: 12,
+  },
+  emptyText: {
+    fontSize: 15,
+    color: '#666',
+    textAlign: 'center',
+    marginTop: 20,
   },
   continueButton: {
     backgroundColor: PRIMARY_COLOR,

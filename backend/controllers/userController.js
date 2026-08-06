@@ -1,5 +1,6 @@
 import UserProfileSchema from '../validation/UserProfileSchema.js';
 import SwitchLanguageSchema from '../validation/SwitchLanguageSchema.js';
+import AddLanguageSchema from '../validation/AddLanguageSchema.js';
 import usersModel from '../models/usersModel.js';
 import userLanguagesModel from '../models/userLanguagesModel.js';
 import userVocabularyModel from '../models/userVocabularyModel.js';
@@ -107,6 +108,85 @@ const userController = {
       });
     } catch (error) {
       console.error('Switch language error:', error);
+      res.status(500).json({
+        message: 'Internal server error',
+      });
+    }
+  },
+
+  // Add a new language pair to the authenticated user's account and make it
+  // current. Auto-seeds vocabulary for words below the given proficiency
+  // level (mirroring registration's seeding) and returns the updated
+  // languages list plus the new language's vocabulary in one round trip.
+  async addLanguage(req, res) {
+    try {
+      const userId = req.user.id;
+
+      const { error, value } = AddLanguageSchema.validate(req.body);
+      if (error) {
+        return res.status(400).json({
+          message: error.details[0].message,
+        });
+      }
+
+      const { native_language_id, learning_language_id, proficiency_level } = value;
+
+      const existingLanguages = await userLanguagesModel.get(userId);
+      // ids come back from Postgres as strings (bigint columns) - coerce before comparing
+      const alreadyHasPair = existingLanguages.some(
+        (lang) =>
+          Number(lang.native_language.id) === native_language_id &&
+          Number(lang.learning_language.id) === learning_language_id
+      );
+
+      if (alreadyHasPair) {
+        return res.status(409).json({
+          message: "You're already learning this language",
+        });
+      }
+
+      const created_at = new Date().toISOString();
+
+      const [newLanguage] = await userLanguagesModel.add(userId, [{
+        native_language: { id: native_language_id },
+        learning_language: { id: learning_language_id },
+        created_at,
+        proficiency_level,
+        experience: 0,
+        is_current_language: false,
+      }]);
+
+      if (!newLanguage) {
+        return res.status(400).json({
+          message: 'Could not add language - check that the language IDs are valid',
+        });
+      }
+
+      // setCurrent unsets every other row for this user in the same statement
+      await userLanguagesModel.setCurrent(userId, newLanguage.id);
+
+      const updatedLanguages = [
+        ...existingLanguages.map((lang) => ({ ...lang, is_current_language: false })),
+        { ...newLanguage, is_current_language: true },
+      ];
+
+      const user_vocabulary = await userVocabularyModel.addByProficiencyLevel(
+        userId,
+        newLanguage.id,
+        learning_language_id,
+        proficiency_level,
+        created_at
+      );
+
+      res.status(201).json({
+        message: 'Language added successfully',
+        user_progress: {
+          languages: updatedLanguages,
+        },
+        user_vocabulary,
+      });
+    } catch (error) {
+      console.error('Add language error:', error);
       res.status(500).json({
         message: 'Internal server error',
       });
