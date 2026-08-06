@@ -41,6 +41,24 @@ export const syncUserData = async (syncPayload, options = {}) => {
 
 
 /**
+ * Switch the authenticated user's current learning language.
+ * @param {number} userLanguagesId - id of the user_languages row to make current
+ * @returns {Promise<Object>} - { message, user_progress: { languages }, user_vocabulary }
+ */
+export const switchCurrentLanguage = async (userLanguagesId) => {
+  try {
+    const response = await apiClient.patch('/user/languages/current', {
+      user_languages_id: userLanguagesId,
+    });
+    return response.data;
+  } catch (error) {
+    const message = error.response?.data?.message || error.message || 'Failed to switch language';
+    throw new Error(message);
+  }
+};
+
+
+/**
  * Get user's vocabulary progress
  * @returns {Promise<Object>} - User's learned words and progress
  */

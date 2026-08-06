@@ -23,7 +23,7 @@ import { useReminderSettings } from './ReminderContext';
  * @property {{ idToken: string, platform: string } | null} pendingGoogleAuth
  * @property {Function} setPendingGoogleAuth
  * @property {() => Promise<void>} initApp
- * @property {() => Promise<void>} forceSync
+ * @property {() => Promise<boolean>} forceSync
  */
 
 /** @type {import('react').Context<AuthContextType>} */
@@ -33,7 +33,7 @@ export const AuthProvider = ({ children }) => {
   const { isOnline, setIsBackendServerReachable } = useNetwork();
   const { isProfileLoaded } = useProfile();
   const { userProgress, isProgressLoaded } = useProgress();
-  const { userVocabulary, isVocabularyLoaded, isVocabularyChangesLoaded, setVocabularyChanges } = useVocabularyContext();
+  const { isVocabularyLoaded, vocabularyChanges, isVocabularyChangesLoaded, setVocabularyChanges } = useVocabularyContext();
   const { isVibrationSettingsLoaded } = useVibrationSettings();
   const { isReminderSettingsLoaded } = useReminderSettings();
 
@@ -55,7 +55,7 @@ export const AuthProvider = ({ children }) => {
   } = usePersistedState(STORAGE_KEYS.ONBOARDING_COMPLETE, false, validators.onboardingComplete);
 
   // Backend sync periodically from custom hook
-  const { forceSync } = useBackendSync(isOnline, isAuthenticated, userProgress, isProgressLoaded, userVocabulary, isVocabularyLoaded, setVocabularyChanges);
+  const { forceSync } = useBackendSync(isOnline, isAuthenticated, userProgress, isProgressLoaded, vocabularyChanges, isVocabularyChangesLoaded, setVocabularyChanges);
 
   // Check for existing auth session on app load
   const initApp = useCallback(async () => {

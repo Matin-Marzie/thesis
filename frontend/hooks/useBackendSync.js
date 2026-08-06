@@ -5,7 +5,7 @@ import { STORAGE_KEYS } from '../constants/defaults';
 import { DEFAULT_VOCABULARY_CHANGES } from './useVocabulary';
 import { syncUserData } from '../api/user';
 
-const SYNC_INTERVAL_MS = 1 * 10000; // 5 minute
+const SYNC_INTERVAL_MS = 1000 * 60 * 5; // 5 minute
 
 // Module-scoped sync state — shared across the single hook instance
 let hasUnsyncedChanges = false;
@@ -36,46 +36,77 @@ export const resetSyncState = () => {
  * @param {boolean} isOnline - Network connectivity status
  * @param {Object} userProgress - Current user progress state
  * @param {boolean} isProgressLoaded - Whether userProgress has loaded from storage
- * @param {Object} userVocabulary - Current user vocabulary state
- * @param {boolean} isVocabularyLoaded - Whether userVocabulary has loaded from storage
- * @returns {{ forceSync: function }}
+ * @param {Object} vocabularyChanges - Pending vocabulary changes { inserts, updates, deletes }
+ * @param {boolean} isVocabularyChangesLoaded - Whether vocabularyChanges has loaded from storage
+ * @returns {{ forceSync: () => Promise<boolean> }} forceSync resolves true if nothing is left
+ *   unsynced afterwards, false if the sync attempt failed and changes are still pending
  */
 
-export const useBackendSync = (isOnline, isAuthenticated, userProgress, isProgressLoaded, userVocabulary, isVocabularyLoaded, setVocabularyChanges) => {
+export const useBackendSync = (isOnline, isAuthenticated, userProgress, isProgressLoaded, vocabularyChanges, isVocabularyChangesLoaded, setVocabularyChanges) => {
   const syncIntervalRef = useRef(null);
   const wasOnlineRef = useRef(isOnline);
   const isOnlineRef = useRef(isOnline);
   const isAuthenticatedRef = useRef(isAuthenticated);
 
-  // Keep refs of latest data to avoid stale closures
+  // Keep a ref of the latest data to avoid stale closures
   const userProgressRef = useRef(userProgress);
-  const userVocabularyRef = useRef(userVocabulary);
 
   // Track whether the initial load has been skipped (to avoid syncing defaults)
   const hasInitializedRef = useRef(false);
+  // Last coins/energy values we know are reflected server-side, so we can
+  // tell a genuine local change apart from userProgress simply being
+  // replaced by reference (e.g. a language switch or a fresh SET from the
+  // server carries no new coins/energy, so it isn't something to push back).
+  const lastSyncedProgressRef = useRef({ coins: userProgress.coins, energy: userProgress.energy });
 
   useEffect(() => { isOnlineRef.current = isOnline; }, [isOnline]);
   useEffect(() => { isAuthenticatedRef.current = isAuthenticated; }, [isAuthenticated]);
   useEffect(() => { userProgressRef.current = userProgress; }, [userProgress]);
-  useEffect(() => { userVocabularyRef.current = userVocabulary; }, [userVocabulary]);
 
-  // Auto-mark dirty when userProgress or userVocabulary changes (after initial load)
+  // Auto-mark dirty only when something that actually needs syncing changed:
+  // coins/energy, or a pending vocabulary insert/update/delete. Reference
+  // changes to userProgress/userVocabulary that don't touch those (switching
+  // languages, applying a SET from the server, bulk-seeding vocabulary
+  // during onboarding) must NOT mark dirty - there's nothing new to push.
   useEffect(() => {
-    if (isProgressLoaded && isVocabularyLoaded) {
-      // Skip the first trigger — it's just the initial load from AsyncStorage
-      if (!hasInitializedRef.current) {
-        hasInitializedRef.current = true;
-        return;
-      }
+
+    if (!isProgressLoaded || !isVocabularyChangesLoaded) return;
+
+    const hasVocabChanges =
+      Object.keys(vocabularyChanges?.inserts || {}).length > 0 ||
+      Object.keys(vocabularyChanges?.updates || {}).length > 0 ||
+      Object.keys(vocabularyChanges?.deletes || {}).length > 0;
+
+    if (!hasInitializedRef.current) {
+      hasInitializedRef.current = true;
+      lastSyncedProgressRef.current = { coins: userProgress.coins, energy: userProgress.energy };
+      // Changes carried over from a previous session (e.g. app closed before
+      // they synced) are real and still need flushing - only the progress
+      // baseline itself should skip marking dirty on this first run.
+      if (hasVocabChanges) hasUnsyncedChanges = true;
+      return;
+    }
+
+    const progressChanged =
+      userProgress.coins !== lastSyncedProgressRef.current.coins ||
+      userProgress.energy !== lastSyncedProgressRef.current.energy;
+
+    if (progressChanged) {
+      lastSyncedProgressRef.current = { coins: userProgress.coins, energy: userProgress.energy };
+    }
+
+    if (progressChanged || hasVocabChanges) {
       hasUnsyncedChanges = true;
     }
-  }, [userProgress, isProgressLoaded, userVocabulary, isVocabularyLoaded]);
+  }, [userProgress.coins, userProgress.energy, vocabularyChanges, isProgressLoaded, isVocabularyChangesLoaded]);
 
-  // Sync to backend — only runs if online, authenticated, and there are unsynced changes
+  // Sync to backend — only runs if online, authenticated, and there are unsynced changes.
+  // Resolves true once nothing is left unsynced (synced successfully, or there
+  // was nothing pending), false if a sync attempt failed and changes remain pending.
   const performSync = useCallback(async () => {
-    if (!isOnlineRef.current) return;
-    if (!isAuthenticatedRef.current) return;
-    if (!hasUnsyncedChanges) return;
+    if (!isOnlineRef.current) return true;
+    if (!isAuthenticatedRef.current) return true;
+    if (!hasUnsyncedChanges) return true;
 
     try {
       // Read vocabulary changes from AsyncStorage before syncing
@@ -114,24 +145,20 @@ export const useBackendSync = (isOnline, isAuthenticated, userProgress, isProgre
       hasUnsyncedChanges = false;
       lastSyncTime = Date.now();
       hasShownSyncError = false; // Reset on successful sync
+      return true;
     } catch (error) {
       if (error.response?.status === 401) {
         // Token is gone (logged out) — stop retrying
         hasUnsyncedChanges = false;
-        return;
+        return true;
       }
       // Mark that we've shown the error - subsequent retries will be silent
       hasShownSyncError = true;
       // Silently retry - don't spam console, banner was already shown on first error
       // Don't clear hasUnsyncedChanges — will retry on next interval
+      return false;
     }
   }, []);
-
-  // Force immediate sync
-  const forceSync = useCallback(async () => {
-    hasUnsyncedChanges = true;
-    await performSync();
-  }, [performSync]);
 
   // Sync when coming back online
   useEffect(() => {
@@ -169,5 +196,11 @@ export const useBackendSync = (isOnline, isAuthenticated, userProgress, isProgre
     return () => subscription.remove();
   }, [isOnline, performSync]);
 
-  return { forceSync };
+  // Exposed as "forceSync": sync immediately instead of waiting for the next
+  // interval/trigger. A no-op (no network call) if nothing is actually
+  // pending, since dirtiness is already tracked accurately above. Callers
+  // that must not touch local data until it's safely on the server (e.g.
+  // switching the current language) should check the resolved value before
+  // proceeding.
+  return { forceSync: performSync };
 };

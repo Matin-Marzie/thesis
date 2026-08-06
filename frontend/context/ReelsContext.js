@@ -1,4 +1,4 @@
-import { createContext, useState, useContext, useCallback, useMemo } from 'react';
+import { createContext, useState, useContext, useCallback, useMemo, useEffect, useRef } from 'react';
 import { fetchReels as fetchReelsApi } from '../api/reels';
 import { useProgress } from './ProgressContext';
 import { useAuth } from './AuthContext';
@@ -34,7 +34,7 @@ import { REELS_LIMIT } from '../constants/Reels';
 const ReelsContext = createContext({});
 
 export const ReelsProvider = ({ children }) => {
-  const { userProgress } = useProgress();
+  const { userProgress, isProgressLoaded } = useProgress();
   const { isAuthenticated } = useAuth();
   
   // State
@@ -123,6 +123,42 @@ export const ReelsProvider = ({ children }) => {
     setHasMore(true);
     setError(null);
   }, []);
+
+  // Auto-reset and refetch when the active learning language changes (e.g.
+  // via the language switch sheet). Mirrors DictionaryContext's auto-fetch
+  // effect - reacting to the language codes here (instead of having callers
+  // invoke fetchReels themselves) avoids a stale-closure trap: a caller that
+  // just updated userProgress and immediately called the fetchReels it held
+  // from render would still be holding the OLD language's closure, since
+  // this provider hasn't re-rendered with the new userProgress yet.
+  //
+  // Two things this must NOT treat as a "switch":
+  //  1. Any change before isProgressLoaded - learningLanguageCode/nativeLanguageCode
+  //     fall back to hardcoded defaults until persisted state loads, so the
+  //     load itself looks like a language change.
+  //  2. The specific render where isProgressLoaded first flips true - that's
+  //     initial hydration to the user's real language, not a switch.
+  // Only changes observed after both have settled are genuine switches.
+  const languageKey = `${learningLanguageCode}:${nativeLanguageCode}`;
+  const prevLanguageKeyRef = useRef(languageKey);
+  const hasHydratedRef = useRef(false);
+  useEffect(() => {
+    if (!isProgressLoaded) {
+      prevLanguageKeyRef.current = languageKey;
+      return;
+    }
+    if (!hasHydratedRef.current) {
+      hasHydratedRef.current = true;
+      prevLanguageKeyRef.current = languageKey;
+      return;
+    }
+    if (prevLanguageKeyRef.current === languageKey) return;
+    prevLanguageKeyRef.current = languageKey;
+    setReels([]);
+    setHasMore(true);
+    setError(null);
+    fetchReels(true);
+  }, [languageKey, fetchReels, isProgressLoaded]);
 
   const contextValue = useMemo(() => ({
     reels,

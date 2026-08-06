@@ -247,5 +247,71 @@ router.delete('/me', verifyJWT, userController.deleteAccount);
  */
 router.post('/sync', verifyJWT, syncController.sync);
 
+/**
+ * @swagger
+ * /user/languages/current:
+ *   patch:
+ *     summary: Switch the authenticated user's current learning language
+ *     description: Marks the given user_languages row as current and returns the refreshed languages list plus the vocabulary scoped to that language.
+ *     tags: [User]
+ *     security:
+ *       - bearerAuth: []
+ *       - cookieAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required: [user_languages_id]
+ *             properties:
+ *               user_languages_id:
+ *                 type: integer
+ *     responses:
+ *       200:
+ *         description: Current language switched successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                 user_progress:
+ *                   type: object
+ *                   properties:
+ *                     languages:
+ *                       type: array
+ *                       items:
+ *                         type: object
+ *                 user_vocabulary:
+ *                   type: object
+ *       400:
+ *         description: Validation error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error'
+ *       401:
+ *         description: Unauthorized - Missing or invalid token
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error'
+ *       404:
+ *         description: Language not found for this user
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error'
+ *       500:
+ *         description: Internal server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error'
+ */
+router.patch('/languages/current', verifyJWT, userController.switchLanguage);
+
 export default router;
 

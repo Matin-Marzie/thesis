@@ -1,28 +1,35 @@
-import React from 'react';
+import React, { useCallback, useRef } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
+import { BottomSheetModal } from '@gorhom/bottom-sheet';
 import { useProgress } from '@/context/ProgressContext';
 import { LANGUAGES_META } from '@/constants/SupportedLanguages';
 import { formatCompactNumber } from '@/utils/formatCompactNumber';
+import TouchableOpacity from '@/components/TouchableOpacity';
+import LanguageSwitchSheet from '@/components/LanguageSwitchSheet';
 
 export default function ProgressHeaderTitle() {
   const { userProgress } = useProgress();
+  const languageSwitchRef = useRef<BottomSheetModal>(null);
 
   // Find the current language object
   const currentLang = userProgress?.languages?.find(l => l.is_current_language);
-  
+
   // Find the LANGUAGES_META entry by ID
   const languageMeta = Object.values(LANGUAGES_META).find(l => l.id === Number(currentLang?.learning_language.id));
 
   const flag = languageMeta?.flag;
 
+  const handleOpenLanguageSwitch = useCallback(() => {
+    languageSwitchRef.current?.present();
+  }, []);
 
   return (
     <View style={styles.container}>
-      {/* Language Flag + Proficiency Level */}
-      <View style={styles.item}>
+      {/* Language Flag + Proficiency Level - opens the language switch sheet */}
+      <TouchableOpacity style={styles.item} onPress={handleOpenLanguageSwitch}>
         <Text style={styles.flag}>{flag || '🏳️'}</Text>
         <Text style={styles.text}>{currentLang?.proficiency_level || 'A1'}</Text>
-      </View>
+      </TouchableOpacity>
 
       {/* Experience */}
       <View style={styles.item}>
@@ -41,6 +48,8 @@ export default function ProgressHeaderTitle() {
         <Text style={styles.icon}>⚡</Text>
         <Text style={styles.text}>{userProgress?.energy || 0}</Text>
       </View>
+
+      <LanguageSwitchSheet ref={languageSwitchRef} />
     </View>
   );
 }

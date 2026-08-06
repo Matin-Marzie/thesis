@@ -1,4 +1,5 @@
 import UserProfileSchema from '../validation/UserProfileSchema.js';
+import SwitchLanguageSchema from '../validation/SwitchLanguageSchema.js';
 import usersModel from '../models/usersModel.js';
 import userLanguagesModel from '../models/userLanguagesModel.js';
 import userVocabularyModel from '../models/userVocabularyModel.js';
@@ -60,6 +61,57 @@ const userController = {
   },
 
 
+
+  // Switch the authenticated user's current learning language.
+  // Returns the updated languages list and the vocabulary scoped to the
+  // newly-current language, so the client can replace its local vocabulary
+  // in the same round trip instead of issuing a second request.
+  async switchLanguage(req, res) {
+    try {
+      const userId = req.user.id;
+
+      const { error, value } = SwitchLanguageSchema.validate(req.body);
+      if (error) {
+        return res.status(400).json({
+          message: error.details[0].message,
+        });
+      }
+
+      const userLanguages = await userLanguagesModel.get(userId);
+      // ids come back from Postgres as strings (bigint columns) - coerce before comparing
+      const target = userLanguages.find(lang => Number(lang.id) === value.user_languages_id);
+
+      if (!target) {
+        return res.status(404).json({
+          message: 'Language not found for this user',
+        });
+      }
+
+      let updatedLanguages = userLanguages;
+      if (!target.is_current_language) {
+        await userLanguagesModel.setCurrent(userId, target.id);
+        updatedLanguages = userLanguages.map(lang => ({
+          ...lang,
+          is_current_language: Number(lang.id) === value.user_languages_id,
+        }));
+      }
+
+      const user_vocabulary = await userVocabularyModel.get(userId, target.id);
+
+      res.status(200).json({
+        message: 'Current language switched successfully',
+        user_progress: {
+          languages: updatedLanguages,
+        },
+        user_vocabulary,
+      });
+    } catch (error) {
+      console.error('Switch language error:', error);
+      res.status(500).json({
+        message: 'Internal server error',
+      });
+    }
+  },
 
   // Permanently delete current user's account and all associated data
   async deleteAccount(req, res) {
