@@ -1,6 +1,8 @@
 import React, { forwardRef, useCallback, useMemo } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { BottomSheetModal, BottomSheetView } from '@gorhom/bottom-sheet';
+import { useColorScheme } from '@/components/useColorScheme';
+import { DARK_COLORS } from '@/constants/App';
 
 interface FilterBottomSheetModalProps {
     onSheetChange?: (index: number) => void;
@@ -19,6 +21,7 @@ const CustomBackdrop = ({ style }) => (
 
 const FilterBottomSheetModal = forwardRef<BottomSheetModal, FilterBottomSheetModalProps>(
     ({ onSheetChange }, ref) => {
+        const isDark = useColorScheme() === 'dark';
         const snapPoints = useMemo(() => ['50%'], []);
 
         const handleSheetChanges = useCallback((index) => {
@@ -33,10 +36,12 @@ const FilterBottomSheetModal = forwardRef<BottomSheetModal, FilterBottomSheetMod
                 enablePanDownToClose
                 onChange={handleSheetChanges}
                 backdropComponent={CustomBackdrop}
+                backgroundStyle={isDark ? { backgroundColor: DARK_COLORS.surface } : undefined}
+                handleIndicatorStyle={isDark ? { backgroundColor: DARK_COLORS.border } : undefined}
             >
                 <BottomSheetView style={styles.contentContainer}>
-                    <Text style={styles.title}>Filter Words</Text>
-                    <Text style={styles.text}>Filter options coming soon...</Text>
+                    <Text style={[styles.title, isDark && { color: DARK_COLORS.text }]}>Filter Words</Text>
+                    <Text style={[styles.text, isDark && { color: DARK_COLORS.textSecondary }]}>Filter options coming soon...</Text>
                 </BottomSheetView>
             </BottomSheetModal>
         );

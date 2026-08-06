@@ -20,7 +20,7 @@ export default function WelcomeSlide({ onNext }: WelcomeSlideProps) {
           resizeMode="contain"
         />
         <Text style={[styles.title, isDark && { color: '#fff' }]}>4 quick questions before we start</Text>
-        <Text style={styles.subtitle}>Help us personalize your learning experience</Text>
+        <Text style={[styles.subtitle, isDark && { color: '#aaa' }]}>Help us personalize your learning experience</Text>
       </View>
       <TouchableOpacity style={styles.continueButton} onPress={onNext}>
         <Text style={styles.continueButtonText}>Continue</Text>

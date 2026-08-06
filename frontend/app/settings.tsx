@@ -4,8 +4,9 @@ import DateTimePicker, { DateTimePickerEvent } from '@react-native-community/dat
 import { useVibrationSettings } from '@/context/VibrationContext';
 import { useReminderSettings } from '@/context/ReminderContext';
 import { requestNotificationPermission } from '@/utils/notifications';
-import { PRIMARY_COLOR } from '@/constants/App';
+import { PRIMARY_COLOR, DARK_COLORS } from '@/constants/App';
 import TouchableOpacity from '@/components/TouchableOpacity';
+import { useColorScheme } from '@/components/useColorScheme';
 
 const formatTime = (hour: number, minute: number) => {
   const period = hour >= 12 ? 'PM' : 'AM';
@@ -14,6 +15,7 @@ const formatTime = (hour: number, minute: number) => {
 };
 
 export default function SettingsScreen() {
+  const isDark = useColorScheme() === 'dark';
   const { vibrationSettings, setVibrationSettings } = useVibrationSettings();
   const { reminderSettings, setReminderSettings } = useReminderSettings();
   const [showTimePicker, setShowTimePicker] = useState(false);
@@ -23,7 +25,9 @@ export default function SettingsScreen() {
   };
 
   const subSwitchesDisabled = !vibrationSettings.enabled;
-  const subSwitchTrackColor = { false: '#ccc', true: subSwitchesDisabled ? '#ccc' : PRIMARY_COLOR };
+  const trackColorOff = isDark ? '#555' : '#ccc';
+  const trackColor = { false: trackColorOff, true: PRIMARY_COLOR };
+  const subSwitchTrackColor = { false: trackColorOff, true: subSwitchesDisabled ? trackColorOff : PRIMARY_COLOR };
 
   const handleReminderToggle = async (value: boolean) => {
     if (!value) {
@@ -56,26 +60,33 @@ export default function SettingsScreen() {
   const timePickerValue = new Date();
   timePickerValue.setHours(reminderSettings.hour, reminderSettings.minute, 0, 0);
 
+  const sectionStyle = [styles.section, isDark && { backgroundColor: DARK_COLORS.surface }];
+  const sectionTitleStyle = [styles.sectionTitle, isDark && { color: DARK_COLORS.textSecondary }];
+  const rowLabelStyle = [styles.rowLabel, isDark && { color: DARK_COLORS.text }];
+  const rowLabelDisabledStyle = isDark ? { color: DARK_COLORS.textMuted } : styles.rowLabelDisabled;
+  const rowDescriptionStyle = [styles.rowDescription, isDark && { color: DARK_COLORS.textSecondary }];
+  const dividerStyle = [styles.divider, isDark && { backgroundColor: DARK_COLORS.border }];
+
   return (
-    <ScrollView style={styles.container}>
+    <ScrollView style={[styles.container, isDark && { backgroundColor: DARK_COLORS.background }]}>
       <View style={styles.content}>
-        <Text style={styles.sectionTitle}>Reminders</Text>
-        <View style={styles.section}>
+        <Text style={sectionTitleStyle}>Reminders</Text>
+        <View style={sectionStyle}>
           <View style={styles.row}>
             <View style={styles.rowText}>
-              <Text style={styles.rowLabel}>Daily Practice Reminder</Text>
-              <Text style={styles.rowDescription}>Get a notification to help you keep practicing</Text>
+              <Text style={rowLabelStyle}>Daily Practice Reminder</Text>
+              <Text style={rowDescriptionStyle}>Get a notification to help you keep practicing</Text>
             </View>
             <Switch
               value={reminderSettings.enabled}
               onValueChange={handleReminderToggle}
-              trackColor={{ false: '#ccc', true: PRIMARY_COLOR }}
+              trackColor={trackColor}
               thumbColor={'#fff'}
               style={{ paddingVertical: 4 }}
             />
           </View>
 
-          <View style={styles.divider} />
+          <View style={dividerStyle} />
 
           <TouchableOpacity
             style={styles.row}
@@ -83,9 +94,9 @@ export default function SettingsScreen() {
             onPress={() => setShowTimePicker(true)}
           >
             <View style={styles.rowText}>
-              <Text style={[styles.rowLabel, !reminderSettings.enabled && styles.rowLabelDisabled]}>Reminder Time</Text>
+              <Text style={[rowLabelStyle, !reminderSettings.enabled && rowLabelDisabledStyle]}>Reminder Time</Text>
             </View>
-            <Text style={[styles.rowValue, !reminderSettings.enabled && styles.rowLabelDisabled]}>
+            <Text style={[styles.rowValue, !reminderSettings.enabled && rowLabelDisabledStyle]}>
               {formatTime(reminderSettings.hour, reminderSettings.minute)}
             </Text>
           </TouchableOpacity>
@@ -107,28 +118,28 @@ export default function SettingsScreen() {
           )}
         </View>
 
-        <Text style={styles.sectionTitle}>Vibrations</Text>
-        <View style={styles.section}>
+        <Text style={sectionTitleStyle}>Vibrations</Text>
+        <View style={sectionStyle}>
           <View style={styles.row}>
             <View style={styles.rowText}>
-              <Text style={styles.rowLabel}>Vibrations</Text>
-              <Text style={styles.rowDescription}>Master switch for all vibration feedback</Text>
+              <Text style={rowLabelStyle}>Vibrations</Text>
+              <Text style={rowDescriptionStyle}>Master switch for all vibration feedback</Text>
             </View>
             <Switch
               value={vibrationSettings.enabled}
               onValueChange={toggle('enabled')}
-              trackColor={{ false: '#ccc', true: PRIMARY_COLOR }}
+              trackColor={trackColor}
               thumbColor={'#fff'}
               style={{ paddingVertical: 4 }}
             />
           </View>
 
-          <View style={styles.divider} />
+          <View style={dividerStyle} />
 
           <View style={styles.row}>
             <View style={styles.rowText}>
-              <Text style={[styles.rowLabel, subSwitchesDisabled && styles.rowLabelDisabled]}>Button Vibrations</Text>
-              <Text style={styles.rowDescription}>Feedback when tapping buttons and keys</Text>
+              <Text style={[rowLabelStyle, subSwitchesDisabled && rowLabelDisabledStyle]}>Button Vibrations</Text>
+              <Text style={rowDescriptionStyle}>Feedback when tapping buttons and keys</Text>
             </View>
             <Switch
               value={vibrationSettings.buttons}
@@ -142,8 +153,8 @@ export default function SettingsScreen() {
 
           <View style={styles.row}>
             <View style={styles.rowText}>
-              <Text style={[styles.rowLabel, subSwitchesDisabled && styles.rowLabelDisabled]}>Animation Vibrations</Text>
-              <Text style={styles.rowDescription}>Feedback tied to in-app animations</Text>
+              <Text style={[rowLabelStyle, subSwitchesDisabled && rowLabelDisabledStyle]}>Animation Vibrations</Text>
+              <Text style={rowDescriptionStyle}>Feedback tied to in-app animations</Text>
             </View>
             <Switch
               value={vibrationSettings.animations}
@@ -156,11 +167,11 @@ export default function SettingsScreen() {
           </View>
         </View>
 
-        <Text style={styles.sectionTitle}>Game Vibrations</Text>
-        <View style={styles.section}>
+        <Text style={sectionTitleStyle}>Game Vibrations</Text>
+        <View style={sectionStyle}>
           <View style={styles.row}>
             <View style={styles.rowText}>
-              <Text style={[styles.rowLabel, subSwitchesDisabled && styles.rowLabelDisabled]}>Word of Wonders</Text>
+              <Text style={[rowLabelStyle, subSwitchesDisabled && rowLabelDisabledStyle]}>Word of Wonders</Text>
             </View>
             <Switch
               value={vibrationSettings.wordOfWonders}
@@ -173,7 +184,7 @@ export default function SettingsScreen() {
 
           <View style={styles.row}>
             <View style={styles.rowText}>
-              <Text style={[styles.rowLabel, subSwitchesDisabled && styles.rowLabelDisabled]}>Wordle</Text>
+              <Text style={[rowLabelStyle, subSwitchesDisabled && rowLabelDisabledStyle]}>Wordle</Text>
             </View>
             <Switch
               value={vibrationSettings.wordle}

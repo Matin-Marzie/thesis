@@ -6,8 +6,11 @@ import FilterBottomSheetModal from '@/components/vocabulary/FilterBottomSheetMod
 import VocabularySearchField from '@/components/vocabulary/VocabularySearchField';
 import VocabularyList from '@/components/vocabulary/VocabularyList';
 import { normalizeQuery } from '@/utils/normalize';
+import { useColorScheme } from '@/components/useColorScheme';
+import { DARK_COLORS } from '@/constants/App';
 
 export default function HomeScreen() {
+  const isDark = useColorScheme() === 'dark';
   const { userVocabulary } = useVocabularyContext();
   const { dictionary } = useDictionaryContext();
   const [search, setSearch] = useState('');
@@ -71,7 +74,7 @@ export default function HomeScreen() {
   }, [search, words, userVocabulary]);
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, isDark && { backgroundColor: DARK_COLORS.background }]}>
       <VocabularySearchField
         search={search}
         onSearchChange={setSearch}

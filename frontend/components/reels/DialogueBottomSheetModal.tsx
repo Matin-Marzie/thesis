@@ -17,6 +17,8 @@ import { FontAwesome } from '@expo/vector-icons';
 import type { VideoPlayer } from 'expo-video';
 import type { Reel, Sentence, Token, Word } from '../../types/dialogue';
 import { LANGUAGES_META } from '../../constants/SupportedLanguages';
+import { useColorScheme } from '@/components/useColorScheme';
+import { DARK_COLORS } from '@/constants/App';
 
 const SNAP_POINTS = ['28%'];
 const RTL_LANGUAGE_CODES = new Set(
@@ -43,6 +45,7 @@ export function DialogueBottomSheetModal({
     player,
     onWordPress,
 }: DialogueBottomSheetModalProps) {
+    const isDark = useColorScheme() === 'dark';
     const sheetRef = useRef<BottomSheetModal>(null);
     const listRef = useRef<BottomSheetFlatListMethods>(null);
     const sentenceStopTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -231,6 +234,7 @@ export function DialogueBottomSheetModal({
                     onPress={() => handleSentencePress(sentence)}
                     style={[
                         styles.sentenceContainer,
+                        isDark && { backgroundColor: DARK_COLORS.surface, borderColor: DARK_COLORS.border },
                         isCurrentLine && styles.sentenceContainerHighlighted,
                         isRightToLeft && styles.sentenceContainerRtl,
                     ]}
@@ -243,30 +247,30 @@ export function DialogueBottomSheetModal({
                                     sentence.tokens.map((token) => (
                                         <Pressable
                                             key={token.id}
-                                            style={styles.tokenButton}
+                                            style={[styles.tokenButton, isDark && { borderColor: DARK_COLORS.border }]}
                                             onPress={(event) => {
                                                 event.stopPropagation();
                                                 handleTokenPress(token, sentence.id);
                                             }}
                                         >
-                                            <Text style={[styles.tokenText, isRightToLeft && styles.textRtl]}>{token.word.written_form}</Text>
+                                            <Text style={[styles.tokenText, isDark && { color: DARK_COLORS.text }, isRightToLeft && styles.textRtl]}>{token.word.written_form}</Text>
                                         </Pressable>
                                     ))
                                 ) : (
-                                    <Text style={[styles.sentenceText, isRightToLeft && styles.textRtl]}>{sentence.text}</Text>
+                                    <Text style={[styles.sentenceText, isDark && { color: DARK_COLORS.text }, isRightToLeft && styles.textRtl]}>{sentence.text}</Text>
                                 )}
                             </View>
                         </View>
 
                         <View style={[styles.translationWrap, isRightToLeft && styles.translationWrapRtl]}>
-                            <Text style={[styles.translationText, isRightToLeft && styles.textRtl]}>{sentence.translation}</Text>
+                            <Text style={[styles.translationText, isDark && { color: DARK_COLORS.textSecondary }, isRightToLeft && styles.textRtl]}>{sentence.translation}</Text>
                         </View>
                     </View>
 
                 </Pressable>
             );
         },
-        [currentLineIndex, handleSentencePress, handleTokenPress, isRightToLeft]
+        [currentLineIndex, handleSentencePress, handleTokenPress, isRightToLeft, isDark]
     );
 
     if (!reel || !sentences.length) {
@@ -289,18 +293,18 @@ export function DialogueBottomSheetModal({
                 backgroundStyle={styles.background}
             >
                 <View style={styles.controlsRow}>
-                    <Pressable onPress={handleTogglePlayPause} style={styles.playPauseButton}>
+                    <Pressable onPress={handleTogglePlayPause} style={[styles.playPauseButton, isDark && { backgroundColor: DARK_COLORS.surface }]}>
                         {isPlaying ?
                         <FontAwesome
                             name='pause'
                             size={16}
-                            color="#1f2937"
+                            color={isDark ? DARK_COLORS.text : '#1f2937'}
                         />
                         :
                         <FontAwesome
                             name='play'
                             size={16}
-                            color="#1f2937"
+                            color={isDark ? DARK_COLORS.text : '#1f2937'}
                         />
                         }
                     </Pressable>

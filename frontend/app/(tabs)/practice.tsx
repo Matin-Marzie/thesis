@@ -2,8 +2,11 @@ import React from 'react';
 import { View, Text, StyleSheet, ScrollView, Image } from 'react-native';
 import { useRouter } from 'expo-router';
 import TouchableOpacity from '@/components/TouchableOpacity';
+import { useColorScheme } from '@/components/useColorScheme';
+import { DARK_COLORS } from '@/constants/App';
 
 export default function PracticeScreen() {
+  const isDark = useColorScheme() === 'dark';
   const router = useRouter();
 
   const handlePlayWordOfWonders = () => {
@@ -15,9 +18,9 @@ export default function PracticeScreen() {
   };
 
   return (
-    <ScrollView style={styles.container}>
+    <ScrollView style={[styles.container, isDark && { backgroundColor: DARK_COLORS.background }]}>
       <View style={styles.content}>
-        <Text style={styles.title}>games</Text>
+        <Text style={[styles.title, isDark && { color: DARK_COLORS.text }]}>games</Text>
         <ScrollView 
           horizontal 
           showsHorizontalScrollIndicator={false}

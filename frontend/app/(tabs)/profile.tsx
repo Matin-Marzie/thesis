@@ -4,20 +4,22 @@ import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import { useProfile } from '@/context/ProfileContext';
 import { useAuth } from '@/context/AuthContext';
-import { PRIMARY_COLOR } from '@/constants/App';
+import { PRIMARY_COLOR, DARK_COLORS } from '@/constants/App';
 import TouchableOpacity from '@/components/TouchableOpacity';
+import { useColorScheme } from '@/components/useColorScheme';
 
 export default function ProfileScreen() {
+  const isDark = useColorScheme() === 'dark';
   const { userProfile } = useProfile();
   const { isAuthenticated } = useAuth();
   const router = useRouter();
 
   return (
-    <ScrollView style={styles.container}>
+    <ScrollView style={[styles.container, isDark && { backgroundColor: DARK_COLORS.background }]}>
       <View style={styles.content}>
         {/* User Info Section */}
         {userProfile && (
-          <View style={styles.userSection}>
+          <View style={[styles.userSection, isDark && { borderBottomColor: DARK_COLORS.border }]}>
             <View style={styles.avatarContainer}>
               { userProfile?.profile_picture ? (
                 <Image
@@ -29,23 +31,23 @@ export default function ProfileScreen() {
               )
               }
             </View>
-            <Text style={styles.userName}>{userProfile.first_name || userProfile.username}</Text>
-            <Text style={styles.userEmail}>{userProfile.email || `@${userProfile.username}`}</Text>
+            <Text style={[styles.userName, isDark && { color: DARK_COLORS.text }]}>{userProfile.first_name || userProfile.username}</Text>
+            <Text style={[styles.userEmail, isDark && { color: DARK_COLORS.textSecondary }]}>{userProfile.email || `@${userProfile.username}`}</Text>
           </View>
         )}
 
         {/* Auth Buttons - Show only when not authenticated */}
         {!isAuthenticated && (
           <View style={styles.authSection}>
-            <TouchableOpacity 
+            <TouchableOpacity
               style={styles.createAccountButton}
               onPress={() => router.push('/onboarding/register')}
             >
               <Text style={styles.createAccountText}>CREATE ACCOUNT</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity 
-              style={styles.loginButton}
+            <TouchableOpacity
+              style={[styles.loginButton, isDark && { backgroundColor: DARK_COLORS.surface }]}
               onPress={() => router.push('/onboarding/login')}
             >
               <Text style={styles.loginText}>LOGIN</Text>

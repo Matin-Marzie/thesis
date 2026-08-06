@@ -9,6 +9,8 @@ import {
 } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
 import { Word } from '../../types/dialogue';
+import { useColorScheme } from '@/components/useColorScheme';
+import { DARK_COLORS } from '@/constants/App';
 
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
 
@@ -29,6 +31,7 @@ export const WordMeaningPopup = ({
   onAddToVocabulary,
   isPlayingAudio = false,
 }: WordMeaningPopupProps) => {
+  const isDark = useColorScheme() === 'dark';
   if (!word || !isVisible) return null;
 
   return (
@@ -39,12 +42,12 @@ export const WordMeaningPopup = ({
       onRequestClose={onClose}
     >
       <Pressable style={styles.backdrop} onPress={onClose}>
-        <Pressable style={styles.popupContainer} onPress={(e) => e.stopPropagation()}>
+        <Pressable style={[styles.popupContainer, isDark && { backgroundColor: DARK_COLORS.surface }]} onPress={(e) => e.stopPropagation()}>
           {/* Word header */}
           <View style={styles.header}>
             <View style={styles.wordSection}>
-              <Text style={styles.wordText}>{word.written_form}</Text>
-              <Text style={styles.posText}>{word.part_of_speech}</Text>
+              <Text style={[styles.wordText, isDark && { color: DARK_COLORS.text }]}>{word.written_form}</Text>
+              <Text style={[styles.posText, isDark && { color: DARK_COLORS.textSecondary }]}>{word.part_of_speech}</Text>
             </View>
             {word.audio_url && (
               <Pressable
@@ -56,21 +59,21 @@ export const WordMeaningPopup = ({
                 <FontAwesome
                   name="volume-up"
                   size={20}
-                  color={isPlayingAudio ? '#2563eb' : '#666'}
+                  color={isPlayingAudio ? '#2563eb' : (isDark ? DARK_COLORS.textSecondary : '#666')}
                 />
               </Pressable>
             )}
           </View>
 
           {/* Level badge */}
-          <View style={styles.levelBadge}>
-            <Text style={styles.levelText}>{word.level}</Text>
+          <View style={[styles.levelBadge, isDark && { backgroundColor: '#312e81' }]}>
+            <Text style={[styles.levelText, isDark && { color: '#c7d2fe' }]}>{word.level}</Text>
           </View>
 
           {/* Translation */}
-          <View style={styles.translationSection}>
-            <Text style={styles.translationLabel}>Translation</Text>
-            <Text style={styles.translationText}>{translation}</Text>
+          <View style={[styles.translationSection, isDark && { borderBottomColor: DARK_COLORS.border }]}>
+            <Text style={[styles.translationLabel, isDark && { color: DARK_COLORS.textSecondary }]}>Translation</Text>
+            <Text style={[styles.translationText, isDark && { color: DARK_COLORS.text }]}>{translation}</Text>
           </View>
 
           {/* Add to vocabulary button */}
@@ -87,7 +90,7 @@ export const WordMeaningPopup = ({
 
           {/* Close button */}
           <Pressable style={styles.closeButton} onPress={onClose}>
-            <FontAwesome name="times" size={24} color="#666" />
+            <FontAwesome name="times" size={24} color={isDark ? DARK_COLORS.textSecondary : '#666'} />
           </Pressable>
         </Pressable>
       </Pressable>

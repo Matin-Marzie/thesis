@@ -2,8 +2,9 @@ import React, { useState, useRef, useMemo } from 'react';
 import { Text, StyleSheet, View, Modal, PanResponder, Platform } from 'react-native';
 import { MASTERY_LEVELS } from '@/constants/Vocabulary';
 import { VOCABULARY_ACTIONS } from '@/hooks/useVocabulary';
-import { PRIMARY_COLOR } from '@/constants/App';
+import { PRIMARY_COLOR, DARK_COLORS } from '@/constants/App';
 import { useVibration } from '@/hooks/useVibration';
+import { useColorScheme } from '@/components/useColorScheme';
 
 // While trying to change the mastery_level:
 // We show mastery_level(s) with gradient colors from "white" to "PRIMARY_COLOR".
@@ -44,6 +45,7 @@ const ITEM_HEIGHT = 40;
 const PICKER_WIDTH = 130;
 
 export default function MasteryLevelButton({ masteryLevel, wordId, vocabularyDispatch, onPress }) {
+    const isDark = useColorScheme() === 'dark';
     const vibrate = useVibration();
     const [showPicker, setShowPicker] = useState(false);
     const [hoveredLevel, setHoveredLevel] = useState(null);
@@ -162,6 +164,7 @@ export default function MasteryLevelButton({ masteryLevel, wordId, vocabularyDis
                     <View
                         style={[
                             styles.pickerContainer,
+                            isDark && { backgroundColor: DARK_COLORS.surface },
                             { top: pickerPosition.top, left: pickerPosition.left },
                         ]}
                         pointerEvents="none"

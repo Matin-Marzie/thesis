@@ -11,9 +11,12 @@ import { Ionicons } from '@expo/vector-icons';
 import { VOCABULARY_ACTIONS } from '@/hooks/useVocabulary';
 import { useVibration } from '@/hooks/useVibration';
 import VibrantTouchableOpacity from '@/components/TouchableOpacity';
+import { useColorScheme } from '@/components/useColorScheme';
+import { DARK_COLORS } from '@/constants/App';
 
 function WordItem({ item }) {
-    
+
+    const isDark = useColorScheme() === 'dark';
     const { userVocabulary, vocabularyDispatch } = useVocabularyContext();
     const { isOnline } = useNetwork();
     const { userProgress } = useProgress();
@@ -150,18 +153,18 @@ function WordItem({ item }) {
             overshootLeft={false}
             enabled={!!UserVocabularyEntry && !isDeleting}
         >
-        <View style={styles.row}>
+        <View style={[styles.row, isDark && { backgroundColor: DARK_COLORS.surface, borderBottomColor: DARK_COLORS.border }]}>
             <View style={[styles.wordRow]}>
                 <View style={{ flexDirection: 'row', flex: 1 }}>
-                    <Text style={{ marginTop: 2, marginRight: 12 }}>{article || ''}</Text>
+                    <Text style={[{ marginTop: 2, marginRight: 12 }, isDark && { color: DARK_COLORS.text }]}>{article || ''}</Text>
                     <View style={styles.written_formTranslationRow}>
-                        <Text style={[styles.written_form]}>{written_form}</Text>
-                        <Text style={[styles.translationText]}>{translations}</Text>
+                        <Text style={[styles.written_form, isDark && { color: DARK_COLORS.text }]}>{written_form}</Text>
+                        <Text style={[styles.translationText, isDark && { color: DARK_COLORS.textSecondary }]}>{translations}</Text>
                     </View>
                 </View>
                 <View>
                     <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end', gap: 8, marginHorizontal: 10 }}>
-                        <Text>{level}</Text>
+                        <Text style={isDark && { color: DARK_COLORS.text }}>{level}</Text>
 
                         {UserVocabularyEntry ? (
                             <MasteryLevelButton masteryLevel={UserVocabularyEntry?.mastery_level} wordId={word.id} vocabularyDispatch={vocabularyDispatch} />
@@ -199,11 +202,11 @@ function WordItem({ item }) {
             </View>
             {/* Wikimedia dictionary section */}
             {isExpanded && isOnline && (
-                <ScrollView style={styles.wikimediaDictionarySection} showsVerticalScrollIndicator={false}>
+                <ScrollView style={[styles.wikimediaDictionarySection, isDark && { backgroundColor: DARK_COLORS.surface }]} showsVerticalScrollIndicator={false}>
                     {loading && (
                         <View style={styles.loadingContainer}>
                             <ActivityIndicator size="small" color="#007bff" />
-                            <Text style={styles.loadingText}>Loading definitions...</Text>
+                            <Text style={[styles.loadingText, isDark && { color: DARK_COLORS.textSecondary }]}>Loading definitions...</Text>
                         </View>
                     )}
 
@@ -218,12 +221,12 @@ function WordItem({ item }) {
                             {meanings.map((item, index) => (
                                 <View key={index} style={styles.meaningItem}>
                                     {item.partOfSpeech && (
-                                        <Text style={styles.partOfSpeechText}>
+                                        <Text style={[styles.partOfSpeechText, isDark && { color: DARK_COLORS.textSecondary }]}>
                                             {item.partOfSpeech}
                                         </Text>
                                     )}
                                     {item.definitions && item.definitions.map((definition, defIndex) => (
-                                        <Text key={defIndex} style={styles.definitionText}>
+                                        <Text key={defIndex} style={[styles.definitionText, isDark && { color: DARK_COLORS.text }]}>
                                             {defIndex + 1}. {definition}
                                         </Text>
                                     ))}

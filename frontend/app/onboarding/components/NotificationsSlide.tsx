@@ -32,7 +32,7 @@ export default function NotificationsSlide({ onNext }: NotificationsSlideProps) 
       <View style={styles.content}>
         <Ionicons name="notifications-outline" size={80} color={PRIMARY_COLOR} />
         <Text style={[styles.title, isDark && { color: '#fff' }]}>I'll remind you to practice</Text>
-        <Text style={styles.subtitle}>
+        <Text style={[styles.subtitle, isDark && { color: '#aaa' }]}>
           Allow notifications to help you stay on track with your learning goals
         </Text>
       </View>

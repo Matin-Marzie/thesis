@@ -1,11 +1,15 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
+import { useColorScheme } from '@/components/useColorScheme';
+import { DARK_COLORS } from '@/constants/App';
 
 export default function CreateScreen() {
+  const isDark = useColorScheme() === 'dark';
+
   return (
-    <ScrollView style={styles.container}>
+    <ScrollView style={[styles.container, isDark && { backgroundColor: DARK_COLORS.background }]}>
       <View style={styles.content}>
-        <Text style={styles.subtitle}>Create your own content</Text>
+        <Text style={[styles.subtitle, isDark && { color: DARK_COLORS.textSecondary }]}>Create your own content</Text>
       </View>
     </ScrollView>
   );

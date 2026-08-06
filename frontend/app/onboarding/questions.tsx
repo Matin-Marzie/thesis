@@ -8,7 +8,8 @@ import LanguageSelectionSlide from './components/LanguageSelectionSlide';
 import ProficiencySlide from './components/ProficiencySlide';
 import NotificationsSlide from './components/NotificationsSlide';
 import PersonalizationSlide from './components/PersonalizationSlide';
-import { PRIMARY_COLOR } from '@/constants/App';
+import { PRIMARY_COLOR, DARK_COLORS } from '@/constants/App';
+import { useColorScheme } from '@/components/useColorScheme';
 import { registerWithGoogle } from '../../api/auth';
 import { useProfile } from '@/context/ProfileContext';
 import { useProgress } from '@/context/ProgressContext';
@@ -19,6 +20,7 @@ import { getLevelsBelowProficiency, getMasteryLevelForWordLevel } from '@/consta
 import { VOCABULARY_ACTIONS, DEFAULT_VOCABULARY_CHANGES } from '@/hooks/useVocabulary';
 
 export default function OnboardingQuestions() {
+  const isDark = useColorScheme() === 'dark';
   const router = useRouter();
   const { updateUserProfile } = useProfile();
   const { userProgress, setUserProgress } = useProgress();
@@ -205,7 +207,7 @@ export default function OnboardingQuestions() {
   ];
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, isDark && { backgroundColor: DARK_COLORS.background }]}>
       {/* Header with Back Button and Progress Indicator */}
       <View style={styles.header}>
         <TouchableOpacity style={styles.backButton} onPress={handleBack}>
@@ -218,6 +220,7 @@ export default function OnboardingQuestions() {
               key={index}
               style={[
                 styles.progressDot,
+                isDark && { backgroundColor: DARK_COLORS.border },
                 index === currentSlide && styles.progressDotActive,
               ]}
             />

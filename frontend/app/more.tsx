@@ -6,8 +6,11 @@ import { useAuth } from '../context/AuthContext';
 import { useLogout } from '../hooks/useLogout';
 import { useDeleteAccount } from '../hooks/useDeleteAccount';
 import TouchableOpacity from '../components/TouchableOpacity';
+import { useColorScheme } from '../components/useColorScheme';
+import { DARK_COLORS } from '../constants/App';
 
 export default function MoreScreen() {
+  const isDark = useColorScheme() === 'dark';
   const router = useRouter();
   const { isAuthenticated } = useAuth();
   const { logout } = useLogout();
@@ -76,40 +79,43 @@ export default function MoreScreen() {
     );
   };
 
+  const iconColor = isDark ? DARK_COLORS.text : '#333';
+  const chevronColor = isDark ? DARK_COLORS.textSecondary : '#999';
+
   return (
-    <ScrollView style={styles.container}>
+    <ScrollView style={[styles.container, isDark && { backgroundColor: DARK_COLORS.background }]}>
       <View style={styles.content}>
         {/* Menu Items */}
-        <View style={styles.menuSection}>
-          <TouchableOpacity style={styles.menuItem} onPress={() => router.push('/settings')}>
-            <Ionicons name="settings-outline" size={24} color="#333" />
-            <Text style={styles.menuText}>Settings</Text>
-            <Ionicons name="chevron-forward" size={20} color="#999" />
+        <View style={[styles.menuSection, isDark && { backgroundColor: DARK_COLORS.surface }]}>
+          <TouchableOpacity style={[styles.menuItem, isDark && { borderBottomColor: DARK_COLORS.border }]} onPress={() => router.push('/settings')}>
+            <Ionicons name="settings-outline" size={24} color={iconColor} />
+            <Text style={[styles.menuText, isDark && { color: DARK_COLORS.text }]}>Settings</Text>
+            <Ionicons name="chevron-forward" size={20} color={chevronColor} />
           </TouchableOpacity>
 
-          <TouchableOpacity style={styles.menuItem}>
-            <Ionicons name="notifications-outline" size={24} color="#333" />
-            <Text style={styles.menuText}>Notifications</Text>
-            <Ionicons name="chevron-forward" size={20} color="#999" />
+          <TouchableOpacity style={[styles.menuItem, isDark && { borderBottomColor: DARK_COLORS.border }]}>
+            <Ionicons name="notifications-outline" size={24} color={iconColor} />
+            <Text style={[styles.menuText, isDark && { color: DARK_COLORS.text }]}>Notifications</Text>
+            <Ionicons name="chevron-forward" size={20} color={chevronColor} />
           </TouchableOpacity>
 
-          <TouchableOpacity style={styles.menuItem}>
-            <Ionicons name="help-circle-outline" size={24} color="#333" />
-            <Text style={styles.menuText}>Help & Support</Text>
-            <Ionicons name="chevron-forward" size={20} color="#999" />
+          <TouchableOpacity style={[styles.menuItem, isDark && { borderBottomColor: DARK_COLORS.border }]}>
+            <Ionicons name="help-circle-outline" size={24} color={iconColor} />
+            <Text style={[styles.menuText, isDark && { color: DARK_COLORS.text }]}>Help & Support</Text>
+            <Ionicons name="chevron-forward" size={20} color={chevronColor} />
           </TouchableOpacity>
 
-          <TouchableOpacity style={styles.menuItem}>
-            <Ionicons name="information-circle-outline" size={24} color="#333" />
-            <Text style={styles.menuText}>About</Text>
-            <Ionicons name="chevron-forward" size={20} color="#999" />
+          <TouchableOpacity style={[styles.menuItem, isDark && { borderBottomColor: DARK_COLORS.border }]}>
+            <Ionicons name="information-circle-outline" size={24} color={iconColor} />
+            <Text style={[styles.menuText, isDark && { color: DARK_COLORS.text }]}>About</Text>
+            <Ionicons name="chevron-forward" size={20} color={chevronColor} />
           </TouchableOpacity>
         </View>
 
         {/* Logout Button */}
         {isAuthenticated && (
-          <TouchableOpacity 
-            style={[styles.logoutButton, isLoggingOut && styles.logoutButtonDisabled]} 
+          <TouchableOpacity
+            style={[styles.logoutButton, isLoggingOut && styles.logoutButtonDisabled]}
             onPress={handleLogout}
             disabled={isLoggingOut}
           >
@@ -125,9 +131,9 @@ export default function MoreScreen() {
         {/* Danger Zone */}
         {isAuthenticated && (
           <View style={styles.dangerZone}>
-            <Text style={styles.dangerZoneTitle}>Danger Zone</Text>
+            <Text style={[styles.dangerZoneTitle, isDark && { color: DARK_COLORS.textSecondary }]}>Danger Zone</Text>
             <TouchableOpacity
-              style={[styles.deleteAccountButton, isDeletingAccount && styles.logoutButtonDisabled]}
+              style={[styles.deleteAccountButton, isDark && { backgroundColor: DARK_COLORS.surface }, isDeletingAccount && styles.logoutButtonDisabled]}
               onPress={handleDeleteAccount}
               disabled={isDeletingAccount}
             >

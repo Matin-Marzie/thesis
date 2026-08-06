@@ -6,13 +6,14 @@ import {
   Image,
 } from 'react-native';
 import { useRouter } from 'expo-router';
-import { APP_NAME, APP_TAGLINE, PRIMARY_COLOR } from '../../constants/App';
+import { APP_NAME, APP_TAGLINE, PRIMARY_COLOR, DARK_COLORS } from '../../constants/App';
 import { useColorScheme } from '@/components/useColorScheme';
 import TouchableOpacity from '@/components/TouchableOpacity';
 
 export default function LandingScreen() {
   const router = useRouter();
   const colorScheme = useColorScheme();
+  const isDark = colorScheme === 'dark';
 
   const handleGetStarted = () => {
     // New users go to onboarding questions first
@@ -28,7 +29,7 @@ export default function LandingScreen() {
     <View
       style={[
         styles.container,
-        { backgroundColor: colorScheme !== 'dark' ? '#e9e7e8' : '' },
+        { backgroundColor: isDark ? '' : '#e9e7e8' },
       ]}
     >
 
@@ -48,7 +49,7 @@ export default function LandingScreen() {
           />
           
           <Text style={styles.logo}>{APP_NAME}</Text>
-          <Text style={styles.sublogo}>{APP_TAGLINE}</Text>
+          <Text style={[styles.sublogo, isDark && { color: DARK_COLORS.textSecondary }]}>{APP_TAGLINE}</Text>
         </View>
 
         {/* Buttons Section */}

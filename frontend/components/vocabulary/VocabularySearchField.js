@@ -6,15 +6,19 @@ import {
   TextInput,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { PRIMARY_COLOR } from '@/constants/App';
+import { PRIMARY_COLOR, DARK_COLORS } from '@/constants/App';
 import TouchableOpacity from '@/components/TouchableOpacity';
+import { useColorScheme } from '@/components/useColorScheme';
 
 export default function VocabularySearchField({ search, onSearchChange, onFilterPress, editable }) {
+  const isDark = useColorScheme() === 'dark';
+
   return (
-    <View style={styles.searchContainer}>
+    <View style={[styles.searchContainer, isDark && { backgroundColor: DARK_COLORS.background, borderBottomColor: DARK_COLORS.border }]}>
       <TextInput
-        style={styles.searchInput}
+        style={[styles.searchInput, isDark && { backgroundColor: DARK_COLORS.surface, color: DARK_COLORS.text }]}
         placeholder="Search dictionary..."
+        placeholderTextColor={isDark ? DARK_COLORS.textMuted : undefined}
         value={search}
         onChangeText={onSearchChange}
         editable={editable}
@@ -22,7 +26,7 @@ export default function VocabularySearchField({ search, onSearchChange, onFilter
 
       {/* Filter Button */}
       <TouchableOpacity
-        style={styles.filterButton}
+        style={[styles.filterButton, isDark && { backgroundColor: DARK_COLORS.surface, borderBottomColor: DARK_COLORS.border }]}
         onPress={onFilterPress}
       >
         <Ionicons name="funnel" size={20} color={PRIMARY_COLOR} style={{ marginRight: 6 }} />
