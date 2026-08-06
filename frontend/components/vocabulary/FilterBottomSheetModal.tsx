@@ -1,5 +1,5 @@
-import React, { forwardRef, useCallback, useMemo } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import React, { forwardRef, useCallback, useEffect, useMemo, useState } from 'react';
+import { View, Text, StyleSheet, BackHandler } from 'react-native';
 import { BottomSheetModal, BottomSheetView } from '@gorhom/bottom-sheet';
 import { useColorScheme } from '@/components/useColorScheme';
 import { DARK_COLORS } from '@/constants/App';
@@ -23,10 +23,25 @@ const FilterBottomSheetModal = forwardRef<BottomSheetModal, FilterBottomSheetMod
     ({ onSheetChange }, ref) => {
         const isDark = useColorScheme() === 'dark';
         const snapPoints = useMemo(() => ['50%'], []);
+        const [isOpen, setIsOpen] = useState(false);
 
-        const handleSheetChanges = useCallback((index) => {
-            // Do nothing
+        const handleSheetChanges = useCallback((index: number) => {
+            setIsOpen(index >= 0);
+            onSheetChange?.(index);
         }, [onSheetChange]);
+
+        // Close on the Android hardware/gesture back button instead of
+        // navigating away while the sheet is open.
+        useEffect(() => {
+            if (!isOpen) return;
+            const sub = BackHandler.addEventListener('hardwareBackPress', () => {
+                if (ref && 'current' in ref) {
+                    ref.current?.dismiss();
+                }
+                return true;
+            });
+            return () => sub.remove();
+        }, [isOpen, ref]);
 
         return (
             <BottomSheetModal

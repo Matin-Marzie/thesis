@@ -1,5 +1,5 @@
-import React, { forwardRef, useCallback, useMemo, useRef, useState } from 'react';
-import { View, Text, StyleSheet, ActivityIndicator, Alert, Animated, Dimensions } from 'react-native';
+import React, { forwardRef, useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { View, Text, StyleSheet, ActivityIndicator, Alert, Animated, BackHandler, Dimensions } from 'react-native';
 import { BottomSheetModal, BottomSheetScrollView, BottomSheetView, BottomSheetBackdrop } from '@gorhom/bottom-sheet';
 import type { BottomSheetBackdropProps } from '@gorhom/bottom-sheet';
 import { Swipeable } from 'react-native-gesture-handler';
@@ -148,6 +148,7 @@ const LanguageSwitchSheet = forwardRef<BottomSheetModal>((_props, ref) => {
     const [switchingId, setSwitchingId] = useState<number | string | null>(null);
     const [deletingId, setDeletingId] = useState<number | string | null>(null);
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
+    const [isSheetOpen, setIsSheetOpen] = useState(false);
 
     // 'list' shows the account's languages; 'select'/'level' are the two
     // steps of the add-language flow, reusing the onboarding slides.
@@ -386,6 +387,27 @@ const LanguageSwitchSheet = forwardRef<BottomSheetModal>((_props, ref) => {
         setDeletingId(null);
     }, []);
 
+    const handleSheetChange = useCallback((index: number) => {
+        setIsSheetOpen(index >= 0);
+    }, []);
+
+    // Android hardware/gesture back: step back through the add-language
+    // flow one level at a time (mirrors onboarding's own back-through-slides
+    // behavior) before dismissing the sheet, instead of navigating away
+    // while it's open.
+    useEffect(() => {
+        if (!isSheetOpen) return;
+        const sub = BackHandler.addEventListener('hardwareBackPress', () => {
+            if (mode !== 'list') {
+                handleBackFromAdd();
+            } else if (ref && 'current' in ref) {
+                ref.current?.dismiss();
+            }
+            return true;
+        });
+        return () => sub.remove();
+    }, [isSheetOpen, mode, handleBackFromAdd, ref]);
+
     return (
         <BottomSheetModal
             index={0}
@@ -397,6 +419,7 @@ const LanguageSwitchSheet = forwardRef<BottomSheetModal>((_props, ref) => {
             backgroundStyle={isDark ? { backgroundColor: DARK_COLORS.surface } : undefined}
             handleIndicatorStyle={isDark ? { backgroundColor: DARK_COLORS.border } : undefined}
             onDismiss={handleDismiss}
+            onChange={handleSheetChange}
         >
             {mode === 'list' ? (
                 <BottomSheetScrollView
