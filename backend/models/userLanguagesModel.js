@@ -125,6 +125,20 @@ const userLanguagesModel = {
     return result.rows[0];
   },
 
+  // Delete a user language entry by its own id. Cascades to user_vocabulary
+  // (fk_user_vocabulary_user_languages ON DELETE CASCADE), so that language's
+  // learned words are removed automatically.
+  async deleteById(userId, userLanguagesId) {
+    const query = `
+      DELETE FROM user_languages
+      WHERE id = $1 AND user_id = $2
+      RETURNING *
+    `;
+
+    const result = await pool.query(query, [userLanguagesId, userId]);
+    return result.rows[0];
+  },
+
 
   // Havn't used yet
   // Update user language progress

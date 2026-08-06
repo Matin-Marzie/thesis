@@ -172,10 +172,10 @@ const styles = StyleSheet.create({
   levelButton: {
     flexDirection: 'row',
     alignItems: 'center',
-    padding: 12,
+    padding: 10,
     borderRadius: 12,
     backgroundColor: '#f8f8f8',
-    marginBottom: 8,
+    marginBottom: 4,
     borderWidth: 2,
     borderColor: 'transparent',
     gap: 8,

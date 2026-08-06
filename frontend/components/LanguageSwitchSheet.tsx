@@ -1,7 +1,8 @@
-import React, { forwardRef, useCallback, useMemo, useState } from 'react';
-import { View, Text, StyleSheet, ActivityIndicator } from 'react-native';
+import React, { forwardRef, useCallback, useMemo, useRef, useState } from 'react';
+import { View, Text, StyleSheet, ActivityIndicator, Alert, Animated, Dimensions } from 'react-native';
 import { BottomSheetModal, BottomSheetScrollView, BottomSheetView, BottomSheetBackdrop } from '@gorhom/bottom-sheet';
 import type { BottomSheetBackdropProps } from '@gorhom/bottom-sheet';
+import { Swipeable } from 'react-native-gesture-handler';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { FontAwesome } from '@expo/vector-icons';
 import TouchableOpacity from '@/components/TouchableOpacity';
@@ -14,7 +15,7 @@ import { useNetwork } from '@/context/NetworkContext';
 import { useAuth } from '@/context/AuthContext';
 import { useVocabularyContext } from '@/context/VocabularyContext';
 import { VOCABULARY_ACTIONS, DEFAULT_VOCABULARY_CHANGES } from '@/hooks/useVocabulary';
-import { switchCurrentLanguage, addLanguage as addLanguageApi } from '@/api/user';
+import { switchCurrentLanguage, addLanguage as addLanguageApi, deleteLanguage as deleteLanguageApi } from '@/api/user';
 import LanguageSelectionSlide from '@/app/onboarding/components/LanguageSelectionSlide';
 import ProficiencySlide from '@/app/onboarding/components/ProficiencySlide';
 
@@ -53,10 +54,91 @@ const ProficiencyBar = ({ level, isDark }) => {
     );
 };
 
+const SWIPE_THRESHOLD = Dimensions.get('window').width / 3;
+
+// A language row that can be swiped right to reveal (and, past the
+// threshold, auto-trigger) delete - mirrors the swipe-to-delete pattern
+// already used for vocabulary words in VocabularyListItem.js.
+const LanguageRow = ({
+    language, meta, nativeMeta, displayName, isCurrent, isSwitchingThis, isDeletingThis,
+    anyActionInProgress, disabled, canDeleteLanguage, isDark, onSelect, onDelete,
+}) => {
+    const swipeableRef = useRef<Swipeable>(null);
+
+    const renderLeftActions = useCallback((_progress, dragX) => {
+        const scale = dragX.interpolate({
+            inputRange: [0, SWIPE_THRESHOLD],
+            outputRange: [0.5, 1],
+            extrapolate: 'clamp',
+        });
+
+        return (
+            <TouchableOpacity
+                style={styles.deleteAction}
+                onPress={() => {
+                    swipeableRef.current?.close();
+                    onDelete();
+                }}
+            >
+                <Animated.View style={{ transform: [{ scale }], alignItems: 'center' }}>
+                    <FontAwesome name="trash-o" size={22} color="#fff" />
+                    <Text style={styles.deleteActionText}>Delete</Text>
+                </Animated.View>
+            </TouchableOpacity>
+        );
+    }, [onDelete]);
+
+    return (
+        <Swipeable
+            ref={swipeableRef}
+            renderLeftActions={renderLeftActions}
+            leftThreshold={SWIPE_THRESHOLD}
+            overshootLeft={false}
+            enabled={canDeleteLanguage && !anyActionInProgress}
+            onSwipeableWillOpen={(direction) => {
+                if (direction === 'left') {
+                    swipeableRef.current?.close();
+                    onDelete();
+                }
+            }}
+            containerStyle={styles.swipeableContainer}
+        >
+            <TouchableOpacity
+                style={[
+                    styles.row,
+                    isDark && { backgroundColor: DARK_COLORS.background, borderColor: DARK_COLORS.border },
+                    isCurrent && styles.rowSelected,
+                    disabled && !isCurrent && styles.rowDisabled,
+                ]}
+                disabled={disabled}
+                onPress={onSelect}
+            >
+                <Text style={styles.flag}>{meta?.flag || '🏳️'}</Text>
+
+                <View style={styles.rowText}>
+                    <Text style={[styles.languageName, isDark && { color: DARK_COLORS.text }]}>
+                        {displayName}
+                    </Text>
+                    <Text style={[styles.languageSub, isDark && { color: DARK_COLORS.textSecondary }]}>
+                        from {nativeMeta?.name || language.native_language?.name} · {language.proficiency_level || 'N'}
+                    </Text>
+                    <ProficiencyBar level={language.proficiency_level} isDark={isDark} />
+                </View>
+
+                {(isSwitchingThis || isDeletingThis) ? (
+                    <ActivityIndicator size="small" color={PRIMARY_COLOR} />
+                ) : isCurrent ? (
+                    <FontAwesome name="check-circle" size={22} color={PRIMARY_COLOR} />
+                ) : null}
+            </TouchableOpacity>
+        </Swipeable>
+    );
+};
+
 const LanguageSwitchSheet = forwardRef<BottomSheetModal>((_props, ref) => {
     const isDark = useColorScheme() === 'dark';
     const insets = useSafeAreaInsets();
-    const snapPoints = useMemo(() => ['50%', '90%'], []);
+    const snapPoints = useMemo(() => ['50%', '90%', '100%'], []);
 
     const { userProgress, setUserProgress } = useProgress();
     const { isOnline } = useNetwork();
@@ -64,6 +146,7 @@ const LanguageSwitchSheet = forwardRef<BottomSheetModal>((_props, ref) => {
     const { vocabularyDispatch, setVocabularyChanges } = useVocabularyContext();
 
     const [switchingId, setSwitchingId] = useState<number | string | null>(null);
+    const [deletingId, setDeletingId] = useState<number | string | null>(null);
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
     // 'list' shows the account's languages; 'select'/'level' are the two
@@ -92,6 +175,8 @@ const LanguageSwitchSheet = forwardRef<BottomSheetModal>((_props, ref) => {
     );
 
     const canAddLanguage = isAuthenticated && isOnline;
+    // A user must always have at least one language
+    const canDeleteLanguage = isAuthenticated && isOnline && languages.length > 1;
 
     const handleSelect = useCallback(async (language) => {
         if (language.is_current_language || switchingId !== null) return;
@@ -151,6 +236,65 @@ const LanguageSwitchSheet = forwardRef<BottomSheetModal>((_props, ref) => {
         }
     }, [switchingId, isOnline, isAuthenticated, forceSync, setUserProgress, vocabularyDispatch, setVocabularyChanges, ref]);
 
+    const performDeleteLanguage = useCallback(async (language) => {
+        setErrorMessage(null);
+        setDeletingId(language.id);
+
+        try {
+            const response = await deleteLanguageApi(Number(language.id));
+
+            await setUserProgress((prev) => ({
+                ...prev,
+                languages: response.user_progress.languages,
+            }));
+
+            // Only present when the deleted language was current - another
+            // language was promoted and its vocabulary returned; otherwise
+            // the current language (and its vocabulary/vocabularyChanges)
+            // is untouched.
+            if (response.user_vocabulary) {
+                vocabularyDispatch({ type: VOCABULARY_ACTIONS.SET, payload: response.user_vocabulary });
+                await setVocabularyChanges(DEFAULT_VOCABULARY_CHANGES);
+            }
+        } catch (err) {
+            setErrorMessage(err.message || 'Could not delete language. Please try again.');
+        } finally {
+            setDeletingId(null);
+        }
+    }, [setUserProgress, vocabularyDispatch, setVocabularyChanges]);
+
+    // Deleting a language is irreversible (all its vocabulary progress goes
+    // with it), so this asks twice before actually calling the API.
+    const handleDeleteLanguage = useCallback((language, displayName) => {
+        if (!canDeleteLanguage || switchingId !== null || deletingId !== null) return;
+
+        Alert.alert(
+            'Remove Language ⚠️',
+            `This will permanently delete your progress and vocabulary for ${displayName}. This action cannot be undone.`,
+            [
+                { text: 'Cancel', style: 'cancel' },
+                {
+                    text: 'Delete',
+                    style: 'destructive',
+                    onPress: () => {
+                        Alert.alert(
+                            'Are you absolutely sure? ⚠️',
+                            `${displayName} and everything you've learned in it will be gone for good.`,
+                            [
+                                { text: 'Cancel', style: 'cancel' },
+                                {
+                                    text: 'Delete Permanently',
+                                    style: 'destructive',
+                                    onPress: () => performDeleteLanguage(language),
+                                },
+                            ]
+                        );
+                    },
+                },
+            ]
+        );
+    }, [canDeleteLanguage, switchingId, deletingId, performDeleteLanguage]);
+
     const handleOpenAddLanguage = useCallback(() => {
         if (!canAddLanguage) return;
         setAddError(null);
@@ -163,9 +307,22 @@ const LanguageSwitchSheet = forwardRef<BottomSheetModal>((_props, ref) => {
         }
     }, [canAddLanguage, ref]);
 
+    const handleGoToLevelStep = useCallback(() => {
+        setMode('level');
+        // Full height here - the proficiency list + Continue button need
+        // more room than they get at 90%, which crowds the button against
+        // the hardware/gesture nav bar.
+        if (ref && 'current' in ref) {
+            ref.current?.snapToIndex(2);
+        }
+    }, [ref]);
+
     const handleBackFromAdd = useCallback(() => {
         if (mode === 'level') {
             setMode('select');
+            if (ref && 'current' in ref) {
+                ref.current?.snapToIndex(1);
+            }
             return;
         }
         setMode('list');
@@ -221,6 +378,12 @@ const LanguageSwitchSheet = forwardRef<BottomSheetModal>((_props, ref) => {
         setAddLevel('N');
         setAddError(null);
         setIsAddingLanguage(false);
+        setErrorMessage(null);
+        // Any in-flight switch/delete still completes in the background (its
+        // own finally block clears these too) - this just avoids a stale
+        // stuck spinner if the sheet is reopened before that settles.
+        setSwitchingId(null);
+        setDeletingId(null);
     }, []);
 
     return (
@@ -244,40 +407,30 @@ const LanguageSwitchSheet = forwardRef<BottomSheetModal>((_props, ref) => {
                     {languages.map((language) => {
                         const meta = getLanguageMeta(language.learning_language?.id);
                         const nativeMeta = getLanguageMeta(language.native_language?.id);
+                        const displayName = meta?.name || language.learning_language?.name;
                         const isCurrent = language.is_current_language;
                         const isSwitchingThis = switchingId === language.id;
-                        const disabled = switchingId !== null || (!isOnline && !isCurrent);
+                        const isDeletingThis = deletingId === language.id;
+                        const anyActionInProgress = switchingId !== null || deletingId !== null;
+                        const disabled = anyActionInProgress || (!isOnline && !isCurrent);
 
                         return (
-                            <TouchableOpacity
+                            <LanguageRow
                                 key={language.id ?? `${language.learning_language?.id}-${language.native_language?.id}`}
-                                style={[
-                                    styles.row,
-                                    isDark && { backgroundColor: DARK_COLORS.background, borderColor: DARK_COLORS.border },
-                                    isCurrent && styles.rowSelected,
-                                    disabled && !isCurrent && styles.rowDisabled,
-                                ]}
+                                language={language}
+                                meta={meta}
+                                nativeMeta={nativeMeta}
+                                displayName={displayName}
+                                isCurrent={isCurrent}
+                                isSwitchingThis={isSwitchingThis}
+                                isDeletingThis={isDeletingThis}
+                                anyActionInProgress={anyActionInProgress}
                                 disabled={disabled}
-                                onPress={() => handleSelect(language)}
-                            >
-                                <Text style={styles.flag}>{meta?.flag || '🏳️'}</Text>
-
-                                <View style={styles.rowText}>
-                                    <Text style={[styles.languageName, isDark && { color: DARK_COLORS.text }]}>
-                                        {meta?.name || language.learning_language?.name}
-                                    </Text>
-                                    <Text style={[styles.languageSub, isDark && { color: DARK_COLORS.textSecondary }]}>
-                                        from {nativeMeta?.name || language.native_language?.name} · {language.proficiency_level || 'N'}
-                                    </Text>
-                                    <ProficiencyBar level={language.proficiency_level} isDark={isDark} />
-                                </View>
-
-                                {isSwitchingThis ? (
-                                    <ActivityIndicator size="small" color={PRIMARY_COLOR} />
-                                ) : isCurrent ? (
-                                    <FontAwesome name="check-circle" size={22} color={PRIMARY_COLOR} />
-                                ) : null}
-                            </TouchableOpacity>
+                                canDeleteLanguage={canDeleteLanguage}
+                                isDark={isDark}
+                                onSelect={() => handleSelect(language)}
+                                onDelete={() => handleDeleteLanguage(language, displayName)}
+                            />
                         );
                     })}
 
@@ -324,7 +477,7 @@ const LanguageSwitchSheet = forwardRef<BottomSheetModal>((_props, ref) => {
 
                     {mode === 'select' && (
                         <LanguageSelectionSlide
-                            onNext={() => setMode('level')}
+                            onNext={handleGoToLevelStep}
                             selectedNative={addNative}
                             selectedTarget={addTarget}
                             setSelectedNative={setAddNative}
@@ -369,6 +522,11 @@ const styles = StyleSheet.create({
         marginBottom: 16,
         color: '#333',
     },
+    swipeableContainer: {
+        marginBottom: 10,
+        borderRadius: 12,
+        overflow: 'hidden',
+    },
     row: {
         flexDirection: 'row',
         alignItems: 'center',
@@ -378,7 +536,6 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderColor: '#e0e0e0',
         backgroundColor: '#f9f9f9',
-        marginBottom: 10,
     },
     rowSelected: {
         borderColor: PRIMARY_COLOR,
@@ -391,6 +548,18 @@ const styles = StyleSheet.create({
     },
     rowText: {
         flex: 1,
+    },
+    deleteAction: {
+        width: SWIPE_THRESHOLD,
+        backgroundColor: '#d32f2f',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    deleteActionText: {
+        color: '#fff',
+        fontSize: 12,
+        fontWeight: '600',
+        marginTop: 4,
     },
     languageName: {
         fontSize: 16,
@@ -460,6 +629,11 @@ const styles = StyleSheet.create({
     },
     addFlowStep: {
         flex: 1,
+        // Extra clearance below the Continue button so it isn't obscured by
+        // the Android hardware/gesture nav bar - insets.bottom alone isn't
+        // enough here since the sheet doesn't get accurate edge-to-edge
+        // insets outside of a native (non-Expo-Go) build.
+        marginBottom: 28,
     },
     addOverlay: {
         ...StyleSheet.absoluteFillObject,

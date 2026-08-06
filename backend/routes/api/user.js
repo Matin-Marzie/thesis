@@ -384,5 +384,69 @@ router.patch('/languages/current', verifyJWT, userController.switchLanguage);
  */
 router.post('/languages', verifyJWT, userController.addLanguage);
 
+/**
+ * @swagger
+ * /user/languages/{id}:
+ *   delete:
+ *     summary: Remove a language pair from the authenticated user's account
+ *     description: Deletes the user_languages row (cascades to that language's vocabulary). A user must always have at least one language. If the deleted language was current, another remaining language is promoted to current and its vocabulary is returned.
+ *     tags: [User]
+ *     security:
+ *       - bearerAuth: []
+ *       - cookieAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: user_languages row id to delete
+ *     responses:
+ *       200:
+ *         description: Language deleted successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                 user_progress:
+ *                   type: object
+ *                   properties:
+ *                     languages:
+ *                       type: array
+ *                       items:
+ *                         type: object
+ *                 user_vocabulary:
+ *                   type: object
+ *                   description: Only present when the deleted language was current
+ *       400:
+ *         description: Invalid id, or this is the user's only language
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error'
+ *       401:
+ *         description: Unauthorized - Missing or invalid token
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error'
+ *       404:
+ *         description: Language not found for this user
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error'
+ *       500:
+ *         description: Internal server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error'
+ */
+router.delete('/languages/:id', verifyJWT, userController.deleteLanguage);
+
 export default router;
 

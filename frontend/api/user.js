@@ -59,6 +59,23 @@ export const switchCurrentLanguage = async (userLanguagesId) => {
 
 
 /**
+ * Remove a language pair from the authenticated user's account.
+ * @param {number} userLanguagesId - id of the user_languages row to delete
+ * @returns {Promise<Object>} - { message, user_progress: { languages }, user_vocabulary? }
+ *   user_vocabulary is only present when the deleted language was current
+ */
+export const deleteLanguage = async (userLanguagesId) => {
+  try {
+    const response = await apiClient.delete(`/user/languages/${userLanguagesId}`);
+    return response.data;
+  } catch (error) {
+    const message = error.response?.data?.message || error.message || 'Failed to delete language';
+    throw new Error(message);
+  }
+};
+
+
+/**
  * Add a new language pair to the authenticated user's account, making it current.
  * @param {Object} params
  * @param {number} params.native_language_id

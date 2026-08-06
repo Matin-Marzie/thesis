@@ -193,6 +193,78 @@ const userController = {
     }
   },
 
+  // Remove a language pair from the authenticated user's account. A user
+  // must always have at least one language, so this is rejected if it's
+  // their only one. If the deleted language was current, the most recently
+  // added remaining language is promoted to current and its vocabulary is
+  // returned so the client can swap to it in the same round trip.
+  async deleteLanguage(req, res) {
+    try {
+      const userId = req.user.id;
+      const languageId = Number(req.params.id);
+
+      if (!Number.isInteger(languageId)) {
+        return res.status(400).json({
+          message: 'Invalid language id',
+        });
+      }
+
+      const existingLanguages = await userLanguagesModel.get(userId);
+      const target = existingLanguages.find((lang) => Number(lang.id) === languageId);
+
+      if (!target) {
+        return res.status(404).json({
+          message: 'Language not found for this user',
+        });
+      }
+
+      if (existingLanguages.length === 1) {
+        return res.status(400).json({
+          message: 'You must have at least one language',
+        });
+      }
+
+      const deleted = await userLanguagesModel.deleteById(userId, languageId);
+      if (!deleted) {
+        return res.status(404).json({
+          message: 'Language not found for this user',
+        });
+      }
+
+      const remainingLanguages = existingLanguages.filter((lang) => Number(lang.id) !== languageId);
+
+      let updatedLanguages = remainingLanguages;
+      let user_vocabulary;
+
+      if (target.is_current_language) {
+        const nextCurrent = [...remainingLanguages].sort(
+          (a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+        )[0];
+
+        await userLanguagesModel.setCurrent(userId, nextCurrent.id);
+        user_vocabulary = await userVocabularyModel.get(userId, nextCurrent.id);
+
+        updatedLanguages = remainingLanguages.map((lang) => ({
+          ...lang,
+          is_current_language: Number(lang.id) === Number(nextCurrent.id),
+        }));
+      }
+
+      res.status(200).json({
+        message: 'Language deleted successfully',
+        user_progress: {
+          languages: updatedLanguages,
+        },
+        ...(user_vocabulary !== undefined && { user_vocabulary }),
+      });
+    } catch (error) {
+      console.error('Delete language error:', error);
+      res.status(500).json({
+        message: 'Internal server error',
+      });
+    }
+  },
+
   // Permanently delete current user's account and all associated data
   async deleteAccount(req, res) {
     try {
