@@ -5,7 +5,6 @@ import {
   StyleSheet,
   Image,
   TextInput,
-  Platform,
   BackHandler,
 } from 'react-native';
 import {
@@ -19,6 +18,7 @@ import type { SharedValue } from 'react-native-reanimated';
 import { withSpring } from 'react-native-reanimated';
 import { Dimensions } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import TouchableOpacity from '@/components/TouchableOpacity';
 
 const { height: SCREEN_HEIGHT } = Dimensions.get('window');
@@ -135,7 +135,7 @@ const CommentInputBar = React.memo(function CommentInputBar({ onSend }: CommentI
   }, [text, onSend]);
 
   return (
-    <View style={[styles.inputBar, Platform.OS === 'ios' && styles.inputBarIos]}>
+    <SafeAreaView edges={['top', 'bottom']} style={styles.inputBar}>
       <Image
         source={{ uri: 'https://i.pravatar.cc/150?img=50' }}
         style={styles.inputAvatar}
@@ -160,7 +160,7 @@ const CommentInputBar = React.memo(function CommentInputBar({ onSend }: CommentI
           Post
         </Text>
       </TouchableOpacity>
-    </View>
+    </SafeAreaView>
   );
 });
 
@@ -388,10 +388,6 @@ const styles = StyleSheet.create({
     borderTopWidth: StyleSheet.hairlineWidth,
     borderTopColor: '#333',
     backgroundColor: '#1c1c1e',
-  },
-  // Extra bottom padding on iOS so the bar clears the home indicator
-  inputBarIos: {
-    paddingBottom: 24,
   },
   inputAvatar: {
     width: 32,

@@ -14,6 +14,7 @@ import {
 } from '@gorhom/bottom-sheet';
 import type { BottomSheetBackdropProps, BottomSheetFlatListMethods } from '@gorhom/bottom-sheet';
 import { FontAwesome } from '@expo/vector-icons';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import type { VideoPlayer } from 'expo-video';
 import type { Reel, Sentence, Token, Word } from '../../types/dialogue';
 import { LANGUAGES_META } from '../../constants/SupportedLanguages';
@@ -292,37 +293,39 @@ export function DialogueBottomSheetModal({
                 handleIndicatorStyle={styles.handle}
                 backgroundStyle={styles.background}
             >
-                <View style={styles.controlsRow}>
-                    <Pressable onPress={handleTogglePlayPause} style={[styles.playPauseButton, isDark && { backgroundColor: DARK_COLORS.surface }]}>
-                        {isPlaying ?
-                        <FontAwesome
-                            name='pause'
-                            size={16}
-                            color={isDark ? DARK_COLORS.text : '#1f2937'}
-                        />
-                        :
-                        <FontAwesome
-                            name='play'
-                            size={16}
-                            color={isDark ? DARK_COLORS.text : '#1f2937'}
-                        />
-                        }
-                    </Pressable>
-                </View>
+                <SafeAreaView edges={['top', 'bottom']} style={styles.sheetContent}>
+                    <View style={styles.controlsRow}>
+                        <Pressable onPress={handleTogglePlayPause} style={[styles.playPauseButton, isDark && { backgroundColor: DARK_COLORS.surface }]}>
+                            {isPlaying ?
+                            <FontAwesome
+                                name='pause'
+                                size={16}
+                                color={isDark ? DARK_COLORS.text : '#1f2937'}
+                            />
+                            :
+                            <FontAwesome
+                                name='play'
+                                size={16}
+                                color={isDark ? DARK_COLORS.text : '#1f2937'}
+                            />
+                            }
+                        </Pressable>
+                    </View>
 
-                <BottomSheetFlatList
-                    ref={listRef}
-                    data={sentences}
-                    keyExtractor={(item: Sentence, index: number) => `sentence-${item.id}-${item.position}-${index}`}
-                    renderItem={renderSentence}
-                    contentContainerStyle={styles.contentContainer}
-                    showsVerticalScrollIndicator={true}
-                    ItemSeparatorComponent={() => <View style={styles.separator} />}
-                    // ListHeaderComponent={
+                    <BottomSheetFlatList
+                        ref={listRef}
+                        data={sentences}
+                        keyExtractor={(item: Sentence, index: number) => `sentence-${item.id}-${item.position}-${index}`}
+                        renderItem={renderSentence}
+                        contentContainerStyle={styles.contentContainer}
+                        showsVerticalScrollIndicator={true}
+                        ItemSeparatorComponent={() => <View style={styles.separator} />}
+                        // ListHeaderComponent={
 
-                    // }
-                    onScrollToIndexFailed={handleScrollToIndexFailed}
-                />
+                        // }
+                        onScrollToIndexFailed={handleScrollToIndexFailed}
+                    />
+                </SafeAreaView>
             </BottomSheetModal>
 
         </>
@@ -336,6 +339,9 @@ const styles = StyleSheet.create({
     handle: {
         backgroundColor: '#d1d5db',
         width: 36,
+    },
+    sheetContent: {
+        flex: 1,
     },
     emptyContainer: {
         flex: 1,

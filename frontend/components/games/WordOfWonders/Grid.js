@@ -4,7 +4,7 @@ import { GREEN, MAX_GRID_WIDTH, width, height } from './gameConstants';
 import { isRTL } from './languageUtils';
 import SeeMeaningPopUp from './pop-ups/SeeMeaningPopUp';
 
-const Grid = memo(({ boxData, gridWords, foundWords, filledBoxes, boxAnimations, shakeWord, shakeAnimation, langCode = 'en', dictionarySet = {} }) => {
+const Grid = memo(({ boxData, gridWords, foundWords, filledBoxes, boxAnimations, shakeWord, shakeAnimation, langCode = 'en', dictionarySet = {}, canvasHeight = height }) => {
   const rtl = isRTL(langCode);
   const [seeMeaningVisible, setSeeMeaningVisible] = useState(false);
   const [seeMeaningWords, setSeeMeaningWords] = useState([]);
@@ -128,7 +128,7 @@ const Grid = memo(({ boxData, gridWords, foundWords, filledBoxes, boxAnimations,
   const gridWidth = columns * boxSize;
   const gridHeight = rows * boxSize;
   const gridLeft = (width - gridWidth) / 2; // Center the grid horizontally
-  const gridTop = height * 0.12;
+  const gridTop = canvasHeight * 0.02;
 
   // Get box indices for the shake word
   const getShakeBoxIndices = () => {

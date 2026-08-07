@@ -17,7 +17,6 @@ export const height = screenHeight;
 export const horizontalOffset = (screenWidth - width) / 2; // Center offset for large screens
 
 // Background settings
-// export const BACKGROUND_IMAGE_URI = 'https://talktravelapp.com/wp-content/uploads/Nasir-al-Mulk-Mosque-Iran.jpg';
 // export const BACKGROUND_IMAGE_URI = 'https://www.robertharding.com/watermark.php?type=preview&im=RM/RH/VERTICAL/832-383388';
 export const BACKGROUND_IMAGE_URI = 'https://i.pinimg.com/736x/6b/b1/94/6bb194fc8d9fd46b172e0855b8cd6d4d.jpg';
 export const BACKGROUND_OVERLAY_OPACITY = 0.4;

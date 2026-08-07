@@ -20,6 +20,8 @@ const LettersCycle = memo(({
   onShuffle,
   shuffledLetters,
   onLetterCentersReady,
+  canvasHeight = height,
+  contentOriginYRef,
 }) => {
   const [currentPointer, setCurrentPointer] = useState(null);
   const [isTouch, setIsTouch] = useState(false);
@@ -67,7 +69,7 @@ const LettersCycle = memo(({
   const LETTERS_RADIUS = 0.71;
   const circleCenter = {
     x: width * 0.5,
-    y: height * 0.84,
+    y: canvasHeight * 0.84,
   };
 
   const getLetterPosition = useCallback((index) => {
@@ -100,7 +102,10 @@ const LettersCycle = memo(({
       onMoveShouldSetPanResponder: () => true,
       onPanResponderGrant: (evt) => {
         const touchX = evt.nativeEvent.pageX;
-        const touchY = evt.nativeEvent.pageY;
+        // Letter centers are computed in content-local space (relative to
+        // where content starts, below the header) - translate the raw page
+        // coordinate into that same space before comparing/drawing.
+        const touchY = evt.nativeEvent.pageY - (contentOriginYRef?.current ?? 0);
         setCurrentPointer({ x: touchX, y: touchY });
 
         const letterIndex = findLetterAtPosition(touchX, touchY);
@@ -113,7 +118,7 @@ const LettersCycle = memo(({
       },
       onPanResponderMove: (evt) => {
         const touchX = evt.nativeEvent.pageX;
-        const touchY = evt.nativeEvent.pageY;
+        const touchY = evt.nativeEvent.pageY - (contentOriginYRef?.current ?? 0);
         setCurrentPointer({ x: touchX, y: touchY });
 
         const letterIndex = findLetterAtPosition(touchX, touchY);
@@ -183,7 +188,7 @@ const LettersCycle = memo(({
       <Svg
         style={StyleSheet.absoluteFill}
         width={width}
-        height={height}
+        height={canvasHeight}
       >
         {lines}
       </Svg>

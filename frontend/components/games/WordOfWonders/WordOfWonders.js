@@ -8,8 +8,10 @@ import {
     ImageBackground,
     PanResponder,
     BackHandler,
+    Platform
 } from 'react-native';
 import { FontAwesome5 } from '@expo/vector-icons';
+import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -30,8 +32,6 @@ import { useVibration } from '@/hooks/useVibration';
 import VibrantTouchableOpacity from '@/components/TouchableOpacity';
 
 
-const HAMMER_HEIGHT = height * 0.69;
-
 // Fisher-Yates shuffle algorithm for shuffling letters
 const shuffleArray = (array) => {
     const shuffled = [...array];
@@ -48,6 +48,41 @@ export default function WordOfWonders({ boxData: initialBoxData, gridWords: init
     const { userProgress, setUserProgress } = useProgress();
     const { dictionary } = useDictionaryContext();
     const vibrate = useVibration();
+
+    const insets = useSafeAreaInsets();
+
+    // Real position + size of the canvas area (everything below the header:
+    // grid, letter circle, hammer/hint/extra-words buttons), measured directly
+    // via onLayout instead of computed from `height - insets.top - ...`.
+    // That arithmetic isn't reliable cross-platform: on Android, whether the
+    // static `height` constant (Dimensions.get('window')) already excludes
+    // the status bar depends on the OS version / edge-to-edge configuration,
+    // so subtracting insets.top on top of it can double-count or under-count
+    // depending on the device. Measuring the actual laid-out box sidesteps
+    // that entirely - it's correct by construction on any platform.
+    const canvasAreaRef = useRef(null);
+    const contentOriginYRef = useRef(insets.top);
+    const [availableHeight, setAvailableHeight] = useState(height - insets.top - insets.bottom);
+    const handleCanvasLayout = useCallback(() => {
+        // .measure()'s pageY (not .measureInWindow()'s window-relative y) is
+        // guaranteed to match PanResponder touch events' pageX/pageY - on
+        // Android those two coordinate spaces can disagree by the status bar
+        // height, which is exactly why this didn't line up on Android before.
+        canvasAreaRef.current?.measure((_x, _y, _w, h, pageX, pageY) => {
+            contentOriginYRef.current = pageY;
+            setAvailableHeight(h);
+        });
+    }, []);
+    const HAMMER_HEIGHT = availableHeight * 0.69;
+
+    // The hammer's PanResponder is created once (see hammerPanResponder below)
+    // and its callbacks close over whatever `availableHeight` existed at that
+    // first render - before the canvas area is even measured. Route hit-testing
+    // through this ref instead so it always reads the latest value.
+    const availableHeightRef = useRef(availableHeight);
+    useEffect(() => {
+        availableHeightRef.current = availableHeight;
+    }, [availableHeight]);
 
     // Normalize written_form the same way LevelGenerator did so lookups always match
     // (e.g. Greek "αδελφός" → "αδελφος", Farsi "بَرادَر" → "برادر")
@@ -335,10 +370,10 @@ export default function WordOfWonders({ boxData: initialBoxData, gridWords: init
         boxSize = Math.min(boxSize, 50); // Cap box size to 50 for better visibility
         const gridWidth = columns * boxSize;
         const gridLeft = (width - gridWidth) / 2;
-        const gridTop = height * 0.05;
+        const gridTop = availableHeightRef.current * 0.02; // must match Grid.js's own gridTop formula
 
         return { boxSize, gridLeft, gridTop };
-    }, []);
+    }, [columns]);
 
     // Helper function to find which grid box was hit by hammer
     const findHitGridBox = useCallback((x, y) => {
@@ -416,16 +451,20 @@ export default function WordOfWonders({ boxData: initialBoxData, gridWords: init
             onStartShouldSetPanResponder: (evt) => {
                 if (coinsRef.current < 80 || gameFinished) return false;                // Check if touch is on hammer button area
                 const { pageX, pageY } = evt.nativeEvent;
+                // hammerButton's `top` (HAMMER_HEIGHT) is content-local (relative to
+                // where content starts, below the header) - translate the raw page
+                // touch into that same space before comparing, like adjustedY below.
+                const localY = pageY - contentOriginYRef.current;
                 const buttonLeft = width * 0.02;
-                const buttonTop = HAMMER_HEIGHT;
+                const buttonTop = availableHeightRef.current * 0.69; // matches HAMMER_HEIGHT, read fresh (see availableHeightRef)
                 const buttonWidth = 70; // approximate width
                 const buttonHeight = 35; // approximate height
 
                 const isTouchOnButton =
                     pageX >= buttonLeft - 10 &&
                     pageX <= buttonLeft + buttonWidth + 10 &&
-                    pageY >= buttonTop - 10 &&
-                    pageY <= buttonTop + buttonHeight + 10;
+                    localY >= buttonTop - 10 &&
+                    localY <= buttonTop + buttonHeight + 10;
 
                 if (isTouchOnButton) {
                     return true;
@@ -439,9 +478,11 @@ export default function WordOfWonders({ boxData: initialBoxData, gridWords: init
                 if (coinsRef.current >= 80 && !gameFinished) {
                     hammerActiveRef.current = true;
                     setHammerActive(true);
+                    // floatingHammer renders in content-local space, so translate
+                    // the raw page touch the same way localY/adjustedY do above.
                     setHammerPosition({
                         x: evt.nativeEvent.pageX,
-                        y: evt.nativeEvent.pageY,
+                        y: evt.nativeEvent.pageY - contentOriginYRef.current,
                     });
                     // Reset animations
                     hammerOpacity.setValue(1);
@@ -453,7 +494,7 @@ export default function WordOfWonders({ boxData: initialBoxData, gridWords: init
                 if (hammerActiveRef.current) {
                     setHammerPosition({
                         x: evt.nativeEvent.pageX,
-                        y: evt.nativeEvent.pageY,
+                        y: evt.nativeEvent.pageY - contentOriginYRef.current,
                     });
                 }
             },
@@ -462,8 +503,10 @@ export default function WordOfWonders({ boxData: initialBoxData, gridWords: init
 
                 // Check if hammer hit a grid box
                 const { pageX, pageY } = evt.nativeEvent;
-                // Adjust Y coordinate based on screen height to match where the hammer icon visually appears
-                const adjustedY = pageY - (height * 0.07);
+                // Translate the raw page coordinate into Grid's local coordinate
+                // space (Grid.js positions boxes relative to where content
+                // starts, right below the header) using the measured origin.
+                const adjustedY = pageY - contentOriginYRef.current;
                 const hitBoxIndex = findHitGridBox(pageX, adjustedY);
 
                 // Only process if hit a valid box and it's not already filled
@@ -647,12 +690,12 @@ export default function WordOfWonders({ boxData: initialBoxData, gridWords: init
 
                 // Start position (center of screen where selectedWordContainer is)
                 const startX = width * 0.5;
-                const startY = height * 0.62;
+                const startY = availableHeight * 0.62;
                 // End position (Extra Words button location)
-                // Extra Words button is at left: width * 0.02, top: height * 0.95, with padding: 5
+                // Extra Words button is at left: width * 0.02, top: availableHeight * 0.95, with padding: 5
                 // The icon is ~20px, gap is 5px, and the number is centered in the remaining space
                 const endX = width * 0.02 + 5 + 20 + 5 + 10; // left + padding + icon + gap + half number width
-                const endY = height * 0.95 + 5 + 15; // top + padding + half button height
+                const endY = availableHeight * 0.95 + 5 + 15; // top + padding + half button height
 
                 wordAnimationPosition.setValue({ x: 0, y: 0 });
                 wordAnimationOpacity.setValue(1);
@@ -702,7 +745,7 @@ export default function WordOfWonders({ boxData: initialBoxData, gridWords: init
             ]).start();
 
         }
-    }, [selectedLetters, letterAnimations, foundWords, handleGridWord, shuffledLetters, wordAnimationPosition, wordAnimationOpacity, wordAnimationScale, vibrate]);
+    }, [selectedLetters, letterAnimations, foundWords, handleGridWord, shuffledLetters, wordAnimationPosition, wordAnimationOpacity, wordAnimationScale, vibrate, availableHeight]);
 
 
     const renderSelectedWord = () => {
@@ -719,6 +762,7 @@ export default function WordOfWonders({ boxData: initialBoxData, gridWords: init
                 <Animated.View
                     style={[
                         styles.selectedWordContainer,
+                        { top: availableHeight * 0.62 },
                         {
                             transform: [
                                 { translateX: wordAnimationPosition.x },
@@ -735,7 +779,7 @@ export default function WordOfWonders({ boxData: initialBoxData, gridWords: init
         }
 
         return (
-            <View style={styles.selectedWordContainer}>
+            <View style={[styles.selectedWordContainer, { top: availableHeight * 0.62 }]}>
                 <Animated.Text
                     style={[
                         styles.selectedLetterText,
@@ -759,148 +803,114 @@ export default function WordOfWonders({ boxData: initialBoxData, gridWords: init
                 {/* Semi-transparent overlay filter */}
                 <View style={styles.overlay} />
 
-                {/* HEADER */}
-                <View style={styles.HeaderBar}>
-                    <VibrantTouchableOpacity
-                        style={styles.backButton}
-                        onPress={() => setConfirmVisible(true)}
-                        game="wordOfWonders"
-                    >
-                        <FontAwesome5 name="arrow-left" size={20} color="#333" />
-                    </VibrantTouchableOpacity>
-                    <View
-                        ref={coinsViewRef}
-                        style={styles.coinsContainer}
-                        onLayout={() => {
-                            coinsViewRef.current?.measure((_x, _y, w, h, pageX, pageY) => {
-                                setCoinTarget({ x: pageX + w / 2, y: pageY + h / 2 });
-                            });
-                        }}
-                    >
-                        <FontAwesome5 name="coins" size={25} color="#FFD700" />
-                        <Text style={styles.coinsText}>{formatCompactNumber(coins)}</Text>
-                    </View>
-                    <VibrantTouchableOpacity
-                        style={styles.settingsButton}
-                        onPress={() => setSettingsVisible(true)}
-                        game="wordOfWonders"
-                    >
-                        <FontAwesome5 name="cog" size={22} color="#333" />
-                    </VibrantTouchableOpacity>
-                </View>
+                <SafeAreaView style={styles.safeContent} edges={['top', 'bottom']}>
 
-
-                {/* Game Grid - Memoized, won't re-render on letter selection */}
-                <Grid
-                    boxData={boxData}
-                    gridWords={gridWords}
-                    foundWords={foundWords}
-                    filledBoxes={filledBoxes}
-                    boxAnimations={boxAnimations}
-                    shakeWord={shakeWord}
-                    shakeAnimation={shakeAnimation}
-                    langCode={langCode}
-                    dictionarySet={dictionarySet}
-                />
-
-
-                {/* LettersCycle with HAMMER, HINT and EXTRA WORDS */}
-                <View style={styles.lettersCycleContainer}>
-
-                    {/* Hammer Button */}
-                    <View
-                        style={styles.hammerButton}
-                    >
+                    {/* HEADER */}
+                    <View style={styles.HeaderBar}>
+                        <VibrantTouchableOpacity
+                            style={styles.backButton}
+                            onPress={() => setConfirmVisible(true)}
+                            game="wordOfWonders"
+                        >
+                            <FontAwesome5 name="arrow-left" size={20} color="#333" />
+                        </VibrantTouchableOpacity>
                         <View
-                            style={{
-                                backgroundColor: coins >= 80 ? (hammerActive ? '#FFE5B4' : '#fff') : '#ccc',
-                                borderColor: hammerActive ? '#FF6347' : '#ddd',
-                                padding: 5,
-                                borderRadius: 10,
-                                borderWidth: hammerActive ? 3 : 2,
-                                flexDirection: 'row',
-                                alignItems: 'center',
-                                gap: 5,
+                            ref={coinsViewRef}
+                            style={styles.coinsContainer}
+                            onLayout={() => {
+                                coinsViewRef.current?.measure((_x, _y, w, h, pageX, pageY) => {
+                                    setCoinTarget({ x: pageX + w / 2, y: pageY + h / 2 });
+                                });
                             }}
                         >
-                            <FontAwesome5 name="hammer" size={20} color={coins >= 80 ? "#FF6347" : "#888"} />
-                            <Text style={[styles.scoreText, { color: coins >= 80 ? '#000' : '#888' }]}>
-                                80
-                            </Text>
+                            <FontAwesome5 name="coins" size={25} color="#FFD700" />
+                            <Text style={styles.coinsText}>{formatCompactNumber(coins)}</Text>
                         </View>
+                        <VibrantTouchableOpacity
+                            style={styles.settingsButton}
+                            onPress={() => setSettingsVisible(true)}
+                            game="wordOfWonders"
+                        >
+                            <FontAwesome5 name="cog" size={22} color="#333" />
+                        </VibrantTouchableOpacity>
                     </View>
 
-                    {/* Floating Hammer Pointer */}
-                    {hammerActive && hammerPosition && (
-                        <Animated.View
-                            style={[
-                                styles.floatingHammer,
-                                {
-                                    left: hammerPosition.x - 20,
-                                    top: hammerPosition.y - 20,
-                                    opacity: hammerOpacity,
-                                    transform: [
-                                        { scale: hammerScale },
-                                        {
-                                            rotate: hammerRotation.interpolate({
-                                                inputRange: [0, 1],
-                                                outputRange: ['0deg', '70deg'],
-                                            })
-                                        }
-                                    ],
-                                },
-                            ]}
-                        >
-                            <FontAwesome5 name="hammer" size={30} color="#FF6347" />
-                        </Animated.View>
-                    )}
+                    <View ref={canvasAreaRef} style={{ flex: 1 }} onLayout={handleCanvasLayout}>
+                    <Grid
+                        boxData={boxData}
+                        gridWords={gridWords}
+                        foundWords={foundWords}
+                        filledBoxes={filledBoxes}
+                        boxAnimations={boxAnimations}
+                        shakeWord={shakeWord}
+                        shakeAnimation={shakeAnimation}
+                        langCode={langCode}
+                        dictionarySet={dictionarySet}
+                        canvasHeight={availableHeight}
+                    />
 
-                    {/* Hint Button */}
-                    <TouchableOpacity
-                        style={styles.hintButton}
-                        onPress={handleHint}
-                        disabled={coins < 40 || gameFinished}
-                        activeOpacity={0.7}
-                    >
+
+                    {/* LettersCycle with HAMMER, HINT and EXTRA WORDS */}
+                    <View style={styles.lettersCycleContainer}>
+
+                        {/* Hammer Button */}
                         <View
-                            style={{
-                                backgroundColor: coins >= 40 ? '#fff' : '#ccc',
-                                borderColor: '#ddd',
-                                padding: 5,
-                                borderRadius: 10,
-                                borderWidth: 2,
-                                flexDirection: 'row',
-                                alignItems: 'center',
-                                gap: 5,
-                            }}
-                        >
-                            <FontAwesome5 name="lightbulb" size={18} color={coins >= 40 ? "#FFD700" : "#888"} />
-                            <Text style={[styles.scoreText, { color: coins >= 40 ? '#000' : '#888' }]}>
-                                40
-                            </Text>
-                        </View>
-                    </TouchableOpacity>
-
-                    {/* Extra Words Button */}
-                    <VibrantTouchableOpacity
-                        style={styles.ExtraWordsButton}
-                        onPress={() => setExtraWordsVisible(true)}
-                        activeOpacity={0.30}
-                        hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
-                        accessibilityRole="button"
-                        accessibilityLabel="Open extra words"
-                        game="wordOfWonders"
-                    >
-                        <Animated.View
-                            style={[
-                                {
-                                    transform: [{ scale: scoreScaleAnimation }],
-                                }
-                            ]}
+                            style={[styles.hammerButton, { top: HAMMER_HEIGHT }]}
                         >
                             <View
                                 style={{
-                                    backgroundColor: '#fff',
+                                    backgroundColor: coins >= 80 ? (hammerActive ? '#FFE5B4' : '#fff') : '#ccc',
+                                    borderColor: hammerActive ? '#FF6347' : '#ddd',
+                                    padding: 5,
+                                    borderRadius: 10,
+                                    borderWidth: hammerActive ? 3 : 2,
+                                    flexDirection: 'row',
+                                    alignItems: 'center',
+                                    gap: 5,
+                                }}
+                            >
+                                <FontAwesome5 name="hammer" size={20} color={coins >= 80 ? "#FF6347" : "#888"} />
+                                <Text style={[styles.scoreText, { color: coins >= 80 ? '#000' : '#888' }]}>
+                                    80
+                                </Text>
+                            </View>
+                        </View>
+
+                        {/* Floating Hammer Pointer */}
+                        {hammerActive && hammerPosition && (
+                            <Animated.View
+                                style={[
+                                    styles.floatingHammer,
+                                    {
+                                        left: hammerPosition.x - 20,
+                                        top: hammerPosition.y - 20,
+                                        opacity: hammerOpacity,
+                                        transform: [
+                                            { scale: hammerScale },
+                                            {
+                                                rotate: hammerRotation.interpolate({
+                                                    inputRange: [0, 1],
+                                                    outputRange: ['0deg', '70deg'],
+                                                })
+                                            }
+                                        ],
+                                    },
+                                ]}
+                            >
+                                <FontAwesome5 name="hammer" size={30} color="#FF6347" />
+                            </Animated.View>
+                        )}
+
+                        {/* Hint Button */}
+                        <TouchableOpacity
+                            style={[styles.hintButton, { top: availableHeight * 0.69 }]}
+                            onPress={handleHint}
+                            disabled={coins < 40 || gameFinished}
+                            activeOpacity={0.7}
+                        >
+                            <View
+                                style={{
+                                    backgroundColor: coins >= 40 ? '#fff' : '#ccc',
                                     borderColor: '#ddd',
                                     padding: 5,
                                     borderRadius: 10,
@@ -910,67 +920,105 @@ export default function WordOfWonders({ boxData: initialBoxData, gridWords: init
                                     gap: 5,
                                 }}
                             >
-                                <FontAwesome5 name="book-medical" size={20} color="#000" />
-                                <Text style={{
-                                    fontSize: 14,
-                                    fontWeight: 'bold',
-                                }}>
-                                    {extraWordsScore < 10 ? ` ${extraWordsScore}` : extraWordsScore}
+                                <FontAwesome5 name="lightbulb" size={18} color={coins >= 40 ? "#FFD700" : "#888"} />
+                                <Text style={[styles.scoreText, { color: coins >= 40 ? '#000' : '#888' }]}>
+                                    40
                                 </Text>
                             </View>
-                        </Animated.View>
-                    </VibrantTouchableOpacity>
+                        </TouchableOpacity>
 
-                    {/* Selected Word Display */}
-                    {renderSelectedWord()}
+                        {/* Extra Words Button */}
+                        <VibrantTouchableOpacity
+                            style={[styles.ExtraWordsButton, { top: availableHeight * 0.95 }]}
+                            onPress={() => setExtraWordsVisible(true)}
+                            activeOpacity={0.30}
+                            hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
+                            accessibilityRole="button"
+                            accessibilityLabel="Open extra words"
+                            game="wordOfWonders"
+                        >
+                            <Animated.View
+                                style={[
+                                    {
+                                        transform: [{ scale: scoreScaleAnimation }],
+                                    }
+                                ]}
+                            >
+                                <View
+                                    style={{
+                                        backgroundColor: '#fff',
+                                        borderColor: '#ddd',
+                                        padding: 5,
+                                        borderRadius: 10,
+                                        borderWidth: 2,
+                                        flexDirection: 'row',
+                                        alignItems: 'center',
+                                        gap: 5,
+                                    }}
+                                >
+                                    <FontAwesome5 name="book-medical" size={20} color="#000" />
+                                    <Text style={{
+                                        fontSize: 14,
+                                        fontWeight: 'bold',
+                                    }}>
+                                        {extraWordsScore < 10 ? ` ${extraWordsScore}` : extraWordsScore}
+                                    </Text>
+                                </View>
+                            </Animated.View>
+                        </VibrantTouchableOpacity>
 
-                    {/* Letter Circle - Memoized, handles its own gestures */}
-                    <LettersCycle
-                        selectedLetters={selectedLetters}
-                        onLetterPress={handleLetterPress}
-                        onLetterRelease={handleLetterRelease}
-                        letterAnimations={letterAnimations}
-                        onShuffle={handleShuffle}
-                        shuffledLetters={shuffledLetters}
-                        onLetterCentersReady={handleLetterCentersReady}
+                        {/* Selected Word Display */}
+                        {renderSelectedWord()}
+
+                        {/* Letter Circle - Memoized, handles its own gestures */}
+                        <LettersCycle
+                            selectedLetters={selectedLetters}
+                            onLetterPress={handleLetterPress}
+                            onLetterRelease={handleLetterRelease}
+                            letterAnimations={letterAnimations}
+                            onShuffle={handleShuffle}
+                            shuffledLetters={shuffledLetters}
+                            onLetterCentersReady={handleLetterCentersReady}
+                            canvasHeight={availableHeight}
+                            contentOriginYRef={contentOriginYRef}
+                        />
+                    </View>
+
+
+                    {/* Extra Words Popup */}
+                    <ExtraWordsPopup
+                        visible={extraWordsVisible}
+                        onClose={() => setExtraWordsVisible(false)}
+                        extraWords={foundWords.filter(w => dictionarySet[w]?.length && !gridWords[w])}
+                        dictionarySet={dictionarySet}
+                        score={extraWordsScore}
                     />
-                </View>
 
+                    {/* Finish Screen (moved to component) */}
+                    <FinishScreen
+                        visible={gameFinished}
+                        onCollect={handleCollect}
+                        coinTarget={coinTarget}
+                        gridWords={gridWords}
+                        dictionarySet={dictionarySet}
+                    />
 
-                {/* Extra Words Popup */}
-                <ExtraWordsPopup
-                    visible={extraWordsVisible}
-                    onClose={() => setExtraWordsVisible(false)}
-                    extraWords={foundWords.filter(w => dictionarySet[w]?.length && !gridWords[w])}
-                    dictionarySet={dictionarySet}
-                    score={extraWordsScore}
-                />
+                    {/* Settings Popup */}
+                    <SettingsPopup
+                        visible={settingsVisible}
+                        onClose={() => setSettingsVisible(false)}
+                    />
 
-                {/* Finish Screen (moved to component) */}
-                <FinishScreen
-                    visible={gameFinished}
-                    onCollect={handleCollect}
-                    coinTarget={coinTarget}
-                    gridWords={gridWords}
-                    dictionarySet={dictionarySet}
-                />
+                    {/* Exit Confirmation Popup */}
+                    <ConfirmationPopup
+                        visible={confirmVisible}
+                        title="Quit Game"
+                        message="Are you sure you want to leave? Your progress will be lost."
+                        onConfirm={() => router.back()}
+                        onCancel={() => setConfirmVisible(false)}
+                    />
 
-                {/* Settings Popup */}
-                <SettingsPopup
-                    visible={settingsVisible}
-                    onClose={() => setSettingsVisible(false)}
-                />
-
-                {/* Exit Confirmation Popup */}
-                <ConfirmationPopup
-                    visible={confirmVisible}
-                    title="Quit Game"
-                    message="Are you sure you want to leave? Your progress will be lost."
-                    onConfirm={() => router.back()}
-                    onCancel={() => setConfirmVisible(false)}
-                />
-
-                {/*
+                    {/*
                   * First-time tutorial overlay.
                   *
                   * Rendered only when both conditions are true:
@@ -984,16 +1032,18 @@ export default function WordOfWonders({ boxData: initialBoxData, gridWords: init
                   * userProgress and controls the instruction text language.
                   * Falls back to 'en' if the language data is not yet loaded.
                   */}
-                {showTutorial && tutorialLetterCenters && (
-                    <TutorialOverlay
-                        letterCenters={tutorialLetterCenters}
-                        onDismiss={handleTutorialDismiss}
-                        langCode={
-                            userProgress?.languages?.find(l => l.is_current_language)
-                                ?.native_language?.code ?? 'en'
-                        }
-                    />
-                )}
+                    {showTutorial && tutorialLetterCenters && (
+                        <TutorialOverlay
+                            letterCenters={tutorialLetterCenters}
+                            onDismiss={handleTutorialDismiss}
+                            langCode={
+                                userProgress?.languages?.find(l => l.is_current_language)
+                                    ?.native_language?.code ?? 'en'
+                            }
+                        />
+                    )}
+                    </View>
+                </SafeAreaView>
             </ImageBackground>
         </View>
     );
@@ -1002,7 +1052,6 @@ export default function WordOfWonders({ boxData: initialBoxData, gridWords: init
 const styles = StyleSheet.create({
     outerContainer: {
         flex: 1,
-        backgroundColor: '#000',
         alignItems: 'center',
         justifyContent: 'center',
     },
@@ -1017,22 +1066,16 @@ const styles = StyleSheet.create({
         backgroundColor: `rgba(0, 0, 0, ${BACKGROUND_OVERLAY_OPACITY})`,
         zIndex: 0,
     },
+    safeContent: {
+        flex: 1,
+    },
     HeaderBar: {
-        position: 'absolute',
-        top: height * 0.05,
-        left: 0,
-        right: 0,
-        height: 40,
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
-        paddingHorizontal: width * 0.02,
         zIndex: 10,
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.25,
-        shadowRadius: 3.84,
-        elevation: 5,
+        paddingHorizontal: width * 0.02,
+        marginTop: 5,
     },
     backButton: {
         width: 35,
@@ -1049,7 +1092,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#FFF',
         borderRadius: 20,
         paddingHorizontal: 10,
-
+        paddingVertical: 2,
     },
     coinsText: {
         fontSize: 16,
@@ -1069,7 +1112,6 @@ const styles = StyleSheet.create({
     },
     hammerButton: {
         position: 'absolute',
-        top: HAMMER_HEIGHT,
         left: width * 0.02,
         zIndex: 10,
     },
@@ -1080,19 +1122,16 @@ const styles = StyleSheet.create({
     },
     hintButton: {
         position: 'absolute',
-        top: height * 0.69,
         right: width * 0.02,
         zIndex: 10,
     },
     ExtraWordsButton: {
         position: 'absolute',
-        top: height * 0.95,
         left: width * 0.02,
         zIndex: 10,
     },
     selectedWordContainer: {
         position: 'absolute',
-        top: height * 0.62,
         left: 0,
         right: 0,
         flexDirection: 'row',

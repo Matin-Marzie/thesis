@@ -9,6 +9,7 @@ import {
     BackHandler,
 } from 'react-native';
 import { FontAwesome5 } from '@expo/vector-icons';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { useProgress } from '@/context/ProgressContext';
 import { useDictionaryContext } from '@/context/DictionaryContext';
 import { useVibration } from '@/hooks/useVibration';
@@ -202,14 +203,16 @@ export default function Wordle({ onClose }) {
 
     if (loading) {
         return (
-            <View style={styles.container}>
-                <ActivityIndicator size="large" color="#6aaa64" />
-            </View>
+            <SafeAreaView style={styles.layout} edges={['top', 'bottom']}>
+                <View style={styles.container}>
+                    <ActivityIndicator size="large" color="#6aaa64" />
+                </View>
+            </SafeAreaView>
         );
     }
 
     return (
-        <View style={styles.layout}>
+        <SafeAreaView style={styles.layout} edges={['top', 'bottom']}>
             <View style={styles.container}>
                 {/* Header */}
                 <View style={styles.header}>
@@ -326,15 +329,13 @@ export default function Wordle({ onClose }) {
                     coinTarget={coinTarget}
                 />
             </View>
-        </View>
+        </SafeAreaView>
     );
 }
 
 const styles = StyleSheet.create({
     layout: {
         backgroundColor: PRIMARY_COLOR,
-        paddingTop: 35,
-        paddingBottom: 50,
         flex: 1,
     },
     container: {
@@ -347,7 +348,6 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         alignItems: 'center',
         paddingHorizontal: 10,
-        paddingVertical: 5,
         borderBottomWidth: 1,
         borderBottomColor: '#e0e0e0',
         backgroundColor: PRIMARY_COLOR,
@@ -365,6 +365,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: 15,
         paddingVertical: 10,
         borderRadius: 999,
+        backgroundColor: '#ffffff21',
     },
     headerTitle: {
         fontSize: 24,
