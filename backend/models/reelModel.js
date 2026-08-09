@@ -51,7 +51,7 @@ const reelModel = {
         `INSERT INTO reels (language_id, dialogue_id, created_by, url, title, description, duration)
          VALUES ($1, $2, $3, $4, $5, $6, $7)
          RETURNING id, language_id, dialogue_id, created_by, url, thumbnail_url, title, description, duration, created_at`,
-        [languageId, dialogueId, createdBy, url, title, description || null, duration]
+        [languageId, dialogueId, createdBy, url, title || null, description || null, duration]
       );
 
       await client.query('COMMIT');

@@ -21,7 +21,7 @@ const router = express.Router();
  *         multipart/form-data:
  *           schema:
  *             type: object
- *             required: [video, title, language_id, duration, lines]
+ *             required: [video, language_id, duration, lines]
  *             properties:
  *               video:
  *                 type: string

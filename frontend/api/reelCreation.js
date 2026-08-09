@@ -6,7 +6,7 @@ import apiClient from './client.js';
  * (the read-only reels-service) - the Node backend owns the write path.
  * @param {Object} params
  * @param {import('../types/createReel').WizardVideoAsset} params.video
- * @param {string} params.title
+ * @param {string|null} params.title
  * @param {string} params.description
  * @param {number} params.languageId
  * @param {number|null} params.translationLanguageId
@@ -24,7 +24,9 @@ export const createReel = async (
     name: video.fileName || `reel-${Date.now()}.mp4`,
     type: video.mimeType || 'video/mp4',
   });
-  form.append('title', title);
+  if (title) {
+    form.append('title', title);
+  }
   if (description) {
     form.append('description', description);
   }

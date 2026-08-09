@@ -9,7 +9,7 @@ import { REELS_LIMIT } from '../constants/Reels';
  * @property {number} id
  * @property {string} url
  * @property {string} thumbnail_url
- * @property {string} title
+ * @property {string|null} title
  * @property {number} duration
  * @property {string} created_at
  * @property {Object} language

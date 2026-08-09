@@ -93,13 +93,9 @@ export default function CreateDetailsScreen() {
   );
 
   const handleContinue = useCallback(() => {
-    if (!title.trim()) {
-      Alert.alert('Add a title', 'Give your reel a title before continuing.');
-      return;
-    }
     player.pause();
     router.push('/(tabs)/create/sync-subtitles');
-  }, [title, router, player]);
+  }, [router, player]);
 
   useEffect(() => {
     const sub = navigation.addListener('beforeRemove', (e) => {
@@ -135,7 +131,7 @@ export default function CreateDetailsScreen() {
 
         <View style={styles.content}>
           <View style={styles.fieldsGroup}>
-            <Text style={[styles.label, isDark && { color: DARK_COLORS.textSecondary }]}>Title</Text>
+            <Text style={[styles.label, isDark && { color: DARK_COLORS.textSecondary }]}>Title (optional)</Text>
             <TextInput
               style={[styles.input, isDark && styles.inputDark]}
               value={title}

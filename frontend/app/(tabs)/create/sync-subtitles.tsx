@@ -66,10 +66,8 @@ export default function SyncSubtitlesScreen() {
   useEffect(() => {
     if (!videoAsset) {
       router.replace('/(tabs)/create');
-    } else if (!title.trim()) {
-      router.replace('/(tabs)/create/details');
     }
-  }, [videoAsset, title, router]);
+  }, [videoAsset, router]);
 
   useEffect(() => {
     player.timeUpdateEventInterval = 0.1;
@@ -163,7 +161,7 @@ export default function SyncSubtitlesScreen() {
       const response = await createReel(
         {
           video: videoAsset,
-          title: title.trim(),
+          title: title.trim() || null,
           description: description.trim(),
           languageId,
           translationLanguageId: hasTranslations ? translationLanguageId : null,

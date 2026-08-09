@@ -63,7 +63,7 @@ export interface Reel {
   id: number;
   url: string;
   thumbnail_url: string;
-  title: string;
+  title: string | null;
   duration: number;
   created_at: string;
   language: Language;

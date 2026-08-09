@@ -25,7 +25,7 @@ export interface CreateReelLinePayload {
 
 export interface CreateReelPayload {
   video: WizardVideoAsset;
-  title: string;
+  title: string | null;
   description: string;
   languageId: number;
   translationLanguageId: number | null;
@@ -41,7 +41,7 @@ export interface CreateReelResponse {
     created_by: number;
     url: string;
     thumbnail_url: string | null;
-    title: string;
+    title: string | null;
     description: string | null;
     duration: number;
     created_at: string;

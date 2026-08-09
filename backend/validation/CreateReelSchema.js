@@ -39,10 +39,7 @@ const SubtitleLineSchema = Joi.object({
 });
 
 const CreateReelSchema = Joi.object({
-  title: Joi.string().trim().min(1).max(MAX_TITLE_LENGTH).required().messages({
-    'any.required': 'title is required',
-    'string.empty': 'title cannot be empty',
-  }),
+  title: Joi.string().trim().max(MAX_TITLE_LENGTH).allow(null, '').default(null),
   description: Joi.string().trim().max(MAX_DESCRIPTION_LENGTH).allow(null, '').default(null),
   language_id: Joi.number().integer().required().messages({
     'any.required': 'language_id is required',
