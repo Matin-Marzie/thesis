@@ -6,7 +6,7 @@ import {
   withSpring,
 } from 'react-native-reanimated';
 import Animated from 'react-native-reanimated';
-import { ReelActions } from './ReelActions';
+import { ReelActions } from './RightSideActionBar';
 
 interface ReelOverlayProps {
   item: any;

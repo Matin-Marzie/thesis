@@ -13,11 +13,11 @@ import Animated, {
   withTiming,
 } from 'react-native-reanimated';
 import { API_BASE_URL } from '@/config/api.config';
-import { ReelOverlay } from './ReelOverlay';
-import { CommentBottomSheetModal } from './CommentBottomSheetModal';
-import { DialogueBottomSheetModal } from './DialogueBottomSheetModal';
-import { WordMeaningPopup } from './WordMeaningPopup';
-import type { Word } from '../../types/dialogue';
+import { ReelOverlay } from './overlay/ReelOverlay';
+import { CommentBottomSheetModal } from './comments/CommentBottomSheetModal';
+import { DialogueBottomSheetModal } from './subtitles/SubtitleBottomSheetModal';
+import { WordMeaningPopup } from './subtitles/WordMeaningPopup';
+import type { Reel, Word } from '../../types/dialogue';
 
 const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get('window');
 
@@ -31,7 +31,7 @@ const fixVideoUrl = (url: string): string => {
 };
 
 interface ReelItemProps {
-  item: any;
+  item: Reel;
   isActive: boolean;
   isScreenFocused: boolean;
 }
@@ -142,12 +142,13 @@ export const ReelItem = React.memo(
         />
 
         <DialogueBottomSheetModal
-           reelId={item.id}
-           visible={isDialogueOpen}
-           onClose={handleDialogueClose}
-           reel={item}
-           player={player}
-           onWordPress={handleWordPress}
+          reelId={item.id}
+          visible={isDialogueOpen}
+          onClose={handleDialogueClose}
+          reel={item}
+          player={player}
+          onWordPress={handleWordPress}
+          sheetHeight={sheetHeight}
         />
 
         <WordMeaningPopup

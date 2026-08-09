@@ -8,7 +8,7 @@ import {
   Dimensions,
 } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
-import { Word } from '../../types/dialogue';
+import { Word } from '../../../types/dialogue';
 import { useColorScheme } from '@/components/useColorScheme';
 import { DARK_COLORS } from '@/constants/App';
 
