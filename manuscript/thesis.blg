@@ -4,50 +4,53 @@ The top-level auxiliary file: thesis.aux
 The style file: plain.bst
 Database file #1: references.bib
 Warning--I didn't find a database entry for "businessResearch2024language"
+Warning--I didn't find a database entry for "businessresearch2024languageapps"
 Warning--I didn't find a database entry for "vygotsky1978mind"
 Warning--I didn't find a database entry for "nation2001learning"
 Warning--I didn't find a database entry for "ebbinghaus1885memory"
+Warning--I didn't find a database entry for "munday2017duolingo"
+Warning--I didn't find a database entry for "duolingo2025approach"
 Warning--I didn't find a database entry for "gilmore2007authentic"
 Warning--I didn't find a database entry for "liu2024authentic"
-You've used 5 entries,
+You've used 2 entries,
             2118 wiz_defined-function locations,
-            533 strings with 4835 characters,
-and the built_in function-call counts, 1258 in all, are:
-= -- 127
-> -- 35
+            521 strings with 4662 characters,
+and the built_in function-call counts, 538 in all, are:
+= -- 54
+> -- 14
 < -- 0
-+ -- 16
-- -- 10
-* -- 66
-:= -- 215
-add.period$ -- 17
-call.type$ -- 5
-change.case$ -- 20
++ -- 7
+- -- 4
+* -- 32
+:= -- 95
+add.period$ -- 7
+call.type$ -- 2
+change.case$ -- 8
 chr.to.int$ -- 0
-cite$ -- 5
-duplicate$ -- 43
-empty$ -- 121
-format.name$ -- 10
-if$ -- 264
+cite$ -- 2
+duplicate$ -- 18
+empty$ -- 50
+format.name$ -- 4
+if$ -- 110
 int.to.chr$ -- 0
-int.to.str$ -- 5
-missing$ -- 2
-newline$ -- 30
-num.names$ -- 10
-pop$ -- 29
+int.to.str$ -- 2
+missing$ -- 1
+newline$ -- 14
+num.names$ -- 4
+pop$ -- 10
 preamble$ -- 1
-purify$ -- 15
+purify$ -- 6
 quote$ -- 0
-skip$ -- 33
+skip$ -- 13
 stack$ -- 0
-substring$ -- 76
-swap$ -- 5
+substring$ -- 36
+swap$ -- 2
 text.length$ -- 0
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 20
+type$ -- 8
 warning$ -- 0
-while$ -- 14
-width$ -- 6
-write$ -- 58
-(There were 6 warnings)
+while$ -- 6
+width$ -- 3
+write$ -- 25
+(There were 9 warnings)
