@@ -55,6 +55,12 @@
           "icon": "./assets/images/splash-icon.png",
           "color": "#0f8690"
         }
+      ],
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "Allow $(PRODUCT_NAME) to access your videos so you can create a reel."
+        }
       ]
     ],
     "experiments": {

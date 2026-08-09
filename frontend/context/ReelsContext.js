@@ -28,6 +28,7 @@ import { REELS_LIMIT } from '../constants/Reels';
  * @property {string|null} error
  * @property {(refresh?: boolean) => Promise<void>} fetchReels
  * @property {() => void} resetReels
+ * @property {(reel: Reel) => void} prependReel
  */
 
 /** @type {import('react').Context<ReelsContextType>} */
@@ -124,6 +125,16 @@ export const ReelsProvider = ({ children }) => {
     setError(null);
   }, []);
 
+  /**
+   * Prepend a freshly-created reel to the feed (optimistic UI after publish).
+   * reels-service's GET /reels is a random sample with no get-by-id / created-by
+   * filter, so a refetch has no guarantee of surfacing the new reel - this
+   * client-built copy is shown instead until the next natural refresh.
+   */
+  const prependReel = useCallback((reel) => {
+    setReels((prev) => [reel, ...prev.filter((r) => r.id !== reel.id)]);
+  }, []);
+
   // Auto-reset and refetch when the active learning language changes (e.g.
   // via the language switch sheet). Mirrors DictionaryContext's auto-fetch
   // effect - reacting to the language codes here (instead of having callers
@@ -168,6 +179,7 @@ export const ReelsProvider = ({ children }) => {
     error,
     fetchReels,
     resetReels,
+    prependReel,
   }), [
     reels,
     isLoading,
@@ -176,6 +188,7 @@ export const ReelsProvider = ({ children }) => {
     error,
     fetchReels,
     resetReels,
+    prependReel,
   ]);
 
   return (

@@ -77,3 +77,7 @@ package-lock.json
 
 # ----------Database----------
 database/execute.sql
+
+# User-uploaded reel videos (runtime content, not seed data)
+backend/public/uploads/reels/*
+!backend/public/uploads/reels/.gitkeep

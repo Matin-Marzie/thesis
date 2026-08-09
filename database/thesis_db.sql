@@ -19959,14 +19959,14 @@ COPY public.words (id, written_form, part_of_speech, image_url, audio_url, langu
 -- Name: dialogue_sentences_id_seq; Type: SEQUENCE SET; Schema: public; Owner: root
 --
 
-SELECT pg_catalog.setval('public.dialogue_sentences_id_seq', 79, true);
+SELECT pg_catalog.setval('public.dialogue_sentences_id_seq', 83, true);
 
 
 --
 -- Name: dialogues_id_seq; Type: SEQUENCE SET; Schema: public; Owner: root
 --
 
-SELECT pg_catalog.setval('public.dialogues_id_seq', 1, true);
+SELECT pg_catalog.setval('public.dialogues_id_seq', 16, true);
 
 
 --
@@ -19994,7 +19994,7 @@ SELECT pg_catalog.setval('public.reel_interactions_id_seq', 2, true);
 -- Name: reels_id_seq; Type: SEQUENCE SET; Schema: public; Owner: root
 --
 
-SELECT pg_catalog.setval('public.reels_id_seq', 1, true);
+SELECT pg_catalog.setval('public.reels_id_seq', 16, true);
 
 
 --

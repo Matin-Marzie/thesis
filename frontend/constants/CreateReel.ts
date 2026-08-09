@@ -1,0 +1,2 @@
+export const MAX_REEL_DURATION_MS = 90_000;
+export const MAX_REEL_FILE_SIZE_BYTES = 100 * 1024 * 1024;
