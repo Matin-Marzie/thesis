@@ -1,24 +1,9 @@
 import express from 'express';
-import multer from 'multer';
 import reelController from '../../controllers/reelController.js';
 import verifyJWT from '../../middleware/verifyJWT.js';
 import uploadReelVideo from '../../middleware/uploadReelVideo.js';
 
 const router = express.Router();
-
-// Wrap multer so file-too-large / wrong-mimetype errors come back as 400s
-// instead of falling through to the global error handler's 500 default.
-const handleVideoUpload = (req, res, next) => {
-  uploadReelVideo.single('video')(req, res, (err) => {
-    if (err instanceof multer.MulterError) {
-      return res.status(400).json({ message: err.message });
-    }
-    if (err) {
-      return res.status(400).json({ message: err.message || 'Invalid video upload' });
-    }
-    next();
-  });
-};
 
 /**
  * @swagger
@@ -63,6 +48,6 @@ const handleVideoUpload = (req, res, next) => {
  *       500:
  *         description: Internal server error
  */
-router.post('/', verifyJWT, handleVideoUpload, reelController.createReel);
+router.post('/', verifyJWT, uploadReelVideo, reelController.createReel);
 
 export default router;
