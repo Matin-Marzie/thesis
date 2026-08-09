@@ -9,14 +9,22 @@ import {
   Alert,
   KeyboardAvoidingView,
   Platform,
+  ActivityIndicator,
 } from 'react-native';
 import { useRouter } from 'expo-router';
 import { useVideoPlayer, VideoView } from 'expo-video';
 import { FontAwesome } from '@expo/vector-icons';
 import { useColorScheme } from '@/components/useColorScheme';
 import { DARK_COLORS, PRIMARY_COLOR } from '@/constants/App';
+import { LANGUAGES_META } from '@/constants/SupportedLanguages';
 import { useCreateReelWizard } from '@/context/CreateReelWizardContext';
+import { useProfile } from '@/context/ProfileContext';
+import { useReelsContext } from '@/context/ReelsContext';
+import { createReel } from '@/api/reelCreation';
 import type { DraftSubtitleLine } from '@/types/createReel';
+import type { Reel } from '@/types/dialogue';
+
+const LANGUAGE_OPTIONS = Object.values(LANGUAGES_META);
 
 const formatMs = (ms: number) => {
   const totalSeconds = ms / 1000;
@@ -26,7 +34,20 @@ const formatMs = (ms: number) => {
 export default function SyncSubtitlesScreen() {
   const isDark = useColorScheme() === 'dark';
   const router = useRouter();
-  const { videoAsset, lines, addLine, updateLine, removeLine } = useCreateReelWizard();
+  const {
+    videoAsset,
+    lines,
+    addLine,
+    updateLine,
+    removeLine,
+    languageId,
+    translationLanguageId,
+    title,
+    description,
+    reset,
+  } = useCreateReelWizard();
+  const { userProfile } = useProfile();
+  const { prependReel } = useReelsContext();
 
   const [phase, setPhase] = useState<'record' | 'review'>('record');
   const [draftText, setDraftText] = useState('');
@@ -34,6 +55,8 @@ export default function SyncSubtitlesScreen() {
   const [draftStartMs, setDraftStartMs] = useState<number | null>(null);
   const [currentTimeMs, setCurrentTimeMs] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
+  const [isPublishing, setIsPublishing] = useState(false);
+  const [progress, setProgress] = useState(0);
 
   const player = useVideoPlayer(videoAsset?.uri ?? null, (p) => {
     p.loop = false;
@@ -42,8 +65,10 @@ export default function SyncSubtitlesScreen() {
   useEffect(() => {
     if (!videoAsset) {
       router.replace('/(tabs)/create');
+    } else if (!title.trim()) {
+      router.replace('/(tabs)/create/details');
     }
-  }, [videoAsset, router]);
+  }, [videoAsset, title, router]);
 
   useEffect(() => {
     player.timeUpdateEventInterval = 0.1;
@@ -120,6 +145,97 @@ export default function SyncSubtitlesScreen() {
     },
     [updateLine]
   );
+
+  const hasTranslations = useMemo(() => lines.some((l) => l.translation.trim().length > 0), [lines]);
+
+  const handlePublish = useCallback(async () => {
+    if (!videoAsset || !languageId) return;
+    if (hasTranslations && !translationLanguageId) {
+      Alert.alert('Pick a translation language', 'Some lines have a translation - go back and choose which language it is in.');
+      return;
+    }
+
+    setIsPublishing(true);
+    setProgress(0);
+
+    try {
+      const response = await createReel(
+        {
+          video: videoAsset,
+          title: title.trim(),
+          description: description.trim(),
+          languageId,
+          translationLanguageId: hasTranslations ? translationLanguageId : null,
+          lines,
+        },
+        (event: any) => {
+          if (event?.total) {
+            setProgress(event.loaded / event.total);
+          }
+        }
+      );
+
+      const subtitleLanguage = LANGUAGE_OPTIONS.find((l) => l.id === languageId);
+
+      const optimisticReel: Reel = {
+        id: response.reel.id,
+        url: response.reel.url,
+        thumbnail_url: response.reel.thumbnail_url || '',
+        title: response.reel.title,
+        duration: response.reel.duration,
+        created_at: response.reel.created_at,
+        language: {
+          id: languageId,
+          code: subtitleLanguage?.code || '',
+          name: subtitleLanguage?.name || '',
+        },
+        created_by: {
+          id: userProfile?.id,
+          username: userProfile?.username,
+          profile_picture: userProfile?.profile_picture,
+        },
+        stats: { views: 0, likes: 0, comments: 0, saves: 0 },
+        user_interaction: {
+          viewed_at: new Date().toISOString(),
+          is_liked: false,
+          is_saved: false,
+          is_shared: false,
+          comment: null,
+        },
+        dialogue: {
+          id: response.reel.dialogue_id,
+          created_at: response.reel.created_at,
+          sentences: lines.map((line, index) => ({
+            id: -(index + 1),
+            position: index + 1,
+            start_time_ms: line.start_time_ms,
+            end_time_ms: line.end_time_ms,
+            text: line.text,
+            normalized_text: line.text,
+            translation: line.translation,
+            tokens: [],
+          })),
+        },
+      };
+
+      prependReel(optimisticReel);
+      reset();
+      router.replace('/(tabs)/reels');
+    } catch (error: any) {
+      Alert.alert('Publish failed', error.message || 'Something went wrong. Please try again.');
+    } finally {
+      setIsPublishing(false);
+    }
+  }, [videoAsset, languageId, translationLanguageId, hasTranslations, title, description, lines, userProfile, prependReel, reset, router]);
+
+  const handlePressPublish = useCallback(() => {
+    const hasInvalid = lines.some((l) => l.end_time_ms <= l.start_time_ms || !l.text.trim());
+    if (hasInvalid) {
+      Alert.alert('Fix line timings', 'Every line needs text and an end time after its start time.');
+      return;
+    }
+    handlePublish();
+  }, [lines, handlePublish]);
 
   if (!videoAsset) return null;
 
@@ -256,21 +372,18 @@ export default function SyncSubtitlesScreen() {
           />
 
           <View style={styles.row}>
-            <Pressable style={styles.secondaryButton} onPress={() => setPhase('record')}>
+            <Pressable style={styles.secondaryButton} onPress={() => setPhase('record')} disabled={isPublishing}>
               <Text style={styles.secondaryButtonText}>Add Another Line</Text>
             </Pressable>
-            <Pressable
-              style={styles.primaryButton}
-              onPress={() => {
-                const hasInvalid = lines.some((l) => l.end_time_ms <= l.start_time_ms || !l.text.trim());
-                if (hasInvalid) {
-                  Alert.alert('Fix line timings', 'Every line needs text and an end time after its start time.');
-                  return;
-                }
-                router.push('/(tabs)/create/details');
-              }}
-            >
-              <Text style={styles.primaryButtonText}>Continue</Text>
+            <Pressable style={styles.primaryButton} onPress={handlePressPublish} disabled={isPublishing}>
+              {isPublishing ? (
+                <View style={styles.publishingRow}>
+                  <ActivityIndicator color="#fff" />
+                  <Text style={styles.primaryButtonText}>{Math.round(progress * 100)}%</Text>
+                </View>
+              ) : (
+                <Text style={styles.primaryButtonText}>Publish</Text>
+              )}
             </Pressable>
           </View>
         </View>
@@ -365,4 +478,5 @@ const styles = StyleSheet.create({
   nudgeButtonText: { fontSize: 11 },
   errorText: { color: '#c0392b', fontSize: 12, marginTop: 6 },
   deleteRowButton: { position: 'absolute', top: 10, right: 10 },
+  publishingRow: { flexDirection: 'row', alignItems: 'center', gap: 8 },
 });

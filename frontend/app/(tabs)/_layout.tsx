@@ -54,6 +54,7 @@ export default function TabLayout() {
         name="create"
         options={{
           title: 'Create',
+          headerShown: false,
           tabBarIcon: ({ color }) => <TabBarIcon name="plus-circle" color={color} />,
         }}
       />

@@ -57,7 +57,7 @@ export default function CreatePickVideoScreen() {
         fileName: asset.fileName ?? null,
       });
 
-      router.push('/(tabs)/create/sync-subtitles');
+      router.push('/(tabs)/create/details');
     } catch (error) {
       console.error('Pick video error:', error);
       Alert.alert('Something went wrong', 'Could not pick a video. Please try again.');

@@ -14,8 +14,8 @@ export default function CreateLayout() {
         }}
       >
         <Stack.Screen name="index" options={{ title: 'Create' }} />
-        <Stack.Screen name="sync-subtitles" options={{ title: 'Sync Subtitles' }} />
-        <Stack.Screen name="details" options={{ title: 'Publish' }} />
+        <Stack.Screen name="details" options={{ title: 'Details' }} />
+        <Stack.Screen name="sync-subtitles" options={{ title: 'Sync & Publish' }} />
       </Stack>
     </CreateReelWizardProvider>
   );
