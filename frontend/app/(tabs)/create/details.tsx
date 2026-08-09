@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
-import { View, Text, StyleSheet, TextInput, Pressable, ScrollView, Alert, BackHandler } from 'react-native';
-import { useRouter } from 'expo-router';
+import { View, Text, StyleSheet, TextInput, Pressable, ScrollView, Alert } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { useNavigation, useRouter } from 'expo-router';
 import { useVideoPlayer, VideoView } from 'expo-video';
 import { FontAwesome } from '@expo/vector-icons';
 import { useColorScheme } from '@/components/useColorScheme';
@@ -19,6 +20,7 @@ const formatMs = (ms: number) => {
 export default function CreateDetailsScreen() {
   const isDark = useColorScheme() === 'dark';
   const router = useRouter();
+  const navigation = useNavigation();
   const {
     videoAsset,
     languageId,
@@ -95,15 +97,30 @@ export default function CreateDetailsScreen() {
       Alert.alert('Add a title', 'Give your reel a title before continuing.');
       return;
     }
+    player.pause();
     router.push('/(tabs)/create/sync-subtitles');
-  }, [title, router]);
+  }, [title, router, player]);
+
+  useEffect(() => {
+    const sub = navigation.addListener('beforeRemove', (e) => {
+      e.preventDefault();
+      Alert.alert('Discard changes?', "You'll lose what you've entered so far.", [
+        { text: 'Keep Editing', style: 'cancel' },
+        { text: 'Discard', style: 'destructive', onPress: () => navigation.dispatch(e.data.action) },
+      ]);
+    });
+    return sub;
+  }, [navigation]);
 
   if (!videoAsset) return null;
 
   return (
-    <>
+    <SafeAreaView
+      edges={['bottom']}
+      style={[styles.container, isDark && { backgroundColor: DARK_COLORS.background }]}
+    >
       <ScrollView
-        style={[styles.container, isDark && { backgroundColor: DARK_COLORS.background }]}
+        style={styles.scrollView}
         contentContainerStyle={styles.scrollContent}
       >
         <View style={styles.videoWrapper}>
@@ -158,12 +175,13 @@ export default function CreateDetailsScreen() {
           </Pressable>
         </View>
       </ScrollView>
-    </>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: '#fff' },
+  scrollView: { flex: 1 },
   videoWrapper: { height: 260, backgroundColor: '#000' },
   video: { flex: 1 },
   playOverlay: {

@@ -3,6 +3,7 @@ import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { Tabs } from 'expo-router';
 import { Link } from 'expo-router';
 import { Pressable } from 'react-native';
+import { getFocusedRouteNameFromRoute } from '@react-navigation/native';
 
 import Colors from '@/constants/Colors';
 import { useColorScheme } from '@/components/useColorScheme';
@@ -52,10 +53,16 @@ export default function TabLayout() {
       />
       <Tabs.Screen
         name="create"
-        options={{
-          title: 'Create',
-          headerShown: false,
-          tabBarIcon: ({ color }) => <TabBarIcon name="plus-circle" color={color} />,
+        options={({ route }) => {
+          const focusedRouteName = getFocusedRouteNameFromRoute(route) ?? 'index';
+          return {
+            title: 'Create',
+            headerShown: false,
+            tabBarIcon: ({ color }) => <TabBarIcon name="plus-circle" color={color} />,
+            tabBarStyle: focusedRouteName === 'index'
+              ? { backgroundColor: PRIMARY_COLOR }
+              : { display: 'none' },
+          };
         }}
       />
       <Tabs.Screen

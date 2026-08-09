@@ -11,6 +11,7 @@ import {
   Platform,
   ActivityIndicator,
 } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
 import { useVideoPlayer, VideoView } from 'expo-video';
 import { FontAwesome } from '@expo/vector-icons';
@@ -240,7 +241,7 @@ export default function SyncSubtitlesScreen() {
   if (!videoAsset) return null;
 
   return (
-    <View style={[styles.container, isDark && { backgroundColor: DARK_COLORS.background }]}>
+    <SafeAreaView edges={['bottom']} style={[styles.container, isDark && { backgroundColor: DARK_COLORS.background }]}>
       <View style={styles.videoWrapper}>
         <VideoView player={player} style={styles.video} contentFit="contain" nativeControls={false} />
         <Pressable style={styles.playOverlay} onPress={handleTogglePlay}>
@@ -388,7 +389,7 @@ export default function SyncSubtitlesScreen() {
           </View>
         </View>
       )}
-    </View>
+    </SafeAreaView>
   );
 }
 
