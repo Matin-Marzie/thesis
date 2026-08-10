@@ -1,5 +1,6 @@
 import React from 'react';
-import { View, Text, StyleSheet, Pressable, TextInput, KeyboardAvoidingView, Platform } from 'react-native';
+import { View, Text, StyleSheet, Pressable, TextInput, KeyboardAvoidingView, Platform, Keyboard } from 'react-native';
+import { FontAwesome } from '@expo/vector-icons';
 import { DARK_COLORS, PRIMARY_COLOR } from '@/constants/App';
 import { formatMs } from './formatMs';
 
@@ -11,8 +12,11 @@ interface SubtitleRecordPanelProps {
   draftTranslation: string;
   onChangeDraftTranslation: (text: string) => void;
   draftStartMs: number | null;
+  draftEndMs: number | null;
   onMarkStart: () => void;
   onMarkEnd: () => void;
+  onRestartRecording: () => void;
+  onAddLine: () => void;
   onUndoLast: () => void;
   onReview: () => void;
 }
@@ -25,67 +29,108 @@ export function SubtitleRecordPanel({
   draftTranslation,
   onChangeDraftTranslation,
   draftStartMs,
+  draftEndMs,
   onMarkStart,
   onMarkEnd,
+  onRestartRecording,
+  onAddLine,
   onUndoLast,
   onReview,
 }: SubtitleRecordPanelProps) {
+  const canAddLine = draftStartMs !== null && draftEndMs !== null && draftEndMs > draftStartMs;
   return (
     <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : undefined} style={styles.recordPanel}>
-      <Text style={[styles.sectionLabel, isDark && { color: DARK_COLORS.textSecondary }]}>
-        {lineCount} line{lineCount === 1 ? '' : 's'} captured
-      </Text>
-
-      <TextInput
-        style={[styles.input, isDark && styles.inputDark]}
-        placeholder="Subtitle text"
-        placeholderTextColor={isDark ? DARK_COLORS.textMuted : '#999'}
-        value={draftText}
-        onChangeText={onChangeDraftText}
-        multiline
-      />
-      <TextInput
-        style={[styles.input, isDark && styles.inputDark]}
-        placeholder="Translation (optional)"
-        placeholderTextColor={isDark ? DARK_COLORS.textMuted : '#999'}
-        value={draftTranslation}
-        onChangeText={onChangeDraftTranslation}
-        multiline
-      />
-
-      {draftStartMs === null ? (
-        <Pressable style={styles.primaryButton} onPress={onMarkStart}>
-          <Text style={styles.primaryButtonText}>Mark Start</Text>
-        </Pressable>
-      ) : (
+      {/* we wrap the content in a pressable area to dismiss the keyboard when tapping outside of text inputs */}
+      <Pressable style={[styles.dismissArea, styles.spaceBetween]} onPress={Keyboard.dismiss}>
         <View>
-          <Text style={[styles.hint, isDark && { color: DARK_COLORS.textMuted }]}>
-            Start marked at {formatMs(draftStartMs)} — keep playing, then mark the end.
+          <Text style={[styles.sectionLabel, isDark && { color: DARK_COLORS.textSecondary }]}>
+            {lineCount} line{lineCount === 1 ? '' : 's'} captured
           </Text>
-          <Pressable style={styles.primaryButton} onPress={onMarkEnd}>
-            <Text style={styles.primaryButtonText}>Mark End &amp; Add Line</Text>
+
+          <TextInput
+            style={[styles.input, isDark && styles.inputDark]}
+            placeholder="Subtitle text"
+            placeholderTextColor={isDark ? DARK_COLORS.textMuted : '#999'}
+            value={draftText}
+            onChangeText={onChangeDraftText}
+            multiline
+          />
+          <TextInput
+            style={[styles.input, isDark && styles.inputDark]}
+            placeholder="Translation (optional)"
+            placeholderTextColor={isDark ? DARK_COLORS.textMuted : '#999'}
+            value={draftTranslation}
+            onChangeText={onChangeDraftTranslation}
+            multiline
+          />
+
+          <View style={{ flexDirection: 'row' }}>
+            <TextInput
+              value={draftStartMs !== null ? formatMs(draftStartMs) : ''}
+              placeholder="Start time"
+              placeholderTextColor={isDark ? DARK_COLORS.textMuted : '#999'}
+              editable={false}
+              style={[styles.input, isDark && styles.inputDark]}
+            />
+            <TextInput
+              value={draftEndMs !== null ? formatMs(draftEndMs) : ''}
+              placeholder="End time"
+              placeholderTextColor={isDark ? DARK_COLORS.textMuted : '#999'}
+              editable={false}
+              style={[styles.input, isDark && styles.inputDark]}
+            />
+          </View>
+
+          <View style={styles.markRow}>
+            {draftStartMs === null ? (
+              <Pressable style={[styles.primaryButton, styles.grow]} onPress={onMarkStart}>
+                <Text style={styles.primaryButtonText}>Mark Start</Text>
+              </Pressable>
+            ) : (
+              <View style={styles.grow}>
+                <Pressable style={styles.primaryButton} onPress={onMarkEnd}>
+                  <Text style={styles.primaryButtonText}>Mark End</Text>
+                </Pressable>
+              </View>
+            )}
+
+
+            <Pressable style={styles.restartButton} onPress={onRestartRecording}>
+              <FontAwesome name="rotate-left" size={16} color={'#fff'} />
+            </Pressable>
+
+          </View>
+
+          <Pressable
+            style={[styles.primaryButton, { marginTop: 10 }, !canAddLine && styles.disabledButton]}
+            onPress={onAddLine}
+            disabled={!canAddLine}
+          >
+            <Text style={styles.primaryButtonText}>Add Line</Text>
           </Pressable>
         </View>
-      )}
 
-      <View style={styles.row}>
-        <Pressable style={styles.secondaryButton} onPress={onUndoLast} disabled={!lineCount}>
-          <Text style={[styles.secondaryButtonText, !lineCount && styles.disabledText]}>Undo Last Line</Text>
-        </Pressable>
-        <Pressable
-          style={[styles.secondaryButton, !lineCount && styles.disabledButton]}
-          onPress={onReview}
-          disabled={!lineCount}
-        >
-          <Text style={[styles.secondaryButtonText, !lineCount && styles.disabledText]}>Review &amp; Finish</Text>
-        </Pressable>
-      </View>
+        <View style={styles.row}>
+          <Pressable style={styles.secondaryButton} onPress={onUndoLast} disabled={!lineCount}>
+            <Text style={[styles.secondaryButtonText, !lineCount && styles.disabledText]}>Undo Last Line</Text>
+          </Pressable>
+          <Pressable
+            style={[styles.secondaryButton, !lineCount && styles.disabledButton]}
+            onPress={onReview}
+            disabled={!lineCount}
+          >
+            <Text style={[styles.secondaryButtonText, !lineCount && styles.disabledText]}>Review &amp; Finish</Text>
+          </Pressable>
+        </View>
+      </Pressable>
     </KeyboardAvoidingView>
   );
 }
 
 const styles = StyleSheet.create({
   recordPanel: { flex: 1, padding: 16 },
+  dismissArea: { flex: 1 },
+  spaceBetween: { justifyContent: 'space-between' },
   sectionLabel: { fontSize: 13, color: '#666', marginBottom: 8 },
   input: {
     borderWidth: 1,
@@ -102,12 +147,21 @@ const styles = StyleSheet.create({
     backgroundColor: DARK_COLORS.surface,
   },
   hint: { fontSize: 12, color: '#666', marginBottom: 8 },
+  markRow: { flexDirection: 'row', alignItems: 'center', gap: 10 },
+  grow: { flex: 1 },
+  restartButton: {
+    width: 44,
+    height: 44,
+    borderRadius: 22,
+    backgroundColor: PRIMARY_COLOR,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
   primaryButton: {
     backgroundColor: PRIMARY_COLOR,
     paddingVertical: 12,
     borderRadius: 20,
     alignItems: 'center',
-    flex: 1,
   },
   primaryButtonText: { color: '#fff', fontWeight: 'bold' },
   secondaryButton: {

@@ -40,6 +40,7 @@ export default function SyncSubtitlesScreen() {
   const [draftText, setDraftText] = useState('');
   const [draftTranslation, setDraftTranslation] = useState('');
   const [draftStartMs, setDraftStartMs] = useState<number | null>(null);
+  const [draftEndMs, setDraftEndMs] = useState<number | null>(null);
   const [currentTimeMs, setCurrentTimeMs] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
   const [isPublishing, setIsPublishing] = useState(false);
@@ -77,31 +78,51 @@ export default function SyncSubtitlesScreen() {
     }
   }, [isPlaying, player]);
 
+  const handleRestartRecording = useCallback(() => {
+    setDraftStartMs(null);
+    setDraftEndMs(null);
+  }, []);
+
   const handleMarkStart = useCallback(() => {
     setDraftStartMs(Math.round(player.currentTime * 1000));
+    player.play();
   }, [player]);
 
   const handleMarkEnd = useCallback(() => {
-    const endMs = Math.round(player.currentTime * 1000);
-    if (draftStartMs === null) return;
+    if (isPlaying) {
+      setDraftEndMs(Math.round(player.currentTime * 1000));
+      player.pause();
+    } else {
+      player.play();
+    }
+  }, [player, isPlaying]);
+  
+  const handleAddLine = useCallback(() => {
     if (!draftText.trim()) {
       Alert.alert('Add text', 'Type the subtitle text for this line before marking its end.');
       return;
     }
-    if (endMs <= draftStartMs) {
+    if (draftStartMs === null || draftEndMs === null) {
+      Alert.alert('Mark start and end', 'Mark the start and end of this line before adding it.');
+      return;
+    }
+    if (draftEndMs <= draftStartMs) {
       Alert.alert('Invalid timing', 'The end of a line must come after its start. Keep the video playing forward before marking the end.');
       return;
     }
+
     addLine({
       text: draftText.trim(),
       translation: draftTranslation.trim(),
       start_time_ms: draftStartMs,
-      end_time_ms: endMs,
+      end_time_ms: draftEndMs,
     });
     setDraftText('');
     setDraftTranslation('');
     setDraftStartMs(null);
-  }, [addLine, draftStartMs, draftText, draftTranslation, player]);
+    setDraftEndMs(null);
+  }, [addLine, draftText, draftTranslation, draftStartMs, draftEndMs]);
+
 
   const handleUndoLast = useCallback(() => {
     const last = lines[lines.length - 1];
@@ -252,8 +273,11 @@ export default function SyncSubtitlesScreen() {
           draftTranslation={draftTranslation}
           onChangeDraftTranslation={setDraftTranslation}
           draftStartMs={draftStartMs}
+          draftEndMs={draftEndMs}
           onMarkStart={handleMarkStart}
           onMarkEnd={handleMarkEnd}
+          onRestartRecording={handleRestartRecording}
+          onAddLine={handleAddLine}
           onUndoLast={handleUndoLast}
           onReview={() => setPhase('review')}
         />
