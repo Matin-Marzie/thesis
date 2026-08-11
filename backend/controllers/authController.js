@@ -109,7 +109,7 @@ const authController = async (req, res) => {
     );
 
     // Latest reels created by this user, for the profile screen's preview
-    const user_reels_in_db = await reelModel.getLatestByUser(user.id, 6);
+    const user_reels_in_db = await reelModel.getLatestByUser(user.id, 9);
 
     // Log login
     logEvents(`User logged in: ${user.username}`, 'authLog.log');

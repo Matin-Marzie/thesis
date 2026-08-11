@@ -1,7 +1,6 @@
 import { createContext, useContext, useCallback, useMemo } from 'react';
 import { usePersistedState } from '../hooks/usePersistedState';
 import { DEFAULT_USER_REELS, STORAGE_KEYS, validators } from '../constants/defaults';
-import { USER_REELS_PREVIEW_LIMIT } from '../constants/Reels';
 
 /**
  * @typedef {Object} UserReelsContextType
@@ -22,9 +21,9 @@ export const UserReelsProvider = ({ children }) => {
   } = usePersistedState(STORAGE_KEYS.USER_REELS, DEFAULT_USER_REELS, validators.userReels);
 
   // Optimistically add a just-published reel to the front of the local
-  // preview list, without waiting for the next login's fetch to surface it.
+  // list, without waiting for the next login's fetch to surface it.
   const prependUserReel = useCallback((reel) => {
-    setUserReels((prev) => [reel, ...prev.filter((r) => r.id !== reel.id)].slice(0, USER_REELS_PREVIEW_LIMIT));
+    setUserReels((prev) => [reel, ...prev.filter((r) => r.id !== reel.id)]);
   }, [setUserReels]);
 
   const value = useMemo(() => ({
