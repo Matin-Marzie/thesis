@@ -20326,7 +20326,7 @@ ALTER TABLE ONLY public.reel_interactions
 --
 
 ALTER TABLE ONLY public.reels
-    ADD CONSTRAINT reels_created_by_fkey FOREIGN KEY (created_by) REFERENCES public.users(id) ON UPDATE CASCADE ON DELETE SET NULL;
+    ADD CONSTRAINT reels_created_by_fkey FOREIGN KEY (created_by) REFERENCES public.users(id) ON UPDATE CASCADE ON DELETE CASCADE;
 
 
 --

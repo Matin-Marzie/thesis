@@ -37,7 +37,7 @@ const reelController = {
         throw { status: 400, message: error.details[0].message };
       }
 
-      const url = `http://localhost:3500/static/uploads/reels/${req.file.filename}`;
+      const url = `http://localhost:3500/static/uploads/reels/${req.user.id}/${req.file.filename}`;
 
       const reel = await reelModel.createWithDialogue({
         createdBy: req.user.id,

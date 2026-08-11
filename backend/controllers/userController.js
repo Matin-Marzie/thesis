@@ -1,8 +1,11 @@
+import fs from 'fs/promises';
+import path from 'path';
 import UserProfileSchema from '../validation/UserProfileSchema.js';
 import usersModel from '../models/usersModel.js';
 import userLanguagesModel from '../models/userLanguagesModel.js';
 import userVocabularyModel from '../models/userVocabularyModel.js';
 import { logEvents } from '../middleware/logEvents.js';
+import { REEL_UPLOAD_DIR } from '../middleware/uploadReelVideo.js';
 
 
 const userController = {
@@ -73,6 +76,11 @@ const userController = {
           message: 'User not found',
         });
       }
+
+      // Reel rows/dialogue/vocabulary etc. are gone via ON DELETE CASCADE,
+      // but the uploaded video files on disk aren't DB rows - remove the
+      // user's whole reel folder now that nothing references it.
+      await fs.rm(path.join(REEL_UPLOAD_DIR, String(userId)), { recursive: true, force: true });
 
       logEvents(`User deleted account: ${deletedUser.email}`, 'authLog.log');
 

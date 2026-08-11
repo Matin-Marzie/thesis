@@ -118,7 +118,10 @@ const usersModel = {
 
 
   // Permanently delete a user (hard delete). Related rows (user_languages,
-  // user_vocabulary, reel_interactions, ...) are removed via ON DELETE CASCADE.
+  // user_vocabulary, reels, reel_interactions, ...) are removed via ON
+  // DELETE CASCADE. The user's uploaded reel video files on disk are NOT
+  // covered by this - caller is responsible for removing
+  // uploads/reels/{userId}/ after this resolves.
   async delete(userId) {
     const query = 'DELETE FROM users WHERE id = $1 RETURNING id, email';
     const result = await pool.query(query, [userId]);

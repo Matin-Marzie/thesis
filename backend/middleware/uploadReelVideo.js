@@ -1,4 +1,5 @@
 import multer from 'multer';
+import fs from 'fs';
 import path from 'path';
 import crypto from 'crypto';
 import { fileURLToPath } from 'url';
@@ -10,10 +11,15 @@ export const REEL_UPLOAD_DIR = path.join(__dirname, '..', 'public', 'uploads', '
 export const MAX_REEL_FILE_SIZE_BYTES = 100 * 1024 * 1024; // 100MB
 
 const storage = multer.diskStorage({
-  destination: (req, file, cb) => cb(null, REEL_UPLOAD_DIR),
+  // Reels are grouped under a per-user folder (keyed by the immutable userId) so a user's uploads can be bulk-deleted/inspected
+  // without scanning the whole reels directory. multer doesn't create destination dirs itself, so it's made here on demand.
+  destination: (req, file, cb) => {
+    const userDir = path.join(REEL_UPLOAD_DIR, String(req.user.id));
+    fs.mkdir(userDir, { recursive: true }, (err) => cb(err, userDir));
+  },
   filename: (req, file, cb) => {
     const ext = path.extname(file.originalname) || '.mp4';
-    cb(null, `${req.user.id}-${Date.now()}-${crypto.randomUUID()}${ext}`);
+    cb(null, `${Date.now()}-${crypto.randomUUID()}${ext}`);
   },
 });
 
