@@ -1,6 +1,7 @@
 import React, { forwardRef, useCallback, useEffect, useMemo, useState } from 'react';
 import { View, Text, StyleSheet, BackHandler } from 'react-native';
 import { BottomSheetModal, BottomSheetView } from '@gorhom/bottom-sheet';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { useColorScheme } from '@/components/useColorScheme';
 import { DARK_COLORS } from '@/constants/App';
 
@@ -55,8 +56,10 @@ const FilterBottomSheetModal = forwardRef<BottomSheetModal, FilterBottomSheetMod
                 handleIndicatorStyle={isDark ? { backgroundColor: DARK_COLORS.border } : undefined}
             >
                 <BottomSheetView style={styles.contentContainer}>
-                    <Text style={[styles.title, isDark && { color: DARK_COLORS.text }]}>Filter Words</Text>
-                    <Text style={[styles.text, isDark && { color: DARK_COLORS.textSecondary }]}>Filter options coming soon...</Text>
+                    <SafeAreaView edges={['bottom']} style={styles.safeArea}>
+                        <Text style={[styles.title, isDark && { color: DARK_COLORS.text }]}>Filter Words</Text>
+                        <Text style={[styles.text, isDark && { color: DARK_COLORS.textSecondary }]}>Filter options coming soon...</Text>
+                    </SafeAreaView>
                 </BottomSheetView>
             </BottomSheetModal>
         );
@@ -71,6 +74,9 @@ const styles = StyleSheet.create({
     contentContainer: {
         flex: 1,
         padding: 20,
+    },
+    safeArea: {
+        flex: 1,
         alignItems: 'center',
     },
     title: {

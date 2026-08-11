@@ -7,13 +7,17 @@ import {
   StyleSheet,
   Dimensions,
   Platform,
+  Alert,
 } from 'react-native';
 import { useIsFocused } from '@react-navigation/native';
 import { FontAwesome } from '@expo/vector-icons';
+import type { BottomSheetModal } from '@gorhom/bottom-sheet';
 import { useReelsContext } from '@/context/ReelsContext';
 import { PRIMARY_COLOR } from '@/constants/App';
 import { ReelItem } from './ReelItem';
+import { ReelActionsBottomSheetModal } from './ReelActionsBottomSheetModal';
 import TouchableOpacity from '@/components/TouchableOpacity';
+import type { Reel } from '@/types/dialogue';
 
 const { height: SCREEN_HEIGHT } = Dimensions.get('window');
 
@@ -45,6 +49,52 @@ export function ReelsList({ onRetry }: ReelsListProps) {
     { viewabilityConfig, onViewableItemsChanged },
   ]).current;
 
+  const [optionsReel, setOptionsReel] = useState<Reel | null>(null);
+  // Overrides the reel's own user_interaction.is_saved once the user toggles
+  // it locally, so a reel that started pre-saved can be un-saved too.
+  const [savedOverrides, setSavedOverrides] = useState<Map<string, boolean>>(new Map());
+  const reelActionsSheetRef = useRef<BottomSheetModal>(null);
+
+  const handleMoreOptions = useCallback((reel: Reel) => {
+    setOptionsReel(reel);
+    reelActionsSheetRef.current?.present();
+  }, []);
+
+  const handleToggleSave = useCallback((reel: Reel) => {
+    // TODO: persist the save/unsave to the backend once the endpoint exists.
+    setSavedOverrides((prev) => {
+      const key = reel.id.toString();
+      const current = prev.has(key) ? prev.get(key)! : !!reel.user_interaction?.is_saved;
+      const next = new Map(prev);
+      next.set(key, !current);
+      return next;
+    });
+  }, []);
+
+  const handleReport = useCallback((reel: Reel) => {
+    Alert.alert(
+      'Report reel?',
+      'Let us know this reel violates our guidelines.',
+      [
+        { text: 'Cancel', style: 'cancel' },
+        {
+          text: 'Report',
+          style: 'destructive',
+          onPress: () => {
+            // TODO: call the backend report endpoint once it's available.
+            console.log('Report reel', reel.id);
+          },
+        },
+      ]
+    );
+  }, []);
+
+  const isOptionsReelSaved = !!optionsReel && (
+    savedOverrides.has(optionsReel.id.toString())
+      ? savedOverrides.get(optionsReel.id.toString())!
+      : !!optionsReel.user_interaction?.is_saved
+  );
+
   // Fetch the next page when the user approaches the end of the list
   const handleEndReached = useCallback(() => {
     if (!isFetchingMore && hasMore) {
@@ -59,9 +109,10 @@ export function ReelsList({ onRetry }: ReelsListProps) {
         item={item}
         isActive={index === activeIndex}
         isScreenFocused={isFocused}
+        onMoreOptions={handleMoreOptions}
       />
     ),
-    [activeIndex, isFocused]
+    [activeIndex, isFocused, handleMoreOptions]
   );
 
   const keyExtractor = useCallback((item: any) => item.id.toString(), []);
@@ -129,6 +180,14 @@ export function ReelsList({ onRetry }: ReelsListProps) {
         removeClippedSubviews={Platform.OS === 'android'}
         bounces={false}
         overScrollMode="never"
+      />
+
+      <ReelActionsBottomSheetModal
+        ref={reelActionsSheetRef}
+        reel={optionsReel}
+        isSaved={isOptionsReelSaved}
+        onToggleSave={handleToggleSave}
+        onReport={handleReport}
       />
     </View>
   );

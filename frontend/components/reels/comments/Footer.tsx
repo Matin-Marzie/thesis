@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from 'react';
-import { StyleSheet, Image, TextInput, Text } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { StyleSheet, Image, TextInput, Text, View } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import TouchableOpacity from '@/components/TouchableOpacity';
 
 interface FooterProps {
@@ -10,6 +10,7 @@ interface FooterProps {
 // Owns its own text state so the BottomSheetModal's footerComponent stays stable
 export const Footer = React.memo(function Footer({ onSend }: FooterProps) {
   const [text, setText] = useState('');
+  const insets = useSafeAreaInsets();
 
   const handleSend = useCallback(() => {
     if (!text.trim()) return;
@@ -18,7 +19,7 @@ export const Footer = React.memo(function Footer({ onSend }: FooterProps) {
   }, [text, onSend]);
 
   return (
-    <SafeAreaView edges={['bottom']} style={styles.inputBar}>
+    <View style={[styles.inputBar, { paddingBottom: 10 + insets.bottom }]}>
       <Image
         source={{ uri: 'https://i.pravatar.cc/150?img=50' }}
         style={styles.inputAvatar}
@@ -43,7 +44,7 @@ export const Footer = React.memo(function Footer({ onSend }: FooterProps) {
           Post
         </Text>
       </TouchableOpacity>
-    </SafeAreaView>
+    </View>
   );
 });
 
@@ -52,7 +53,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     paddingHorizontal: 12,
-    paddingVertical: 10,
+    paddingTop: 10,
     borderTopWidth: StyleSheet.hairlineWidth,
     borderTopColor: '#333',
     backgroundColor: '#1c1c1e',

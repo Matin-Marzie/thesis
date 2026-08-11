@@ -20,10 +20,13 @@ interface ReelActionsProps {
 }
 
 // Compact number formatter: 1200 → "1.2K", 1500000 → "1.5M"
+// Returns '' for a zero/missing count so the label hides while its Text
+// element still reserves its line height, keeping icon spacing consistent.
 const formatCount = (count: number): string => {
+  if (!count) return '';
   if (count >= 1_000_000) return (count / 1_000_000).toFixed(1) + 'M';
   if (count >= 1_000) return (count / 1_000).toFixed(1) + 'K';
-  return count?.toString() || '0';
+  return count.toString();
 };
 
 // Right-side vertical action bar (like, comment, share, dialogue, more)
@@ -54,11 +57,12 @@ export const ReelActions = React.memo(
         <Text style={styles.actionText}>{formatCount(likesCount)}</Text>
       </TouchableOpacity>
 
-      {/* Comment */}
+      {/* Comment — temporarily disabled
       <TouchableOpacity style={styles.actionButton} onPress={onComment}>
         <FontAwesome name="comment-o" size={28} color="#fff" />
         <Text style={styles.actionText}>{formatCount(commentsCount)}</Text>
       </TouchableOpacity>
+      */}
 
       {/* Share */}
       <TouchableOpacity style={[styles.actionButton, { paddingHorizontal: 7 }]} onPress={onShare}>

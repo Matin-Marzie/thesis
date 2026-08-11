@@ -1,17 +1,13 @@
 import React, { useCallback } from 'react';
-import { View, Text, Image, StyleSheet, Platform, Share } from 'react-native';
-import {
-  useSharedValue,
-  useAnimatedStyle,
-  withSpring,
-} from 'react-native-reanimated';
-import Animated from 'react-native-reanimated';
+import { View, Text, Image, StyleSheet, Platform, Share, StyleProp, ViewStyle } from 'react-native';
+import Animated, { AnimatedStyle } from 'react-native-reanimated';
 import { ReelActions } from './RightSideActionBar';
 
 interface ReelOverlayProps {
   item: any;
   isLiked: boolean;
   hasDialogue: boolean;
+  animatedLikeStyle: StyleProp<AnimatedStyle<StyleProp<ViewStyle>>>;
   onLike: () => void;
   onComment: () => void;
   onDialogue: () => void;
@@ -21,20 +17,7 @@ interface ReelOverlayProps {
 // Translucent overlay rendered on top of the video.
 // Splits into three zones: creator info (top), action bar (right), title + tag (bottom).
 export const ReelOverlay = React.memo(
-  ({ item, isLiked, hasDialogue, onLike, onComment, onDialogue, onMoreOptions }: ReelOverlayProps) => {
-    // Spring animation for the like button
-    const likeScale = useSharedValue(1);
-    const animatedLikeStyle = useAnimatedStyle(() => ({
-      transform: [{ scale: likeScale.value }],
-    }));
-
-    const handleLike = useCallback(() => {
-      likeScale.value = withSpring(1.3, { damping: 2 }, () => {
-        likeScale.value = withSpring(1);
-      });
-      onLike();
-    }, [likeScale, onLike]);
-
+  ({ item, isLiked, hasDialogue, animatedLikeStyle, onLike, onComment, onDialogue, onMoreOptions }: ReelOverlayProps) => {
     const handleShare = useCallback(async () => {
       try {
         const username = item.created_by?.username || 'Unknown';
@@ -80,7 +63,7 @@ export const ReelOverlay = React.memo(
           commentsCount={item.stats?.comments || 0}
           sharesCount={item.stats?.shares || 0}
           animatedLikeStyle={animatedLikeStyle}
-          onLike={handleLike}
+          onLike={onLike}
           onComment={onComment}
           hasDialogue={hasDialogue}
           onDialogue={onDialogue}

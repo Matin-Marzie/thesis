@@ -3,14 +3,16 @@ import {
   View,
   StyleSheet,
   Dimensions,
-  Pressable,
 } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
 import { useVideoPlayer, VideoView } from 'expo-video';
+import { Gesture, GestureDetector } from 'react-native-gesture-handler';
 import Animated, {
   useSharedValue,
   useAnimatedStyle,
   withTiming,
+  withSpring,
+  runOnJS,
 } from 'react-native-reanimated';
 import { fixMediaUrl } from '@/utils/fixMediaUrl';
 import { ReelOverlay } from './overlay/ReelOverlay';
@@ -40,6 +42,17 @@ export const ReelItem = React.memo(
     const animatedPauseIconStyle = useAnimatedStyle(() => ({
       opacity: pauseIconOpacity.value,
     }));
+
+    // Like-button bounce — shared by both the sidebar heart button and double-tap
+    const likeScale = useSharedValue(1);
+    const animatedLikeStyle = useAnimatedStyle(() => ({
+      transform: [{ scale: likeScale.value }],
+    }));
+    const triggerLikeBounce = useCallback(() => {
+      likeScale.value = withSpring(1.3, { damping: 2 }, () => {
+        likeScale.value = withSpring(1);
+      });
+    }, [likeScale]);
 
     // Height of the phantom spacer at the bottom of the flex container.
     // Growing this value pushes videoContainer (flex: 1) upward naturally.
@@ -80,7 +93,33 @@ export const ReelItem = React.memo(
       setIsPaused((prev) => !prev);
     }, []);
 
-    const handleLike = useCallback(() => setIsLiked((prev: boolean) => !prev), []);
+    const handleLike = useCallback(() => {
+      setIsLiked((prev: boolean) => !prev);
+      triggerLikeBounce();
+    }, [triggerLikeBounce]);
+
+    // Double-tap only ever likes (never unlikes) — matches Instagram/TikTok behavior
+    const handleDoubleTapLike = useCallback(() => {
+      setIsLiked(true);
+      triggerLikeBounce();
+    }, [triggerLikeBounce]);
+
+    const singleTap = Gesture.Tap()
+      .maxDuration(250)
+      .onEnd(() => {
+        runOnJS(handleTogglePause)();
+      });
+
+    const doubleTap = Gesture.Tap()
+      .numberOfTaps(2)
+      .maxDelay(250)
+      .onEnd(() => {
+        runOnJS(handleDoubleTapLike)();
+      });
+
+    // Single tap waits for the double tap to fail before toggling pause
+    const tapGesture = Gesture.Exclusive(doubleTap, singleTap);
+
     const handleCommentOpen = useCallback(() => setIsCommentOpen(true), []);
     const handleCommentClose = useCallback(() => setIsCommentOpen(false), []);
     const handleDialogueOpen = useCallback(() => setIsDialogueOpen(true), []);
@@ -110,17 +149,20 @@ export const ReelItem = React.memo(
         {/* Phantom spacer — grows as the comment sheet opens, pushing the video up */}
         <Animated.View style={animatedSpacerStyle} />
 
-        {/* Tap-to-pause layer */}
-        <Pressable style={styles.tapOverlay} onPress={handleTogglePause}>
-          <Animated.View style={[styles.pauseIconContainer, animatedPauseIconStyle]}>
-            <FontAwesome name="pause" size={30} color="rgba(255,255,255,0.85)" />
+        {/* Tap-to-pause / double-tap-to-like layer */}
+        <GestureDetector gesture={tapGesture}>
+          <Animated.View style={styles.tapOverlay}>
+            <Animated.View style={[styles.pauseIconContainer, animatedPauseIconStyle]}>
+              <FontAwesome name="pause" size={30} color="rgba(255,255,255,0.85)" />
+            </Animated.View>
           </Animated.View>
-        </Pressable>
+        </GestureDetector>
 
         <ReelOverlay
           item={item}
           isLiked={isLiked}
           hasDialogue={!!(item.dialogue?.sentences?.length)}
+          animatedLikeStyle={animatedLikeStyle}
           onComment={handleCommentOpen}
           onDialogue={handleDialogueOpen}
           onLike={handleLike}

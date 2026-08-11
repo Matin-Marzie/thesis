@@ -1,11 +1,13 @@
 import React, { useCallback, useMemo, useRef, useState } from 'react';
-import { View, FlatList, StyleSheet, Dimensions, Platform, StatusBar } from 'react-native';
+import { View, FlatList, StyleSheet, Dimensions, Platform, StatusBar, Alert } from 'react-native';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { useIsFocused } from '@react-navigation/native';
 import { FontAwesome } from '@expo/vector-icons';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import type { BottomSheetModal } from '@gorhom/bottom-sheet';
 import { useUserReels } from '@/context/UserReelsContext';
 import { ReelItem } from '@/components/reels/ReelItem';
+import { ReelOptionsBottomSheetModal } from '@/components/profile/ReelOptionsBottomSheetModal';
 import TouchableOpacity from '@/components/TouchableOpacity';
 import type { Reel } from '@/types/dialogue';
 
@@ -41,9 +43,35 @@ export default function ProfileReelScreen() {
     { viewabilityConfig, onViewableItemsChanged },
   ]).current;
 
-  // TODO: wire up the reel-management bottom sheet (edit/delete/etc) here.
+  const [optionsReel, setOptionsReel] = useState<Reel | null>(null);
+  const reelOptionsSheetRef = useRef<BottomSheetModal>(null);
+
   const handleMoreOptions = useCallback((reel: Reel) => {
-    console.log('More options pressed for own reel:', reel.id);
+    setOptionsReel(reel);
+    reelOptionsSheetRef.current?.present();
+  }, []);
+
+  const handleEditTitle = useCallback((reel: Reel) => {
+    // TODO: open the edit-title flow once its design is specified.
+    console.log('Edit title for reel', reel.id);
+  }, []);
+
+  const handleDeleteReel = useCallback((reel: Reel) => {
+    Alert.alert(
+      'Delete reel?',
+      'This will permanently remove the reel from your profile.',
+      [
+        { text: 'Cancel', style: 'cancel' },
+        {
+          text: 'Delete',
+          style: 'destructive',
+          onPress: () => {
+            // TODO: call the backend DELETE endpoint once it's available.
+            console.log('Delete reel', reel.id);
+          },
+        },
+      ]
+    );
   }, []);
 
   const renderItem = useCallback(
@@ -100,6 +128,13 @@ export default function ProfileReelScreen() {
           <FontAwesome name="chevron-left" size={20} color="#fff" />
         </TouchableOpacity>
       </SafeAreaView>
+
+      <ReelOptionsBottomSheetModal
+        ref={reelOptionsSheetRef}
+        reel={optionsReel}
+        onEditTitle={handleEditTitle}
+        onDelete={handleDeleteReel}
+      />
     </View>
   );
 }
