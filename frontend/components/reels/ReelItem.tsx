@@ -25,10 +25,11 @@ interface ReelItemProps {
   item: Reel;
   isActive: boolean;
   isScreenFocused: boolean;
+  onMoreOptions?: (item: Reel) => void;
 }
 
 export const ReelItem = React.memo(
-  ({ item, isActive, isScreenFocused }: ReelItemProps) => {
+  ({ item, isActive, isScreenFocused, onMoreOptions }: ReelItemProps) => {
     const [isLiked, setIsLiked] = useState(item.user_interaction?.is_liked || false);
     const [isCommentOpen, setIsCommentOpen] = useState(false);
     const [isDialogueOpen, setIsDialogueOpen] = useState(false);
@@ -123,6 +124,7 @@ export const ReelItem = React.memo(
           onComment={handleCommentOpen}
           onDialogue={handleDialogueOpen}
           onLike={handleLike}
+          onMoreOptions={onMoreOptions}
         />
 
         <CommentBottomSheetModal

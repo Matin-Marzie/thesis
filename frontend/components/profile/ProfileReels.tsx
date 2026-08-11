@@ -1,9 +1,11 @@
 import React from 'react';
 import { View, Text, StyleSheet, Image } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { useRouter } from 'expo-router';
 import { DARK_COLORS } from '@/constants/App';
 import { fixMediaUrl } from '@/utils/fixMediaUrl';
 import { formatDuration } from '@/utils/formatDuration';
+import TouchableOpacity from '@/components/TouchableOpacity';
 
 interface ProfileReel {
   id: string | number;
@@ -17,6 +19,8 @@ interface ProfileReelsProps {
 }
 
 export function ProfileReels({ isDark, reels }: ProfileReelsProps) {
+  const router = useRouter();
+
   if (!reels?.length) return null;
 
   return (
@@ -24,7 +28,12 @@ export function ProfileReels({ isDark, reels }: ProfileReelsProps) {
       <Text style={[styles.sectionTitle, isDark && { color: DARK_COLORS.text }]}>My Reels</Text>
       <View style={styles.reelsGrid}>
         {reels.map((reel) => (
-          <View key={reel.id} style={[styles.reelTile, isDark && { backgroundColor: DARK_COLORS.surface }]}>
+          <TouchableOpacity
+            key={reel.id}
+            style={[styles.reelTile, isDark && { backgroundColor: DARK_COLORS.surface }]}
+            onPress={() => router.push(`/profileReel/${reel.id}`)}
+            activeOpacity={0.85}
+          >
             {reel.thumbnail_url ? (
               <Image source={{ uri: fixMediaUrl(reel.thumbnail_url) }} style={styles.reelThumbnail} />
             ) : (
@@ -35,7 +44,7 @@ export function ProfileReels({ isDark, reels }: ProfileReelsProps) {
             <View style={styles.reelDurationBadge}>
               <Text style={styles.reelDurationText}>{formatDuration(reel.duration)}</Text>
             </View>
-          </View>
+          </TouchableOpacity>
         ))}
       </View>
     </View>

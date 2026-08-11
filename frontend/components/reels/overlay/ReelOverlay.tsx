@@ -15,12 +15,13 @@ interface ReelOverlayProps {
   onLike: () => void;
   onComment: () => void;
   onDialogue: () => void;
+  onMoreOptions?: (item: any) => void;
 }
 
 // Translucent overlay rendered on top of the video.
 // Splits into three zones: creator info (top), action bar (right), title + tag (bottom).
 export const ReelOverlay = React.memo(
-  ({ item, isLiked, hasDialogue, onLike, onComment, onDialogue }: ReelOverlayProps) => {
+  ({ item, isLiked, hasDialogue, onLike, onComment, onDialogue, onMoreOptions }: ReelOverlayProps) => {
     // Spring animation for the like button
     const likeScale = useSharedValue(1);
     const animatedLikeStyle = useAnimatedStyle(() => ({
@@ -46,8 +47,12 @@ export const ReelOverlay = React.memo(
     }, [item]);
 
     const handleMoreOptions = useCallback(() => {
+      if (onMoreOptions) {
+        onMoreOptions(item);
+        return;
+      }
       console.log('More options pressed for reel:', item.id);
-    }, [item.id]);
+    }, [item, onMoreOptions]);
 
     return (
       <Animated.View style={styles.overlay} pointerEvents="box-none">

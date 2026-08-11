@@ -89,6 +89,7 @@ function RootLayoutNav() {
     const inSettingsScreen = segments[0] === 'settings';
     const inModal = segments[0] === 'modal';
     const inGames = segments[0] === 'games';
+    const inReelScreen = segments[0] === 'profileReel';
     const inLoginOrRegister =
       segments[1] === 'login' ||
       segments[1] === 'register' ||
@@ -105,7 +106,7 @@ function RootLayoutNav() {
     } else {
       // [] Main app — allow access to app (tabs, more, settings, modal, games)
       // Also allow access to login/register for guest users
-      if (!inTabsGroup && !inMoreScreen && !inSettingsScreen && !inModal && !inGames && !inLoginOrRegister) {
+      if (!inTabsGroup && !inMoreScreen && !inSettingsScreen && !inModal && !inGames && !inReelScreen && !inLoginOrRegister) {
         router.replace('/(tabs)');
       }
     }
@@ -181,6 +182,10 @@ function RootLayoutNav() {
         />
         <Stack.Screen
           name="games/wordofwonders"
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="profileReel/[id]"
           options={{ headerShown: false }}
         />
         <Stack.Screen name="modal" options={{ presentation: 'modal' }} />
