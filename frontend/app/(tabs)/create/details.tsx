@@ -1,8 +1,9 @@
 import React, { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
-import { View, Text, StyleSheet, TextInput, Pressable, ScrollView, Alert } from 'react-native';
+import { View, Text, StyleSheet, TextInput, Pressable, ScrollView, Alert, Image } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation, useRouter } from 'expo-router';
 import { useVideoPlayer, VideoView } from 'expo-video';
+import * as ImagePicker from 'expo-image-picker';
 import { FontAwesome } from '@expo/vector-icons';
 import { useColorScheme } from '@/components/useColorScheme';
 import { DARK_COLORS, PRIMARY_COLOR } from '@/constants/App';
@@ -23,6 +24,8 @@ export default function CreateDetailsScreen() {
   const navigation = useNavigation();
   const {
     videoAsset,
+    thumbnailAsset,
+    setThumbnailAsset,
     languageId,
     setLanguageId,
     translationLanguageId,
@@ -61,6 +64,36 @@ export default function CreateDetailsScreen() {
       player.play();
     }
   }, [isPlaying, player]);
+
+  const handlePickThumbnail = useCallback(async () => {
+    const permission = await ImagePicker.requestMediaLibraryPermissionsAsync();
+    if (!permission.granted) {
+      Alert.alert('Permission required', 'Allow access to your photos to choose a cover.');
+      return;
+    }
+
+    const result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ['images'],
+      allowsEditing: true,
+      aspect: [9, 16],
+      quality: 0.8,
+    });
+
+    if (result.canceled || !result.assets?.length) {
+      return;
+    }
+
+    const asset = result.assets[0];
+    setThumbnailAsset({
+      uri: asset.uri,
+      mimeType: asset.mimeType ?? null,
+      fileName: asset.fileName ?? null,
+    });
+  }, [setThumbnailAsset]);
+
+  const handleRemoveThumbnail = useCallback(() => {
+    setThumbnailAsset(null);
+  }, [setThumbnailAsset]);
 
   useEffect(() => {
     if (!videoAsset) {
@@ -152,6 +185,30 @@ export default function CreateDetailsScreen() {
               multiline
             />
 
+            <Text style={[styles.label, isDark && { color: DARK_COLORS.textSecondary }]}>Cover (optional)</Text>
+            <View style={styles.coverRow}>
+              <Pressable
+                style={[styles.coverPreview, isDark && { backgroundColor: DARK_COLORS.surface, borderColor: DARK_COLORS.border }]}
+                onPress={handlePickThumbnail}
+              >
+                {thumbnailAsset ? (
+                  <Image source={{ uri: thumbnailAsset.uri }} style={styles.coverImage} />
+                ) : (
+                  <FontAwesome name="image" size={22} color={isDark ? DARK_COLORS.textSecondary : '#999'} />
+                )}
+              </Pressable>
+              <View style={styles.coverInfo}>
+                <Text style={[styles.coverInfoText, isDark && { color: DARK_COLORS.textSecondary }]}>
+                  {thumbnailAsset
+                    ? "This image will be your reel's cover."
+                    : "We'll grab a frame from your video if you skip this."}
+                </Text>
+                <Pressable onPress={thumbnailAsset ? handleRemoveThumbnail : handlePickThumbnail}>
+                  <Text style={styles.coverActionText}>{thumbnailAsset ? 'Remove' : 'Choose from library'}</Text>
+                </Pressable>
+              </View>
+            </View>
+
             <View style={styles.languageRow}>
               <Text style={[styles.languageRowLabel, isDark && { color: DARK_COLORS.textSecondary }]}>Subtitle language</Text>
               <Text style={[styles.languageRowValue, isDark && { color: DARK_COLORS.text }]}>
@@ -215,6 +272,39 @@ const styles = StyleSheet.create({
     borderColor: DARK_COLORS.border,
     color: DARK_COLORS.text,
     backgroundColor: DARK_COLORS.surface,
+  },
+  coverRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 12,
+  },
+  coverPreview: {
+    width: 64,
+    aspectRatio: 9 / 16,
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: '#ddd',
+    backgroundColor: '#f5f5f5',
+    justifyContent: 'center',
+    alignItems: 'center',
+    overflow: 'hidden',
+  },
+  coverImage: {
+    width: '100%',
+    height: '100%',
+  },
+  coverInfo: {
+    flex: 1,
+    gap: 4,
+  },
+  coverInfoText: {
+    fontSize: 13,
+    color: '#666',
+  },
+  coverActionText: {
+    fontSize: 13,
+    fontWeight: '600',
+    color: PRIMARY_COLOR,
   },
   languageRow: {
     flexDirection: 'row',

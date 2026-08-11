@@ -7,11 +7,13 @@ import { resetSyncState } from './useBackendSync';
 import { useProfile } from '../context/ProfileContext';
 import { useProgress } from '../context/ProgressContext';
 import { useVocabularyContext } from '../context/VocabularyContext';
+import { useUserReels } from '../context/UserReelsContext';
 import { useAuth } from '../context/AuthContext';
 import {
   DEFAULT_USER_PROFILE,
   DEFAULT_USER_PROGRESS,
   DEFAULT_USER_VOCABULARY,
+  DEFAULT_USER_REELS,
   STORAGE_KEYS,
 } from '../constants/defaults';
 import { DEFAULT_VOCABULARY_CHANGES } from './useVocabulary';
@@ -26,6 +28,7 @@ export function useLogout() {
   const { setUserProfile } = useProfile();
   const { setUserProgress } = useProgress();
   const { setUserVocabulary, setVocabularyChanges } = useVocabularyContext();
+  const { setUserReels } = useUserReels();
   const { setIsAuthenticated, setHasCompletedOnboarding, forceSync } = useAuth();
 
   const logout = useCallback(async (clearAllData = false) => {
@@ -56,16 +59,18 @@ export function useLogout() {
       } else {
         await AsyncStorage.removeItem(STORAGE_KEYS.USER_PROFILE);
         await AsyncStorage.removeItem(STORAGE_KEYS.USER_VOCABULARY_CHANGES);
+        await AsyncStorage.removeItem(STORAGE_KEYS.USER_REELS);
         setVocabularyChanges(DEFAULT_VOCABULARY_CHANGES);
       }
 
       setIsAuthenticated(false);
       setHasCompletedOnboarding(false);
       setUserProfile(DEFAULT_USER_PROFILE);
+      setUserReels(DEFAULT_USER_REELS);
     } catch (error) {
       console.error('Logout error:', error);
     }
-  }, [setUserProfile, setUserProgress, setUserVocabulary, setVocabularyChanges, setIsAuthenticated, setHasCompletedOnboarding, forceSync]);
+  }, [setUserProfile, setUserProgress, setUserVocabulary, setVocabularyChanges, setUserReels, setIsAuthenticated, setHasCompletedOnboarding, forceSync]);
 
   const clearAllOfflineData = useCallback(async () => {
     try {

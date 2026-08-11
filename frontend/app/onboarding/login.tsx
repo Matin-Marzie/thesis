@@ -18,6 +18,7 @@ import { PRIMARY_COLOR } from '@/constants/App';
 import { useProfile } from '@/context/ProfileContext';
 import { useProgress } from '@/context/ProgressContext';
 import { useVocabularyContext } from '@/context/VocabularyContext';
+import { useUserReels } from '@/context/UserReelsContext';
 import { useAuth } from '@/context/AuthContext';
 import { VOCABULARY_ACTIONS, DEFAULT_VOCABULARY_CHANGES } from '@/hooks/useVocabulary';
 import { useColorScheme } from '@/components/useColorScheme';
@@ -53,6 +54,7 @@ export default function LoginScreen() {
   const { userProfile, updateUserProfile } = useProfile();
   const { userProgress, setUserProgress } = useProgress();
   const { vocabularyChanges, vocabularyDispatch, setVocabularyChanges } = useVocabularyContext();
+  const { setUserReels } = useUserReels();
   const { setIsAuthenticated, setHasCompletedOnboarding, hasCompletedOnboarding, setPendingGoogleAuth } = useAuth();
   const router = useRouter();
   const colorScheme = useColorScheme();
@@ -141,6 +143,7 @@ export default function LoginScreen() {
             await updateUserProfile(response.data?.user_profile);
             await setUserProgress(response.data?.user_progress);
             vocabularyDispatch({ type: VOCABULARY_ACTIONS.SET, payload: response.data?.user_vocabulary });
+            setUserReels(response.data?.user_reels || []);
           }
           // Overwrite discarded the local session entirely; Merge already
           // applied these changes server-side - either way, nothing local

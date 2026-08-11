@@ -1,11 +1,13 @@
 import React, { createContext, useCallback, useContext, useMemo, useState } from 'react';
-import type { DraftSubtitleLine, WizardVideoAsset } from '../types/createReel';
+import type { DraftSubtitleLine, WizardImageAsset, WizardVideoAsset } from '../types/createReel';
 
 const makeLocalId = () => `line-${Date.now()}-${Math.random().toString(36).slice(2, 9)}`;
 
 interface CreateReelWizardContextType {
   videoAsset: WizardVideoAsset | null;
   setVideoAsset: (asset: WizardVideoAsset | null) => void;
+  thumbnailAsset: WizardImageAsset | null;
+  setThumbnailAsset: (asset: WizardImageAsset | null) => void;
   lines: DraftSubtitleLine[];
   addLine: (line: Omit<DraftSubtitleLine, 'localId'>) => void;
   updateLine: (localId: string, updates: Partial<Omit<DraftSubtitleLine, 'localId'>>) => void;
@@ -25,6 +27,7 @@ const CreateReelWizardContext = createContext<CreateReelWizardContextType | null
 
 export const CreateReelWizardProvider = ({ children }: { children: React.ReactNode }) => {
   const [videoAsset, setVideoAsset] = useState<WizardVideoAsset | null>(null);
+  const [thumbnailAsset, setThumbnailAsset] = useState<WizardImageAsset | null>(null);
   const [lines, setLines] = useState<DraftSubtitleLine[]>([]);
   const [languageId, setLanguageId] = useState<number | null>(null);
   const [translationLanguageId, setTranslationLanguageId] = useState<number | null>(null);
@@ -45,6 +48,7 @@ export const CreateReelWizardProvider = ({ children }: { children: React.ReactNo
 
   const reset = useCallback(() => {
     setVideoAsset(null);
+    setThumbnailAsset(null);
     setLines([]);
     setLanguageId(null);
     setTranslationLanguageId(null);
@@ -56,6 +60,8 @@ export const CreateReelWizardProvider = ({ children }: { children: React.ReactNo
     () => ({
       videoAsset,
       setVideoAsset,
+      thumbnailAsset,
+      setThumbnailAsset,
       lines,
       addLine,
       updateLine,
@@ -70,7 +76,7 @@ export const CreateReelWizardProvider = ({ children }: { children: React.ReactNo
       setDescription,
       reset,
     }),
-    [videoAsset, lines, addLine, updateLine, removeLine, languageId, translationLanguageId, title, description, reset]
+    [videoAsset, thumbnailAsset, lines, addLine, updateLine, removeLine, languageId, translationLanguageId, title, description, reset]
   );
 
   return <CreateReelWizardContext.Provider value={value}>{children}</CreateReelWizardContext.Provider>;

@@ -12,7 +12,7 @@ const reelModel = {
   // any client-supplied `position` field is ignored here so the
   // dialogue_sentences(dialogue_id, position) unique constraint can never be
   // violated by out-of-order/duplicate client input.
-  async createWithDialogue({ createdBy, url, title, description, languageId, duration, lines }) {
+  async createWithDialogue({ createdBy, url, thumbnailUrl, title, description, languageId, duration, lines }) {
     const client = await pool.connect();
     try {
       await client.query('BEGIN');
@@ -48,20 +48,48 @@ const reelModel = {
       }
 
       const reelResult = await client.query(
-        `INSERT INTO reels (language_id, dialogue_id, created_by, url, title, description, duration)
-         VALUES ($1, $2, $3, $4, $5, $6, $7)
+        `INSERT INTO reels (language_id, dialogue_id, created_by, url, thumbnail_url, title, description, duration)
+         VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
          RETURNING id, language_id, dialogue_id, created_by, url, thumbnail_url, title, description, duration, created_at`,
-        [languageId, dialogueId, createdBy, url, title || null, description || null, duration]
+        [languageId, dialogueId, createdBy, url, thumbnailUrl || null, title || null, description || null, duration]
       );
 
       await client.query('COMMIT');
-      return reelResult.rows[0];
+      const row = reelResult.rows[0];
+      return {
+        ...row,
+        // id/dialogue_id/created_by are bigint columns - pg returns those as
+        // strings by default. reels-service (Python/Pydantic) returns plain
+        // number ids, and ReelsContext's dedup logic (prependReel's filter,
+        // fetchReels' append-dedup) compares ids with strict equality, so a
+        // string id here silently fails to match its number counterpart
+        // once the feed picks this reel up too - producing a duplicate
+        // FlatList entry/key. Normalize to numbers to match that contract.
+        id: Number(row.id),
+        dialogue_id: Number(row.dialogue_id),
+        created_by: Number(row.created_by),
+      };
     } catch (error) {
       await client.query('ROLLBACK');
       throw error;
     } finally {
       client.release();
     }
+  },
+
+  // Latest reels created by a user, newest first - used to show a preview
+  // of "my reels" right after login without a separate round trip.
+  async getLatestByUser(userId, limit = 6) {
+    const result = await pool.query(
+      `SELECT id, url, thumbnail_url, title, duration, created_at
+       FROM reels
+       WHERE created_by = $1
+       ORDER BY created_at DESC
+       LIMIT $2`,
+      [userId, limit]
+    );
+    // Same bigint-as-string normalization as createWithDialogue.
+    return result.rows.map((row) => ({ ...row, id: Number(row.id) }));
   },
 };
 

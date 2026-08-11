@@ -41,6 +41,8 @@ export const DEFAULT_USER_PROGRESS = {
 
 export const DEFAULT_USER_VOCABULARY = {};
 
+export const DEFAULT_USER_REELS = [];
+
 export const DEFAULT_VIBRATION_SETTINGS = {
   enabled: true,
   buttons: true,
@@ -62,6 +64,7 @@ export const STORAGE_KEYS = {
   USER_PROGRESS: 'user_progress',
   USER_VOCABULARY: 'user_vocabulary',
   USER_VOCABULARY_CHANGES: 'user_vocabulary_changes',
+  USER_REELS: 'user_reels',
   ONBOARDING_COMPLETE: 'onboarding_complete',
   VIBRATION_SETTINGS: 'vibration_settings',
   REMINDER_SETTINGS: 'reminder_settings',
@@ -79,6 +82,9 @@ export const validators = {
 
   userVocabulary: (data) =>
     data && typeof data === 'object',
+
+  userReels: (data) =>
+    Array.isArray(data),
 
   vocabularyChanges: (data) =>
     data && typeof data === 'object' &&

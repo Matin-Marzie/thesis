@@ -6,6 +6,7 @@ import apiClient from './client.js';
  * (the read-only reels-service) - the Node backend owns the write path.
  * @param {Object} params
  * @param {import('../types/createReel').WizardVideoAsset} params.video
+ * @param {import('../types/createReel').WizardImageAsset|null} [params.thumbnail] - Optional cover image; when omitted, the backend extracts one from the video's first frame.
  * @param {string|null} params.title
  * @param {string} params.description
  * @param {number} params.languageId
@@ -15,7 +16,7 @@ import apiClient from './client.js';
  * @returns {Promise<import('../types/createReel').CreateReelResponse>}
  */
 export const createReel = async (
-  { video, title, description, languageId, translationLanguageId, lines },
+  { video, thumbnail, title, description, languageId, translationLanguageId, lines },
   onUploadProgress
 ) => {
   const form = new FormData();
@@ -24,6 +25,13 @@ export const createReel = async (
     name: video.fileName || `reel-${Date.now()}.mp4`,
     type: video.mimeType || 'video/mp4',
   });
+  if (thumbnail) {
+    form.append('thumbnail', {
+      uri: thumbnail.uri,
+      name: thumbnail.fileName || `thumbnail-${Date.now()}.jpg`,
+      type: thumbnail.mimeType || 'image/jpeg',
+    });
+  }
   if (title) {
     form.append('title', title);
   }

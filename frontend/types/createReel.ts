@@ -6,6 +6,12 @@ export interface WizardVideoAsset {
   fileName: string | null;
 }
 
+export interface WizardImageAsset {
+  uri: string;
+  mimeType: string | null;
+  fileName: string | null;
+}
+
 export interface DraftSubtitleLine {
   localId: string;
   text: string;
@@ -25,6 +31,7 @@ export interface CreateReelLinePayload {
 
 export interface CreateReelPayload {
   video: WizardVideoAsset;
+  thumbnail: WizardImageAsset | null;
   title: string | null;
   description: string;
   languageId: number;

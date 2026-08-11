@@ -43,6 +43,34 @@ ALTER FUNCTION public.update_last_login_on_refresh_token() OWNER TO root;
 
 COMMENT ON FUNCTION public.update_last_login_on_refresh_token() IS 'Automatically updates last_login timestamp when refresh_token is updated';
 
+--
+-- Name: delete_dialogue_after_reel_delete(); Type: FUNCTION; Schema: public; Owner: root
+--
+
+CREATE FUNCTION public.delete_dialogue_after_reel_delete() RETURNS trigger
+    LANGUAGE plpgsql
+    AS $$
+BEGIN
+  -- reels.dialogue_id -> dialogues.id is ON DELETE SET NULL, which only
+  -- cascades in the dialogue-deleted direction. Each reel owns a dialogue
+  -- exclusively (never shared), so deleting the reel deletes its dialogue
+  -- here; dialogue_sentences then cascade off that via their own FK.
+  IF OLD.dialogue_id IS NOT NULL THEN
+    DELETE FROM public.dialogues WHERE id = OLD.dialogue_id;
+  END IF;
+  RETURN OLD;
+END;
+$$;
+
+
+ALTER FUNCTION public.delete_dialogue_after_reel_delete() OWNER TO root;
+
+--
+-- Name: FUNCTION delete_dialogue_after_reel_delete(); Type: COMMENT; Schema: public; Owner: root
+--
+
+COMMENT ON FUNCTION public.delete_dialogue_after_reel_delete() IS 'Deletes a reel''s dialogue (and transitively its dialogue_sentences) after the reel is deleted';
+
 
 SET default_tablespace = '';
 
@@ -20263,6 +20291,19 @@ CREATE TRIGGER trigger_update_last_login BEFORE UPDATE OF refresh_token ON publi
 --
 
 COMMENT ON TRIGGER trigger_update_last_login ON public.users IS 'Updates last_login to NOW() when refresh_token is updated';
+
+--
+-- Name: reels trigger_delete_dialogue_after_reel_delete; Type: TRIGGER; Schema: public; Owner: root
+--
+
+CREATE TRIGGER trigger_delete_dialogue_after_reel_delete AFTER DELETE ON public.reels FOR EACH ROW EXECUTE FUNCTION public.delete_dialogue_after_reel_delete();
+
+
+--
+-- Name: TRIGGER trigger_delete_dialogue_after_reel_delete ON reels; Type: COMMENT; Schema: public; Owner: root
+--
+
+COMMENT ON TRIGGER trigger_delete_dialogue_after_reel_delete ON public.reels IS 'Deletes the associated dialogue whenever a reel row is deleted';
 
 
 --

@@ -26,6 +26,10 @@ const router = express.Router();
  *               video:
  *                 type: string
  *                 format: binary
+ *               thumbnail:
+ *                 type: string
+ *                 format: binary
+ *                 description: Optional cover image. When omitted, the server extracts one from the video's first frame.
  *               title:
  *                 type: string
  *               description:

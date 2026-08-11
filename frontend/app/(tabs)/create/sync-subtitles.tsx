@@ -9,6 +9,7 @@ import { LANGUAGES_META } from '@/constants/SupportedLanguages';
 import { useCreateReelWizard } from '@/context/CreateReelWizardContext';
 import { useProfile } from '@/context/ProfileContext';
 import { useReelsContext } from '@/context/ReelsContext';
+import { useUserReels } from '@/context/UserReelsContext';
 import { createReel } from '@/api/reelCreation';
 import { SubtitleVideoPreview } from '@/components/create/sync-subtitles/SubtitleVideoPreview';
 import { SubtitleRecordPanel } from '@/components/create/sync-subtitles/SubtitleRecordPanel';
@@ -23,6 +24,7 @@ export default function SyncSubtitlesScreen() {
   const router = useRouter();
   const {
     videoAsset,
+    thumbnailAsset,
     lines,
     addLine,
     updateLine,
@@ -35,6 +37,7 @@ export default function SyncSubtitlesScreen() {
   } = useCreateReelWizard();
   const { userProfile } = useProfile();
   const { prependReel } = useReelsContext();
+  const { prependUserReel } = useUserReels();
 
   const [phase, setPhase] = useState<'record' | 'review'>('record');
   const [draftText, setDraftText] = useState('');
@@ -178,6 +181,7 @@ export default function SyncSubtitlesScreen() {
       const response = await createReel(
         {
           video: videoAsset,
+          thumbnail: thumbnailAsset,
           title: title.trim() || null,
           description: description.trim(),
           languageId,
@@ -235,6 +239,17 @@ export default function SyncSubtitlesScreen() {
       };
 
       prependReel(optimisticReel);
+      // Mirrors the shape authController.js/getLatestByUser returns at
+      // login, so the profile screen's "My Reels" grid can render this
+      // straight away instead of waiting for the next login's fetch.
+      prependUserReel({
+        id: response.reel.id,
+        url: response.reel.url,
+        thumbnail_url: response.reel.thumbnail_url || null,
+        title: response.reel.title,
+        duration: response.reel.duration,
+        created_at: response.reel.created_at,
+      });
       reset();
       router.replace('/(tabs)/reels');
     } catch (error: any) {
@@ -242,7 +257,7 @@ export default function SyncSubtitlesScreen() {
     } finally {
       setIsPublishing(false);
     }
-  }, [videoAsset, languageId, translationLanguageId, hasTranslations, title, description, lines, userProfile, prependReel, reset, router]);
+  }, [videoAsset, thumbnailAsset, languageId, translationLanguageId, hasTranslations, title, description, lines, userProfile, prependReel, prependUserReel, reset, router]);
 
   const handlePressPublish = useCallback(() => {
     const hasInvalid = lines.some((l) => l.end_time_ms <= l.start_time_ms || !l.text.trim());
