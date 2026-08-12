@@ -2,12 +2,14 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, Alert, ActivityIndicator } from 'react-native';
 import { useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
+import * as WebBrowser from 'expo-web-browser';
 import { useAuth } from '../context/AuthContext';
 import { useLogout } from '../hooks/useLogout';
 import { useDeleteAccount } from '../hooks/useDeleteAccount';
 import TouchableOpacity from '../components/TouchableOpacity';
 import { useColorScheme } from '../components/useColorScheme';
 import { DARK_COLORS } from '../constants/App';
+import { PRIVACY_POLICY_URL, TERMS_OF_USE_URL, OSS_LICENSES_URL } from '../config/legal.config';
 
 export default function MoreScreen() {
   const isDark = useColorScheme() === 'dark';
@@ -79,6 +81,33 @@ export default function MoreScreen() {
     );
   };
 
+  const handleOpenPrivacyPolicy = async () => {
+    try {
+      await WebBrowser.openBrowserAsync(PRIVACY_POLICY_URL);
+    } catch (error) {
+      console.error('Open privacy policy error:', error);
+      Alert.alert('Could not open page', 'Please try again later.');
+    }
+  };
+
+  const handleOpenTermsOfUse = async () => {
+    try {
+      await WebBrowser.openBrowserAsync(TERMS_OF_USE_URL);
+    } catch (error) {
+      console.error('Open terms of use error:', error);
+      Alert.alert('Could not open page', 'Please try again later.');
+    }
+  };
+
+  const handleOpenOssLicenses = async () => {
+    try {
+      await WebBrowser.openBrowserAsync(OSS_LICENSES_URL);
+    } catch (error) {
+      console.error('Open OSS licenses error:', error);
+      Alert.alert('Could not open page', 'Please try again later.');
+    }
+  };
+
   const iconColor = isDark ? DARK_COLORS.text : '#333';
   const chevronColor = isDark ? DARK_COLORS.textSecondary : '#999';
 
@@ -108,6 +137,27 @@ export default function MoreScreen() {
           <TouchableOpacity style={[styles.menuItem, isDark && { borderBottomColor: DARK_COLORS.border }]}>
             <Ionicons name="information-circle-outline" size={24} color={iconColor} />
             <Text style={[styles.menuText, isDark && { color: DARK_COLORS.text }]}>About</Text>
+            <Ionicons name="chevron-forward" size={20} color={chevronColor} />
+          </TouchableOpacity>
+        </View>
+
+        {/* Legal */}
+        <View style={[styles.menuSection, isDark && { backgroundColor: DARK_COLORS.surface }]}>
+          <TouchableOpacity style={[styles.menuItem, isDark && { borderBottomColor: DARK_COLORS.border }]} onPress={handleOpenPrivacyPolicy}>
+            <Ionicons name="shield-checkmark-outline" size={24} color={iconColor} />
+            <Text style={[styles.menuText, isDark && { color: DARK_COLORS.text }]}>Privacy Policy</Text>
+            <Ionicons name="chevron-forward" size={20} color={chevronColor} />
+          </TouchableOpacity>
+
+          <TouchableOpacity style={[styles.menuItem, isDark && { borderBottomColor: DARK_COLORS.border }]} onPress={handleOpenTermsOfUse}>
+            <Ionicons name="document-text-outline" size={24} color={iconColor} />
+            <Text style={[styles.menuText, isDark && { color: DARK_COLORS.text }]}>Terms of Use</Text>
+            <Ionicons name="chevron-forward" size={20} color={chevronColor} />
+          </TouchableOpacity>
+
+          <TouchableOpacity style={[styles.menuItem, isDark && { borderBottomColor: DARK_COLORS.border }]} onPress={handleOpenOssLicenses}>
+            <Ionicons name="code-slash-outline" size={24} color={iconColor} />
+            <Text style={[styles.menuText, isDark && { color: DARK_COLORS.text }]}>Open Source Licenses</Text>
             <Ionicons name="chevron-forward" size={20} color={chevronColor} />
           </TouchableOpacity>
         </View>

@@ -28,7 +28,9 @@ export default function PersonalizationSlide({
     'Movies', 'Sports', 'Anime', 'Make up', 'Cartoons', 'Video games', 'News', 'Politics'
   ];
 
-  const ageData = Array.from({ length: 100 }, (_, i) => (i + 1).toString());
+  // Matches the backend's UserProfileSchema minimum (16) - kept in sync with
+  // the declared Play Store target audience.
+  const ageData = Array.from({ length: 85 }, (_, i) => (i + 16).toString());
 
   const handleAgeChange = (age: string) => {
     setSelectedAge(age);

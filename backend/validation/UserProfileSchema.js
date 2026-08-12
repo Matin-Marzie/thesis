@@ -26,9 +26,11 @@ const UserProfileSchema = Joi.object({
     joined_date: Joi.date().messages({
         'date.base': 'Joined date must be a valid date',
     }),
-    age: Joi.number().integer().min(13).max(100).messages({
+    // 16 matches the declared Play Store target audience (chosen to avoid
+    // the Families Policy's UGC restrictions).
+    age: Joi.number().integer().min(16).max(100).messages({
         'number.base': 'Age must be a number',
-        'number.min': 'Age must be at least 13',
+        'number.min': 'Age must be at least 16',
         'number.max': 'Age must be at most 100',
     }),
     notifications: Joi.boolean().messages({
