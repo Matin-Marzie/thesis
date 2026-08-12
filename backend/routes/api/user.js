@@ -2,6 +2,7 @@ import express from 'express';
 import userController from '../../controllers/userController.js';
 import syncController from '../../controllers/syncController.js';
 import verifyJWT from '../../middleware/verifyJWT.js';
+import uploadProfilePicture from '../../middleware/uploadProfilePicture.js';
 
 const router = express.Router();
 
@@ -146,6 +147,63 @@ router.get('/:id', userController.getUserById);
  *               $ref: '#/components/schemas/Error'
  */
 router.patch('/profile', verifyJWT, userController.updateProfile);
+
+/**
+ * @swagger
+ * /user/profile-picture:
+ *   patch:
+ *     summary: Upload/replace current user's profile picture
+ *     description: Uploads an image file and sets it as the authenticated user's profile picture, replacing any previous one uploaded through this endpoint
+ *     tags: [User]
+ *     security:
+ *       - bearerAuth: []
+ *       - cookieAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         multipart/form-data:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               profile_picture:
+ *                 type: string
+ *                 format: binary
+ *     responses:
+ *       200:
+ *         description: Profile picture updated successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: 'Profile picture updated successfully'
+ *                 data:
+ *                   type: object
+ *                   properties:
+ *                     user:
+ *                       $ref: '#/components/schemas/User'
+ *       400:
+ *         description: Missing file, invalid file type, or file too large
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error'
+ *       401:
+ *         description: Unauthorized - Missing or invalid token
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error'
+ *       500:
+ *         description: Internal server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error'
+ */
+router.patch('/profile-picture', verifyJWT, uploadProfilePicture, userController.updateProfilePicture);
 
 /**
  * @swagger

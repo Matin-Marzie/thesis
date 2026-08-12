@@ -36,7 +36,7 @@ export function ProfileHeader({ isDark, firstName, username, profilePicture }: P
         </View>
       </View>
 
-      <Link href="/more" asChild style={{padding: 10, justifyContent: 'start', alignSelf: 'flex-start' }}>
+      <Link href="/settings" asChild style={{padding: 10, justifyContent: 'start', alignSelf: 'flex-start' }}>
         <Pressable hitSlop={12}>
           {({ pressed }) => (
             <FontAwesome
@@ -55,10 +55,9 @@ export function ProfileHeader({ isDark, firstName, username, profilePicture }: P
 const styles = StyleSheet.create({
   userSection: {
     flexDirection: 'row',
-    paddingVertical: 6,
+    paddingVertical: 12,
     paddingHorizontal: 12,
     marginBottom: 4,
-
   },
   avatarRing: {
     width: 84,

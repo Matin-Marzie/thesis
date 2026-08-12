@@ -6,6 +6,15 @@ import userLanguagesModel from '../models/userLanguagesModel.js';
 import userVocabularyModel from '../models/userVocabularyModel.js';
 import { logEvents } from '../middleware/logEvents.js';
 import { REEL_UPLOAD_DIR } from '../middleware/uploadReelVideo.js';
+import { PROFILE_PICTURE_UPLOAD_DIR } from '../middleware/uploadProfilePicture.js';
+
+const buildProfilePictureUrl = (userId, filename) =>
+  `http://localhost:3500/static/uploads/profile_pictures/${userId}/${filename}`;
+
+// Old profile pictures are only ours to delete if they live under our own
+// upload dir - a Google-linked avatar (or anything else external) is just a
+// URL we store, not a file we own.
+const isOwnedProfilePicture = (url) => typeof url === 'string' && url.includes('/static/uploads/profile_pictures/');
 
 
 const userController = {
@@ -78,9 +87,10 @@ const userController = {
       }
 
       // Reel rows/dialogue/vocabulary etc. are gone via ON DELETE CASCADE,
-      // but the uploaded video files on disk aren't DB rows - remove the
-      // user's whole reel folder now that nothing references it.
+      // but the uploaded video/profile-picture files on disk aren't DB rows -
+      // remove the user's upload folders now that nothing references them.
       await fs.rm(path.join(REEL_UPLOAD_DIR, String(userId)), { recursive: true, force: true });
+      await fs.rm(path.join(PROFILE_PICTURE_UPLOAD_DIR, String(userId)), { recursive: true, force: true });
 
       logEvents(`User deleted account: ${deletedUser.email}`, 'authLog.log');
 
@@ -94,23 +104,6 @@ const userController = {
       });
     }
   },
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -161,6 +154,66 @@ const userController = {
     }
   },
 
+
+
+  // Upload/replace current user's profile picture. The file is already
+  // saved to disk by the uploadProfilePicture middleware before this handler
+  // runs - if anything below fails, the catch block removes it so it isn't
+  // left as an orphan with no matching DB row.
+  async updateProfilePicture(req, res) {
+    const userId = req.user.id;
+    const uploadedFile = req.file;
+
+    try {
+      if (!uploadedFile) {
+        return res.status(400).json({
+          message: 'A profile picture file is required',
+        });
+      }
+
+      const previousUser = await usersModel.get(userId);
+      const newUrl = buildProfilePictureUrl(userId, uploadedFile.filename);
+
+      const updatedUser = await usersModel.updateProfile(userId, { profile_picture: newUrl });
+
+      if (!updatedUser) {
+        throw new Error('Failed to save profile picture');
+      }
+
+      // Best-effort - if the old file can't be deleted, it's just an orphan,
+      // not something that should block a successful upload.
+      if (previousUser && isOwnedProfilePicture(previousUser.profile_picture)) {
+        await fs
+          .unlink(path.join(PROFILE_PICTURE_UPLOAD_DIR, String(userId), path.basename(previousUser.profile_picture)))
+          .catch(() => {});
+      }
+
+      res.status(200).json({
+        message: 'Profile picture updated successfully',
+        data: {
+          user: updatedUser,
+        },
+      });
+    } catch (error) {
+      console.error('Update profile picture error:', error);
+      if (uploadedFile) {
+        await fs.unlink(uploadedFile.path).catch(() => {});
+      }
+      res.status(500).json({
+        message: 'Internal server error',
+      });
+    }
+  },
+
+
+
+
+
+
+
+
+
+
   // Get user by ID (public profile)
   async getUserById(req, res) {
     try {
@@ -190,6 +243,16 @@ const userController = {
     }
   },
 
+
+
+
+
+
+
+
+
+
+
   // Update user energy
   async updateEnergy(req, res) {
     try {
@@ -218,6 +281,18 @@ const userController = {
       });
     }
   },
+
+
+
+
+
+
+
+
+
+
+
+
 
   // Update user coins
   async updateCoins(req, res) {

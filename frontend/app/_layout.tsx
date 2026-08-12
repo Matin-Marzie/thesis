@@ -85,7 +85,6 @@ function RootLayoutNav() {
     // 
     const inOnboardingGroup = segments[0] === 'onboarding';
     const inTabsGroup = segments[0] === '(tabs)';
-    const inMoreScreen = segments[0] === 'more';
     const inSettingsScreen = segments[0] === 'settings';
     const inModal = segments[0] === 'modal';
     const inGames = segments[0] === 'games';
@@ -104,9 +103,9 @@ function RootLayoutNav() {
         router.replace('/onboarding/landing');
       }
     } else {
-      // [] Main app — allow access to app (tabs, more, settings, modal, games)
+      // [] Main app — allow access to app (tabs, settings, modal, games)
       // Also allow access to login/register for guest users
-      if (!inTabsGroup && !inMoreScreen && !inSettingsScreen && !inModal && !inGames && !inReelScreen && !inLoginOrRegister) {
+      if (!inTabsGroup && !inSettingsScreen && !inModal && !inGames && !inReelScreen && !inLoginOrRegister) {
         router.replace('/(tabs)');
       }
     }
@@ -148,11 +147,11 @@ function RootLayoutNav() {
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
         <Stack.Screen name="onboarding" options={{ headerShown: false }} />
         <Stack.Screen
-          name="more"
+          name="settings"
           options={{
             presentation: 'modal',
             headerShown: true,
-            title: 'More',
+            title: 'Settings',
             headerStyle: {
               backgroundColor: PRIMARY_COLOR,
             },
@@ -163,10 +162,38 @@ function RootLayoutNav() {
           }}
         />
         <Stack.Screen
-          name="settings"
+          name="settings/account"
           options={{
             headerShown: true,
-            title: 'Settings',
+            title: 'Account',
+            headerStyle: {
+              backgroundColor: PRIMARY_COLOR,
+            },
+            headerTintColor: '#fff',
+            headerTitleStyle: {
+              fontWeight: 'bold',
+            },
+          }}
+        />
+        <Stack.Screen
+          name="settings/notifications"
+          options={{
+            headerShown: true,
+            title: 'Notifications',
+            headerStyle: {
+              backgroundColor: PRIMARY_COLOR,
+            },
+            headerTintColor: '#fff',
+            headerTitleStyle: {
+              fontWeight: 'bold',
+            },
+          }}
+        />
+        <Stack.Screen
+          name="settings/vibrations"
+          options={{
+            headerShown: true,
+            title: 'Vibrations',
             headerStyle: {
               backgroundColor: PRIMARY_COLOR,
             },

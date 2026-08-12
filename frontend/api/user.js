@@ -56,18 +56,20 @@ export const getUserVocabulary = async () => {
 
 
 /**
- * Update user profile
- * @param {Object} userData - { user_profile }
- * @returns {Promise<Object>} - { message, user_profile }
+ * Update user profile (first_name, last_name, username, profile_picture, age, preferences, notifications)
+ * @param {Object} userData - fields to update, e.g. { first_name, last_name, username }
+ * @returns {Promise<Object>} - { message, data: { user } }
  */
-// NOT TESTED AND NOT USING THIS FUNCTION
 export const updateUserProfile = async (userData) => {
   try {
-    const response = await apiClient.patch('/user/me', userData);
+    const response = await apiClient.patch('/user/profile', userData);
     return response.data;
   } catch (error) {
-    console.error('Update user error:', error.response?.data || error.message);
-    throw error;
+    const message =
+      error.response?.data?.message ||
+      error.message ||
+      'Failed to update profile';
+    throw new Error(message);
   }
 };
 
