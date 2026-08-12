@@ -233,10 +233,7 @@ CREATE TABLE public.reel_interactions (
     is_saved boolean DEFAULT false NOT NULL,
     comment text,
     commented_at timestamp with time zone,
-    is_shared boolean DEFAULT false NOT NULL,
-    is_reported boolean DEFAULT false NOT NULL,
-    report_reason text,
-    reported_at timestamp with time zone
+    is_shared boolean DEFAULT false NOT NULL
 );
 
 
@@ -261,6 +258,42 @@ ALTER SEQUENCE public.reel_interactions_id_seq OWNER TO root;
 --
 
 ALTER SEQUENCE public.reel_interactions_id_seq OWNED BY public.reel_interactions.id;
+
+
+--
+-- Name: reel_reports; Type: TABLE; Schema: public; Owner: root
+--
+
+CREATE TABLE public.reel_reports (
+    id bigint NOT NULL,
+    reel_id bigint NOT NULL,
+    user_id bigint NOT NULL,
+    reason text NOT NULL,
+    created_at timestamp with time zone DEFAULT now() NOT NULL
+);
+
+
+ALTER TABLE public.reel_reports OWNER TO root;
+
+--
+-- Name: reel_reports_id_seq; Type: SEQUENCE; Schema: public; Owner: root
+--
+
+CREATE SEQUENCE public.reel_reports_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.reel_reports_id_seq OWNER TO root;
+
+--
+-- Name: reel_reports_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: root
+--
+
+ALTER SEQUENCE public.reel_reports_id_seq OWNED BY public.reel_reports.id;
 
 
 --
@@ -688,6 +721,13 @@ ALTER TABLE ONLY public.reel_interactions ALTER COLUMN id SET DEFAULT nextval('p
 
 
 --
+-- Name: reel_reports id; Type: DEFAULT; Schema: public; Owner: root
+--
+
+ALTER TABLE ONLY public.reel_reports ALTER COLUMN id SET DEFAULT nextval('public.reel_reports_id_seq'::regclass);
+
+
+--
 -- Name: reels id; Type: DEFAULT; Schema: public; Owner: root
 --
 
@@ -881,9 +921,17 @@ COPY public.letters (id, writing_style, letter_sign, type, audio_url, image_url,
 -- Data for Name: reel_interactions; Type: TABLE DATA; Schema: public; Owner: root
 --
 
-COPY public.reel_interactions (id, reel_id, user_id, viewed_at, is_liked, is_saved, comment, commented_at, is_shared, is_reported, report_reason, reported_at) FROM stdin;
-1	1	1	2026-04-03 21:43:05.402411+03	t	f	\N	\N	f	f	\N	\N
-2	1	2	2026-04-03 21:43:22.200042+03	t	f	Salaaaam	2026-04-03 21:43:46.56887+03	t	f	\N	\N
+COPY public.reel_interactions (id, reel_id, user_id, viewed_at, is_liked, is_saved, comment, commented_at, is_shared) FROM stdin;
+1	1	1	2026-04-03 21:43:05.402411+03	t	f	\N	\N	f
+2	1	2	2026-04-03 21:43:22.200042+03	t	f	Salaaaam	2026-04-03 21:43:46.56887+03	t
+\.
+
+
+--
+-- Data for Name: reel_reports; Type: TABLE DATA; Schema: public; Owner: root
+--
+
+COPY public.reel_reports (id, reel_id, user_id, reason, created_at) FROM stdin;
 \.
 
 
@@ -20019,6 +20067,13 @@ SELECT pg_catalog.setval('public.reel_interactions_id_seq', 2, true);
 
 
 --
+-- Name: reel_reports_id_seq; Type: SEQUENCE SET; Schema: public; Owner: root
+--
+
+SELECT pg_catalog.setval('public.reel_reports_id_seq', 1, false);
+
+
+--
 -- Name: reels_id_seq; Type: SEQUENCE SET; Schema: public; Owner: root
 --
 
@@ -20151,6 +20206,22 @@ ALTER TABLE ONLY public.reel_interactions
 
 ALTER TABLE ONLY public.reel_interactions
     ADD CONSTRAINT reel_interactions_reel_id_user_id_key UNIQUE (reel_id, user_id);
+
+
+--
+-- Name: reel_reports reel_reports_pkey; Type: CONSTRAINT; Schema: public; Owner: root
+--
+
+ALTER TABLE ONLY public.reel_reports
+    ADD CONSTRAINT reel_reports_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: reel_reports reel_reports_reel_id_user_id_key; Type: CONSTRAINT; Schema: public; Owner: root
+--
+
+ALTER TABLE ONLY public.reel_reports
+    ADD CONSTRAINT reel_reports_reel_id_user_id_key UNIQUE (reel_id, user_id);
 
 
 --
@@ -20360,6 +20431,22 @@ ALTER TABLE ONLY public.reel_interactions
 
 ALTER TABLE ONLY public.reel_interactions
     ADD CONSTRAINT reel_interactions_user_id_fkey FOREIGN KEY (user_id) REFERENCES public.users(id) ON DELETE CASCADE;
+
+
+--
+-- Name: reel_reports reel_reports_reel_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: root
+--
+
+ALTER TABLE ONLY public.reel_reports
+    ADD CONSTRAINT reel_reports_reel_id_fkey FOREIGN KEY (reel_id) REFERENCES public.reels(id) ON DELETE CASCADE;
+
+
+--
+-- Name: reel_reports reel_reports_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: root
+--
+
+ALTER TABLE ONLY public.reel_reports
+    ADD CONSTRAINT reel_reports_user_id_fkey FOREIGN KEY (user_id) REFERENCES public.users(id) ON DELETE CASCADE;
 
 
 --

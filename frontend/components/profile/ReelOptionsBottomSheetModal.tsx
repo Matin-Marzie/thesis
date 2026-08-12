@@ -1,6 +1,6 @@
 import React, { forwardRef, useCallback, useEffect, useMemo, useState } from 'react';
 import { View, Text, StyleSheet, BackHandler } from 'react-native';
-import { BottomSheetModal, BottomSheetView } from '@gorhom/bottom-sheet';
+import { BottomSheetBackdrop, BottomSheetBackdropProps, BottomSheetModal, BottomSheetView } from '@gorhom/bottom-sheet';
 import { Ionicons } from '@expo/vector-icons';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useColorScheme } from '@/components/useColorScheme';
@@ -15,17 +15,6 @@ interface ReelOptionsBottomSheetModalProps {
   onEditTitle: (reel: Reel) => void;
 }
 
-const CustomBackdrop = ({ style }: any) => (
-  <View
-    style={[
-      style,
-      {
-        backgroundColor: 'rgba(0, 0, 0, 0.5)',
-      },
-    ]}
-  />
-);
-
 // Bottom sheet with reel-management actions (edit / delete), opened from the
 // "More options" button in the profile reel viewer.
 export const ReelOptionsBottomSheetModal = forwardRef<BottomSheetModal, ReelOptionsBottomSheetModalProps>(
@@ -33,6 +22,26 @@ export const ReelOptionsBottomSheetModal = forwardRef<BottomSheetModal, ReelOpti
     const isDark = useColorScheme() === 'dark';
     const snapPoints = useMemo(() => ['30%'], []);
     const [isOpen, setIsOpen] = useState(false);
+
+    // TODO(bug): tapping the dimmed backdrop here does not dismiss the sheet
+    // (pressBehavior="close" has no effect - no console warning/error either).
+    // Same backdrop config works in ReportReelBottomSheetModal/FilterBottomSheetModal.
+    // Suspected cause: this screen sits over ReelItem's full-screen
+    // tap-to-pause/double-tap-to-like GestureDetector, which may be winning
+    // gesture arbitration over the backdrop's own GestureDetector - unconfirmed,
+    // needs reproduction on-device to verify. Swipe-down-to-close still works.
+    const renderBackdrop = useCallback(
+      (props: BottomSheetBackdropProps) => (
+        <BottomSheetBackdrop
+          {...props}
+          disappearsOnIndex={-1}
+          appearsOnIndex={1}
+          pressBehavior="close"
+          opacity={0.5}
+        />
+      ),
+      [],
+    );
 
     const handleSheetChanges = useCallback((index: number) => {
       setIsOpen(index >= 0);
@@ -73,7 +82,7 @@ export const ReelOptionsBottomSheetModal = forwardRef<BottomSheetModal, ReelOpti
         snapPoints={snapPoints}
         enablePanDownToClose
         onChange={handleSheetChanges}
-        backdropComponent={CustomBackdrop}
+        backdropComponent={renderBackdrop}
         backgroundStyle={isDark ? { backgroundColor: DARK_COLORS.surface } : undefined}
         handleIndicatorStyle={isDark ? { backgroundColor: DARK_COLORS.border } : undefined}
       >

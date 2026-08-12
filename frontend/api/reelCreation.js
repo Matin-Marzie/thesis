@@ -80,3 +80,19 @@ export const deleteReel = async (reelId) => {
     throw new Error(message);
   }
 };
+
+/**
+ * Report a reel for violating content guidelines.
+ * @param {number|string} reelId
+ * @param {string} reason - One of REPORT_REASONS in components/reels/ReportReelBottomSheetModal
+ * @returns {Promise<{message: string}>}
+ */
+export const reportReel = async (reelId, reason) => {
+  try {
+    const response = await apiClient.post(`/reel/${reelId}/report`, { reason });
+    return response.data;
+  } catch (error) {
+    const message = error.response?.data?.message || error.message || 'Failed to report reel';
+    throw new Error(message);
+  }
+};

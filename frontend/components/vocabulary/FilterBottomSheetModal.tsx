@@ -1,6 +1,6 @@
 import React, { forwardRef, useCallback, useEffect, useMemo, useState } from 'react';
 import { View, Text, StyleSheet, BackHandler } from 'react-native';
-import { BottomSheetModal, BottomSheetView } from '@gorhom/bottom-sheet';
+import { BottomSheetBackdrop, BottomSheetBackdropProps, BottomSheetModal, BottomSheetView } from '@gorhom/bottom-sheet';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useColorScheme } from '@/components/useColorScheme';
 import { DARK_COLORS } from '@/constants/App';
@@ -9,22 +9,24 @@ interface FilterBottomSheetModalProps {
     onSheetChange?: (index: number) => void;
 }
 
-const CustomBackdrop = ({ style }) => (
-    <View
-        style={[
-            style,
-            {
-                backgroundColor: 'rgba(0, 0, 0, 0.5)',
-            },
-        ]}
-    />
-);
-
 const FilterBottomSheetModal = forwardRef<BottomSheetModal, FilterBottomSheetModalProps>(
     ({ onSheetChange }, ref) => {
         const isDark = useColorScheme() === 'dark';
         const snapPoints = useMemo(() => ['50%'], []);
         const [isOpen, setIsOpen] = useState(false);
+
+        const renderBackdrop = useCallback(
+            (props: BottomSheetBackdropProps) => (
+                <BottomSheetBackdrop
+                    {...props}
+                    disappearsOnIndex={-1}
+                    appearsOnIndex={1}
+                    pressBehavior="close"
+                    opacity={0.5}
+                />
+            ),
+            [],
+        );
 
         const handleSheetChanges = useCallback((index: number) => {
             setIsOpen(index >= 0);
@@ -51,7 +53,7 @@ const FilterBottomSheetModal = forwardRef<BottomSheetModal, FilterBottomSheetMod
                 snapPoints={snapPoints}
                 enablePanDownToClose
                 onChange={handleSheetChanges}
-                backdropComponent={CustomBackdrop}
+                backdropComponent={renderBackdrop}
                 backgroundStyle={isDark ? { backgroundColor: DARK_COLORS.surface } : undefined}
                 handleIndicatorStyle={isDark ? { backgroundColor: DARK_COLORS.border } : undefined}
             >

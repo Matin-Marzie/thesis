@@ -118,8 +118,9 @@ const usersModel = {
 
 
   // Permanently delete a user (hard delete). Related rows (user_languages,
-  // user_vocabulary, reels, reel_interactions, ...) are removed via ON
-  // DELETE CASCADE. The user's uploaded reel video files on disk are NOT
+  // user_vocabulary, reels, reel_interactions, reel_reports, ...) are
+  // removed via ON DELETE CASCADE. The user's uploaded reel video files on
+  // disk are NOT
   // covered by this - caller is responsible for removing
   // uploads/reels/{userId}/ after this resolves.
   async delete(userId) {

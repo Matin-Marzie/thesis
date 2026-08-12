@@ -85,4 +85,46 @@ router.post('/', verifyJWT, uploadReelVideo, reelController.createReel);
  */
 router.delete('/:id', verifyJWT, reelController.deleteReel);
 
+/**
+ * @swagger
+ * /reel/{id}/report:
+ *   post:
+ *     summary: Report a reel
+ *     description: Records the current user's report against a reel for moderation review. Reporting the same reel again replaces the previous reason/timestamp instead of creating a duplicate.
+ *     tags: [Reel]
+ *     security:
+ *       - bearerAuth: []
+ *       - cookieAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: Reel ID
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required: [reason]
+ *             properties:
+ *               reason:
+ *                 type: string
+ *                 enum: [spam, nudity_or_sexual_content, violence_or_dangerous_content, hate_speech_or_symbols, harassment_or_bullying, false_information, other]
+ *     responses:
+ *       200:
+ *         description: Reel reported successfully
+ *       400:
+ *         description: Invalid reel id or reason
+ *       401:
+ *         description: Unauthorized - Missing or invalid token
+ *       404:
+ *         description: Reel not found
+ *       500:
+ *         description: Internal server error
+ */
+router.post('/:id/report', verifyJWT, reelController.reportReel);
+
 export default router;

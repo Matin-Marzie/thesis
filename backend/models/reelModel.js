@@ -105,6 +105,22 @@ const reelModel = {
     );
     return result.rows[0] || null;
   },
+
+  // Upserts onto the single (reel_id, user_id) row in reel_reports - a user
+  // can only ever have one open report per reel, so re-reporting just
+  // replaces the reason/timestamp rather than creating a duplicate row.
+  // Throws with the raw pg error (caller checks .code === '23503') if
+  // reelId doesn't exist, since there's no cheap existence check that
+  // isn't itself a race with the FK.
+  async report(reelId, userId, reason) {
+    await pool.query(
+      `INSERT INTO reel_reports (reel_id, user_id, reason)
+       VALUES ($1, $2, $3)
+       ON CONFLICT (reel_id, user_id)
+       DO UPDATE SET reason = $3, created_at = now()`,
+      [reelId, userId, reason]
+    );
+  },
 };
 
 export default reelModel;

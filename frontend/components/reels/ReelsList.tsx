@@ -16,7 +16,9 @@ import { useReelsContext } from '@/context/ReelsContext';
 import { PRIMARY_COLOR } from '@/constants/App';
 import { ReelItem } from './ReelItem';
 import { ReelActionsBottomSheetModal } from './ReelActionsBottomSheetModal';
+import { ReportReelBottomSheetModal } from './ReportReelBottomSheetModal';
 import TouchableOpacity from '@/components/TouchableOpacity';
+import { reportReel as reportReelRequest } from '@/api/reelCreation';
 import type { Reel } from '@/types/dialogue';
 
 const { height: SCREEN_HEIGHT } = Dimensions.get('window');
@@ -55,6 +57,9 @@ export function ReelsList({ onRetry }: ReelsListProps) {
   const [savedOverrides, setSavedOverrides] = useState<Map<string, boolean>>(new Map());
   const reelActionsSheetRef = useRef<BottomSheetModal>(null);
 
+  const [reportReelTarget, setReportReelTarget] = useState<Reel | null>(null);
+  const reportReelSheetRef = useRef<BottomSheetModal>(null);
+
   const handleMoreOptions = useCallback((reel: Reel) => {
     setOptionsReel(reel);
     reelActionsSheetRef.current?.present();
@@ -71,22 +76,22 @@ export function ReelsList({ onRetry }: ReelsListProps) {
     });
   }, []);
 
+  // Opens the report-reasons sheet right after ReelActionsBottomSheetModal
+  // dismisses itself (both are independent BottomSheetModal instances under
+  // the same app-level BottomSheetModalProvider, so presenting one while the
+  // other finishes its dismiss animation is safe).
   const handleReport = useCallback((reel: Reel) => {
-    Alert.alert(
-      'Report reel?',
-      'Let us know this reel violates our guidelines.',
-      [
-        { text: 'Cancel', style: 'cancel' },
-        {
-          text: 'Report',
-          style: 'destructive',
-          onPress: () => {
-            // TODO: call the backend report endpoint once it's available.
-            console.log('Report reel', reel.id);
-          },
-        },
-      ]
-    );
+    setReportReelTarget(reel);
+    reportReelSheetRef.current?.present();
+  }, []);
+
+  const handleSelectReportReason = useCallback(async (reel: Reel, reason: string) => {
+    try {
+      await reportReelRequest(reel.id, reason);
+      Alert.alert('Reel reported', 'Thanks for letting us know. Our team will review it.');
+    } catch (error: any) {
+      Alert.alert('Report failed', error?.message || 'Could not report this reel. Please try again.');
+    }
   }, []);
 
   const isOptionsReelSaved = !!optionsReel && (
@@ -188,6 +193,12 @@ export function ReelsList({ onRetry }: ReelsListProps) {
         isSaved={isOptionsReelSaved}
         onToggleSave={handleToggleSave}
         onReport={handleReport}
+      />
+
+      <ReportReelBottomSheetModal
+        ref={reportReelSheetRef}
+        reel={reportReelTarget}
+        onSelectReason={handleSelectReportReason}
       />
     </View>
   );
