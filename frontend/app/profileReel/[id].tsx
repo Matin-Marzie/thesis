@@ -9,6 +9,7 @@ import { useUserReels } from '@/context/UserReelsContext';
 import { ReelItem } from '@/components/reels/ReelItem';
 import { ReelOptionsBottomSheetModal } from '@/components/profile/ReelOptionsBottomSheetModal';
 import TouchableOpacity from '@/components/TouchableOpacity';
+import { deleteReel as deleteReelRequest } from '@/api/reelCreation';
 import type { Reel } from '@/types/dialogue';
 
 const { height: SCREEN_HEIGHT } = Dimensions.get('window');
@@ -19,7 +20,7 @@ export default function ProfileReelScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
   const router = useRouter();
   const isFocused = useIsFocused();
-  const { userReels } = useUserReels();
+  const { userReels, removeUserReel } = useUserReels();
 
   const initialIndex = useMemo(() => {
     const index = userReels.findIndex((r: Reel) => r.id.toString() === id);
@@ -65,14 +66,19 @@ export default function ProfileReelScreen() {
         {
           text: 'Delete',
           style: 'destructive',
-          onPress: () => {
-            // TODO: call the backend DELETE endpoint once it's available.
-            console.log('Delete reel', reel.id);
+          onPress: async () => {
+            try {
+              await deleteReelRequest(reel.id);
+              removeUserReel(reel.id);
+              router.back();
+            } catch (error: any) {
+              Alert.alert('Delete failed', error?.message || 'Could not delete the reel. Please try again.');
+            }
           },
         },
       ]
     );
-  }, []);
+  }, [removeUserReel, router]);
 
   const renderItem = useCallback(
     ({ item, index }: any) => (

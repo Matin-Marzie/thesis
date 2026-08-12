@@ -65,3 +65,18 @@ export const createReel = async (
     throw new Error(message);
   }
 };
+
+/**
+ * Permanently delete one of the current user's reels.
+ * @param {number|string} reelId
+ * @returns {Promise<{message: string}>}
+ */
+export const deleteReel = async (reelId) => {
+  try {
+    const response = await apiClient.delete(`/reel/${reelId}`);
+    return response.data;
+  } catch (error) {
+    const message = error.response?.data?.message || error.message || 'Failed to delete reel';
+    throw new Error(message);
+  }
+};

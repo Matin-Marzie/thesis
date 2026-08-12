@@ -54,4 +54,35 @@ const router = express.Router();
  */
 router.post('/', verifyJWT, uploadReelVideo, reelController.createReel);
 
+/**
+ * @swagger
+ * /reel/{id}:
+ *   delete:
+ *     summary: Delete one of the current user's reels
+ *     description: Permanently deletes the reel (and its dialogue/subtitles via a DB cascade) and removes its video/thumbnail files. Only the reel's owner may delete it.
+ *     tags: [Reel]
+ *     security:
+ *       - bearerAuth: []
+ *       - cookieAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: Reel ID
+ *     responses:
+ *       200:
+ *         description: Reel deleted successfully
+ *       400:
+ *         description: Invalid reel id
+ *       401:
+ *         description: Unauthorized - Missing or invalid token
+ *       404:
+ *         description: Reel not found (or not owned by the current user)
+ *       500:
+ *         description: Internal server error
+ */
+router.delete('/:id', verifyJWT, reelController.deleteReel);
+
 export default router;

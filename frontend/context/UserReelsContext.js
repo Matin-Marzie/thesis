@@ -7,6 +7,7 @@ import { DEFAULT_USER_REELS, STORAGE_KEYS, validators } from '../constants/defau
  * @property {Array} userReels
  * @property {Function} setUserReels
  * @property {(reel: Object) => void} prependUserReel
+ * @property {(reelId: number|string) => void} removeUserReel
  * @property {boolean} isUserReelsLoaded
  */
 
@@ -26,10 +27,16 @@ export const UserReelsProvider = ({ children }) => {
     setUserReels((prev) => [reel, ...prev.filter((r) => r.id !== reel.id)]);
   }, [setUserReels]);
 
+  // Drops a deleted reel from local state so the profile grid/pager reflect
+  // the deletion immediately, without waiting on the next login's fetch.
+  const removeUserReel = useCallback((reelId) => {
+    setUserReels((prev) => prev.filter((r) => r.id !== reelId));
+  }, [setUserReels]);
+
   const value = useMemo(() => ({
-    userReels, setUserReels, prependUserReel,
+    userReels, setUserReels, prependUserReel, removeUserReel,
     isUserReelsLoaded,
-  }), [userReels, setUserReels, prependUserReel, isUserReelsLoaded]);
+  }), [userReels, setUserReels, prependUserReel, removeUserReel, isUserReelsLoaded]);
 
   return <UserReelsContext.Provider value={value}>{children}</UserReelsContext.Provider>;
 };

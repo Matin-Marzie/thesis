@@ -56,6 +56,8 @@ const styles = StyleSheet.create({
   userSection: {
     flexDirection: 'row',
     paddingVertical: 6,
+    paddingHorizontal: 12,
+    marginBottom: 4,
 
   },
   avatarRing: {

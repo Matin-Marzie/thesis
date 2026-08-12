@@ -91,6 +91,20 @@ const reelModel = {
     // Same bigint-as-string normalization as createWithDialogue.
     return result.rows.map((row) => ({ ...row, id: Number(row.id) }));
   },
+
+  // Scoped to created_by so a user can only ever delete their own reel - a
+  // non-owner (or nonexistent id) simply gets no row back, no separate
+  // ownership check needed. The reel's dialogue/dialogue_sentences are
+  // removed by the trigger_delete_dialogue_after_reel_delete DB trigger;
+  // this only returns the file URLs so the caller can clean up disk storage.
+  async delete(reelId, userId) {
+    const result = await pool.query(
+      `DELETE FROM reels WHERE id = $1 AND created_by = $2
+       RETURNING id, url, thumbnail_url`,
+      [reelId, userId]
+    );
+    return result.rows[0] || null;
+  },
 };
 
 export default reelModel;

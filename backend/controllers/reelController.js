@@ -3,9 +3,22 @@ import path from 'path';
 import CreateReelSchema from '../validation/CreateReelSchema.js';
 import reelModel from '../models/reelModel.js';
 import { generateReelThumbnail } from '../utils/generateReelThumbnail.js';
+import { REEL_UPLOAD_DIR } from '../middleware/uploadReelVideo.js';
 
 const buildStaticUrl = (userId, filename) =>
   `http://localhost:3500/static/uploads/reels/${userId}/${filename}`;
+
+// Video/thumbnail are stored on disk under a per-user folder, keyed by
+// filename only (buildStaticUrl's path) - not by DB rows, so they have to
+// be removed by hand once the reel row is gone.
+const deleteReelFiles = async (userId, { url, thumbnail_url }) => {
+  const filenames = [url, thumbnail_url].filter(Boolean).map((fileUrl) => path.basename(fileUrl));
+  await Promise.all(
+    filenames.map((filename) =>
+      fs.unlink(path.join(REEL_UPLOAD_DIR, String(userId), filename)).catch(() => {})
+    )
+  );
+};
 
 const reelController = {
   // Creates a reel + its dialogue + subtitle sentences (with ms-precise
@@ -94,6 +107,31 @@ const reelController = {
       }
 
       console.error('Create reel error:', error);
+      res.status(500).json({ message: 'Internal server error' });
+    }
+  },
+
+  // Permanently deletes one of the current user's own reels. The DB trigger
+  // trigger_delete_dialogue_after_reel_delete cascades the dialogue and its
+  // dialogue_sentences; only the on-disk video/thumbnail need cleanup here.
+  async deleteReel(req, res) {
+    try {
+      const reelId = Number(req.params.id);
+      if (!Number.isInteger(reelId)) {
+        return res.status(400).json({ message: 'Invalid reel id' });
+      }
+
+      const deletedReel = await reelModel.delete(reelId, req.user.id);
+
+      if (!deletedReel) {
+        return res.status(404).json({ message: 'Reel not found' });
+      }
+
+      await deleteReelFiles(req.user.id, deletedReel);
+
+      res.status(200).json({ message: 'Reel deleted successfully' });
+    } catch (error) {
+      console.error('Delete reel error:', error);
       res.status(500).json({ message: 'Internal server error' });
     }
   },

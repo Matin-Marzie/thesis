@@ -60,8 +60,8 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     color: '#999',
     textTransform: 'uppercase',
-    marginBottom: 10,
-    marginLeft: 2,
+    marginBottom: 4,
+    marginLeft: 8,
   },
   reelsGrid: {
     flexDirection: 'row',
@@ -72,7 +72,7 @@ const styles = StyleSheet.create({
   reelTile: {
     width: '33%',
     aspectRatio: 9 / 16,
-    borderRadius: 10,
+    borderRadius: 4,
     overflow: 'hidden',
     backgroundColor: '#eee',
   },

@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, StyleSheet, ScrollView } from 'react-native';
+import { View, StyleSheet, ScrollView, StatusBar } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
 import { useProfile } from '@/context/ProfileContext';
@@ -30,6 +30,7 @@ export default function ProfileScreen() {
       edges={['top']}
       style={[styles.container, isDark && { backgroundColor: DARK_COLORS.background }]}
     >
+      <StatusBar barStyle={isDark ? 'light-content' : 'dark-content'} />
       <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}>
         <View style={styles.content}>
           {userProfile && (
@@ -76,6 +77,5 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   content: {
-    paddingHorizontal: 12,
   },
 });
