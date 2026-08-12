@@ -130,11 +130,6 @@ const usersModel = {
   },
 
 
-
-
-  
-
-
   // Update user profile, energy, or coins
   async updateProfile(userId, updates) {
     const allowedFields = ['first_name', 'last_name', 'username', 'profile_picture', 'energy', 'coins', 'age', 'preferences', 'notifications'];
@@ -163,7 +158,6 @@ const usersModel = {
                 profile_picture, joined_date, last_login, energy, coins,
                 age, preferences, notifications
     `;
-
     const result = await pool.query(query, values);
     return result.rows[0];
   },

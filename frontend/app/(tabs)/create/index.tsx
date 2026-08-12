@@ -7,6 +7,8 @@ import { useColorScheme } from '@/components/useColorScheme';
 import { DARK_COLORS, PRIMARY_COLOR } from '@/constants/App';
 import { MAX_REEL_DURATION_MS, MAX_REEL_FILE_SIZE_BYTES } from '@/constants/CreateReel';
 import { useCreateReelWizard } from '@/context/CreateReelWizardContext';
+import { useAuth } from '@/context/AuthContext';
+import { ProfileAuthButtons } from '@/components/profile/ProfileAuthButtons';
 
 const MAX_DURATION_SECONDS = MAX_REEL_DURATION_MS / 1000;
 const MAX_FILE_SIZE_MB = MAX_REEL_FILE_SIZE_BYTES / (1024 * 1024);
@@ -14,6 +16,7 @@ const MAX_FILE_SIZE_MB = MAX_REEL_FILE_SIZE_BYTES / (1024 * 1024);
 export default function CreatePickVideoScreen() {
   const isDark = useColorScheme() === 'dark';
   const router = useRouter();
+  const { isAuthenticated } = useAuth();
   const { setVideoAsset, reset } = useCreateReelWizard();
   const [isPicking, setIsPicking] = useState(false);
 
@@ -65,6 +68,24 @@ export default function CreatePickVideoScreen() {
       setIsPicking(false);
     }
   }, [reset, setVideoAsset, router]);
+
+  if (!isAuthenticated) {
+    return (
+      <View style={[styles.container, isDark && { backgroundColor: DARK_COLORS.background }]}>
+        <FontAwesome name="video-camera" size={56} color={isDark ? DARK_COLORS.textSecondary : '#999'} />
+        <Text style={[styles.title, isDark && { color: DARK_COLORS.text }]}>Create a Reel</Text>
+        <Text style={[styles.subtitle, isDark && { color: DARK_COLORS.textSecondary }]}>
+          Sign in to pick a video and create a reel.
+        </Text>
+
+        <ProfileAuthButtons
+          isDark={isDark}
+          onCreateAccount={() => router.push('/onboarding/register')}
+          onLogin={() => router.push('/onboarding/login')}
+        />
+      </View>
+    );
+  }
 
   return (
     <View style={[styles.container, isDark && { backgroundColor: DARK_COLORS.background }]}>

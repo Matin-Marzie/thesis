@@ -28,7 +28,8 @@ export function ProfileAuthButtons({ isDark, onCreateAccount, onLogin }: Profile
 
 const styles = StyleSheet.create({
   authSection: {
-    paddingVertical: 20,
+    width: '100%',
+    padding: 12,
     gap: 16,
   },
   createAccountButton: {
