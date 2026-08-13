@@ -14,7 +14,6 @@ class User(Base):
     last_name = Column(String(100), nullable=True)
     username = Column(String(50), nullable=False, unique=True)
     password_hash = Column(Text, nullable=True)
-    refresh_token = Column(Text, nullable=True)
     email = Column(String(255), nullable=True)
     profile_picture = Column(Text, nullable=True)
     joined_date = Column(DateTime(timezone=True), server_default=func.now(), nullable=False)
