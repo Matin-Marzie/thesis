@@ -6,6 +6,7 @@ import forgotPasswordController from '../controllers/forgotPasswordController.js
 import verifyResetCodeController from '../controllers/verifyResetCodeController.js';
 import resetPasswordController from '../controllers/resetPasswordController.js';
 import verifyGoogleToken from '../middleware/verifyGoogleToken.js';
+import { loginLimiter, forgotPasswordLimiter, verifyResetCodeLimiter, resetPasswordLimiter } from '../middleware/rateLimiter.js';
 
 const router = express.Router();
 
@@ -72,7 +73,7 @@ const router = express.Router();
  *             schema:
  *               $ref: '#/components/schemas/Error'
  */
-router.post('/login', authController);
+router.post('/login', loginLimiter, authController);
 
 /**
  * @swagger
@@ -262,7 +263,7 @@ router.post('/google/register', verifyGoogleToken, googleRegisterController);
  *             schema:
  *               $ref: '#/components/schemas/Error'
  */
-router.post('/forgot-password', forgotPasswordController);
+router.post('/forgot-password', forgotPasswordLimiter, forgotPasswordController);
 
 /**
  * @swagger
@@ -315,7 +316,7 @@ router.post('/forgot-password', forgotPasswordController);
  *             schema:
  *               $ref: '#/components/schemas/Error'
  */
-router.post('/verify-reset-code', verifyResetCodeController);
+router.post('/verify-reset-code', verifyResetCodeLimiter, verifyResetCodeController);
 
 /**
  * @swagger
@@ -371,6 +372,6 @@ router.post('/verify-reset-code', verifyResetCodeController);
  *             schema:
  *               $ref: '#/components/schemas/Error'
  */
-router.post('/reset-password', resetPasswordController);
+router.post('/reset-password', resetPasswordLimiter, resetPasswordController);
 
 export default router;

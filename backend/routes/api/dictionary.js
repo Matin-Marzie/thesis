@@ -1,5 +1,6 @@
 import express from 'express';
 import dictionaryController from '../../controllers/dictionaryController.js';
+import { dictionaryLimiter } from '../../middleware/rateLimiter.js';
 
 const router = express.Router();
 
@@ -46,7 +47,7 @@ const router = express.Router();
  *             schema:
  *               $ref: '#/components/schemas/DictionaryError'
  */
-router.get('/:language_code', dictionaryController.getLanguageDictionary);
+router.get('/:language_code', dictionaryLimiter, dictionaryController.getLanguageDictionary);
 
 /**
  * @swagger
@@ -90,6 +91,6 @@ router.get('/:language_code', dictionaryController.getLanguageDictionary);
  *             schema:
  *               $ref: '#/components/schemas/DictionaryError'
  */
-router.get('/:language_code/:translation_language_code', dictionaryController.getLanguageDictionaryWithTranslations);
+router.get('/:language_code/:translation_language_code', dictionaryLimiter, dictionaryController.getLanguageDictionaryWithTranslations);
 
 export default router;

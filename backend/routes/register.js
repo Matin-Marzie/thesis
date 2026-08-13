@@ -1,6 +1,7 @@
 import express from 'express';
 import registerController from '../controllers/registerController.js';
 import emailVerificationCodeController from '../controllers/emailVerificationCodeController.js';
+import { sendCodeLimiter } from '../middleware/rateLimiter.js';
 
 const router = express.Router();
 
@@ -93,6 +94,6 @@ router.post('/', registerController);
  *       500:
  *         description: Server error
  */
-router.post('/send-code', emailVerificationCodeController);
+router.post('/send-code', sendCodeLimiter, emailVerificationCodeController);
 
 export default router;

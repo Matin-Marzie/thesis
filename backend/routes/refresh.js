@@ -1,5 +1,6 @@
 import express from 'express';
 import refreshTokenController from '../controllers/refreshTokenController.js';
+import { refreshLimiter } from '../middleware/rateLimiter.js';
 
 const router = express.Router();
 
@@ -38,6 +39,9 @@ const router = express.Router();
  *                     accessToken:
  *                       type: string
  *                       description: New JWT access token
+ *                     refreshToken:
+ *                       type: string
+ *                       description: Rotated refresh token - replaces the one that was presented. The old one is single-use and no longer valid.
  *       401:
  *         description: Refresh token not found
  *         content:
@@ -45,11 +49,13 @@ const router = express.Router();
  *             schema:
  *               $ref: '#/components/schemas/Error'
  *       403:
- *         description: Invalid or expired refresh token
+ *         description: Invalid, reused, or expired refresh token - client should clear local tokens and prompt login again
  *         content:
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/Error'
+ *       429:
+ *         description: Too many refresh attempts
  *       500:
  *         description: Server error
  *         content:
@@ -57,6 +63,6 @@ const router = express.Router();
  *             schema:
  *               $ref: '#/components/schemas/Error'
  */
-router.post('/', refreshTokenController);
+router.post('/', refreshLimiter, refreshTokenController);
 
 export default router;
