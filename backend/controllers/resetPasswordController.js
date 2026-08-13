@@ -1,6 +1,7 @@
 import ResetPasswordSchema from '../validation/ResetPasswordSchema.js';
 import { hashPassword } from '../utils/password.js';
 import usersModel from '../models/usersModel.js';
+import refreshTokensModel from '../models/refreshTokensModel.js';
 import passwordResetModel from '../models/passwordResetModel.js';
 import { verifyCode, attemptsExceeded } from '../utils/PasswordResetCode.js';
 import { logEvents } from '../middleware/logEvents.js';
@@ -65,8 +66,9 @@ const resetPasswordController = async (req, res) => {
     await passwordResetModel.deleteByEmail(email);
 
     const password_hash = await hashPassword(new_password);
-    // Also clears refresh_token, logging out any existing sessions
     await usersModel.updatePassword(user.id, password_hash);
+    // Log out every device - a password reset should kill all sessions, not just one
+    await refreshTokensModel.revokeAllForUser(user.id);
 
     logEvents(`Password reset for ${user.email}`, 'authLog.log');
 

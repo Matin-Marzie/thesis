@@ -45,10 +45,11 @@ const usersModel = {
   },
 
 
-  // Update refresh token
-  async updateRefreshToken(userId, refreshToken) {
-    const query = 'UPDATE users SET refresh_token = $1 WHERE id = $2';
-    await pool.query(query, [refreshToken, userId]);
+  // Bump last_login to now - call only on real login/register (issueTokenPair),
+  // never on a silent token refresh.
+  async touchLastLogin(userId) {
+    const query = 'UPDATE users SET last_login = now() WHERE id = $1';
+    await pool.query(query, [userId]);
   },
 
 
@@ -81,14 +82,6 @@ const usersModel = {
   },
 
 
-  // Find user by refresh token
-  async findByRefreshToken(refreshToken) {
-    const query = 'SELECT * FROM users WHERE refresh_token = $1';
-    const result = await pool.query(query, [refreshToken]);
-    return result.rows[0];
-  },
-
-
   // Find user by Google ID
   async findByGoogleId(googleId) {
     const query = 'SELECT * FROM users WHERE google_id = $1';
@@ -96,19 +89,14 @@ const usersModel = {
     return result.rows[0];
   },
 
-  // Clear refresh token (logout)
-  async clearRefreshToken(userId) {
-    const query = 'UPDATE users SET refresh_token = NULL WHERE id = $1';
-    await pool.query(query, [userId]);
-  },
 
-
-  // Set a new password hash and invalidate any existing session (refresh_token),
-  // since a password reset should log out other devices.
+  // Set a new password hash. Caller is responsible for also calling
+  // refreshTokensModel.revokeAllForUser(userId) - a password reset should
+  // log out every device, not just clear a single column.
   async updatePassword(userId, passwordHash) {
     const query = `
       UPDATE users
-      SET password_hash = $1, refresh_token = NULL
+      SET password_hash = $1
       WHERE id = $2
       RETURNING id, email
     `;

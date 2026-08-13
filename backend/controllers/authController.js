@@ -1,5 +1,5 @@
-import jwt from 'jsonwebtoken';
 import LoginSchema from '../validation/LoginSchema.js';
+import { issueTokenPair } from '../utils/tokens.js';
 import { comparePassword } from '../utils/password.js';
 import { logEvents } from '../middleware/logEvents.js';
 import usersModel from '../models/usersModel.js';
@@ -67,24 +67,10 @@ const authController = async (req, res) => {
     }
 
     // Generate tokens
-    const accessToken = jwt.sign(
-      {
-        id: user.id,
-        email: user.email,
-        username: user.username,
-      },
-      process.env.ACCESS_TOKEN_SECRET,
-      { expiresIn: process.env.ACCESS_TOKEN_EXPIRES_IN || '15m' }
-    );
-
-    const refreshToken = jwt.sign(
-      { id: user.id },
-      process.env.REFRESH_TOKEN_SECRET,
-      { expiresIn: process.env.REFRESH_TOKEN_EXPIRES_IN || '30d' }
-    );
-
-    // Save refresh token to database
-    await usersModel.updateRefreshToken(user.id, refreshToken);
+    const { accessToken, refreshToken } = await issueTokenPair(user, {
+      userAgent: req.headers['user-agent'],
+      ipAddress: req.ip,
+    });
 
     // Fetch user_languages from DB
     let userLanguages = await userLanguagesModel.get(user.id);

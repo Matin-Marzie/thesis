@@ -104,7 +104,14 @@ apiClient.interceptors.response.use(
           }
         }
       } catch (refreshError) {
-        // If refresh fails, clear tokens and reject the original request
+        // Distinguish "server unreachable, refresh token might still be
+        // fine" from a definitive rejection (invalid/reused/expired refresh
+        // token) - only the latter means the session is actually dead.
+        const isNetworkError = !refreshError.response;
+        const isServerError = refreshError.response?.status >= 500;
+        if (!isNetworkError && !isServerError) {
+          apiEvents.emit(API_EVENTS.AUTH_SESSION_EXPIRED);
+        }
         return Promise.reject(refreshError);
       }
     }

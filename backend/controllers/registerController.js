@@ -1,5 +1,5 @@
-import jwt from 'jsonwebtoken';
 import { hashPassword } from '../utils/password.js';
+import { issueTokenPair } from '../utils/tokens.js';
 import { generateUsername } from '../utils/username.js';
 import { logEvents } from '../middleware/logEvents.js';
 import RegisterSchema from '../validation/RegisterSchema.js';
@@ -112,24 +112,10 @@ const registerController = async (req, res) => {
     );
 
     // Generate tokens
-    const accessToken = jwt.sign(
-      {
-        id: newUser.id,
-        username: newUser.username,
-      },
-      process.env.ACCESS_TOKEN_SECRET,
-      { expiresIn: process.env.ACCESS_TOKEN_EXPIRES_IN || '15m' }
-    );
-
-    const refreshToken = jwt.sign(
-      { id: newUser.id },
-      process.env.REFRESH_TOKEN_SECRET,
-      { expiresIn: process.env.REFRESH_TOKEN_EXPIRES_IN || '30d' }
-    );
-
-
-    // Save refresh token to database
-    await usersModel.updateRefreshToken(newUser.id, refreshToken);
+    const { accessToken, refreshToken } = await issueTokenPair(newUser, {
+      userAgent: req.headers['user-agent'],
+      ipAddress: req.ip,
+    });
 
     // Add Languages
     const new_user_languages = await userLanguagesModel.add(newUser.id, user_progress.languages);

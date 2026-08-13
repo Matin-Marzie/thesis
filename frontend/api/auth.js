@@ -284,7 +284,9 @@ export const refreshAccessToken = async () => {
       throw networkError;
     }
     
-    // Auth error (invalid/expired refresh token) - throw clean error
+    // Auth error (invalid/expired/reused refresh token) - the session is
+    // definitively dead, not just temporarily unreachable.
+    apiEvents.emit(API_EVENTS.AUTH_SESSION_EXPIRED);
     const errorMessage = error.response?.data?.message || error.message || 'Token refresh failed';
     throw new Error(errorMessage);
   }

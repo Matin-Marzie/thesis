@@ -1,4 +1,5 @@
-import usersModel from '../models/usersModel.js';
+import refreshTokensModel from '../models/refreshTokensModel.js';
+import { hashRefreshToken } from '../utils/tokens.js';
 import { logEvents } from '../middleware/logEvents.js';
 
 const logoutController = async (req, res) => {
@@ -10,16 +11,16 @@ const logoutController = async (req, res) => {
       return res.status(204).json();
     }
 
-    // Find user with this refresh token
-    const user = await usersModel.findByRefreshToken(refreshToken);
+    // Revoke the whole family this token belongs to (not just this one
+    // row), so logout reliably kills the device's session even if the
+    // client's stored token happens to be one rotation behind.
+    const row = await refreshTokensModel.findByHash(hashRefreshToken(refreshToken));
 
-    if (user) {
-      // Clear refresh token from database
-      await usersModel.clearRefreshToken(user.id);
-      logEvents(`User logged out: ${user.email}`, 'authLog.log');
+    if (row) {
+      await refreshTokensModel.revokeFamily(row.family_id);
+      logEvents(`User logged out (user ${row.user_id})`, 'authLog.log');
     }
 
-    // Refresh token cleared from database
     res.status(200).json({
       message: 'Logout successful',
     });

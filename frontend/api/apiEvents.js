@@ -33,6 +33,10 @@ export const API_EVENTS = {
   SERVER_ERROR: 'SERVER_ERROR',
   /** Emitted when a successful response is received (server is back online) */
   SERVER_RECOVERED: 'SERVER_RECOVERED',
+  /** Emitted when a refresh token attempt definitively fails (invalid,
+   * reused, or past its absolute expiry) - as opposed to a network/server
+   * error, where the refresh token itself might still be valid. */
+  AUTH_SESSION_EXPIRED: 'AUTH_SESSION_EXPIRED',
 };
 
 /**

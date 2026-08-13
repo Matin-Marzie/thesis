@@ -19,31 +19,6 @@ SET client_min_messages = warning;
 SET row_security = off;
 
 --
--- Name: update_last_login_on_refresh_token(); Type: FUNCTION; Schema: public; Owner: root
---
-
-CREATE FUNCTION public.update_last_login_on_refresh_token() RETURNS trigger
-    LANGUAGE plpgsql
-    AS $$
-BEGIN
-  -- Only update last_login if refresh_token is actually changing
-  IF NEW.refresh_token IS DISTINCT FROM OLD.refresh_token AND NEW.refresh_token IS NOT NULL THEN
-    NEW.last_login = NOW();
-  END IF;
-  RETURN NEW;
-END;
-$$;
-
-
-ALTER FUNCTION public.update_last_login_on_refresh_token() OWNER TO root;
-
---
--- Name: FUNCTION update_last_login_on_refresh_token(); Type: COMMENT; Schema: public; Owner: root
---
-
-COMMENT ON FUNCTION public.update_last_login_on_refresh_token() IS 'Automatically updates last_login timestamp when refresh_token is updated';
-
---
 -- Name: delete_dialogue_after_reel_delete(); Type: FUNCTION; Schema: public; Owner: root
 --
 
@@ -594,6 +569,53 @@ CREATE TABLE public.password_reset_codes (
 ALTER TABLE public.password_reset_codes OWNER TO root;
 
 --
+-- Name: refresh_tokens; Type: TABLE; Schema: public; Owner: root
+--
+
+CREATE TABLE public.refresh_tokens (
+    id bigint NOT NULL,
+    user_id bigint NOT NULL,
+    family_id uuid DEFAULT gen_random_uuid() NOT NULL,
+    token_hash text NOT NULL,
+    created_at timestamp with time zone DEFAULT now() NOT NULL,
+    expires_at timestamp with time zone NOT NULL,
+    revoked_at timestamp with time zone,
+    replaced_by_id bigint,
+    user_agent text,
+    ip_address text,
+    last_used_at timestamp with time zone
+);
+
+
+ALTER TABLE public.refresh_tokens OWNER TO root;
+
+COMMENT ON TABLE public.refresh_tokens IS 'Refresh token sessions. One row per issued token; rotation chains rows via family_id. expires_at is fixed at family creation (absolute cap) and copied forward on rotation.';
+COMMENT ON COLUMN public.refresh_tokens.family_id IS 'Shared by every token in a rotation chain from one login. Revoking a family revokes the whole chain (reuse detection / logout).';
+COMMENT ON COLUMN public.refresh_tokens.expires_at IS 'Absolute cap set once at family creation; unchanged by rotation.';
+COMMENT ON COLUMN public.refresh_tokens.revoked_at IS 'NULL = active. Set on rotation (old row), reuse detection, logout, or password reset.';
+
+--
+-- Name: refresh_tokens_id_seq; Type: SEQUENCE; Schema: public; Owner: root
+--
+
+CREATE SEQUENCE public.refresh_tokens_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.refresh_tokens_id_seq OWNER TO root;
+
+--
+-- Name: refresh_tokens_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: root
+--
+
+ALTER SEQUENCE public.refresh_tokens_id_seq OWNED BY public.refresh_tokens.id;
+
+
+--
 -- Name: users; Type: TABLE; Schema: public; Owner: root
 --
 
@@ -604,7 +626,6 @@ CREATE TABLE public.users (
     last_name character varying(100),
     username character varying(50) NOT NULL,
     password_hash text,
-    refresh_token text,
     email character varying(255),
     profile_picture text,
     joined_date timestamp with time zone DEFAULT now() NOT NULL,
@@ -732,6 +753,13 @@ ALTER TABLE ONLY public.reel_reports ALTER COLUMN id SET DEFAULT nextval('public
 --
 
 ALTER TABLE ONLY public.reels ALTER COLUMN id SET DEFAULT nextval('public.reels_id_seq'::regclass);
+
+
+--
+-- Name: refresh_tokens id; Type: DEFAULT; Schema: public; Owner: root
+--
+
+ALTER TABLE ONLY public.refresh_tokens ALTER COLUMN id SET DEFAULT nextval('public.refresh_tokens_id_seq'::regclass);
 
 
 --
@@ -956,6 +984,14 @@ COPY public.reels (id, language_id, dialogue_id, created_by, url, thumbnail_url,
 10	3	\N	3	http://localhost:3500/static/3-sedkhareji/akasi.mp4	\N	\N	\N	\N	2026-04-07 10:25:47.411894+03
 11	3	\N	3	http://localhost:3500/static/3-sedkhareji/doktor.mp4	\N	\N	\N	\N	2026-04-07 10:27:59.82117+03
 12	3	\N	3	http://localhost:3500/static/3-sedkhareji/esfehan.mp4	\N	\N	\N	\N	2026-04-07 10:28:20.622291+03
+\.
+
+
+--
+-- Data for Name: refresh_tokens; Type: TABLE DATA; Schema: public; Owner: root
+--
+
+COPY public.refresh_tokens (id, user_id, family_id, token_hash, created_at, expires_at, revoked_at, replaced_by_id, user_agent, ip_address, last_used_at) FROM stdin;
 \.
 
 
@@ -4066,11 +4102,11 @@ COPY public.user_vocabulary (id, user_id, word_id, mastery_level, last_review, c
 -- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: root
 --
 
-COPY public.users (id, google_id, first_name, last_name, username, password_hash, refresh_token, email, profile_picture, joined_date, last_login, energy, coins, age, preferences, notifications, email_verified) FROM stdin;
-2	\N	Matin	\N	matin	$2b$10$BAhmVr5MLQm7kkXjUuBeJO4Wlvc.de1dqIh1yipm1ddACHyz3m.VG	eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjIiLCJpYXQiOjE3NzYxOTI0NTIsImV4cCI6MTc3ODc4NDQ1Mn0.RBsPItKc_76VekAPYB8OZbqJSwwxeDXP0VDVLLVhVOk	matin1@ionio.gr	\N	2026-03-11 23:13:36.677333+02	2026-04-14 21:47:32.989722+03	100	680	25	Make up	t	f
-4	\N	\N	\N	calligraphy_ghasemian	\N	\N	\N	\N	2026-04-07 10:41:29.363921+03	\N	100	20	\N	\N	t	f
-1	\N	admin	\N	admin	$2b$10$QUDz5xnUbe77Rk9VYBzzl.sZKS7EkU0YVLIb78oICrsCcMd2lU8SG	\N	matin@ionio.gr	\N	2026-03-09 17:08:32.449024+02	2026-04-10 17:59:42.441012+03	100	400	25	Video games	t	f
-3	\N		\N	sedkhareji	\N	\N	\N	\N	2026-04-07 09:31:43.637905+03	\N	100	20	\N	\N	t	f
+COPY public.users (id, google_id, first_name, last_name, username, password_hash, email, profile_picture, joined_date, last_login, energy, coins, age, preferences, notifications, email_verified) FROM stdin;
+2	\N	Matin	\N	matin	$2b$10$BAhmVr5MLQm7kkXjUuBeJO4Wlvc.de1dqIh1yipm1ddACHyz3m.VG	matin1@ionio.gr	\N	2026-03-11 23:13:36.677333+02	2026-04-14 21:47:32.989722+03	100	680	25	Make up	t	f
+4	\N	\N	\N	calligraphy_ghasemian	\N	\N	\N	2026-04-07 10:41:29.363921+03	\N	100	20	\N	\N	t	f
+1	\N	admin	\N	admin	$2b$10$QUDz5xnUbe77Rk9VYBzzl.sZKS7EkU0YVLIb78oICrsCcMd2lU8SG	matin@ionio.gr	\N	2026-03-09 17:08:32.449024+02	2026-04-10 17:59:42.441012+03	100	400	25	Video games	t	f
+3	\N		\N	sedkhareji	\N	\N	\N	2026-04-07 09:31:43.637905+03	\N	100	20	\N	\N	t	f
 \.
 
 
@@ -20081,6 +20117,13 @@ SELECT pg_catalog.setval('public.reels_id_seq', 16, true);
 
 
 --
+-- Name: refresh_tokens_id_seq; Type: SEQUENCE SET; Schema: public; Owner: root
+--
+
+SELECT pg_catalog.setval('public.refresh_tokens_id_seq', 1, false);
+
+
+--
 -- Name: sentence_tokens_id_seq; Type: SEQUENCE SET; Schema: public; Owner: root
 --
 
@@ -20233,6 +20276,22 @@ ALTER TABLE ONLY public.reels
 
 
 --
+-- Name: refresh_tokens refresh_tokens_pkey; Type: CONSTRAINT; Schema: public; Owner: root
+--
+
+ALTER TABLE ONLY public.refresh_tokens
+    ADD CONSTRAINT refresh_tokens_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: refresh_tokens refresh_tokens_token_hash_key; Type: CONSTRAINT; Schema: public; Owner: root
+--
+
+ALTER TABLE ONLY public.refresh_tokens
+    ADD CONSTRAINT refresh_tokens_token_hash_key UNIQUE (token_hash);
+
+
+--
 -- Name: sentence_tokens sentence_tokens_pkey; Type: CONSTRAINT; Schema: public; Owner: root
 --
 
@@ -20351,17 +20410,18 @@ CREATE UNIQUE INDEX users_email_unique_idx ON public.users USING btree (email) W
 
 
 --
--- Name: users trigger_update_last_login; Type: TRIGGER; Schema: public; Owner: root
+-- Name: idx_refresh_tokens_family_id; Type: INDEX; Schema: public; Owner: root
 --
 
-CREATE TRIGGER trigger_update_last_login BEFORE UPDATE OF refresh_token ON public.users FOR EACH ROW EXECUTE FUNCTION public.update_last_login_on_refresh_token();
+CREATE INDEX idx_refresh_tokens_family_id ON public.refresh_tokens USING btree (family_id);
 
 
 --
--- Name: TRIGGER trigger_update_last_login ON users; Type: COMMENT; Schema: public; Owner: root
+-- Name: idx_refresh_tokens_user_active; Type: INDEX; Schema: public; Owner: root
 --
 
-COMMENT ON TRIGGER trigger_update_last_login ON public.users IS 'Updates last_login to NOW() when refresh_token is updated';
+CREATE INDEX idx_refresh_tokens_user_active ON public.refresh_tokens USING btree (user_id) WHERE (revoked_at IS NULL);
+
 
 --
 -- Name: reels trigger_delete_dialogue_after_reel_delete; Type: TRIGGER; Schema: public; Owner: root
@@ -20471,6 +20531,22 @@ ALTER TABLE ONLY public.reels
 
 ALTER TABLE ONLY public.reels
     ADD CONSTRAINT reels_language_id_fkey FOREIGN KEY (language_id) REFERENCES public.languages(id);
+
+
+--
+-- Name: refresh_tokens refresh_tokens_replaced_by_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: root
+--
+
+ALTER TABLE ONLY public.refresh_tokens
+    ADD CONSTRAINT refresh_tokens_replaced_by_id_fkey FOREIGN KEY (replaced_by_id) REFERENCES public.refresh_tokens(id) ON DELETE SET NULL;
+
+
+--
+-- Name: refresh_tokens refresh_tokens_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: root
+--
+
+ALTER TABLE ONLY public.refresh_tokens
+    ADD CONSTRAINT refresh_tokens_user_id_fkey FOREIGN KEY (user_id) REFERENCES public.users(id) ON DELETE CASCADE;
 
 
 --

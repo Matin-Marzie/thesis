@@ -4,7 +4,7 @@ import { useFonts } from 'expo-font';
 import { Stack, useRouter, useSegments } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import * as Notifications from 'expo-notifications';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { View, ActivityIndicator } from 'react-native';
 import 'react-native-reanimated';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
@@ -19,6 +19,9 @@ import { DictionaryProvider } from '../context/DictionaryContext';
 import { ReelsProvider } from '../context/ReelsContext';
 import { PRIMARY_COLOR } from '@/constants/App';
 import ServerErrorBanner from '@/components/ServerErrorBanner';
+import SessionExpiredBanner from '@/components/SessionExpiredBanner';
+import { useLogout } from '@/hooks/useLogout';
+import { apiEvents, API_EVENTS } from '@/api/apiEvents';
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -77,12 +80,26 @@ function RootLayoutNav() {
   const { isLoading, hasCompletedOnboarding } = useAuth();
   const segments = useSegments();
   const router = useRouter();
+  const { logout } = useLogout();
+  const [sessionExpiredTrigger, setSessionExpiredTrigger] = useState<number | null>(null);
 
-  // 
+  // A previously-authenticated session was definitively invalidated (refresh
+  // token past its absolute cap, or revoked via reuse detection). Reuse the
+  // same logout() the settings screen uses - it clears tokens, resets local
+  // state, and sets hasCompletedOnboarding=false, which the effect below
+  // then naturally routes to /onboarding/landing. Just show a banner on top.
+  useEffect(() => {
+    const unsubscribe = apiEvents.on(API_EVENTS.AUTH_SESSION_EXPIRED, () => {
+      logout();
+      setSessionExpiredTrigger(Date.now());
+    });
+    return () => { unsubscribe(); };
+  }, [logout]);
+
+  
   useEffect(() => {
     if (isLoading) return;
 
-    // 
     const inOnboardingGroup = segments[0] === 'onboarding';
     const inTabsGroup = segments[0] === '(tabs)';
     const inSettingsScreen = segments[0] === 'settings';
@@ -143,6 +160,7 @@ function RootLayoutNav() {
   return (
     <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
       <ServerErrorBanner />
+      <SessionExpiredBanner trigger={sessionExpiredTrigger} />
       <Stack screenOptions={{ headerShown: false }}>
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
         <Stack.Screen name="onboarding" options={{ headerShown: false }} />

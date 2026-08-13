@@ -1,5 +1,5 @@
-import jwt from 'jsonwebtoken';
 import usersModel from '../models/usersModel.js';
+import { issueTokenPair } from '../utils/tokens.js';
 import userLanguagesModel from '../models/userLanguagesModel.js';
 import userVocabularyModel from '../models/userVocabularyModel.js';
 import { logEvents } from '../middleware/logEvents.js';
@@ -61,24 +61,10 @@ const googleLoginController = async (req, res) => {
     const userVocabulary = await userVocabularyModel.get(user.id, current_language.id);
 
     // Generate tokens
-    const accessToken = jwt.sign(
-      {
-        id: user.id,
-        email: user.email,
-        username: user.username,
-      },
-      process.env.ACCESS_TOKEN_SECRET,
-      { expiresIn: process.env.ACCESS_TOKEN_EXPIRES_IN || '15m' }
-    );
-
-    const refreshToken = jwt.sign(
-      { id: user.id },
-      process.env.REFRESH_TOKEN_SECRET,
-      { expiresIn: process.env.REFRESH_TOKEN_EXPIRES_IN || '30d' }
-    );
-
-    // Save refresh token to database
-    await usersModel.updateRefreshToken(user.id, refreshToken);
+    const { accessToken, refreshToken } = await issueTokenPair(user, {
+      userAgent: req.headers['user-agent'],
+      ipAddress: req.ip,
+    });
 
     logEvents(`User logged in via Google: ${email}`, 'authLog.log');
 
