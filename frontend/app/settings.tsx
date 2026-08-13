@@ -5,12 +5,35 @@ import { Ionicons } from '@expo/vector-icons';
 import * as WebBrowser from 'expo-web-browser';
 import TouchableOpacity from '../components/TouchableOpacity';
 import { useColorScheme } from '../components/useColorScheme';
+import { useAuth } from '../context/AuthContext';
+import { useProfile } from '../context/ProfileContext';
 import { DARK_COLORS } from '../constants/App';
-import { PRIVACY_POLICY_URL, TERMS_OF_USE_URL, OSS_LICENSES_URL } from '../config/legal.config';
+import { DEFAULT_USER_PROFILE } from '../constants/defaults';
+import { PRIVACY_POLICY_URL, TERMS_OF_USE_URL, OSS_LICENSES_URL, FEEDBACK_URL } from '../config/legal.config';
 
 export default function SettingsScreen() {
   const isDark = useColorScheme() === 'dark';
   const router = useRouter();
+  const { isAuthenticated } = useAuth();
+  const { userProfile } = useProfile();
+
+  const handleOpenFeedback = async () => {
+    try {
+      // WebBrowser opens a separate browser process with no JS bridge back
+      // to the app, so the only way to hand it the signed-in user's email
+      // (to save them retyping it) is via a URL query param - the page
+      // reads it and pre-fills the field. Skip it for guests/unauthenticated
+      // users so the form doesn't get the placeholder default email.
+      const email = isAuthenticated && userProfile?.email && userProfile.email !== DEFAULT_USER_PROFILE.email
+        ? userProfile.email
+        : null;
+      const url = email ? `${FEEDBACK_URL}?email=${encodeURIComponent(email)}` : FEEDBACK_URL;
+      await WebBrowser.openBrowserAsync(url);
+    } catch (error) {
+      console.error('Open feedback error:', error);
+      Alert.alert('Could not open page', 'Please try again later.');
+    }
+  };
 
   const handleOpenPrivacyPolicy = async () => {
     try {
@@ -65,9 +88,9 @@ export default function SettingsScreen() {
             <Ionicons name="chevron-forward" size={20} color={chevronColor} />
           </TouchableOpacity>
 
-          <TouchableOpacity style={[styles.menuItem, isDark && { borderBottomColor: DARK_COLORS.border }]}>
+          <TouchableOpacity style={[styles.menuItem, isDark && { borderBottomColor: DARK_COLORS.border }]} onPress={handleOpenFeedback}>
             <Ionicons name="help-circle-outline" size={24} color={iconColor} />
-            <Text style={[styles.menuText, isDark && { color: DARK_COLORS.text }]}>Help & Support</Text>
+            <Text style={[styles.menuText, isDark && { color: DARK_COLORS.text }]}>Feedback</Text>
             <Ionicons name="chevron-forward" size={20} color={chevronColor} />
           </TouchableOpacity>
 

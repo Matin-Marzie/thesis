@@ -616,6 +616,49 @@ ALTER SEQUENCE public.refresh_tokens_id_seq OWNED BY public.refresh_tokens.id;
 
 
 --
+-- Name: feedback; Type: TABLE; Schema: public; Owner: root
+--
+
+CREATE TABLE public.feedback (
+    id bigint NOT NULL,
+    category text NOT NULL,
+    message text NOT NULL,
+    email character varying(255) NOT NULL,
+    user_agent text,
+    ip_address text,
+    created_at timestamp with time zone DEFAULT now() NOT NULL,
+    CONSTRAINT feedback_category_check CHECK ((category = ANY (ARRAY['bug'::text, 'suggestion'::text, 'question'::text, 'account_access'::text, 'other'::text]))),
+    CONSTRAINT feedback_email_not_blank CHECK ((length(btrim((email)::text)) > 0)),
+    CONSTRAINT feedback_message_not_blank CHECK ((length(btrim(message)) > 0))
+);
+
+
+ALTER TABLE public.feedback OWNER TO root;
+
+COMMENT ON TABLE public.feedback IS 'Feedback submitted via the public feedback page (backend/public/feedback.html), no account required.';
+
+--
+-- Name: feedback_id_seq; Type: SEQUENCE; Schema: public; Owner: root
+--
+
+CREATE SEQUENCE public.feedback_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.feedback_id_seq OWNER TO root;
+
+--
+-- Name: feedback_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: root
+--
+
+ALTER SEQUENCE public.feedback_id_seq OWNED BY public.feedback.id;
+
+
+--
 -- Name: users; Type: TABLE; Schema: public; Owner: root
 --
 
@@ -760,6 +803,13 @@ ALTER TABLE ONLY public.reels ALTER COLUMN id SET DEFAULT nextval('public.reels_
 --
 
 ALTER TABLE ONLY public.refresh_tokens ALTER COLUMN id SET DEFAULT nextval('public.refresh_tokens_id_seq'::regclass);
+
+
+--
+-- Name: feedback id; Type: DEFAULT; Schema: public; Owner: root
+--
+
+ALTER TABLE ONLY public.feedback ALTER COLUMN id SET DEFAULT nextval('public.feedback_id_seq'::regclass);
 
 
 --
@@ -992,6 +1042,14 @@ COPY public.reels (id, language_id, dialogue_id, created_by, url, thumbnail_url,
 --
 
 COPY public.refresh_tokens (id, user_id, family_id, token_hash, created_at, expires_at, revoked_at, replaced_by_id, user_agent, ip_address, last_used_at) FROM stdin;
+\.
+
+
+--
+-- Data for Name: feedback; Type: TABLE DATA; Schema: public; Owner: root
+--
+
+COPY public.feedback (id, category, message, email, user_agent, ip_address, created_at) FROM stdin;
 \.
 
 
@@ -20124,6 +20182,13 @@ SELECT pg_catalog.setval('public.refresh_tokens_id_seq', 1, false);
 
 
 --
+-- Name: feedback_id_seq; Type: SEQUENCE SET; Schema: public; Owner: root
+--
+
+SELECT pg_catalog.setval('public.feedback_id_seq', 1, false);
+
+
+--
 -- Name: sentence_tokens_id_seq; Type: SEQUENCE SET; Schema: public; Owner: root
 --
 
@@ -20292,6 +20357,14 @@ ALTER TABLE ONLY public.refresh_tokens
 
 
 --
+-- Name: feedback feedback_pkey; Type: CONSTRAINT; Schema: public; Owner: root
+--
+
+ALTER TABLE ONLY public.feedback
+    ADD CONSTRAINT feedback_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: sentence_tokens sentence_tokens_pkey; Type: CONSTRAINT; Schema: public; Owner: root
 --
 
@@ -20421,6 +20494,13 @@ CREATE INDEX idx_refresh_tokens_family_id ON public.refresh_tokens USING btree (
 --
 
 CREATE INDEX idx_refresh_tokens_user_active ON public.refresh_tokens USING btree (user_id) WHERE (revoked_at IS NULL);
+
+
+--
+-- Name: idx_feedback_created_at; Type: INDEX; Schema: public; Owner: root
+--
+
+CREATE INDEX idx_feedback_created_at ON public.feedback USING btree (created_at DESC);
 
 
 --

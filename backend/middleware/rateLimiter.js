@@ -104,5 +104,17 @@ export const dictionaryLimiter = rateLimit({
   max: 1,
   standardHeaders: true,
   legacyHeaders: false,
-  message: { message: 'Too many dictionary requests. You have reached the limit. Please try again later.' },
+  message: { message: 'Too many dictionary requests.\nYou have reached the limit.\nPlease try again later.' },
+});
+
+// Public, no-auth endpoint (see feedback.html) - keyed by IP since there's
+// no user to key by. Generous enough for a real person submitting feedback,
+// tight enough to blunt spam/abuse of the open form.
+// 5 submissions per hour per IP
+export const feedbackLimiter = rateLimit({
+  windowMs: 60 * 60 * 1000,
+  max: 5,
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { message: 'Too many feedback submissions.\nYou have reached the limit.\nPlease try again later.' },
 });

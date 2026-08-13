@@ -12,9 +12,11 @@ const API_ORIGIN = API_BASE_URL.replace(/\/api\/v1$/, '');
 export const PRIVACY_POLICY_URL = `${API_ORIGIN}/static/legal/privacy-policy.html`;
 export const TERMS_OF_USE_URL = `${API_ORIGIN}/static/legal/terms-of-use.html`;
 export const OSS_LICENSES_URL = `${API_ORIGIN}/static/legal/licenses.html`;
+export const FEEDBACK_URL = `${API_ORIGIN}/static/feedback.html`;
 
 export default {
   PRIVACY_POLICY_URL,
   TERMS_OF_USE_URL,
   OSS_LICENSES_URL,
+  FEEDBACK_URL,
 };

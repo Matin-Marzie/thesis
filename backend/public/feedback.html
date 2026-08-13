@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>gloreels — Feedback</title>
+<style>
+  :root { color-scheme: light dark; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    max-width: 640px;
+    margin: 0 auto;
+    padding: 32px 20px 80px;
+    line-height: 1.6;
+    color: #1a1a1a;
+    background: #fff;
+  }
+  h1 { font-size: 1.8em; margin-bottom: 0.2em; }
+  p.meta { color: #666; font-size: 0.95em; margin-bottom: 2em; }
+  label { display: block; font-weight: 600; margin: 1.2em 0 0.4em; font-size: 0.95em; }
+  select, textarea, input[type="email"] {
+    width: 100%;
+    box-sizing: border-box;
+    font: inherit;
+    padding: 10px 12px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    background: #fff;
+    color: #1a1a1a;
+  }
+  textarea { min-height: 140px; resize: vertical; }
+  .hint { color: #777; font-size: 0.85em; margin-top: 0.3em; }
+  .required { color: #d64541; }
+  button {
+    margin-top: 1.6em;
+    background: #0f8690;
+    color: #fff;
+    border: none;
+    padding: 12px 22px;
+    font-size: 1em;
+    font-weight: 600;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+  button:disabled { opacity: 0.6; cursor: default; }
+  .status { margin-top: 1.2em; padding: 12px 16px; border-radius: 6px; display: none; }
+  .status.success { display: block; background: #e6f5e9; color: #14532d; border-left: 4px solid #22a05a; }
+  .status.error { display: block; background: #fdeceb; color: #7a1f1a; border-left: 4px solid #d64541; }
+  a { color: #0f8690; }
+
+  @media (prefers-color-scheme: dark) {
+    body { background: #121212; color: #eee; }
+    p.meta, .hint { color: #999; }
+    select, textarea, input[type="email"] { background: #1e1e1e; color: #eee; border-color: #444; }
+    .status.success { background: #123a1f; color: #b7e6c3; }
+    .status.error { background: #3a1512; color: #f3b8b4; }
+  }
+</style>
+</head>
+<body>
+
+<h1>Send Feedback</h1>
+<p class="meta">Found a bug, have a suggestion, or just want to tell us something? This form doesn't require a gloreels account. You can also email us directly at <a href="mailto:gloreels.gr@gmail.com">gloreels.gr@gmail.com</a>.</p>
+
+<form id="feedback-form">
+  <label for="email">Email <span class="required">*</span> <span class="hint"></span></label>
+  <input type="email" id="email" name="email" required placeholder="you@example.com">
+
+  <label for="category">Category <span class="required">*</span></label>
+  <select id="category" name="category" required>
+    <option value="" selected disabled>Select a category...</option>
+    <option value="bug">Bug report</option>
+    <option value="suggestion">Suggestion</option>
+    <option value="question">Question</option>
+    <option value="account_access">I cannot access my account</option>
+    <option value="other">Other</option>
+  </select>
+
+  <label for="message">Message <span class="required">*</span></label>
+  <textarea id="message" name="message" required minlength="5" maxlength="4000" placeholder="Tell us what's on your mind..."></textarea>
+
+  <button type="submit" id="submit-btn">Send Feedback</button>
+
+  <div class="status" id="status"></div>
+</form>
+
+<script>
+  const form = document.getElementById('feedback-form');
+  const statusEl = document.getElementById('status');
+  const submitBtn = document.getElementById('submit-btn');
+
+  // Pre-filled by the app (see settings.tsx) for signed-in users, passed as
+  // a URL query param since WebBrowser.openBrowserAsync has no JS bridge
+  // back to the app. Still editable, and simply absent for guests/direct
+  // web visitors, who type it in themselves.
+  const prefillEmail = new URLSearchParams(window.location.search).get('email');
+  if (prefillEmail) {
+    document.getElementById('email').value = prefillEmail;
+  }
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    statusEl.className = 'status';
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Sending...';
+
+    try {
+      const res = await fetch('/api/v1/feedback', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          category: document.getElementById('category').value,
+          message: document.getElementById('message').value,
+          email: document.getElementById('email').value,
+        }),
+      });
+      const data = await res.json().catch(() => ({}));
+
+      if (res.ok) {
+        statusEl.textContent = data.message || 'Thanks for the feedback!';
+        statusEl.className = 'status success';
+        form.reset();
+      } else {
+        statusEl.textContent = data.message || 'Something went wrong. Please try again later.';
+        statusEl.className = 'status error';
+      }
+    } catch (err) {
+      statusEl.textContent = 'Network error. Please check your connection and try again.';
+      statusEl.className = 'status error';
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Send Feedback';
+    }
+  });
+</script>
+
+</body>
+</html>

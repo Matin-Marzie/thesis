@@ -24,6 +24,7 @@ import userRouter from './routes/api/user.js';
 import languageRouter from './routes/api/language.js';
 import dictionaryRouter from './routes/api/dictionary.js';
 import reelRouter from './routes/api/reel.js';
+import feedbackRouter from './routes/api/feedback.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -57,6 +58,7 @@ app.use(`/api/${API_VERSION}/user`, userRouter);
 app.use(`/api/${API_VERSION}/language`, languageRouter);
 app.use(`/api/${API_VERSION}/dictionary`, dictionaryRouter);
 app.use(`/api/${API_VERSION}/reel`, reelRouter);
+app.use(`/api/${API_VERSION}/feedback`, feedbackRouter);
 // Root route
 /**
  * @swagger
