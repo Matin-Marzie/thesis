@@ -222,6 +222,20 @@ function RootLayoutNav() {
           }}
         />
         <Stack.Screen
+          name="settings/about"
+          options={{
+            headerShown: true,
+            title: 'About',
+            headerStyle: {
+              backgroundColor: PRIMARY_COLOR,
+            },
+            headerTintColor: '#fff',
+            headerTitleStyle: {
+              fontWeight: 'bold',
+            },
+          }}
+        />
+        <Stack.Screen
           name="games/wordle"
           options={{ headerShown: false }}
         />

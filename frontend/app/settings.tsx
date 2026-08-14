@@ -94,7 +94,7 @@ export default function SettingsScreen() {
             <Ionicons name="chevron-forward" size={20} color={chevronColor} />
           </TouchableOpacity>
 
-          <TouchableOpacity style={[styles.menuItem, isDark && { borderBottomColor: DARK_COLORS.border }]}>
+          <TouchableOpacity style={[styles.menuItem, isDark && { borderBottomColor: DARK_COLORS.border }]} onPress={() => router.push('/settings/about')}>
             <Ionicons name="information-circle-outline" size={24} color={iconColor} />
             <Text style={[styles.menuText, isDark && { color: DARK_COLORS.text }]}>About</Text>
             <Ionicons name="chevron-forward" size={20} color={chevronColor} />
