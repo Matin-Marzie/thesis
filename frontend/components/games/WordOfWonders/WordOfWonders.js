@@ -22,7 +22,7 @@ import ExtraWordsPopup from './pop-ups/ExtraWordsPopup';
 import FinishScreen from './pop-ups/FinishScreen';
 import TutorialOverlay from './pop-ups/TutorialOverlay';
 import ConfirmationPopup from '../ConfirmationPopup';
-import { GREEN, MAX_WIDTH, width, height, horizontalOffset, BACKGROUND_IMAGE_URI, BACKGROUND_OVERLAY_OPACITY } from './gameConstants';
+import { GREEN, MAX_WIDTH, width, height, horizontalOffset, BACKGROUND_IMAGE_URI, BACKGROUND_OVERLAY_OPACITY, EXTRA_WORDS_BATCH_SIZE, EXTRA_WORDS_REWARD, GAME_WIN_REWARD } from './gameConstants';
 import { useVocabularyContext } from '@/context/VocabularyContext';
 import { useProgress } from '@/context/ProgressContext';
 import { useDictionaryContext } from '@/context/DictionaryContext';
@@ -114,6 +114,12 @@ export default function WordOfWonders({ boxData: initialBoxData, gridWords: init
     const [filledBoxes, setFilledBoxes] = useState([]);
     const [foundWords, setFoundWords] = useState([]);
     const [extraWordsScore, setExtraWordsScore] = useState(0);
+    // How many extra words have already been cashed in via the Extra Words
+    // popup's Collect button - always a multiple of EXTRA_WORDS_BATCH_SIZE.
+    // (extraWordsScore - extraWordsCollected) is the progress toward the
+    // next collectible batch, and can exceed the batch size if the player
+    // keeps finding words without opening the popup.
+    const [extraWordsCollected, setExtraWordsCollected] = useState(0);
     const [gameFinished, setGameFinished] = useState(false);
     const [shuffledLetters, setShuffledLetters] = useState(() => shuffleArray(letters));
     const [animatingWord, setAnimatingWord] = useState(null);
@@ -183,6 +189,7 @@ export default function WordOfWonders({ boxData: initialBoxData, gridWords: init
         setAnimatingWord(null);
         setShakeWord(null);
         setExtraWordsScore(0);
+        setExtraWordsCollected(0);
         setShuffledLetters(shuffleArray(letters));
 
         // Reset box animations
@@ -600,12 +607,27 @@ export default function WordOfWonders({ boxData: initialBoxData, gridWords: init
     }, [router]);
 
     const handleCollect = useCallback(() => {
-        const newCoins = coinsRef.current + 10;
+        const newCoins = coinsRef.current + GAME_WIN_REWARD;
         coinsRef.current = newCoins;
         setCoins(newCoins);
         setUserProgress(prev => ({ ...prev, coins: newCoins }));
         onPlayAgain?.();
     }, [onPlayAgain, setUserProgress]);
+
+    // Cashes in one batch of EXTRA_WORDS_BATCH_SIZE extra words for
+    // EXTRA_WORDS_REWARD coins. Deducts only one batch per call - e.g. at
+    // 15/10 progress, one press leaves 5/10; if the player had already
+    // reached 20+/10 (found two batches' worth before opening the popup),
+    // Collect stays enabled and a second press collects the next batch too.
+    const handleCollectExtraWords = useCallback(() => {
+        if (extraWordsScore - extraWordsCollected < EXTRA_WORDS_BATCH_SIZE) return;
+
+        const newCoins = coinsRef.current + EXTRA_WORDS_REWARD;
+        coinsRef.current = newCoins;
+        setCoins(newCoins);
+        setUserProgress(prev => ({ ...prev, coins: newCoins }));
+        setExtraWordsCollected(prev => prev + EXTRA_WORDS_BATCH_SIZE);
+    }, [extraWordsScore, extraWordsCollected, setUserProgress]);
 
     const handleLetterRelease = useCallback(() => {
         if (selectedLetters.length === 0) return;
@@ -992,6 +1014,11 @@ export default function WordOfWonders({ boxData: initialBoxData, gridWords: init
                         extraWords={foundWords.filter(w => dictionarySet[w]?.length && !gridWords[w])}
                         dictionarySet={dictionarySet}
                         score={extraWordsScore}
+                        progress={extraWordsScore - extraWordsCollected}
+                        batchSize={EXTRA_WORDS_BATCH_SIZE}
+                        reward={EXTRA_WORDS_REWARD}
+                        coinTarget={coinTarget}
+                        onCollect={handleCollectExtraWords}
                     />
 
                     {/* Finish Screen (moved to component) */}

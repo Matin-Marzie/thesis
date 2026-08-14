@@ -3,13 +3,13 @@ import { View, Text, StyleSheet, Modal, Animated, Easing, Dimensions, SectionLis
 import { FontAwesome5 } from '@expo/vector-icons';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { popupStyles } from './popupStyles';
-import { GREEN } from '../gameConstants';
+import { GREEN, GAME_WIN_REWARD } from '../gameConstants';
 import VocabularyListItem from '../../../vocabulary/VocabularyListItem';
 import { useVibration } from '@/hooks/useVibration';
 import TouchableOpacity from '@/components/TouchableOpacity';
 
 const COIN_COUNT = 6;
-const REWARD = 10;
+const REWARD = GAME_WIN_REWARD;
 const { height: screenHeight } = Dimensions.get('window');
 
 // Each entry: midX (px right of origin), midY (px down from origin), p1 (fraction of DURATION spent reaching midpoint)

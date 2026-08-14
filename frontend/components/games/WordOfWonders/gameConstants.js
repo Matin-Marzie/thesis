@@ -10,6 +10,13 @@ export const MAX_WIDTH = 768; // Limit width to tablet/mobile size (iPad Pro is 
 export const MAX_CIRCLE_RADIUS = 140; // Maximum radius for the letter cycle on large screens
 export const MAX_GRID_WIDTH = 500; // Maximum width for the game grid on large screens
 
+// Every EXTRA_WORDS_BATCH_SIZE extra (outside-the-grid) words found, the
+// player can collect EXTRA_WORDS_REWARD coins from the Extra Words popup.
+export const EXTRA_WORDS_BATCH_SIZE = 10;
+export const EXTRA_WORDS_REWARD = 10;
+
+export const GAME_WIN_REWARD = 20;
+
 // Screen dimensions
 const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
 export const width = screenWidth > MAX_WIDTH ? MAX_WIDTH : screenWidth;
