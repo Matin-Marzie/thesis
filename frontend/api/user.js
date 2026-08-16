@@ -103,6 +103,24 @@ export const uploadProfilePicture = async (asset) => {
 
 
 /**
+ * Remove the current user's profile picture, reverting to the default avatar
+ * @returns {Promise<Object>} - { message, data: { user } }
+ */
+export const deleteProfilePicture = async () => {
+  try {
+    const response = await apiClient.delete('/user/profile-picture');
+    return response.data;
+  } catch (error) {
+    const message =
+      error.response?.data?.message ||
+      error.message ||
+      'Failed to remove profile picture';
+    throw new Error(message);
+  }
+};
+
+
+/**
  * Permanently delete the current user's account and all associated data
  * @returns {Promise<Object>} - { message }
  */

@@ -208,6 +208,53 @@ router.patch('/profile-picture', verifyJWT, profilePictureLimiter, uploadProfile
 
 /**
  * @swagger
+ * /user/profile-picture:
+ *   delete:
+ *     summary: Remove current user's profile picture
+ *     description: Removes the authenticated user's profile picture, reverting them to the default initial-letter avatar
+ *     tags: [User]
+ *     security:
+ *       - bearerAuth: []
+ *       - cookieAuth: []
+ *     responses:
+ *       200:
+ *         description: Profile picture removed successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: 'Profile picture removed successfully'
+ *                 data:
+ *                   type: object
+ *                   properties:
+ *                     user:
+ *                       $ref: '#/components/schemas/User'
+ *       400:
+ *         description: No profile picture to remove
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error'
+ *       401:
+ *         description: Unauthorized - Missing or invalid token
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error'
+ *       500:
+ *         description: Internal server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error'
+ */
+router.delete('/profile-picture', verifyJWT, userController.deleteProfilePicture);
+
+/**
+ * @swagger
  * /user/me:
  *   delete:
  *     summary: Delete current user's account

@@ -214,6 +214,50 @@ const userController = {
 
 
 
+  // Remove the current user's profile picture, reverting them to the
+  // default initial-letter avatar the frontend shows when there's none set.
+  async deleteProfilePicture(req, res) {
+    try {
+      const userId = req.user.id;
+
+      const previousUser = await usersModel.get(userId);
+
+      if (!previousUser?.profile_picture) {
+        return res.status(400).json({
+          message: 'No profile picture to remove',
+        });
+      }
+
+      const updatedUser = await usersModel.updateProfile(userId, { profile_picture: null });
+
+      if (!updatedUser) {
+        throw new Error('Failed to remove profile picture');
+      }
+
+      // Best-effort - if the file can't be deleted, it's just an orphan,
+      // not something that should block a successful removal.
+      if (isOwnedProfilePicture(previousUser.profile_picture)) {
+        await fs
+          .unlink(path.join(PROFILE_PICTURE_UPLOAD_DIR, String(userId), path.basename(previousUser.profile_picture)))
+          .catch(() => {});
+      }
+
+      res.status(200).json({
+        message: 'Profile picture removed successfully',
+        data: {
+          user: updatedUser,
+        },
+      });
+    } catch (error) {
+      console.error('Delete profile picture error:', error);
+      res.status(500).json({
+        message: 'Internal server error',
+      });
+    }
+  },
+
+
+
   // Get user by ID (public profile)
   async getUserById(req, res) {
     try {
