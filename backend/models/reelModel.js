@@ -81,7 +81,7 @@ const reelModel = {
   // of "my reels" right after login without a separate round trip.
   async getLatestByUser(userId, limit = 6) {
     const result = await pool.query(
-      `SELECT id, url, thumbnail_url, title, duration, created_at
+      `SELECT id, url, thumbnail_url, title, duration, language_id, created_at
        FROM reels
        WHERE created_by = $1
        ORDER BY created_at DESC

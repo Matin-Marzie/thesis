@@ -248,6 +248,7 @@ export default function SyncSubtitlesScreen() {
         thumbnail_url: response.reel.thumbnail_url || null,
         title: response.reel.title,
         duration: response.reel.duration,
+        language_id: languageId,
         created_at: response.reel.created_at,
       });
       reset();
