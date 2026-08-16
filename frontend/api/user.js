@@ -75,6 +75,34 @@ export const updateUserProfile = async (userData) => {
 
 
 /**
+ * Upload/replace the current user's profile picture
+ * @param {Object} asset - { uri, mimeType, fileName } from expo-image-picker
+ * @returns {Promise<Object>} - { message, data: { user } }
+ */
+export const uploadProfilePicture = async (asset) => {
+  const form = new FormData();
+  form.append('profile_picture', {
+    uri: asset.uri,
+    name: asset.fileName || `profile-picture-${Date.now()}.jpg`,
+    type: asset.mimeType || 'image/jpeg',
+  });
+
+  try {
+    const response = await apiClient.patch('/user/profile-picture', form, {
+      headers: { 'Content-Type': 'multipart/form-data' },
+    });
+    return response.data;
+  } catch (error) {
+    const message =
+      error.response?.data?.message ||
+      error.message ||
+      'Failed to update profile picture';
+    throw new Error(message);
+  }
+};
+
+
+/**
  * Permanently delete the current user's account and all associated data
  * @returns {Promise<Object>} - { message }
  */

@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, Image, Pressable } from 'react-native';
+import { View, Text, StyleSheet, Image, Pressable, ActivityIndicator } from 'react-native';
 import { Link } from 'expo-router';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { DARK_COLORS, PRIMARY_COLOR } from '@/constants/App';
@@ -9,21 +9,51 @@ interface ProfileHeaderProps {
   firstName?: string;
   username?: string;
   profilePicture?: string;
+  onChangePicture?: () => void;
+  changingPicture?: boolean;
 }
 
-export function ProfileHeader({ isDark, firstName, username, profilePicture }: ProfileHeaderProps) {
+export function ProfileHeader({
+  isDark,
+  firstName,
+  username,
+  profilePicture,
+  onChangePicture,
+  changingPicture,
+}: ProfileHeaderProps) {
   const initial = (firstName || username || '?').charAt(0).toUpperCase();
 
   return (
     <View style={styles.userSection}>
       <View style={{ flexDirection: 'row', alignItems: 'center', gap: 12, flex: 1 }}>
-        <View style={styles.avatarRing}>
-          {profilePicture ? (
-            <Image source={{ uri: profilePicture }} style={styles.avatarImage} />
-          ) : (
-            <View style={styles.avatarInitial}>
-              <Text style={styles.avatarInitialText}>{initial}</Text>
-            </View>
+        <View style={styles.avatarWrapper}>
+          <View style={styles.avatarRing}>
+            {profilePicture ? (
+              <Image source={{ uri: profilePicture }} style={styles.avatarImage} />
+            ) : (
+              <View style={styles.avatarInitial}>
+                <Text style={styles.avatarInitialText}>{initial}</Text>
+              </View>
+            )}
+          </View>
+
+          {onChangePicture && (
+            <Pressable
+              onPress={onChangePicture}
+              disabled={changingPicture}
+              hitSlop={8}
+              style={({ pressed }) => [
+                styles.avatarBadge,
+                isDark && { borderColor: DARK_COLORS.background },
+                { opacity: pressed ? 0.7 : 1 },
+              ]}
+            >
+              {changingPicture ? (
+                <ActivityIndicator size="small" color="#fff" />
+              ) : (
+                <FontAwesome name={profilePicture ? 'pencil' : 'plus'} size={13} color="#fff" />
+              )}
+            </Pressable>
           )}
         </View>
         <View style={styles.userInfo}>
@@ -59,6 +89,10 @@ const styles = StyleSheet.create({
     paddingHorizontal: 12,
     marginBottom: 4,
   },
+  avatarWrapper: {
+    width: 84,
+    height: 84,
+  },
   avatarRing: {
     width: 84,
     height: 84,
@@ -66,6 +100,19 @@ const styles = StyleSheet.create({
     padding: 3,
     borderWidth: 2,
     borderColor: PRIMARY_COLOR,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  avatarBadge: {
+    position: 'absolute',
+    right: -2,
+    bottom: -2,
+    width: 26,
+    height: 26,
+    borderRadius: 13,
+    backgroundColor: PRIMARY_COLOR,
+    borderWidth: 2,
+    borderColor: '#fff',
     justifyContent: 'center',
     alignItems: 'center',
   },
