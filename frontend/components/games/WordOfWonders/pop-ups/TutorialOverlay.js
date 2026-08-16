@@ -9,15 +9,42 @@
  *   4. Pauses briefly, then loops indefinitely until the user dismisses it.
  *
  * Props:
- *   letterCenters  – Array of { x, y } objects in screen coordinates, one per
- *                    letter in the LettersCycle.  Supplied by the parent after
- *                    LettersCycle's first render via the onLetterCentersReady
- *                    callback.  The overlay uses the first DEMO_COUNT entries.
+ *   letterCenters  – Array of { x, y } objects, one per letter in the
+ *                    LettersCycle, in the same content-local coordinate space
+ *                    as the grid/letter-cycle (i.e. relative to the canvas
+ *                    area below the header, not the raw screen). Supplied by
+ *                    the parent after LettersCycle's first render via the
+ *                    onLetterCentersReady callback. The overlay uses the
+ *                    first DEMO_COUNT entries.
  *   onDismiss      – Called when the user taps "Got it!".  The parent is
  *                    responsible for persisting the "seen" flag to AsyncStorage.
  *   langCode       – The user's native language code ('en' | 'el' | 'fa').
  *                    Controls the instruction text and dismiss-button label,
  *                    and enables RTL text direction for Farsi.
+ *   canvasHeight   – Height of the canvas area (WordOfWonders' measured
+ *                    `availableHeight`, i.e. screen height minus the header).
+ *                    Used instead of the raw screen `height` so the footer
+ *                    lines up with the same gap between grid and letter
+ *                    cycle that the game itself uses. Falls back to the raw
+ *                    screen height if not supplied.
+ *   canvasOriginYRef – Ref holding the canvas area's real page Y position
+ *                    (WordOfWonders' `contentOriginYRef`, from a `.measure()`
+ *                    call on canvasAreaRef - same value used elsewhere to
+ *                    translate PanResponder touches into canvas-local space).
+ *                    This overlay renders in a `Modal`, like every other
+ *                    popup in this game, rather than nested in the game's own
+ *                    view tree: a Modal is its own top-level native window,
+ *                    flush with the real screen origin, so its backdrop
+ *                    trivially covers the header too, and `canvasOriginYRef`
+ *                    can be used directly as the offset without also having
+ *                    to measure this component's own root and diff the two -
+ *                    two prior versions of this fix that each did their own
+ *                    layout/measurement here (one computed from the header's
+ *                    Yoga layout, one diffed a second `.measure()` call
+ *                    against this component's own root) both had a small but
+ *                    visible residual error, so this cuts out any extra
+ *                    measurement in favour of the one value already proven
+ *                    reliable for this exact purpose.
  */
 
 import React, { useEffect, useRef } from 'react';
@@ -27,6 +54,7 @@ import {
   Animated,
   StyleSheet,
   Platform,
+  Modal,
 } from 'react-native';
 import { GREEN, width, height } from '../gameConstants';
 import TouchableOpacity from '@/components/TouchableOpacity';
@@ -104,12 +132,22 @@ const getDemoPoints = (centers) => {
 // Component
 // ---------------------------------------------------------------------------
 
-export default function TutorialOverlay({ letterCenters, onDismiss, langCode = 'en' }) {
+export default function TutorialOverlay({ letterCenters, onDismiss, langCode = 'en', canvasHeight = height, canvasOriginYRef }) {
   // Resolve localised strings; fall back to English for any unsupported code.
   const strings = STRINGS[langCode] ?? STRINGS.en;
 
   // Farsi is the only RTL language in the supported set.
   const isRTL = langCode === 'fa';
+
+  /**
+   * Vertical gap (in px) between the Modal's root (flush with the real
+   * screen origin) and the canvas area's real on-screen position, i.e. how
+   * far down `letterCenters` / `canvasHeight` (both canvas-local) need to be
+   * shifted to line up inside the Modal. See the `canvasOriginYRef` prop doc
+   * above for why this is just the ref's value, with no measurement of our
+   * own needed.
+   */
+  const contentOffset = canvasOriginYRef?.current ?? 0;
 
   // -------------------------------------------------------------------------
   // Animated values — all driven on the native thread (useNativeDriver: true)
@@ -293,18 +331,28 @@ export default function TutorialOverlay({ letterCenters, onDismiss, langCode = '
   // Render
   // -------------------------------------------------------------------------
   return (
+    <Modal visible transparent animationType="none" onRequestClose={() => {}}>
     <View style={styles.root}>
 
       {/* Semi-transparent backdrop that dims the game behind the overlay,
-          drawing the user's attention to the animated demonstration. */}
+          drawing the user's attention to the animated demonstration. The
+          Modal fills the entire real screen (header included), so this
+          covers the header too. */}
       <View style={styles.backdrop} />
+
+      {/* Everything below is positioned in canvas-local coordinates - the
+          same space `letterCenters` and `canvasHeight` were computed in -
+          so it's offset down by `contentOffset` to line back up now that
+          the Modal's root starts at the real screen origin, above the
+          canvas. */}
+      <View style={[styles.content, { top: contentOffset }]}>
 
       {/* SVG connecting lines between consecutive selected letters.
           Rendered only on native (react-native-svg is unavailable on web).
           Each line's opacity is driven by its corresponding lineAnims value
           so it fades in as the finger slides to the next letter. */}
       {Platform.OS !== 'web' && Svg && AnimatedLine && (
-        <Svg style={StyleSheet.absoluteFill} width={width} height={height}>
+        <Svg style={StyleSheet.absoluteFill} width={width} height={canvasHeight}>
           {pts.slice(0, DEMO_COUNT - 1).map((p, i) => (
             <AnimatedLine
               key={i}
@@ -384,7 +432,7 @@ export default function TutorialOverlay({ letterCenters, onDismiss, langCode = '
           Positioned in the vertical gap between the crossword grid and the
           letter cycle so they are always visible and never overlap the
           animated elements. */}
-      <View style={styles.footer}>
+      <View style={[styles.footer, { top: canvasHeight * 0.50 }]}>
         {/* writingDirection: 'rtl' is applied for Farsi so the text flows
             correctly without needing a separate RTL layout pass. */}
         <Text style={[styles.instruction, isRTL && styles.rtlText]}>
@@ -398,7 +446,10 @@ export default function TutorialOverlay({ letterCenters, onDismiss, langCode = '
         </TouchableOpacity>
       </View>
 
+      </View>
+
     </View>
+    </Modal>
   );
 }
 
@@ -407,8 +458,9 @@ export default function TutorialOverlay({ letterCenters, onDismiss, langCode = '
 // ---------------------------------------------------------------------------
 const styles = StyleSheet.create({
   /**
-   * Root container fills the entire screen and sits above all game UI
-   * (zIndex 200 exceeds the highest game element at zIndex 10).
+   * Root fills the Modal, which already covers the entire real screen
+   * (header included) - zIndex here just orders content within this Modal's
+   * own stacking context, not against the game underneath it.
    */
   root: {
     ...StyleSheet.absoluteFillObject,
@@ -419,6 +471,16 @@ const styles = StyleSheet.create({
   backdrop: {
     ...StyleSheet.absoluteFillObject,
     backgroundColor: 'rgba(0,0,0,0.52)',
+  },
+
+  /**
+   * Wraps everything except the backdrop. `root` starts at the real screen
+   * origin, but `letterCenters`/`canvasHeight` are in canvas-local
+   * coordinates (below the header) - `top` is set inline to `contentOffset`
+   * to shift this back into that same space.
+   */
+  content: {
+    ...StyleSheet.absoluteFillObject,
   },
 
   /**
@@ -459,14 +521,13 @@ const styles = StyleSheet.create({
   },
 
   /**
-   * Footer container placed at 50 % of the screen height — in the gap
-   * between the crossword grid (top ~5 %–40 %) and the letter cycle
-   * (bottom ~67 %–95 %).  This ensures the text and button are always
-   * visible regardless of grid size.
+   * Footer container placed at 50 % of the canvas height (passed in via the
+   * `canvasHeight` prop, `top` set inline) — in the gap between the crossword
+   * grid (top ~5 %–40 %) and the letter cycle (bottom ~67 %–95 %). This
+   * ensures the text and button are always visible regardless of grid size.
    */
   footer: {
     position: 'absolute',
-    top: height * 0.50,
     left: 0,
     right: 0,
     alignItems: 'center',

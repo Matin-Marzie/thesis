@@ -73,6 +73,7 @@ export default function WordOfWonders({ boxData: initialBoxData, gridWords: init
             setAvailableHeight(h);
         });
     }, []);
+
     const HAMMER_HEIGHT = availableHeight * 0.69;
 
     // The hammer's PanResponder is created once (see hammerPanResponder below)
@@ -1045,6 +1046,8 @@ export default function WordOfWonders({ boxData: initialBoxData, gridWords: init
                         onCancel={() => setConfirmVisible(false)}
                     />
 
+                    </View>
+
                     {/*
                   * First-time tutorial overlay.
                   *
@@ -1058,18 +1061,28 @@ export default function WordOfWonders({ boxData: initialBoxData, gridWords: init
                   * `langCode` is resolved from the active language entry in
                   * userProgress and controls the instruction text language.
                   * Falls back to 'en' if the language data is not yet loaded.
+                  *
+                  * Rendered as a sibling of the header (not nested inside
+                  * canvasAreaRef) so its dimmed backdrop covers the header
+                  * too, not just the canvas below it. `canvasOriginYRef` lets
+                  * its content still line up with the canvas-local
+                  * coordinates `tutorialLetterCenters` was computed in - see
+                  * the prop's doc comment in TutorialOverlay.js for why this
+                  * is measured in real page pixels rather than computed from
+                  * the header's own layout.
                   */}
                     {showTutorial && tutorialLetterCenters && (
                         <TutorialOverlay
                             letterCenters={tutorialLetterCenters}
                             onDismiss={handleTutorialDismiss}
+                            canvasHeight={availableHeight}
+                            canvasOriginYRef={contentOriginYRef}
                             langCode={
                                 userProgress?.languages?.find(l => l.is_current_language)
                                     ?.native_language?.code ?? 'en'
                             }
                         />
                     )}
-                    </View>
                 </SafeAreaView>
             </ImageBackground>
         </View>
