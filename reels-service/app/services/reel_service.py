@@ -84,11 +84,16 @@ class ReelService:
         )
 
     async def get_sentence_translation(
-        self, 
-        sentence_id: int, 
+        self,
+        sentence_id: int,
         native_language_id: int
     ) -> Optional[str]:
         """Get translation of a sentence in the native language."""
+        # A sentence can have more than one translation_sentence in the same
+        # language - e.g. two different reels each contributing their own
+        # phrasing for the same original sentence - so this isn't guaranteed
+        # to be unique. Pick one deterministically rather than assuming a
+        # single match (scalar_one_or_none would raise MultipleResultsFound).
         result = await self.db.execute(
             select(Sentence.text)
             .join(
@@ -101,8 +106,10 @@ class ReelService:
                     Sentence.language_id == native_language_id
                 )
             )
+            .order_by(Sentence.id)
+            .limit(1)
         )
-        translation = result.scalar_one_or_none()
+        translation = result.scalar()
         return translation
 
     async def build_dialogue_response(

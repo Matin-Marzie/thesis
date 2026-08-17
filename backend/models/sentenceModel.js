@@ -18,9 +18,16 @@ const sentenceModel = {
     return inserted.rows[0].id;
   },
 
+  // Two different lines can end up resolving to the identical
+  // (sentence_id, translation_sentence_id) pair - e.g. two lines with the
+  // same text ("OK") each translated the same way reuse the same sentence
+  // rows via findOrCreate - so the link may already exist; that's a no-op,
+  // not an error.
   async linkTranslation(client, { sentenceId, translationSentenceId }) {
     await client.query(
-      `INSERT INTO sentence_translations (sentence_id, translation_sentence_id) VALUES ($1, $2)`,
+      `INSERT INTO sentence_translations (sentence_id, translation_sentence_id)
+       VALUES ($1, $2)
+       ON CONFLICT (sentence_id, translation_sentence_id) DO NOTHING`,
       [sentenceId, translationSentenceId]
     );
   },
