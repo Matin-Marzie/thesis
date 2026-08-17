@@ -5,6 +5,7 @@ import { logEvents } from '../middleware/logEvents.js';
 import usersModel from '../models/usersModel.js';
 import userLanguagesModel from '../models/userLanguagesModel.js';
 import userVocabularyModel from '../models/userVocabularyModel.js';
+import userSentencesModel from '../models/userSentencesModel.js';
 import reelModel from '../models/reelModel.js';
 import mergeGuestProgress from '../utils/mergeGuestProgress.js';
 
@@ -19,7 +20,7 @@ const authController = async (req, res) => {
       });
     }
 
-    const { username, email, password, user_profile, user_progress, vocabulary_changes } = value;
+    const { username, email, password, user_profile, user_progress, vocabulary_changes, sentence_changes } = value;
 
     // Find user by username or email
     let user;
@@ -77,8 +78,8 @@ const authController = async (req, res) => {
 
     // If the client sent local guest progress along with login, merge it
     // into this account (see mergeGuestProgress.js for the exact rules)
-    if (user_profile || user_progress || vocabulary_changes) {
-      const updatedUser = await mergeGuestProgress(user.id, { user_profile, user_progress, vocabulary_changes }, userLanguages);
+    if (user_profile || user_progress || vocabulary_changes || sentence_changes) {
+      const updatedUser = await mergeGuestProgress(user.id, { user_profile, user_progress, vocabulary_changes, sentence_changes }, userLanguages);
       if (updatedUser) {
         user = { ...user, ...updatedUser };
       }
@@ -90,6 +91,12 @@ const authController = async (req, res) => {
 
     // Fetch user vocabulary for current language
     const user_vocabulary_in_db = await userVocabularyModel.get(
+      user.id,
+      current_language.id,
+    );
+
+    // Fetch user's saved sentences for current language
+    const user_sentences_in_db = await userSentencesModel.get(
       user.id,
       current_language.id,
     );
@@ -120,6 +127,7 @@ const authController = async (req, res) => {
         languages: userLanguages,
       },
       user_vocabulary: user_vocabulary_in_db,
+      user_sentences: user_sentences_in_db,
       user_reels: user_reels_in_db,
       accessToken,
       refreshToken,

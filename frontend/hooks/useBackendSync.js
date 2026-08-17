@@ -1,8 +1,6 @@
 import { useEffect, useRef, useCallback } from 'react';
 import { AppState } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { STORAGE_KEYS } from '../constants/defaults';
-import { DEFAULT_VOCABULARY_CHANGES } from './useVocabulary';
 import { syncUserData } from '../api/user';
 
 const SYNC_INTERVAL_MS = 1000 * 60 * 5; // 5 minute
@@ -22,8 +20,25 @@ export const resetSyncState = () => {
   hasShownSyncError = false;
 };
 
+const hasPendingChanges = (changes) =>
+  Object.keys(changes?.inserts || {}).length > 0 ||
+  Object.keys(changes?.updates || {}).length > 0 ||
+  Object.keys(changes?.deletes || {}).length > 0;
+
 /**
- * Hook to manage syncing userProgress and userVocabulary with the backend.
+ * @typedef {Object} ChangeSet
+ * @property {string} key - payload key sent to /user/sync, e.g. 'vocabulary_changes'
+ * @property {string} storageKey - AsyncStorage key (from STORAGE_KEYS) the changes are persisted under
+ * @property {boolean} isLoaded - whether this change-set has finished loading from storage
+ * @property {Object} changes - the current in-memory changes value (for dirty-tracking only;
+ *   performSync re-reads storage directly, same as before, to avoid stale-closure changes)
+ * @property {Function} setValue - setter to reset this change-set to defaultValue after a successful sync
+ * @property {Object} defaultValue - the DEFAULT_*_CHANGES object for this change-set
+ */
+
+/**
+ * Hook to manage syncing userProgress and any number of change-sets
+ * (vocabulary_changes, sentence_changes, ...) with the backend.
  *
  * Sync triggers:
  * - Every 1 minute (if there are unsynced changes)
@@ -34,15 +49,15 @@ export const resetSyncState = () => {
  * without causing effect re-registrations.
  *
  * @param {boolean} isOnline - Network connectivity status
+ * @param {boolean} isAuthenticated
  * @param {Object} userProgress - Current user progress state
  * @param {boolean} isProgressLoaded - Whether userProgress has loaded from storage
- * @param {Object} vocabularyChanges - Pending vocabulary changes { inserts, updates, deletes }
- * @param {boolean} isVocabularyChangesLoaded - Whether vocabularyChanges has loaded from storage
+ * @param {ChangeSet[]} changeSets - one entry per tracked changes-object (vocabulary, sentences, ...)
  * @returns {{ forceSync: () => Promise<boolean> }} forceSync resolves true if nothing is left
  *   unsynced afterwards, false if the sync attempt failed and changes are still pending
  */
 
-export const useBackendSync = (isOnline, isAuthenticated, userProgress, isProgressLoaded, vocabularyChanges, isVocabularyChangesLoaded, setVocabularyChanges) => {
+export const useBackendSync = (isOnline, isAuthenticated, userProgress, isProgressLoaded, changeSets) => {
   const syncIntervalRef = useRef(null);
   const wasOnlineRef = useRef(isOnline);
   const isOnlineRef = useRef(isOnline);
@@ -50,6 +65,7 @@ export const useBackendSync = (isOnline, isAuthenticated, userProgress, isProgre
 
   // Keep a ref of the latest data to avoid stale closures
   const userProgressRef = useRef(userProgress);
+  const changeSetsRef = useRef(changeSets);
 
   // Track whether the initial load has been skipped (to avoid syncing defaults)
   const hasInitializedRef = useRef(false);
@@ -62,20 +78,21 @@ export const useBackendSync = (isOnline, isAuthenticated, userProgress, isProgre
   useEffect(() => { isOnlineRef.current = isOnline; }, [isOnline]);
   useEffect(() => { isAuthenticatedRef.current = isAuthenticated; }, [isAuthenticated]);
   useEffect(() => { userProgressRef.current = userProgress; }, [userProgress]);
+  useEffect(() => { changeSetsRef.current = changeSets; }, [changeSets]);
+
+  const allChangeSetsLoaded = changeSets.every((cs) => cs.isLoaded);
 
   // Auto-mark dirty only when something that actually needs syncing changed:
-  // coins/energy, or a pending vocabulary insert/update/delete. Reference
-  // changes to userProgress/userVocabulary that don't touch those (switching
-  // languages, applying a SET from the server, bulk-seeding vocabulary
-  // during onboarding) must NOT mark dirty - there's nothing new to push.
+  // coins/energy, or a pending insert/update/delete in any change-set.
+  // Reference changes to userProgress/userSentences/userVocabulary that
+  // don't touch those (switching languages, applying a SET from the server,
+  // bulk-seeding vocabulary during onboarding) must NOT mark dirty - there's
+  // nothing new to push.
   useEffect(() => {
 
-    if (!isProgressLoaded || !isVocabularyChangesLoaded) return;
+    if (!isProgressLoaded || !allChangeSetsLoaded) return;
 
-    const hasVocabChanges =
-      Object.keys(vocabularyChanges?.inserts || {}).length > 0 ||
-      Object.keys(vocabularyChanges?.updates || {}).length > 0 ||
-      Object.keys(vocabularyChanges?.deletes || {}).length > 0;
+    const hasAnyChanges = changeSets.some((cs) => hasPendingChanges(cs.changes));
 
     if (!hasInitializedRef.current) {
       hasInitializedRef.current = true;
@@ -83,7 +100,7 @@ export const useBackendSync = (isOnline, isAuthenticated, userProgress, isProgre
       // Changes carried over from a previous session (e.g. app closed before
       // they synced) are real and still need flushing - only the progress
       // baseline itself should skip marking dirty on this first run.
-      if (hasVocabChanges) hasUnsyncedChanges = true;
+      if (hasAnyChanges) hasUnsyncedChanges = true;
       return;
     }
 
@@ -95,10 +112,11 @@ export const useBackendSync = (isOnline, isAuthenticated, userProgress, isProgre
       lastSyncedProgressRef.current = { coins: userProgress.coins, energy: userProgress.energy };
     }
 
-    if (progressChanged || hasVocabChanges) {
+    if (progressChanged || hasAnyChanges) {
       hasUnsyncedChanges = true;
     }
-  }, [userProgress.coins, userProgress.energy, vocabularyChanges, isProgressLoaded, isVocabularyChangesLoaded]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [userProgress.coins, userProgress.energy, isProgressLoaded, allChangeSetsLoaded, ...changeSets.map((cs) => cs.changes)]);
 
   // Sync to backend — only runs if online, authenticated, and there are unsynced changes.
   // Resolves true once nothing is left unsynced (synced successfully, or there
@@ -109,21 +127,23 @@ export const useBackendSync = (isOnline, isAuthenticated, userProgress, isProgre
     if (!hasUnsyncedChanges) return true;
 
     try {
-      // Read vocabulary changes from AsyncStorage before syncing
-      let vocabularyChanges = DEFAULT_VOCABULARY_CHANGES;
-      try {
-        const stored = await AsyncStorage.getItem(STORAGE_KEYS.USER_VOCABULARY_CHANGES);
-        if (stored) {
-          vocabularyChanges = JSON.parse(stored);
-        }
-      } catch (e) {
-        console.error('[useBackendSync] Failed to read vocabulary changes:', e.message);
-      }
+      // Read each change-set from AsyncStorage before syncing
+      const currentChangeSets = changeSetsRef.current;
+      const readChanges = await Promise.all(
+        currentChangeSets.map(async (cs) => {
+          try {
+            const stored = await AsyncStorage.getItem(cs.storageKey);
+            return stored ? JSON.parse(stored) : cs.defaultValue;
+          } catch (e) {
+            console.error(`[useBackendSync] Failed to read ${cs.key}:`, e.message);
+            return cs.defaultValue;
+          }
+        })
+      );
 
-      const hasVocabularyChanges =
-        Object.keys(vocabularyChanges.inserts).length > 0 ||
-        Object.keys(vocabularyChanges.updates).length > 0 ||
-        Object.keys(vocabularyChanges.deletes).length > 0;
+      const dirtyIndexes = readChanges
+        .map((changes, i) => (hasPendingChanges(changes) ? i : -1))
+        .filter((i) => i !== -1);
 
       const current_user_lang = userProgressRef.current?.languages?.find(lang => lang.is_current_language);
       const syncPayload = {
@@ -132,14 +152,16 @@ export const useBackendSync = (isOnline, isAuthenticated, userProgress, isProgre
           energy: userProgressRef.current.energy,
           current_user_languages_id: current_user_lang?.id,
         },
-        vocabulary_changes: hasVocabularyChanges ? vocabularyChanges : undefined,
       };
+      for (const i of dirtyIndexes) {
+        syncPayload[currentChangeSets[i].key] = readChanges[i];
+      }
 
       await syncUserData(syncPayload, { silent: hasShownSyncError });
 
-      // Clear vocabulary changes via React state setter (usePersistedState will persist it)
-      if (hasVocabularyChanges) {
-        setVocabularyChanges(DEFAULT_VOCABULARY_CHANGES);
+      // Clear each dirty change-set via its React state setter (usePersistedState will persist it)
+      for (const i of dirtyIndexes) {
+        currentChangeSets[i].setValue(currentChangeSets[i].defaultValue);
       }
 
       hasUnsyncedChanges = false;

@@ -1,6 +1,7 @@
 import SyncSchema from '../validation/SyncSchema.js';
 import usersModel from '../models/usersModel.js';
 import userVocabularyModel from '../models/userVocabularyModel.js';
+import userSentencesModel from '../models/userSentencesModel.js';
 
 const syncController = {
   // Sync user progress and vocabulary changes
@@ -17,7 +18,7 @@ const syncController = {
         });
       }
 
-      const { user_progress, vocabulary_changes } = value;
+      const { user_progress, vocabulary_changes, sentence_changes } = value;
       const syncResults = {};
 
       // Update user progress (energy, coins)
@@ -70,6 +71,48 @@ const syncController = {
             currentUserLanguagesId
           );
           syncResults.vocabulary_changes.inserts = insertedWords;
+        }
+      }
+
+      // Handle sentence changes if present
+      if (sentence_changes) {
+        const { inserts, updates, deletes } = sentence_changes;
+        const currentUserLanguagesId = user_progress?.current_user_languages_id;
+
+        if (!currentUserLanguagesId && (inserts && Object.keys(inserts).length > 0)) {
+          return res.status(400).json({
+            message: 'current_user_languages_id is required when inserting sentences',
+          });
+        }
+
+        syncResults.sentence_changes = {};
+
+        // Process deletes first
+        if (deletes && Object.keys(deletes).length > 0) {
+          const sentenceIdsToDelete = Object.keys(deletes).map(Number);
+          const deletedSentences = await userSentencesModel.deleteSentences(userId, [sentenceIdsToDelete]);
+          syncResults.sentence_changes.deletes = deletedSentences.length;
+        }
+
+        // Process updates
+        if (updates && Object.keys(updates).length > 0) {
+          const updatedSentences = await userSentencesModel.update(
+            userId,
+            currentUserLanguagesId,
+            updates
+          );
+          syncResults.sentence_changes.updates = updatedSentences;
+        }
+
+        // Process inserts last
+        if (inserts && Object.keys(inserts).length > 0) {
+          const insertArray = Object.entries(inserts);
+          const insertedSentences = await userSentencesModel.add(
+            userId,
+            insertArray,
+            currentUserLanguagesId
+          );
+          syncResults.sentence_changes.inserts = insertedSentences;
         }
       }
 

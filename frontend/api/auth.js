@@ -166,7 +166,7 @@ export const loginUser = async (credentials) => {
  * 'GOOGLE_ACCOUNT_NOT_FOUND', so the caller can route to onboarding and
  * finish sign-up via registerWithGoogle instead.
  * @param {Object} data - { idToken, platform }
- * @returns {Promise<Object>} - full axios response; response.data = { user_profile, user_progress, user_vocabulary, accessToken, refreshToken }
+ * @returns {Promise<Object>} - full axios response; response.data = { user_profile, user_progress, user_vocabulary, user_sentences, accessToken, refreshToken }
  */
 export const loginWithGoogle = async (data) => {
   try {
@@ -199,7 +199,7 @@ export const loginWithGoogle = async (data) => {
  * during onboarding. If the account already exists, the backend responds
  * the same way a login would rather than erroring.
  * @param {Object} data - { idToken, platform, user_profile, user_progress }
- * @returns {Promise<Object>} - full axios response; response.data = { user_profile, user_progress, user_vocabulary, accessToken, refreshToken }
+ * @returns {Promise<Object>} - full axios response; response.data = { user_profile, user_progress, user_vocabulary, user_sentences, accessToken, refreshToken }
  */
 export const registerWithGoogle = async (data) => {
   try {

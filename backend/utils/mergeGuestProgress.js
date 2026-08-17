@@ -1,6 +1,7 @@
 import usersModel from '../models/usersModel.js';
 import userLanguagesModel from '../models/userLanguagesModel.js';
 import userVocabularyModel from '../models/userVocabularyModel.js';
+import userSentencesModel from '../models/userSentencesModel.js';
 
 const PROFICIENCY_LEVELS = ['N', 'A1', 'A2', 'B1', 'B2', 'C1', 'C2'];
 
@@ -35,13 +36,18 @@ const higherProficiency = (a, b) => {
  *       level and the new (higher of local/account) one; for a brand new
  *       pair it seeds everything below the local level, same as a fresh
  *       registration would.
+ * - sentences: same word-by-word merge rule as vocabulary (only the guest's
+ *   manually-tracked sentence_changes inserts/updates, higher mastery_level
+ *   wins when levels matched going in). Unlike vocabulary there is no
+ *   proficiency-based backfill step - sentences has no level column, so
+ *   there is nothing to seed regardless of whether levelsAreSame.
  *
  * @param {number} userId
- * @param {{ user_profile?: object, user_progress?: object, vocabulary_changes?: { inserts?: object, updates?: object } }} guestData
+ * @param {{ user_profile?: object, user_progress?: object, vocabulary_changes?: { inserts?: object, updates?: object }, sentence_changes?: { inserts?: object, updates?: object } }} guestData
  * @param {Array} accountLanguages - the account's user_languages rows, fetched before merging
  * @returns {Promise<object|null>} the updated user row if profile/coins/energy changed, else null
  */
-const mergeGuestProgress = async (userId, { user_profile, user_progress, vocabulary_changes }, accountLanguages) => {
+const mergeGuestProgress = async (userId, { user_profile, user_progress, vocabulary_changes, sentence_changes }, accountLanguages) => {
   // --- Profile + coins/energy ---
   const profileUpdates = {};
 
@@ -81,6 +87,12 @@ const mergeGuestProgress = async (userId, { user_profile, user_progress, vocabul
       ...(vocabulary_changes?.updates || {}),
     };
 
+    // Same reasoning as localWordChanges, for sentences.
+    const localSentenceChanges = {
+      ...(sentence_changes?.inserts || {}),
+      ...(sentence_changes?.updates || {}),
+    };
+
     for (const localLang of localLanguages) {
       // Coerce both sides to Number before comparing - Postgres/node-pg
       // returns integer id columns as strings, while the client sends them
@@ -95,6 +107,7 @@ const mergeGuestProgress = async (userId, { user_profile, user_progress, vocabul
       // local language - there's nothing to merge for any other local pair.
       const isLocalCurrent = localLang === localCurrentLanguage;
       const localWordIds = isLocalCurrent ? Object.keys(localWordChanges) : [];
+      const localSentenceIds = isLocalCurrent ? Object.keys(localSentenceChanges) : [];
 
       let userLanguagesId;
       let levelsAreSame = false;
@@ -186,6 +199,44 @@ const mergeGuestProgress = async (userId, { user_profile, user_progress, vocabul
         }
         if (Object.keys(toUpdate).length > 0) {
           await userVocabularyModel.update(userId, userLanguagesId, toUpdate);
+        }
+      }
+
+      if (localSentenceIds.length > 0) {
+        // Re-fetch so a sentence saved both locally and on the account is
+        // compared against its current server-side mastery_level.
+        const accountSentences = await userSentencesModel.get(userId, userLanguagesId);
+
+        const sentencesToInsert = [];
+        const sentencesToUpdate = {};
+
+        for (const sentenceId of localSentenceIds) {
+          const localSentence = localSentenceChanges[sentenceId];
+          // An update entry can carry only last_review with no
+          // mastery_level - nothing meaningful to compare or insert then.
+          if (localSentence.mastery_level === undefined) continue;
+
+          const accountSentence = accountSentences[sentenceId];
+
+          if (!accountSentence) {
+            sentencesToInsert.push([sentenceId, {
+              mastery_level: localSentence.mastery_level,
+              last_review: localSentence.last_review ?? null,
+              created_at: localSentence.created_at ?? localSentence.last_review ?? new Date().toISOString(),
+            }]);
+          } else if (!levelsAreSame || localSentence.mastery_level > accountSentence.mastery_level) {
+            // Levels matched going in: only take the local value if it's
+            // actually better. Levels differed (or this is a new pair):
+            // trust the local session's tracked changes outright.
+            sentencesToUpdate[sentenceId] = { mastery_level: localSentence.mastery_level, last_review: localSentence.last_review };
+          }
+        }
+
+        if (sentencesToInsert.length > 0) {
+          await userSentencesModel.add(userId, sentencesToInsert, userLanguagesId);
+        }
+        if (Object.keys(sentencesToUpdate).length > 0) {
+          await userSentencesModel.update(userId, userLanguagesId, sentencesToUpdate);
         }
       }
     }

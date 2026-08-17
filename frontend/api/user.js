@@ -2,7 +2,7 @@ import apiClient from './client.js';
 
 /**
  * Get current user profile with language preferences
- * @returns {Promise<Object>} - { success, data: { user, languages } }
+ * @returns {Promise<Object>} - { success, data: { user, languages, user_vocabulary, user_sentences } }
  */
 export const getCurrentUser = async () => {
   try {
@@ -16,10 +16,11 @@ export const getCurrentUser = async () => {
 
 
 /**
- * Sync user progress and vocabulary changes with the backend
+ * Sync user progress, vocabulary changes, and sentence changes with the backend
  * @param {Object} syncPayload
  * @param {Object} syncPayload.user_progress - { energy, coins, current_user_languages_id }
- * @param {Object|null} syncPayload.vocabulary_changes - { inserts, updates, deletes }
+ * @param {Object|null} [syncPayload.vocabulary_changes] - { inserts, updates, deletes }
+ * @param {Object|null} [syncPayload.sentence_changes] - { inserts, updates, deletes }
  * @returns {Promise<Object>} - { message, results }
  */
 /**

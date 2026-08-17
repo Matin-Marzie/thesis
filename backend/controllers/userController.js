@@ -4,6 +4,7 @@ import UserProfileSchema from '../validation/UserProfileSchema.js';
 import usersModel from '../models/usersModel.js';
 import userLanguagesModel from '../models/userLanguagesModel.js';
 import userVocabularyModel from '../models/userVocabularyModel.js';
+import userSentencesModel from '../models/userSentencesModel.js';
 import { logEvents } from '../middleware/logEvents.js';
 import { REEL_UPLOAD_DIR } from '../middleware/uploadReelVideo.js';
 import { PROFILE_PICTURE_UPLOAD_DIR } from '../middleware/uploadProfilePicture.js';
@@ -42,6 +43,12 @@ const userController = {
         current_language.id,
       );
 
+      // Fetch saved sentences (user_sentences) for current language
+      const saved_sentences = await userSentencesModel.get(
+        userId,
+        current_language.id,
+      );
+
       res.status(200).json({
         message: 'User profile fetched successfully',
         user_profile: {
@@ -62,6 +69,7 @@ const userController = {
           languages: userLanguages,
         },
         user_vocabulary: learned_vocabulary,
+        user_sentences: saved_sentences,
       });
     } catch (error) {
       console.error('Get profile error:', error);

@@ -2,6 +2,7 @@ import { NetworkProvider } from './NetworkContext';
 import { ProfileProvider } from './ProfileContext';
 import { ProgressProvider } from './ProgressContext';
 import { VocabularyProvider } from './VocabularyContext';
+import { SentenceProvider } from './SentenceContext';
 import { UserReelsProvider } from './UserReelsContext';
 import { VibrationProvider } from './VibrationContext';
 import { ReminderProvider } from './ReminderContext';
@@ -17,13 +18,15 @@ export const AppProviders = ({ children }) => (
     <ProfileProvider>
       <ProgressProvider>
         <VocabularyProvider>
-          <UserReelsProvider>
-            <VibrationProvider>
-              <ReminderProvider>
-                <AuthProvider>{children}</AuthProvider>
-              </ReminderProvider>
-            </VibrationProvider>
-          </UserReelsProvider>
+          <SentenceProvider>
+            <UserReelsProvider>
+              <VibrationProvider>
+                <ReminderProvider>
+                  <AuthProvider>{children}</AuthProvider>
+                </ReminderProvider>
+              </VibrationProvider>
+            </UserReelsProvider>
+          </SentenceProvider>
         </VocabularyProvider>
       </ProgressProvider>
     </ProfileProvider>

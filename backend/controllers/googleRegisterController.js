@@ -2,6 +2,7 @@ import usersModel from '../models/usersModel.js';
 import { issueTokenPair } from '../utils/tokens.js';
 import userLanguagesModel from '../models/userLanguagesModel.js';
 import userVocabularyModel from '../models/userVocabularyModel.js';
+import userSentencesModel from '../models/userSentencesModel.js';
 import { generateUsernameFromName } from '../utils/username.js';
 import { logEvents } from '../middleware/logEvents.js';
 import GoogleRegisterSchema from '../validation/GoogleRegisterSchema.js';
@@ -18,7 +19,7 @@ const googleRegisterController = async (req, res) => {
         message: error.details[0].message,
       });
     }
-    const { user_profile, user_progress, vocabulary_changes } = value;
+    const { user_profile, user_progress, vocabulary_changes, sentence_changes } = value;
 
     // Register should only ever create a new account - if one already
     // exists (whether linked to this Google identity already, or under a
@@ -104,6 +105,26 @@ const googleRegisterController = async (req, res) => {
       // Note: deletes are not processed during registration (nothing to delete for a new user)
     }
 
+    // Apply any sentence_changes from the client (manual saves during
+    // onboarding). No proficiency-based seeding here - sentences has no
+    // level column, so userSentences starts empty unless the client sent
+    // something explicit.
+    let userSentences = {};
+    if (sentence_changes) {
+      if (sentence_changes.inserts && Object.keys(sentence_changes.inserts).length > 0) {
+        const insertsArray = Object.entries(sentence_changes.inserts);
+        const insertedSentences = await userSentencesModel.add(user.id, insertsArray, current_language.id);
+        userSentences = { ...userSentences, ...insertedSentences };
+      }
+
+      if (sentence_changes.updates && Object.keys(sentence_changes.updates).length > 0) {
+        const updatedSentences = await userSentencesModel.update(user.id, current_language.id, sentence_changes.updates);
+        userSentences = { ...userSentences, ...updatedSentences };
+      }
+
+      // Note: deletes are not processed during registration (nothing to delete for a new user)
+    }
+
     logEvents(`New user registered via Google: ${email} (${username})`, 'authLog.log');
 
     // Generate tokens
@@ -132,6 +153,7 @@ const googleRegisterController = async (req, res) => {
         languages: userLanguages,
       },
       user_vocabulary: userVocabulary,
+      user_sentences: userSentences,
       accessToken,
       refreshToken,
     });

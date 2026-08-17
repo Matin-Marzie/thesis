@@ -14,10 +14,12 @@ import { registerWithGoogle } from '../../api/auth';
 import { useProfile } from '@/context/ProfileContext';
 import { useProgress } from '@/context/ProgressContext';
 import { useVocabularyContext } from '@/context/VocabularyContext';
+import { useSentenceContext } from '@/context/SentenceContext';
 import { useAuth } from '@/context/AuthContext';
 import { useDictionaryContext } from '@/context/DictionaryContext';
 import { getLevelsBelowProficiency, getMasteryLevelForWordLevel } from '@/constants/Vocabulary';
 import { VOCABULARY_ACTIONS, DEFAULT_VOCABULARY_CHANGES } from '@/hooks/useVocabulary';
+import { SENTENCE_ACTIONS, DEFAULT_SENTENCE_CHANGES } from '@/hooks/useSentences';
 
 export default function OnboardingQuestions() {
   const isDark = useColorScheme() === 'dark';
@@ -25,6 +27,7 @@ export default function OnboardingQuestions() {
   const { updateUserProfile } = useProfile();
   const { userProgress, setUserProgress } = useProgress();
   const { bulkAddVocabulary, vocabularyChanges, vocabularyDispatch, setVocabularyChanges } = useVocabularyContext();
+  const { sentenceChanges, sentenceDispatch, setSentenceChanges } = useSentenceContext();
   const { setIsAuthenticated, setHasCompletedOnboarding, pendingGoogleAuth, setPendingGoogleAuth } = useAuth();
   const { fetchDictionary } = useDictionaryContext();
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -148,6 +151,7 @@ export default function OnboardingQuestions() {
             languages: newLanguages,
           },
           vocabulary_changes: vocabularyChanges,
+          sentence_changes: sentenceChanges,
         });
 
         if (apiResponse.status === 201 && apiResponse.data) {
@@ -155,10 +159,12 @@ export default function OnboardingQuestions() {
           await updateUserProfile(apiResponse.data.user_profile);
           await setUserProgress(apiResponse.data.user_progress);
           vocabularyDispatch({ type: VOCABULARY_ACTIONS.SET, payload: apiResponse.data.user_vocabulary });
+          sentenceDispatch({ type: SENTENCE_ACTIONS.SET, payload: apiResponse.data.user_sentences });
           // The manually-tracked changes just sent were already applied
           // server-side - clear them so a later background sync doesn't
           // try to re-insert them and hit a duplicate-key error.
           setVocabularyChanges(DEFAULT_VOCABULARY_CHANGES);
+          setSentenceChanges(DEFAULT_SENTENCE_CHANGES);
         }
       } catch (error: any) {
         console.error('Failed to finish Google sign-up after onboarding:', error);

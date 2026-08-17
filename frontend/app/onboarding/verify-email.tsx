@@ -16,8 +16,10 @@ import { registerUser, requestVerificationCode } from '../../api/auth';
 import { useProfile } from '../../context/ProfileContext';
 import { useProgress } from '../../context/ProgressContext';
 import { useVocabularyContext } from '../../context/VocabularyContext';
+import { useSentenceContext } from '../../context/SentenceContext';
 import { useAuth } from '../../context/AuthContext';
 import { VOCABULARY_ACTIONS, DEFAULT_VOCABULARY_CHANGES } from '@/hooks/useVocabulary';
+import { SENTENCE_ACTIONS, DEFAULT_SENTENCE_CHANGES } from '@/hooks/useSentences';
 import { useColorScheme } from '@/components/useColorScheme';
 import TouchableOpacity from '@/components/TouchableOpacity';
 
@@ -41,6 +43,7 @@ export default function VerifyEmailScreen() {
   const { userProfile, updateUserProfile } = useProfile();
   const { userProgress, setUserProgress } = useProgress();
   const { vocabularyChanges, vocabularyDispatch, setVocabularyChanges } = useVocabularyContext();
+  const { sentenceChanges, sentenceDispatch, setSentenceChanges } = useSentenceContext();
   const { setIsAuthenticated } = useAuth();
 
   const [sixDigitCode, setSixDigitCode] = useState('');
@@ -89,6 +92,7 @@ export default function VerifyEmailScreen() {
         },
         user_progress: userProgress,
         vocabulary_changes: vocabularyChanges,
+        sentence_changes: sentenceChanges,
       };
 
       const response = await registerUser({
@@ -102,11 +106,13 @@ export default function VerifyEmailScreen() {
           await updateUserProfile(response.data?.user_profile);
           await setUserProgress(response.data?.user_progress);
           vocabularyDispatch({ type: VOCABULARY_ACTIONS.SET, payload: response.data?.user_vocabulary });
+          sentenceDispatch({ type: SENTENCE_ACTIONS.SET, payload: response.data?.user_sentences });
         }
         // The manually-tracked changes just sent were already applied
         // server-side - clear them so a later background sync doesn't
         // try to re-insert them and hit a duplicate-key error.
         setVocabularyChanges(DEFAULT_VOCABULARY_CHANGES);
+        setSentenceChanges(DEFAULT_SENTENCE_CHANGES);
         router.replace('/(tabs)');
       }
     } catch (error: any) {

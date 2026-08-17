@@ -6,13 +6,16 @@ import { resetSyncState } from './useBackendSync';
 import { useProfile } from '../context/ProfileContext';
 import { useProgress } from '../context/ProgressContext';
 import { useVocabularyContext } from '../context/VocabularyContext';
+import { useSentenceContext } from '../context/SentenceContext';
 import { useAuth } from '../context/AuthContext';
 import {
   DEFAULT_USER_PROFILE,
   DEFAULT_USER_PROGRESS,
   DEFAULT_USER_VOCABULARY,
+  DEFAULT_USER_SENTENCES,
 } from '../constants/defaults';
 import { DEFAULT_VOCABULARY_CHANGES } from './useVocabulary';
+import { DEFAULT_SENTENCE_CHANGES } from './useSentences';
 
 /**
  * Custom hook that permanently deletes the user's account on the backend,
@@ -25,6 +28,7 @@ export function useDeleteAccount() {
   const { setUserProfile } = useProfile();
   const { setUserProgress } = useProgress();
   const { setUserVocabulary, setVocabularyChanges } = useVocabularyContext();
+  const { setUserSentences, setSentenceChanges } = useSentenceContext();
   const { setIsAuthenticated, setHasCompletedOnboarding } = useAuth();
 
   const deleteAccount = useCallback(async () => {
@@ -38,10 +42,12 @@ export function useDeleteAccount() {
     setUserProgress(DEFAULT_USER_PROGRESS);
     setUserVocabulary(DEFAULT_USER_VOCABULARY);
     setVocabularyChanges(DEFAULT_VOCABULARY_CHANGES);
+    setUserSentences(DEFAULT_USER_SENTENCES);
+    setSentenceChanges(DEFAULT_SENTENCE_CHANGES);
     setIsAuthenticated(false);
     setHasCompletedOnboarding(false);
     setUserProfile(DEFAULT_USER_PROFILE);
-  }, [setUserProfile, setUserProgress, setUserVocabulary, setVocabularyChanges, setIsAuthenticated, setHasCompletedOnboarding]);
+  }, [setUserProfile, setUserProgress, setUserVocabulary, setVocabularyChanges, setUserSentences, setSentenceChanges, setIsAuthenticated, setHasCompletedOnboarding]);
 
   return { deleteAccount };
 }

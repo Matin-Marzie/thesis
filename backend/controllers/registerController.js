@@ -6,6 +6,7 @@ import RegisterSchema from '../validation/RegisterSchema.js';
 import usersModel from '../models/usersModel.js';
 import userLanguagesModel from '../models/userLanguagesModel.js';
 import userVocabularyModel from '../models/userVocabularyModel.js';
+import userSentencesModel from '../models/userSentencesModel.js';
 import emailVerificationModel from '../models/emailVerificationModel.js';
 import { verifyCode, attemptsExceeded } from '../utils/EmailVerificationCode.js';
 
@@ -27,6 +28,7 @@ const registerController = async (req, res) => {
       user_profile,
       user_progress,
       vocabulary_changes,
+      sentence_changes,
     } = value;
 
     // Verify the pending code stored server-side, before creating any user row
@@ -162,6 +164,34 @@ const registerController = async (req, res) => {
       // Note: deletes are not processed during registration (nothing to delete for new user)
     }
 
+    // Apply any sentence_changes from the client (manual saves during
+    // onboarding). No proficiency-based seeding here - sentences has no
+    // level column, so new_user_sentences starts empty unless the client
+    // sent something explicit.
+    let new_user_sentences = {};
+    if (sentence_changes) {
+      if (sentence_changes.inserts && Object.keys(sentence_changes.inserts).length > 0) {
+        const insertsArray = Object.entries(sentence_changes.inserts);
+        const insertedSentences = await userSentencesModel.add(
+          newUser.id,
+          insertsArray,
+          current_language.id
+        );
+        new_user_sentences = { ...new_user_sentences, ...insertedSentences };
+      }
+
+      if (sentence_changes.updates && Object.keys(sentence_changes.updates).length > 0) {
+        const updatedSentences = await userSentencesModel.update(
+          newUser.id,
+          current_language.id,
+          sentence_changes.updates
+        );
+        new_user_sentences = { ...new_user_sentences, ...updatedSentences };
+      }
+
+      // Note: deletes are not processed during registration (nothing to delete for new user)
+    }
+
     // Respond with user data, dictionary and tokens
     res.status(201).json({
       message: 'User registered successfully',
@@ -184,6 +214,7 @@ const registerController = async (req, res) => {
         languages: new_user_languages,
       },
       user_vocabulary: new_user_vocabulary,
+      user_sentences: new_user_sentences,
       accessToken,
       refreshToken,
     });

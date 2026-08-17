@@ -3,6 +3,7 @@ import UserProfileSchema from './UserProfileSchema.js';
 import UserProgressSchema from './UserProgressSchema.js';
 import PasswordSchema from './PasswordSchema.js';
 import VocabularyChangesSchema from './VocabularyChangesSchema.js';
+import SentenceChangesSchema from './SentenceChangesSchema.js';
 
 const RegisterSchema = Joi.object({
   password: PasswordSchema,
@@ -23,6 +24,7 @@ const RegisterSchema = Joi.object({
     languages: UserProgressSchema.extract('languages').required(),
   }),
   vocabulary_changes: VocabularyChangesSchema,
+  sentence_changes: SentenceChangesSchema,
 }).options({ stripUnknown: true });
 
 export default RegisterSchema;

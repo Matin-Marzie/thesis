@@ -3,6 +3,7 @@ import UserProgressSchema from './UserProgressSchema.js';
 import PasswordSchema from './PasswordSchema.js';
 import UserProfileSchema from './UserProfileSchema.js';
 import VocabularyChangesSchema from './VocabularyChangesSchema.js';
+import SentenceChangesSchema from './SentenceChangesSchema.js';
 
 const LoginSchema = Joi.object({
   username: UserProfileSchema.extract('username'),
@@ -24,6 +25,7 @@ const LoginSchema = Joi.object({
     languages: UserProgressSchema.extract('languages').optional(),
   }).optional(),
   vocabulary_changes: VocabularyChangesSchema,
+  sentence_changes: SentenceChangesSchema,
 })
 .xor('username', 'email') // Require either username or email, not both
 .messages({

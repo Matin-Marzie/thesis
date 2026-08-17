@@ -13,6 +13,8 @@ import { Dimensions } from 'react-native';
 import type { Sentence, Token } from '../../../types/dialogue';
 import { LANGUAGES_META } from '../../../constants/SupportedLanguages';
 import { useColorScheme } from '@/components/useColorScheme';
+import { useSentenceContext } from '@/context/SentenceContext';
+import { SENTENCE_ACTIONS } from '@/hooks/useSentences';
 import { PlaybackControls } from './PlaybackControls';
 import { SentenceRow } from './SentenceRow';
 import type { DialogueBottomSheetModalProps } from './types';
@@ -37,6 +39,10 @@ export function DialogueBottomSheetModal({
     sheetHeight,
 }: DialogueBottomSheetModalProps) {
     const isDark = useColorScheme() === 'dark';
+    const { userSentences, sentenceDispatch } = useSentenceContext();
+    // SentenceContext's userSentences is typed as a plain Object (JSDoc, no
+    // index signature) - narrow it here rather than indexing it untyped below.
+    const savedSentences = userSentences as Record<number, { text?: string; translation?: string }>;
     const sheetRef = useRef<BottomSheetModal>(null);
     const listRef = useRef<BottomSheetFlatListMethods>(null);
     const sentenceStopTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -220,6 +226,21 @@ export function DialogueBottomSheetModal({
         [sentences, onWordPress]
     );
 
+    // Optimistic local-only save, synced later by useBackendSync - same
+    // pattern as adding a word to vocabulary. text/translation are carried
+    // along for display only (not sent to the backend, which resolves
+    // sentence text itself via a JOIN when re-fetching user_sentences).
+    const handleSaveSentence = useCallback(
+        (sentence: Sentence) => {
+            if (savedSentences[sentence.id]) return;
+            sentenceDispatch({
+                type: SENTENCE_ACTIONS.ADD,
+                payload: { sentenceId: sentence.id, text: sentence.text, translation: sentence.translation },
+            });
+        },
+        [savedSentences, sentenceDispatch]
+    );
+
     const renderSentence = useCallback(
         ({ item: sentence, index }: { item: Sentence; index: number }) => (
             <SentenceRow
@@ -227,11 +248,13 @@ export function DialogueBottomSheetModal({
                 isCurrentLine={index === currentLineIndex}
                 isDark={isDark}
                 isRightToLeft={isRightToLeft}
+                isSaved={!!savedSentences[sentence.id]}
                 onPress={handleSentencePress}
                 onTokenPress={handleTokenPress}
+                onSavePress={handleSaveSentence}
             />
         ),
-        [currentLineIndex, handleSentencePress, handleTokenPress, isRightToLeft, isDark]
+        [currentLineIndex, handleSentencePress, handleTokenPress, handleSaveSentence, savedSentences, isRightToLeft, isDark]
     );
 
     if (!reel || !sentences.length) {

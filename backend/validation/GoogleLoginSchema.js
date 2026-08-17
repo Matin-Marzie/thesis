@@ -2,6 +2,7 @@ import UserProfileSchema from './UserProfileSchema.js';
 import UserProgressSchema from './UserProgressSchema.js';
 import GoogleTokenSchema from './GoogleTokenSchema.js';
 import VocabularyChangesSchema from './VocabularyChangesSchema.js';
+import SentenceChangesSchema from './SentenceChangesSchema.js';
 
 // user_profile/user_progress/vocabulary_changes are optional here, unlike
 // registration - present only when the client is merging local guest
@@ -21,6 +22,7 @@ const GoogleLoginSchema = GoogleTokenSchema.keys({
     languages: UserProgressSchema.extract('languages').optional(),
   }).optional(),
   vocabulary_changes: VocabularyChangesSchema,
+  sentence_changes: SentenceChangesSchema,
 }).options({ stripUnknown: true });
 
 export default GoogleLoginSchema;

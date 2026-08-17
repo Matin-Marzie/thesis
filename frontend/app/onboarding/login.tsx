@@ -18,9 +18,11 @@ import { PRIMARY_COLOR } from '@/constants/App';
 import { useProfile } from '@/context/ProfileContext';
 import { useProgress } from '@/context/ProgressContext';
 import { useVocabularyContext } from '@/context/VocabularyContext';
+import { useSentenceContext } from '@/context/SentenceContext';
 import { useUserReels } from '@/context/UserReelsContext';
 import { useAuth } from '@/context/AuthContext';
 import { VOCABULARY_ACTIONS, DEFAULT_VOCABULARY_CHANGES } from '@/hooks/useVocabulary';
+import { SENTENCE_ACTIONS, DEFAULT_SENTENCE_CHANGES } from '@/hooks/useSentences';
 import { useColorScheme } from '@/components/useColorScheme';
 import TouchableOpacity from '@/components/TouchableOpacity';
 // @react-native-google-signin/google-signin is a native module and isn't
@@ -54,6 +56,7 @@ export default function LoginScreen() {
   const { userProfile, updateUserProfile } = useProfile();
   const { userProgress, setUserProgress } = useProgress();
   const { vocabularyChanges, vocabularyDispatch, setVocabularyChanges } = useVocabularyContext();
+  const { sentenceChanges, sentenceDispatch, setSentenceChanges } = useSentenceContext();
   const { setUserReels } = useUserReels();
   const { setIsAuthenticated, setHasCompletedOnboarding, hasCompletedOnboarding, setPendingGoogleAuth } = useAuth();
   const router = useRouter();
@@ -104,6 +107,7 @@ export default function LoginScreen() {
     // full vocabulary can be thousands of words and blow past Express's
     // JSON body size limit. Mirrors what the register flows already send.
     vocabulary_changes: vocabularyChanges,
+    sentence_changes: sentenceChanges,
   });
 
   const handleLogin = () => {
@@ -143,6 +147,7 @@ export default function LoginScreen() {
             await updateUserProfile(response.data?.user_profile);
             await setUserProgress(response.data?.user_progress);
             vocabularyDispatch({ type: VOCABULARY_ACTIONS.SET, payload: response.data?.user_vocabulary });
+            sentenceDispatch({ type: SENTENCE_ACTIONS.SET, payload: response.data?.user_sentences });
             setUserReels(response.data?.user_reels || []);
           }
           // Overwrite discarded the local session entirely; Merge already
@@ -150,6 +155,7 @@ export default function LoginScreen() {
           // is left to resync, so clear it before a background sync can
           // resend it and hit a duplicate-key error.
           setVocabularyChanges(DEFAULT_VOCABULARY_CHANGES);
+          setSentenceChanges(DEFAULT_SENTENCE_CHANGES);
           router.replace('/(tabs)');
         }
 

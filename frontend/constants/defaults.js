@@ -41,6 +41,8 @@ export const DEFAULT_USER_PROGRESS = {
 
 export const DEFAULT_USER_VOCABULARY = {};
 
+export const DEFAULT_USER_SENTENCES = {};
+
 export const DEFAULT_USER_REELS = [];
 
 export const DEFAULT_VIBRATION_SETTINGS = {
@@ -64,6 +66,8 @@ export const STORAGE_KEYS = {
   USER_PROGRESS: 'user_progress',
   USER_VOCABULARY: 'user_vocabulary',
   USER_VOCABULARY_CHANGES: 'user_vocabulary_changes',
+  USER_SENTENCES: 'user_sentences',
+  USER_SENTENCE_CHANGES: 'user_sentence_changes',
   USER_REELS: 'user_reels',
   ONBOARDING_COMPLETE: 'onboarding_complete',
   VIBRATION_SETTINGS: 'vibration_settings',
@@ -87,6 +91,15 @@ export const validators = {
     Array.isArray(data),
 
   vocabularyChanges: (data) =>
+    data && typeof data === 'object' &&
+    typeof data.inserts === 'object' &&
+    typeof data.updates === 'object' &&
+    typeof data.deletes === 'object',
+
+  userSentences: (data) =>
+    data && typeof data === 'object',
+
+  sentenceChanges: (data) =>
     data && typeof data === 'object' &&
     typeof data.inserts === 'object' &&
     typeof data.updates === 'object' &&

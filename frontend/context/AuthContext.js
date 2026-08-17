@@ -9,8 +9,11 @@ import { useNetwork } from './NetworkContext';
 import { useProfile } from './ProfileContext';
 import { useProgress } from './ProgressContext';
 import { useVocabularyContext } from './VocabularyContext';
+import { useSentenceContext } from './SentenceContext';
 import { useVibrationSettings } from './VibrationContext';
 import { useReminderSettings } from './ReminderContext';
+import { DEFAULT_VOCABULARY_CHANGES } from '../hooks/useVocabulary';
+import { DEFAULT_SENTENCE_CHANGES } from '../hooks/useSentences';
 
 /**
  * @typedef {Object} AuthContextType
@@ -34,6 +37,7 @@ export const AuthProvider = ({ children }) => {
   const { isProfileLoaded } = useProfile();
   const { userProgress, isProgressLoaded } = useProgress();
   const { isVocabularyLoaded, vocabularyChanges, isVocabularyChangesLoaded, setVocabularyChanges } = useVocabularyContext();
+  const { isSentencesLoaded, sentenceChanges, isSentenceChangesLoaded, setSentenceChanges } = useSentenceContext();
   const { isVibrationSettingsLoaded } = useVibrationSettings();
   const { isReminderSettingsLoaded } = useReminderSettings();
 
@@ -54,8 +58,28 @@ export const AuthProvider = ({ children }) => {
     isLoaded: isOnboardingLoaded,
   } = usePersistedState(STORAGE_KEYS.ONBOARDING_COMPLETE, false, validators.onboardingComplete);
 
+  // One entry per tracked changes-object - see useBackendSync's ChangeSet typedef
+  const changeSets = useMemo(() => [
+    {
+      key: 'vocabulary_changes',
+      storageKey: STORAGE_KEYS.USER_VOCABULARY_CHANGES,
+      isLoaded: isVocabularyChangesLoaded,
+      changes: vocabularyChanges,
+      setValue: setVocabularyChanges,
+      defaultValue: DEFAULT_VOCABULARY_CHANGES,
+    },
+    {
+      key: 'sentence_changes',
+      storageKey: STORAGE_KEYS.USER_SENTENCE_CHANGES,
+      isLoaded: isSentenceChangesLoaded,
+      changes: sentenceChanges,
+      setValue: setSentenceChanges,
+      defaultValue: DEFAULT_SENTENCE_CHANGES,
+    },
+  ], [isVocabularyChangesLoaded, vocabularyChanges, setVocabularyChanges, isSentenceChangesLoaded, sentenceChanges, setSentenceChanges]);
+
   // Backend sync periodically from custom hook
-  const { forceSync } = useBackendSync(isOnline, isAuthenticated, userProgress, isProgressLoaded, vocabularyChanges, isVocabularyChangesLoaded, setVocabularyChanges);
+  const { forceSync } = useBackendSync(isOnline, isAuthenticated, userProgress, isProgressLoaded, changeSets);
 
   // Check for existing auth session on app load
   const initApp = useCallback(async () => {
@@ -113,12 +137,12 @@ export const AuthProvider = ({ children }) => {
   // 1. Wait for persisted state to load
   // 2. Check auth status and if dirty data needs to be synced
   useEffect(() => {
-    if (isProfileLoaded && isProgressLoaded && isVocabularyLoaded && isVocabularyChangesLoaded && isOnboardingLoaded && isVibrationSettingsLoaded && isReminderSettingsLoaded && isOnline !== null) {
+    if (isProfileLoaded && isProgressLoaded && isVocabularyLoaded && isVocabularyChangesLoaded && isSentencesLoaded && isSentenceChangesLoaded && isOnboardingLoaded && isVibrationSettingsLoaded && isReminderSettingsLoaded && isOnline !== null) {
       // [1] All persisted state is loaded - check the code above
       // [2] reroute to /onboarding/landing if user hasn't completed onboarding - check /app/_layout.js
       initApp(); // (check auth, sync dirty data if online, etc)
     }
-  }, [isProfileLoaded, isProgressLoaded, isVocabularyLoaded, isVocabularyChangesLoaded, isOnboardingLoaded, isVibrationSettingsLoaded, isReminderSettingsLoaded, initApp, isOnline]);
+  }, [isProfileLoaded, isProgressLoaded, isVocabularyLoaded, isVocabularyChangesLoaded, isSentencesLoaded, isSentenceChangesLoaded, isOnboardingLoaded, isVibrationSettingsLoaded, isReminderSettingsLoaded, initApp, isOnline]);
 
   const value = useMemo(() => ({
     isAuthenticated, setIsAuthenticated, initApp,

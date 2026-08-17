@@ -14,7 +14,9 @@ import { useProgress } from '@/context/ProgressContext';
 import { useNetwork } from '@/context/NetworkContext';
 import { useAuth } from '@/context/AuthContext';
 import { useVocabularyContext } from '@/context/VocabularyContext';
+import { useSentenceContext } from '@/context/SentenceContext';
 import { VOCABULARY_ACTIONS, DEFAULT_VOCABULARY_CHANGES } from '@/hooks/useVocabulary';
+import { SENTENCE_ACTIONS, DEFAULT_SENTENCE_CHANGES } from '@/hooks/useSentences';
 import { switchCurrentLanguage, addLanguage as addLanguageApi, deleteLanguage as deleteLanguageApi } from '@/api/language';
 import LanguageSelectionSlide from '@/app/onboarding/components/LanguageSelectionSlide';
 import ProficiencySlide from '@/app/onboarding/components/ProficiencySlide';
@@ -144,6 +146,7 @@ const LanguageSwitchSheet = forwardRef<BottomSheetModal>((_props, ref) => {
     const { isOnline } = useNetwork();
     const { isAuthenticated, forceSync } = useAuth();
     const { vocabularyDispatch, setVocabularyChanges } = useVocabularyContext();
+    const { sentenceDispatch, setSentenceChanges } = useSentenceContext();
 
     const [switchingId, setSwitchingId] = useState<number | string | null>(null);
     const [deletingId, setDeletingId] = useState<number | string | null>(null);
@@ -206,10 +209,13 @@ const LanguageSwitchSheet = forwardRef<BottomSheetModal>((_props, ref) => {
                     languages: response.user_progress.languages,
                 }));
                 vocabularyDispatch({ type: VOCABULARY_ACTIONS.SET, payload: response.user_vocabulary });
+                sentenceDispatch({ type: SENTENCE_ACTIONS.SET, payload: response.user_sentences });
                 // Defensive: the flush above should have already cleared this,
-                // but the new vocabulary just replaced local state wholesale,
-                // so any leftover entries here can no longer apply to anything.
+                // but the new vocabulary/sentences just replaced local state
+                // wholesale, so any leftover entries here can no longer apply
+                // to anything.
                 await setVocabularyChanges(DEFAULT_VOCABULARY_CHANGES);
+                await setSentenceChanges(DEFAULT_SENTENCE_CHANGES);
             } else {
                 // Guest accounts never accumulate more than one language today,
                 // but handle it locally just in case - no server state to touch.
@@ -235,7 +241,7 @@ const LanguageSwitchSheet = forwardRef<BottomSheetModal>((_props, ref) => {
         } finally {
             setSwitchingId(null);
         }
-    }, [switchingId, isOnline, isAuthenticated, forceSync, setUserProgress, vocabularyDispatch, setVocabularyChanges, ref]);
+    }, [switchingId, isOnline, isAuthenticated, forceSync, setUserProgress, vocabularyDispatch, setVocabularyChanges, sentenceDispatch, setSentenceChanges, ref]);
 
     const performDeleteLanguage = useCallback(async (language) => {
         setErrorMessage(null);
@@ -250,19 +256,23 @@ const LanguageSwitchSheet = forwardRef<BottomSheetModal>((_props, ref) => {
             }));
 
             // Only present when the deleted language was current - another
-            // language was promoted and its vocabulary returned; otherwise
-            // the current language (and its vocabulary/vocabularyChanges)
-            // is untouched.
+            // language was promoted and its vocabulary/sentences returned;
+            // otherwise the current language (and its vocabulary/sentences/
+            // *Changes) is untouched.
             if (response.user_vocabulary) {
                 vocabularyDispatch({ type: VOCABULARY_ACTIONS.SET, payload: response.user_vocabulary });
                 await setVocabularyChanges(DEFAULT_VOCABULARY_CHANGES);
+            }
+            if (response.user_sentences) {
+                sentenceDispatch({ type: SENTENCE_ACTIONS.SET, payload: response.user_sentences });
+                await setSentenceChanges(DEFAULT_SENTENCE_CHANGES);
             }
         } catch (err) {
             setErrorMessage(err.message || 'Could not delete language. Please try again.');
         } finally {
             setDeletingId(null);
         }
-    }, [setUserProgress, vocabularyDispatch, setVocabularyChanges]);
+    }, [setUserProgress, vocabularyDispatch, setVocabularyChanges, sentenceDispatch, setSentenceChanges]);
 
     // Deleting a language is irreversible (all its vocabulary progress goes
     // with it), so this asks twice before actually calling the API.
@@ -360,6 +370,10 @@ const LanguageSwitchSheet = forwardRef<BottomSheetModal>((_props, ref) => {
             }));
             vocabularyDispatch({ type: VOCABULARY_ACTIONS.SET, payload: response.user_vocabulary });
             await setVocabularyChanges(DEFAULT_VOCABULARY_CHANGES);
+            // Always empty for a newly-added pair (no proficiency-based seed
+            // for sentences) - dispatched anyway for uniform response handling.
+            sentenceDispatch({ type: SENTENCE_ACTIONS.SET, payload: response.user_sentences });
+            await setSentenceChanges(DEFAULT_SENTENCE_CHANGES);
 
             setMode('list');
             if (ref && 'current' in ref) {
@@ -370,7 +384,7 @@ const LanguageSwitchSheet = forwardRef<BottomSheetModal>((_props, ref) => {
         } finally {
             setIsAddingLanguage(false);
         }
-    }, [addNative, addTarget, addLevel, isAddingLanguage, forceSync, setUserProgress, vocabularyDispatch, setVocabularyChanges, ref]);
+    }, [addNative, addTarget, addLevel, isAddingLanguage, forceSync, setUserProgress, vocabularyDispatch, setVocabularyChanges, sentenceDispatch, setSentenceChanges, ref]);
 
     const handleDismiss = useCallback(() => {
         setMode('list');

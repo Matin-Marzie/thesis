@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet, Pressable } from 'react-native';
-import { DARK_COLORS } from '@/constants/App';
+import { FontAwesome } from '@expo/vector-icons';
+import { DARK_COLORS, PRIMARY_COLOR } from '@/constants/App';
 import type { Sentence, Token } from '../../../types/dialogue';
 
 interface SentenceRowProps {
@@ -8,11 +9,13 @@ interface SentenceRowProps {
     isCurrentLine: boolean;
     isDark: boolean;
     isRightToLeft: boolean;
+    isSaved: boolean;
     onPress: (sentence: Sentence) => void;
     onTokenPress: (token: Token, sentenceId: number) => void;
+    onSavePress: (sentence: Sentence) => void;
 }
 
-export function SentenceRow({ sentence, isCurrentLine, isDark, isRightToLeft, onPress, onTokenPress }: SentenceRowProps) {
+export function SentenceRow({ sentence, isCurrentLine, isDark, isRightToLeft, isSaved, onPress, onTokenPress, onSavePress }: SentenceRowProps) {
     const hasTokens = sentence.tokens && sentence.tokens.length > 0;
 
     return (
@@ -51,6 +54,22 @@ export function SentenceRow({ sentence, isCurrentLine, isDark, isRightToLeft, on
                 <View style={[styles.translationWrap, isRightToLeft && styles.translationWrapRtl]}>
                     <Text style={[styles.translationText, isDark && { color: DARK_COLORS.textSecondary }, isRightToLeft && styles.textRtl]}>{sentence.translation}</Text>
                 </View>
+
+                {/* Save button — not nested with the token buttons, single per-row action */}
+                <Pressable
+                    hitSlop={8}
+                    style={styles.saveButton}
+                    onPress={(event) => {
+                        event.stopPropagation();
+                        onSavePress(sentence);
+                    }}
+                >
+                    <FontAwesome
+                        name={isSaved ? 'bookmark' : 'bookmark-o'}
+                        size={18}
+                        color={isSaved ? PRIMARY_COLOR : (isDark ? DARK_COLORS.textSecondary : '#9ca3af')}
+                    />
+                </Pressable>
             </View>
         </Pressable>
     );
@@ -128,6 +147,12 @@ const styles = StyleSheet.create({
     translationWrapRtl: {
         marginLeft: 0,
         marginRight: 8,
+    },
+    saveButton: {
+        marginLeft: 8,
+        paddingHorizontal: 4,
+        paddingVertical: 2,
+        alignSelf: 'flex-start',
     },
     textRtl: {
         textAlign: 'right',

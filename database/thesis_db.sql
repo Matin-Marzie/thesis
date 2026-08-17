@@ -537,6 +537,47 @@ ALTER SEQUENCE public.user_vocabulary_id_seq OWNED BY public.user_vocabulary.id;
 
 
 --
+-- Name: user_sentences; Type: TABLE; Schema: public; Owner: root
+--
+
+CREATE TABLE public.user_sentences (
+    id bigint NOT NULL,
+    user_id bigint NOT NULL,
+    sentence_id bigint NOT NULL,
+    mastery_level smallint DEFAULT 1 NOT NULL,
+    last_review timestamp with time zone DEFAULT now() NOT NULL,
+    created_at timestamp with time zone DEFAULT now() NOT NULL,
+    user_languages_id bigint NOT NULL,
+    review_count integer DEFAULT 0 NOT NULL,
+    next_review_at timestamp with time zone DEFAULT now() NOT NULL,
+    CONSTRAINT user_sentences_mastery_level_check CHECK (((mastery_level >= 1) AND (mastery_level <= 6)))
+);
+
+
+ALTER TABLE public.user_sentences OWNER TO root;
+
+--
+-- Name: user_sentences_id_seq; Type: SEQUENCE; Schema: public; Owner: root
+--
+
+CREATE SEQUENCE public.user_sentences_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.user_sentences_id_seq OWNER TO root;
+
+--
+-- Name: user_sentences_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: root
+--
+
+ALTER SEQUENCE public.user_sentences_id_seq OWNED BY public.user_sentences.id;
+
+
+--
 -- Name: email_verification_codes; Type: TABLE; Schema: public; Owner: root
 --
 
@@ -845,6 +886,7 @@ ALTER TABLE ONLY public.user_languages ALTER COLUMN id SET DEFAULT nextval('publ
 --
 
 ALTER TABLE ONLY public.user_vocabulary ALTER COLUMN id SET DEFAULT nextval('public.user_vocabulary_id_seq'::regclass);
+ALTER TABLE ONLY public.user_sentences ALTER COLUMN id SET DEFAULT nextval('public.user_sentences_id_seq'::regclass);
 
 
 --
@@ -20437,6 +20479,21 @@ ALTER TABLE ONLY public.user_vocabulary
 
 
 --
+-- Name: user_sentences user_sentences_pkey; Type: CONSTRAINT; Schema: public; Owner: root
+--
+
+ALTER TABLE ONLY public.user_sentences
+    ADD CONSTRAINT user_sentences_pkey PRIMARY KEY (id);
+
+--
+-- Name: user_sentences uq_user_sentences_user_sentence; Type: CONSTRAINT; Schema: public; Owner: root
+--
+
+ALTER TABLE ONLY public.user_sentences
+    ADD CONSTRAINT uq_user_sentences_user_sentence UNIQUE (user_id, sentence_id);
+
+
+--
 -- Name: users users_google_id_key; Type: CONSTRAINT; Schema: public; Owner: root
 --
 
@@ -20473,6 +20530,13 @@ ALTER TABLE ONLY public.words
 --
 
 CREATE INDEX idx_words_language_id ON public.words USING btree (language_id);
+
+
+--
+-- Name: idx_user_sentences_user_lang; Type: INDEX; Schema: public; Owner: root
+--
+
+CREATE INDEX idx_user_sentences_user_lang ON public.user_sentences USING btree (user_id, user_languages_id);
 
 
 --
@@ -20547,6 +20611,21 @@ ALTER TABLE ONLY public.dialogues
 
 ALTER TABLE ONLY public.user_vocabulary
     ADD CONSTRAINT fk_user_vocabulary_user_languages FOREIGN KEY (user_languages_id) REFERENCES public.user_languages(id) ON DELETE CASCADE;
+
+
+--
+-- Name: user_sentences fk_user_sentences_user_languages; Type: FK CONSTRAINT; Schema: public; Owner: root
+--
+
+ALTER TABLE ONLY public.user_sentences
+    ADD CONSTRAINT fk_user_sentences_user_languages FOREIGN KEY (user_languages_id) REFERENCES public.user_languages(id) ON DELETE CASCADE;
+
+--
+-- Name: user_sentences user_sentences_sentence_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: root
+--
+
+ALTER TABLE ONLY public.user_sentences
+    ADD CONSTRAINT user_sentences_sentence_id_fkey FOREIGN KEY (sentence_id) REFERENCES public.sentences(id) ON DELETE CASCADE;
 
 
 --
@@ -20723,6 +20802,15 @@ ALTER TABLE ONLY public.user_vocabulary
 
 ALTER TABLE ONLY public.user_vocabulary
     ADD CONSTRAINT user_vocabulary_word_id_fkey FOREIGN KEY (word_id) REFERENCES public.words(id) ON DELETE CASCADE;
+
+
+--
+-- Name: user_sentences user_sentences_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: root
+--
+
+ALTER TABLE ONLY public.user_sentences
+    ADD CONSTRAINT user_sentences_user_id_fkey FOREIGN KEY (user_id) REFERENCES public.users(id) ON UPDATE CASCADE ON DELETE CASCADE;
+
 
 
 --

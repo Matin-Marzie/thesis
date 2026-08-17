@@ -2,6 +2,7 @@ import SwitchLanguageSchema from '../validation/SwitchLanguageSchema.js';
 import AddLanguageSchema from '../validation/AddLanguageSchema.js';
 import userLanguagesModel from '../models/userLanguagesModel.js';
 import userVocabularyModel from '../models/userVocabularyModel.js';
+import userSentencesModel from '../models/userSentencesModel.js';
 
 const languageController = {
   // Switch the authenticated user's current learning language.
@@ -39,6 +40,7 @@ const languageController = {
       }
 
       const user_vocabulary = await userVocabularyModel.get(userId, target.id);
+      const user_sentences = await userSentencesModel.get(userId, target.id);
 
       res.status(200).json({
         message: 'Current language switched successfully',
@@ -46,6 +48,7 @@ const languageController = {
           languages: updatedLanguages,
         },
         user_vocabulary,
+        user_sentences,
       });
     } catch (error) {
       console.error('Switch language error:', error);
@@ -125,6 +128,11 @@ const languageController = {
           languages: updatedLanguages,
         },
         user_vocabulary,
+        // Always empty for a new pair - sentences has no level column, so
+        // there's no proficiency-based seed to run (unlike user_vocabulary
+        // above). Returned explicitly (not omitted) so the response shape
+        // stays uniform across all three language endpoints.
+        user_sentences: {},
       });
     } catch (error) {
       console.error('Add language error:', error);
@@ -176,6 +184,7 @@ const languageController = {
 
       let updatedLanguages = remainingLanguages;
       let user_vocabulary;
+      let user_sentences;
 
       if (target.is_current_language) {
         const nextCurrent = [...remainingLanguages].sort(
@@ -184,6 +193,7 @@ const languageController = {
 
         await userLanguagesModel.setCurrent(userId, nextCurrent.id);
         user_vocabulary = await userVocabularyModel.get(userId, nextCurrent.id);
+        user_sentences = await userSentencesModel.get(userId, nextCurrent.id);
 
         updatedLanguages = remainingLanguages.map((lang) => ({
           ...lang,
@@ -197,6 +207,7 @@ const languageController = {
           languages: updatedLanguages,
         },
         ...(user_vocabulary !== undefined && { user_vocabulary }),
+        ...(user_sentences !== undefined && { user_sentences }),
       });
     } catch (error) {
       console.error('Delete language error:', error);
