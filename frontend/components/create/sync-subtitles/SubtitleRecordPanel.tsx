@@ -150,17 +150,17 @@ export function SubtitleRecordPanel({
               <View style={styles.nudgeRow}>
                 <Pressable
                   onPress={() => onNudgeStart(-100)}
-                  style={[styles.nudgeButton, draftStartMs === null && styles.disabledButton]}
+                  style={[styles.nudgeButton, isDark && styles.nudgeButtonDark, draftStartMs === null && styles.disabledButton]}
                   disabled={draftStartMs === null}
                 >
-                  <Text style={styles.nudgeButtonText}>-100ms</Text>
+                  <Text style={[styles.nudgeButtonText, isDark && { color: DARK_COLORS.text }]}>-100ms</Text>
                 </Pressable>
                 <Pressable
                   onPress={() => onNudgeStart(100)}
-                  style={[styles.nudgeButton, draftStartMs === null && styles.disabledButton]}
+                  style={[styles.nudgeButton, isDark && styles.nudgeButtonDark, draftStartMs === null && styles.disabledButton]}
                   disabled={draftStartMs === null}
                 >
-                  <Text style={styles.nudgeButtonText}>+100ms</Text>
+                  <Text style={[styles.nudgeButtonText, isDark && { color: DARK_COLORS.text }]}>+100ms</Text>
                 </Pressable>
               </View>
             </View>
@@ -175,17 +175,17 @@ export function SubtitleRecordPanel({
               <View style={styles.nudgeRow}>
                 <Pressable
                   onPress={() => onNudgeEnd(-100)}
-                  style={[styles.nudgeButton, draftEndMs === null && styles.disabledButton]}
+                  style={[styles.nudgeButton, isDark && styles.nudgeButtonDark, draftEndMs === null && styles.disabledButton]}
                   disabled={draftEndMs === null}
                 >
-                  <Text style={styles.nudgeButtonText}>-100ms</Text>
+                  <Text style={[styles.nudgeButtonText, isDark && { color: DARK_COLORS.text }]}>-100ms</Text>
                 </Pressable>
                 <Pressable
                   onPress={() => onNudgeEnd(100)}
-                  style={[styles.nudgeButton, draftEndMs === null && styles.disabledButton]}
+                  style={[styles.nudgeButton, isDark && styles.nudgeButtonDark, draftEndMs === null && styles.disabledButton]}
                   disabled={draftEndMs === null}
                 >
-                  <Text style={styles.nudgeButtonText}>+100ms</Text>
+                  <Text style={[styles.nudgeButtonText, isDark && { color: DARK_COLORS.text }]}>+100ms</Text>
                 </Pressable>
               </View>
             </View>
@@ -289,6 +289,10 @@ const styles = StyleSheet.create({
     borderRadius: 6,
     paddingVertical: 4,
     paddingHorizontal: 6,
+  },
+  nudgeButtonDark: {
+    borderColor: DARK_COLORS.border,
+    backgroundColor: DARK_COLORS.surface,
   },
   nudgeButtonText: { fontSize: 11 },
   markRow: { flexDirection: 'row', alignItems: 'center', gap: 10 },

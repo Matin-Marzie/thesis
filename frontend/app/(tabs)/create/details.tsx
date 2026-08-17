@@ -148,8 +148,8 @@ export default function CreateDetailsScreen() {
               <Picker
                 selectedValue={languageId}
                 onValueChange={(value) => setLanguageId(Number(value))}
-                style={[styles.picker, isDark && { color: DARK_COLORS.text }]}
-                itemStyle={[styles.pickerItem, isDark && { color: DARK_COLORS.text }]}
+                style={[styles.picker, Platform.OS === 'ios' && styles.pickerIOS, isDark && { color: DARK_COLORS.text }]}
+                itemStyle={[styles.pickerItem, Platform.OS === 'ios' && styles.pickerItemIOS, isDark && { color: DARK_COLORS.text }]}
                 dropdownIconColor={isDark ? DARK_COLORS.text : '#333'}
                 mode="dropdown"
               >
@@ -239,7 +239,9 @@ const styles = StyleSheet.create({
     borderColor: '#ddd',
   },
   picker: { color: '#333' },
+  pickerIOS: { height: 120 },
   pickerItem: { color: '#333' },
+  pickerItemIOS: { height: 120, fontSize: 15 },
 
   continueButton: {
     backgroundColor: PRIMARY_COLOR,

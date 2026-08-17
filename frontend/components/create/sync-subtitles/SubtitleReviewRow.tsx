@@ -50,11 +50,11 @@ export function SubtitleReviewRow({
 
   return (
     <Pressable
-      style={[styles.reviewRow, isActive && styles.reviewRowActive, isDark && { borderColor: DARK_COLORS.border }]}
+      style={[styles.reviewRow, !isActive && isDark && { borderColor: DARK_COLORS.border }, isActive && styles.reviewRowActive]}
       onPress={() => onPress(line)}
     >
       <TextInput
-        style={[styles.reviewText, isDark && { color: DARK_COLORS.text }]}
+        style={[styles.reviewText, isDark && { color: DARK_COLORS.text, borderColor: DARK_COLORS.border }]}
         value={line.text}
         onChangeText={(text) => onChangeText(line.localId, text)}
         multiline
@@ -68,7 +68,7 @@ export function SubtitleReviewRow({
         return (
           <View key={translation.localId} style={styles.translationRow}>
             <TextInput
-              style={[styles.reviewTranslation, styles.translationInput, isDark && { color: DARK_COLORS.textSecondary }]}
+              style={[styles.reviewTranslation, styles.translationInput, isDark && { color: DARK_COLORS.textSecondary, borderColor: DARK_COLORS.border }]}
               value={translation.text}
               onChangeText={(text) => onChangeTranslationText(line.localId, translation.localId, text)}
               placeholder={selectedLanguage ? `${selectedLanguage.flag} Translation (optional)` : 'Translation (optional)'}
@@ -117,22 +117,22 @@ export function SubtitleReviewRow({
         <View style={styles.timingControl}>
           <Text style={styles.timingLabel}>Start {formatMs(line.start_time_ms)}</Text>
           <View style={styles.nudgeRow}>
-            <Pressable onPress={() => onNudge(line, 'start_time_ms', -100)} style={styles.nudgeButton}>
-              <Text style={styles.nudgeButtonText}>-100ms</Text>
+            <Pressable onPress={() => onNudge(line, 'start_time_ms', -100)} style={[styles.nudgeButton, isDark && styles.nudgeButtonDark]}>
+              <Text style={[styles.nudgeButtonText, isDark && { color: DARK_COLORS.text }]}>-100ms</Text>
             </Pressable>
-            <Pressable onPress={() => onNudge(line, 'start_time_ms', 100)} style={styles.nudgeButton}>
-              <Text style={styles.nudgeButtonText}>+100ms</Text>
+            <Pressable onPress={() => onNudge(line, 'start_time_ms', 100)} style={[styles.nudgeButton, isDark && styles.nudgeButtonDark]}>
+              <Text style={[styles.nudgeButtonText, isDark && { color: DARK_COLORS.text }]}>+100ms</Text>
             </Pressable>
           </View>
         </View>
         <View style={styles.timingControl}>
           <Text style={styles.timingLabel}>End {formatMs(line.end_time_ms)}</Text>
           <View style={styles.nudgeRow}>
-            <Pressable onPress={() => onNudge(line, 'end_time_ms', -100)} style={styles.nudgeButton}>
-              <Text style={styles.nudgeButtonText}>-100ms</Text>
+            <Pressable onPress={() => onNudge(line, 'end_time_ms', -100)} style={[styles.nudgeButton, isDark && styles.nudgeButtonDark]}>
+              <Text style={[styles.nudgeButtonText, isDark && { color: DARK_COLORS.text }]}>-100ms</Text>
             </Pressable>
-            <Pressable onPress={() => onNudge(line, 'end_time_ms', 100)} style={styles.nudgeButton}>
-              <Text style={styles.nudgeButtonText}>+100ms</Text>
+            <Pressable onPress={() => onNudge(line, 'end_time_ms', 100)} style={[styles.nudgeButton, isDark && styles.nudgeButtonDark]}>
+              <Text style={[styles.nudgeButtonText, isDark && { color: DARK_COLORS.text }]}>+100ms</Text>
             </Pressable>
           </View>
         </View>
@@ -156,8 +156,22 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   reviewRowActive: { borderColor: PRIMARY_COLOR, borderWidth: 2 },
-  reviewText: { fontSize: 15, fontWeight: '600' },
-  reviewTranslation: { fontSize: 13, color: '#666' },
+  reviewText: {
+    fontSize: 15,
+    fontWeight: '600',
+    borderWidth: StyleSheet.hairlineWidth,
+    borderColor: '#ddd',
+    borderRadius: 6,
+    padding: 6,
+  },
+  reviewTranslation: {
+    fontSize: 13,
+    color: '#666',
+    borderWidth: StyleSheet.hairlineWidth,
+    borderColor: '#ddd',
+    borderRadius: 6,
+    padding: 6,
+  },
   translationRow: { flexDirection: 'row', alignItems: 'flex-start', gap: 8, marginTop: 4 },
   translationInput: { flex: 1 },
   miniPickerContainer: {
@@ -184,6 +198,10 @@ const styles = StyleSheet.create({
     borderRadius: 6,
     paddingVertical: 4,
     paddingHorizontal: 6,
+  },
+  nudgeButtonDark: {
+    borderColor: DARK_COLORS.border,
+    backgroundColor: DARK_COLORS.surface,
   },
   nudgeButtonText: { fontSize: 11 },
   errorText: { color: '#c0392b', fontSize: 12, marginTop: 6 },

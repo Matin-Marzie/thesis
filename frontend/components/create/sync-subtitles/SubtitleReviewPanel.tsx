@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { View, Text, StyleSheet, Pressable, FlatList, ActivityIndicator } from 'react-native';
 import { PRIMARY_COLOR } from '@/constants/App';
 import type { DraftSubtitleLine } from '@/types/createReel';
@@ -49,9 +49,31 @@ export function SubtitleReviewPanel({
   onAddAnotherLine,
   onPublish,
 }: SubtitleReviewPanelProps) {
+  const listRef = useRef<FlatList<DraftSubtitleLine>>(null);
+
+  // Keep the currently-playing line centered as the video advances. Rows
+  // have variable height (multiline text, a variable number of
+  // translations), so scrollToIndex can't rely on an exact getItemLayout -
+  // onScrollToIndexFailed below handles the case where it misjudges the
+  // offset for a row that hasn't rendered/measured yet.
+  useEffect(() => {
+    if (currentReviewIndex < 0 || currentReviewIndex >= lines.length) return;
+    listRef.current?.scrollToIndex({ index: currentReviewIndex, viewPosition: 0.5, animated: true });
+  }, [currentReviewIndex, lines.length]);
+
+  const handleScrollToIndexFailed = (info: { index: number; averageItemLength: number }) => {
+    listRef.current?.scrollToOffset({ offset: info.averageItemLength * info.index, animated: false });
+    setTimeout(() => {
+      if (info.index >= 0 && info.index < lines.length) {
+        listRef.current?.scrollToIndex({ index: info.index, viewPosition: 0.5, animated: true });
+      }
+    }, 100);
+  };
+
   return (
     <View style={styles.reviewPanel}>
       <FlatList
+        ref={listRef}
         data={lines}
         keyExtractor={(item) => item.localId}
         renderItem={({ item, index }) => (
@@ -72,6 +94,7 @@ export function SubtitleReviewPanel({
           />
         )}
         contentContainerStyle={styles.reviewListContent}
+        onScrollToIndexFailed={handleScrollToIndexFailed}
       />
 
       <View style={styles.row}>
