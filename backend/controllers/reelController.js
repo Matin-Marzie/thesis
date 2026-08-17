@@ -50,7 +50,6 @@ const reelController = {
 
       const { error, value } = CreateReelSchema.validate({
         title: req.body.title,
-        description: req.body.description,
         language_id: Number(req.body.language_id),
         duration: Number(req.body.duration),
         lines: parsedLines,
@@ -82,7 +81,6 @@ const reelController = {
         url,
         thumbnailUrl,
         title: value.title,
-        description: value.description,
         languageId: value.language_id,
         duration: value.duration,
         lines: value.lines,

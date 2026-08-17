@@ -16,7 +16,6 @@ class Reel(Base):
     url = Column(Text, nullable=False)
     thumbnail_url = Column(Text, nullable=True)
     title = Column(Text, nullable=True)
-    description = Column(Text, nullable=True)
     duration = Column(SmallInteger, nullable=True)
     created_at = Column(DateTime(timezone=True), server_default=func.now(), nullable=False)
     

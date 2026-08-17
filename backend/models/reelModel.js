@@ -12,7 +12,7 @@ const reelModel = {
   // any client-supplied `position` field is ignored here so the
   // dialogue_sentences(dialogue_id, position) unique constraint can never be
   // violated by out-of-order/duplicate client input.
-  async createWithDialogue({ createdBy, url, thumbnailUrl, title, description, languageId, duration, lines }) {
+  async createWithDialogue({ createdBy, url, thumbnailUrl, title, languageId, duration, lines }) {
     const client = await pool.connect();
     try {
       await client.query('BEGIN');
@@ -35,10 +35,10 @@ const reelModel = {
           endTimeMs: line.end_time_ms,
         });
 
-        if (line.translation && line.translation_language_id) {
+        for (const translation of line.translations) {
           const translationSentenceId = await sentenceModel.findOrCreate(client, {
-            languageId: line.translation_language_id,
-            text: line.translation,
+            languageId: translation.translation_language_id,
+            text: translation.text,
           });
           await sentenceModel.linkTranslation(client, {
             sentenceId,
@@ -48,10 +48,10 @@ const reelModel = {
       }
 
       const reelResult = await client.query(
-        `INSERT INTO reels (language_id, dialogue_id, created_by, url, thumbnail_url, title, description, duration)
-         VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
-         RETURNING id, language_id, dialogue_id, created_by, url, thumbnail_url, title, description, duration, created_at`,
-        [languageId, dialogueId, createdBy, url, thumbnailUrl || null, title || null, description || null, duration]
+        `INSERT INTO reels (language_id, dialogue_id, created_by, url, thumbnail_url, title, duration)
+         VALUES ($1, $2, $3, $4, $5, $6, $7)
+         RETURNING id, language_id, dialogue_id, created_by, url, thumbnail_url, title, duration, created_at`,
+        [languageId, dialogueId, createdBy, url, thumbnailUrl || null, title || null, duration]
       );
 
       await client.query('COMMIT');

@@ -1,9 +1,10 @@
 import React, { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
-import { View, Text, StyleSheet, TextInput, Pressable, ScrollView, Alert, Image } from 'react-native';
+import { View, Text, StyleSheet, TextInput, Pressable, ScrollView, Alert, Image, Platform } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation, useRouter } from 'expo-router';
 import { useVideoPlayer, VideoView } from 'expo-video';
 import * as ImagePicker from 'expo-image-picker';
+import { Picker } from '@react-native-picker/picker';
 import { FontAwesome } from '@expo/vector-icons';
 import { useColorScheme } from '@/components/useColorScheme';
 import { DARK_COLORS, PRIMARY_COLOR } from '@/constants/App';
@@ -28,12 +29,8 @@ export default function CreateDetailsScreen() {
     setThumbnailAsset,
     languageId,
     setLanguageId,
-    translationLanguageId,
-    setTranslationLanguageId,
     title,
     setTitle,
-    description,
-    setDescription,
   } = useCreateReelWizard();
   const { userProgress } = useProgress();
 
@@ -100,30 +97,16 @@ export default function CreateDetailsScreen() {
       router.replace('/(tabs)/create');
       return;
     }
-    if (languageId === null || translationLanguageId === null) {
+    if (languageId === null) {
       const current = userProgress?.languages?.find((l) => l.is_current_language) || userProgress?.languages?.[0];
-      // learning_language.id / native_language.id come back from the backend
-      // as strings (Postgres bigint columns), but LANGUAGES_META's ids are
-      // numbers - without coercing, selectedValue would never strictly match
-      // a Picker.Item's value and the picker silently falls back to its
-      // first item (English) regardless of the user's actual language.
-      if (languageId === null) {
-        setLanguageId(Number(current?.learning_language?.id ?? LANGUAGE_OPTIONS[0].id));
-      }
-      if (translationLanguageId === null) {
-        setTranslationLanguageId(Number(current?.native_language?.id ?? LANGUAGE_OPTIONS[0].id));
-      }
+      // learning_language.id comes back from the backend as a string
+      // (Postgres bigint column), but LANGUAGES_META's ids are numbers -
+      // without coercing, selectedValue would never strictly match a
+      // Picker.Item's value and the picker silently falls back to its first
+      // item (English) regardless of the user's actual language.
+      setLanguageId(Number(current?.learning_language?.id ?? LANGUAGE_OPTIONS[0].id));
     }
-  }, [videoAsset, languageId, translationLanguageId, userProgress, router, setLanguageId, setTranslationLanguageId]);
-
-  const subtitleLanguage = useMemo(
-    () => LANGUAGE_OPTIONS.find((lang) => lang.id === languageId),
-    [languageId]
-  );
-  const translationLanguage = useMemo(
-    () => LANGUAGE_OPTIONS.find((lang) => lang.id === translationLanguageId),
-    [translationLanguageId]
-  );
+  }, [videoAsset, languageId, userProgress, router, setLanguageId]);
 
   const handleContinue = useCallback(() => {
     player.pause();
@@ -164,28 +147,15 @@ export default function CreateDetailsScreen() {
 
         <View style={styles.content}>
           <View style={styles.fieldsGroup}>
-            <Text style={[styles.label, isDark && { color: DARK_COLORS.textSecondary }]}>Title (optional)</Text>
             <TextInput
               style={[styles.input, isDark && styles.inputDark]}
               value={title}
               onChangeText={setTitle}
-              placeholder="Give your reel a title"
+              placeholder="Title"
               placeholderTextColor={isDark ? DARK_COLORS.textMuted : '#999'}
               maxLength={100}
             />
 
-            <Text style={[styles.label, isDark && { color: DARK_COLORS.textSecondary }]}>Description (optional)</Text>
-            <TextInput
-              style={[styles.input, styles.multiline, isDark && styles.inputDark]}
-              value={description}
-              onChangeText={setDescription}
-              placeholder="What's this reel about?"
-              placeholderTextColor={isDark ? DARK_COLORS.textMuted : '#999'}
-              maxLength={500}
-              multiline
-            />
-
-            <Text style={[styles.label, isDark && { color: DARK_COLORS.textSecondary }]}>Cover (optional)</Text>
             <View style={styles.coverRow}>
               <Pressable
                 style={[styles.coverPreview, isDark && { backgroundColor: DARK_COLORS.surface, borderColor: DARK_COLORS.border }]}
@@ -209,17 +179,30 @@ export default function CreateDetailsScreen() {
               </View>
             </View>
 
-            <View style={styles.languageRow}>
-              <Text style={[styles.languageRowLabel, isDark && { color: DARK_COLORS.textSecondary }]}>Subtitle language</Text>
-              <Text style={[styles.languageRowValue, isDark && { color: DARK_COLORS.text }]}>
-                {subtitleLanguage ? `${subtitleLanguage.flag} ${subtitleLanguage.name}` : '—'}
-              </Text>
-            </View>
-            <View style={styles.languageRow}>
-              <Text style={[styles.languageRowLabel, isDark && { color: DARK_COLORS.textSecondary }]}>Translation language</Text>
-              <Text style={[styles.languageRowValue, isDark && { color: DARK_COLORS.text }]}>
-                {translationLanguage ? `${translationLanguage.flag} ${translationLanguage.name}` : '—'}
-              </Text>
+            <Text style={[styles.label, isDark && { color: DARK_COLORS.textSecondary }]}>Reel / Subtitle language</Text>
+            <View style={[styles.pickerContainer, isDark && { backgroundColor: DARK_COLORS.surface, borderColor: DARK_COLORS.border }]}>
+              <Picker
+                selectedValue={languageId}
+                onValueChange={(value) => setLanguageId(Number(value))}
+                style={[styles.picker, isDark && { color: DARK_COLORS.text }]}
+                itemStyle={[styles.pickerItem, isDark && { color: DARK_COLORS.text }]}
+                dropdownIconColor={isDark ? DARK_COLORS.text : '#333'}
+                mode="dropdown"
+              >
+                {LANGUAGE_OPTIONS.map((lang) => (
+                  <Picker.Item
+                    key={lang.id}
+                    label={`${lang.flag} ${lang.name}`}
+                    value={lang.id}
+                    color={Platform.OS === 'android' ? (isDark ? DARK_COLORS.text : '#333') : undefined}
+                    style={
+                      Platform.OS === 'android'
+                        ? { backgroundColor: isDark ? DARK_COLORS.surface : '#fff' }
+                        : undefined
+                    }
+                  />
+                ))}
+              </Picker>
             </View>
           </View>
 
@@ -257,9 +240,8 @@ const styles = StyleSheet.create({
   },
   timeBadgeText: { color: '#fff', fontSize: 12, fontWeight: '600' },
   scrollContent: { flexGrow: 1 },
-  content: { flex: 1, paddingHorizontal: 20, paddingVertical: 6, justifyContent: 'space-between' },
-  fieldsGroup: {},
-  label: { fontSize: 13, color: '#666', marginBottom: 6, marginTop: 14 },
+  content: { flex: 1, paddingHorizontal: 20, paddingVertical: 16, justifyContent: 'space-between' },
+  fieldsGroup: { gap: 12},
   input: {
     borderWidth: 1,
     borderColor: '#ddd',
@@ -267,7 +249,6 @@ const styles = StyleSheet.create({
     padding: 12,
     fontSize: 15,
   },
-  multiline: { minHeight: 80, textAlignVertical: 'top' },
   inputDark: {
     borderColor: DARK_COLORS.border,
     color: DARK_COLORS.text,
@@ -306,17 +287,16 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     color: PRIMARY_COLOR,
   },
-  languageRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    paddingVertical: 4,
-    marginTop: 8,
-    borderBottomWidth: 1,
-    borderBottomColor: '#eee',
+  label: { fontSize: 14, color: '#666', marginTop: 8 },
+  pickerContainer: {
+    backgroundColor: '#fff',
+    overflow: 'hidden',
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: '#ddd',
   },
-  languageRowLabel: { fontSize: 14, color: '#666' },
-  languageRowValue: { fontSize: 14, fontWeight: '600' },
+  picker: { color: '#333' },
+  pickerItem: { color: '#333' },
 
   continueButton: {
     backgroundColor: PRIMARY_COLOR,

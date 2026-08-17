@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { StyleSheet, Alert } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
@@ -8,16 +8,19 @@ import { DARK_COLORS } from '@/constants/App';
 import { LANGUAGES_META } from '@/constants/SupportedLanguages';
 import { useCreateReelWizard } from '@/context/CreateReelWizardContext';
 import { useProfile } from '@/context/ProfileContext';
+import { useProgress } from '@/context/ProgressContext';
 import { useReelsContext } from '@/context/ReelsContext';
 import { useUserReels } from '@/context/UserReelsContext';
 import { createReel } from '@/api/reelCreation';
 import { SubtitleVideoPreview } from '@/components/create/sync-subtitles/SubtitleVideoPreview';
 import { SubtitleRecordPanel } from '@/components/create/sync-subtitles/SubtitleRecordPanel';
 import { SubtitleReviewPanel } from '@/components/create/sync-subtitles/SubtitleReviewPanel';
-import type { DraftSubtitleLine } from '@/types/createReel';
+import type { DraftSubtitleLine, DraftTranslation } from '@/types/createReel';
 import type { Reel } from '@/types/dialogue';
 
 const LANGUAGE_OPTIONS = Object.values(LANGUAGES_META);
+
+const makeTranslationLocalId = () => `translation-${Date.now()}-${Math.random().toString(36).slice(2, 9)}`;
 
 export default function SyncSubtitlesScreen() {
   const isDark = useColorScheme() === 'dark';
@@ -30,18 +33,36 @@ export default function SyncSubtitlesScreen() {
     updateLine,
     removeLine,
     languageId,
-    translationLanguageId,
     title,
-    description,
     reset,
   } = useCreateReelWizard();
   const { userProfile } = useProfile();
+  const { userProgress } = useProgress();
   const { prependReel } = useReelsContext();
   const { prependUserReel } = useUserReels();
 
+  // The reel's own subtitle language can't also be picked as a translation
+  // language for one of its lines - translating a line into the language
+  // it's already written in is meaningless.
+  const nativeLanguageId = useMemo(() => {
+    const current = userProgress?.languages?.find((l) => l.is_current_language) || userProgress?.languages?.[0];
+    const id = current?.native_language?.id;
+    return id != null ? Number(id) : null;
+  }, [userProgress]);
+
+  const defaultTranslationLanguageId = useMemo(() => {
+    if (nativeLanguageId !== null && nativeLanguageId !== languageId) return nativeLanguageId;
+    return LANGUAGE_OPTIONS.find((l) => l.id !== languageId)?.id ?? null;
+  }, [nativeLanguageId, languageId]);
+
+  const makeDefaultTranslations = useCallback((): DraftTranslation[] => {
+    if (defaultTranslationLanguageId === null) return [];
+    return [{ localId: makeTranslationLocalId(), text: '', languageId: defaultTranslationLanguageId }];
+  }, [defaultTranslationLanguageId]);
+
   const [phase, setPhase] = useState<'record' | 'review'>('record');
   const [draftText, setDraftText] = useState('');
-  const [draftTranslation, setDraftTranslation] = useState('');
+  const [draftTranslations, setDraftTranslations] = useState<DraftTranslation[]>([]);
   const [draftStartMs, setDraftStartMs] = useState<number | null>(null);
   const [draftEndMs, setDraftEndMs] = useState<number | null>(null);
   const [currentTimeMs, setCurrentTimeMs] = useState(0);
@@ -58,6 +79,17 @@ export default function SyncSubtitlesScreen() {
       router.replace('/(tabs)/create');
     }
   }, [videoAsset, router]);
+
+  // Seeds the very first draft's translation row once we know which
+  // language to default it to - later drafts get reseeded straight from
+  // handleAddLine, this only covers the initial mount.
+  const hasSeededDraftTranslations = useRef(false);
+  useEffect(() => {
+    if (!hasSeededDraftTranslations.current && defaultTranslationLanguageId !== null) {
+      setDraftTranslations(makeDefaultTranslations());
+      hasSeededDraftTranslations.current = true;
+    }
+  }, [defaultTranslationLanguageId, makeDefaultTranslations]);
 
   useEffect(() => {
     player.timeUpdateEventInterval = 0.1;
@@ -100,6 +132,28 @@ export default function SyncSubtitlesScreen() {
     }
   }, [player, isPlaying]);
   
+  const handleAddDraftTranslation = useCallback(() => {
+    setDraftTranslations((prev) => {
+      const usedLanguageIds = new Set(prev.map((t) => t.languageId));
+      const nextLanguageId =
+        LANGUAGE_OPTIONS.find((l) => l.id !== languageId && !usedLanguageIds.has(l.id))?.id ?? null;
+      if (nextLanguageId === null) return prev;
+      return [...prev, { localId: makeTranslationLocalId(), text: '', languageId: nextLanguageId }];
+    });
+  }, [languageId]);
+
+  const handleChangeDraftTranslationText = useCallback((translationLocalId: string, text: string) => {
+    setDraftTranslations((prev) => prev.map((t) => (t.localId === translationLocalId ? { ...t, text } : t)));
+  }, []);
+
+  const handleChangeDraftTranslationLanguage = useCallback((translationLocalId: string, langId: number) => {
+    setDraftTranslations((prev) => prev.map((t) => (t.localId === translationLocalId ? { ...t, languageId: langId } : t)));
+  }, []);
+
+  const handleRemoveDraftTranslation = useCallback((translationLocalId: string) => {
+    setDraftTranslations((prev) => prev.filter((t) => t.localId !== translationLocalId));
+  }, []);
+
   const handleAddLine = useCallback(() => {
     if (!draftText.trim()) {
       Alert.alert('Add text', 'Type the subtitle text for this line before marking its end.');
@@ -116,15 +170,15 @@ export default function SyncSubtitlesScreen() {
 
     addLine({
       text: draftText.trim(),
-      translation: draftTranslation.trim(),
+      translations: draftTranslations.filter((t) => t.text.trim() && t.languageId !== null),
       start_time_ms: draftStartMs,
       end_time_ms: draftEndMs,
     });
     setDraftText('');
-    setDraftTranslation('');
+    setDraftTranslations(makeDefaultTranslations());
     setDraftStartMs(null);
     setDraftEndMs(null);
-  }, [addLine, draftText, draftTranslation, draftStartMs, draftEndMs]);
+  }, [addLine, draftText, draftTranslations, draftStartMs, draftEndMs, makeDefaultTranslations]);
 
 
   const handleUndoLast = useCallback(() => {
@@ -160,19 +214,55 @@ export default function SyncSubtitlesScreen() {
     [updateLine]
   );
 
-  const handleChangeLineTranslation = useCallback(
-    (localId: string, translation: string) => updateLine(localId, { translation }),
-    [updateLine]
+  const handleAddLineTranslation = useCallback(
+    (localId: string) => {
+      const line = lines.find((l) => l.localId === localId);
+      if (!line) return;
+      const usedLanguageIds = new Set(line.translations.map((t) => t.languageId));
+      const nextLanguageId = LANGUAGE_OPTIONS.find((l) => l.id !== languageId && !usedLanguageIds.has(l.id))?.id ?? null;
+      if (nextLanguageId === null) return;
+      updateLine(localId, {
+        translations: [...line.translations, { localId: makeTranslationLocalId(), text: '', languageId: nextLanguageId }],
+      });
+    },
+    [lines, languageId, updateLine]
   );
 
-  const hasTranslations = useMemo(() => lines.some((l) => l.translation.trim().length > 0), [lines]);
+  const handleChangeLineTranslationText = useCallback(
+    (localId: string, translationLocalId: string, text: string) => {
+      const line = lines.find((l) => l.localId === localId);
+      if (!line) return;
+      updateLine(localId, {
+        translations: line.translations.map((t) => (t.localId === translationLocalId ? { ...t, text } : t)),
+      });
+    },
+    [lines, updateLine]
+  );
+
+  const handleChangeLineTranslationLanguage = useCallback(
+    (localId: string, translationLocalId: string, langId: number) => {
+      const line = lines.find((l) => l.localId === localId);
+      if (!line) return;
+      updateLine(localId, {
+        translations: line.translations.map((t) => (t.localId === translationLocalId ? { ...t, languageId: langId } : t)),
+      });
+    },
+    [lines, updateLine]
+  );
+
+  const handleRemoveLineTranslation = useCallback(
+    (localId: string, translationLocalId: string) => {
+      const line = lines.find((l) => l.localId === localId);
+      if (!line) return;
+      updateLine(localId, {
+        translations: line.translations.filter((t) => t.localId !== translationLocalId),
+      });
+    },
+    [lines, updateLine]
+  );
 
   const handlePublish = useCallback(async () => {
     if (!videoAsset || !languageId) return;
-    if (hasTranslations && !translationLanguageId) {
-      Alert.alert('Pick a translation language', 'Some lines have a translation - go back and choose which language it is in.');
-      return;
-    }
 
     setIsPublishing(true);
     setProgress(0);
@@ -183,9 +273,7 @@ export default function SyncSubtitlesScreen() {
           video: videoAsset,
           thumbnail: thumbnailAsset,
           title: title.trim() || null,
-          description: description.trim(),
           languageId,
-          translationLanguageId: hasTranslations ? translationLanguageId : null,
           lines,
         },
         (event: any) => {
@@ -232,7 +320,12 @@ export default function SyncSubtitlesScreen() {
             end_time_ms: line.end_time_ms,
             text: line.text,
             normalized_text: line.text,
-            translation: line.translation,
+            // Mirrors get_sentence_translation's per-viewer lookup: once this
+            // reel is actually fetched, the server resolves the translation
+            // matching the viewer's own native language - so for this
+            // optimistic preview (viewed by the publisher themselves) we
+            // pick the same one from what was just typed in.
+            translation: line.translations.find((t) => t.languageId === nativeLanguageId)?.text || '',
             tokens: [],
           })),
         },
@@ -252,13 +345,13 @@ export default function SyncSubtitlesScreen() {
         created_at: response.reel.created_at,
       });
       reset();
-      router.replace('/(tabs)/reels');
+      router.replace('/(tabs)/profile');
     } catch (error: any) {
       Alert.alert('Publish failed', error.message || 'Something went wrong. Please try again.');
     } finally {
       setIsPublishing(false);
     }
-  }, [videoAsset, thumbnailAsset, languageId, translationLanguageId, hasTranslations, title, description, lines, userProfile, prependReel, prependUserReel, reset, router]);
+  }, [videoAsset, thumbnailAsset, languageId, nativeLanguageId, title, lines, userProfile, prependReel, prependUserReel, reset, router]);
 
   const handlePressPublish = useCallback(() => {
     const hasInvalid = lines.some((l) => l.end_time_ms <= l.start_time_ms || !l.text.trim());
@@ -286,8 +379,13 @@ export default function SyncSubtitlesScreen() {
           lineCount={lines.length}
           draftText={draftText}
           onChangeDraftText={setDraftText}
-          draftTranslation={draftTranslation}
-          onChangeDraftTranslation={setDraftTranslation}
+          draftTranslations={draftTranslations}
+          onAddTranslation={handleAddDraftTranslation}
+          onChangeTranslationText={handleChangeDraftTranslationText}
+          onChangeTranslationLanguage={handleChangeDraftTranslationLanguage}
+          onRemoveTranslation={handleRemoveDraftTranslation}
+          reelLanguageId={languageId}
+          languageOptions={LANGUAGE_OPTIONS}
           draftStartMs={draftStartMs}
           draftEndMs={draftEndMs}
           onMarkStart={handleMarkStart}
@@ -306,7 +404,12 @@ export default function SyncSubtitlesScreen() {
           progress={progress}
           onSeekToLine={handleSeekToLine}
           onChangeText={handleChangeLineText}
-          onChangeTranslation={handleChangeLineTranslation}
+          onAddTranslation={handleAddLineTranslation}
+          onChangeTranslationText={handleChangeLineTranslationText}
+          onChangeTranslationLanguage={handleChangeLineTranslationLanguage}
+          onRemoveTranslation={handleRemoveLineTranslation}
+          reelLanguageId={languageId}
+          languageOptions={LANGUAGE_OPTIONS}
           onNudge={nudge}
           onRemoveLine={removeLine}
           onAddAnotherLine={() => setPhase('record')}

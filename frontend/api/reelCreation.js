@@ -8,15 +8,13 @@ import apiClient from './client.js';
  * @param {import('../types/createReel').WizardVideoAsset} params.video
  * @param {import('../types/createReel').WizardImageAsset|null} [params.thumbnail] - Optional cover image; when omitted, the backend extracts one from the video's first frame.
  * @param {string|null} params.title
- * @param {string} params.description
  * @param {number} params.languageId
- * @param {number|null} params.translationLanguageId
  * @param {import('../types/createReel').DraftSubtitleLine[]} params.lines
  * @param {(progressEvent: any) => void} [onUploadProgress]
  * @returns {Promise<import('../types/createReel').CreateReelResponse>}
  */
 export const createReel = async (
-  { video, thumbnail, title, description, languageId, translationLanguageId, lines },
+  { video, thumbnail, title, languageId, lines },
   onUploadProgress
 ) => {
   const form = new FormData();
@@ -35,9 +33,6 @@ export const createReel = async (
   if (title) {
     form.append('title', title);
   }
-  if (description) {
-    form.append('description', description);
-  }
   form.append('language_id', String(languageId));
   form.append('duration', String(Math.round(video.durationMs / 1000)));
   form.append(
@@ -46,8 +41,9 @@ export const createReel = async (
       lines.map((line, index) => ({
         position: index + 1,
         text: line.text,
-        translation: line.translation || null,
-        translation_language_id: line.translation ? translationLanguageId : null,
+        translations: line.translations
+          .filter((t) => t.text.trim() && t.languageId)
+          .map((t) => ({ text: t.text.trim(), translation_language_id: t.languageId })),
         start_time_ms: line.start_time_ms,
         end_time_ms: line.end_time_ms,
       }))

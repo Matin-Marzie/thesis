@@ -4,6 +4,12 @@ import { PRIMARY_COLOR } from '@/constants/App';
 import type { DraftSubtitleLine } from '@/types/createReel';
 import { SubtitleReviewRow } from './SubtitleReviewRow';
 
+interface LanguageOption {
+  id: number;
+  name: string;
+  flag: string;
+}
+
 interface SubtitleReviewPanelProps {
   isDark: boolean;
   lines: DraftSubtitleLine[];
@@ -12,7 +18,12 @@ interface SubtitleReviewPanelProps {
   progress: number;
   onSeekToLine: (line: DraftSubtitleLine) => void;
   onChangeText: (localId: string, text: string) => void;
-  onChangeTranslation: (localId: string, translation: string) => void;
+  onAddTranslation: (localId: string) => void;
+  onChangeTranslationText: (localId: string, translationLocalId: string, text: string) => void;
+  onChangeTranslationLanguage: (localId: string, translationLocalId: string, languageId: number) => void;
+  onRemoveTranslation: (localId: string, translationLocalId: string) => void;
+  reelLanguageId: number | null;
+  languageOptions: LanguageOption[];
   onNudge: (line: DraftSubtitleLine, field: 'start_time_ms' | 'end_time_ms', deltaMs: number) => void;
   onRemoveLine: (localId: string) => void;
   onAddAnotherLine: () => void;
@@ -27,7 +38,12 @@ export function SubtitleReviewPanel({
   progress,
   onSeekToLine,
   onChangeText,
-  onChangeTranslation,
+  onAddTranslation,
+  onChangeTranslationText,
+  onChangeTranslationLanguage,
+  onRemoveTranslation,
+  reelLanguageId,
+  languageOptions,
   onNudge,
   onRemoveLine,
   onAddAnotherLine,
@@ -45,7 +61,12 @@ export function SubtitleReviewPanel({
             isActive={index === currentReviewIndex}
             onPress={onSeekToLine}
             onChangeText={onChangeText}
-            onChangeTranslation={onChangeTranslation}
+            onAddTranslation={onAddTranslation}
+            onChangeTranslationText={onChangeTranslationText}
+            onChangeTranslationLanguage={onChangeTranslationLanguage}
+            onRemoveTranslation={onRemoveTranslation}
+            reelLanguageId={reelLanguageId}
+            languageOptions={languageOptions}
             onNudge={onNudge}
             onRemove={onRemoveLine}
           />

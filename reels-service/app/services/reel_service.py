@@ -256,7 +256,6 @@ class ReelService:
                 url=reel.url,
                 thumbnail_url=reel.thumbnail_url,
                 title=reel.title,
-                description=reel.description,
                 duration=reel.duration,
                 created_at=reel.created_at,
                 language=language_response,

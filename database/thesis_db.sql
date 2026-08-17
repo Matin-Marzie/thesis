@@ -283,7 +283,6 @@ CREATE TABLE public.reels (
     url text NOT NULL,
     thumbnail_url text,
     title text,
-    description text,
     duration smallint,
     created_at timestamp with time zone DEFAULT now() NOT NULL
 );
@@ -1059,23 +1058,23 @@ COPY public.reel_reports (id, reel_id, user_id, reason, created_at) FROM stdin;
 -- Data for Name: reels; Type: TABLE DATA; Schema: public; Owner: root
 --
 
-COPY public.reels (id, language_id, dialogue_id, created_by, url, thumbnail_url, title, description, duration, created_at) FROM stdin;
-7	3	7	3	http://localhost:3500/static/3-sedkhareji/iran.mp4	\N	\N	\N	\N	2026-04-07 09:32:26.697735+03
-8	3	8	3	http://localhost:3500/static/3-sedkhareji/ghahve.mp4	\N	\N	\N	\N	2026-04-07 10:24:41.191203+03
-13	3	13	4	http://localhost:3500/static/4-calligraphy_ghasemian/nun.mp4	\N	\N	\N	\N	2026-04-07 10:42:35.47637+03
-14	3	14	4	http://localhost:3500/static/4-calligraphy_ghasemian/vav.mp4	\N	\N	\N	\N	2026-04-07 10:42:35.481575+03
-15	3	15	4	http://localhost:3500/static/4-calligraphy_ghasemian/mim.mp4	\N	\N	\N	\N	2026-04-07 10:44:16.411016+03
-16	3	16	4	http://localhost:3500/static/4-calligraphy_ghasemian/i.mp4	\N	\N	\N	\N	2026-04-07 10:44:16.451804+03
-1	3	1	1	http://localhost:3500/static/1-admin/dialogue-1.mp4	\N	\N	\N	\N	2026-03-11 13:05:27.864154+02
-2	3	2	1	http://localhost:3500/static/1-admin/2-pedram-thomas.mp4	\N	\N	\N	\N	2026-03-11 14:20:13.552634+02
-3	3	3	1	http://localhost:3500/static/1-admin/dialogue-3.mp4	\N	\N	\N	\N	2026-03-11 14:23:42.356641+02
-4	3	4	1	http://localhost:3500/static/1-admin/dialogue-4.mp4	\N	\N	\N	\N	2026-03-11 14:23:42.360455+02
-5	3	5	1	http://localhost:3500/static/1-admin/dialogue-5.mp4	\N	\N	\N	\N	2026-03-11 14:23:42.36396+02
-6	3	6	1	http://localhost:3500/static/1-admin/dialogue-6.mp4	\N	\N	\N	\N	2026-03-11 14:23:59.252445+02
-9	3	\N	3	http://localhost:3500/static/3-sedkhareji/chayi.mp4	\N	\N	\N	\N	2026-04-07 10:25:05.775204+03
-10	3	\N	3	http://localhost:3500/static/3-sedkhareji/akasi.mp4	\N	\N	\N	\N	2026-04-07 10:25:47.411894+03
-11	3	\N	3	http://localhost:3500/static/3-sedkhareji/doktor.mp4	\N	\N	\N	\N	2026-04-07 10:27:59.82117+03
-12	3	\N	3	http://localhost:3500/static/3-sedkhareji/esfehan.mp4	\N	\N	\N	\N	2026-04-07 10:28:20.622291+03
+COPY public.reels (id, language_id, dialogue_id, created_by, url, thumbnail_url, title, duration, created_at) FROM stdin;
+7	3	7	3	http://localhost:3500/static/3-sedkhareji/iran.mp4	\N	\N	\N	2026-04-07 09:32:26.697735+03
+8	3	8	3	http://localhost:3500/static/3-sedkhareji/ghahve.mp4	\N	\N	\N	2026-04-07 10:24:41.191203+03
+13	3	13	4	http://localhost:3500/static/4-calligraphy_ghasemian/nun.mp4	\N	\N	\N	2026-04-07 10:42:35.47637+03
+14	3	14	4	http://localhost:3500/static/4-calligraphy_ghasemian/vav.mp4	\N	\N	\N	2026-04-07 10:42:35.481575+03
+15	3	15	4	http://localhost:3500/static/4-calligraphy_ghasemian/mim.mp4	\N	\N	\N	2026-04-07 10:44:16.411016+03
+16	3	16	4	http://localhost:3500/static/4-calligraphy_ghasemian/i.mp4	\N	\N	\N	2026-04-07 10:44:16.451804+03
+1	3	1	1	http://localhost:3500/static/1-admin/dialogue-1.mp4	\N	\N	\N	2026-03-11 13:05:27.864154+02
+2	3	2	1	http://localhost:3500/static/1-admin/2-pedram-thomas.mp4	\N	\N	\N	2026-03-11 14:20:13.552634+02
+3	3	3	1	http://localhost:3500/static/1-admin/dialogue-3.mp4	\N	\N	\N	2026-03-11 14:23:42.356641+02
+4	3	4	1	http://localhost:3500/static/1-admin/dialogue-4.mp4	\N	\N	\N	2026-03-11 14:23:42.360455+02
+5	3	5	1	http://localhost:3500/static/1-admin/dialogue-5.mp4	\N	\N	\N	2026-03-11 14:23:42.36396+02
+6	3	6	1	http://localhost:3500/static/1-admin/dialogue-6.mp4	\N	\N	\N	2026-03-11 14:23:59.252445+02
+9	3	\N	3	http://localhost:3500/static/3-sedkhareji/chayi.mp4	\N	\N	\N	2026-04-07 10:25:05.775204+03
+10	3	\N	3	http://localhost:3500/static/3-sedkhareji/akasi.mp4	\N	\N	\N	2026-04-07 10:25:47.411894+03
+11	3	\N	3	http://localhost:3500/static/3-sedkhareji/doktor.mp4	\N	\N	\N	2026-04-07 10:27:59.82117+03
+12	3	\N	3	http://localhost:3500/static/3-sedkhareji/esfehan.mp4	\N	\N	\N	2026-04-07 10:28:20.622291+03
 \.
 
 

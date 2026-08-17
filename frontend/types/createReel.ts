@@ -12,19 +12,29 @@ export interface WizardImageAsset {
   fileName: string | null;
 }
 
+export interface DraftTranslation {
+  localId: string;
+  text: string;
+  languageId: number | null;
+}
+
 export interface DraftSubtitleLine {
   localId: string;
   text: string;
-  translation: string;
+  translations: DraftTranslation[];
   start_time_ms: number;
   end_time_ms: number;
+}
+
+export interface CreateReelTranslationPayload {
+  text: string;
+  translation_language_id: number;
 }
 
 export interface CreateReelLinePayload {
   position: number;
   text: string;
-  translation: string | null;
-  translation_language_id: number | null;
+  translations: CreateReelTranslationPayload[];
   start_time_ms: number;
   end_time_ms: number;
 }
@@ -33,9 +43,7 @@ export interface CreateReelPayload {
   video: WizardVideoAsset;
   thumbnail: WizardImageAsset | null;
   title: string | null;
-  description: string;
   languageId: number;
-  translationLanguageId: number | null;
   lines: DraftSubtitleLine[];
 }
 
@@ -49,7 +57,6 @@ export interface CreateReelResponse {
     url: string;
     thumbnail_url: string | null;
     title: string | null;
-    description: string | null;
     duration: number;
     created_at: string;
   };

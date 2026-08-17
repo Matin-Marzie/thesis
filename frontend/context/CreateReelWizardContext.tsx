@@ -14,12 +14,8 @@ interface CreateReelWizardContextType {
   removeLine: (localId: string) => void;
   languageId: number | null;
   setLanguageId: (id: number | null) => void;
-  translationLanguageId: number | null;
-  setTranslationLanguageId: (id: number | null) => void;
   title: string;
   setTitle: (title: string) => void;
-  description: string;
-  setDescription: (description: string) => void;
   reset: () => void;
 }
 
@@ -30,9 +26,7 @@ export const CreateReelWizardProvider = ({ children }: { children: React.ReactNo
   const [thumbnailAsset, setThumbnailAsset] = useState<WizardImageAsset | null>(null);
   const [lines, setLines] = useState<DraftSubtitleLine[]>([]);
   const [languageId, setLanguageId] = useState<number | null>(null);
-  const [translationLanguageId, setTranslationLanguageId] = useState<number | null>(null);
   const [title, setTitle] = useState('');
-  const [description, setDescription] = useState('');
 
   const addLine = useCallback((line: Omit<DraftSubtitleLine, 'localId'>) => {
     setLines((prev) => [...prev, { ...line, localId: makeLocalId() }]);
@@ -51,9 +45,7 @@ export const CreateReelWizardProvider = ({ children }: { children: React.ReactNo
     setThumbnailAsset(null);
     setLines([]);
     setLanguageId(null);
-    setTranslationLanguageId(null);
     setTitle('');
-    setDescription('');
   }, []);
 
   const value = useMemo(
@@ -68,15 +60,11 @@ export const CreateReelWizardProvider = ({ children }: { children: React.ReactNo
       removeLine,
       languageId,
       setLanguageId,
-      translationLanguageId,
-      setTranslationLanguageId,
       title,
       setTitle,
-      description,
-      setDescription,
       reset,
     }),
-    [videoAsset, thumbnailAsset, lines, addLine, updateLine, removeLine, languageId, translationLanguageId, title, description, reset]
+    [videoAsset, thumbnailAsset, lines, addLine, updateLine, removeLine, languageId, title, reset]
   );
 
   return <CreateReelWizardContext.Provider value={value}>{children}</CreateReelWizardContext.Provider>;

@@ -32,7 +32,6 @@ class ReelResponse(BaseModel):
     url: str
     thumbnail_url: Optional[str] = None
     title: Optional[str] = None
-    description: Optional[str] = None
     duration: Optional[int] = None
     created_at: datetime
     language: Optional[LanguageResponse] = None
