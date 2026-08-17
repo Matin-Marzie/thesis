@@ -1,8 +1,8 @@
-import React, { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useLayoutEffect, useMemo, useRef } from 'react';
 import { View, Text, StyleSheet, TextInput, Pressable, ScrollView, Alert, Image, Platform } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation, useRouter } from 'expo-router';
-import { useVideoPlayer, VideoView } from 'expo-video';
+import { useVideoPlayer } from 'expo-video';
 import * as ImagePicker from 'expo-image-picker';
 import { Picker } from '@react-native-picker/picker';
 import { FontAwesome } from '@expo/vector-icons';
@@ -11,13 +11,9 @@ import { DARK_COLORS, PRIMARY_COLOR } from '@/constants/App';
 import { LANGUAGES_META } from '@/constants/SupportedLanguages';
 import { useCreateReelWizard } from '@/context/CreateReelWizardContext';
 import { useProgress } from '@/context/ProgressContext';
+import { SubtitleVideoPreview } from '@/components/create/sync-subtitles/SubtitleVideoPreview';
 
 const LANGUAGE_OPTIONS = Object.values(LANGUAGES_META);
-
-const formatMs = (ms: number) => {
-  const totalSeconds = ms / 1000;
-  return `${totalSeconds.toFixed(2)}s`;
-};
 
 export default function CreateDetailsScreen() {
   const isDark = useColorScheme() === 'dark';
@@ -34,33 +30,9 @@ export default function CreateDetailsScreen() {
   } = useCreateReelWizard();
   const { userProgress } = useProgress();
 
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [currentTimeMs, setCurrentTimeMs] = useState(0);
   const player = useVideoPlayer(videoAsset?.uri ?? null, (p) => {
     p.loop = false;
   });
-
-  useEffect(() => {
-    player.timeUpdateEventInterval = 0.1;
-    const sub = player.addListener('timeUpdate', ({ currentTime }) => {
-      setCurrentTimeMs((currentTime || 0) * 1000);
-    });
-    return () => sub.remove();
-  }, [player]);
-
-  useEffect(() => {
-    setIsPlaying(player.playing);
-    const sub = player.addListener('playingChange', ({ isPlaying: next }) => setIsPlaying(next));
-    return () => sub.remove();
-  }, [player]);
-
-  const handleTogglePlay = useCallback(() => {
-    if (isPlaying) {
-      player.pause();
-    } else {
-      player.play();
-    }
-  }, [isPlaying, player]);
 
   const handlePickThumbnail = useCallback(async () => {
     const permission = await ImagePicker.requestMediaLibraryPermissionsAsync();
@@ -135,15 +107,7 @@ export default function CreateDetailsScreen() {
         style={styles.scrollView}
         contentContainerStyle={styles.scrollContent}
       >
-        <View style={styles.videoWrapper}>
-          <VideoView player={player} style={styles.video} contentFit="contain" nativeControls={false} />
-          <Pressable style={styles.playOverlay} onPress={handleTogglePlay}>
-            <FontAwesome name={isPlaying ? 'pause' : 'play'} size={22} color="#fff" />
-          </Pressable>
-          <View style={styles.timeBadge}>
-            <Text style={styles.timeBadgeText}>{formatMs(currentTimeMs)}</Text>
-          </View>
-        </View>
+        <SubtitleVideoPreview player={player} />
 
         <View style={styles.content}>
           <View style={styles.fieldsGroup}>
@@ -218,27 +182,6 @@ export default function CreateDetailsScreen() {
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: '#fff' },
   scrollView: { flex: 1 },
-  videoWrapper: { height: 260, backgroundColor: '#000' },
-  video: { flex: 1 },
-  playOverlay: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  timeBadge: {
-    position: 'absolute',
-    bottom: 8,
-    right: 8,
-    backgroundColor: 'rgba(0,0,0,0.6)',
-    paddingHorizontal: 8,
-    paddingVertical: 4,
-    borderRadius: 8,
-  },
-  timeBadgeText: { color: '#fff', fontSize: 12, fontWeight: '600' },
   scrollContent: { flexGrow: 1 },
   content: { flex: 1, paddingHorizontal: 20, paddingVertical: 16, justifyContent: 'space-between' },
   fieldsGroup: { gap: 12},

@@ -139,31 +139,14 @@ export function SubtitleRecordPanel({
           )}
 
           <View style={styles.timeRow}>
-            <TextInput
-              value={draftStartMs !== null ? formatMs(draftStartMs) : ''}
-              placeholder="Start time"
-              placeholderTextColor={isDark ? DARK_COLORS.textMuted : '#999'}
-              editable={false}
-              style={[styles.input, styles.grow, isDark && styles.inputDark]}
-            />
-            <TextInput
-              value={draftEndMs !== null ? formatMs(draftEndMs) : ''}
-              placeholder="End time"
-              placeholderTextColor={isDark ? DARK_COLORS.textMuted : '#999'}
-              editable={false}
-              style={[styles.input, styles.grow, isDark && styles.inputDark]}
-            />
-            <Pressable
-              style={[styles.restartButton, !canAddLine && styles.disabledButton]}
-              onPress={onPlayRange}
-              disabled={!canAddLine}
-            >
-              <FontAwesome name="play" size={16} color={'#fff'} />
-            </Pressable>
-          </View>
-
-          <View style={styles.timingRow}>
-            <View style={styles.timingControl}>
+            <View style={styles.timeColumn}>
+              <TextInput
+                value={draftStartMs !== null ? formatMs(draftStartMs) : ''}
+                placeholder="Start time"
+                placeholderTextColor={isDark ? DARK_COLORS.textMuted : '#999'}
+                editable={false}
+                style={[styles.input, isDark && styles.inputDark]}
+              />
               <View style={styles.nudgeRow}>
                 <Pressable
                   onPress={() => onNudgeStart(-100)}
@@ -181,7 +164,14 @@ export function SubtitleRecordPanel({
                 </Pressable>
               </View>
             </View>
-            <View style={styles.timingControl}>
+            <View style={styles.timeColumn}>
+              <TextInput
+                value={draftEndMs !== null ? formatMs(draftEndMs) : ''}
+                placeholder="End time"
+                placeholderTextColor={isDark ? DARK_COLORS.textMuted : '#999'}
+                editable={false}
+                style={[styles.input, isDark && styles.inputDark]}
+              />
               <View style={styles.nudgeRow}>
                 <Pressable
                   onPress={() => onNudgeEnd(-100)}
@@ -199,6 +189,13 @@ export function SubtitleRecordPanel({
                 </Pressable>
               </View>
             </View>
+            <Pressable
+              style={[styles.restartButton, !canAddLine && styles.disabledButton]}
+              onPress={onPlayRange}
+              disabled={!canAddLine}
+            >
+              <FontAwesome name="play" size={16} color={'#fff'} />
+            </Pressable>
           </View>
 
           <View style={styles.markRow}>
@@ -283,9 +280,8 @@ const styles = StyleSheet.create({
   removeTranslationButton: { padding: 6, marginTop: 10 },
   addTranslationRow: { flexDirection: 'row', alignItems: 'center', gap: 6, marginTop: -2, marginBottom: 10 },
   addTranslationText: { color: PRIMARY_COLOR, fontWeight: '600', fontSize: 13 },
-  timeRow: { flexDirection: 'row', alignItems: 'center', gap: 10 },
-  timingRow: { flexDirection: 'row', gap: 16, marginTop: -6, marginBottom: 10 },
-  timingControl: { flex: 1 },
+  timeRow: { flexDirection: 'row', alignItems: 'flex-start', gap: 10, marginBottom: 10 },
+  timeColumn: { flex: 1 },
   nudgeRow: { flexDirection: 'row', gap: 6 },
   nudgeButton: {
     borderWidth: 1,

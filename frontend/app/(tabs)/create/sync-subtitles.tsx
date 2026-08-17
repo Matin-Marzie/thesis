@@ -115,14 +115,6 @@ export default function SyncSubtitlesScreen() {
     return () => sub.remove();
   }, [player]);
 
-  const handleTogglePlay = useCallback(() => {
-    if (isPlaying) {
-      player.pause();
-    } else {
-      player.play();
-    }
-  }, [isPlaying, player]);
-
   const handleRestartRecording = useCallback(() => {
     setDraftStartMs(null);
     setDraftEndMs(null);
@@ -391,12 +383,7 @@ export default function SyncSubtitlesScreen() {
 
   return (
     <SafeAreaView edges={['bottom']} style={[styles.container, isDark && { backgroundColor: DARK_COLORS.background }]}>
-      <SubtitleVideoPreview
-        player={player}
-        isPlaying={isPlaying}
-        currentTimeMs={currentTimeMs}
-        onTogglePlay={handleTogglePlay}
-      />
+      <SubtitleVideoPreview player={player} />
 
       {phase === 'record' ? (
         <SubtitleRecordPanel
