@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, useMemo, useCallback } from 'react';
-import { View, StyleSheet, Keyboard, Text, TouchableOpacity } from 'react-native';
+import { View, StyleSheet, Keyboard, Text, TouchableOpacity, ActivityIndicator } from 'react-native';
 import { useVocabularyContext } from '@/context/VocabularyContext';
 import { useSentenceContext } from '@/context/SentenceContext';
 import { useDictionaryContext } from '@/context/DictionaryContext';
@@ -19,16 +19,30 @@ export default function HomeScreen() {
   const [search, setSearch] = useState('');
   const [filteredWords, setFilteredWords] = useState([]); // To Do: don't duplicate state, remove filteredWords
   const [isFilterModalOpen, setIsFilterModalOpen] = useState(false);
+  // True only while a non-empty search query is debouncing/being computed -
+  // the empty-query "my words" path is immediate, so it never sets this.
+  const [isSearching, setIsSearching] = useState(false);
   // 'words' shows the vocabulary list (search/filter included); 'sentences'
   // shows sentences saved from reel subtitles.
   const [activeTab, setActiveTab] = useState('words');
   const debounceTimeout = useRef(null);
 
+  // Sort by created_at descending without re-allocating Date objects inside
+  // the comparator (decorate-sort-undecorate) - a plain `new Date(...)`
+  // comparator allocates twice per comparison, which adds up fast at
+  // dictionary scale and was blocking the JS thread long enough to trip
+  // VirtualizedList's "slow to update" warning.
+  const sortByCreatedAtDesc = useCallback((items, getCreatedAt) => {
+    return items
+      .map((item) => ({ item, ts: new Date(getCreatedAt(item) || 0).getTime() }))
+      .sort((a, b) => b.ts - a.ts)
+      .map(({ item }) => item);
+  }, []);
+
   const sortedSentences = useMemo(() => {
-    return Object.entries(userSentences || {})
-      .map(([id, entry]) => ({ id: Number(id), entry }))
-      .sort((a, b) => new Date(b.entry?.created_at || 0).getTime() - new Date(a.entry?.created_at || 0).getTime());
-  }, [userSentences]);
+    const items = Object.entries(userSentences || {}).map(([id, entry]) => ({ id: Number(id), entry }));
+    return sortByCreatedAtDesc(items, (sentenceItem) => sentenceItem.entry?.created_at);
+  }, [userSentences, sortByCreatedAtDesc]);
 
   // Ref for filter bottom sheet modal
   const vocabularyFilterRef = useRef(null);
@@ -45,45 +59,73 @@ export default function HomeScreen() {
 
   const words = useMemo(() => dictionary?.words || [], [dictionary]);
 
+  // id -> word lookup, built once per dictionary fetch (not per vocabulary
+  // change) so deriving "my saved words" never has to scan the full
+  // dictionary - only Object.keys(userVocabulary), which is normally far
+  // smaller than the dictionary itself.
+  // Keys are normalized to strings: words.id is a Postgres bigint, which
+  // node-postgres returns as a string (no numeric precision loss) - so
+  // word.id is already a string here. Map, unlike plain object access or
+  // the `in` operator, does NOT coerce number/string keys as equal, so both
+  // sides must be strings or a lookup with the "wrong" type silently misses.
+  const wordsById = useMemo(() => {
+    const map = new Map();
+    for (const word of words) map.set(String(word.id), word);
+    return map;
+  }, [words]);
+
+  // Each word's normalized written_form, computed once per dictionary fetch
+  // instead of on every keystroke. Search used to call normalizeQuery()
+  // (trim + lowercase + diacritics-strip) on all ~11,000 words every single
+  // time the debounce fired - the word's own text never changes, only the
+  // query does, so there's no reason to redo that work per search.
+  const normalizedWordEntries = useMemo(
+    () => words.map((word) => ({ word, normalized: normalizeQuery(word.written_form ?? '') })),
+    [words]
+  );
+
   // Debounced search effect
   // TO DO: depending on query language, search written_form or translations
   useEffect(() => {
+    const query = normalizeQuery(search);
+
+    if (!query) {
+      // Show user's vocabulary words when search is empty, sorted by
+      // created_at (newest first). No debounce here - there's no typing to
+      // wait out, so compute immediately instead of adding an artificial
+      // delay before the screen shows anything.
+      if (debounceTimeout.current) clearTimeout(debounceTimeout.current);
+      setIsSearching(false);
+      const vocabularyWords = userVocabulary
+        ? Object.keys(userVocabulary)
+          .map((id) => wordsById.get(id))
+          .filter(Boolean)
+        : [];
+      setFilteredWords(sortByCreatedAtDesc(vocabularyWords, (word) => userVocabulary[word.id]?.created_at));
+      return;
+    }
+
     if (debounceTimeout.current) clearTimeout(debounceTimeout.current);
+    // Show the spinner immediately (covers both the debounce wait and the
+    // filter/sort itself), not just while the setTimeout callback runs.
+    setIsSearching(true);
 
     debounceTimeout.current = setTimeout(() => {
-      const query = normalizeQuery(search);
-      if (!query) {
-        // Show user's vocabulary words when search is empty, sorted by created_at (newest first)
-        const vocabularyWords = words
-          .filter(word => userVocabulary && word.id in userVocabulary)
-          .sort((a, b) => {
-            const dateA = new Date(userVocabulary[a.id]?.created_at || 0);
-            const dateB = new Date(userVocabulary[b.id]?.created_at || 0);
-            return dateB - dateA;
-          });
-        setFilteredWords(vocabularyWords);
-        return;
-      }
+      // Filter by search query using each word's precomputed normalized
+      // form (see normalizedWordEntries) - only a cheap startsWith() per
+      // word now, not a fresh normalize+compare on every keystroke.
+      const filtered = normalizedWordEntries
+        .filter((entry) => entry.normalized.startsWith(query))
+        .map((entry) => entry.word);
+      // const translationMatch = word.translations?.some(t => t?.toLowerCase().includes(query));
+      // return writtenMatch || translationMatch;
 
-      // Filter words by search query and sort by created_at (newest first)
-      const filtered = words
-        .filter(word => {
-          const writtenMatch = normalizeQuery(word.written_form ?? '').startsWith(query);
-          // const translationMatch = word.translations?.some(t => t?.toLowerCase().includes(query));
-          // return writtenMatch || translationMatch;
-          return writtenMatch;
-        })
-        .sort((a, b) => {
-          const dateA = new Date(userVocabulary?.[a.id]?.created_at || 0);
-          const dateB = new Date(userVocabulary?.[b.id]?.created_at || 0);
-          return dateB - dateA;
-        });
-
-      setFilteredWords(filtered);
+      setFilteredWords(sortByCreatedAtDesc(filtered, (word) => userVocabulary?.[word.id]?.created_at));
+      setIsSearching(false);
     }, 500);
 
     return () => clearTimeout(debounceTimeout.current);
-  }, [search, words, userVocabulary]);
+  }, [search, normalizedWordEntries, wordsById, userVocabulary, sortByCreatedAtDesc]);
 
   return (
     <View style={[styles.container, isDark && { backgroundColor: DARK_COLORS.background }]}>
@@ -115,7 +157,13 @@ export default function HomeScreen() {
             editable={!isFilterModalOpen}
           />
 
-          <VocabularyList words={filteredWords} />
+          {isSearching ? (
+            <View style={styles.searchingContainer}>
+              <ActivityIndicator size="large" color={PRIMARY_COLOR} />
+            </View>
+          ) : (
+            <VocabularyList words={filteredWords} />
+          )}
 
           {/* Filter Bottom Sheet Modal */}
           <FilterBottomSheetModal ref={vocabularyFilterRef} onSheetChange={handleFilterSheetChange} />
@@ -153,5 +201,10 @@ const styles = StyleSheet.create({
   },
   tabButtonTextActive: {
     color: PRIMARY_COLOR,
+  },
+  searchingContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });
