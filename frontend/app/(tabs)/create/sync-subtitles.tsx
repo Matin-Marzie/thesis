@@ -91,10 +91,20 @@ export default function SyncSubtitlesScreen() {
     }
   }, [defaultTranslationLanguageId, makeDefaultTranslations]);
 
+  // Set by handlePlayDraftRange when previewing a marked start/end range -
+  // read from the timeUpdate listener below so playback auto-stops right at
+  // the marked end instead of continuing to play past it.
+  const playRangeEndMsRef = useRef<number | null>(null);
+
   useEffect(() => {
     player.timeUpdateEventInterval = 0.1;
     const sub = player.addListener('timeUpdate', ({ currentTime }) => {
-      setCurrentTimeMs((currentTime || 0) * 1000);
+      const timeMs = (currentTime || 0) * 1000;
+      setCurrentTimeMs(timeMs);
+      if (playRangeEndMsRef.current !== null && timeMs >= playRangeEndMsRef.current) {
+        playRangeEndMsRef.current = null;
+        player.pause();
+      }
     });
     return () => sub.remove();
   }, [player]);
@@ -116,6 +126,21 @@ export default function SyncSubtitlesScreen() {
   const handleRestartRecording = useCallback(() => {
     setDraftStartMs(null);
     setDraftEndMs(null);
+  }, []);
+
+  const handlePlayDraftRange = useCallback(() => {
+    if (draftStartMs === null || draftEndMs === null) return;
+    playRangeEndMsRef.current = draftEndMs;
+    player.currentTime = draftStartMs / 1000;
+    player.play();
+  }, [player, draftStartMs, draftEndMs]);
+
+  const handleNudgeDraftStart = useCallback((deltaMs: number) => {
+    setDraftStartMs((prev) => (prev === null ? prev : Math.max(0, prev + deltaMs)));
+  }, []);
+
+  const handleNudgeDraftEnd = useCallback((deltaMs: number) => {
+    setDraftEndMs((prev) => (prev === null ? prev : Math.max(0, prev + deltaMs)));
   }, []);
 
   const handleMarkStart = useCallback(() => {
@@ -390,6 +415,9 @@ export default function SyncSubtitlesScreen() {
           draftEndMs={draftEndMs}
           onMarkStart={handleMarkStart}
           onMarkEnd={handleMarkEnd}
+          onPlayRange={handlePlayDraftRange}
+          onNudgeStart={handleNudgeDraftStart}
+          onNudgeEnd={handleNudgeDraftEnd}
           onRestartRecording={handleRestartRecording}
           onAddLine={handleAddLine}
           onUndoLast={handleUndoLast}

@@ -28,6 +28,9 @@ interface SubtitleRecordPanelProps {
   draftEndMs: number | null;
   onMarkStart: () => void;
   onMarkEnd: () => void;
+  onPlayRange: () => void;
+  onNudgeStart: (deltaMs: number) => void;
+  onNudgeEnd: (deltaMs: number) => void;
   onRestartRecording: () => void;
   onAddLine: () => void;
   onUndoLast: () => void;
@@ -50,6 +53,9 @@ export function SubtitleRecordPanel({
   draftEndMs,
   onMarkStart,
   onMarkEnd,
+  onPlayRange,
+  onNudgeStart,
+  onNudgeEnd,
   onRestartRecording,
   onAddLine,
   onUndoLast,
@@ -132,21 +138,67 @@ export function SubtitleRecordPanel({
             </Pressable>
           )}
 
-          <View style={{ flexDirection: 'row' }}>
+          <View style={styles.timeRow}>
             <TextInput
               value={draftStartMs !== null ? formatMs(draftStartMs) : ''}
               placeholder="Start time"
               placeholderTextColor={isDark ? DARK_COLORS.textMuted : '#999'}
               editable={false}
-              style={[styles.input, isDark && styles.inputDark]}
+              style={[styles.input, styles.grow, isDark && styles.inputDark]}
             />
             <TextInput
               value={draftEndMs !== null ? formatMs(draftEndMs) : ''}
               placeholder="End time"
               placeholderTextColor={isDark ? DARK_COLORS.textMuted : '#999'}
               editable={false}
-              style={[styles.input, isDark && styles.inputDark]}
+              style={[styles.input, styles.grow, isDark && styles.inputDark]}
             />
+            <Pressable
+              style={[styles.restartButton, !canAddLine && styles.disabledButton]}
+              onPress={onPlayRange}
+              disabled={!canAddLine}
+            >
+              <FontAwesome name="play" size={16} color={'#fff'} />
+            </Pressable>
+          </View>
+
+          <View style={styles.timingRow}>
+            <View style={styles.timingControl}>
+              <View style={styles.nudgeRow}>
+                <Pressable
+                  onPress={() => onNudgeStart(-100)}
+                  style={[styles.nudgeButton, draftStartMs === null && styles.disabledButton]}
+                  disabled={draftStartMs === null}
+                >
+                  <Text style={styles.nudgeButtonText}>-100ms</Text>
+                </Pressable>
+                <Pressable
+                  onPress={() => onNudgeStart(100)}
+                  style={[styles.nudgeButton, draftStartMs === null && styles.disabledButton]}
+                  disabled={draftStartMs === null}
+                >
+                  <Text style={styles.nudgeButtonText}>+100ms</Text>
+                </Pressable>
+              </View>
+            </View>
+            <View style={styles.timingControl}>
+              <View style={styles.nudgeRow}>
+                <Pressable
+                  onPress={() => onNudgeEnd(-100)}
+                  style={[styles.nudgeButton, draftEndMs === null && styles.disabledButton]}
+                  disabled={draftEndMs === null}
+                >
+                  <Text style={styles.nudgeButtonText}>-100ms</Text>
+                </Pressable>
+                <Pressable
+                  onPress={() => onNudgeEnd(100)}
+                  style={[styles.nudgeButton, draftEndMs === null && styles.disabledButton]}
+                  disabled={draftEndMs === null}
+                >
+                  <Text style={styles.nudgeButtonText}>+100ms</Text>
+                </Pressable>
+              </View>
+            </View>
           </View>
 
           <View style={styles.markRow}>
@@ -231,6 +283,18 @@ const styles = StyleSheet.create({
   removeTranslationButton: { padding: 6, marginTop: 10 },
   addTranslationRow: { flexDirection: 'row', alignItems: 'center', gap: 6, marginTop: -2, marginBottom: 10 },
   addTranslationText: { color: PRIMARY_COLOR, fontWeight: '600', fontSize: 13 },
+  timeRow: { flexDirection: 'row', alignItems: 'center', gap: 10 },
+  timingRow: { flexDirection: 'row', gap: 16, marginTop: -6, marginBottom: 10 },
+  timingControl: { flex: 1 },
+  nudgeRow: { flexDirection: 'row', gap: 6 },
+  nudgeButton: {
+    borderWidth: 1,
+    borderColor: '#ccc',
+    borderRadius: 6,
+    paddingVertical: 4,
+    paddingHorizontal: 6,
+  },
+  nudgeButtonText: { fontSize: 11 },
   markRow: { flexDirection: 'row', alignItems: 'center', gap: 10 },
   grow: { flex: 1 },
   restartButton: {
