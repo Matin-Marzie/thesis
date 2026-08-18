@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, StyleProp, ViewStyle } from 'react-native';
+import { View, Text, Image, StyleSheet, StyleProp, ViewStyle } from 'react-native';
 import { FontAwesome, MaterialIcons } from '@expo/vector-icons';
 import Animated, { AnimatedStyle } from 'react-native-reanimated';
 import TouchableOpacity from '@/components/TouchableOpacity';
@@ -10,6 +10,10 @@ interface ReelActionsProps {
   commentsCount: number;
   sharesCount: number;
   hasDialogue: boolean;
+  // Creator's avatar, shown pinned above the like button (TikTok/Instagram-style)
+  creatorProfilePicture?: string | null;
+  // Navigates to the creator's public profile when the avatar is tapped
+  onAvatarPress?: () => void;
   // Animated style passed down from ReelItem so the spring animation stays outside this component
   animatedLikeStyle: StyleProp<AnimatedStyle<StyleProp<ViewStyle>>>;
   onLike: () => void;
@@ -37,6 +41,8 @@ export const ReelActions = React.memo(
     commentsCount,
     sharesCount,
     hasDialogue,
+    creatorProfilePicture,
+    onAvatarPress,
     animatedLikeStyle,
     onLike,
     onComment,
@@ -45,6 +51,14 @@ export const ReelActions = React.memo(
     onMoreOptions,
   }: ReelActionsProps) => (
     <View style={styles.actionsContainer}>
+      {/* Creator avatar */}
+      <TouchableOpacity style={styles.avatarContainer} onPress={onAvatarPress} disabled={!onAvatarPress}>
+        <Image
+          source={{ uri: creatorProfilePicture || 'https://via.placeholder.com/40' }}
+          style={styles.avatar}
+        />
+      </TouchableOpacity>
+
       {/* Like */}
       <TouchableOpacity style={styles.actionButton} onPress={onLike}>
         <Animated.View style={animatedLikeStyle}>
@@ -95,6 +109,16 @@ const styles = StyleSheet.create({
     right: 12,
     bottom: 120,
     alignItems: 'center',
+  },
+  avatarContainer: {
+    marginBottom: 18,
+  },
+  avatar: {
+    width: 42,
+    height: 42,
+    borderRadius: 21,
+    borderWidth: 2,
+    borderColor: '#fff',
   },
   actionButton: {
     alignItems: 'center',

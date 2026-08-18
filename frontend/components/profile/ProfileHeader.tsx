@@ -11,6 +11,8 @@ interface ProfileHeaderProps {
   profilePicture?: string;
   onChangePicture?: () => void;
   changingPicture?: boolean;
+  // Hides the hamburger -> /settings link, for viewing another user's profile
+  showSettingsLink?: boolean;
 }
 
 export function ProfileHeader({
@@ -20,6 +22,7 @@ export function ProfileHeader({
   profilePicture,
   onChangePicture,
   changingPicture,
+  showSettingsLink = true,
 }: ProfileHeaderProps) {
   const initial = (firstName || username || '?').charAt(0).toUpperCase();
 
@@ -66,18 +69,20 @@ export function ProfileHeader({
         </View>
       </View>
 
-      <Link href="/settings" asChild style={{padding: 10, justifyContent: 'start', alignSelf: 'flex-start' }}>
-        <Pressable hitSlop={12}>
-          {({ pressed }) => (
-            <FontAwesome
-              name="bars"
-              size={25}
-              color={isDark ? DARK_COLORS.text : '#333'}
-              style={{ opacity: pressed ? 0.5 : 1 }}
-            />
-          )}
-        </Pressable>
-      </Link>
+      {showSettingsLink && (
+        <Link href="/settings" asChild style={{padding: 10, justifyContent: 'start', alignSelf: 'flex-start' }}>
+          <Pressable hitSlop={12}>
+            {({ pressed }) => (
+              <FontAwesome
+                name="bars"
+                size={25}
+                color={isDark ? DARK_COLORS.text : '#333'}
+                style={{ opacity: pressed ? 0.5 : 1 }}
+              />
+            )}
+          </Pressable>
+        </Link>
+      )}
     </View>
   );
 }

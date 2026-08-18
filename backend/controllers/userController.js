@@ -5,6 +5,7 @@ import usersModel from '../models/usersModel.js';
 import userLanguagesModel from '../models/userLanguagesModel.js';
 import userVocabularyModel from '../models/userVocabularyModel.js';
 import userSentencesModel from '../models/userSentencesModel.js';
+import reelModel from '../models/reelModel.js';
 import { logEvents } from '../middleware/logEvents.js';
 import { REEL_UPLOAD_DIR } from '../middleware/uploadReelVideo.js';
 import { PROFILE_PICTURE_UPLOAD_DIR } from '../middleware/uploadProfilePicture.js';
@@ -266,12 +267,19 @@ const userController = {
 
 
 
-  // Get user by ID (public profile)
+  // Get user by ID (public profile) - only ever returns fields safe to show
+  // to anyone, unauthenticated (see usersModel.getPublicProfile).
   async getUserById(req, res) {
     try {
-      const { id } = req.params;
+      const id = Number(req.params.id);
+      if (!Number.isInteger(id)) {
+        return res.status(400).json({
+          success: false,
+          message: 'Invalid user id',
+        });
+      }
 
-      const user = await usersModel.get(id);
+      const user = await usersModel.getPublicProfile(id);
 
       if (!user) {
         return res.status(404).json({
@@ -288,6 +296,42 @@ const userController = {
       });
     } catch (error) {
       console.error('Get user by ID error:', error);
+      res.status(500).json({
+        success: false,
+        message: 'Internal server error',
+      });
+    }
+  },
+
+
+
+  // A user's own published reels (public - anyone can view a creator's
+  // reels grid). optionalVerifyJWT sets req.user when the viewer happens to
+  // be logged in, so their own like/save state can be included; guests get
+  // viewerId = null, which the model treats as "no interaction" for every reel.
+  async getUserReels(req, res) {
+    try {
+      const id = Number(req.params.id);
+      if (!Number.isInteger(id)) {
+        return res.status(400).json({
+          success: false,
+          message: 'Invalid user id',
+        });
+      }
+
+      const limit = Math.min(Number(req.query.limit) || 30, 50);
+      const viewerId = req.user?.id ?? null;
+
+      const reels = await reelModel.getReelsByUser(id, viewerId, limit);
+
+      res.status(200).json({
+        success: true,
+        data: {
+          reels,
+        },
+      });
+    } catch (error) {
+      console.error('Get user reels error:', error);
       res.status(500).json({
         success: false,
         message: 'Internal server error',

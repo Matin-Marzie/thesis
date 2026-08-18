@@ -1,6 +1,8 @@
 import React, { useCallback } from 'react';
-import { View, Text, Image, StyleSheet, Platform, Share, StyleProp, ViewStyle } from 'react-native';
+import { View, Text, StyleSheet, Platform, Share, StyleProp, ViewStyle } from 'react-native';
 import Animated, { AnimatedStyle } from 'react-native-reanimated';
+import { useRouter } from 'expo-router';
+import { fixMediaUrl } from '@/utils/fixMediaUrl';
 import { ReelActions } from './RightSideActionBar';
 
 interface ReelOverlayProps {
@@ -19,6 +21,13 @@ interface ReelOverlayProps {
 // Splits into three zones: creator info (top), action bar (right), title + tag (bottom).
 export const ReelOverlay = React.memo(
   ({ item, isLiked, likesCount, hasDialogue, animatedLikeStyle, onLike, onComment, onDialogue, onMoreOptions }: ReelOverlayProps) => {
+    const router = useRouter();
+
+    const handleAvatarPress = useCallback(() => {
+      if (!item.created_by?.id) return;
+      router.push(`/creator/${item.created_by.id}`);
+    }, [item, router]);
+
     const handleShare = useCallback(async () => {
       try {
         const username = item.created_by?.username || 'Unknown';
@@ -40,29 +49,14 @@ export const ReelOverlay = React.memo(
 
     return (
       <Animated.View style={styles.overlay} pointerEvents="box-none">
-        {/* Top: creator avatar + username */}
-        <View style={styles.topSection}>
-          <View style={styles.creatorInfo}>
-            <Image
-              source={{
-                uri:
-                  item.created_by?.profile_picture ||
-                  'https://via.placeholder.com/40',
-              }}
-              style={styles.profilePicture}
-            />
-            <Text style={styles.username}>
-              {item.created_by?.username || 'Unknown'}
-            </Text>
-          </View>
-        </View>
-
         {/* Right: vertical action bar */}
         <ReelActions
           isLiked={isLiked}
           likesCount={likesCount}
           commentsCount={item.stats?.comments || 0}
           sharesCount={item.stats?.shares || 0}
+          creatorProfilePicture={fixMediaUrl(item.created_by?.profile_picture)}
+          onAvatarPress={handleAvatarPress}
           animatedLikeStyle={animatedLikeStyle}
           onLike={onLike}
           onComment={onComment}
@@ -82,29 +76,12 @@ const styles = StyleSheet.create({
     ...StyleSheet.absoluteFillObject,
     justifyContent: 'space-between',
   },
-  topSection: {
-    paddingTop: Platform.OS === 'ios' ? 60 : 40,
-    paddingHorizontal: 16,
-  },
-  creatorInfo: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
   profilePicture: {
     width: 40,
     height: 40,
     borderRadius: 20,
     borderWidth: 2,
     borderColor: '#fff',
-  },
-  username: {
-    color: '#fff',
-    fontSize: 16,
-    fontWeight: '600',
-    marginLeft: 10,
-    textShadowColor: 'rgba(0, 0, 0, 0.75)',
-    textShadowOffset: { width: 1, height: 1 },
-    textShadowRadius: 3,
   },
   bottomSection: {
     paddingHorizontal: 16,

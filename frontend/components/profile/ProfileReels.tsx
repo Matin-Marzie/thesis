@@ -27,16 +27,18 @@ const getLanguageFlag = (languageId?: number) =>
 interface ProfileReelsProps {
   isDark: boolean;
   reels: ProfileReel[];
+  title?: string;
+  onReelPress?: (reel: ProfileReel) => void;
 }
 
-export function ProfileReels({ isDark, reels }: ProfileReelsProps) {
+export function ProfileReels({ isDark, reels, title = 'My Reels', onReelPress }: ProfileReelsProps) {
   const router = useRouter();
 
   if (!reels?.length) return null;
 
   return (
     <View style={styles.reelsSection}>
-      <Text style={[styles.sectionTitle, isDark && { color: DARK_COLORS.text }]}>My Reels</Text>
+      <Text style={[styles.sectionTitle, isDark && { color: DARK_COLORS.text }]}>{title}</Text>
       <View style={styles.reelsGrid}>
         {reels.map((reel) => {
           const languageFlag = getLanguageFlag(reel.language_id);
@@ -44,7 +46,7 @@ export function ProfileReels({ isDark, reels }: ProfileReelsProps) {
             <TouchableOpacity
               key={reel.id}
               style={[styles.reelTile, isDark && { backgroundColor: DARK_COLORS.surface }]}
-              onPress={() => router.push(`/profileReel/${reel.id}`)}
+              onPress={() => (onReelPress ? onReelPress(reel) : router.push(`/profileReel/${reel.id}`))}
               activeOpacity={0.85}
             >
               {reel.thumbnail_url ? (

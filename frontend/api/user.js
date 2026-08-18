@@ -16,6 +16,43 @@ export const getCurrentUser = async () => {
 
 
 /**
+ * Get another user's public profile (id, username, first_name, last_name,
+ * profile_picture, joined_date - no private fields). Works for guests too.
+ * @param {number|string} userId
+ * @returns {Promise<Object>} - { success, data: { user } }
+ */
+export const getUserById = async (userId) => {
+  try {
+    const response = await apiClient.get(`/user/${userId}`);
+    return response.data;
+  } catch (error) {
+    const message = error.response?.data?.message || error.message || 'Failed to load profile';
+    throw new Error(message);
+  }
+};
+
+/**
+ * Get a user's published reels (most recent first). Works for guests too;
+ * if the caller is authenticated, each reel's user_interaction reflects
+ * the caller's own like/save state.
+ * @param {number|string} userId
+ * @param {number} [limit]
+ * @returns {Promise<Object>} - { success, data: { reels } }
+ */
+export const getUserReels = async (userId, limit) => {
+  try {
+    const response = await apiClient.get(`/user/${userId}/reels`, {
+      params: limit ? { limit } : undefined,
+    });
+    return response.data;
+  } catch (error) {
+    const message = error.response?.data?.message || error.message || 'Failed to load reels';
+    throw new Error(message);
+  }
+};
+
+
+/**
  * Sync user progress, vocabulary changes, and sentence changes with the backend
  * @param {Object} syncPayload
  * @param {Object} syncPayload.user_progress - { energy, coins, current_user_languages_id }

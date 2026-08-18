@@ -2,6 +2,7 @@ import express from 'express';
 import userController from '../../controllers/userController.js';
 import syncController from '../../controllers/syncController.js';
 import verifyJWT from '../../middleware/verifyJWT.js';
+import optionalVerifyJWT from '../../middleware/optionalVerifyJWT.js';
 import uploadProfilePicture from '../../middleware/uploadProfilePicture.js';
 import { profilePictureLimiter } from '../../middleware/rateLimiter.js';
 
@@ -89,6 +90,60 @@ router.get('/me', verifyJWT, userController.getUserProfileProgress);
  *               $ref: '#/components/schemas/Error'
  */
 router.get('/:id', userController.getUserById);
+
+/**
+ * @swagger
+ * /user/{id}/reels:
+ *   get:
+ *     summary: Get a user's published reels
+ *     description: Retrieve a user's own reels (public - no auth required), most recent first. If the caller is authenticated, each reel's user_interaction reflects the caller's own like/save state.
+ *     tags: [User]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: User ID
+ *       - in: query
+ *         name: limit
+ *         schema:
+ *           type: integer
+ *           default: 30
+ *           maximum: 50
+ *         description: Maximum number of reels to return
+ *     responses:
+ *       200:
+ *         description: Reels retrieved successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   example: true
+ *                 data:
+ *                   type: object
+ *                   properties:
+ *                     reels:
+ *                       type: array
+ *                       items:
+ *                         type: object
+ *       400:
+ *         description: Invalid user id
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error'
+ *       500:
+ *         description: Internal server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error'
+ */
+router.get('/:id/reels', optionalVerifyJWT, userController.getUserReels);
 
 /**
  * @swagger

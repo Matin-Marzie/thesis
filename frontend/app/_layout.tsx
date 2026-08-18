@@ -106,6 +106,7 @@ function RootLayoutNav() {
     const inModal = segments[0] === 'modal';
     const inGames = segments[0] === 'games';
     const inReelScreen = segments[0] === 'profileReel';
+    const inCreatorScreen = segments[0] === 'creator';
     const inLoginOrRegister =
       segments[1] === 'login' ||
       segments[1] === 'register' ||
@@ -122,7 +123,7 @@ function RootLayoutNav() {
     } else {
       // [] Main app — allow access to app (tabs, settings, modal, games)
       // Also allow access to login/register for guest users
-      if (!inTabsGroup && !inSettingsScreen && !inModal && !inGames && !inReelScreen && !inLoginOrRegister) {
+      if (!inTabsGroup && !inSettingsScreen && !inModal && !inGames && !inReelScreen && !inCreatorScreen && !inLoginOrRegister) {
         router.replace('/(tabs)');
       }
     }
@@ -245,6 +246,24 @@ function RootLayoutNav() {
         />
         <Stack.Screen
           name="profileReel/[id]"
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="creator/[id]"
+          options={{
+            headerShown: true,
+            title: 'Profile',
+            headerStyle: {
+              backgroundColor: PRIMARY_COLOR,
+            },
+            headerTintColor: '#fff',
+            headerTitleStyle: {
+              fontWeight: 'bold',
+            },
+          }}
+        />
+        <Stack.Screen
+          name="creator/[id]/reel/[reelId]"
           options={{ headerShown: false }}
         />
         <Stack.Screen name="modal" options={{ presentation: 'modal' }} />

@@ -66,6 +66,22 @@ const usersModel = {
   },
 
 
+  // Public profile fields only, for viewing ANOTHER user's profile - unlike
+  // get(), never includes email/energy/coins/google_id/etc. bigint id is
+  // normalized to a number to match reelModel's convention (pg returns
+  // bigint columns as strings otherwise).
+  async getPublicProfile(id) {
+    const query = `
+      SELECT id, username, first_name, last_name, profile_picture, joined_date
+      FROM users
+      WHERE id = $1
+    `;
+    const result = await pool.query(query, [id]);
+    const row = result.rows[0];
+    return row ? { ...row, id: Number(row.id) } : undefined;
+  },
+
+
   // Find user by username
   async findByUsername(username) {
     const query = 'SELECT * FROM users WHERE username = $1';
