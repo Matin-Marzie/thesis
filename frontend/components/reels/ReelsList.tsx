@@ -13,12 +13,13 @@ import { useIsFocused } from '@react-navigation/native';
 import { FontAwesome } from '@expo/vector-icons';
 import type { BottomSheetModal } from '@gorhom/bottom-sheet';
 import { useReelsContext } from '@/context/ReelsContext';
+import { useAuth } from '@/context/AuthContext';
 import { PRIMARY_COLOR } from '@/constants/App';
 import { ReelItem } from './ReelItem';
 import { ReelActionsBottomSheetModal } from './ReelActionsBottomSheetModal';
 import { ReportReelBottomSheetModal } from './ReportReelBottomSheetModal';
 import TouchableOpacity from '@/components/TouchableOpacity';
-import { reportReel as reportReelRequest } from '@/api/reelCreation';
+import { reportReel as reportReelRequest, toggleSaveReel } from '@/api/reelCreation';
 import type { Reel } from '@/types/dialogue';
 
 const { height: SCREEN_HEIGHT } = Dimensions.get('window');
@@ -32,6 +33,7 @@ interface ReelsListProps {
 // Handles viewability tracking, infinite scroll, and tab-focus awareness.
 export function ReelsList({ onRetry }: ReelsListProps) {
   const isFocused = useIsFocused();
+  const { isAuthenticated } = useAuth();
   const { reels, isFetchingMore, hasMore, fetchReels } = useReelsContext();
   const [activeIndex, setActiveIndex] = useState(0);
   const flatListRef = useRef<FlatList>(null);
@@ -65,16 +67,38 @@ export function ReelsList({ onRetry }: ReelsListProps) {
     reelActionsSheetRef.current?.present();
   }, []);
 
+  // Optimistically flips the bookmark instantly, then persists to the
+  // backend. On failure, rolls back to exactly the pre-tap state. Guests
+  // get the local-only toggle with no persistence, same as the like button.
   const handleToggleSave = useCallback((reel: Reel) => {
-    // TODO: persist the save/unsave to the backend once the endpoint exists.
+    const key = reel.id.toString();
+    const prevSaved = savedOverrides.has(key) ? savedOverrides.get(key)! : !!reel.user_interaction?.is_saved;
+    const nextSaved = !prevSaved;
+
     setSavedOverrides((prev) => {
-      const key = reel.id.toString();
-      const current = prev.has(key) ? prev.get(key)! : !!reel.user_interaction?.is_saved;
       const next = new Map(prev);
-      next.set(key, !current);
+      next.set(key, nextSaved);
       return next;
     });
-  }, []);
+
+    if (!isAuthenticated) return;
+
+    toggleSaveReel(reel.id)
+      .then(({ is_saved }) => {
+        setSavedOverrides((prev) => {
+          const next = new Map(prev);
+          next.set(key, is_saved);
+          return next;
+        });
+      })
+      .catch(() => {
+        setSavedOverrides((prev) => {
+          const next = new Map(prev);
+          next.set(key, prevSaved);
+          return next;
+        });
+      });
+  }, [savedOverrides, isAuthenticated]);
 
   // Opens the report-reasons sheet right after ReelActionsBottomSheetModal
   // dismisses itself (both are independent BottomSheetModal instances under

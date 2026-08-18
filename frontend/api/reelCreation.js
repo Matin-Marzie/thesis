@@ -92,3 +92,35 @@ export const reportReel = async (reelId, reason) => {
     throw new Error(message);
   }
 };
+
+/**
+ * Toggle the current user's like on a reel. Likes it if not already liked,
+ * unlikes it otherwise.
+ * @param {number|string} reelId
+ * @returns {Promise<{is_liked: boolean, likes_count: number}>}
+ */
+export const toggleLikeReel = async (reelId) => {
+  try {
+    const response = await apiClient.post(`/reel/${reelId}/like`);
+    return response.data;
+  } catch (error) {
+    const message = error.response?.data?.message || error.message || 'Failed to like reel';
+    throw new Error(message);
+  }
+};
+
+/**
+ * Toggle the current user's save (bookmark) on a reel. Saves it if not
+ * already saved, unsaves it otherwise.
+ * @param {number|string} reelId
+ * @returns {Promise<{is_saved: boolean}>}
+ */
+export const toggleSaveReel = async (reelId) => {
+  try {
+    const response = await apiClient.post(`/reel/${reelId}/save`);
+    return response.data;
+  } catch (error) {
+    const message = error.response?.data?.message || error.message || 'Failed to save reel';
+    throw new Error(message);
+  }
+};

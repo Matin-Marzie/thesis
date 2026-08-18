@@ -162,6 +162,51 @@ const reelController = {
       res.status(500).json({ message: 'Internal server error' });
     }
   },
+
+  // Toggles the current user's like on a reel (any reel, not just others' -
+  // liking is per (reel, user), enforced by reel_interactions' unique
+  // constraint). Returns the resulting state and the reel's fresh total like
+  // count so the client can reconcile its optimistic update in one round trip.
+  async toggleLike(req, res) {
+    try {
+      const reelId = Number(req.params.id);
+      if (!Number.isInteger(reelId)) {
+        return res.status(400).json({ message: 'Invalid reel id' });
+      }
+
+      const { isLiked, likesCount } = await reelModel.toggleLike(reelId, req.user.id);
+
+      res.status(200).json({ is_liked: isLiked, likes_count: likesCount });
+    } catch (error) {
+      if (error?.code === '23503') {
+        return res.status(404).json({ message: 'Reel not found' });
+      }
+
+      console.error('Toggle reel like error:', error);
+      res.status(500).json({ message: 'Internal server error' });
+    }
+  },
+
+  // Toggles the current user's save (bookmark) on a reel.
+  async toggleSave(req, res) {
+    try {
+      const reelId = Number(req.params.id);
+      if (!Number.isInteger(reelId)) {
+        return res.status(400).json({ message: 'Invalid reel id' });
+      }
+
+      const { isSaved } = await reelModel.toggleSave(reelId, req.user.id);
+
+      res.status(200).json({ is_saved: isSaved });
+    } catch (error) {
+      if (error?.code === '23503') {
+        return res.status(404).json({ message: 'Reel not found' });
+      }
+
+      console.error('Toggle reel save error:', error);
+      res.status(500).json({ message: 'Internal server error' });
+    }
+  },
 };
 
 export default reelController;

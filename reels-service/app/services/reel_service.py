@@ -177,20 +177,42 @@ class ReelService:
             sentences=sentences_response
         )
 
+    async def get_reel_interactions_for_user(
+        self,
+        user_id: int,
+        reel_ids: List[int]
+    ) -> dict:
+        """Batch-fetch this user's interaction row for each of the given reels."""
+        if not reel_ids:
+            return {}
+
+        result = await self.db.execute(
+            select(ReelInteraction).where(
+                and_(
+                    ReelInteraction.user_id == user_id,
+                    ReelInteraction.reel_id.in_(reel_ids)
+                )
+            )
+        )
+        return {interaction.reel_id: interaction for interaction in result.scalars().all()}
+
     async def get_random_reels(
         self,
         native_language_code: str,
         learning_language_code: str,
-        limit: int = 10
+        limit: int = 10,
+        user_id: Optional[int] = None
     ) -> Tuple[List[ReelResponse], int]:
         """
         Get random reels for the specified language pair.
-        
+
         Args:
             native_language_code: ISO code for user's native language
             learning_language_code: ISO code for language being learned
             limit: Maximum number of reels to return
-            
+            user_id: Authenticated user's id, used to populate each reel's
+                user_interaction (e.g. whether they already liked it)
+
         Returns:
             Tuple of (list of reels, total count)
         """
@@ -222,6 +244,12 @@ class ReelService:
             select(func.count(Reel.id)).where(Reel.language_id == learning_language.id)
         )
         total = count_result.scalar() or 0
+
+        # Batch-fetch this user's like/save/etc. state for the returned reels
+        # (one query for the whole page rather than one per reel).
+        interactions_by_reel = await self.get_reel_interactions_for_user(
+            user_id, [reel.id for reel in reels]
+        ) if user_id else {}
 
         # Build response
         reels_response = []
@@ -255,8 +283,18 @@ class ReelService:
                     native_language.id
                 )
 
-            # No user interaction since no authentication
-            user_interaction = UserInteractionResponse()
+            # Reflect this user's own like/save/etc. state, if any
+            interaction = interactions_by_reel.get(reel.id)
+            if interaction:
+                user_interaction = UserInteractionResponse(
+                    viewed_at=interaction.viewed_at,
+                    is_liked=interaction.is_liked,
+                    is_saved=interaction.is_saved,
+                    is_shared=interaction.is_shared,
+                    comment=interaction.comment
+                )
+            else:
+                user_interaction = UserInteractionResponse()
 
             reels_response.append(ReelResponse(
                 id=reel.id,

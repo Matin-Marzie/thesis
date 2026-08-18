@@ -29,10 +29,20 @@ def decode_access_token(token: str) -> Tuple[Optional[int], Optional[str]]:
         )
         user_id = payload.get("id")
         username = payload.get("username")
-        
+
         if user_id is None:
             return None, None
-            
+
+        # The Node backend signs `id` as whatever type pg handed back for a
+        # bigint column - a string, not a number - so it arrives here as a
+        # JSON string. Coerce to int to match the type hint and so callers
+        # can bind it against bigint columns (asyncpg rejects str/bigint
+        # comparisons outright rather than implicitly casting).
+        try:
+            user_id = int(user_id)
+        except (TypeError, ValueError):
+            return None, None
+
         return user_id, username
     except JWTError:
         return None, None

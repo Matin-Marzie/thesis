@@ -6,6 +6,7 @@ import { ReelActions } from './RightSideActionBar';
 interface ReelOverlayProps {
   item: any;
   isLiked: boolean;
+  likesCount: number;
   hasDialogue: boolean;
   animatedLikeStyle: StyleProp<AnimatedStyle<StyleProp<ViewStyle>>>;
   onLike: () => void;
@@ -17,7 +18,7 @@ interface ReelOverlayProps {
 // Translucent overlay rendered on top of the video.
 // Splits into three zones: creator info (top), action bar (right), title + tag (bottom).
 export const ReelOverlay = React.memo(
-  ({ item, isLiked, hasDialogue, animatedLikeStyle, onLike, onComment, onDialogue, onMoreOptions }: ReelOverlayProps) => {
+  ({ item, isLiked, likesCount, hasDialogue, animatedLikeStyle, onLike, onComment, onDialogue, onMoreOptions }: ReelOverlayProps) => {
     const handleShare = useCallback(async () => {
       try {
         const username = item.created_by?.username || 'Unknown';
@@ -59,7 +60,7 @@ export const ReelOverlay = React.memo(
         {/* Right: vertical action bar */}
         <ReelActions
           isLiked={isLiked}
-          likesCount={item.stats?.likes || 0}
+          likesCount={likesCount}
           commentsCount={item.stats?.comments || 0}
           sharesCount={item.stats?.shares || 0}
           animatedLikeStyle={animatedLikeStyle}

@@ -40,10 +40,7 @@ class ReelInteraction(Base):
     comment = Column(Text, nullable=True)
     commented_at = Column(DateTime(timezone=True), nullable=True)
     is_shared = Column(Boolean, default=False, nullable=False)
-    is_reported = Column(Boolean, default=False, nullable=False)
-    report_reason = Column(Text, nullable=True)
-    reported_at = Column(DateTime(timezone=True), nullable=True)
-    
+
     # Relationships
     reel = relationship("Reel", back_populates="interactions")
     user = relationship("User", lazy="joined")

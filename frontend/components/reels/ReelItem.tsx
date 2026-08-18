@@ -19,6 +19,8 @@ import { ReelOverlay } from './overlay/ReelOverlay';
 import { CommentBottomSheetModal } from './comments/CommentBottomSheetModal';
 import { DialogueBottomSheetModal } from './subtitles/SubtitleBottomSheetModal';
 import { WordMeaningPopup } from './subtitles/WordMeaningPopup';
+import { toggleLikeReel } from '@/api/reelCreation';
+import { useAuth } from '@/context/AuthContext';
 import type { Reel, Word } from '../../types/dialogue';
 
 const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get('window');
@@ -32,7 +34,9 @@ interface ReelItemProps {
 
 export const ReelItem = React.memo(
   ({ item, isActive, isScreenFocused, onMoreOptions }: ReelItemProps) => {
+    const { isAuthenticated } = useAuth();
     const [isLiked, setIsLiked] = useState(item.user_interaction?.is_liked || false);
+    const [likesCount, setLikesCount] = useState(item.stats?.likes || 0);
     const [isCommentOpen, setIsCommentOpen] = useState(false);
     const [isDialogueOpen, setIsDialogueOpen] = useState(false);
     const [isPaused, setIsPaused] = useState(false);
@@ -93,16 +97,42 @@ export const ReelItem = React.memo(
       setIsPaused((prev) => !prev);
     }, []);
 
-    const handleLike = useCallback(() => {
-      setIsLiked((prev: boolean) => !prev);
+    // Flips like state + count instantly (optimistic, Instagram/TikTok-style),
+    // then persists to the backend and reconciles with its authoritative
+    // response. On failure, rolls back to exactly the pre-tap state rather
+    // than re-flipping (safe even if a second tap landed in between).
+    // Guests get the local-only bounce with no persistence.
+    const applyLikeChange = useCallback((nextLiked: boolean) => {
+      const prevLiked = isLiked;
+      setIsLiked(nextLiked);
+      setLikesCount((prev) => prev + (nextLiked ? 1 : -1));
       triggerLikeBounce();
-    }, [triggerLikeBounce]);
+
+      if (!isAuthenticated) return;
+
+      toggleLikeReel(item.id)
+        .then(({ is_liked, likes_count }) => {
+          setIsLiked(is_liked);
+          setLikesCount(likes_count);
+        })
+        .catch(() => {
+          setIsLiked(prevLiked);
+          setLikesCount((prev) => prev + (nextLiked ? -1 : 1));
+        });
+    }, [isLiked, isAuthenticated, item.id, triggerLikeBounce]);
+
+    const handleLike = useCallback(() => {
+      applyLikeChange(!isLiked);
+    }, [applyLikeChange, isLiked]);
 
     // Double-tap only ever likes (never unlikes) — matches Instagram/TikTok behavior
     const handleDoubleTapLike = useCallback(() => {
-      setIsLiked(true);
-      triggerLikeBounce();
-    }, [triggerLikeBounce]);
+      if (isLiked) {
+        triggerLikeBounce();
+        return;
+      }
+      applyLikeChange(true);
+    }, [applyLikeChange, isLiked, triggerLikeBounce]);
 
     const singleTap = Gesture.Tap()
       .maxDuration(250)
@@ -161,6 +191,7 @@ export const ReelItem = React.memo(
         <ReelOverlay
           item={item}
           isLiked={isLiked}
+          likesCount={likesCount}
           hasDialogue={!!(item.dialogue?.sentences?.length)}
           animatedLikeStyle={animatedLikeStyle}
           onComment={handleCommentOpen}

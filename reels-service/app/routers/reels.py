@@ -94,7 +94,8 @@ async def get_reels(
         reels, total = await service.get_random_reels(
         native_language_code=native_language_code,
         learning_language_code=learning_language_code,
-        limit=limit
+        limit=limit,
+        user_id=user_id
         )
     else: # Not authenticated user
         reels, total = await service.get_random_reels(

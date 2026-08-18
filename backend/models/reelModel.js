@@ -121,6 +121,51 @@ const reelModel = {
       [reelId, userId, reason]
     );
   },
+
+  // Toggles the current user's like on a reel via a single upsert - first tap
+  // inserts a liked row onto reel_interactions, a second tap flips is_liked
+  // on the existing (reel_id, user_id) row instead of creating a duplicate
+  // (enforced by reel_interactions' unique constraint). Race-safe: concurrent
+  // toggles from the same user serialize on the row and each sees the other's
+  // flip, so the returned is_liked always matches what actually persisted.
+  // Throws the raw pg error (caller checks .code === '23503') if reelId
+  // doesn't exist.
+  async toggleLike(reelId, userId) {
+    const toggleResult = await pool.query(
+      `INSERT INTO reel_interactions (reel_id, user_id, is_liked)
+       VALUES ($1, $2, true)
+       ON CONFLICT (reel_id, user_id)
+       DO UPDATE SET is_liked = NOT reel_interactions.is_liked
+       RETURNING is_liked`,
+      [reelId, userId]
+    );
+    const isLiked = toggleResult.rows[0].is_liked;
+
+    const countResult = await pool.query(
+      `SELECT COUNT(*)::int AS count FROM reel_interactions WHERE reel_id = $1 AND is_liked = true`,
+      [reelId]
+    );
+
+    return { isLiked, likesCount: countResult.rows[0].count };
+  },
+
+  // Toggles the current user's save (bookmark) on a reel. Same single-upsert
+  // shape as toggleLike, on the same (reel_id, user_id) row - only the
+  // is_saved column is touched, so an existing like on that row is untouched.
+  // Throws the raw pg error (caller checks .code === '23503') if reelId
+  // doesn't exist.
+  async toggleSave(reelId, userId) {
+    const toggleResult = await pool.query(
+      `INSERT INTO reel_interactions (reel_id, user_id, is_saved)
+       VALUES ($1, $2, true)
+       ON CONFLICT (reel_id, user_id)
+       DO UPDATE SET is_saved = NOT reel_interactions.is_saved
+       RETURNING is_saved`,
+      [reelId, userId]
+    );
+
+    return { isSaved: toggleResult.rows[0].is_saved };
+  },
 };
 
 export default reelModel;

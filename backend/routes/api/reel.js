@@ -126,4 +126,82 @@ router.delete('/:id', verifyJWT, reelController.deleteReel);
  */
 router.post('/:id/report', verifyJWT, reelController.reportReel);
 
+/**
+ * @swagger
+ * /reel/{id}/like:
+ *   post:
+ *     summary: Toggle like on a reel
+ *     description: Likes the reel if the current user hasn't liked it yet, otherwise unlikes it. Returns the resulting state and the reel's fresh total like count.
+ *     tags: [Reel]
+ *     security:
+ *       - bearerAuth: []
+ *       - cookieAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: Reel ID
+ *     responses:
+ *       200:
+ *         description: Like toggled successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 is_liked:
+ *                   type: boolean
+ *                 likes_count:
+ *                   type: integer
+ *       400:
+ *         description: Invalid reel id
+ *       401:
+ *         description: Unauthorized - Missing or invalid token
+ *       404:
+ *         description: Reel not found
+ *       500:
+ *         description: Internal server error
+ */
+router.post('/:id/like', verifyJWT, reelController.toggleLike);
+
+/**
+ * @swagger
+ * /reel/{id}/save:
+ *   post:
+ *     summary: Toggle save (bookmark) on a reel
+ *     description: Saves the reel if the current user hasn't saved it yet, otherwise unsaves it.
+ *     tags: [Reel]
+ *     security:
+ *       - bearerAuth: []
+ *       - cookieAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: Reel ID
+ *     responses:
+ *       200:
+ *         description: Save toggled successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 is_saved:
+ *                   type: boolean
+ *       400:
+ *         description: Invalid reel id
+ *       401:
+ *         description: Unauthorized - Missing or invalid token
+ *       404:
+ *         description: Reel not found
+ *       500:
+ *         description: Internal server error
+ */
+router.post('/:id/save', verifyJWT, reelController.toggleSave);
+
 export default router;
