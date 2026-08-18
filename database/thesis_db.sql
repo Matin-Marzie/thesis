@@ -762,7 +762,7 @@ CREATE TABLE public.words (
     level character varying(2),
     article character varying(10),
     normalized_text text,
-    CONSTRAINT words_level_check CHECK (((level)::text = ANY (ARRAY['N'::text, 'A1'::text, 'A2'::text, 'B1'::text, 'B2'::text, 'AB'::text, 'C1'::text, 'C2'::text])))
+    CONSTRAINT words_level_check CHECK (((level)::text = ANY (ARRAY['N'::text, 'A1'::text, 'A2'::text, 'B1'::text, 'B2'::text, 'AB'::text, 'C1'::text, 'C2'::text, 'EX'::text])))
 );
 
 

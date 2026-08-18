@@ -94,7 +94,7 @@ router.patch('/current', verifyJWT, languageController.switchLanguage);
  *                 type: integer
  *               proficiency_level:
  *                 type: string
- *                 enum: [N, A1, A2, B1, B2, C1, C2]
+ *                 enum: [N, A1, A2, B1, B2, C1, C2, EX]
  *     responses:
  *       201:
  *         description: Language added successfully

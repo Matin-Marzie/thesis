@@ -175,14 +175,14 @@ const userVocabularyModel = {
      * @param {number} userId - User's ID
      * @param {number} userLanguagesId - user_languages ID for the current language
      * @param {number} learningLanguageId - Learning language ID
-     * @param {string} proficiencyLevel - Level to seed up to (N, A1, A2, B1, B2, C1, C2)
+     * @param {string} proficiencyLevel - Level to seed up to (N, A1, A2, B1, B2, C1, C2, EX)
      * @param {Date|string} joinedDate - Date to use for created_at and last_review
      * @param {string} fromProficiencyLevel - Level to seed from, exclusive (default 'N', i.e. seed everything below proficiencyLevel)
      * @returns {Object} Vocabulary object { wordId: { mastery_level, last_review, created_at } }
      */
     async addByProficiencyLevel(userId, userLanguagesId, learningLanguageId, proficiencyLevel, joinedDate = null, fromProficiencyLevel = 'N') {
         // Proficiency levels in order - get all levels below the target level
-        const PROFICIENCY_LEVELS = ['N', 'A1', 'A2', 'B1', 'B2', 'C1', 'C2'];
+        const PROFICIENCY_LEVELS = ['N', 'A1', 'A2', 'B1', 'B2', 'C1', 'C2', 'EX'];
         const levelIndex = PROFICIENCY_LEVELS.indexOf(proficiencyLevel);
         const fromIndex = Math.max(0, PROFICIENCY_LEVELS.indexOf(fromProficiencyLevel));
 

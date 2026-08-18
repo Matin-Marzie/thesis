@@ -1,6 +1,6 @@
 import Joi from 'joi';
 
-const PROFICIENCY_LEVELS = ['N', 'A1', 'A2', 'B1', 'B2', 'C1', 'C2'];
+const PROFICIENCY_LEVELS = ['N', 'A1', 'A2', 'B1', 'B2', 'C1', 'C2', 'EX'];
 
 const AddLanguageSchema = Joi.object({
   native_language_id: Joi.number().integer().required().messages({

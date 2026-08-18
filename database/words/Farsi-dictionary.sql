@@ -3230,9 +3230,3 @@ VALUES
 (203229, 'نُخبه', 'noun', NULL, NULL, 3, 'C1', NULL),          -- elite
 (203230, 'ویرانگَر', 'adjective', NULL, NULL, 3, 'C1', NULL),    -- destructive
 (203231, 'پُرفَریب', 'adjective', NULL, NULL, 3, 'C1', NULL);   -- sly/tricky
-
---  تف کردن - to spit
--- فُرمِ ثَبتِ نام - registration form
--- لِباس فُرم - uniform
--- قُم - city of Qom
--- غُر زَدَن - to grumble

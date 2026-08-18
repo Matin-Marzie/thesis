@@ -3,7 +3,7 @@ import userLanguagesModel from '../models/userLanguagesModel.js';
 import userVocabularyModel from '../models/userVocabularyModel.js';
 import userSentencesModel from '../models/userSentencesModel.js';
 
-const PROFICIENCY_LEVELS = ['N', 'A1', 'A2', 'B1', 'B2', 'C1', 'C2'];
+const PROFICIENCY_LEVELS = ['N', 'A1', 'A2', 'B1', 'B2', 'C1', 'C2', 'EX'];
 
 const higherProficiency = (a, b) => {
   const ia = PROFICIENCY_LEVELS.indexOf(a);

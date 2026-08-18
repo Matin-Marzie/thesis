@@ -40,7 +40,7 @@ export const deleteLanguage = async (userLanguagesId) => {
  * @param {Object} params
  * @param {number} params.native_language_id
  * @param {number} params.learning_language_id
- * @param {string} params.proficiency_level - one of N, A1, A2, B1, B2, C1, C2
+ * @param {string} params.proficiency_level - one of N, A1, A2, B1, B2, C1, C2, EX
  * @returns {Promise<Object>} - { message, user_progress: { languages }, user_vocabulary, user_sentences }
  *   user_sentences is always empty for a newly-added pair (no proficiency-based seed for sentences)
  */

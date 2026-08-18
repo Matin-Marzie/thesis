@@ -1,7 +1,7 @@
 import Joi from 'joi';
 import LanguageSchema from './LanguageSchema.js';
 
-const PROFICIENCY_LEVELS = ['N', 'A1', 'A2', 'B1', 'B2', 'C1', 'C2'];
+const PROFICIENCY_LEVELS = ['N', 'A1', 'A2', 'B1', 'B2', 'C1', 'C2', 'EX'];
 
 const UserProgressSchema = Joi.object({
 
