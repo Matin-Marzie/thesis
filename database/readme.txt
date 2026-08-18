@@ -1,6 +1,7 @@
 DICTIONARY SOURCE:
+    *Claude used to generate words for all.
     ENGLISH:    https://www.esl-lounge.com/student/reference/a1-cefr-vocabulary-word-list.php (A1, ..., C2)
-    GREEK:      https://neohel.com/ (A1, A2, B1)
+    GREEK:      https://inventory.clarin.gr/lcr/741?lang=el(A1, A2, B1)
     PERSIAN:    https://saadifoundation.ir/en (A1, ) no-amuz, mina-1, mina-2, 
 
 FREQUENCY LIST:
