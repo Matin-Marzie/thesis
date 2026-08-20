@@ -4,7 +4,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import { DARK_COLORS } from '@/constants/App';
 import { LANGUAGES_META } from '@/constants/SupportedLanguages';
-import { fixMediaUrl } from '@/utils/fixMediaUrl';
+import { getMediaUrl } from '@/utils/mediaUrl';
 import { formatDuration } from '@/utils/formatDuration';
 import TouchableOpacity from '@/components/TouchableOpacity';
 
@@ -50,7 +50,7 @@ export function ProfileReels({ isDark, reels, title = 'My Reels', onReelPress }:
               activeOpacity={0.85}
             >
               {reel.thumbnail_url ? (
-                <Image source={{ uri: fixMediaUrl(reel.thumbnail_url) }} style={styles.reelThumbnail} />
+                <Image source={{ uri: getMediaUrl(reel.thumbnail_url) }} style={styles.reelThumbnail} />
               ) : (
                 <View style={styles.reelPlaceholder}>
                   <Ionicons name="film-outline" size={28} color={isDark ? DARK_COLORS.textSecondary : '#bbb'} />

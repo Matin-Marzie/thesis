@@ -14,7 +14,7 @@ import Animated, {
   withSpring,
   runOnJS,
 } from 'react-native-reanimated';
-import { fixMediaUrl } from '@/utils/fixMediaUrl';
+import { getMediaUrl } from '@/utils/mediaUrl';
 import { ReelOverlay } from './overlay/ReelOverlay';
 import { CommentBottomSheetModal } from './comments/CommentBottomSheetModal';
 import { DialogueBottomSheetModal } from './subtitles/SubtitleBottomSheetModal';
@@ -66,7 +66,7 @@ export const ReelItem = React.memo(
     }));
 
     const shouldPlay = isActive && isScreenFocused && !isPaused;
-    const videoUrl = fixMediaUrl(item.url) as string;
+    const videoUrl = getMediaUrl(item.url) as string;
 
     const player = useVideoPlayer(videoUrl, (p) => {
       p.loop = true;

@@ -12,7 +12,7 @@ import { uploadProfilePicture, deleteProfilePicture } from '@/api/user';
 import { LANGUAGES_META } from '@/constants/SupportedLanguages';
 import { DARK_COLORS } from '@/constants/App';
 import { useColorScheme } from '@/components/useColorScheme';
-import { fixMediaUrl } from '@/utils/fixMediaUrl';
+import { getMediaUrl } from '@/utils/mediaUrl';
 import { ProfileHeader } from '@/components/profile/ProfileHeader';
 import { ProfilePictureOptionsSheet } from '@/components/profile/ProfilePictureOptionsSheet';
 import { ProfileStats } from '@/components/profile/ProfileStats';
@@ -99,7 +99,7 @@ export default function ProfileScreen() {
                 isDark={isDark}
                 firstName={userProfile.first_name}
                 username={userProfile.username}
-                profilePicture={fixMediaUrl(userProfile.profile_picture)}
+                profilePicture={getMediaUrl(userProfile.profile_picture)}
                 onChangePicture={isAuthenticated ? handleChangePicture : undefined}
                 changingPicture={changingPicture}
               />

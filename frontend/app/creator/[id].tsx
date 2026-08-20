@@ -4,7 +4,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { useColorScheme } from '@/components/useColorScheme';
 import { DARK_COLORS, PRIMARY_COLOR } from '@/constants/App';
-import { fixMediaUrl } from '@/utils/fixMediaUrl';
+import { getMediaUrl } from '@/utils/mediaUrl';
 import { ProfileHeader } from '@/components/profile/ProfileHeader';
 import { ProfileReels } from '@/components/profile/ProfileReels';
 import TouchableOpacity from '@/components/TouchableOpacity';
@@ -97,7 +97,7 @@ export default function CreatorProfileScreen() {
               isDark={isDark}
               firstName={profile.first_name || undefined}
               username={profile.username}
-              profilePicture={fixMediaUrl(profile.profile_picture || undefined)}
+              profilePicture={getMediaUrl(profile.profile_picture)}
               showSettingsLink={false}
             />
 

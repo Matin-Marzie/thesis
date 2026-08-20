@@ -2,7 +2,7 @@ import React, { useCallback } from 'react';
 import { View, Text, StyleSheet, Platform, Share, StyleProp, ViewStyle } from 'react-native';
 import Animated, { AnimatedStyle } from 'react-native-reanimated';
 import { useRouter } from 'expo-router';
-import { fixMediaUrl } from '@/utils/fixMediaUrl';
+import { getMediaUrl } from '@/utils/mediaUrl';
 import { ReelActions } from './RightSideActionBar';
 
 interface ReelOverlayProps {
@@ -55,7 +55,7 @@ export const ReelOverlay = React.memo(
           likesCount={likesCount}
           commentsCount={item.stats?.comments || 0}
           sharesCount={item.stats?.shares || 0}
-          creatorProfilePicture={fixMediaUrl(item.created_by?.profile_picture)}
+          creatorProfilePicture={getMediaUrl(item.created_by?.profile_picture)}
           onAvatarPress={handleAvatarPress}
           animatedLikeStyle={animatedLikeStyle}
           onLike={onLike}
