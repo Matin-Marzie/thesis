@@ -9089,4 +9089,2084 @@ INSERT INTO words (id, written_form, part_of_speech, image_url, audio_url, langu
 (9316, 'resentment', 'n', NULL, NULL, 1, 'B2', NULL),
 (9317, 'disgust', 'n', NULL, NULL, 1, 'B1', NULL),
 (9318, 'astonished', 'adj', NULL, NULL, 1, 'B1', NULL),
-(9319, 'puzzled', 'adj', NULL, NULL, 1, 'B1', NULL);
+(9319, 'puzzled', 'adj', NULL, NULL, 1, 'B1', NULL),
+(9320, 'Azerbaijan', 'n', NULL, NULL, 1, 'EX', NULL), -- آذَربایجان -> Azerbaijan (country name)
+(9321, 'Saturday', 'n', NULL, NULL, 1, 'A1', NULL), -- شَنبِه -> Saturday
+(9322, 'sixty', 'num', NULL, NULL, 1, 'A1', NULL), -- شَصت -> sixty
+(9323, 'two hundred', 'num', NULL, NULL, 1, 'A1', NULL), -- دُوِیست -> two hundred
+(9324, 'seventy', 'num', NULL, NULL, 1, 'A1', NULL), -- هَفتاد -> seventy
+(9325, 'candy', 'n', NULL, NULL, 1, 'A1', NULL), -- آبنَبات -> candy
+(9326, 'three hundred', 'num', NULL, NULL, 1, 'A1', NULL), -- سیصَد -> three hundred
+(9327, 'seventeen', 'num', NULL, NULL, 1, 'A1', NULL), -- هِفدَه -> seventeen
+(9328, 'peach', 'n', NULL, NULL, 1, 'A1', NULL), -- هُلو -> peach
+(9329, 'rooster', 'n', NULL, NULL, 1, 'A1', NULL), -- خروس -> rooster
+(9330, 'sixteen', 'num', NULL, NULL, 1, 'A1', NULL), -- شانزدَه -> sixteen
+(9331, 'matches', 'n', NULL, NULL, 1, 'A1', NULL), -- کِبریت -> matches [fire-starting]
+(9332, 'dinosaur', 'n', NULL, NULL, 1, 'A1', NULL), -- دایناسور -> dinosaur (loanword)
+(9333, 'six hundred', 'num', NULL, NULL, 1, 'A1', NULL), -- شِشصَد -> six hundred
+(9334, 'plum', 'n', NULL, NULL, 1, 'A1', NULL), -- آلو -> plum
+(9335, 'seven hundred', 'num', NULL, NULL, 1, 'A1', NULL), -- هَفتصَد -> seven hundred
+(9336, 'eight hundred', 'num', NULL, NULL, 1, 'A1', NULL), -- هَشتصَد -> eight hundred
+(9337, 'good afternoon', 'interj', NULL, NULL, 1, 'A1', NULL), -- عَصربِخِیر -> good afternoon
+(9338, 'lettuce', 'n', NULL, NULL, 1, 'A1', NULL), -- کاهو -> lettuce
+(9339, 'nine hundred', 'num', NULL, NULL, 1, 'A1', NULL), -- نُهصَد -> nine hundred
+(9340, 'turtle', 'n', NULL, NULL, 1, 'A1', NULL), -- لاکپُشت -> turtle
+(9341, 'kite', 'n', NULL, NULL, 1, 'A1', NULL), -- بادبادَک -> kite [toy]
+(9342, 'giraffe', 'n', NULL, NULL, 1, 'A1', NULL), -- زَرافه -> giraffe
+(9343, 'cinnamon', 'n', NULL, NULL, 1, 'A1', NULL), -- دارچین -> cinnamon
+(9344, 'stew', 'n', NULL, NULL, 1, 'A1', NULL), -- خورِشت -> stew
+(9345, 'zebra', 'n', NULL, NULL, 1, 'A1', NULL), -- گورخَر -> zebra
+(9346, 'spinach', 'n', NULL, NULL, 1, 'A1', NULL), -- اِسفِناج -> spinach
+(9347, 'melon', 'n', NULL, NULL, 1, 'A1', NULL), -- خَربُزه -> melon [cantaloupe]
+(9348, 'ostrich', 'n', NULL, NULL, 1, 'A1', NULL), -- شُترمُرغ -> ostrich
+(9349, 'kangaroo', 'n', NULL, NULL, 1, 'A1', NULL), -- کانگورو -> kangaroo (loanword)
+(9350, 'good day', 'interj', NULL, NULL, 1, 'A1', NULL), -- روزبِخِیر -> good day!
+(9351, 'overcoat', 'n', NULL, NULL, 1, 'A1', NULL), -- مانتو -> manteau / overcoat (loanword)
+(9352, 'parsley', 'n', NULL, NULL, 1, 'A1', NULL), -- جَعفَری -> parsley
+(9353, 'seeds', 'n', NULL, NULL, 1, 'A1', NULL), -- تُخمه -> seeds [sunflower/watermelon snack]
+(9354, 'eraser', 'n', NULL, NULL, 1, 'A1', NULL), -- پاکُن -> eraser
+(9355, 'sour cherry', 'n', NULL, NULL, 1, 'A1', NULL), -- آلبالو -> sour cherry
+(9356, 'coriander', 'n', NULL, NULL, 1, 'A1', NULL), -- گِشنیز -> coriander
+(9357, 'lentil', 'n', NULL, NULL, 1, 'A1', NULL), -- عَدَس -> lentil
+(9358, 'sunflower', 'n', NULL, NULL, 1, 'A1', NULL), -- آفتابگَردان -> sunflower
+(9359, 'toothpaste', 'n', NULL, NULL, 1, 'A1', NULL), -- خَمیردَندان -> toothpaste
+(9360, 'pea', 'n', NULL, NULL, 1, 'A1', NULL), -- نَخودفَرَنگی -> pea
+(9361, 'ladybug', 'n', NULL, NULL, 1, 'A1', NULL), -- کَفشدوزَک -> ladybug
+(9362, 'saffron', 'n', NULL, NULL, 1, 'A1', NULL), -- زَعفَران -> saffron
+(9363, 'aboard', 'adj', NULL, NULL, 1, 'A2', NULL), -- سُوار -> riding / boarding (سوار شدن = to get on / board)
+(9364, 'awake', 'adj', NULL, NULL, 1, 'A1', NULL), -- بیدار -> awake (بیدار شدن = to wake up)
+(9365, 'last night', 'adv', NULL, NULL, 1, 'A1', NULL), -- دیشَب -> last night
+(9366, 'on foot', 'adv', NULL, NULL, 1, 'A2', NULL), -- پیاده -> on foot (پیاده شدن = to get off)
+(9367, 'blessed', 'adj', NULL, NULL, 1, 'A2', NULL), -- مُبارَک -> blessed / congratulations
+(9368, 'congratulations', 'interj', NULL, NULL, 1, 'A2', NULL), -- تَبریک -> congratulations (تبریک گفتن = to congratulate)
+(9369, 'donkey', 'n', NULL, NULL, 1, 'A1', NULL), -- خَر -> donkey
+(9370, 'ride', 'n', NULL, NULL, 1, 'A2', NULL), -- سَواری -> riding
+(9371, 'high school', 'n', NULL, NULL, 1, 'A2', NULL), -- دَبیرِستان -> high school
+(9372, 'loser', 'n', NULL, NULL, 1, 'A2', NULL), -- بازَنده -> loser
+(9373, 'this year', 'adv', NULL, NULL, 1, 'A2', NULL), -- اِمسال -> this year
+(9374, 'bathtub', 'n', NULL, NULL, 1, 'A2', NULL), -- وان -> bathtub
+(9375, 'lost', 'adj', NULL, NULL, 1, 'A2', NULL), -- گُمشُده -> lost
+(9376, 'sweat', 'n', NULL, NULL, 1, 'A2', NULL), -- عَرَق -> sweat
+(9377, 'liar', 'n', NULL, NULL, 1, 'A2', NULL), -- دُروغگو -> liar
+(9378, 'thigh', 'n', NULL, NULL, 1, 'A2', NULL), -- ران -> thigh
+(9379, 'cage', 'n', NULL, NULL, 1, 'A2', NULL), -- قَفَس -> cage
+(9380, 'fog', 'n', NULL, NULL, 1, 'A2', NULL), -- مِه -> fog / mist
+(9381, 'shark', 'n', NULL, NULL, 1, 'A2', NULL), -- کوسه -> shark
+(9382, 'regretful', 'adj', NULL, NULL, 1, 'A2', NULL), -- پَشیمان -> regretful (پشیمان شدن = to regret)
+(9383, 'hammer', 'n', NULL, NULL, 1, 'A2', NULL), -- چَکُش -> hammer
+(9384, 'claw', 'n', NULL, NULL, 1, 'A2', NULL), -- پَنجه -> claw / paw; toes
+(9385, 'cub', 'n', NULL, NULL, 1, 'A2', NULL), -- توله -> cub / puppy
+(9386, 'clown', 'n', NULL, NULL, 1, 'A2', NULL), -- دَلقَک -> clown
+(9387, 'groom', 'n', NULL, NULL, 1, 'A2', NULL), -- داماد -> groom / son-in-law
+(9388, 'brake', 'n', NULL, NULL, 1, 'A2', NULL), -- تُرمُز -> brake (loanword)
+(9389, 'perfume', 'n', NULL, NULL, 1, 'A2', NULL), -- عِطر -> perfume
+(9390, 'thunder', 'n', NULL, NULL, 1, 'A2', NULL), -- رَعد -> thunder
+(9391, 'massage', 'n', NULL, NULL, 1, 'A2', NULL), -- ماساژ -> massage (loanword)
+(9392, 'chess', 'n', NULL, NULL, 1, 'A2', NULL), -- شِطرَنج -> chess
+(9393, 'crab', 'n', NULL, NULL, 1, 'A2', NULL), -- خَرچَنگ -> crab
+(9394, 'backpack', 'n', NULL, NULL, 1, 'A2', NULL), -- کوله -> backpack
+(9395, 'eagle', 'n', NULL, NULL, 1, 'A2', NULL), -- عُقاب -> eagle
+(9396, 'sour', 'adj', NULL, NULL, 1, 'A2', NULL), -- تُرش -> sour
+(9397, 'stylish', 'adj', NULL, NULL, 1, 'A2', NULL), -- خوشتیپ -> well-dressed / stylish
+(9398, 'crooked', 'adj', NULL, NULL, 1, 'B1', NULL), -- کَج -> crooked / tilted
+(9399, 'axe', 'n', NULL, NULL, 1, 'A2', NULL), -- تَبَر -> axe
+(9400, 'circus', 'n', NULL, NULL, 1, 'A2', NULL), -- سیرک -> circus (loanword)
+(9401, 'blonde', 'adj', NULL, NULL, 1, 'B1', NULL), -- بُلوند -> blonde (loanword)
+(9402, 'waist', 'n', NULL, NULL, 1, 'A2', NULL), -- کَمَر -> waist / lower back
+(9403, 'turkey', 'n', NULL, NULL, 1, 'A2', NULL), -- بوقَلَمون -> turkey (bird)
+(9404, 'hooray', 'interj', NULL, NULL, 1, 'A2', NULL), -- هورا -> hooray
+(9405, 'feminine', 'adj', NULL, NULL, 1, 'B1', NULL), -- زَنانه -> feminine / women''s
+(9406, 'cockroach', 'n', NULL, NULL, 1, 'A2', NULL), -- سوسک -> cockroach
+(9407, 'drum', 'n', NULL, NULL, 1, 'A2', NULL), -- طَبل -> drum
+(9408, 'old woman', 'n', NULL, NULL, 1, 'A2', NULL), -- پیرزَن -> old woman
+(9409, 'vest', 'n', NULL, NULL, 1, 'B1', NULL), -- جِلیقه -> vest
+(9410, 'oak', 'n', NULL, NULL, 1, 'B1', NULL), -- بَلوط -> oak (tree)
+(9411, 'seashell', 'n', NULL, NULL, 1, 'B1', NULL), -- صَدَف -> seashell
+(9412, 'wink', 'n', NULL, NULL, 1, 'B1', NULL), -- چِشمَک -> wink (چشمک زدن = to wink)
+(9413, 'spray', 'n', NULL, NULL, 1, 'A2', NULL), -- اِسپِری -> spray (loanword)
+(9414, 'folder', 'n', NULL, NULL, 1, 'A2', NULL), -- پوشه -> folder
+(9415, 'sausage', 'n', NULL, NULL, 1, 'A2', NULL), -- سوسیس -> sausage (loanword)
+(9416, 'charcoal', 'n', NULL, NULL, 1, 'B1', NULL), -- زُغال -> charcoal
+(9417, 'bald', 'adj', NULL, NULL, 1, 'A2', NULL), -- کَچَل -> bald
+(9418, 'bad luck', 'n', NULL, NULL, 1, 'B1', NULL), -- بَدشانسی -> bad luck
+(9419, 'earring', 'n', NULL, NULL, 1, 'A2', NULL), -- گوشواره -> earring
+(9420, 'lantern', 'n', NULL, NULL, 1, 'B1', NULL), -- فانوس -> lantern
+(9421, 'blossom', 'n', NULL, NULL, 1, 'B1', NULL), -- شُکوفه -> blossom
+(9422, 'leopard', 'n', NULL, NULL, 1, 'A2', NULL), -- پَلَنگ -> leopard
+(9423, 'bedsheet', 'n', NULL, NULL, 1, 'A2', NULL), -- مَلافه -> bedsheet
+(9424, 'one hundred percent', 'adv', NULL, NULL, 1, 'B1', NULL), -- صَددَرصَد -> one hundred percent
+(9425, 'anthem', 'n', NULL, NULL, 1, 'B1', NULL), -- سُرود -> anthem / hymn
+(9426, 'beans', 'n', NULL, NULL, 1, 'A2', NULL), -- لوبیا -> beans
+(9427, 'microphone', 'n', NULL, NULL, 1, 'A2', NULL), -- میکروفون -> microphone (loanword)
+(9428, 'cherry', 'n', NULL, NULL, 1, 'A2', NULL), -- گیلاس -> cherry
+(9429, 'text message', 'n', NULL, NULL, 1, 'A2', NULL), -- پیامَک -> text message / SMS
+(9430, 'bark', 'n', NULL, NULL, 1, 'B1', NULL), -- پارس -> bark [dog sound] (پارس کردن = to bark)
+(9431, 'small bell', 'n', NULL, NULL, 1, 'B1', NULL), -- زَنگوله -> small bell
+(9432, 'eyelid', 'n', NULL, NULL, 1, 'B1', NULL), -- پِلک -> eyelid
+(9433, 'masculine', 'adj', NULL, NULL, 1, 'B1', NULL), -- مَردانه -> manly / masculine
+(9434, 'centimeter', 'n', NULL, NULL, 1, 'A2', NULL), -- سانت -> centimeter (loanword)
+(9435, 'Arab', 'n', NULL, NULL, 1, 'EX', NULL), -- عَرَب -> Arab (nationality)
+(9436, 'intern', 'n', NULL, NULL, 1, 'B1', NULL), -- کارآموز -> intern / trainee
+(9437, 'surname', 'n', NULL, NULL, 1, 'A2', NULL), -- فامیلی -> surname / last name
+(9438, 'waterfall', 'n', NULL, NULL, 1, 'A2', NULL), -- آبشار -> waterfall
+(9439, 'freezer', 'n', NULL, NULL, 1, 'A2', NULL), -- فریزِر -> freezer (loanword)
+(9440, 'Scottish', 'adj', NULL, NULL, 1, 'EX', NULL), -- اِسکاتلَندی -> Scottish (nationality)
+(9441, 'meatball', 'n', NULL, NULL, 1, 'A2', NULL), -- کوفته -> meatball
+(9442, 'chickpea', 'n', NULL, NULL, 1, 'B1', NULL), -- نُخود -> chickpea
+(9443, 'triangle', 'n', NULL, NULL, 1, 'A2', NULL), -- مُثَلَّث -> triangle
+(9444, 'wild boar', 'n', NULL, NULL, 1, 'B1', NULL), -- گُراز -> wild boar
+(9445, 'automatic', 'adj', NULL, NULL, 1, 'B1', NULL), -- اُتوماتیک -> automatic (loanword)
+(9446, 'typing', 'n', NULL, NULL, 1, 'A2', NULL), -- تایپ -> typing (تایپ کردن = to type)
+(9447, 'thankful', 'adj', NULL, NULL, 1, 'B1', NULL), -- مُتِشَکِّر -> thankful
+(9448, 'straw', 'n', NULL, NULL, 1, 'B1', NULL), -- کاه -> straw
+(9449, 'mustache', 'n', NULL, NULL, 1, 'A2', NULL), -- سیبیل -> mustache
+(9450, 'bronze', 'n', NULL, NULL, 1, 'B1', NULL), -- بِرُنز -> bronze (loanword)
+(9451, 'flute', 'n', NULL, NULL, 1, 'B1', NULL), -- فِلوت -> flute (loanword)
+(9452, 'sleeve', 'n', NULL, NULL, 1, 'A2', NULL), -- آستین -> sleeve
+(9453, 'owl', 'n', NULL, NULL, 1, 'A2', NULL), -- جُغد -> owl
+(9454, 'diner', 'n', NULL, NULL, 1, 'B1', NULL), -- غذاخوری -> diner / eatery
+(9455, 'scorpion', 'n', NULL, NULL, 1, 'A2', NULL), -- عَقرَب -> scorpion
+(9456, 'drill', 'n', NULL, NULL, 1, 'B1', NULL), -- مَته -> drill [tool]
+(9457, 'thorn', 'n', NULL, NULL, 1, 'B1', NULL), -- خار -> thorn
+(9458, 'mattress', 'n', NULL, NULL, 1, 'A2', NULL), -- تُشَک -> mattress
+(9459, 'frown', 'n', NULL, NULL, 1, 'B1', NULL), -- اَخم -> frown (اخم کردن = to frown)
+(9460, 'millionaire', 'n', NULL, NULL, 1, 'B1', NULL), -- میلیونِر -> millionaire (loanword)
+(9461, 'Muslim', 'n', NULL, NULL, 1, 'EX', NULL), -- مُسَلمان -> Muslim
+(9462, 'cradle', 'n', NULL, NULL, 1, 'B1', NULL), -- گَهواره -> cradle
+(9463, 'firecracker', 'n', NULL, NULL, 1, 'B1', NULL), -- تَرَقّه -> firecracker
+(9464, 'allergy', 'n', NULL, NULL, 1, 'B1', NULL), -- آلِرژی -> allergy (loanword)
+(9465, 'twelfth', 'num', NULL, NULL, 1, 'A2', NULL), -- دَوازدَهُم -> twelfth
+(9466, 'fertilizer', 'n', NULL, NULL, 1, 'B1', NULL), -- کود -> fertilizer
+(9467, 'sneeze', 'n', NULL, NULL, 1, 'B1', NULL), -- عَطسه -> sneeze (عطسه کردن = to sneeze)
+(9468, 'necktie', 'n', NULL, NULL, 1, 'A2', NULL), -- کِراوات -> necktie (loanword)
+(9469, 'Syrian', 'adj', NULL, NULL, 1, 'EX', NULL), -- سوری -> Syrian (nationality)
+(9470, 'jeep', 'n', NULL, NULL, 1, 'A2', NULL), -- جیپ -> jeep (loanword)
+(9471, 'lizard', 'n', NULL, NULL, 1, 'A2', NULL), -- مارمولَک -> lizard
+(9472, 'shoe polish', 'n', NULL, NULL, 1, 'B1', NULL), -- واکس -> shoe polish / wax (loanword)
+(9473, 'terrace', 'n', NULL, NULL, 1, 'B1', NULL), -- تِراس -> terrace (loanword)
+(9474, 'Iraqi', 'adj', NULL, NULL, 1, 'EX', NULL), -- عِراقی -> Iraqi (nationality)
+(9475, 'gorilla', 'n', NULL, NULL, 1, 'A2', NULL), -- گوریل -> gorilla (loanword)
+(9476, 'tray', 'n', NULL, NULL, 1, 'A2', NULL), -- سینی -> tray
+(9477, 'firewood', 'n', NULL, NULL, 1, 'B1', NULL), -- هیزُم -> firewood
+(9478, 'canned food', 'n', NULL, NULL, 1, 'B1', NULL), -- کُنسِرو -> canned food (loanword)
+(9479, 'air conditioner', 'n', NULL, NULL, 1, 'A2', NULL), -- کولِر -> air conditioner (loanword)
+(9480, 'flea', 'n', NULL, NULL, 1, 'B1', NULL), -- کَک -> flea
+(9481, 'locust', 'n', NULL, NULL, 1, 'B1', NULL), -- مَلَخ -> locust / grasshopper
+(9482, 'coconut', 'n', NULL, NULL, 1, 'A2', NULL), -- نارگیل -> coconut
+(9483, 'drone', 'n', NULL, NULL, 1, 'B1', NULL), -- پَهپاد -> drone
+(9484, 'wrench', 'n', NULL, NULL, 1, 'A2', NULL), -- آچار -> wrench [tool]
+(9485, 'heater', 'n', NULL, NULL, 1, 'A2', NULL), -- بُخاری -> heater
+(9486, 'male cousin', 'n', NULL, NULL, 1, 'A2', NULL), -- پِسرعَمو -> male cousin (paternal uncle''s son)
+(9487, 'cart', 'n', NULL, NULL, 1, 'A2', NULL), -- گاری -> cart / wagon
+(9488, 'liter', 'n', NULL, NULL, 1, 'A2', NULL), -- لیتر -> liter (loanword)
+(9489, 'thirteenth', 'num', NULL, NULL, 1, 'A2', NULL), -- سیزدَهُم -> thirteenth
+(9490, 'genetics', 'n', NULL, NULL, 1, 'B2', NULL), -- ژِنِتیک -> genetics (loanword)
+(9491, 'pendant', 'n', NULL, NULL, 1, 'B1', NULL), -- آویز -> pendant / hanging ornament
+(9492, 'sulking', 'n', NULL, NULL, 1, 'B1', NULL), -- قَهر -> sulking / estrangement (قهر کردن = to stop speaking to someone)
+(9493, 'sensor', 'n', NULL, NULL, 1, 'B1', NULL), -- سِنسور -> sensor (loanword)
+(9494, 'sickle', 'n', NULL, NULL, 1, 'B1', NULL), -- داس -> sickle
+(9495, 'boxer', 'n', NULL, NULL, 1, 'B1', NULL), -- بوکسور -> boxer (loanword)
+(9496, 'buffet', 'n', NULL, NULL, 1, 'A2', NULL), -- بوفه -> buffet (loanword)
+(9497, 'nineteenth', 'num', NULL, NULL, 1, 'A2', NULL), -- نوزدَهُم -> nineteenth
+(9498, 'prayer', 'n', NULL, NULL, 1, 'B1', NULL), -- نَماز -> Islamic prayer
+(9499, 'swan', 'n', NULL, NULL, 1, 'A2', NULL), -- قو -> swan
+(9500, 'pickles', 'n', NULL, NULL, 1, 'B1', NULL), -- تُرشی -> pickles
+(9501, 'pedal', 'n', NULL, NULL, 1, 'A2', NULL), -- پِدال -> pedal (loanword)
+(9502, 'aspirin', 'n', NULL, NULL, 1, 'B1', NULL), -- آسپیرین -> aspirin (loanword)
+(9503, 'scanner', 'n', NULL, NULL, 1, 'B1', NULL), -- اِسکَنِر -> scanner (loanword)
+(9504, 'lead', 'n', NULL, NULL, 1, 'B1', NULL), -- سُرب -> lead [metal]
+(9505, 'ribbon', 'n', NULL, NULL, 1, 'A2', NULL), -- روبان -> ribbon
+(9506, 'tulip', 'n', NULL, NULL, 1, 'A2', NULL), -- لاله -> tulip
+(9507, 'fisherman', 'n', NULL, NULL, 1, 'A2', NULL), -- ماهیگیر -> fisherman
+(9508, 'fourteenth', 'num', NULL, NULL, 1, 'A2', NULL), -- چَهاردَهُم -> fourteenth
+(9509, 'Pakistani', 'adj', NULL, NULL, 1, 'EX', NULL), -- پاکِستانی -> Pakistani (nationality)
+(9510, 'sew', 'v', NULL, NULL, 1, 'B1', NULL), -- دوختَن -> to sew
+(9511, 'pajamas', 'n', NULL, NULL, 1, 'A2', NULL), -- پیژامه -> pajamas (loanword)
+(9512, 'alphabet', 'n', NULL, NULL, 1, 'A2', NULL), -- اَلِفبا -> alphabet
+(9513, 'crane', 'n', NULL, NULL, 1, 'B1', NULL), -- جَرثَقیل -> crane [construction]
+(9514, 'tile', 'n', NULL, NULL, 1, 'B1', NULL), -- کاشی -> tile
+(9515, 'decor', 'n', NULL, NULL, 1, 'B1', NULL), -- دِکور -> decor (loanword)
+(9516, 'ruby', 'n', NULL, NULL, 1, 'B1', NULL), -- یاقوت -> ruby (gemstone)
+(9517, 'cactus', 'n', NULL, NULL, 1, 'A2', NULL), -- کاکتوس -> cactus (loanword)
+(9518, 'dry cleaning', 'n', NULL, NULL, 1, 'B1', NULL), -- خُشکشویی -> dry cleaning
+(9519, 'carpenter', 'n', NULL, NULL, 1, 'A2', NULL), -- نَجّار -> carpenter
+(9520, 'diameter', 'n', NULL, NULL, 1, 'B1', NULL), -- قُطر -> diameter
+(9521, 'raspberry', 'n', NULL, NULL, 1, 'A2', NULL), -- تِمشک -> raspberry
+(9522, 'asphalt', 'n', NULL, NULL, 1, 'B1', NULL), -- آسفالت -> asphalt (loanword)
+(9523, 'blacksmith', 'n', NULL, NULL, 1, 'B1', NULL), -- آهَنگَر -> blacksmith
+(9524, 'power plant', 'n', NULL, NULL, 1, 'B1', NULL), -- نیروگاه -> power plant
+(9525, 'blister', 'n', NULL, NULL, 1, 'B1', NULL), -- تاوَل -> blister
+(9526, 'mountaineering', 'n', NULL, NULL, 1, 'B1', NULL), -- کوهنَوَردی -> mountaineering
+(9527, 'mule', 'n', NULL, NULL, 1, 'B1', NULL), -- قاطِر -> mule
+(9528, 'eleventh', 'num', NULL, NULL, 1, 'A2', NULL), -- یازدَهُم -> eleventh
+(9529, 'diabetes', 'n', NULL, NULL, 1, 'EX', NULL), -- دیابِت -> diabetes (loanword)
+(9530, 'corn on the cob', 'n', NULL, NULL, 1, 'B1', NULL), -- بَلال -> corn on the cob
+(9531, 'staircase', 'n', NULL, NULL, 1, 'A2', NULL), -- پِلِکان -> staircase (formal)
+(9532, 'coupon', 'n', NULL, NULL, 1, 'B1', NULL), -- کوپُن -> coupon (loanword)
+(9533, 'meat stew', 'n', NULL, NULL, 1, 'EX', NULL), -- آبگوشت -> Persian meat stew
+(9534, 'cocoa', 'n', NULL, NULL, 1, 'A2', NULL), -- کاکائو -> cocoa (loanword)
+(9535, 'mercury', 'n', NULL, NULL, 1, 'EX', NULL), -- جیوه -> mercury [metal]
+(9536, 'navel', 'n', NULL, NULL, 1, 'A2', NULL), -- ناف -> navel
+(9537, 'caviar', 'n', NULL, NULL, 1, 'EX', NULL), -- خاویار -> caviar (loanword)
+(9538, 'veterinarian', 'n', NULL, NULL, 1, 'B1', NULL), -- دامپِزِشک -> veterinarian
+(9539, 'scarecrow', 'n', NULL, NULL, 1, 'B1', NULL), -- مَترَسَک -> scarecrow
+(9540, 'hose', 'n', NULL, NULL, 1, 'A2', NULL), -- شِلَنگ -> hose
+(9541, 'dashboard', 'n', NULL, NULL, 1, 'A2', NULL), -- داشبورد -> dashboard [car] (loanword)
+(9542, 'carnival', 'n', NULL, NULL, 1, 'B1', NULL), -- کارناوال -> carnival (loanword)
+(9543, 'chimpanzee', 'n', NULL, NULL, 1, 'A2', NULL), -- شامپانزه -> chimpanzee (loanword)
+(9544, 'tractor', 'n', NULL, NULL, 1, 'A2', NULL), -- تِراکتور -> tractor (loanword)
+(9545, 'microbe', 'n', NULL, NULL, 1, 'B1', NULL), -- میکروب -> microbe / germ (loanword)
+(9546, 'soy', 'n', NULL, NULL, 1, 'B1', NULL), -- سویا -> soy
+(9547, 'doorman', 'n', NULL, NULL, 1, 'B1', NULL), -- دَربان -> doorman / gatekeeper
+(9548, 'seventeenth', 'num', NULL, NULL, 1, 'A2', NULL), -- هِفدَهُم -> seventeenth
+(9549, 'sulfur', 'n', NULL, NULL, 1, 'EX', NULL), -- گوگِرد -> sulfur (chemistry)
+(9550, 'booklet', 'n', NULL, NULL, 1, 'B1', NULL), -- کتابچه -> booklet
+(9551, 'algae', 'n', NULL, NULL, 1, 'B1', NULL), -- جِلبَک -> algae / seaweed
+(9552, 'oxide', 'n', NULL, NULL, 1, 'EX', NULL), -- اُکسید -> oxide (chemistry, loanword)
+(9553, 'vinegar', 'n', NULL, NULL, 1, 'A2', NULL), -- سِرکه -> vinegar
+(9554, 'hectare', 'n', NULL, NULL, 1, 'EX', NULL), -- هِکتار -> hectare (loanword)
+(9555, 'nitrogen', 'n', NULL, NULL, 1, 'EX', NULL), -- نیتروژن -> nitrogen (chemistry, loanword)
+(9556, 'hyena', 'n', NULL, NULL, 1, 'B1', NULL), -- کَفتار -> hyena
+(9557, 'eighteenth', 'num', NULL, NULL, 1, 'A2', NULL), -- هِجدَهُم -> eighteenth
+(9558, 'emerald', 'n', NULL, NULL, 1, 'EX', NULL), -- زُمُرُّد -> emerald (gemstone)
+(9559, 'marble', 'n', NULL, NULL, 1, 'B1', NULL), -- مَرمَر -> marble [stone]
+(9560, 'shorts', 'n', NULL, NULL, 1, 'A2', NULL), -- شَلوارَک -> shorts [clothing]
+(9561, 'headphones', 'n', NULL, NULL, 1, 'A2', NULL), -- هَدفون -> headphones (loanword)
+(9562, 'cement', 'n', NULL, NULL, 1, 'B1', NULL), -- سیمان -> cement
+(9563, 'sodium', 'n', NULL, NULL, 1, 'EX', NULL), -- سُدیم -> sodium (chemistry, loanword)
+(9564, 'rice pudding', 'n', NULL, NULL, 1, 'EX', NULL), -- فِرنی -> rice pudding
+(9565, 'billionaire', 'n', NULL, NULL, 1, 'B1', NULL), -- میلیاردِر -> billionaire (loanword)
+(9566, 'vulture', 'n', NULL, NULL, 1, 'B1', NULL), -- لاشخور -> vulture
+(9567, 'spongy', 'adj', NULL, NULL, 1, 'B2', NULL), -- اِسفَنجی -> spongy (formal)
+(9568, 'birth certificate', 'n', NULL, NULL, 1, 'B1', NULL), -- شَناسنامه -> birth certificate / ID document
+(9569, 'stapler', 'n', NULL, NULL, 1, 'A2', NULL), -- مَنگَنه -> stapler
+(9570, 'common cold', 'n', NULL, NULL, 1, 'A2', NULL), -- سَرماخوردگی -> common cold
+(9571, 'magnet', 'n', NULL, NULL, 1, 'A2', NULL), -- آهَنرُبا -> magnet
+(9572, 'llama', 'n', NULL, NULL, 1, 'B1', NULL), -- لاما -> llama (loanword)
+(9573, 'potassium', 'n', NULL, NULL, 1, 'EX', NULL), -- پتاسیم -> potassium (chemistry, loanword)
+(9574, 'calorie', 'n', NULL, NULL, 1, 'B1', NULL), -- کالری -> calorie (loanword)
+(9575, 'diver', 'n', NULL, NULL, 1, 'B1', NULL), -- غَوّاص -> diver
+(9576, 'malaria', 'n', NULL, NULL, 1, 'EX', NULL), -- مالاریا -> malaria (loanword)
+(9577, 'leech', 'n', NULL, NULL, 1, 'B1', NULL), -- زالو -> leech
+(9578, 'canary', 'n', NULL, NULL, 1, 'B1', NULL), -- قَناری -> canary (bird)
+(9579, 'eyelash', 'n', NULL, NULL, 1, 'A2', NULL), -- مِژه -> eyelash
+(9580, 'poppy', 'n', NULL, NULL, 1, 'B1', NULL), -- خَشخاش -> poppy (plant)
+(9581, 'forehead', 'n', NULL, NULL, 1, 'A2', NULL), -- پیشانی -> forehead
+(9582, 'snoring', 'n', NULL, NULL, 1, 'B1', NULL), -- خُروپُف -> snoring (خروپف کردن = to snore)
+(9583, 'insulin', 'n', NULL, NULL, 1, 'EX', NULL), -- اینسولین -> insulin (medical, loanword)
+(9584, 'stubbornness', 'n', NULL, NULL, 1, 'B1', NULL), -- لَجبازی -> stubbornness (informal)
+(9585, 'grimace', 'n', NULL, NULL, 1, 'B1', NULL), -- شِکلَک -> grimace / emoji (informal)
+(9586, 'chin', 'n', NULL, NULL, 1, 'A2', NULL), -- چانه -> chin; bargaining
+(9587, 'tickle', 'n', NULL, NULL, 1, 'B1', NULL), -- قِلقِلَک -> tickle (قلقلک دادن = to tickle)
+(9588, 'eighth', 'num', NULL, NULL, 1, 'A2', NULL), -- هَشتُمین -> eighth
+(9589, 'horseshoe', 'n', NULL, NULL, 1, 'B1', NULL), -- نَعل -> horseshoe
+(9590, 'octopus', 'n', NULL, NULL, 1, 'A2', NULL), -- اُختاپوس -> octopus (loanword)
+(9591, 'microscope', 'n', NULL, NULL, 1, 'B1', NULL), -- میکروسکوپ -> microscope (loanword)
+(9592, 'undershirt', 'n', NULL, NULL, 1, 'A2', NULL), -- زیرپوش -> undershirt
+(9593, 'stepmother', 'n', NULL, NULL, 1, 'A2', NULL), -- نامادَری -> stepmother
+(9594, 'dew', 'n', NULL, NULL, 1, 'B1', NULL), -- شَبنَم -> dew
+(9595, 'spaceship', 'n', NULL, NULL, 1, 'B1', NULL), -- فَضاپیما -> spaceship (formal)
+(9596, 'bookworm', 'n', NULL, NULL, 1, 'B2', NULL), -- خُرخون -> bookworm / nerd (informal)
+(9597, 'swimmer', 'n', NULL, NULL, 1, 'A2', NULL), -- شَناگَر -> swimmer
+(9598, 'dragonfly', 'n', NULL, NULL, 1, 'B1', NULL), -- سُنجاقَک -> dragonfly
+(9599, 'nitrate', 'n', NULL, NULL, 1, 'EX', NULL), -- نیترات -> nitrate (chemistry, loanword)
+(9600, 'buffalo', 'n', NULL, NULL, 1, 'B1', NULL), -- گاومیش -> buffalo
+(9601, 'ivory', 'n', NULL, NULL, 1, 'B1', NULL), -- عاج -> ivory
+(9602, 'calcium', 'n', NULL, NULL, 1, 'EX', NULL), -- کَلسیم -> calcium (chemistry, loanword)
+(9603, 'hyacinth', 'n', NULL, NULL, 1, 'EX', NULL), -- سُنبُل -> hyacinth (flower)
+(9604, 'mint', 'n', NULL, NULL, 1, 'A2', NULL), -- نَعنا -> mint [herb]
+(9605, 'ham', 'n', NULL, NULL, 1, 'A2', NULL), -- ژامبون -> ham (loanword)
+(9606, 'palm tree', 'n', NULL, NULL, 1, 'B1', NULL), -- نَخل -> palm tree
+(9607, 'Swiss', 'adj', NULL, NULL, 1, 'EX', NULL), -- سوئیسی -> Swiss (nationality)
+(9608, 'janitor', 'n', NULL, NULL, 1, 'B1', NULL), -- نَظافَتچی -> janitor / cleaner
+(9609, 'tremble', 'v', NULL, NULL, 1, 'B1', NULL), -- لَرزیدَن -> to tremble
+(9610, 'helium', 'n', NULL, NULL, 1, 'EX', NULL), -- هلیوم -> helium (loanword)
+(9611, 'ultrasound', 'n', NULL, NULL, 1, 'EX', NULL), -- سونوگرافی -> ultrasound (loanword, medical)
+(9612, 'gardener', 'n', NULL, NULL, 1, 'B1', NULL), -- باغبان -> gardener
+(9613, 'marble', 'n', NULL, NULL, 1, 'B1', NULL), -- تیله -> marble [toy]
+(9614, 'unicorn', 'n', NULL, NULL, 1, 'A2', NULL), -- تَک‌شاخ -> unicorn
+(9615, 'bran', 'n', NULL, NULL, 1, 'EX', NULL), -- سُبوس -> bran
+(9616, 'beak', 'n', NULL, NULL, 1, 'B1', NULL), -- مِنقار -> beak
+(9617, 'ozone', 'n', NULL, NULL, 1, 'EX', NULL), -- اوزون -> ozone (loanword)
+(9618, 'stubborn', 'adj', NULL, NULL, 1, 'B1', NULL), -- لَجباز -> stubborn
+(9619, 'dictation', 'n', NULL, NULL, 1, 'B1', NULL), -- دیکته -> dictation (school)
+(9620, 'slippers', 'n', NULL, NULL, 1, 'A2', NULL), -- دَمپایی -> slippers / flip-flops
+(9621, 'hijab', 'n', NULL, NULL, 1, 'B1', NULL), -- حِجاب -> veil / hijab
+(9622, 'one hundred', 'num', NULL, NULL, 1, 'A1', NULL), -- یِکصَد -> one hundred (formal)
+(9623, 'wetland', 'n', NULL, NULL, 1, 'EX', NULL), -- تالاب -> wetland / marsh (formal)
+(9624, 'nicotine', 'n', NULL, NULL, 1, 'EX', NULL), -- نیکوتین -> nicotine (loanword)
+(9625, 'cesarean section', 'n', NULL, NULL, 1, 'EX', NULL), -- سِزارین -> cesarean section (loanword, medical)
+(9626, 'ointment', 'n', NULL, NULL, 1, 'B1', NULL), -- پماد -> ointment
+(9627, 'sandal', 'n', NULL, NULL, 1, 'A2', NULL), -- صَندَل -> sandal
+(9628, 'tar', 'n', NULL, NULL, 1, 'EX', NULL), -- قیر -> tar / asphalt binder
+(9629, 'grassland', 'n', NULL, NULL, 1, 'B1', NULL), -- عَلَفزار -> meadow / grassland (formal)
+(9630, 'satin', 'n', NULL, NULL, 1, 'EX', NULL), -- ساتِن -> satin (loanword)
+(9631, 'millimeter', 'n', NULL, NULL, 1, 'A2', NULL), -- میلیمِتر -> millimeter (loanword)
+(9632, 'pinch', 'n', NULL, NULL, 1, 'B1', NULL), -- نیشگون -> pinch (نیشگون گرفتن = to pinch)
+(9633, 'flower bud', 'n', NULL, NULL, 1, 'B1', NULL), -- غُنچه -> flower bud
+(9634, 'veterinary medicine', 'n', NULL, NULL, 1, 'EX', NULL), -- دامپِزِشکی -> veterinary medicine [field]
+(9635, 'grumpy', 'n', NULL, NULL, 1, 'B1', NULL), -- غُرغُرو -> grumpy / grouchy person (informal)
+(9636, 'karma', 'n', NULL, NULL, 1, 'EX', NULL), -- کارما -> karma (loanword)
+(9637, 'afternoon snack', 'n', NULL, NULL, 1, 'B1', NULL), -- عَصرانه -> afternoon snack
+(9638, 'diesel', 'n', NULL, NULL, 1, 'EX', NULL), -- دیزِل -> diesel (loanword)
+(9639, 'jackal', 'n', NULL, NULL, 1, 'B1', NULL), -- شُغال -> jackal
+(9640, 'cleaver', 'n', NULL, NULL, 1, 'EX', NULL), -- ساطور -> cleaver [knife]
+(9641, 'home cooking', 'n', NULL, NULL, 1, 'B1', NULL), -- دَستپُخت -> home-cooking [someone''s cooking]
+(9642, 'baker', 'n', NULL, NULL, 1, 'A2', NULL), -- نانِوا -> baker
+(9643, 'guesthouse', 'n', NULL, NULL, 1, 'B1', NULL), -- مِهمانخانه -> inn / guesthouse (formal)
+(9644, 'cashier', 'n', NULL, NULL, 1, 'A2', NULL), -- صَندوقدار -> cashier
+(9645, 'hiccup', 'n', NULL, NULL, 1, 'B1', NULL), -- سِکسِکه -> hiccup
+(9646, 'Afghan', 'adj', NULL, NULL, 1, 'EX', NULL), -- اَفغانی -> Afghan (nationality)
+(9647, 'aluminum', 'n', NULL, NULL, 1, 'EX', NULL), -- آلومینیوم -> aluminum (loanword)
+(9648, 'lily', 'n', NULL, NULL, 1, 'B1', NULL), -- سوسَن -> lily (flower)
+(9649, 'footballer', 'n', NULL, NULL, 1, 'B1', NULL), -- فوتبالیست -> footballer (loanword)
+(9650, 'pruning', 'n', NULL, NULL, 1, 'EX', NULL), -- هَرَس -> pruning (formal; هرس کردن = to prune)
+(9651, 'motorcyclist', 'n', NULL, NULL, 1, 'B1', NULL), -- موتورسوار -> motorcyclist
+(9652, 'ginger', 'n', NULL, NULL, 1, 'A2', NULL), -- زَنجَبیل -> ginger
+(9653, 'lime', 'n', NULL, NULL, 1, 'EX', NULL), -- آهَک -> lime [mineral, construction] (formal)
+(9654, 'parking lot', 'n', NULL, NULL, 1, 'A2', NULL), -- تَوَقُّفگاه -> parking lot / stopping place
+(9655, 'cholesterol', 'n', NULL, NULL, 1, 'EX', NULL), -- کُلِسترول -> cholesterol (loanword)
+(9656, 'somersault', 'n', NULL, NULL, 1, 'B1', NULL), -- پُشتَک -> somersault (پشتک زدن = to do a somersault)
+(9657, 'snacks', 'n', NULL, NULL, 1, 'A2', NULL), -- تَنَقُّلات -> snacks (formal)
+(9658, 'frying pan', 'n', NULL, NULL, 1, 'A2', NULL), -- ماهیتابه -> frying pan
+(9659, 'pliers', 'n', NULL, NULL, 1, 'B1', NULL), -- اَنبَردَست -> pliers
+(9660, 'trumpet', 'n', NULL, NULL, 1, 'B1', NULL), -- تِرومپِت -> trumpet (loanword)
+(9661, 'piston', 'n', NULL, NULL, 1, 'EX', NULL), -- پیستون -> piston (loanword)
+(9662, 'sausage', 'n', NULL, NULL, 1, 'A2', NULL), -- کالباس -> bologna / sausage [cold cuts] (loanword)
+(9663, 'scaffolding', 'n', NULL, NULL, 1, 'EX', NULL), -- داربَست -> scaffolding
+(9664, 'mare', 'n', NULL, NULL, 1, 'B1', NULL), -- مادیان -> mare [female horse]
+(9665, 'samosa', 'n', NULL, NULL, 1, 'EX', NULL), -- سَمبوسه -> samosa (loanword)
+(9666, 'iris', 'n', NULL, NULL, 1, 'EX', NULL), -- زَنبَق -> iris / lily [flower]
+(9667, 'ammonia', 'n', NULL, NULL, 1, 'EX', NULL), -- آمونیاک -> ammonia (loanword)
+(9668, 'eel', 'n', NULL, NULL, 1, 'B1', NULL), -- مارماهی -> eel
+(9669, 'trunk', 'n', NULL, NULL, 1, 'B1', NULL), -- خُرطوم -> trunk [elephant] / proboscis (formal)
+(9670, 'bow tie', 'n', NULL, NULL, 1, 'B1', NULL), -- پاپیون -> bow tie (loanword)
+(9671, 'quilt', 'n', NULL, NULL, 1, 'B1', NULL), -- لِحاف -> quilt / comforter
+(9672, 'sheep pen', 'n', NULL, NULL, 1, 'EX', NULL), -- آغُل -> sheep pen / animal enclosure
+(9673, 'Fahrenheit', 'n', NULL, NULL, 1, 'EX', NULL), -- فارِنهایت -> Fahrenheit (loanword)
+(9674, 'tracksuit', 'n', NULL, NULL, 1, 'B1', NULL), -- گَرمکَن -> tracksuit / sweatsuit (informal)
+(9675, 'adoptive mother', 'n', NULL, NULL, 1, 'B1', NULL), -- مادَرخوانده -> adoptive mother
+(9676, 'wicker', 'adj', NULL, NULL, 1, 'EX', NULL), -- حَصیری -> wicker / straw-woven
+(9677, 'guinea pig', 'n', NULL, NULL, 1, 'A2', NULL), -- خوکچه -> piglet / guinea pig
+(9678, 'grinder', 'n', NULL, NULL, 1, 'B1', NULL), -- خُردکُن -> grinder / chopper [kitchen tool]
+(9679, 'valve', 'n', NULL, NULL, 1, 'EX', NULL), -- سوپاپ -> valve [mechanical] (loanword)
+(9680, 'thermostat', 'n', NULL, NULL, 1, 'EX', NULL), -- تِرموستات -> thermostat (loanword)
+(9681, 'phosphorus', 'n', NULL, NULL, 1, 'EX', NULL), -- فُسفُر -> phosphorus (loanword)
+(9682, 'barefoot', 'adj', NULL, NULL, 1, 'A2', NULL), -- پابَرَهنه -> barefoot
+(9683, 'grocery store', 'n', NULL, NULL, 1, 'A2', NULL), -- بَقّالی -> grocery store
+(9684, 'fluorescent light', 'adj', NULL, NULL, 1, 'B1', NULL), -- مَهتابی -> moonlit; fluorescent light tube
+(9685, 'tendon', 'n', NULL, NULL, 1, 'EX', NULL), -- تاندون -> tendon (loanword, medical)
+(9686, 'welding', 'n', NULL, NULL, 1, 'EX', NULL), -- جوشکاری -> welding (formal)
+(9687, 'detergent', 'n', NULL, NULL, 1, 'B1', NULL), -- شوینده -> detergent / cleanser (formal)
+(9688, 'boarding house', 'n', NULL, NULL, 1, 'EX', NULL), -- پانسیون -> boarding house (loanword)
+(9689, 'pasture', 'n', NULL, NULL, 1, 'B1', NULL), -- چَراگاه -> pasture (formal)
+(9690, 'cousin', 'n', NULL, NULL, 1, 'A2', NULL), -- دُخترخاله -> maternal aunt''s daughter [cousin]
+(9691, 'okra', 'n', NULL, NULL, 1, 'EX', NULL), -- بامیه -> okra
+(9692, 'hedgehog', 'n', NULL, NULL, 1, 'B1', NULL), -- خارپُشت -> hedgehog
+(9693, 'embassy', 'n', NULL, NULL, 1, 'B1', NULL), -- سِفارَتخانه -> embassy building
+(9694, 'stew', 'n', NULL, NULL, 1, 'EX', NULL), -- قیمه -> Persian meat-and-legume stew
+(9695, 'basin', 'n', NULL, NULL, 1, 'B1', NULL), -- حَوضچه -> small pool / basin (formal)
+(9696, 'short circuit', 'n', NULL, NULL, 1, 'EX', NULL), -- اِتِّصالی -> short circuit
+(9697, 'bangle', 'n', NULL, NULL, 1, 'EX', NULL), -- النگو -> bangle / bracelet
+(9698, 'platinum', 'n', NULL, NULL, 1, 'EX', NULL), -- پِلاتین -> platinum (loanword)
+(9699, 'termite', 'n', NULL, NULL, 1, 'B1', NULL), -- موریانه -> termite
+(9700, 'gardening', 'n', NULL, NULL, 1, 'B1', NULL), -- باغبانی -> gardening (formal)
+(9701, 'boiled', 'adj', NULL, NULL, 1, 'A2', NULL), -- آبپَز -> boiled [food]
+(9702, 'pianist', 'n', NULL, NULL, 1, 'B1', NULL), -- پیانیست -> pianist (loanword)
+(9703, 'radish', 'n', NULL, NULL, 1, 'A2', NULL), -- تُربچه -> radish
+(9704, 'turban', 'n', NULL, NULL, 1, 'EX', NULL), -- عِمامه -> turban
+(9705, 'father-in-law', 'n', NULL, NULL, 1, 'A2', NULL), -- پِدَرزَن -> father-in-law [wife''s father]
+(9706, 'microwave', 'n', NULL, NULL, 1, 'A2', NULL), -- مایکروویو -> microwave (loanword)
+(9707, 'sugarcane', 'n', NULL, NULL, 1, 'B1', NULL), -- نِیشکَر -> sugarcane
+(9708, 'buckle', 'n', NULL, NULL, 1, 'B1', NULL), -- سَگَک -> buckle
+(9709, 'checkered', 'adj', NULL, NULL, 1, 'B1', NULL), -- شَطرَنجی -> checkered / plaid pattern
+(9710, 'watering can', 'n', NULL, NULL, 1, 'B1', NULL), -- آبپاش -> watering can / sprinkler
+(9711, 'ashtray', 'n', NULL, NULL, 1, 'B1', NULL), -- زیرسیگاری -> ashtray
+(9712, 'hologram', 'n', NULL, NULL, 1, 'EX', NULL), -- هولوگرام -> hologram (loanword)
+(9713, 'prayer beads', 'n', NULL, NULL, 1, 'EX', NULL), -- تَسبیح -> prayer beads
+(9714, 'carnivore', 'n', NULL, NULL, 1, 'B1', NULL), -- گوشتخوار -> carnivore
+(9715, 'boomerang', 'n', NULL, NULL, 1, 'EX', NULL), -- بومِرَنگ -> boomerang (loanword)
+(9716, 'turbine', 'n', NULL, NULL, 1, 'EX', NULL), -- توربین -> turbine (loanword)
+(9717, 'bakery', 'n', NULL, NULL, 1, 'A2', NULL), -- نانوایی -> bakery
+(9718, 'thermometer', 'n', NULL, NULL, 1, 'A2', NULL), -- دَماسَنج -> thermometer
+(9719, 'guitarist', 'n', NULL, NULL, 1, 'B1', NULL), -- گیتاریست -> guitarist (loanword)
+(9720, 'halva', 'n', NULL, NULL, 1, 'EX', NULL), -- حَلوا -> halva
+(9721, 'wheeled', 'adj', NULL, NULL, 1, 'EX', NULL), -- چَرخدار -> wheeled (formal)
+(9722, 'centipede', 'n', NULL, NULL, 1, 'B1', NULL), -- هَزارپا -> centipede
+(9723, 'oval', 'adj', NULL, NULL, 1, 'B1', NULL), -- بیضی -> oval / ellipse (formal, geometry)
+(9724, 'shoulder blade', 'n', NULL, NULL, 1, 'EX', NULL), -- کَتف -> shoulder blade (formal)
+(9725, 'Serb', 'adj', NULL, NULL, 1, 'EX', NULL), -- صِرب -> Serb (nationality)
+(9726, 'answering machine', 'n', NULL, NULL, 1, 'EX', NULL), -- پیغامگیر -> answering machine / voicemail
+(9727, 'lotion', 'n', NULL, NULL, 1, 'B1', NULL), -- لوسیون -> lotion (loanword)
+(9728, 'starch', 'n', NULL, NULL, 1, 'B1', NULL), -- نِشاسته -> starch
+(9729, 'bow and arrow', 'n', NULL, NULL, 1, 'B1', NULL), -- تیروکَمان -> bow and arrow
+(9730, 'mummy', 'n', NULL, NULL, 1, 'B1', NULL), -- مومیایی -> mummy
+(9731, 'titanium', 'n', NULL, NULL, 1, 'EX', NULL), -- تیتانیوم -> titanium (loanword)
+(9732, 'seventh', 'adj', NULL, NULL, 1, 'A2', NULL), -- هَفتُمین -> seventh [ordinal]
+(9733, 'welcome', 'interj', NULL, NULL, 1, 'A1', NULL), -- مَرحَبا -> welcome! / hello! (formal, Arabic loan)
+(9734, 'modem', 'n', NULL, NULL, 1, 'B1', NULL), -- مودِم -> modem (loanword)
+(9735, 'minus', 'prep', NULL, NULL, 1, 'A2', NULL), -- مَنهایِ -> minus [math]
+(9736, 'Albanian', 'adj', NULL, NULL, 1, 'EX', NULL), -- آلبانیایی -> Albanian (nationality)
+(9737, 'barber shop', 'n', NULL, NULL, 1, 'A2', NULL), -- سَلمانی -> barber shop
+(9738, 'stereo', 'n', NULL, NULL, 1, 'B1', NULL), -- اِستریو -> stereo (loanword)
+(9739, 'sapling', 'n', NULL, NULL, 1, 'EX', NULL), -- نِهال -> sapling
+(9740, 'tram', 'n', NULL, NULL, 1, 'B1', NULL), -- تِراموا -> tram (loanword)
+(9741, 'apron', 'n', NULL, NULL, 1, 'B1', NULL), -- پیشبَند -> apron / bib
+(9742, 'ivy', 'n', NULL, NULL, 1, 'B1', NULL), -- پیچَک -> ivy [plant]
+(9743, 'dentistry', 'n', NULL, NULL, 1, 'EX', NULL), -- دَندانپِزِشکی -> dentistry
+(9744, 'thirteenth', 'adj', NULL, NULL, 1, 'A2', NULL), -- سیزدَهُمین -> thirteenth [ordinal]
+(9745, 'rosewater', 'n', NULL, NULL, 1, 'EX', NULL), -- گُلاب -> rosewater
+(9746, 'adhesive tape', 'n', NULL, NULL, 1, 'B1', NULL), -- نَوارچِسب -> adhesive tape
+(9747, 'woolen', 'adj', NULL, NULL, 1, 'B1', NULL), -- پَشمی -> woolen
+(9748, 'treadmill', 'n', NULL, NULL, 1, 'B1', NULL), -- تِرِدمیل -> treadmill (loanword)
+(9749, 'Catholic', 'n', NULL, NULL, 1, 'EX', NULL), -- کاتولیک -> Catholic
+(9750, 'hand fan', 'n', NULL, NULL, 1, 'B1', NULL), -- بادبِزَن -> hand fan
+(9751, 'weasel', 'n', NULL, NULL, 1, 'B1', NULL), -- راسو -> weasel
+(9752, 'kilim', 'n', NULL, NULL, 1, 'EX', NULL), -- گِلیم -> kilim [woven rug]
+(9753, 'chandelier', 'n', NULL, NULL, 1, 'B1', NULL), -- لوستِر -> chandelier (loanword)
+(9754, 'falafel', 'n', NULL, NULL, 1, 'EX', NULL), -- فِلافِل -> falafel
+(9755, 'laziness', 'n', NULL, NULL, 1, 'B1', NULL), -- تَنبَلی -> laziness
+(9756, 'alarm system', 'n', NULL, NULL, 1, 'B1', NULL), -- دُزدگیر -> alarm system / anti-theft device
+(9757, 'cutlet', 'n', NULL, NULL, 1, 'B1', NULL), -- کُتلِت -> cutlet [food] (loanword)
+(9758, 'kiwi', 'n', NULL, NULL, 1, 'A2', NULL), -- کیوی -> kiwi [fruit/bird]
+(9759, 'dairy products', 'n', NULL, NULL, 1, 'B1', NULL), -- لَبَنیّات -> dairy products
+(9760, 'orchid', 'n', NULL, NULL, 1, 'B1', NULL), -- اُرکیده -> orchid
+(9761, 'neon', 'n', NULL, NULL, 1, 'EX', NULL), -- نِئون -> neon (loanword)
+(9762, 'motorcycling', 'n', NULL, NULL, 1, 'B1', NULL), -- موتورسواری -> motorcycling
+(9763, 'anime', 'n', NULL, NULL, 1, 'EX', NULL), -- اَنیمه -> anime (loanword)
+(9764, 'photocopy', 'n', NULL, NULL, 1, 'B1', NULL), -- فتوکپی -> photocopy
+(9765, 'one-way', 'adj', NULL, NULL, 1, 'B1', NULL), -- یِک‌طَرَفه -> one-way
+(9766, 'headset', 'n', NULL, NULL, 1, 'B1', NULL), -- هِدست -> headset (loanword)
+(9767, 'florist', 'n', NULL, NULL, 1, 'B1', NULL), -- گُل‌فروشی -> florist shop
+(9768, 'clover', 'n', NULL, NULL, 1, 'B1', NULL), -- شَبدَر -> clover
+(9769, 'Argentine', 'adj', NULL, NULL, 1, 'EX', NULL), -- آرژانتینی -> Argentine (nationality)
+(9770, 'colander', 'n', NULL, NULL, 1, 'EX', NULL), -- آبکَش -> colander / strainer
+(9771, 'Yemeni', 'adj', NULL, NULL, 1, 'EX', NULL), -- یَمَنی -> Yemeni (nationality)
+(9772, 'woodpecker', 'n', NULL, NULL, 1, 'B1', NULL), -- دارکوب -> woodpecker
+(9773, 'barcode', 'n', NULL, NULL, 1, 'B1', NULL), -- بارکُد -> barcode (loanword)
+(9774, 'ewe', 'n', NULL, NULL, 1, 'EX', NULL), -- میش -> ewe [female sheep]
+(9775, 'offline', 'adj', NULL, NULL, 1, 'B1', NULL), -- آفلاین -> offline (loanword)
+(9776, 'handicraft', 'n', NULL, NULL, 1, 'B1', NULL), -- کاردَستی -> handicraft
+(9777, 'bikini', 'n', NULL, NULL, 1, 'B1', NULL), -- بیکینی -> bikini (loanword)
+(9778, 'loofah', 'n', NULL, NULL, 1, 'EX', NULL), -- لیف -> loofah / bath sponge
+(9779, 'font', 'n', NULL, NULL, 1, 'B1', NULL), -- فونت -> font (loanword)
+(9780, 'poppy', 'n', NULL, NULL, 1, 'B1', NULL), -- شُقایِق -> poppy [flower]
+(9781, 'mayonnaise', 'n', NULL, NULL, 1, 'A2', NULL), -- مایونز -> mayonnaise (loanword)
+(9782, 'disco', 'n', NULL, NULL, 1, 'EX', NULL), -- دیسکو -> disco (loanword)
+(9783, 'pacifier', 'n', NULL, NULL, 1, 'B1', NULL), -- پِستانَک -> pacifier
+(9784, 'hot spring', 'n', NULL, NULL, 1, 'EX', NULL), -- آبگَرم -> hot spring / hot water
+(9785, 'Mexican', 'adj', NULL, NULL, 1, 'EX', NULL), -- مِکزیکی -> Mexican (nationality)
+(9786, 'pickle', 'n', NULL, NULL, 1, 'B1', NULL), -- خیارشور -> pickled cucumber
+(9787, 'Parisian', 'adj', NULL, NULL, 1, 'EX', NULL), -- پاریسی -> Parisian
+(9788, 'poodle', 'n', NULL, NULL, 1, 'B1', NULL), -- پودِل -> poodle (loanword)
+(9789, 'cappuccino', 'n', NULL, NULL, 1, 'B1', NULL), -- کاپوچینو -> cappuccino (loanword)
+(9790, 'sixth', 'adj', NULL, NULL, 1, 'A2', NULL), -- ششُمین -> sixth [ordinal]
+(9791, 'orangutan', 'n', NULL, NULL, 1, 'B1', NULL), -- اورانگوتان -> orangutan (loanword)
+(9792, 'unsafe', 'adj', NULL, NULL, 1, 'B1', NULL), -- ناامَن -> unsafe
+(9793, 'boutique', 'n', NULL, NULL, 1, 'B1', NULL), -- بوتیک -> boutique (loanword)
+(9794, 'cushion', 'n', NULL, NULL, 1, 'B1', NULL), -- کوسِن -> cushion (loanword)
+(9795, 'basil', 'n', NULL, NULL, 1, 'B1', NULL), -- ریحان -> basil
+(9796, 'jasmine', 'n', NULL, NULL, 1, 'B1', NULL), -- یاسَمَن -> jasmine
+(9797, 'lasagna', 'n', NULL, NULL, 1, 'B1', NULL), -- لازانیا -> lasagna (loanword)
+(9798, 'vanilla', 'n', NULL, NULL, 1, 'A2', NULL), -- وانیل -> vanilla (loanword)
+(9799, 'quail', 'n', NULL, NULL, 1, 'B1', NULL), -- بَلدَرچین -> quail
+(9800, 'podcast', 'n', NULL, NULL, 1, 'EX', NULL), -- پادکَست -> podcast (loanword)
+(9801, 'dandelion', 'n', NULL, NULL, 1, 'B1', NULL), -- قاصِدَک -> dandelion
+(9802, 'celery', 'n', NULL, NULL, 1, 'A2', NULL), -- کَرَفس -> celery
+(9803, 'salt shaker', 'n', NULL, NULL, 1, 'B1', NULL), -- نَمَکدان -> salt shaker
+(9804, 'stool', 'n', NULL, NULL, 1, 'B1', NULL), -- چَهارپایه -> stool [furniture]
+(9805, 'barbecue', 'n', NULL, NULL, 1, 'A2', NULL), -- باربیکیو -> barbecue (loanword)
+(9806, 'biryani', 'n', NULL, NULL, 1, 'EX', NULL), -- بِریانی -> biryani (loanword)
+(9807, 'jacuzzi', 'n', NULL, NULL, 1, 'EX', NULL), -- جکوزی -> jacuzzi (loanword)
+(9808, 'cookie', 'n', NULL, NULL, 1, 'A1', NULL), -- کوکی -> cookie (loanword)
+(9809, 'barbari bread', 'n', NULL, NULL, 1, 'EX', NULL), -- بَربَری -> barbari [flatbread]; barbarian
+(9810, 'flamingo', 'n', NULL, NULL, 1, 'B1', NULL), -- فلامینگو -> flamingo (loanword)
+(9811, 'televised', 'adj', NULL, NULL, 1, 'B1', NULL), -- تِلِویزیونی -> televised
+(9812, 'checkup', 'n', NULL, NULL, 1, 'B1', NULL), -- چکاپ -> checkup [medical] (loanword)
+(9813, 'racket', 'n', NULL, NULL, 1, 'B1', NULL), -- راکِت -> racket [sports] (loanword)
+(9814, 'kimono', 'n', NULL, NULL, 1, 'EX', NULL), -- کیمونو -> kimono (loanword)
+(9815, 'ram', 'n', NULL, NULL, 1, 'B1', NULL), -- قوچ -> ram [animal]
+(9816, 'pasta', 'n', NULL, NULL, 1, 'A2', NULL), -- پاستا -> pasta (loanword)
+(9817, 'pelican', 'n', NULL, NULL, 1, 'B1', NULL), -- پِلیکان -> pelican (loanword)
+(9818, 'like', 'n', NULL, NULL, 1, 'EX', NULL), -- لایک -> like [social media] (loanword)
+(9819, 'curly', 'adj', NULL, NULL, 1, 'B1', NULL), -- فِرفِری -> curly [hair]
+(9820, 'cheetah', 'n', NULL, NULL, 1, 'A2', NULL), -- چیتا -> cheetah
+(9821, 'raccoon', 'n', NULL, NULL, 1, 'B1', NULL), -- راکون -> raccoon (loanword)
+(9822, 'octopus', 'n', NULL, NULL, 1, 'A2', NULL), -- هَشت‌پا -> octopus
+(9823, 'Austrian', 'adj', NULL, NULL, 1, 'EX', NULL), -- اتریشی -> Austrian (nationality)
+(9824, 'mascara', 'n', NULL, NULL, 1, 'B1', NULL), -- ریمِل -> mascara (loanword)
+(9825, 'lipstick', 'n', NULL, NULL, 1, 'A2', NULL), -- رژلَب -> lipstick
+(9826, 'vanilla', 'adj', NULL, NULL, 1, 'A2', NULL), -- وانیلی -> vanilla [adjective]
+(9827, 'rattle', 'n', NULL, NULL, 1, 'B1', NULL), -- جَغجَغه -> rattle [baby toy]
+(9828, 'coat rack', 'n', NULL, NULL, 1, 'B1', NULL), -- جالباسی -> coat rack / clothes hanger
+(9829, 'superhero', 'n', NULL, NULL, 1, 'A2', NULL), -- سوپِرقَهرَمان -> superhero
+(9830, 'trowel', 'n', NULL, NULL, 1, 'EX', NULL), -- بیلچه -> small shovel / trowel
+(9831, 'nylon', 'n', NULL, NULL, 1, 'B1', NULL), -- نایلون -> nylon (loanword)
+(9832, 'mandarin', 'n', NULL, NULL, 1, 'B1', NULL), -- ماندارین -> mandarin [orange; language] (loanword)
+(9833, 'puma', 'n', NULL, NULL, 1, 'B1', NULL), -- پوما -> puma (loanword)
+(9834, 'ramen', 'n', NULL, NULL, 1, 'EX', NULL), -- رامِن -> ramen (loanword)
+(9835, 'sore throat', 'n', NULL, NULL, 1, 'B1', NULL), -- گَلودَرد -> sore throat
+(9836, 'pumpkin', 'n', NULL, NULL, 1, 'A2', NULL), -- کَدوتَنبَل -> pumpkin / squash
+(9837, 'Islamic', 'adj', NULL, NULL, 1, 'EX', NULL), -- اِسلامی -> Islamic
+(9838, 'non-', 'prefix', NULL, NULL, 1, 'EX', NULL), -- غِیر -> other than / non- (prefix)
+(9839, 'held', 'adj', NULL, NULL, 1, 'B1', NULL), -- بَرگُزار -> held (of an event)
+(9840, 'be located', 'v', NULL, NULL, 1, 'B1', NULL), -- قَرار داشتَن -> to be located
+(9841, 'elections', 'n', NULL, NULL, 1, 'B1', NULL), -- اِنتِخابات -> elections
+(9842, 'raised', 'adj', NULL, NULL, 1, 'B1', NULL), -- مَطرَح -> raised (of a topic) / discussed
+(9843, 'gunshot', 'n', NULL, NULL, 1, 'B1', NULL), -- شَلیک -> gunshot (شلیک کردن = to shoot)
+(9844, 'destroyed', 'adj', NULL, NULL, 1, 'B1', NULL), -- نابود -> destroyed (نابود کردن = to destroy)
+(9845, 'solving', 'n', NULL, NULL, 1, 'B1', NULL), -- حَل -> solving (حل کردن = to solve)
+(9846, 'murderer', 'n', NULL, NULL, 1, 'B1', NULL), -- قاتِل -> murderer
+(9847, 'come on', 'interj', NULL, NULL, 1, 'A2', NULL), -- یالا -> come on! / hurry up!
+(9848, 'remaining', 'adj', NULL, NULL, 1, 'B1', NULL), -- باقی -> remaining
+(9849, 'stopped', 'adj', NULL, NULL, 1, 'B1', NULL), -- مُتَوَقِّف -> stopped (متوقف کردن = to stop)
+(9850, 'hateful', 'adj', NULL, NULL, 1, 'B1', NULL), -- مُتَنَفِّر -> hateful (متنفر بودن = to hate)
+(9851, 'native of', 'adj', NULL, NULL, 1, 'B1', NULL), -- اَهلِ -> native of / belonging to
+(9852, 'if only', 'interj', NULL, NULL, 1, 'B1', NULL), -- کاش -> if only / I wish
+(9853, 'rid of', 'adj', NULL, NULL, 1, 'B1', NULL), -- خَلاص -> freed / rid of (خلاص شدن = to get rid of)
+(9854, 'exploded', 'adj', NULL, NULL, 1, 'B1', NULL), -- مُنفَجِر -> exploded (منفجر شدن = to explode)
+(9855, 'arrested', 'adj', NULL, NULL, 1, 'B1', NULL), -- دَستگیر -> arrested (دستگیر کردن = to arrest)
+(9856, 'drowning', 'adj', NULL, NULL, 1, 'B1', NULL), -- غَرق -> drowning / sinking (غرق شدن = to drown)
+(9857, 'wrecked', 'adj', NULL, NULL, 1, 'B1', NULL), -- داغون -> wrecked / messed up (colloquial)
+(9858, 'territory', 'n', NULL, NULL, 1, 'B1', NULL), -- سَرزَمین -> land / territory
+(9859, 'attire', 'n', NULL, NULL, 1, 'B1', NULL), -- پوشِش -> covering / attire
+(9860, 'disappeared', 'adj', NULL, NULL, 1, 'B1', NULL), -- ناپَدید -> disappeared (ناپدید شدن = to disappear)
+(9861, 'exactly like', 'adj', NULL, NULL, 1, 'B1', NULL), -- عَین -> exactly like
+(9862, 'subtitle', 'n', NULL, NULL, 1, 'B1', NULL), -- زیرنِویس -> subtitle
+(9863, 'transferred', 'adj', NULL, NULL, 1, 'B1', NULL), -- مُنتَقِل -> transferred (منتقل کردن = to transfer)
+(9864, 'musical instrument', 'n', NULL, NULL, 1, 'B1', NULL), -- ساز -> musical instrument
+(9865, 'bothersome', 'adj', NULL, NULL, 1, 'B1', NULL), -- مُزاحِم -> bothersome / intruder
+(9866, 'corpse', 'n', NULL, NULL, 1, 'B1', NULL), -- جَنازه -> corpse
+(9867, 'punishment', 'n', NULL, NULL, 1, 'B1', NULL), -- مُجازات -> punishment (مجازات کردن = to punish)
+(9868, 'bleeding', 'n', NULL, NULL, 1, 'B1', NULL), -- خونریزی -> bleeding
+(9869, 'stopping', 'n', NULL, NULL, 1, 'B1', NULL), -- توقُّف -> stopping [vehicle] (توقف کردن = to stop)
+(9870, 'insistence', 'n', NULL, NULL, 1, 'B1', NULL), -- اِصرار -> insistence (اصرار کردن = to insist)
+(9871, 'pleading', 'n', NULL, NULL, 1, 'B1', NULL), -- التِماس -> begging / pleading (التماس کردن = to beg)
+(9872, 'imprisonment', 'n', NULL, NULL, 1, 'B1', NULL), -- حَبس -> imprisonment (حبس کردن = to imprison)
+(9873, 'fugitive', 'n', NULL, NULL, 1, 'B1', NULL), -- فَراری -> fugitive
+(9874, 'Jewish', 'adj', NULL, NULL, 1, 'EX', NULL), -- یَهودی -> Jewish
+(9875, 'on the contrary', 'adv', NULL, NULL, 1, 'B1', NULL), -- بَرعَکس -> on the contrary
+(9876, 'published', 'adj', NULL, NULL, 1, 'B1', NULL), -- مُنتَشِر -> published (منتشر کردن = to publish)
+(9877, 'jinn', 'n', NULL, NULL, 1, 'B2', NULL), -- جِن -> jinn / genie
+(9878, 'staring', 'adj', NULL, NULL, 1, 'B1', NULL), -- خیره -> staring (خیره شدن = to stare)
+(9879, 'nightly', 'adj', NULL, NULL, 1, 'B1', NULL), -- شَبانه -> nightly
+(9880, 'dagger', 'n', NULL, NULL, 1, 'B1', NULL), -- خَنجَر -> dagger
+(9881, 'deception', 'n', NULL, NULL, 1, 'B1', NULL), -- فَریب -> deception (فریب دادن = to deceive)
+(9882, 'bribe', 'n', NULL, NULL, 1, 'B1', NULL), -- رِشوه -> bribe
+(9883, 'coordinated', 'adj', NULL, NULL, 1, 'B1', NULL), -- هَماهَنگ -> coordinated (هماهنگ کردن = to coordinate)
+(9884, 'confronted', 'adj', NULL, NULL, 1, 'B1', NULL), -- مُواجِه -> facing / confronted (مواجه شدن = to face)
+(9885, 'cancellation', 'n', NULL, NULL, 1, 'B1', NULL), -- لَغو -> cancellation (لغو کردن = to cancel)
+(9886, 'knot', 'n', NULL, NULL, 1, 'B1', NULL), -- گِره -> knot
+(9887, 'status', 'n', NULL, NULL, 1, 'B1', NULL), -- جایگاه -> position / status; platform
+(9888, 'sinner', 'n', NULL, NULL, 1, 'B1', NULL), -- گُناهکار -> sinner / guilty person
+(9889, 'issued', 'adj', NULL, NULL, 1, 'B1', NULL), -- صادِر -> issued (صادر کردن = to issue)
+(9890, 'zombie', 'n', NULL, NULL, 1, 'B2', NULL), -- زامبی -> zombie (loanword)
+(9891, 'unseen', 'adj', NULL, NULL, 1, 'B1', NULL), -- نادیده -> unseen (نادیده گرفتن = to ignore)
+(9892, 'crushed', 'adj', NULL, NULL, 1, 'B1', NULL), -- لِه -> crushed (له کردن = to crush)
+(9893, 'ethnicity', 'n', NULL, NULL, 1, 'B1', NULL), -- نِژاد -> race / ethnicity
+(9894, 'displaced', 'adj', NULL, NULL, 1, 'B1', NULL), -- جابِجا -> displaced / moved (جابجا کردن = to move)
+(9895, 'following', 'n', NULL, NULL, 1, 'B1', NULL), -- پَیرَوی -> following / obedience (پیروی کردن = to follow)
+(9896, 'fighter', 'n', NULL, NULL, 1, 'B1', NULL), -- مُبارِز -> fighter
+(9897, 'smuggling', 'n', NULL, NULL, 1, 'B1', NULL), -- قاچاق -> smuggling
+(9898, 'politeness', 'n', NULL, NULL, 1, 'B1', NULL), -- اَدَب -> politeness / manners
+(9899, 'handcuffs', 'n', NULL, NULL, 1, 'B1', NULL), -- دَستبَند -> handcuffs / bracelet
+(9900, 'rumor', 'n', NULL, NULL, 1, 'B1', NULL), -- شایِعه -> rumor
+(9901, 'shocked', 'adj', NULL, NULL, 1, 'B1', NULL), -- شوکه -> shocked (شوکه شدن = to be shocked)
+(9902, 'document', 'n', NULL, NULL, 1, 'A2', NULL), -- سَند -> document
+(9903, 'erased', 'adj', NULL, NULL, 1, 'B1', NULL), -- مَحو -> erased / faded (محو شدن = to fade away)
+(9904, 'forced', 'adj', NULL, NULL, 1, 'B1', NULL), -- وادار -> forced / compelled (وادار کردن = to force)
+(9905, 'inheritance', 'n', NULL, NULL, 1, 'B1', NULL), -- اِرث -> inheritance
+(9906, 'coffin', 'n', NULL, NULL, 1, 'B1', NULL), -- تابوت -> coffin
+(9907, 'blunt', 'adj', NULL, NULL, 1, 'B1', NULL), -- رُک -> blunt / frank
+(9908, 'stationed', 'adj', NULL, NULL, 1, 'B1', NULL), -- مُستَقِر -> stationed / based (مستقر شدن = to be based)
+(9909, 'durability', 'n', NULL, NULL, 1, 'B1', NULL), -- دَوام -> durability (دوام آوردن = to endure)
+(9910, 'tumor', 'n', NULL, NULL, 1, 'B2', NULL), -- تومور -> tumor (loanword)
+(9911, 'whiskey', 'n', NULL, NULL, 1, 'B1', NULL), -- ویسکی -> whiskey (loanword)
+(9912, 'captive', 'n', NULL, NULL, 1, 'B1', NULL), -- اَسیر -> captive
+(9913, 'chaotic', 'adj', NULL, NULL, 1, 'B1', NULL), -- آشُفته -> chaotic / distressed
+(9914, 'paralyzed', 'adj', NULL, NULL, 1, 'B2', NULL), -- فَلَج -> paralyzed
+(9915, 'goddess', 'n', NULL, NULL, 1, 'B1', NULL), -- اِلهه -> goddess
+(9916, 'ammunition', 'n', NULL, NULL, 1, 'B2', NULL), -- مُهِمّات -> ammunition
+(9917, 'mole', 'n', NULL, NULL, 1, 'B1', NULL), -- خال -> mole / beauty mark
+(9918, 'renewal', 'n', NULL, NULL, 1, 'B1', NULL), -- تَجدید -> renewal (تجدید کردن = to renew)
+(9919, 'tattoo', 'n', NULL, NULL, 1, 'B1', NULL), -- خالکوبی -> tattoo
+(9920, 'humiliation', 'n', NULL, NULL, 1, 'B1', NULL), -- تَحقیر -> humiliation (تحقیر کردن = to humiliate)
+(9921, 'embassy', 'n', NULL, NULL, 1, 'B1', NULL), -- سِفارَت -> embassy
+(9922, 'emperor', 'n', NULL, NULL, 1, 'B1', NULL), -- اِمپراتور -> emperor
+(9923, 'indebted', 'adj', NULL, NULL, 1, 'B1', NULL), -- بِدهکار -> indebted / owing
+(9924, 'armor', 'n', NULL, NULL, 1, 'B1', NULL), -- زِره -> armor
+(9925, 'shield', 'n', NULL, NULL, 1, 'B1', NULL), -- سِپَر -> shield / bumper
+(9926, 'ethics', 'n', NULL, NULL, 1, 'B1', NULL), -- اَخلاق -> ethics / morals
+(9927, 'stupidity', 'n', NULL, NULL, 1, 'B1', NULL), -- حَماقَت -> stupidity
+(9928, 'orphan', 'n', NULL, NULL, 1, 'B1', NULL), -- یَتیم -> orphan
+(9929, 'heir', 'n', NULL, NULL, 1, 'B1', NULL), -- وارِث -> heir
+(9930, 'witch', 'n', NULL, NULL, 1, 'B1', NULL), -- ساحِره -> witch (female sorceress)
+(9931, 'branch of government', 'n', NULL, NULL, 1, 'B2', NULL), -- قُوّه -> power / branch [of government]
+(9932, 'discharged', 'adj', NULL, NULL, 1, 'B1', NULL), -- مَرخَّص -> dismissed / discharged (مرخص شدن = to be discharged)
+(9933, 'swear word', 'n', NULL, NULL, 1, 'B1', NULL), -- فُحش -> swear word (فحش دادن = to curse at someone)
+(9934, 'fainting', 'n', NULL, NULL, 1, 'B1', NULL), -- غَش -> fainting (غش کردن = to faint)
+(9935, 'dock', 'n', NULL, NULL, 1, 'B1', NULL), -- اِسکِله -> dock / pier
+(9936, 'work shift', 'n', NULL, NULL, 1, 'B1', NULL), -- شیفت -> work shift (loanword)
+(9937, 'blocked', 'adj', NULL, NULL, 1, 'B1', NULL), -- مَسدود -> blocked (مسدود کردن = to block)
+(9938, 'sewage', 'n', NULL, NULL, 1, 'B1', NULL), -- فاضِلاب -> sewage
+(9939, 'sultan', 'n', NULL, NULL, 1, 'EX', NULL), -- سُلطان -> sultan
+(9940, 'floating', 'adj', NULL, NULL, 1, 'B1', NULL), -- شِناوَر -> floating (شناور بودن = to float)
+(9941, 'casualties', 'n', NULL, NULL, 1, 'B1', NULL), -- تَلَفات -> casualties
+(9942, 'jewel', 'n', NULL, NULL, 1, 'B1', NULL), -- جَواهِر -> jewel
+(9943, 'moan', 'n', NULL, NULL, 1, 'B1', NULL), -- ناله -> moan / groan (ناله کردن = to groan)
+(9944, 'permitted', 'adj', NULL, NULL, 1, 'B1', NULL), -- مُجاز -> permitted / authorized
+(9945, 'blurry', 'adj', NULL, NULL, 1, 'B1', NULL), -- تار -> dark / blurry
+(9946, 'grumbling', 'n', NULL, NULL, 1, 'B1', NULL), -- غُر -> grumbling (غر زدن = to grumble)
+(9947, 'kept waiting', 'adj', NULL, NULL, 1, 'B1', NULL), -- مُعَطَّل -> delayed / kept waiting (معطل شدن = to be kept waiting)
+(9948, 'limping', 'adj', NULL, NULL, 1, 'B1', NULL), -- لَنگ -> limping (لنگ زدن = to limp)
+(9949, 'mutual understanding', 'n', NULL, NULL, 1, 'B2', NULL), -- تَفاهُم -> mutual understanding
+(9950, 'killer', 'n', NULL, NULL, 1, 'B1', NULL), -- آدَمکُش -> killer / assassin
+(9951, 'concentrated', 'adj', NULL, NULL, 1, 'B1', NULL), -- مُتِمَرکِز -> concentrated / focused (متمرکز شدن = to focus)
+(9952, 'astonishment', 'n', NULL, NULL, 1, 'B1', NULL), -- حَیرَت -> astonishment
+(9953, 'melting', 'n', NULL, NULL, 1, 'B1', NULL), -- ذوب -> melting (ذوب شدن = to melt)
+(9954, 'collateral', 'n', NULL, NULL, 1, 'B2', NULL), -- گِرو -> pawn / collateral (گرو گذاشتن = to pawn)
+(9955, 'resulting from', 'adj', NULL, NULL, 1, 'B1', NULL), -- ناشی اَز -> resulting from
+(9956, 'retaliation', 'n', NULL, NULL, 1, 'B2', NULL), -- تَلافی -> retaliation (تلافی کردن = to retaliate)
+(9957, 'murmur', 'n', NULL, NULL, 1, 'B1', NULL), -- زَمزَمه -> murmur / humming (زمزمه کردن = to murmur)
+(9958, 'self-sacrifice', 'n', NULL, NULL, 1, 'B2', NULL), -- فِداکاری -> self-sacrifice
+(9959, 'coward', 'adj', NULL, NULL, 1, 'B1', NULL), -- بُزدِل -> coward
+(9960, 'transmitter', 'n', NULL, NULL, 1, 'B1', NULL), -- فِرستَنده -> sender / transmitter
+(9961, 'misguided', 'adj', NULL, NULL, 1, 'B1', NULL), -- گُمراه -> misguided / astray (گمراه کردن = to mislead)
+(9962, 'resolved', 'adj', NULL, NULL, 1, 'B1', NULL), -- بَرطَرَف -> resolved / removed (برطرف کردن = to resolve)
+(9963, 'reliance', 'n', NULL, NULL, 1, 'B1', NULL), -- تِکیه -> leaning / reliance (تکیه کردن = to lean / rely)
+(9964, 'senate', 'n', NULL, NULL, 1, 'B1', NULL), -- سِنا -> senate (loanword)
+(9965, 'head chef', 'n', NULL, NULL, 1, 'B1', NULL), -- سَرآشپَز -> head chef
+(9966, 'mansion', 'n', NULL, NULL, 1, 'B1', NULL), -- عِمارَت -> mansion
+(9967, 'psychiatrist', 'n', NULL, NULL, 1, 'B1', NULL), -- روانپِزِشک -> psychiatrist
+(9968, 'prosperous', 'adj', NULL, NULL, 1, 'B1', NULL), -- آباد -> prosperous / developed
+(9969, 'cape', 'n', NULL, NULL, 1, 'B1', NULL), -- شِنِل -> cape / cloak
+(9970, 'walkie-talkie', 'n', NULL, NULL, 1, 'B1', NULL), -- بیسیم -> wireless / walkie-talkie
+(9971, 'dryness', 'n', NULL, NULL, 1, 'B1', NULL), -- خُشکی -> dryness; land (vs. sea)
+(9972, 'deprived', 'adj', NULL, NULL, 1, 'B1', NULL), -- مَحروم -> deprived (محروم کردن = to deprive)
+(9973, 'prohibition', 'n', NULL, NULL, 1, 'B1', NULL), -- مَنع -> prohibition (منع کردن = to prohibit)
+(9974, 'constructive', 'adj', NULL, NULL, 1, 'B1', NULL), -- سازَنده -> builder / constructive
+(9975, 'side effects', 'n', NULL, NULL, 1, 'B1', NULL), -- عَوارِض -> side effects; tolls
+(9976, 'suppression', 'n', NULL, NULL, 1, 'B1', NULL), -- سَرکوب -> suppression (سرکوب کردن = to suppress)
+(9977, 'mounted', 'adj', NULL, NULL, 1, 'B1', NULL), -- سَواره -> mounted / on horseback
+(9978, 'gunpowder', 'n', NULL, NULL, 1, 'B1', NULL), -- باروت -> gunpowder
+(9979, 'pronunciation', 'n', NULL, NULL, 1, 'B1', NULL), -- تَلَفُّظ -> pronunciation (تلفظ کردن = to pronounce)
+(9980, 'rarity', 'n', NULL, NULL, 1, 'B1', NULL), -- نُدرَت -> rarity (به‌ندرت = rarely)
+(9981, 'ambush', 'n', NULL, NULL, 1, 'B1', NULL), -- کَمین -> ambush (کمین کردن = to ambush)
+(9982, 'equipped', 'adj', NULL, NULL, 1, 'B1', NULL), -- مُجَهَّز -> equipped
+(9983, 'marriage proposal', 'n', NULL, NULL, 1, 'B1', NULL), -- خواستگاری -> marriage proposal
+(9984, 'antique', 'n', NULL, NULL, 1, 'B1', NULL), -- عَتیقه -> antique
+(9985, 'dissuaded', 'adj', NULL, NULL, 1, 'B1', NULL), -- مُنصَرِف -> dissuaded (منصرف شدن = to change one''s mind)
+(9986, 'vodka', 'n', NULL, NULL, 1, 'B1', NULL), -- ودکا -> vodka (loanword)
+(9987, 'unbelievable', 'adj', NULL, NULL, 1, 'B1', NULL), -- باورنَکَردَنی -> unbelievable
+(9988, 'desirous', 'adj', NULL, NULL, 1, 'B1', NULL), -- خواهان -> desirous / wanting (formal)
+(9989, 'concoction', 'n', NULL, NULL, 1, 'B1', NULL), -- مَعجون -> concoction / potion
+(9990, 'deserving', 'adj', NULL, NULL, 1, 'B1', NULL), -- مُستَحِق -> deserving / entitled
+(9991, 'demanding', 'adj', NULL, NULL, 1, 'B1', NULL), -- خواستار -> desirous / demanding (formal)
+(9992, 'clergyman', 'n', NULL, NULL, 1, 'B1', NULL), -- روحانی -> clergyman / spiritual person
+(9993, 'parasite', 'n', NULL, NULL, 1, 'B1', NULL), -- اَنگَل -> parasite
+(9994, 'greed', 'n', NULL, NULL, 1, 'B1', NULL), -- طَمَع -> greed
+(9995, 'extraction', 'n', NULL, NULL, 1, 'B1', NULL), -- اِستِخراج -> extraction (استخراج کردن = to extract)
+(9996, 'archer', 'n', NULL, NULL, 1, 'B1', NULL), -- کَماندار -> archer
+(9997, 'trench', 'n', NULL, NULL, 1, 'B1', NULL), -- سَنگَر -> trench / bunker (military)
+(9998, 'informant', 'n', NULL, NULL, 1, 'B1', NULL), -- خَبَرچین -> informant / snitch
+(9999, 'stance', 'n', NULL, NULL, 1, 'B1', NULL), -- مَوضِع -> position / stance (formal)
+(10000, 'childbirth', 'n', NULL, NULL, 1, 'B1', NULL), -- زایمان -> childbirth
+(10001, 'generator', 'n', NULL, NULL, 1, 'B1', NULL), -- ژِنِراتور -> generator (loanword)
+(10002, 'provisions', 'n', NULL, NULL, 1, 'B1', NULL), -- آذوقه -> provisions / food supply
+(10003, 'inhabitants', 'n', NULL, NULL, 1, 'B1', NULL), -- اَهالی -> inhabitants / locals
+(10004, 'meddling', 'n', NULL, NULL, 1, 'B1', NULL), -- فُضولی -> nosiness / meddling (فضولی کردن = to meddle)
+(10005, 'lightning bolt', 'n', NULL, NULL, 1, 'B1', NULL), -- صاعِقه -> lightning bolt
+(10006, 'guardian', 'n', NULL, NULL, 1, 'B1', NULL), -- حافِظ -> protector / guardian (formal)
+(10007, 'physique', 'n', NULL, NULL, 1, 'B1', NULL), -- هیکَل -> physique / body build
+(10008, 'hospitalized', 'adj', NULL, NULL, 1, 'B1', NULL), -- بَستَری -> hospitalized (بستری شدن = to be hospitalized)
+(10009, 'facilities', 'n', NULL, NULL, 1, 'B1', NULL), -- اِمکانات -> facilities / resources
+(10010, 'imitation', 'n', NULL, NULL, 1, 'B1', NULL), -- تَقلید -> imitation (تقلید کردن = to imitate)
+(10011, 'mute', 'adj', NULL, NULL, 1, 'B1', NULL), -- لال -> mute (unable to speak)
+(10012, 'hormone', 'n', NULL, NULL, 1, 'B1', NULL), -- هورمون -> hormone (loanword)
+(10013, 'best man', 'n', NULL, NULL, 1, 'B2', NULL), -- ساقدوش -> best man / bridesmaid
+(10014, 'submarine', 'n', NULL, NULL, 1, 'A2', NULL), -- زیردَریایی -> submarine
+(10015, 'pointless', 'adj', NULL, NULL, 1, 'B1', NULL), -- بیخود -> pointless / for no reason (informal)
+(10016, 'bankrupt', 'adj', NULL, NULL, 1, 'B1', NULL), -- وَرشِکَست -> bankrupt
+(10017, 'tomb', 'n', NULL, NULL, 1, 'B1', NULL), -- مَقبَره -> tomb / mausoleum
+(10018, 'exaggeration', 'n', NULL, NULL, 1, 'B1', NULL), -- اِغراق -> exaggeration (اغراق کردن = to exaggerate)
+(10019, 'reconciliation', 'n', NULL, NULL, 1, 'B1', NULL), -- آشتی -> reconciliation (آشتی کردن = to reconcile)
+(10020, 'editing', 'n', NULL, NULL, 1, 'B1', NULL), -- ویرایِش -> editing (ویرایش کردن = to edit)
+(10021, 'regulations', 'n', NULL, NULL, 1, 'B1', NULL), -- مُقَرَّرات -> regulations
+(10022, 'rock candy', 'n', NULL, NULL, 1, 'EX', NULL), -- نَبات -> rock candy
+(10023, 'installations', 'n', NULL, NULL, 1, 'B1', NULL), -- تاسیسات -> facilities / installations
+(10024, 'condolences', 'n', NULL, NULL, 1, 'B1', NULL), -- تَسلیَت -> condolences
+(10025, 'savior', 'n', NULL, NULL, 1, 'B1', NULL), -- ناجی -> savior / rescuer
+(10026, 'digestion', 'n', NULL, NULL, 1, 'B1', NULL), -- هَضم -> digestion (هضم کردن = to digest)
+(10027, 'syringe', 'n', NULL, NULL, 1, 'B1', NULL), -- سِرنگ -> syringe
+(10028, 'devastated', 'adj', NULL, NULL, 1, 'B1', NULL), -- ویران -> ruined / devastated
+(10029, 'falcon', 'n', NULL, NULL, 1, 'B1', NULL), -- شاهین -> falcon
+(10030, 'bluff', 'n', NULL, NULL, 1, 'B1', NULL), -- بلوف -> bluff (loanword)
+(10031, 'prophet', 'n', NULL, NULL, 1, 'B1', NULL), -- پَیامبَر -> prophet
+(10032, 'police station', 'n', NULL, NULL, 1, 'A2', NULL), -- کَلانتَری -> police station
+(10033, 'cramp', 'n', NULL, NULL, 1, 'B1', NULL), -- گِرِفتگی -> cramp / blockage
+(10034, 'seasoning', 'n', NULL, NULL, 1, 'B1', NULL), -- چاشنی -> seasoning / condiment
+(10035, 'compatible', 'adj', NULL, NULL, 1, 'B1', NULL), -- سازگار -> compatible / adaptable
+(10036, 'honored', 'adj', NULL, NULL, 1, 'B1', NULL), -- مُفتَخَر -> honored / privileged (formal)
+(10037, 'departing', 'adj', NULL, NULL, 1, 'B1', NULL), -- عازِم -> departing / heading to (formal)
+(10038, 'compressed', 'adj', NULL, NULL, 1, 'B1', NULL), -- فِشُرده -> compressed / condensed
+(10039, 'caress', 'n', NULL, NULL, 1, 'B1', NULL), -- نَوازِش -> caress (نوازش کردن = to caress)
+(10040, 'rebellious', 'adj', NULL, NULL, 1, 'B1', NULL), -- یاغی -> rebellious / outlaw
+(10041, 'opening ceremony', 'n', NULL, NULL, 1, 'B1', NULL), -- اِفتِتاحیه -> opening ceremony
+(10042, 'in need of', 'adj', NULL, NULL, 1, 'B1', NULL), -- نیازمَند -> in need of (formal)
+(10043, 'containing', 'adj', NULL, NULL, 1, 'B1', NULL), -- حاوی -> containing (formal)
+(10044, 'machine gun', 'n', NULL, NULL, 1, 'B1', NULL), -- مِسلَسَل -> machine gun
+(10045, 'godfather', 'n', NULL, NULL, 1, 'B1', NULL), -- پِدَرخوانده -> godfather / adoptive father
+(10046, 'attractiveness', 'n', NULL, NULL, 1, 'B1', NULL), -- جَذّابیَّت -> attractiveness
+(10047, 'villager', 'n', NULL, NULL, 1, 'B1', NULL), -- دِهاتی -> villager / rural person
+(10048, 'engraving', 'n', NULL, NULL, 1, 'B1', NULL), -- حَک -> engraving (حک کردن = to engrave)
+(10049, 'disrupted', 'adj', NULL, NULL, 1, 'B1', NULL), -- مُختَل -> disrupted / disturbed (formal)
+(10050, 'preliminaries', 'n', NULL, NULL, 1, 'B2', NULL), -- مُقَدَّمات -> preliminaries / preparations (formal)
+(10051, 'upside down', 'adj', NULL, NULL, 1, 'A2', NULL), -- واروَنه -> upside down / inverted
+(10052, 'madness', 'n', NULL, NULL, 1, 'B1', NULL), -- دیوانگی -> madness
+(10053, 'excavation', 'n', NULL, NULL, 1, 'B1', NULL), -- حَفّاری -> excavation / digging (حفاری کردن = to excavate)
+(10054, 'having a share', 'adj', NULL, NULL, 1, 'B2', NULL), -- سَهیم -> having a share (formal)
+(10055, 'itching', 'n', NULL, NULL, 1, 'B1', NULL), -- خارِش -> itching (خارش داشتن = to itch)
+(10056, 'characteristics', 'n', NULL, NULL, 1, 'B1', NULL), -- خُصوصیات -> characteristics / properties (formal)
+(10057, 'cleaning', 'n', NULL, NULL, 1, 'A2', NULL), -- نَظافَت -> cleaning (formal; نظافت کردن = to clean)
+(10058, 'insignificant', 'adj', NULL, NULL, 1, 'B1', NULL), -- ناچیز -> insignificant / trivial
+(10059, 'mafia', 'n', NULL, NULL, 1, 'B1', NULL), -- مافیا -> mafia (loanword)
+(10060, 'lice', 'n', NULL, NULL, 1, 'B1', NULL), -- شِپِش -> lice
+(10061, 'total', 'n', NULL, NULL, 1, 'A2', NULL), -- مَجموع -> total / sum (formal)
+(10062, 'swamp', 'n', NULL, NULL, 1, 'B1', NULL), -- باتلاق -> swamp / marsh
+(10063, 'concealment', 'n', NULL, NULL, 1, 'B1', NULL), -- جاسازی -> concealment / embedding (جاسازی کردن = to conceal)
+(10064, 'atlas', 'n', NULL, NULL, 1, 'B1', NULL), -- اَطلَس -> atlas
+(10065, 'reins', 'n', NULL, NULL, 1, 'B1', NULL), -- اَفسار -> reins / bridle
+(10066, 'maneuver', 'n', NULL, NULL, 1, 'B1', NULL), -- مانِوَر -> maneuver
+(10067, 'dubbing', 'n', NULL, NULL, 1, 'B1', NULL), -- دوبله -> dubbing [film]
+(10068, 'halal', 'adj', NULL, NULL, 1, 'EX', NULL), -- حَلال -> permissible / halal (religious)
+(10069, 'captivity', 'n', NULL, NULL, 1, 'B1', NULL), -- اَسارَت -> captivity (formal)
+(10070, 'gangster', 'n', NULL, NULL, 1, 'B1', NULL), -- گانگستِر -> gangster (loanword)
+(10071, 'imposition', 'n', NULL, NULL, 1, 'B1', NULL), -- تَحمیل -> imposition (formal; تحمیل کردن = to impose)
+(10072, 'Middle East', 'n', NULL, NULL, 1, 'EX', NULL), -- خاوَرمیانه -> Middle East
+(10073, 'unsuccessful', 'adj', NULL, NULL, 1, 'B1', NULL), -- ناموفَّق -> unsuccessful
+(10074, 'hypnosis', 'n', NULL, NULL, 1, 'B1', NULL), -- هیپنوتیزم -> hypnosis (loanword)
+(10075, 'sanatorium', 'n', NULL, NULL, 1, 'EX', NULL), -- آسایشگاه -> sanatorium / rest home
+(10076, 'military barracks', 'n', NULL, NULL, 1, 'B1', NULL), -- پادگان -> military barracks
+(10077, 'arch', 'n', NULL, NULL, 1, 'B1', NULL), -- طاق -> arch
+(10078, 'postponement', 'n', NULL, NULL, 1, 'B1', NULL), -- تَعویق -> postponement (formal)
+(10079, 'howl', 'n', NULL, NULL, 1, 'B1', NULL), -- زوزه -> howl (زوزه کشیدن = to howl)
+(10080, 'solar system', 'n', NULL, NULL, 1, 'A2', NULL), -- مَنظومه -> solar system
+(10081, 'marriage contract', 'n', NULL, NULL, 1, 'B1', NULL), -- عَقد -> marriage contract (formal)
+(10082, 'executioner', 'n', NULL, NULL, 1, 'B1', NULL), -- جَلّاد -> executioner
+(10083, 'mourning', 'n', NULL, NULL, 1, 'B1', NULL), -- عَزاداری -> mourning (formal)
+(10084, 'junk', 'adj', NULL, NULL, 1, 'B1', NULL), -- قِراضه -> junk / scrap (informal)
+(10085, 'reptile', 'adj', NULL, NULL, 1, 'A2', NULL), -- خِزَنده -> reptile / creeping (formal)
+(10086, 'misunderstanding', 'n', NULL, NULL, 1, 'B1', NULL), -- سوءتَفاهُم -> misunderstanding (formal)
+(10087, 'fountain', 'n', NULL, NULL, 1, 'A2', NULL), -- فَوّاره -> fountain
+(10088, 'banker', 'n', NULL, NULL, 1, 'B1', NULL), -- بانکدار -> banker
+(10089, 'inactive', 'adj', NULL, NULL, 1, 'B1', NULL), -- غیرفَعّال -> inactive
+(10090, 'blindly', 'adv', NULL, NULL, 1, 'B1', NULL), -- کورکورانه -> blindly
+(10091, 'viewer', 'n', NULL, NULL, 1, 'B1', NULL), -- بیننده -> viewer
+(10092, 'unlimited', 'adj', NULL, NULL, 1, 'B1', NULL), -- نامَحدود -> unlimited
+(10093, 'reactor', 'n', NULL, NULL, 1, 'B1', NULL), -- راکتور -> reactor (loanword)
+(10094, 'beggar', 'n', NULL, NULL, 1, 'B1', NULL), -- گِدا -> beggar
+(10095, 'fanatic', 'n', NULL, NULL, 1, 'B1', NULL), -- مُتَعَصِّب -> fanatic / bigoted (formal)
+(10096, 'promptly', 'adv', NULL, NULL, 1, 'B1', NULL), -- سَروَقت -> promptly / on time (formal)
+(10097, 'ration', 'n', NULL, NULL, 1, 'B1', NULL), -- جیره -> ration
+(10098, 'thug', 'n', NULL, NULL, 1, 'B1', NULL), -- لات -> thug / hoodlum (informal)
+(10099, 'sloppy', 'adj', NULL, NULL, 1, 'B1', NULL), -- شُلَخته -> sloppy / disheveled (informal)
+(10100, 'dynamite', 'n', NULL, NULL, 1, 'B1', NULL), -- دینامیت -> dynamite (loanword)
+(10101, 'horse-drawn carriage', 'n', NULL, NULL, 1, 'EX', NULL), -- دُرُشکه -> horse-drawn carriage
+(10102, 'mistreatment', 'n', NULL, NULL, 1, 'B1', NULL), -- بَدرَفتاری -> mistreatment (formal)
+(10103, 'installment', 'n', NULL, NULL, 1, 'B1', NULL), -- قِسط -> installment [payment] (formal)
+(10104, 'showing off', 'n', NULL, NULL, 1, 'B1', NULL), -- خودنِمایی -> showing off (formal)
+(10105, 'roar', 'n', NULL, NULL, 1, 'B1', NULL), -- غُرِّش -> roar (غرش کردن = to roar)
+(10106, 'sip', 'n', NULL, NULL, 1, 'B1', NULL), -- جُرعه -> sip / gulp (formal)
+(10107, 'meteorology', 'n', NULL, NULL, 1, 'B1', NULL), -- هواشِناسی -> meteorology
+(10108, 'intensification', 'n', NULL, NULL, 1, 'B2', NULL), -- تَشدید -> intensification (formal; تشدید کردن = to intensify)
+(10109, 'terror', 'n', NULL, NULL, 1, 'B1', NULL), -- هَراس -> fear / terror (formal)
+(10110, 'mockery', 'n', NULL, NULL, 1, 'B1', NULL), -- تَمَسخُر -> mockery (formal; تمسخر کردن = to mock)
+(10111, 'locker room', 'n', NULL, NULL, 1, 'B1', NULL), -- رِختکَن -> locker room / changing room
+(10112, 'hastily', 'adv', NULL, NULL, 1, 'B1', NULL), -- عَجولانه -> hastily
+(10113, 'commando', 'n', NULL, NULL, 1, 'B2', NULL), -- تَکاوَر -> commando
+(10114, 'coup d''etat', 'n', NULL, NULL, 1, 'B2', NULL), -- کودِتا -> coup d''état (formal / political)
+(10115, 'boldly', 'adv', NULL, NULL, 1, 'B1', NULL), -- جَسورانه -> boldly
+(10116, 'unspecified', 'adj', NULL, NULL, 1, 'B1', NULL), -- نامُشَخَّص -> unspecified
+(10117, 'decoding', 'n', NULL, NULL, 1, 'B2', NULL), -- رَمزگُشایی -> decoding / decryption (formal, tech)
+(10118, 'children', 'n', NULL, NULL, 1, 'A1', NULL), -- اَطفال -> children (formal)
+(10119, 'classy', 'adj', NULL, NULL, 1, 'B1', NULL), -- باکِلاس -> classy (informal)
+(10120, 'merciless', 'adj', NULL, NULL, 1, 'B1', NULL), -- بیرَحم -> merciless
+(10121, 'boasting', 'n', NULL, NULL, 1, 'B1', NULL), -- لاف -> boasting (لاف زدن = to boast)
+(10122, 'hangout spot', 'n', NULL, NULL, 1, 'B1', NULL), -- پاتوق -> hangout spot (informal)
+(10123, 'chubby', 'adj', NULL, NULL, 1, 'B1', NULL), -- خِپِل -> chubby (informal)
+(10124, 'obedient', 'adj', NULL, NULL, 1, 'B1', NULL), -- مُطیع -> obedient (formal)
+(10125, 'blood cell', 'n', NULL, NULL, 1, 'B2', NULL), -- گُلبول -> blood cell (formal, medical)
+(10126, 'lacking', 'adj', NULL, NULL, 1, 'B1', NULL), -- فاقِد -> lacking (formal)
+(10127, 'marital', 'adj', NULL, NULL, 1, 'B1', NULL), -- زَناشویی -> marital (formal)
+(10128, 'federation', 'n', NULL, NULL, 1, 'B1', NULL), -- فِدِراسیون -> federation (loanword)
+(10129, 'Judgment Day', 'n', NULL, NULL, 1, 'EX', NULL), -- قِیامَت -> Judgment Day / doomsday
+(10130, 'reforms', 'n', NULL, NULL, 1, 'B1', NULL), -- اِصلاحات -> reforms (formal)
+(10131, 'stabilization', 'n', NULL, NULL, 1, 'B2', NULL), -- تَثبیت -> stabilization (formal; تثبیت کردن = to stabilize)
+(10132, 'consolation', 'n', NULL, NULL, 1, 'B2', NULL), -- تَسَلّی -> consolation (formal; تسلی دادن = to console)
+(10133, 'discouraged', 'adj', NULL, NULL, 1, 'B1', NULL), -- دِلسَرد -> discouraged (formal)
+(10134, 'search engine', 'n', NULL, NULL, 1, 'B1', NULL), -- جُستُجوگَر -> searcher / search engine (formal, tech)
+(10135, 'hangover', 'n', NULL, NULL, 1, 'B1', NULL), -- خُماری -> hangover feeling / craving (informal)
+(10136, 'pistol', 'n', NULL, NULL, 1, 'B1', NULL), -- تَپانچه -> pistol / handgun
+(10137, 'opium', 'n', NULL, NULL, 1, 'B2', NULL), -- تِریاک -> opium
+(10138, 'chattering', 'n', NULL, NULL, 1, 'B1', NULL), -- وَراجی -> chattering / gossip (informal)
+(10139, 'unjust', 'adj', NULL, NULL, 1, 'B1', NULL), -- ناعادِلانه -> unjust
+(10140, 'Quran', 'n', NULL, NULL, 1, 'EX', NULL), -- قُرآن -> the Quran
+(10141, 'cheeky', 'adj', NULL, NULL, 1, 'B1', NULL), -- پَررو -> impudent / cheeky (informal)
+(10142, 'close', 'adj', NULL, NULL, 1, 'B2', NULL), -- قَریب -> close / near (formal)
+(10143, 'conqueror', 'n', NULL, NULL, 1, 'B1', NULL), -- فاتِح -> conqueror (formal)
+(10144, 'gallop', 'n', NULL, NULL, 1, 'B2', NULL), -- تاخت -> gallop (تاخت و تاز = raid)
+(10145, 'march', 'n', NULL, NULL, 1, 'B1', NULL), -- راهپیمایی -> march / procession (formal)
+(10146, 'infinite', 'adj', NULL, NULL, 1, 'B1', NULL), -- بی‌نِهایَت -> infinite
+(10147, 'blight', 'n', NULL, NULL, 1, 'B2', NULL), -- آفَت -> pest / blight; calamity (formal)
+(10148, 'disobedience', 'n', NULL, NULL, 1, 'B1', NULL), -- نافَرمانی -> disobedience (formal)
+(10149, 'grains', 'n', NULL, NULL, 1, 'B1', NULL), -- غَلّات -> grains / cereals (formal)
+(10150, 'fluctuation', 'n', NULL, NULL, 1, 'B2', NULL), -- نَوسان -> fluctuation (formal)
+(10151, 'dissatisfied', 'adj', NULL, NULL, 1, 'B1', NULL), -- ناراضی -> dissatisfied
+(10152, 'withered', 'adj', NULL, NULL, 1, 'B2', NULL), -- پژمُرده -> withered / wilted
+(10153, 'flourishing', 'adj', NULL, NULL, 1, 'B2', NULL), -- شُکوفا -> flourishing / blooming (formal)
+(10154, 'authorities', 'n', NULL, NULL, 1, 'B2', NULL), -- اِختیارات -> powers / authorities (formal)
+(10155, 'rhyme', 'n', NULL, NULL, 1, 'B1', NULL), -- قافیه -> rhyme (formal, poetry)
+(10156, 'stutter', 'n', NULL, NULL, 1, 'B1', NULL), -- لُکنَت -> stutter / stammer (formal)
+(10157, 'imprisoned', 'adj', NULL, NULL, 1, 'B1', NULL), -- مَحبوس -> imprisoned (formal)
+(10158, 'blizzard', 'n', NULL, NULL, 1, 'B1', NULL), -- کولاک -> blizzard
+(10159, 'moved', 'adj', NULL, NULL, 1, 'B1', NULL), -- مُتَأَثِّر -> affected / moved [emotionally] (formal)
+(10160, 'spiral', 'n', NULL, NULL, 1, 'B1', NULL), -- مارپیچ -> spiral
+(10161, 'charisma', 'n', NULL, NULL, 1, 'B2', NULL), -- جَذبه -> charisma / allure (formal)
+(10162, 'compelled', 'adj', NULL, NULL, 1, 'B1', NULL), -- ناچار -> compelled / having no choice (formal)
+(10163, 'proportion', 'n', NULL, NULL, 1, 'B1', NULL), -- تَناسُب -> proportion / fitness (formal)
+(10164, 'uranium', 'n', NULL, NULL, 1, 'EX', NULL), -- اورانیوم -> uranium (loanword)
+(10165, 'blowing', 'n', NULL, NULL, 1, 'B1', NULL), -- وَزِش -> blowing [wind] (formal)
+(10166, 'prone', 'adj', NULL, NULL, 1, 'B2', NULL), -- مُستَعِد -> prone / predisposed (formal)
+(10167, 'porter', 'n', NULL, NULL, 1, 'B1', NULL), -- حَمّال -> porter (dated occupation term)
+(10168, 'cylinder', 'n', NULL, NULL, 1, 'B1', NULL), -- اُستوانه -> cylinder (formal, geometry)
+(10169, 'irregular', 'adj', NULL, NULL, 1, 'B1', NULL), -- نامُنظَم -> irregular
+(10170, 'comedian', 'n', NULL, NULL, 1, 'B1', NULL), -- کُمِدین -> comedian (loanword)
+(10171, 'exports', 'n', NULL, NULL, 1, 'B1', NULL), -- صادِرات -> exports (formal)
+(10172, 'humility', 'n', NULL, NULL, 1, 'B2', NULL), -- تَواضُع -> humility (formal)
+(10173, 'dilapidated', 'adj', NULL, NULL, 1, 'B2', NULL), -- فَرسوده -> worn out / dilapidated (formal)
+(10174, 'reserved', 'adj', NULL, NULL, 1, 'B1', NULL), -- مَحفوظ -> preserved / reserved (formal)
+(10175, 'overflowing', 'adj', NULL, NULL, 1, 'B1', NULL), -- لَبریز -> overflowing (formal)
+(10176, 'embezzlement', 'n', NULL, NULL, 1, 'B2', NULL), -- اِختِلاس -> embezzlement (formal, legal)
+(10177, 'wicked', 'adj', NULL, NULL, 1, 'B1', NULL), -- خَبیث -> malicious / wicked (formal)
+(10178, 'Alzheimer''s', 'n', NULL, NULL, 1, 'EX', NULL), -- آلزایمر -> Alzheimer''s (loanword, medical)
+(10179, 'accumulated', 'adj', NULL, NULL, 1, 'B1', NULL), -- اَنباشته -> accumulated / stockpiled (formal)
+(10180, 'mischief', 'n', NULL, NULL, 1, 'B1', NULL), -- شیطَنَت -> mischief (formal)
+(10181, 'abnormal', 'adj', NULL, NULL, 1, 'B1', NULL), -- غیرطَبیعی -> abnormal
+(10182, 'bulge', 'n', NULL, NULL, 1, 'B2', NULL), -- بَرآمَدگی -> bulge / protrusion (formal)
+(10183, 'the public', 'n', NULL, NULL, 1, 'B1', NULL), -- عامّه -> the public / masses (formal)
+(10184, 'exclusive to', 'adj', NULL, NULL, 1, 'B1', NULL), -- مُختَص -> exclusive to / specific to (formal)
+(10185, 'inscription', 'n', NULL, NULL, 1, 'B2', NULL), -- کتیبه -> inscription (formal, archaeology)
+(10186, 'stingy', 'adj', NULL, NULL, 1, 'B1', NULL), -- خَسیس -> stingy / miserly
+(10187, 'comforting', 'n', NULL, NULL, 1, 'B1', NULL), -- دِلداری -> comforting / consolation (formal; دلداری دادن = to comfort)
+(10188, 'suffocation', 'n', NULL, NULL, 1, 'B1', NULL), -- خَفِگی -> suffocation (formal)
+(10189, 'smirk', 'n', NULL, NULL, 1, 'B1', NULL), -- پوزخَند -> smirk / sneer
+(10190, 'commemoration', 'n', NULL, NULL, 1, 'B2', NULL), -- بُزُرگداشت -> commemoration (formal)
+(10191, 'denier', 'adj', NULL, NULL, 1, 'B1', NULL), -- مُنکِر -> denying / denier (formal)
+(10192, 'shaky', 'adj', NULL, NULL, 1, 'B1', NULL), -- مُتِزَلزِل -> shaky / unstable (formal)
+(10193, 'gradualness', 'n', NULL, NULL, 1, 'B2', NULL), -- تَدریج -> gradualness (formal; به تدریج = gradually)
+(10194, 'both sides', 'n', NULL, NULL, 1, 'B1', NULL), -- طَرَفین -> both sides / parties (formal, legal)
+(10195, 'Buddhist', 'n', NULL, NULL, 1, 'EX', NULL), -- بودایی -> Buddhist
+(10196, 'pamphlet', 'n', NULL, NULL, 1, 'B1', NULL), -- جُزوه -> pamphlet / handout (academic)
+(10197, 'superstitions', 'n', NULL, NULL, 1, 'B1', NULL), -- خُرافات -> superstitions (formal)
+(10198, 'cozy', 'adj', NULL, NULL, 1, 'B1', NULL), -- دَنج -> cozy (informal)
+(10199, 'ground floor', 'n', NULL, NULL, 1, 'B1', NULL), -- هَمکَف -> ground floor (formal)
+(10200, 'crowding', 'n', NULL, NULL, 1, 'B1', NULL), -- اِزدِحام -> crowding / congestion (formal)
+(10201, 'rotten', 'adj', NULL, NULL, 1, 'B1', NULL), -- گَندیده -> rotten / decayed (formal)
+(10202, 'narrator', 'n', NULL, NULL, 1, 'B1', NULL), -- راوی -> narrator (formal)
+(10203, 'remittance', 'n', NULL, NULL, 1, 'B2', NULL), -- حَواله -> remittance / money transfer (formal)
+(10204, 'hump', 'n', NULL, NULL, 1, 'B1', NULL), -- قوز -> hump / hunchback (formal)
+(10205, 'imports', 'n', NULL, NULL, 1, 'B1', NULL), -- واردات -> imports (formal)
+(10206, 'defective', 'adj', NULL, NULL, 1, 'B1', NULL), -- مَعیوب -> defective (formal)
+(10207, 'pedestrian', 'n', NULL, NULL, 1, 'A2', NULL), -- عابِر -> pedestrian (formal)
+(10208, 'headstrong', 'adj', NULL, NULL, 1, 'B1', NULL), -- خودسَر -> headstrong / self-willed (formal)
+(10209, 'admirer', 'n', NULL, NULL, 1, 'B1', NULL), -- دوستدار -> admirer / well-wisher (formal)
+(10210, 'radioactive', 'adj', NULL, NULL, 1, 'B1', NULL), -- رادیواَکتیو -> radioactive (loanword)
+(10211, 'suitor', 'n', NULL, NULL, 1, 'B1', NULL), -- خواستگار -> suitor
+(10212, 'epic', 'n', NULL, NULL, 1, 'B1', NULL), -- حَماسه -> epic (formal, literary)
+(10213, 'publications', 'n', NULL, NULL, 1, 'B1', NULL), -- اِنتِشارات -> publications (formal)
+(10214, 'skeptical', 'adj', NULL, NULL, 1, 'B1', NULL), -- شَکّاک -> skeptical (formal)
+(10215, 'repayment', 'n', NULL, NULL, 1, 'B1', NULL), -- بازپَرداخت -> repayment (formal, financial)
+(10216, 'deterrent', 'adj', NULL, NULL, 1, 'B1', NULL), -- بازدارَنده -> deterrent (formal)
+(10217, 'migraine', 'n', NULL, NULL, 1, 'B1', NULL), -- میگرِن -> migraine (loanword)
+(10218, 'plowing', 'n', NULL, NULL, 1, 'B1', NULL), -- شُخم -> plowing (شخم زدن = to plow)
+(10219, 'spinal cord', 'n', NULL, NULL, 1, 'B2', NULL), -- نُخاع -> spinal cord (medical)
+(10220, 'telecommunications', 'n', NULL, NULL, 1, 'B1', NULL), -- مُخابِرات -> telecommunications (formal)
+(10221, 'abandoned', 'adj', NULL, NULL, 1, 'B1', NULL), -- مَتروک -> abandoned (formal)
+(10222, 'overtaking', 'n', NULL, NULL, 1, 'B1', NULL), -- سَبقَت -> overtaking (formal; سبقت گرفتن = to overtake)
+(10223, 'subsiding', 'n', NULL, NULL, 1, 'B2', NULL), -- فُروکِش -> subsiding (formal; فروکش کردن = to subside)
+(10224, 'face to face', 'adj', NULL, NULL, 1, 'B1', NULL), -- روبِرو -> face to face (formal)
+(10225, 'caliph', 'n', NULL, NULL, 1, 'EX', NULL), -- خَلیفه -> caliph (historical / religious title)
+(10226, 'rewriting', 'n', NULL, NULL, 1, 'B1', NULL), -- بازنویسی -> rewriting (formal)
+(10227, 'consulate', 'n', NULL, NULL, 1, 'B1', NULL), -- کُنسولگَری -> consulate (formal)
+(10228, 'deputy position', 'n', NULL, NULL, 1, 'B2', NULL), -- مُعاوَنَت -> deputy position / vice-presidency (formal)
+(10229, 'obligated', 'adj', NULL, NULL, 1, 'B1', NULL), -- مُوَظَّف -> obligated (formal)
+(10230, 'disgusted', 'adj', NULL, NULL, 1, 'B1', NULL), -- بیزار -> disgusted / averse (formal)
+(10231, 'bloodthirsty', 'adj', NULL, NULL, 1, 'B2', NULL), -- خونخوار -> bloodthirsty (formal)
+(10232, 'arrogant', 'adj', NULL, NULL, 1, 'B1', NULL), -- مُتِکَبِّر -> arrogant (formal)
+(10233, 'relapse', 'n', NULL, NULL, 1, 'B2', NULL), -- عود -> relapse / recurrence [medical] (formal)
+(10234, 'post', 'n', NULL, NULL, 1, 'B1', NULL), -- مَنصَب -> position / post (formal)
+(10235, 'thyroid', 'n', NULL, NULL, 1, 'EX', NULL), -- تیروئید -> thyroid (loanword, medical)
+(10236, 'machete', 'n', NULL, NULL, 1, 'B1', NULL), -- قَمه -> large knife / machete
+(10237, 'inventor', 'n', NULL, NULL, 1, 'B1', NULL), -- مُختَرِع -> inventor (formal)
+(10238, 'relativity', 'n', NULL, NULL, 1, 'EX', NULL), -- نِسبیَّت -> relativity (formal, physics)
+(10239, 'swollen', 'adj', NULL, NULL, 1, 'B1', NULL), -- مُتَوَرِّم -> swollen (formal, medical)
+(10240, 'conforming', 'adj', NULL, NULL, 1, 'B1', NULL), -- هَمرَنگ -> same color / conforming (formal)
+(10241, 'confessing', 'adj', NULL, NULL, 1, 'B1', NULL), -- مُعتَرِف -> confessing (formal)
+(10242, 'CEO', 'n', NULL, NULL, 1, 'B1', NULL), -- مُدیرعامِل -> CEO / managing director
+(10243, 'shack', 'n', NULL, NULL, 1, 'B1', NULL), -- آلونَک -> shack / hut
+(10244, 'cover-up', 'n', NULL, NULL, 1, 'B1', NULL), -- لاپوشانی -> cover-up (informal)
+(10245, 'auditing', 'n', NULL, NULL, 1, 'B1', NULL), -- حِسابرَسی -> auditing (formal)
+(10246, 'entrust', 'v', NULL, NULL, 1, 'B1', NULL), -- سِپُردَن -> to entrust
+(10247, 'fertile', 'adj', NULL, NULL, 1, 'B1', NULL), -- بارَور -> fertile (formal)
+(10248, 'treaty', 'n', NULL, NULL, 1, 'B1', NULL), -- عَهدنامه -> treaty document (formal)
+(10249, 'issuance', 'n', NULL, NULL, 1, 'B2', NULL), -- صُدور -> issuance (formal)
+(10250, 'gravedigger', 'n', NULL, NULL, 1, 'B1', NULL), -- گورکَن -> gravedigger
+(10251, 'dowry', 'n', NULL, NULL, 1, 'B1', NULL), -- جِهیزیه -> dowry / trousseau
+(10252, 'settings', 'n', NULL, NULL, 1, 'A2', NULL), -- تَنظیمات -> settings (formal)
+(10253, 'yield', 'n', NULL, NULL, 1, 'B2', NULL), -- بازدِه -> yield / output (formal, economics)
+(10254, 'money laundering', 'n', NULL, NULL, 1, 'B1', NULL), -- پولشویی -> money laundering (formal)
+(10255, 'swindler', 'n', NULL, NULL, 1, 'B1', NULL), -- شَیّاد -> swindler / con artist (formal)
+(10256, 'thickness', 'n', NULL, NULL, 1, 'B1', NULL), -- ضَخامَت -> thickness (formal)
+(10257, 'bestselling', 'adj', NULL, NULL, 1, 'B1', NULL), -- پُرفُروش -> bestselling (formal)
+(10258, 'jaw', 'n', NULL, NULL, 1, 'B1', NULL), -- آرواره -> jaw (formal, anatomical)
+(10259, 'alternating', 'adj', NULL, NULL, 1, 'B2', NULL), -- مُتِناوِب -> alternating / periodic (formal)
+(10260, 'unstable', 'adj', NULL, NULL, 1, 'B1', NULL), -- ناپایدار -> unstable
+(10261, 'indicative of', 'adj', NULL, NULL, 1, 'B2', NULL), -- بَیانگَر -> indicative of / representing (formal)
+(10262, 'unsaid', 'adj', NULL, NULL, 1, 'B2', NULL), -- ناگُفته -> unsaid / untold (formal)
+(10263, 'helpless', 'adj', NULL, NULL, 1, 'B1', NULL), -- عاجِز -> helpless / incapable (formal)
+(10264, 'crumpled', 'adj', NULL, NULL, 1, 'B2', NULL), -- مُچاله -> crumpled (formal)
+(10265, 'pilgrimage', 'n', NULL, NULL, 1, 'B1', NULL), -- زیارَت -> pilgrimage (formal, religious)
+(10266, 'poor thing', 'n', NULL, NULL, 1, 'B1', NULL), -- طِفلَکی -> poor thing (informal, endearment)
+(10267, 'lasting', 'adj', NULL, NULL, 1, 'B1', NULL), -- ماندگار -> lasting / enduring (formal)
+(10268, 'repeatedly', 'adv', NULL, NULL, 1, 'B1', NULL), -- مُرَتَّباً -> repeatedly (formal)
+(10269, 'legumes', 'n', NULL, NULL, 1, 'B2', NULL), -- حُبوبات -> legumes (formal)
+(10270, 'notification', 'n', NULL, NULL, 1, 'B1', NULL), -- اِبلاغ -> notification (formal, legal; ابلاغ کردن = to notify)
+(10271, 'crescent', 'n', NULL, NULL, 1, 'B1', NULL), -- هِلال -> crescent (formal)
+(10272, 'middle-aged', 'adj', NULL, NULL, 1, 'B1', NULL), -- میانسال -> middle-aged (formal)
+(10273, 'auditory', 'adj', NULL, NULL, 1, 'B2', NULL), -- شِنیداری -> auditory (formal)
+(10274, 'horizontal', 'adj', NULL, NULL, 1, 'B1', NULL), -- اُفُقی -> horizontal (formal)
+(10275, 'fortifications', 'n', NULL, NULL, 1, 'B2', NULL), -- اِستِحکامات -> fortifications (formal)
+(10276, 'vibration', 'n', NULL, NULL, 1, 'B1', NULL), -- اِرتِعاش -> vibration (formal, physics)
+(10277, 'beginner', 'n', NULL, NULL, 1, 'A2', NULL), -- مُبتَدی -> beginner (formal)
+(10278, 'step-sibling', 'adj', NULL, NULL, 1, 'B2', NULL), -- ناتَنی -> half- / step- [sibling] (formal)
+(10279, 'gambler', 'n', NULL, NULL, 1, 'B1', NULL), -- قِمارباز -> gambler
+(10280, 'solar eclipse', 'n', NULL, NULL, 1, 'B1', NULL), -- کُسوف -> solar eclipse (formal, astronomy)
+(10281, 'diplomacy', 'n', NULL, NULL, 1, 'B2', NULL), -- دیپلماسی -> diplomacy (formal)
+(10282, 'honorable', 'adj', NULL, NULL, 1, 'B1', NULL), -- شَرافَتمَند -> honorable (formal)
+(10283, 'sense of smell', 'n', NULL, NULL, 1, 'B1', NULL), -- بویایی -> sense of smell (formal)
+(10284, 'insulation', 'n', NULL, NULL, 1, 'B2', NULL), -- عایِق -> insulator / insulation (formal, technical)
+(10285, 'contagious', 'adj', NULL, NULL, 1, 'B1', NULL), -- واگیردار -> contagious (formal, medical)
+(10286, 'well-groomed', 'adj', NULL, NULL, 1, 'B1', NULL), -- آراسته -> adorned / well-groomed (formal)
+(10287, 'ghazal', 'n', NULL, NULL, 1, 'EX', NULL), -- غَزَل -> lyric poem [ghazal] (formal, literary)
+(10288, 'distortion', 'n', NULL, NULL, 1, 'B2', NULL), -- تَحریف -> distortion [of facts] (formal)
+(10289, 'jailer', 'n', NULL, NULL, 1, 'B1', NULL), -- زِندانبان -> jailer / prison guard
+(10290, 'high-quality', 'adj', NULL, NULL, 1, 'B1', NULL), -- مَرغوب -> high-quality (formal)
+(10291, 'valiant', 'adj', NULL, NULL, 1, 'B2', NULL), -- رَشید -> handsome / valiant (formal)
+(10292, 'unclean', 'adj', NULL, NULL, 1, 'B1', NULL), -- ناپاک -> impure / unclean
+(10293, 'favorable', 'adj', NULL, NULL, 1, 'B1', NULL), -- مُساعِد -> favorable / conducive (formal)
+(10294, 'genome', 'n', NULL, NULL, 1, 'EX', NULL), -- ژِنوم -> genome (loanword)
+(10295, 'sloped roof', 'n', NULL, NULL, 1, 'B1', NULL), -- شیروانی -> rooftop / sloped roof
+(10296, 'irrigation', 'n', NULL, NULL, 1, 'B1', NULL), -- آبیاری -> irrigation (formal)
+(10297, 'overturned', 'adj', NULL, NULL, 1, 'B1', NULL), -- واژگون -> overturned / inverted (formal)
+(10298, 'internship', 'n', NULL, NULL, 1, 'B1', NULL), -- کارآموزی -> internship
+(10299, 'impure', 'adj', NULL, NULL, 1, 'B1', NULL), -- ناخالِص -> impure
+(10300, 'flick', 'n', NULL, NULL, 1, 'B2', NULL), -- تَلَنگُر -> flick / nudge (formal)
+(10301, 'census', 'n', NULL, NULL, 1, 'B1', NULL), -- سَرشُماری -> census (formal)
+(10302, 'foreman', 'n', NULL, NULL, 1, 'B1', NULL), -- سَرکارگَر -> foreman
+(10303, 'artistically', 'adv', NULL, NULL, 1, 'B1', NULL), -- هُنَرمَندانه -> artistically (formal)
+(10304, 'editor-in-chief', 'n', NULL, NULL, 1, 'B1', NULL), -- سَردَبیر -> editor-in-chief
+(10305, 'astronomy', 'n', NULL, NULL, 1, 'B1', NULL), -- نُجوم -> astronomy (formal)
+(10306, 'gradual', 'adj', NULL, NULL, 1, 'B1', NULL), -- تَدریجی -> gradual (formal)
+(10307, 'self-sacrificing', 'adj', NULL, NULL, 1, 'B2', NULL), -- فِداکار -> self-sacrificing (formal)
+(10308, 'Torah', 'n', NULL, NULL, 1, 'EX', NULL), -- تَورات -> the Torah
+(10309, 'dread', 'n', NULL, NULL, 1, 'B1', NULL), -- رُعب -> terror / dread (formal)
+(10310, 'rightful', 'adj', NULL, NULL, 1, 'B2', NULL), -- بَرحَق -> rightful / justified (formal)
+(10311, 'interrogation', 'n', NULL, NULL, 1, 'B1', NULL), -- بازخواست -> interrogation / questioning (formal)
+(10312, 'illustrated', 'adj', NULL, NULL, 1, 'B1', NULL), -- مُصَوَّر -> illustrated (formal)
+(10313, 'colonialism', 'n', NULL, NULL, 1, 'B2', NULL), -- اِستِعمار -> colonialism (formal)
+(10314, 'nutritious', 'adj', NULL, NULL, 1, 'B1', NULL), -- مُقَوّی -> nutritious (formal)
+(10315, 'cave dweller', 'n', NULL, NULL, 1, 'B1', NULL), -- غارنِشین -> cave dweller (formal / historical)
+(10316, 'swordsman', 'n', NULL, NULL, 1, 'B1', NULL), -- شَمشیرزَن -> swordsman
+(10317, 'social worker', 'n', NULL, NULL, 1, 'B1', NULL), -- مَددکار -> social worker / helper (formal)
+(10318, 'religious merit', 'n', NULL, NULL, 1, 'EX', NULL), -- ثَواب -> religious merit / good deed (formal)
+(10319, 'righteous', 'adj', NULL, NULL, 1, 'B2', NULL), -- صالِح -> righteous / virtuous (formal)
+(10320, 'fibers', 'n', NULL, NULL, 1, 'B1', NULL), -- اَلیاف -> fibers (formal)
+(10321, 'seeking', 'adj', NULL, NULL, 1, 'B1', NULL), -- طالِب -> seeking / wanting (formal)
+(10322, 'yearbook', 'n', NULL, NULL, 1, 'B1', NULL), -- سالنامه -> yearbook / almanac (formal)
+(10323, 'predicament', 'n', NULL, NULL, 1, 'B2', NULL), -- تَنگنا -> predicament / bottleneck (formal)
+(10324, 'allied', 'adj', NULL, NULL, 1, 'B1', NULL), -- مُتَّفِق -> allied / agreed (formal)
+(10325, 'dissatisfaction', 'n', NULL, NULL, 1, 'B1', NULL), -- نارِضایَتی -> dissatisfaction (formal)
+(10326, 'lactose', 'n', NULL, NULL, 1, 'EX', NULL), -- لاکتوز -> lactose (loanword)
+(10327, 'Mediterranean', 'adj', NULL, NULL, 1, 'EX', NULL), -- مدیترانه -> Mediterranean (formal, geography)
+(10328, 'animal husbandry', 'n', NULL, NULL, 1, 'B2', NULL), -- دامداری -> animal husbandry (formal)
+(10329, 'bulletin', 'n', NULL, NULL, 1, 'B1', NULL), -- بولتِن -> bulletin (loanword)
+(10330, 'carrier', 'n', NULL, NULL, 1, 'B1', NULL), -- ناقِل -> carrier [disease] (formal, medical)
+(10331, 'gratitude', 'n', NULL, NULL, 1, 'B1', NULL), -- سِپاسگُزاری -> gratitude / thanking (formal)
+(10332, 'sermon', 'n', NULL, NULL, 1, 'B1', NULL), -- خُطبه -> sermon [religious / political] (formal)
+(10333, 'slippery', 'adj', NULL, NULL, 1, 'B1', NULL), -- لَغزَنده -> slippery (formal)
+(10334, 'regarded as', 'n', NULL, NULL, 1, 'B2', NULL), -- قَلَمداد -> regarded as (formal; قلمداد کردن = to regard as)
+(10335, 'manliness', 'n', NULL, NULL, 1, 'B2', NULL), -- مَردانگی -> manliness / virility (formal)
+(10336, 'materials', 'n', NULL, NULL, 1, 'B1', NULL), -- مَصالِح -> materials [construction] (formal)
+(10337, 'rhythmic', 'adj', NULL, NULL, 1, 'B1', NULL), -- موزون -> rhythmic / well-proportioned (formal)
+(10338, 'Scandinavian', 'adj', NULL, NULL, 1, 'EX', NULL), -- اِسکاندیناوی -> Scandinavian (formal)
+(10339, 'chivalrously', 'adv', NULL, NULL, 1, 'B2', NULL), -- جَوانمَردانه -> chivalrously (formal)
+(10340, 'delicacy', 'n', NULL, NULL, 1, 'B2', NULL), -- لَطافَت -> softness / delicacy (formal)
+(10341, 'equipping', 'n', NULL, NULL, 1, 'B1', NULL), -- تَجهیز -> equipping (formal)
+(10342, 'anatomy', 'n', NULL, NULL, 1, 'B1', NULL), -- آناتومی -> anatomy (loanword)
+(10343, 'in view', 'adj', NULL, NULL, 1, 'B2', NULL), -- مَدنَظَر -> in view / under consideration (formal)
+(10344, 'adventurer', 'n', NULL, NULL, 1, 'B1', NULL), -- ماجراجو -> adventurer
+(10345, 'overthrown', 'adj', NULL, NULL, 1, 'B2', NULL), -- ساقِط -> overthrown / fallen (formal)
+(10346, 'illogical', 'adj', NULL, NULL, 1, 'B1', NULL), -- غیرمَنطِقی -> illogical
+(10347, 'psychoanalysis', 'n', NULL, NULL, 1, 'EX', NULL), -- روانکاوی -> psychoanalysis (formal)
+(10348, 'ruins', 'n', NULL, NULL, 1, 'B1', NULL), -- مَخروبه -> ruins / dilapidated place (formal)
+(10349, 'hypocritical', 'adj', NULL, NULL, 1, 'B1', NULL), -- مُتِظاهِر -> hypocritical / pretending (formal)
+(10350, 'enchanter', 'n', NULL, NULL, 1, 'B1', NULL), -- اَفسونگَر -> enchanter / charmer (formal)
+(10351, 'superpower', 'n', NULL, NULL, 1, 'B1', NULL), -- اَبَرقُدرَت -> superpower
+(10352, 'mobilization', 'n', NULL, NULL, 1, 'B1', NULL), -- بَسیج -> mobilization (formal)
+(10353, 'unveiling', 'n', NULL, NULL, 1, 'B1', NULL), -- رونَمایی -> unveiling (formal)
+(10354, 'cannibal', 'n', NULL, NULL, 1, 'B1', NULL), -- آدَمخوار -> cannibal (formal)
+(10355, 'dialysis', 'n', NULL, NULL, 1, 'EX', NULL), -- دیالیز -> dialysis (loanword, medical)
+(10356, 'banking', 'n', NULL, NULL, 1, 'B1', NULL), -- بانکداری -> banking (formal)
+(10357, 'filmmaking', 'n', NULL, NULL, 1, 'B1', NULL), -- فیلمسازی -> filmmaking (formal)
+(10358, 'aviation', 'n', NULL, NULL, 1, 'B1', NULL), -- هَوانَوَردی -> aviation (formal)
+(10359, 'underage', 'adj', NULL, NULL, 1, 'B1', NULL), -- نابالِغ -> immature / underage (formal)
+(10360, 'dignified', 'adj', NULL, NULL, 1, 'B1', NULL), -- باوَقار -> dignified (formal)
+(10361, 'respectable', 'adj', NULL, NULL, 1, 'B1', NULL), -- آبرومَند -> respectable / honorable (formal)
+(10362, 'aforementioned', 'adj', NULL, NULL, 1, 'B2', NULL), -- مَذکور -> aforementioned (formal)
+(10363, 'masquerade ball', 'n', NULL, NULL, 1, 'B2', NULL), -- بالماسکه -> masquerade ball (formal)
+(10364, 'side dishes', 'n', NULL, NULL, 1, 'B1', NULL), -- مُخَلَّفات -> accompaniments / side dishes (formal)
+(10365, 'sinus', 'n', NULL, NULL, 1, 'EX', NULL), -- سینوس -> sinus (loanword, medical)
+(10366, 'portal', 'n', NULL, NULL, 1, 'B1', NULL), -- پورتال -> portal (loanword, tech)
+(10367, 'beforehand', 'adv', NULL, NULL, 1, 'B1', NULL), -- پیشاپیش -> beforehand / in advance (formal)
+(10368, 'platelet', 'n', NULL, NULL, 1, 'EX', NULL), -- پِلاکِت -> platelet (loanword, medical)
+(10369, 'arbitrarily', 'adv', NULL, NULL, 1, 'B2', NULL), -- خودسَرانه -> arbitrarily (formal)
+(10370, 'encoding', 'n', NULL, NULL, 1, 'B1', NULL), -- کُدگُذاری -> encoding (formal, tech)
+(10371, 'villages', 'n', NULL, NULL, 1, 'A2', NULL), -- دِهات -> villages (formal)
+(10372, 'malware', 'n', NULL, NULL, 1, 'B1', NULL), -- بَدافزار -> malware (formal, tech)
+(10373, 'spendthrift', 'adj', NULL, NULL, 1, 'B2', NULL), -- وَلخَرج -> spendthrift (formal)
+(10374, 'hostage-taking', 'n', NULL, NULL, 1, 'B1', NULL), -- گُروگانگیری -> hostage-taking (formal)
+(10375, 'auditor', 'n', NULL, NULL, 1, 'B1', NULL), -- مَمیّز -> auditor / censor (formal)
+(10376, 'brokering', 'n', NULL, NULL, 1, 'B1', NULL), -- دَلّالی -> brokering / mediation (formal)
+(10377, 'expiration', 'n', NULL, NULL, 1, 'B1', NULL), -- اِنقِضا -> expiration (formal)
+(10378, 'places', 'n', NULL, NULL, 1, 'B1', NULL), -- اَماکِن -> places / locations (formal)
+(10379, 'guillotine', 'n', NULL, NULL, 1, 'EX', NULL), -- گیوتین -> guillotine (loanword)
+(10380, 'bloating', 'n', NULL, NULL, 1, 'B1', NULL), -- نَفخ -> bloating (medical)
+(10381, 'narcissistic', 'adj', NULL, NULL, 1, 'B1', NULL), -- خودشیفته -> narcissistic (formal)
+(10382, 'gluten', 'n', NULL, NULL, 1, 'B1', NULL), -- گلوتِن -> gluten (loanword)
+(10383, 'recitation', 'n', NULL, NULL, 1, 'B2', NULL), -- قِرائَت -> recitation / reading (formal)
+(10384, 'bomber', 'n', NULL, NULL, 1, 'B1', NULL), -- بَمبگُذار -> bomber [person who plants bombs]
+(10385, 'procrastination', 'n', NULL, NULL, 1, 'B1', NULL), -- تَعَلُّل -> procrastination (formal)
+(10386, 'exhalation', 'n', NULL, NULL, 1, 'B1', NULL), -- بازدَم -> exhalation (formal, medical)
+(10387, 'uninvited', 'adj', NULL, NULL, 1, 'B1', NULL), -- ناخوانده -> uninvited (formal)
+(10388, 'daydreaming', 'n', NULL, NULL, 1, 'B1', NULL), -- خیالبافی -> daydreaming (formal)
+(10389, 'refueling', 'n', NULL, NULL, 1, 'B1', NULL), -- سوختگیری -> refueling (formal)
+(10390, 'hypocrite', 'n', NULL, NULL, 1, 'B1', NULL), -- ریاکار -> hypocrite (formal)
+(10391, 'evaporation', 'n', NULL, NULL, 1, 'B1', NULL), -- تَبخیر -> evaporation (formal, chemistry)
+(10392, 'increasing', 'adj', NULL, NULL, 1, 'B1', NULL), -- فَزاینده -> increasing (formal)
+(10393, 'nectar', 'n', NULL, NULL, 1, 'B1', NULL), -- شَهد -> nectar (formal)
+(10394, 'added', 'adj', NULL, NULL, 1, 'A2', NULL), -- اَفزوده -> added / augmented (formal)
+(10395, 'projectile', 'n', NULL, NULL, 1, 'B2', NULL), -- پَرتابه -> projectile (formal)
+(10396, 'helplessness', 'n', NULL, NULL, 1, 'B1', NULL), -- دَرماندگی -> helplessness (formal)
+(10397, 'finder', 'n', NULL, NULL, 1, 'B1', NULL), -- یابَنده -> finder (formal)
+(10398, 'hunchback', 'n', NULL, NULL, 1, 'B1', NULL), -- گوژپُشت -> hunchback
+(10399, 'contradictory', 'adj', NULL, NULL, 1, 'B1', NULL), -- مُتَناقِض -> contradictory / paradoxical (formal)
+(10400, 'subject to', 'adj', NULL, NULL, 1, 'B1', NULL), -- مَشمول -> subject to / covered by [regulation] (formal)
+(10401, 'prostate', 'n', NULL, NULL, 1, 'EX', NULL), -- پروستات -> prostate (loanword, medical)
+(10402, 'incompatibility', 'n', NULL, NULL, 1, 'B1', NULL), -- ناسازگاری -> incompatibility (formal)
+(10403, 'continuity', 'n', NULL, NULL, 1, 'B1', NULL), -- تَداوُم -> continuity (formal)
+(10404, 'imperceptible', 'adj', NULL, NULL, 1, 'B2', NULL), -- نامَحسوس -> imperceptible (formal)
+(10405, 'agile', 'adj', NULL, NULL, 1, 'B1', NULL), -- چابُک -> agile / nimble (formal)
+(10406, 'savings', 'n', NULL, NULL, 1, 'B1', NULL), -- اَندوخته -> savings / accumulated wealth (formal)
+(10407, 'anonymity', 'n', NULL, NULL, 1, 'B1', NULL), -- ناشناسی -> anonymity (formal)
+(10408, 'donated', 'adj', NULL, NULL, 1, 'B1', NULL), -- اَهدایی -> donated (formal)
+(10409, 'statue', 'n', NULL, NULL, 1, 'B1', NULL), -- پیکَره -> figure / statue; body (formal)
+(10410, 'vulgar', 'adj', NULL, NULL, 1, 'B1', NULL), -- رَکیک -> obscene / vulgar [language] (formal)
+(10411, 'worship', 'n', NULL, NULL, 1, 'B1', NULL), -- نیایِش -> prayer / worship (formal, literary)
+(10412, 'loyally', 'adv', NULL, NULL, 1, 'B2', NULL), -- وَفادارانه -> loyally (formal)
+(10413, 'unfavorable', 'adj', NULL, NULL, 1, 'B1', NULL), -- نامُساعِد -> unfavorable (formal)
+(10414, 'magnanimity', 'n', NULL, NULL, 1, 'C1', NULL), -- بُزُرگواری -> magnanimity (formal)
+(10415, 'credentials', 'n', NULL, NULL, 1, 'B2', NULL), -- اِعتِبارنامه -> credentials document (formal)
+(10416, 'trampled', 'adj', NULL, NULL, 1, 'B2', NULL), -- پایمال -> trampled [rights violated] (formal; پایمال کردن = to trample)
+(10417, 'medical practice', 'n', NULL, NULL, 1, 'B2', NULL), -- طَبابَت -> medical practice (formal)
+(10418, 'apprehension', 'n', NULL, NULL, 1, 'B2', NULL), -- واهِمه -> fear / apprehension (formal)
+(10419, 'devotee', 'n', NULL, NULL, 1, 'B2', NULL), -- فِدایی -> devotee / self-sacrificer (formal)
+(10420, 'cryptography', 'n', NULL, NULL, 1, 'EX', NULL), -- رَمزنِگاری -> cryptography (formal, tech)
+(10421, 'tetanus', 'n', NULL, NULL, 1, 'EX', NULL), -- کُزاز -> tetanus (medical)
+(10422, 'crossroads', 'n', NULL, NULL, 1, 'B1', NULL), -- دوراهی -> crossroads / fork in the road (formal)
+(10423, 'instability', 'n', NULL, NULL, 1, 'B1', NULL), -- تَزَلزُل -> instability (formal)
+(10424, 'restlessness', 'n', NULL, NULL, 1, 'B1', NULL), -- بیقَراری -> restlessness (formal)
+(10425, 'autonomous', 'adj', NULL, NULL, 1, 'B2', NULL), -- مُختار -> autonomous / authorized (formal)
+(10426, 'incompetent', 'adj', NULL, NULL, 1, 'B1', NULL), -- نالایِق -> unworthy / incompetent (formal)
+(10427, 'neuron', 'n', NULL, NULL, 1, 'EX', NULL), -- نورون -> neuron (loanword, medical)
+(10428, 'sorrowful', 'adj', NULL, NULL, 1, 'B1', NULL), -- اَندوهگین -> sorrowful (formal)
+(10429, 'hydraulic', 'adj', NULL, NULL, 1, 'B2', NULL), -- هیدرولیک -> hydraulic (loanword)
+(10430, 'paranoia', 'n', NULL, NULL, 1, 'B2', NULL), -- پارانویا -> paranoia (loanword)
+(10431, 'psychoanalyst', 'n', NULL, NULL, 1, 'EX', NULL), -- روانکاو -> psychoanalyst (formal)
+(10432, 'decay', 'n', NULL, NULL, 1, 'B1', NULL), -- پوسیدگی -> decay / rot (formal)
+(10433, 'ungrateful', 'adj', NULL, NULL, 1, 'B1', NULL), -- ناسپاس -> ungrateful (formal)
+(10434, 'devotion', 'n', NULL, NULL, 1, 'B1', NULL), -- اِرادَت -> devotion / reverence (formal)
+(10435, 'deaf', 'adj', NULL, NULL, 1, 'A2', NULL), -- ناشنوا -> deaf (formal)
+(10436, 'innocence', 'n', NULL, NULL, 1, 'B1', NULL), -- مَعصومیَّت -> innocence (formal)
+(10437, 'pilgrim', 'n', NULL, NULL, 1, 'B1', NULL), -- زائِر -> pilgrim (formal)
+(10438, 'fellow sufferer', 'n', NULL, NULL, 1, 'C1', NULL), -- هَمدَرد -> fellow sufferer / sympathizer (formal)
+(10439, 'responsibly', 'adv', NULL, NULL, 1, 'B1', NULL), -- مَسئولانه -> responsibly (formal)
+(10440, 'heart-wrenching', 'adj', NULL, NULL, 1, 'B2', NULL), -- دِلخَراش -> heart-wrenching (formal)
+(10441, 'GPA', 'n', NULL, NULL, 1, 'EX', NULL), -- مُعَدَّل -> GPA / average grade (formal, academic)
+(10442, 'fortune teller', 'n', NULL, NULL, 1, 'B1', NULL), -- فالگیر -> fortune teller (formal)
+(10443, 'decisiveness', 'n', NULL, NULL, 1, 'B1', NULL), -- قاطِعیَّت -> decisiveness (formal)
+(10444, 'masked', 'adj', NULL, NULL, 1, 'B1', NULL), -- نِقابدار -> masked (formal)
+(10445, 'tsar', 'n', NULL, NULL, 1, 'EX', NULL), -- تِزار -> tsar (loanword, historical)
+(10446, 'doubled', 'adj', NULL, NULL, 1, 'B1', NULL), -- مُضاعَف -> doubled / redoubled (formal)
+(10447, 'subjected to', 'adj', NULL, NULL, 1, 'B1', NULL), -- دَستخوش -> subjected to / victim of (formal)
+(10448, 'refining', 'n', NULL, NULL, 1, 'B2', NULL), -- پالایِش -> refining / purification (formal)
+(10449, 'secondhand shop', 'n', NULL, NULL, 1, 'B1', NULL), -- سِمساری -> secondhand shop (formal)
+(10450, 'musicianship', 'n', NULL, NULL, 1, 'B2', NULL), -- نَوازَندگی -> musicianship (formal)
+(10451, 'chivalrous', 'adj', NULL, NULL, 1, 'B2', NULL), -- جَوانمَرد -> chivalrous (formal)
+(10452, 'detour', 'n', NULL, NULL, 1, 'B1', NULL), -- بیراهه -> wrong path / detour (formal)
+(10453, 'preventive', 'adj', NULL, NULL, 1, 'B1', NULL), -- پیشگیرانه -> preventive (formal)
+(10454, 'targeting', 'n', NULL, NULL, 1, 'B1', NULL), -- هَدفگیری -> aiming / targeting (formal)
+(10455, 'superhuman', 'n', NULL, NULL, 1, 'B1', NULL), -- اَبَرانسان -> superhuman (formal)
+(10456, 'physiotherapy', 'n', NULL, NULL, 1, 'B1', NULL), -- فیزیوتِراپی -> physiotherapy (loanword)
+(10457, 'adorned', 'adj', NULL, NULL, 1, 'B1', NULL), -- مُزَیَّن -> adorned (formal)
+(10458, 'chemist', 'n', NULL, NULL, 1, 'B1', NULL), -- شیمیدان -> chemist (formal)
+(10459, 'alertness', 'n', NULL, NULL, 1, 'B1', NULL), -- هُشیاری -> alertness (formal)
+(10460, 'slaughter', 'n', NULL, NULL, 1, 'B1', NULL), -- ذَبح -> slaughter [ritual] (formal)
+(10461, 'unparalleled', 'adj', NULL, NULL, 1, 'B1', NULL), -- بینَظیر -> unparalleled / matchless (formal)
+(10462, 'self-governing', 'adj', NULL, NULL, 1, 'B2', NULL), -- خودمُختار -> autonomous / self-governing (formal)
+(10463, 'exemption', 'n', NULL, NULL, 1, 'B1', NULL), -- مُعافیَّت -> exemption (formal)
+(10464, 'requirements', 'n', NULL, NULL, 1, 'B1', NULL), -- مَلزومات -> requirements / necessities (formal)
+(10465, 'luxuries', 'n', NULL, NULL, 1, 'B1', NULL), -- تَجَمُّلات -> luxuries (formal)
+(10466, 'suspended', 'adj', NULL, NULL, 1, 'B1', NULL), -- مَوقوف -> suspended / halted (formal)
+(10467, 'unarmed', 'adj', NULL, NULL, 1, 'B1', NULL), -- غیرمُسَلَّح -> unarmed
+(10468, 'unhealthy', 'adj', NULL, NULL, 1, 'A2', NULL), -- ناسالِم -> unhealthy
+(10469, 'femininity', 'n', NULL, NULL, 1, 'B1', NULL), -- زَنانِگی -> femininity (formal)
+(10470, 'consonant', 'n', NULL, NULL, 1, 'B1', NULL), -- صامِت -> consonant [linguistics]
+(10471, 'improper', 'adj', NULL, NULL, 1, 'B1', NULL), -- ناشایَست -> unbecoming / improper (formal)
+(10472, 'decorations', 'n', NULL, NULL, 1, 'B1', NULL), -- تَزئینات -> decorations (formal)
+(10473, 'forger', 'n', NULL, NULL, 1, 'B1', NULL), -- جاعِل -> forger (formal, legal)
+(10474, 'Islamic law', 'n', NULL, NULL, 1, 'EX', NULL), -- شَرع -> Islamic law / religious law (formal)
+(10475, 'digestive', 'adj', NULL, NULL, 1, 'B1', NULL), -- گُوارِشی -> digestive (formal)
+(10476, 'alloy', 'n', NULL, NULL, 1, 'B1', NULL), -- آلیاژ -> alloy (formal)
+(10477, 'symmetrical', 'adj', NULL, NULL, 1, 'B1', NULL), -- مُتِقارِن -> symmetrical (formal)
+(10478, 'portering', 'n', NULL, NULL, 1, 'C1', NULL), -- حَمّالی -> portering / work of carrying loads (formal)
+(10479, 'turret', 'n', NULL, NULL, 1, 'B1', NULL), -- بُرجَک -> turret / small tower
+(10480, 'downhill slope', 'n', NULL, NULL, 1, 'B1', NULL), -- سَرازیری -> downhill slope (formal)
+(10481, 'polish', 'n', NULL, NULL, 1, 'B1', NULL), -- صیقَل -> polish / sheen (formal; صیقل دادن = to polish)
+(10482, 'orders', 'n', NULL, NULL, 1, 'B1', NULL), -- اَوامِر -> orders / commands (formal, plural of امر)
+(10483, 'transfers', 'n', NULL, NULL, 1, 'B1', NULL), -- اِنتِقالات -> transfers (formal)
+(10484, 'unforgivable', 'adj', NULL, NULL, 1, 'B1', NULL), -- نابَخشودَنی -> unforgivable (formal)
+(10485, 'endeavor', 'n', NULL, NULL, 1, 'B2', NULL), -- تَکاپو -> endeavor / bustling activity (formal, literary)
+(10486, 'pterygium', 'n', NULL, NULL, 1, 'EX', NULL), -- ناخُنَک -> pterygium [eye condition]; nibbling at food (formal; ناخنک زدن = to pick at)
+(10487, 'coexistence', 'n', NULL, NULL, 1, 'B1', NULL), -- هَمزیستی -> coexistence (formal)
+(10488, 'crystalline', 'adj', NULL, NULL, 1, 'B1', NULL), -- کریستالی -> crystalline (loanword)
+(10489, 'thoughtfully', 'adv', NULL, NULL, 1, 'B1', NULL), -- مُتِفَکِّرانه -> thoughtfully (formal)
+(10490, 'skein', 'n', NULL, NULL, 1, 'EX', NULL), -- کَلاف -> skein / tangle [of yarn] (formal)
+(10491, 'ethanol', 'n', NULL, NULL, 1, 'EX', NULL), -- اِتانول -> ethanol (loanword, chemistry)
+(10492, 'place of worship', 'n', NULL, NULL, 1, 'B1', NULL), -- پَرَستِشگاه -> place of worship (formal)
+(10493, 'chlorine', 'n', NULL, NULL, 1, 'EX', NULL), -- کِلر -> chlorine (loanword, chemistry)
+(10494, 'fortune-teller', 'n', NULL, NULL, 1, 'B1', NULL), -- رَمّال -> fortune-teller (formal)
+(10495, 'application form', 'n', NULL, NULL, 1, 'B1', NULL), -- تَقاضانامه -> application form (formal)
+(10496, 'obelisk', 'n', NULL, NULL, 1, 'EX', NULL), -- آبِلیسک -> obelisk (loanword)
+(10497, 'stagecoach', 'n', NULL, NULL, 1, 'EX', NULL), -- دِلیجان -> stagecoach (formal)
+(10498, 'weaving', 'n', NULL, NULL, 1, 'B1', NULL), -- بافَندگی -> weaving [craft] (formal)
+(10499, 'passenger transport', 'adj', NULL, NULL, 1, 'B1', NULL), -- مُسافِربَری -> passenger-carrying / passenger transport (formal)
+(10500, 'introduction ceremony', 'n', NULL, NULL, 1, 'C1', NULL), -- مُعارَفه -> introduction ceremony / getting acquainted (formal)
+(10501, 'brazier', 'n', NULL, NULL, 1, 'EX', NULL), -- مَنقَل -> brazier / charcoal grill (formal)
+(10502, 'uncertain', 'adj', NULL, NULL, 1, 'B1', NULL), -- نامُطمَئِن -> uncertain / unsure (formal)
+(10503, 'begging', 'n', NULL, NULL, 1, 'B1', NULL), -- گَدایی -> begging (formal)
+(10504, 'stretcher', 'n', NULL, NULL, 1, 'B1', NULL), -- بَرانکار -> stretcher [medical] (loanword)
+(10505, 'obsessive', 'adj', NULL, NULL, 1, 'B1', NULL), -- وَسواسی -> obsessive (formal)
+(10506, 'village chief', 'n', NULL, NULL, 1, 'B1', NULL), -- کَدخُدا -> village chief (formal)
+(10507, 'geometric', 'adj', NULL, NULL, 1, 'B1', NULL), -- هَندَسی -> geometric (formal)
+(10508, 'locomotive', 'n', NULL, NULL, 1, 'B1', NULL), -- لوکوموتیو -> locomotive (loanword)
+(10509, 'flustered', 'adj', NULL, NULL, 1, 'B1', NULL), -- سَراسیمه -> flustered / panicked (formal)
+(10510, 'silicon', 'n', NULL, NULL, 1, 'EX', NULL), -- سیلیکون -> silicon (loanword)
+(10511, 'fluffy', 'adj', NULL, NULL, 1, 'B1', NULL), -- کُرکی -> fluffy / downy (formal)
+(10512, 'blood relative', 'adj', NULL, NULL, 1, 'B1', NULL), -- هَمخون -> blood relative / of the same blood (formal)
+(10513, 'immoral', 'adj', NULL, NULL, 1, 'B1', NULL), -- غَیرِاَخلاقی -> immoral / unethical (formal)
+(10514, 'appendix', 'n', NULL, NULL, 1, 'EX', NULL), -- آپاندیس -> appendix [organ] (medical, loanword)
+(10515, 'critical moment', 'n', NULL, NULL, 1, 'B2', NULL), -- بَزَنگاه -> critical moment (formal)
+(10516, 'optimal', 'adj', NULL, NULL, 1, 'B1', NULL), -- بِهینه -> optimal (formal)
+(10517, 'vibrations', 'n', NULL, NULL, 1, 'B1', NULL), -- اِرتِعاشات -> vibrations (formal)
+(10518, 'dwarf', 'n', NULL, NULL, 1, 'B1', NULL), -- کوتوله -> dwarf / midget (formal)
+(10519, 'slimy', 'adj', NULL, NULL, 1, 'B1', NULL), -- لَزج -> slimy / viscous (formal)
+(10520, 'symphony', 'n', NULL, NULL, 1, 'B1', NULL), -- سِمفونی -> symphony (loanword)
+(10521, 'torpedo', 'n', NULL, NULL, 1, 'EX', NULL), -- اَژدَر -> torpedo (formal)
+(10522, 'krill', 'n', NULL, NULL, 1, 'EX', NULL), -- کریل -> krill (loanword, marine biology)
+(10523, 'rotating', 'adj', NULL, NULL, 1, 'B1', NULL), -- چَرخان -> rotating / spinning (formal)
+(10524, 'instincts', 'n', NULL, NULL, 1, 'B1', NULL), -- غَرایِز -> instincts (formal, plural of غریزه)
+(10525, 'hearing aid', 'n', NULL, NULL, 1, 'B1', NULL), -- سَمعَک -> hearing aid
+(10526, 'wellness', 'n', NULL, NULL, 1, 'B1', NULL), -- تَندُرُستی -> good health / wellness (formal)
+(10527, 'quadruped', 'n', NULL, NULL, 1, 'EX', NULL), -- چَهارپا -> quadruped (formal)
+(10528, 'confidant', 'n', NULL, NULL, 1, 'B2', NULL), -- رازدار -> confidant / keeper of secrets (formal)
+(10529, 'principled', 'adj', NULL, NULL, 1, 'B1', NULL), -- اُصولی -> principled / methodical (formal)
+(10530, 'trigonometry', 'n', NULL, NULL, 1, 'EX', NULL), -- مُثَلَّثات -> trigonometry (formal)
+(10531, 'long-range', 'adj', NULL, NULL, 1, 'B1', NULL), -- دورُبُرد -> long-range (formal)
+(10532, 'affordability', 'n', NULL, NULL, 1, 'B1', NULL), -- اَرزانی -> cheapness / affordability (formal)
+(10533, 'cone', 'n', NULL, NULL, 1, 'B1', NULL), -- مَخروط -> cone [geometry] (formal)
+(10534, 'ceremonial', 'adj', NULL, NULL, 1, 'B1', NULL), -- تَشریفاتی -> ceremonial / protocol-related (formal)
+(10535, 'wheat-colored', 'adj', NULL, NULL, 1, 'EX', NULL), -- گَندُمی -> wheat-colored (formal)
+(10536, 'scratched', 'adj', NULL, NULL, 1, 'B1', NULL), -- خَراشیده -> scratched (formal)
+(10537, 'biochemistry', 'n', NULL, NULL, 1, 'EX', NULL), -- بیوشیمی -> biochemistry
+(10538, 'gravitational', 'adj', NULL, NULL, 1, 'B2', NULL), -- گَرانِشی -> gravitational (formal)
+(10539, 'punctuation', 'n', NULL, NULL, 1, 'B1', NULL), -- عَلامَت‌گُذاری -> punctuation / marking (formal)
+(10540, 'dodge', 'n', NULL, NULL, 1, 'B1', NULL), -- جاخالی -> dodge / feint (formal; جاخالی دادن = to dodge)
+(10541, 'unconventional', 'adj', NULL, NULL, 1, 'B1', NULL), -- نامُتِعارَف -> unconventional (formal)
+(10542, 'grapevine', 'n', NULL, NULL, 1, 'B1', NULL), -- تاک -> grapevine (formal, literary)
+(10543, 'indentation', 'n', NULL, NULL, 1, 'B1', NULL), -- فُرورَفتِگی -> indentation / dent (formal)
+(10544, 'bony', 'adj', NULL, NULL, 1, 'B1', NULL), -- اُستُخوانی -> bony / skeletal (formal)
+(10545, 'attributed', 'adj', NULL, NULL, 1, 'B1', NULL), -- مَنسوب -> attributed / ascribed (formal)
+(10546, 'disabled people', 'n', NULL, NULL, 1, 'B1', NULL), -- مَعلولین -> disabled people (formal)
+(10547, 'deviance', 'n', NULL, NULL, 1, 'B2', NULL), -- گُمراهی -> being misguided / deviance (formal)
+(10548, 'illiterate', 'adj', NULL, NULL, 1, 'B1', NULL), -- بی‌سَواد -> illiterate (formal)
+(10549, 'vaccinated', 'adj', NULL, NULL, 1, 'B1', NULL), -- واکسینه -> vaccinated (formal; واکسینه کردن = to vaccinate)
+(10550, 'outdoor stroll', 'n', NULL, NULL, 1, 'C1', NULL), -- هَواخوری -> outdoor stroll / prison yard time (formal)
+(10551, 'puff', 'n', NULL, NULL, 1, 'B1', NULL), -- پُف -> puff / fluff (formal)
+(10552, 'risen', 'adj', NULL, NULL, 1, 'B1', NULL), -- بَرخاسته -> risen / arisen (formal)
+(10553, 'interpretations', 'n', NULL, NULL, 1, 'B2', NULL), -- تَفاسیر -> interpretations / exegeses (formal, plural of تفسیر)
+(10554, 'supernatural', 'adj', NULL, NULL, 1, 'B1', NULL), -- ماوَرایی -> supernatural / otherworldly (formal)
+(10555, 'outpatient', 'adj', NULL, NULL, 1, 'B1', NULL), -- سَرپایی -> outpatient / walk-in [medical] (formal)
+(10556, 'glucose', 'n', NULL, NULL, 1, 'EX', NULL), -- گلوکز -> glucose (loanword)
+(10557, 'for two people', 'adj', NULL, NULL, 1, 'B1', NULL), -- دونَفَره -> for two people (formal)
+(10558, 'hereditary', 'adj', NULL, NULL, 1, 'B1', NULL), -- مَوروثی -> hereditary (formal)
+(10559, 'Celsius', 'n', NULL, NULL, 1, 'A2', NULL), -- سانتیگراد -> Celsius / centigrade (loanword)
+(10560, 'research-related', 'adj', NULL, NULL, 1, 'B1', NULL), -- پِژوهِشی -> research-related (formal)
+(10561, 'tow cable', 'n', NULL, NULL, 1, 'B1', NULL), -- بَکسِل -> tow cable / towing (formal, loanword)
+(10562, 'myths', 'n', NULL, NULL, 1, 'B1', NULL), -- اَساطیر -> myths / legends (formal, plural)
+(10563, 'thrush', 'n', NULL, NULL, 1, 'EX', NULL), -- بَرفَک -> snow static; thrush [medical] (formal)
+(10564, 'receptive', 'adj', NULL, NULL, 1, 'B1', NULL), -- پَذیرا -> welcoming / receptive (formal)
+(10565, 'purposeful', 'adj', NULL, NULL, 1, 'B1', NULL), -- هَدفمَند -> purposeful / targeted (formal)
+(10566, 'gentleness', 'n', NULL, NULL, 1, 'B1', NULL), -- مُلایَمَت -> gentleness / mildness (formal)
+(10567, 'fertility', 'n', NULL, NULL, 1, 'B1', NULL), -- باروَری -> fertility (formal)
+(10568, 'mountaineer', 'n', NULL, NULL, 1, 'B1', NULL), -- کوه‌نَوَرد -> mountaineer (formal)
+(10569, 'decorative', 'adj', NULL, NULL, 1, 'B1', NULL), -- تَزئینی -> decorative (formal)
+(10570, 'scouting', 'n', NULL, NULL, 1, 'B1', NULL), -- پیشاهَنگی -> scouting [boy/girl scouts] (formal)
+(10571, 'discriminatory', 'adj', NULL, NULL, 1, 'B1', NULL), -- تَبعیضی -> discriminatory (formal)
+(10572, 'filing', 'n', NULL, NULL, 1, 'EX', NULL), -- بُراده -> filing / shaving [metal] (formal)
+(10573, 'expired', 'adj', NULL, NULL, 1, 'B1', NULL), -- مُنقَضی -> expired (formal)
+(10574, 'salary advance', 'n', NULL, NULL, 1, 'B2', NULL), -- مُساعده -> salary advance (formal)
+(10575, 'considerations', 'n', NULL, NULL, 1, 'B1', NULL), -- مُلاحَظات -> considerations (formal)
+(10576, 'uptown', 'n', NULL, NULL, 1, 'B1', NULL), -- بالاشَهر -> uptown / affluent part of city (formal)
+(10577, 'mathematician', 'n', NULL, NULL, 1, 'B1', NULL), -- ریاضی‌دان -> mathematician (formal)
+(10578, 'cross-eyed', 'adj', NULL, NULL, 1, 'EX', NULL), -- لوچ -> cross-eyed (formal)
+(10579, 'petroleum jelly', 'n', NULL, NULL, 1, 'EX', NULL), -- وازِلین -> Vaseline / petroleum jelly (loanword)
+(10580, 'shepherding', 'n', NULL, NULL, 1, 'B1', NULL), -- چوپانی -> shepherding (formal)
+(10581, 'bullying', 'n', NULL, NULL, 1, 'B1', NULL), -- زورگویی -> bullying (formal)
+(10582, 'safeguarding', 'n', NULL, NULL, 1, 'B1', NULL), -- پاسداری -> guarding / safeguarding (formal)
+(10583, 'duality', 'n', NULL, NULL, 1, 'B2', NULL), -- دوگانگی -> duality (formal)
+(10584, 'tracking', 'n', NULL, NULL, 1, 'B1', NULL), -- رَهگیری -> tracking / interception (formal)
+(10585, 'permissible', 'adj', NULL, NULL, 1, 'B1', NULL), -- جایِز -> permissible / lawful (formal)
+(10586, 'disasters', 'n', NULL, NULL, 1, 'B1', NULL), -- فَجایِع -> disasters / tragedies (formal, plural of فاجعه)
+(10587, 'energizing', 'adj', NULL, NULL, 1, 'B1', NULL), -- نیروبَخش -> energizing / invigorating (formal)
+(10588, 'matador', 'n', NULL, NULL, 1, 'EX', NULL), -- ماتادور -> matador (loanword)
+(10589, 'barracks', 'n', NULL, NULL, 1, 'B1', NULL), -- سَربازخانه -> barracks (formal)
+(10590, 'psychiatry', 'n', NULL, NULL, 1, 'EX', NULL), -- روانپِزِشکی -> psychiatry
+(10591, 'tightrope walking', 'n', NULL, NULL, 1, 'EX', NULL), -- بَندبازی -> tightrope walking (formal)
+(10592, 'clergy', 'n', NULL, NULL, 1, 'B1', NULL), -- روحانیون -> clergy (formal, plural)
+(10593, 'lack of coordination', 'n', NULL, NULL, 1, 'B2', NULL), -- ناهَماهَنگی -> lack of coordination (formal)
+(10594, 'negative', 'n', NULL, NULL, 1, 'B1', NULL), -- نِگاتیو -> negative [film] (loanword)
+(10595, 'patiently', 'adv', NULL, NULL, 1, 'B1', NULL), -- صَبورانه -> patiently (formal)
+(10596, 'crookedness', 'n', NULL, NULL, 1, 'B1', NULL), -- کَجی -> crookedness (formal)
+(10597, 'occupier', 'n', NULL, NULL, 1, 'B1', NULL), -- اِشغالگَر -> occupier [military] (formal)
+(10598, 'pyramidal', 'adj', NULL, NULL, 1, 'EX', NULL), -- هَرَمی -> pyramidal (formal)
+(10599, 'thinness', 'n', NULL, NULL, 1, 'B1', NULL), -- نازُکی -> thinness (formal)
+(10600, 'descriptions', 'n', NULL, NULL, 1, 'B1', NULL), -- توصیفات -> descriptions (formal, plural)
+(10601, 'passerby', 'n', NULL, NULL, 1, 'B1', NULL), -- رَهگُذَر -> passerby (formal)
+(10602, 'kidnapping', 'n', NULL, NULL, 1, 'B1', NULL), -- آدم‌رُبایی -> kidnapping (formal)
+(10603, 'hashish', 'n', NULL, NULL, 1, 'EX', NULL), -- حَشیش -> hashish (formal)
+(10604, 'wart', 'n', NULL, NULL, 1, 'B1', NULL), -- زَگیل -> wart (formal)
+(10605, 'news agency', 'n', NULL, NULL, 1, 'B1', NULL), -- خَبَرگُزاری -> news agency (formal)
+(10606, 'gingery', 'adj', NULL, NULL, 1, 'EX', NULL), -- زَنجَبیلی -> ginger-colored / gingery (formal)
+(10607, 'privileges', 'n', NULL, NULL, 1, 'B1', NULL), -- اِمتیازات -> privileges / scores (formal, plural)
+(10608, 'farmland', 'n', NULL, NULL, 1, 'B1', NULL), -- کِشتزار -> farmland / cropland (formal)
+(10609, 'real estate', 'n', NULL, NULL, 1, 'B1', NULL), -- اَملاک -> properties / real estate (formal, plural)
+(10610, 'merchants', 'n', NULL, NULL, 1, 'B1', NULL), -- تُجّار -> merchants (formal, plural of تاجر)
+(10611, 'plundering', 'n', NULL, NULL, 1, 'B2', NULL), -- غارَتگَری -> plundering / pillaging (formal)
+(10612, 'trombone', 'n', NULL, NULL, 1, 'EX', NULL), -- تِرومبون -> trombone (loanword)
+(10613, 'diseases', 'n', NULL, NULL, 1, 'B1', NULL), -- اَمراض -> diseases (formal, plural of مرض)
+(10614, 'obedience', 'n', NULL, NULL, 1, 'B1', NULL), -- فَرمانبَرداری -> obedience (formal)
+(10615, 'causes', 'n', NULL, NULL, 1, 'B1', NULL), -- عِلَل -> causes (formal, plural of علت)
+(10616, 'condom', 'n', NULL, NULL, 1, 'B1', NULL), -- کاندوم -> condom
+(10617, 'dopamine', 'n', NULL, NULL, 1, 'EX', NULL), -- دوپامین -> dopamine (loanword)
+(10618, 'delusions', 'n', NULL, NULL, 1, 'B1', NULL), -- خیالات -> fancies / delusions (formal, plural)
+(10619, 'manger', 'n', NULL, NULL, 1, 'EX', NULL), -- آخور -> manger / stable trough (formal)
+(10620, 'rescue', 'adj', NULL, NULL, 1, 'B1', NULL), -- اِمدادی -> rescue-related (formal)
+(10621, 'wick', 'n', NULL, NULL, 1, 'EX', NULL), -- فَتیله -> wick (formal)
+(10622, 'understood', 'adj', NULL, NULL, 1, 'B1', NULL), -- شیرفَهم -> understood (formal; شیرفهم شدن = to get it)
+(10623, 'imported', 'adj', NULL, NULL, 1, 'B1', NULL), -- وارداتی -> imported (formal)
+(10624, 'unbalanced', 'adj', NULL, NULL, 1, 'B1', NULL), -- نامُتِعادِل -> unbalanced (formal)
+(10625, 'washer', 'n', NULL, NULL, 1, 'B1', NULL), -- واشِر -> washer [hardware] (loanword)
+(10626, 'needs', 'n', NULL, NULL, 1, 'A2', NULL), -- اِحتیاجات -> needs (formal, plural)
+(10627, 'each one', 'pron', NULL, NULL, 1, 'B1', NULL), -- هَریک -> each one (formal)
+(10628, 'salesmanship', 'n', NULL, NULL, 1, 'B2', NULL), -- فروشَندگی -> salesmanship (formal)
+(10629, 'overthrow', 'n', NULL, NULL, 1, 'B1', NULL), -- سَرنِگونی -> overthrow [political] (formal)
+(10630, 'interrogator', 'n', NULL, NULL, 1, 'B1', NULL), -- بازجو -> interrogator (formal)
+(10631, 'corrosive', 'adj', NULL, NULL, 1, 'B1', NULL), -- خورَنده -> corrosive (formal)
+(10632, 'boatman', 'n', NULL, NULL, 1, 'B1', NULL), -- قایِقران -> boatman / rower (formal)
+(10633, 'reopening', 'n', NULL, NULL, 1, 'B1', NULL), -- بازگُشایی -> reopening (formal)
+(10634, 'vagrancy', 'n', NULL, NULL, 1, 'B2', NULL), -- وِلگَردی -> vagrancy / loitering (formal)
+(10635, 'tonsil', 'n', NULL, NULL, 1, 'EX', NULL), -- لوزه -> tonsil (medical)
+(10636, 'vengeful', 'adj', NULL, NULL, 1, 'B1', NULL), -- اِنتِقامجو -> vengeful / avenger (formal)
+(10637, 'compounds', 'n', NULL, NULL, 1, 'B1', NULL), -- تَرکیبات -> compounds / combinations (formal)
+(10638, 'pigment', 'n', NULL, NULL, 1, 'B1', NULL), -- رَنگدانه -> pigment (formal)
+(10639, 'unfamiliar', 'adj', NULL, NULL, 1, 'B1', NULL), -- ناآشنا -> unfamiliar (formal)
+(10640, 'lump in throat', 'n', NULL, NULL, 1, 'B2', NULL), -- بُغض -> lump in throat [from crying] (formal)
+(10641, 'written pledge', 'n', NULL, NULL, 1, 'B2', NULL), -- تَعَهُّدنامه -> written pledge / commitment letter (formal)
+(10642, 'complaints', 'n', NULL, NULL, 1, 'A2', NULL), -- شِکایات -> complaints (formal, plural)
+(10643, 'volunteering', 'n', NULL, NULL, 1, 'B1', NULL), -- داوطَلَبی -> volunteering (formal)
+(10644, 'logistical', 'adj', NULL, NULL, 1, 'B1', NULL), -- تَدارُکاتی -> logistical (formal)
+(10645, 'ports', 'n', NULL, NULL, 1, 'B1', NULL), -- بَنادِر -> ports (formal, plural of بندر)
+(10646, 'fearless', 'adj', NULL, NULL, 1, 'B1', NULL), -- بی‌باک -> fearless (formal)
+(10647, 'influenza', 'n', NULL, NULL, 1, 'EX', NULL), -- آنفلوانزا -> influenza (loanword)
+(10648, 'saltiness', 'n', NULL, NULL, 1, 'B1', NULL), -- شوری -> saltiness (formal)
+(10649, 'shiver', 'n', NULL, NULL, 1, 'B1', NULL), -- مورمور -> goosebumps feeling / shiver (formal; مورمور شدن)
+(10650, 'unrealistic', 'adj', NULL, NULL, 1, 'B1', NULL), -- غیرواقِعی -> unrealistic (formal)
+(10651, 'study-related', 'adj', NULL, NULL, 1, 'B1', NULL), -- مُطالِعاتی -> study-related (formal)
+(10652, 'airtight', 'adj', NULL, NULL, 1, 'B1', NULL), -- هوابَند -> airtight (formal)
+(10653, 'attic', 'n', NULL, NULL, 1, 'B1', NULL), -- زیرِشیروانی -> attic (formal)
+(10654, 'lands', 'n', NULL, NULL, 1, 'B1', NULL), -- اَراضی -> lands / territories (formal, plural of ارض)
+(10655, 'cinnamon-colored', 'adj', NULL, NULL, 1, 'EX', NULL), -- دارچینی -> cinnamon-colored (formal)
+(10656, 'abundance', 'n', NULL, NULL, 1, 'B1', NULL), -- وُفور -> abundance (formal)
+(10657, 'by no means', 'adv', NULL, NULL, 1, 'B1', NULL), -- به‌هیچ‌وَجه -> by no means (formal)
+(10658, 'magnesium', 'n', NULL, NULL, 1, 'EX', NULL), -- مِنیزیم -> magnesium (loanword)
+(10659, 'fuel tank', 'n', NULL, NULL, 1, 'B1', NULL), -- باک -> fuel tank (formal)
+(10660, 'pampered', 'adj', NULL, NULL, 1, 'B1', NULL), -- نازپَرورده -> pampered / spoiled (formal)
+(10661, 'assemblies', 'n', NULL, NULL, 1, 'B1', NULL), -- مَجالِس -> assemblies / gatherings (formal, plural of مجلس)
+(10662, 'high-pressure', 'adj', NULL, NULL, 1, 'B1', NULL), -- پُرفِشار -> high-pressure (formal)
+(10663, 'bully', 'n', NULL, NULL, 1, 'B1', NULL), -- زورگو -> bully (formal)
+(10664, 'compartment', 'n', NULL, NULL, 1, 'B1', NULL), -- کوپه -> compartment [train] (formal, loanword)
+(10665, 'retaliatory', 'adj', NULL, NULL, 1, 'B1', NULL), -- اِنتِقامی -> vengeful / retaliatory (formal)
+(10666, 'misshapen', 'adj', NULL, NULL, 1, 'B1', NULL), -- بَدشِکل -> misshapen / deformed (formal)
+(10667, 'subtraction', 'n', NULL, NULL, 1, 'A2', NULL), -- تَفریق -> subtraction [math] (formal)
+(10668, 'warm-hearted', 'adj', NULL, NULL, 1, 'B1', NULL), -- خونگَرم -> warm-hearted / hospitable (formal)
+(10669, 'street vendor', 'n', NULL, NULL, 1, 'B1', NULL), -- دَستفُروش -> street vendor / peddler (formal)
+(10670, 'sighted', 'adj', NULL, NULL, 1, 'B1', NULL), -- بینا -> sighted / seeing (formal)
+(10671, 'electrode', 'n', NULL, NULL, 1, 'EX', NULL), -- اِلِکترود -> electrode (loanword)
+(10672, 'sensory', 'adj', NULL, NULL, 1, 'B1', NULL), -- حِسّی -> sensory (formal)
+(10673, 'law-abiding', 'adj', NULL, NULL, 1, 'B1', NULL), -- قانونمَند -> law-abiding / orderly (formal)
+(10674, 'smelly', 'adj', NULL, NULL, 1, 'B1', NULL), -- بودار -> smelly / odorous (formal)
+(10675, 'belongings', 'n', NULL, NULL, 1, 'B1', NULL), -- مُتَعَلِّقات -> belongings / accessories (formal)
+(10676, 'movements', 'n', NULL, NULL, 1, 'B1', NULL), -- تَحَرُّکات -> movements / activities (formal)
+(10677, 'taxi service', 'n', NULL, NULL, 1, 'B1', NULL), -- تاکسی‌رانی -> taxi service (formal)
+(10678, 'muscular', 'adj', NULL, NULL, 1, 'B1', NULL), -- عَضَلانی -> muscular (formal)
+(10679, 'innovator', 'n', NULL, NULL, 1, 'B1', NULL), -- مُبتِکِر -> innovator (formal)
+(10680, 'unequal', 'adj', NULL, NULL, 1, 'B1', NULL), -- ناباَرابَر -> unequal (formal)
+(10681, 'visiting the sick', 'n', NULL, NULL, 1, 'EX', NULL), -- عیادَت -> visiting [the sick] (formal)
+(10682, 'measles', 'n', NULL, NULL, 1, 'EX', NULL), -- سُرخَک -> measles (medical)
+(10683, 'caravanserai', 'n', NULL, NULL, 1, 'EX', NULL), -- کاروانسَرا -> caravanserai (formal)
+(10684, 'Latin', 'adj', NULL, NULL, 1, 'EX', NULL), -- لاتینی -> Latin (formal)
+(10685, 'occupied', 'adj', NULL, NULL, 1, 'B1', NULL), -- اِشغالی -> occupied (formal)
+(10686, 'disobedient', 'adj', NULL, NULL, 1, 'B1', NULL), -- نافَرمان -> disobedient (formal)
+(10687, 'bow-shaped', 'adj', NULL, NULL, 1, 'B1', NULL), -- کَمانی -> bow-shaped / arched (formal)
+(10688, 'leopard-print', 'adj', NULL, NULL, 1, 'EX', NULL), -- پَلَنگی -> leopard-print / leopard-like (formal)
+(10689, 'sleepwalking', 'n', NULL, NULL, 1, 'B1', NULL), -- خوابگَردی -> sleepwalking (formal)
+(10690, 'little girl', 'n', NULL, NULL, 1, 'A2', NULL), -- دُختَرَک -> little girl [affectionate/diminutive] (formal)
+(10691, 'banjo', 'n', NULL, NULL, 1, 'EX', NULL), -- بانجو -> banjo (loanword)
+(10692, 'generosity', 'n', NULL, NULL, 1, 'B1', NULL), -- سَخاوَتمَندی -> generosity (formal)
+(10693, 'overeating', 'n', NULL, NULL, 1, 'B1', NULL), -- پُرخوری -> overeating (formal)
+(10694, 'as a result', 'adv', NULL, NULL, 1, 'B1', NULL), -- دَرنَتیجه -> as a result (formal)
+(10695, 'robotics', 'n', NULL, NULL, 1, 'EX', NULL), -- رباتیک -> robotics (loanword)
+(10696, 'carbohydrate', 'n', NULL, NULL, 1, 'EX', NULL), -- کَربوهیدرات -> carbohydrate (loanword)
+(10697, 'rivals', 'n', NULL, NULL, 1, 'B1', NULL), -- رُقَبا -> rivals / competitors (formal, plural of رقیب)
+(10698, 'peach-colored', 'adj', NULL, NULL, 1, 'EX', NULL), -- هُلویی -> peach-colored (formal)
+(10699, 'shilling', 'n', NULL, NULL, 1, 'EX', NULL), -- شیلینگ -> shilling [currency] (loanword)
+(10700, 'religions', 'n', NULL, NULL, 1, 'B1', NULL), -- اَدیان -> religions (formal, plural of دین)
+(10701, 'satiated', 'adj', NULL, NULL, 1, 'B1', NULL), -- سیراب -> quenched / satiated (formal)
+(10702, 'wetness', 'n', NULL, NULL, 1, 'B1', NULL), -- خیسی -> wetness (formal)
+(10703, 'ministers', 'n', NULL, NULL, 1, 'B1', NULL), -- وَزیران -> ministers (formal, plural of وزیر)
+(10704, 'expectations', 'n', NULL, NULL, 1, 'B1', NULL), -- توقُّعات -> expectations (formal)
+(10705, 'so-and-so', 'pron', NULL, NULL, 1, 'B1', NULL), -- فُلانی -> so-and-so (formal)
+(10706, 'reptiles', 'n', NULL, NULL, 1, 'B1', NULL), -- خَزَندگان -> reptiles (formal)
+(10707, 'fireproof', 'adj', NULL, NULL, 1, 'B1', NULL), -- نَسوز -> fireproof / heat-resistant (formal)
+(10708, 'willow', 'n', NULL, NULL, 1, 'B1', NULL), -- بید -> willow tree (formal)
+(10709, 'damp', 'adj', NULL, NULL, 1, 'B1', NULL), -- نَمناک -> damp / moist (formal)
+(10710, 'printing house', 'n', NULL, NULL, 1, 'B1', NULL), -- چاپخانه -> printing house (formal)
+(10711, 'technician', 'n', NULL, NULL, 1, 'B1', NULL), -- تِکنیسین -> technician (loanword)
+(10712, 'in cash', 'adv', NULL, NULL, 1, 'B1', NULL), -- نَقداً -> in cash (formal)
+(10713, 'devastating', 'adj', NULL, NULL, 1, 'B1', NULL), -- نابودکُننده -> destroyer / devastating (formal)
+(10714, 'wholeheartedly', 'adv', NULL, NULL, 1, 'B1', NULL), -- قَلباً -> wholeheartedly / sincerely (formal)
+(10715, 'radiator', 'n', NULL, NULL, 1, 'B1', NULL), -- شوفاژ -> radiator [heating] (loanword)
+(10716, 'pavement', 'n', NULL, NULL, 1, 'B1', NULL), -- سَنگفَرش -> pavement / cobblestone (formal)
+(10717, 'bumper', 'n', NULL, NULL, 1, 'B1', NULL), -- بامپِر -> bumper [car] (loanword)
+(10718, 'socialism', 'n', NULL, NULL, 1, 'EX', NULL), -- سوسیالیسم -> socialism (loanword)
+(10719, 'actively', 'adv', NULL, NULL, 1, 'B1', NULL), -- فَعّالانه -> actively (formal)
+(10720, 'cocaine', 'n', NULL, NULL, 1, 'EX', NULL), -- کوکائین -> cocaine (loanword)
+(10721, 'dinar', 'n', NULL, NULL, 1, 'EX', NULL), -- دینار -> dinar [currency] (formal)
+(10722, 'minaret', 'n', NULL, NULL, 1, 'EX', NULL), -- مِناره -> minaret (formal)
+(10723, 'gifts', 'n', NULL, NULL, 1, 'A1', NULL), -- هَدایا -> gifts (formal, plural of هدیه)
+(10724, 'adrenaline', 'n', NULL, NULL, 1, 'EX', NULL), -- آدرنالین -> adrenaline (loanword)
+(10725, 'light beige', 'adj', NULL, NULL, 1, 'EX', NULL), -- نُخودی -> chickpea-colored / light beige (formal)
+(10726, 'sufficing', 'n', NULL, NULL, 1, 'B2', NULL), -- اِکتِفا -> sufficing / being content with (formal)
+(10727, 'users', 'n', NULL, NULL, 1, 'B1', NULL), -- کارِبران -> users (formal, plural of کاربر)
+(10728, 'flooring', 'n', NULL, NULL, 1, 'B1', NULL), -- کَفپوش -> flooring (formal)
+(10729, 'robotic', 'adj', NULL, NULL, 1, 'B1', NULL), -- رُباتی -> robotic (formal)
+(10730, 'partnership-related', 'adj', NULL, NULL, 1, 'B2', NULL), -- شِراکَتی -> partnership-related (formal)
+(10731, 'usefulness', 'n', NULL, NULL, 1, 'B1', NULL), -- سودمَندی -> usefulness (formal)
+(10732, 'groceries', 'n', NULL, NULL, 1, 'A2', NULL), -- خواروبار -> groceries (formal)
+(10733, 'running errands', 'n', NULL, NULL, 1, 'B1', NULL), -- دَوَندگی -> running around [errands] (formal)
+(10734, 'cruelty', 'n', NULL, NULL, 1, 'B1', NULL), -- بی‌رَحمی -> cruelty (formal)
+(10735, 'self-motivated', 'adj', NULL, NULL, 1, 'B1', NULL), -- خودجوش -> spontaneous / self-motivated (formal)
+(10736, 'blood pressure', 'n', NULL, NULL, 1, 'B1', NULL), -- فِشارخون -> blood pressure (formal)
+(10737, 'chocolate-colored', 'adj', NULL, NULL, 1, 'EX', NULL), -- شُکُلاتی -> chocolate-colored / chocolate-flavored (formal)
+(10738, 'from head to toe', 'adv', NULL, NULL, 1, 'B1', NULL), -- سَرتاپا -> from head to toe (formal)
+(10739, 'coma', 'n', NULL, NULL, 1, 'EX', NULL), -- کُما -> coma (medical, loanword)
+(10740, 'laundry room', 'n', NULL, NULL, 1, 'B1', NULL), -- رَختشورخانه -> laundry room (formal)
+(10741, 'mortar', 'n', NULL, NULL, 1, 'EX', NULL), -- هاوَن -> mortar [cooking tool] (formal)
+(10742, 'flock', 'n', NULL, NULL, 1, 'B1', NULL), -- رَمه -> flock / herd (formal)
+(10743, 'gill', 'n', NULL, NULL, 1, 'EX', NULL), -- آبشُش -> gill [fish] (formal)
+(10744, 'street sweeper', 'n', NULL, NULL, 1, 'B1', NULL), -- رُفتِگی -> sanitation worker / street sweeper (formal)
+(10745, 'unintentionally', 'adv', NULL, NULL, 1, 'B1', NULL), -- سَهواً -> unintentionally (formal)
+(10746, 'fern', 'n', NULL, NULL, 1, 'B1', NULL), -- سَرخَس -> fern (formal)
+(10747, 'wine-colored', 'adj', NULL, NULL, 1, 'EX', NULL), -- شَرابی -> wine-colored (formal)
+(10748, 'stature', 'n', NULL, NULL, 1, 'B2', NULL), -- قامَت -> stature / figure (formal, literary)
+(10749, 'cooking pot', 'n', NULL, NULL, 1, 'B1', NULL), -- پاتیل -> large cooking pot (formal)
+(10750, 'plateau', 'n', NULL, NULL, 1, 'B1', NULL), -- فَلات -> plateau [geography] (formal)
+(10751, 'bad temper', 'n', NULL, NULL, 1, 'B1', NULL), -- بَدخُلقی -> bad temper (formal)
+(10752, 'prizes', 'n', NULL, NULL, 1, 'A2', NULL), -- جَوایِز -> prizes / awards (formal, plural of جایزه)
+(10753, 'autism', 'n', NULL, NULL, 1, 'EX', NULL), -- اوتیسم -> autism (loanword)
+(10754, 'confectioner', 'n', NULL, NULL, 1, 'B1', NULL), -- قَنّاد -> confectioner / pastry chef (formal)
+(10755, 'tick', 'n', NULL, NULL, 1, 'B1', NULL), -- کَنه -> tick [insect] (formal)
+(10756, 'head-chef profession', 'n', NULL, NULL, 1, 'EX', NULL), -- سَرآشپَزی -> head-chef profession (formal)
+(10757, 'professors', 'n', NULL, NULL, 1, 'A2', NULL), -- اَساتید -> professors (formal, plural of استاد)
+(10758, 'exiled', 'n', NULL, NULL, 1, 'B1', NULL), -- تَبعیدی -> exiled [person] (formal)
+(10759, 'granite', 'n', NULL, NULL, 1, 'EX', NULL), -- گِرانیت -> granite (loanword)
+(10760, 'anxiety-related', 'adj', NULL, NULL, 1, 'B1', NULL), -- اِضطِرابی -> anxiety-related (formal)
+(10761, 'bodybuilder', 'n', NULL, NULL, 1, 'B1', NULL), -- بَدَنساز -> bodybuilder (formal)
+(10762, 'reflex', 'n', NULL, NULL, 1, 'B1', NULL), -- رِفلِکس -> reflex (loanword)
+(10763, 'installments', 'n', NULL, NULL, 1, 'B1', NULL), -- اَقساط -> installments (formal, plural of قسط)
+(10764, 'praying mantis', 'n', NULL, NULL, 1, 'EX', NULL), -- آخوندَک -> praying mantis (formal)
+(10765, 'academic', 'adj', NULL, NULL, 1, 'B1', NULL), -- آکادمیک -> academic (loanword)
+(10766, 'judgmental', 'adj', NULL, NULL, 1, 'B1', NULL), -- قَضاوَتی -> judgmental (formal)
+(10767, 'job placement', 'n', NULL, NULL, 1, 'B1', NULL), -- کاریابی -> job placement / employment agency (formal)
+(10768, 'gearbox', 'n', NULL, NULL, 1, 'EX', NULL), -- گیربُکس -> gearbox (loanword)
+(10769, 'fond of', 'adj', NULL, NULL, 1, 'B1', NULL), -- دِلبَسته -> attached / fond of (formal)
+(10770, 'parachute', 'n', NULL, NULL, 1, 'A2', NULL), -- چَترِ نَجات -> parachute
+(10771, 'imaging', 'n', NULL, NULL, 1, 'B2', NULL), -- تَصویربَرداری -> imaging (formal, medical/photography)
+(10772, 'creditor', 'n', NULL, NULL, 1, 'B1', NULL), -- طَلَبکار -> creditor (formal)
+(10773, 'injectable', 'adj', NULL, NULL, 1, 'B2', NULL), -- تَزریقی -> injectable (formal)
+(10774, 'identity-related', 'adj', NULL, NULL, 1, 'B1', NULL), -- هُویَّتی -> identity-related (formal)
+(10775, 'how many years old', 'adj', NULL, NULL, 1, 'B1', NULL), -- چَندساله -> how many years old / several years
+(10776, 'money-making', 'adj', NULL, NULL, 1, 'B1', NULL), -- پولساز -> money-making (formal)
+(10777, 'dispersion', 'n', NULL, NULL, 1, 'B2', NULL), -- پَراکَندگی -> dispersion / scatter (formal)
+(10778, 'knitting', 'n', NULL, NULL, 1, 'B1', NULL), -- بافتَنی -> knitting / knitted item (formal)
+(10779, 'measures', 'n', NULL, NULL, 1, 'B1', NULL), -- تَدابیر -> measures / precautions (formal, plural of تدبیر)
+(10780, 'sculpture', 'n', NULL, NULL, 1, 'B1', NULL), -- تَندیس -> statue / sculpture (formal)
+(10781, 'ascending', 'adj', NULL, NULL, 1, 'B1', NULL), -- صُعودی -> ascending (formal)
+(10782, 'flag-bearer', 'n', NULL, NULL, 1, 'EX', NULL), -- پَرچَمدار -> flag-bearer (formal)
+(10783, 'coaching', 'n', NULL, NULL, 1, 'B1', NULL), -- مُربّی‌گَری -> coaching [profession] (formal)
+(10784, 'acidic', 'adj', NULL, NULL, 1, 'B1', NULL), -- اسیدی -> acidic (formal)
+(10785, 'intervals', 'n', NULL, NULL, 1, 'B1', NULL), -- فَواصِل -> distances / intervals (formal, plural of فاصله)
+(10786, 'vegetarianism', 'n', NULL, NULL, 1, 'B1', NULL), -- گیاه‌خواری -> vegetarianism (formal)
+(10787, 'mammal', 'n', NULL, NULL, 1, 'B1', NULL), -- پِستاندار -> mammal (formal)
+(10788, 'fiber', 'n', NULL, NULL, 1, 'B1', NULL), -- فایبِر -> fiber (loanword)
+(10789, 'entrance exam', 'n', NULL, NULL, 1, 'B1', NULL), -- کُنکور -> entrance exam (formal)
+(10790, 'doping', 'n', NULL, NULL, 1, 'EX', NULL), -- دوپینگ -> doping [sports] (formal)
+(10791, 'merrymaking', 'n', NULL, NULL, 1, 'B2', NULL), -- خوشگُذَرانی -> having fun / merrymaking (formal)
+(10792, 'fillet', 'n', NULL, NULL, 1, 'B1', NULL), -- فیله -> fillet [meat] (loanword)
+(10793, 'being informed', 'n', NULL, NULL, 1, 'B1', NULL), -- باخَبَری -> being informed (formal)
+(10794, 'reflected', 'adj', NULL, NULL, 1, 'B1', NULL), -- مُنعَکِس -> reflected (formal)
+(10795, 'ampere', 'n', NULL, NULL, 1, 'EX', NULL), -- آمپِر -> ampere (loanword)
+(10796, 'conductor', 'n', NULL, NULL, 1, 'B1', NULL), -- رَسانا -> conductor [electricity] (formal)
+(10797, 'early riser', 'adj', NULL, NULL, 1, 'B1', NULL), -- سَحَرخیز -> early riser (formal)
+(10798, 'nervousness', 'n', NULL, NULL, 1, 'B1', NULL), -- دَستپاچگی -> flustering / nervousness (formal)
+(10799, 'turquoise', 'n', NULL, NULL, 1, 'B1', NULL), -- فیروزه -> turquoise (formal)
+(10800, 'ages', 'n', NULL, NULL, 1, 'A2', NULL), -- سِنین -> ages (formal, plural of سن)
+(10801, 'spotted', 'adj', NULL, NULL, 1, 'B1', NULL), -- خال‌دار -> spotted [pattern] (formal)
+(10802, 'comrades', 'n', NULL, NULL, 1, 'B1', NULL), -- رُفَقا -> friends / comrades (formal, plural of رفیق)
+(10803, 'masonry', 'n', NULL, NULL, 1, 'B1', NULL), -- بَنّایی -> masonry / construction work (formal)
+(10804, 'cobalt', 'n', NULL, NULL, 1, 'EX', NULL), -- کبالت -> cobalt (formal, chemistry, loanword)
+(10805, 'guffaw', 'n', NULL, NULL, 1, 'B1', NULL), -- قَهقَهه -> loud laughter / guffaw (formal)
+(10806, 'rotational', 'adj', NULL, NULL, 1, 'B1', NULL), -- چَرخِشی -> rotational (formal)
+(10807, 'lick', 'v', NULL, NULL, 1, 'A2', NULL), -- لیسیدَن -> to lick
+(10808, 'unrelated', 'adj', NULL, NULL, 1, 'B1', NULL), -- نامُرتَبِط -> unrelated (formal)
+(10809, 'siphon', 'n', NULL, NULL, 1, 'EX', NULL), -- سیفون -> siphon / toilet flush (loanword)
+(10810, 'mutually', 'adv', NULL, NULL, 1, 'B1', NULL), -- مُتَقابِلاً -> mutually / reciprocally (formal)
+(10811, 'ice skating', 'n', NULL, NULL, 1, 'B1', NULL), -- پاتیناژ -> ice skating (formal)
+(10812, 'freight', 'n', NULL, NULL, 1, 'B1', NULL), -- باربَری -> freight / cargo transport (formal)
+(10813, 'shortcut', 'n', NULL, NULL, 1, 'A2', NULL), -- میانبُر -> shortcut (formal)
+(10814, 'indigo', 'adj', NULL, NULL, 1, 'B1', NULL), -- نیلی -> indigo-colored (formal)
+(10815, 'lithium', 'n', NULL, NULL, 1, 'EX', NULL), -- لیتیوم -> lithium (loanword)
+(10816, 'prettiness', 'n', NULL, NULL, 1, 'B1', NULL), -- خوشگِلی -> prettiness (formal)
+(10817, 'plant-based', 'adj', NULL, NULL, 1, 'B1', NULL), -- نَباتی -> vegetal / plant-based (formal)
+(10818, 'reflective', 'adj', NULL, NULL, 1, 'B1', NULL), -- اِنعِکاسی -> reflective (formal)
+(10819, 'kashk', 'n', NULL, NULL, 1, 'EX', NULL), -- کَشک -> kashk [dairy product] (formal)
+(10820, 'like-minded', 'adj', NULL, NULL, 1, 'B1', NULL), -- هَمفِکر -> like-minded (formal)
+(10821, 'blindness', 'n', NULL, NULL, 1, 'B1', NULL), -- کوری -> blindness (formal)
+(10822, 'extinction', 'n', NULL, NULL, 1, 'B1', NULL), -- اِنقِراض -> extinction (formal)
+(10823, 'stepfather', 'n', NULL, NULL, 1, 'A2', NULL), -- ناپِدَری -> stepfather (formal)
+(10824, 'deceased', 'n', NULL, NULL, 1, 'B1', NULL), -- کُشته -> killed / deceased (formal)
+(10825, 'spacious', 'adj', NULL, NULL, 1, 'B1', NULL), -- جادار -> spacious (formal)
+(10826, 'uneven', 'adj', NULL, NULL, 1, 'B1', NULL), -- ناهَموار -> uneven (formal)
+(10827, 'gambling house', 'n', NULL, NULL, 1, 'B1', NULL), -- قِمارخانه -> gambling house (formal)
+(10828, 'pixel', 'n', NULL, NULL, 1, 'B1', NULL), -- پیکسِل -> pixel (loanword)
+(10829, 'tasteless', 'adj', NULL, NULL, 1, 'B1', NULL), -- بی‌مَزه -> tasteless / unfunny (formal)
+(10830, 'attackers', 'n', NULL, NULL, 1, 'B1', NULL), -- مُهاجِمین -> attackers / forwards (formal, plural)
+(10831, 'embroidery', 'n', NULL, NULL, 1, 'B1', NULL), -- گُلدوزی -> embroidery (formal)
+(10832, 'stale', 'adj', NULL, NULL, 1, 'B1', NULL), -- بایات -> stale [food] (formal)
+(10833, 'bandaging', 'n', NULL, NULL, 1, 'B1', NULL), -- باندپیچی -> bandaging (formal)
+(10834, 'middle age', 'n', NULL, NULL, 1, 'B1', NULL), -- میانسالی -> middle age (formal)
+(10835, 'military recruitment', 'n', NULL, NULL, 1, 'B1', NULL), -- سَربازگیری -> military recruitment (formal)
+(10836, 'reassurance', 'n', NULL, NULL, 1, 'B1', NULL), -- دِلگَرمی -> reassurance (formal)
+(10837, 'seasons', 'n', NULL, NULL, 1, 'A2', NULL), -- فُصول -> seasons / chapters (formal, plural of فصل)
+(10838, 'squares', 'n', NULL, NULL, 1, 'B1', NULL), -- میادین -> squares (formal, plural of میدان)
+(10839, 'theories', 'n', NULL, NULL, 1, 'B1', NULL), -- نَظَریّات -> theories / opinions (formal, plural of نظریه)
+(10840, 'traitorous', 'adj', NULL, NULL, 1, 'B1', NULL), -- خیانَتکار -> traitorous (formal)
+(10841, 'concepts', 'n', NULL, NULL, 1, 'B1', NULL), -- مَفاهیم -> concepts (formal, plural of مفهوم)
+(10842, 'martyr', 'n', NULL, NULL, 1, 'B2', NULL), -- شَهید -> martyr
+(10843, 'imam', 'n', NULL, NULL, 1, 'EX', NULL), -- اِمام -> imam (religious leader)
+(10844, 'alcoholic drink', 'n', NULL, NULL, 1, 'B2', NULL), -- مَشروب -> alcoholic drink
+(10845, 'expulsion', 'n', NULL, NULL, 1, 'B2', NULL), -- اِخراج -> expulsion (اخراج کردن = to fire / expel)
+(10846, 'wasted', 'n', NULL, NULL, 1, 'B1', NULL), -- تَلَف -> wasted (تلف کردن = to waste)
+(10847, 'afflicted with', 'adj', NULL, NULL, 1, 'B2', NULL), -- دُچار -> afflicted with (دچار شدن = to become afflicted)
+(10848, 'happening', 'n', NULL, NULL, 1, 'B1', NULL), -- رُخ -> happening (formal; رخ دادن = to happen)
+(10849, 'sergeant', 'n', NULL, NULL, 1, 'B1', NULL), -- گُروهبان -> sergeant
+(10850, 'pretending', 'n', NULL, NULL, 1, 'B1', NULL), -- وانِمود -> pretending (وانمود کردن = to pretend)
+(10851, 'eternity', 'n', NULL, NULL, 1, 'B2', NULL), -- اَبَد -> eternity (تا ابد = forever)
+(10852, 'lieutenant', 'n', NULL, NULL, 1, 'B1', NULL), -- سِتوان -> lieutenant
+(10853, 'police chief', 'n', NULL, NULL, 1, 'B1', NULL), -- کَلانتَر -> police chief / sheriff
+(10854, 'colonel', 'n', NULL, NULL, 1, 'B1', NULL), -- سَرهَنگ -> colonel
+(10855, 'belonging', 'n', NULL, NULL, 1, 'B1', NULL), -- تَعَلُّق -> belonging (تعلق داشتن = to belong)
+(10856, 'confidential', 'adj', NULL, NULL, 1, 'B2', NULL), -- مَحرَمانه -> confidential
+(10857, 'honestly', 'adv', NULL, NULL, 1, 'B1', NULL), -- صادِقانه -> honestly
+(10858, 'perpetrator', 'n', NULL, NULL, 1, 'B2', NULL), -- مُرتَکِب -> perpetrator (مرتکب شدن = to commit [a crime])
+(10859, 'curse', 'n', NULL, NULL, 1, 'B1', NULL), -- نِفرین -> curse (نفرین کردن = to curse)
+(10860, 'evacuation', 'n', NULL, NULL, 1, 'B2', NULL), -- تَخلیه -> evacuation (تخلیه کردن = to evacuate)
+(10861, 'greetings', 'interj', NULL, NULL, 1, 'B1', NULL), -- دُرود -> greetings (formal)
+(10862, 'by means of', 'prep', NULL, NULL, 1, 'B2', NULL), -- بِوَسیلِه -> by means of
+(10863, 'deviant', 'adj', NULL, NULL, 1, 'B2', NULL), -- مُنحَرِف -> deviant / perverted
+(10864, 'congress', 'n', NULL, NULL, 1, 'B1', NULL), -- کُنگرِه -> congress
+(10865, 'considered', 'adj', NULL, NULL, 1, 'B1', NULL), -- مَحسوب -> considered / counted (محسوب شدن = to be considered)
+(10866, 'poisoned', 'adj', NULL, NULL, 1, 'B1', NULL), -- مَسموم -> poisoned (مسموم شدن = to be poisoned)
+(10867, 'provocation', 'n', NULL, NULL, 1, 'B2', NULL), -- تَحریک -> provocation (تحریک کردن = to provoke)
+(10868, 'adultery', 'n', NULL, NULL, 1, 'B2', NULL), -- زِنا -> adultery
+(10869, 'temptation', 'n', NULL, NULL, 1, 'B1', NULL), -- وَسوَسه -> temptation (وسوسه کردن = to tempt)
+(10870, 'pardon', 'n', NULL, NULL, 1, 'B1', NULL), -- عَفو -> pardon / amnesty (عفو کردن = to pardon)
+(10871, 'Roman', 'adj', NULL, NULL, 1, 'EX', NULL), -- رومی -> Roman
+(10872, 'royal court', 'n', NULL, NULL, 1, 'B2', NULL), -- دَربار -> royal court
+(10873, 'coordinates', 'n', NULL, NULL, 1, 'B1', NULL), -- مُختَصات -> coordinates
+(10874, 'possessing', 'adj', NULL, NULL, 1, 'B1', NULL), -- دارایِ -> having / possessing (formal)
+(10875, 'Bible', 'n', NULL, NULL, 1, 'EX', NULL), -- اِنجیل -> the Bible / Gospel
+(10876, 'avoidance', 'n', NULL, NULL, 1, 'B1', NULL), -- اِجتِناب -> avoidance (اجتناب کردن = to avoid)
+(10877, 'corporal', 'n', NULL, NULL, 1, 'B1', NULL), -- سَرجوخه -> corporal [military rank]
+(10878, 'clot', 'n', NULL, NULL, 1, 'B1', NULL), -- لَخته -> clot
+(10879, 'monastery', 'n', NULL, NULL, 1, 'B1', NULL), -- صومِعه -> monastery
+(10880, 'sorrow', 'n', NULL, NULL, 1, 'B1', NULL), -- اَندوه -> sorrow
+(10881, 'grenade', 'n', NULL, NULL, 1, 'B1', NULL), -- نارَنجَک -> grenade
+(10882, 'treasury', 'n', NULL, NULL, 1, 'B1', NULL), -- خَزانه -> treasury
+(10883, 'acquittal', 'n', NULL, NULL, 1, 'B2', NULL), -- تَبرِئه -> acquittal (تبرئه کردن = to acquit)
+(10884, 'lever', 'n', NULL, NULL, 1, 'B1', NULL), -- اَهرُم -> lever
+(10885, 'the unseen', 'n', NULL, NULL, 1, 'B2', NULL), -- غَیب -> the unseen (formal / religious; غیب شدن = to vanish)
+(10886, 'murder victim', 'n', NULL, NULL, 1, 'B2', NULL), -- مَقتول -> murder victim
+(10887, 'dispatch', 'n', NULL, NULL, 1, 'B1', NULL), -- اِعزام -> dispatch (اعزام کردن = to dispatch)
+(10888, 'strait', 'n', NULL, NULL, 1, 'B1', NULL), -- تَنگه -> strait (geography)
+(10889, 'gland', 'n', NULL, NULL, 1, 'B1', NULL), -- غُدّه -> gland
+(10890, 'confiscation', 'n', NULL, NULL, 1, 'B1', NULL), -- توقیف -> confiscation (توقیف کردن = to confiscate)
+(10891, 'encirclement', 'n', NULL, NULL, 1, 'B2', NULL), -- اِحاطه -> encirclement (احاطه کردن = to surround)
+(10892, 'evasion', 'n', NULL, NULL, 1, 'B1', NULL), -- طَفره -> evasion (طفره رفتن = to evade)
+(10893, 'bowing', 'n', NULL, NULL, 1, 'B1', NULL), -- تَعظیم -> bowing (تعظیم کردن = to bow)
+(10894, 'aristocracy', 'n', NULL, NULL, 1, 'B1', NULL), -- اَشراف -> aristocracy / nobility
+(10895, 'similar to', 'prep', NULL, NULL, 1, 'B1', NULL), -- هَمانَند -> similar to (formal)
+(10896, 'carcass', 'n', NULL, NULL, 1, 'B1', NULL), -- لاشه -> carcass
+(10897, 'plague', 'n', NULL, NULL, 1, 'B1', NULL), -- طاعون -> plague (disease)
+(10898, 'inflammation', 'n', NULL, NULL, 1, 'B1', NULL), -- اِلتِهاب -> inflammation (medical)
+(10899, 'priest', 'n', NULL, NULL, 1, 'B1', NULL), -- کاهِن -> priest (ancient / pagan, formal)
+(10900, 'infatuated', 'adj', NULL, NULL, 1, 'B1', NULL), -- شیفته -> infatuated / enamored (formal)
+(10901, 'funeral procession', 'n', NULL, NULL, 1, 'B1', NULL), -- تَشییع -> funeral procession (formal)
+(10902, 'attendant', 'n', NULL, NULL, 1, 'B1', NULL), -- مُتَصَدّی -> attendant / clerk (formal)
+(10903, 'chancellor', 'n', NULL, NULL, 1, 'B2', NULL), -- صَدراَعظَم -> prime minister / chancellor (historical)
+(10904, 'captivated', 'adj', NULL, NULL, 1, 'B2', NULL), -- مَجذوب -> captivated / fascinated (formal)
+(10905, 'extortion', 'n', NULL, NULL, 1, 'C1', NULL), -- اَخّاذی -> extortion (اخاذی کردن = to extort)
+(10906, 'madly in love', 'adj', NULL, NULL, 1, 'B2', NULL), -- مَجنون -> madly in love / insane (formal)
+(10907, 'aggressor', 'n', NULL, NULL, 1, 'B2', NULL), -- مُتَجاوِز -> aggressor / trespasser (formal)
+(10908, 'extinct', 'adj', NULL, NULL, 1, 'B1', NULL), -- مُنقَرِض -> extinct (منقرض شدن = to become extinct)
+(10909, 'abbreviation', 'n', NULL, NULL, 1, 'B1', NULL), -- مُخَفَّف -> abbreviation
+(10910, 'visualization', 'n', NULL, NULL, 1, 'B2', NULL), -- تَجَسُّم -> visualization (formal; تجسم کردن = to visualize)
+(10911, 'bandit', 'n', NULL, NULL, 1, 'B1', NULL), -- راهزَن -> highway robber / bandit
+(10912, 'judiciary', 'n', NULL, NULL, 1, 'B2', NULL), -- دادگُستَری -> judiciary / ministry of justice (formal)
+(10913, 'appointed', 'adj', NULL, NULL, 1, 'B1', NULL), -- مَنصوب -> appointed (formal; منصوب کردن = to appoint)
+(10914, 'fear', 'n', NULL, NULL, 1, 'B1', NULL), -- پَروا -> fear / concern (formal; بی‌پروا = fearless)
+(10915, 'disguised', 'adj', NULL, NULL, 1, 'B2', NULL), -- مُبَدَّل -> disguised / converted (formal)
+(10916, 'enduring', 'adj', NULL, NULL, 1, 'B2', NULL), -- مُتَحَمِّل -> enduring / incurring (formal)
+(10917, 'socializing', 'n', NULL, NULL, 1, 'B1', NULL), -- مُعاشِرَت -> socializing (formal; معاشرت کردن = to socialize)
+(10918, 'exposed', 'adj', NULL, NULL, 1, 'B1', NULL), -- بَرمَلا -> exposed / revealed (formal)
+(10919, 'dismissed from office', 'adj', NULL, NULL, 1, 'B2', NULL), -- بَرکَنار -> dismissed / removed [from office] (formal)
+(10920, 'lamentation', 'n', NULL, NULL, 1, 'C1', NULL), -- زاری -> lamentation (formal)
+(10921, 'bestowal', 'n', NULL, NULL, 1, 'C1', NULL), -- اِعطا -> granting / bestowal (formal)
+(10922, 'corrupted', 'adj', NULL, NULL, 1, 'B2', NULL), -- تَباه -> ruined / corrupted (formal)
+(10923, 'seduction', 'n', NULL, NULL, 1, 'B2', NULL), -- اَغوا -> seduction (formal)
+(10924, 'artillery', 'n', NULL, NULL, 1, 'B2', NULL), -- توپخانه -> artillery
+(10925, 'illegitimate', 'adj', NULL, NULL, 1, 'B2', NULL), -- نامَشروع -> illegitimate (formal)
+(10926, 'loot', 'n', NULL, NULL, 1, 'B2', NULL), -- غَنیمَت -> loot / spoils (formal)
+(10927, 'crown prince', 'n', NULL, NULL, 1, 'EX', NULL), -- وَلیعَهد -> crown prince (formal)
+(10928, 'preacher', 'n', NULL, NULL, 1, 'B2', NULL), -- واعِظ -> preacher (formal)
+(10929, 'admiral', 'n', NULL, NULL, 1, 'B1', NULL), -- دَریاسالار -> admiral
+(10930, 'fated', 'adj', NULL, NULL, 1, 'B2', NULL), -- مُقَدَّر -> predestined / fated (formal)
+(10931, 'defeated', 'adj', NULL, NULL, 1, 'B1', NULL), -- مَغلوب -> defeated (formal)
+(10932, 'multiplication sign', 'n', NULL, NULL, 1, 'A2', NULL), -- ضَربدَر -> multiplication sign / cross mark (formal)
+(10933, 'iron-made', 'adj', NULL, NULL, 1, 'B1', NULL), -- آهَنین -> iron-made / of iron (formal)
+(10934, 'armaments', 'n', NULL, NULL, 1, 'B2', NULL), -- تَسلیحات -> armaments / weapons (formal)
+(10935, 'soaked', 'adj', NULL, NULL, 1, 'B1', NULL), -- آغِشته -> soaked / coated (formal)
+(10936, 'transformed', 'adj', NULL, NULL, 1, 'B1', NULL), -- دِگَرگون -> transformed / changed (formal)
+(10937, 'scroll', 'n', NULL, NULL, 1, 'B1', NULL), -- طومار -> scroll (formal, historical)
+(10938, 'immunity', 'n', NULL, NULL, 1, 'B1', NULL), -- مَصونیَّت -> immunity (formal, legal / medical)
+(10939, 'stipulated', 'adj', NULL, NULL, 1, 'B2', NULL), -- مُقَرَّر -> stipulated / prescribed (formal)
+(10940, 'artery', 'n', NULL, NULL, 1, 'B1', NULL), -- شِریان -> artery (medical, formal)
+(10941, 'bladder', 'n', NULL, NULL, 1, 'EX', NULL), -- مَثانه -> bladder (medical)
+(10942, 'mysticism', 'n', NULL, NULL, 1, 'C1', NULL), -- عِرفان -> mysticism (formal)
+(10943, 'low tide', 'n', NULL, NULL, 1, 'B1', NULL), -- جَزر -> low tide (formal)
+(10944, 'chastity', 'n', NULL, NULL, 1, 'C1', NULL), -- نَجابَت -> decency / chastity (formal)
+(10945, 'primitive', 'adj', NULL, NULL, 1, 'B1', NULL), -- بَدَوی -> primitive (formal)
+(10946, 'promised one', 'adj', NULL, NULL, 1, 'C1', NULL), -- مَوعود -> promised [one] (formal / religious)
+(10947, 'despised', 'adj', NULL, NULL, 1, 'B2', NULL), -- مَنفور -> hated / despised (formal)
+(10948, 'blockage', 'n', NULL, NULL, 1, 'B1', NULL), -- اِنسِداد -> blockage / obstruction (formal)
+(10949, 'banquet', 'n', NULL, NULL, 1, 'B1', NULL), -- ضِیافَت -> banquet / feast (formal)
+(10950, 'livelihood', 'n', NULL, NULL, 1, 'B1', NULL), -- مَعاش -> livelihood (formal)
+(10951, 'delegated', 'adj', NULL, NULL, 1, 'B2', NULL), -- مَحوَّل -> assigned / delegated (formal)
+(10952, 'sheriff', 'n', NULL, NULL, 1, 'B1', NULL), -- داروغه -> sheriff / constable (historical)
+(10953, 'sanctification', 'n', NULL, NULL, 1, 'C1', NULL), -- تَقدیس -> sanctification (formal, religious)
+(10954, 'autopsy', 'n', NULL, NULL, 1, 'EX', NULL), -- کالبُدشِکافی -> autopsy (formal, medical)
+(10955, 'congenital', 'adj', NULL, NULL, 1, 'EX', NULL), -- مادَرزادی -> congenital / innate (formal, medical)
+(10956, 'enchanted', 'adj', NULL, NULL, 1, 'B1', NULL), -- مَسحور -> captivated / enchanted (formal)
+(10957, 'contraction', 'n', NULL, NULL, 1, 'B1', NULL), -- اِنقِباض -> contraction (formal, medical / physics)
+(10958, 'buried', 'adj', NULL, NULL, 1, 'B1', NULL), -- مَدفون -> buried (formal)
+(10959, 'jugular vein', 'n', NULL, NULL, 1, 'EX', NULL), -- شاهرَگ -> jugular vein / main artery (formal)
+(10960, 'confined', 'adj', NULL, NULL, 1, 'B1', NULL), -- مَحصور -> confined / enclosed (formal)
+(10961, 'blood vessels', 'n', NULL, NULL, 1, 'EX', NULL), -- عُروق -> blood vessels (formal, medical)
+(10962, 'camouflage', 'n', NULL, NULL, 1, 'B1', NULL), -- اِستِتار -> camouflage (formal, military)
+(10963, 'ultraviolet', 'adj', NULL, NULL, 1, 'B1', NULL), -- فَرابَنَفش -> ultraviolet (formal, physics)
+(10964, 'electromagnetic', 'adj', NULL, NULL, 1, 'B1', NULL), -- اِلِکترومَغناطیسی -> electromagnetic (formal, physics)
+(10965, 'resorting to', 'adj', NULL, NULL, 1, 'B2', NULL), -- مُتِوَسِّل -> resorting to (formal)
+(10966, 'coronation', 'n', NULL, NULL, 1, 'B1', NULL), -- تاجگُذاری -> coronation (formal, historical)
+(10967, 'elevated', 'adj', NULL, NULL, 1, 'B1', NULL), -- مُرتَفِع -> elevated / high (formal)
+(10968, 'convening', 'n', NULL, NULL, 1, 'B2', NULL), -- اِنعِقاد -> convening; coagulation (formal)
+(10969, 'assailant', 'n', NULL, NULL, 1, 'B2', NULL), -- ضارِب -> attacker / assailant (formal, legal)
+(10970, 'purification', 'n', NULL, NULL, 1, 'C1', NULL), -- تَطهیر -> purification (formal, religious)
+(10971, 'weakening', 'n', NULL, NULL, 1, 'B1', NULL), -- تَضعیف -> weakening (formal; تضعیف کردن = to weaken)
+(10972, 'atonement', 'n', NULL, NULL, 1, 'C1', NULL), -- کَفّاره -> atonement (formal, religious)
+(10973, 'days', 'n', NULL, NULL, 1, 'A2', NULL), -- اَیّام -> days (formal)
+(10974, 'composed of', 'adj', NULL, NULL, 1, 'B1', NULL), -- مُتَشَکِّل -> composed of / consisting of (formal)
+(10975, 'inhalation', 'n', NULL, NULL, 1, 'B1', NULL), -- اِستِنشاق -> inhalation (formal, medical)
+(10976, 'Ottoman', 'adj', NULL, NULL, 1, 'EX', NULL), -- عُثمانی -> Ottoman (historical)
+(10977, 'declaration form', 'n', NULL, NULL, 1, 'B2', NULL), -- اِظهارنامه -> declaration form (formal, legal / tax)
+(10978, 'Mongol', 'adj', NULL, NULL, 1, 'EX', NULL), -- مُغول -> Mongol (historical)
+(10979, 'peacefulness', 'n', NULL, NULL, 1, 'B1', NULL), -- مُسالِمَت -> peacefulness (formal)
+(10980, 'saturation', 'n', NULL, NULL, 1, 'B1', NULL), -- اِشباع -> saturation (formal, chemistry / psychology)
+(10981, 'aorta', 'n', NULL, NULL, 1, 'EX', NULL), -- آئورت -> aorta (medical, loanword)
+(10982, 'hardship', 'n', NULL, NULL, 1, 'B1', NULL), -- مَشَقَّت -> hardship (formal)
+(10983, 'molten', 'adj', NULL, NULL, 1, 'B1', NULL), -- مُذاب -> molten (formal, technical)
+(10984, 'cupbearer', 'n', NULL, NULL, 1, 'EX', NULL), -- ساقی -> cupbearer / wine-pourer (formal, literary)
+(10985, 'fragrance', 'n', NULL, NULL, 1, 'B1', NULL), -- رایِحه -> fragrance / scent (formal)
+(10986, 'fellow human', 'n', NULL, NULL, 1, 'B2', NULL), -- هَمنَوع -> fellow human (formal)
+(10987, 'companionship', 'n', NULL, NULL, 1, 'B1', NULL), -- مُصاحِبَت -> companionship (formal)
+(10988, 'divine revelation', 'n', NULL, NULL, 1, 'EX', NULL), -- وَحی -> divine revelation (formal, religious)
+(10989, 'years', 'n', NULL, NULL, 1, 'A1', NULL), -- سالیان -> years (formal, literary)
+(10990, 'envy', 'n', NULL, NULL, 1, 'B1', NULL), -- غِبطه -> envy [benign] (formal)
+(10991, 'collarbone', 'n', NULL, NULL, 1, 'EX', NULL), -- تَرقُوه -> collarbone (formal, medical)
+(10992, 'horrific', 'adj', NULL, NULL, 1, 'B1', NULL), -- فَجیع -> horrific / gruesome (formal)
+(10993, 'synchronized', 'adj', NULL, NULL, 1, 'B1', NULL), -- هَمگام -> in step / synchronized (formal)
+(10994, 'retina', 'n', NULL, NULL, 1, 'EX', NULL), -- شَبَکیه -> retina (medical)
+(10995, 'fertilization', 'n', NULL, NULL, 1, 'B1', NULL), -- لِقاح -> fertilization (formal, medical)
+(10996, 'originating', 'n', NULL, NULL, 1, 'B1', NULL), -- نِشأَت -> originating (formal; نشأت گرفتن = to originate from)
+(10997, 'kindnesses', 'n', NULL, NULL, 1, 'B1', NULL), -- اَلطاف -> kindnesses / favors (formal)
+(10998, 'flirtation', 'n', NULL, NULL, 1, 'B1', NULL), -- عِشوه -> coquetry / flirtation (formal, literary)
+(10999, 'ablaze', 'adj', NULL, NULL, 1, 'B1', NULL), -- مُشتَعِل -> ignited / ablaze (formal)
+(11000, 'inference', 'n', NULL, NULL, 1, 'B1', NULL), -- اِستِنباط -> inference / deduction (formal)
+(11001, 'contracted', 'adj', NULL, NULL, 1, 'B1', NULL), -- مُنقَبِض -> contracted (formal)
+(11002, 'livestock', 'n', NULL, NULL, 1, 'A2', NULL), -- اَحشام -> livestock (formal)
+(11003, 'larynx', 'n', NULL, NULL, 1, 'EX', NULL), -- حَنجَره -> larynx (medical)
+(11004, 'saliva', 'n', NULL, NULL, 1, 'B1', NULL), -- بُزاق -> saliva (formal, medical)
+(11005, 'redeemed', 'adj', NULL, NULL, 1, 'B1', NULL), -- رَستگار -> saved / redeemed (formal)
+(11006, 'brigadier general', 'n', NULL, NULL, 1, 'EX', NULL), -- سَرتیپ -> brigadier general (military rank)
+(11007, 'malignant', 'adj', NULL, NULL, 1, 'EX', NULL), -- بَدخیم -> malignant (formal, medical)
+(11008, 'necessitating', 'adj', NULL, NULL, 1, 'B2', NULL), -- مُستَلزِم -> requiring / necessitating (formal)
+(11009, 'ovary', 'n', NULL, NULL, 1, 'EX', NULL), -- تُخمدان -> ovary (medical)
+(11010, 'intravenous', 'adj', NULL, NULL, 1, 'EX', NULL), -- وَریدی -> venous / intravenous (formal, medical)
+(11011, 'barren', 'adj', NULL, NULL, 1, 'B1', NULL), -- نازا -> infertile / barren (formal, medical)
+(11012, 'sterile', 'adj', NULL, NULL, 1, 'B1', NULL), -- عَقیم -> sterile / infertile (formal)
+(11013, 'the deceased', 'n', NULL, NULL, 1, 'B1', NULL), -- اَموات -> the deceased (formal)
+(11014, 'hemlock', 'n', NULL, NULL, 1, 'EX', NULL), -- شوکَران -> hemlock (poison plant)
+(11015, 'secretions', 'n', NULL, NULL, 1, 'EX', NULL), -- تَرَشُّحات -> secretions (formal, medical)
+(11016, 'elixir', 'n', NULL, NULL, 1, 'EX', NULL), -- اِکسیر -> elixir (formal, literary)
+(11017, 'alimony', 'n', NULL, NULL, 1, 'EX', NULL), -- نَفَقه -> alimony (formal, legal)
+(11018, 'petty officer', 'n', NULL, NULL, 1, 'EX', NULL), -- ناوبان -> petty officer [naval rank]
+(11019, 'ligament', 'n', NULL, NULL, 1, 'EX', NULL), -- رَباط -> ligament (medical)
+(11020, 'usurper', 'n', NULL, NULL, 1, 'C1', NULL), -- غاصِب -> usurper (formal)
+(11021, 'infiltration', 'n', NULL, NULL, 1, 'B1', NULL), -- رُسوخ -> infiltration / penetration (formal)
+(11022, 'awe', 'n', NULL, NULL, 1, 'B1', NULL), -- هَیبَت -> imposing presence / awe (formal)
+(11023, 'estrogen', 'n', NULL, NULL, 1, 'EX', NULL), -- اِستروژن -> estrogen (loanword, medical)
+(11024, 'heavenly throne', 'n', NULL, NULL, 1, 'EX', NULL), -- عَرش -> throne [heavenly] (formal, religious)
+(11025, 'roaming', 'n', NULL, NULL, 1, 'B1', NULL), -- جَولان -> roaming / rampaging (formal)
+(11026, 'ascension', 'n', NULL, NULL, 1, 'C1', NULL), -- عُروج -> ascension (formal, religious / literary)
+(11027, 'bayonet', 'n', NULL, NULL, 1, 'EX', NULL), -- سَرنیزه -> bayonet (military)
+(11028, 'innately', 'adv', NULL, NULL, 1, 'B1', NULL), -- بِالفِطره -> innately / by nature (formal)
+(11029, 'exempt', 'adj', NULL, NULL, 1, 'B1', NULL), -- مُبَرّا -> exempt / free from (formal)
+(11030, 'heavenly kingdom', 'n', NULL, NULL, 1, 'EX', NULL), -- مَلَکوت -> heavenly kingdom (formal, religious / literary)
+(11031, 'brother-in-law', 'n', NULL, NULL, 1, 'A2', NULL), -- باجِناق -> brother-in-law [wife''s sister''s husband]
+(11032, 'chaste', 'adj', NULL, NULL, 1, 'B1', NULL), -- پاکدامَن -> chaste / virtuous (formal)
+(11033, 'altar', 'n', NULL, NULL, 1, 'B1', NULL), -- قُربانگاه -> altar / sacrificial site (formal, religious)
+(11034, 'cornea', 'n', NULL, NULL, 1, 'EX', NULL), -- قَرنیه -> cornea (medical)
+(11035, 'lawsuits', 'n', NULL, NULL, 1, 'B1', NULL), -- دَعاوی -> lawsuits / claims [legal] (formal)
+(11036, 'stoning', 'n', NULL, NULL, 1, 'EX', NULL), -- سَنگسار -> stoning [punishment] (formal)
+(11037, 'ostracized', 'adj', NULL, NULL, 1, 'B1', NULL), -- مَطرود -> rejected / ostracized (formal)
+(11038, 'gendarmerie', 'n', NULL, NULL, 1, 'EX', NULL), -- ژاندارمَری -> gendarmerie (loanword, historical / military police)
+(11039, 'caliphate', 'n', NULL, NULL, 1, 'EX', NULL), -- خِلافَت -> caliphate (formal, historical / religious)
+(11040, 'blood money', 'n', NULL, NULL, 1, 'EX', NULL), -- خونبَها -> blood money (formal)
+(11041, 'assassination attempt', 'n', NULL, NULL, 1, 'B1', NULL), -- سوءقَصد -> assassination attempt (formal)
+(11042, 'high-ranking', 'adj', NULL, NULL, 1, 'B1', NULL), -- والامَقام -> high-ranking / exalted (formal)
+(11043, 'inflamed', 'adj', NULL, NULL, 1, 'B1', NULL), -- مُلتَهِب -> inflamed (formal, medical)
+(11044, 'derivative', 'n', NULL, NULL, 1, 'B2', NULL), -- مُشتَق -> derivative (formal, math / linguistics)
+(11045, 'exasperation', 'n', NULL, NULL, 1, 'B1', NULL), -- سُتوه -> exasperation (formal; به ستوه آمدن = to be fed up)
+(11046, 'supplication', 'n', NULL, NULL, 1, 'C1', NULL), -- مُناجات -> supplication / prayer (formal, literary)
+(11047, 'modesty', 'n', NULL, NULL, 1, 'B1', NULL), -- عِفَّت -> chastity / modesty (formal)
+(11048, 'asceticism', 'n', NULL, NULL, 1, 'C1', NULL), -- ریاضَت -> asceticism / austerity (formal)
+(11049, 'freshness', 'n', NULL, NULL, 1, 'B1', NULL), -- طَراوَت -> freshness (formal, literary)
+(11050, 'answered prayer', 'adj', NULL, NULL, 1, 'EX', NULL), -- مُستَجاب -> answered [prayer] (formal, religious)
+(11051, 'radiotherapy', 'n', NULL, NULL, 1, 'EX', NULL), -- پَرتودَرمانی -> radiotherapy (medical)
+(11052, 'ulna', 'n', NULL, NULL, 1, 'EX', NULL), -- اولنا -> ulna [forearm bone] (medical, loanword)
+(11053, 'that which', 'conj', NULL, NULL, 1, 'C1', NULL), -- آنکه -> that which / the one that (formal, literary)
+(11054, 'stolen', 'adj', NULL, NULL, 1, 'B1', NULL), -- مَسروقه -> stolen [legal term] (formal)
+(11055, 'leprosy', 'n', NULL, NULL, 1, 'EX', NULL), -- جُذام -> leprosy (medical)
+(11056, 'ascetic', 'n', NULL, NULL, 1, 'C1', NULL), -- زاهِد -> ascetic / pious hermit (formal)
+(11057, 'poorhouse', 'n', NULL, NULL, 1, 'EX', NULL), -- نَوانخانه -> poorhouse / almshouse (formal)
+(11058, 'postpartum woman', 'n', NULL, NULL, 1, 'EX', NULL), -- زائو -> woman in childbirth / postpartum woman (formal, medical)
+(11059, 'at rest', 'adj', NULL, NULL, 1, 'B2', NULL), -- آرمیده -> at rest / settled (formal, literary)
+(11060, 'land tax', 'n', NULL, NULL, 1, 'EX', NULL), -- خَراج -> land tax [historical] (formal)
+(11061, 'temporary marriage', 'n', NULL, NULL, 1, 'EX', NULL), -- صیغه -> temporary marriage [Islamic legal term] (formal)
+(11062, 'discoverer', 'n', NULL, NULL, 1, 'B1', NULL), -- مُکتَشِف -> discoverer / explorer (formal)
+(11063, 'in that manner', 'adv', NULL, NULL, 1, 'C1', NULL), -- آن‌گونه -> in that manner (formal, literary)
+(11064, 'rouge', 'n', NULL, NULL, 1, 'EX', NULL), -- گُلگونه -> rouge / blush [cosmetic] (formal, literary)
+(11065, 'priestess', 'n', NULL, NULL, 1, 'EX', NULL), -- کاهِنه -> priestess (formal)
+(11066, 'worshippers', 'n', NULL, NULL, 1, 'EX', NULL), -- بَندِگان -> servants / worshippers [of God] (formal, religious)
+(11067, 'His Majesty', 'n', NULL, NULL, 1, 'EX', NULL), -- عَلیحَضرَت -> His/Her Majesty (formal, royal title)
+(11068, 'buoy', 'n', NULL, NULL, 1, 'EX', NULL), -- بویه -> buoy (formal, nautical)
+(11069, 'lustful', 'adj', NULL, NULL, 1, 'B2', NULL), -- شَهوَتی -> lustful (formal)
+(11070, 'the undersigned', 'pron', NULL, NULL, 1, 'EX', NULL), -- این‌جانِب -> the undersigned / I (formal)
+(11071, 'humbly', 'adv', NULL, NULL, 1, 'B1', NULL), -- فروتنانه -> humbly (formal)
+(11072, 'exorcist', 'n', NULL, NULL, 1, 'EX', NULL), -- جِن‌گیر -> exorcist (formal)
+(11073, 'unshapely', 'adj', NULL, NULL, 1, 'EX', NULL), -- بَدتَرکیب -> unshapely / ill-formed (formal)
+(11074, 'bridal chamber', 'n', NULL, NULL, 1, 'EX', NULL), -- حُجله -> bridal chamber (formal)
+(11075, 'catapult', 'n', NULL, NULL, 1, 'EX', NULL), -- مَنجَنیق -> catapult / trebuchet (formal)
+(11076, 'disgracefully', 'adv', NULL, NULL, 1, 'EX', NULL), -- مُفتَضِحانه -> disgracefully (formal)
+(11077, 'convened', 'adj', NULL, NULL, 1, 'B2', NULL), -- مُنعَقِد -> concluded / convened [formal, e.g. treaty]
+(11078, 'spouses', 'n', NULL, NULL, 1, 'B1', NULL), -- اَزواج -> spouses (formal, plural)
+(11079, 'adventurously', 'adv', NULL, NULL, 1, 'B1', NULL), -- ماجراجویانه -> adventurously (formal)
+(11080, 'foolish', 'adj', NULL, NULL, 1, 'B1', NULL), -- سَفیه -> foolish / imprudent (formal, also legal term)
+(11081, 'gout', 'n', NULL, NULL, 1, 'EX', NULL), -- نِقرِس -> gout (medical)
+(11082, 'menstruation', 'n', NULL, NULL, 1, 'B2', NULL), -- قاعِدگی -> menstruation (medical)
+(11083, 'airs', 'n', NULL, NULL, 1, 'EX', NULL), -- اَطوار -> manners / airs (formal, plural)
+(11084, 'divinity', 'n', NULL, NULL, 1, 'EX', NULL), -- خُداوَندی -> divinity / lordship (formal)
+(11085, 'marquis', 'n', NULL, NULL, 1, 'EX', NULL), -- مارکیز -> marquis (loanword, title)
+(11086, 'inauspiciousness', 'n', NULL, NULL, 1, 'EX', NULL), -- نُحسی -> ill-omened nature / inauspiciousness (formal)
+(11087, 'homeland', 'n', NULL, NULL, 1, 'B1', NULL), -- دیار -> land / homeland (formal, literary)
+(11088, 'typhoid fever', 'n', NULL, NULL, 1, 'EX', NULL), -- حَصبه -> typhoid fever (medical)
+(11089, 'electromagnetism', 'n', NULL, NULL, 1, 'EX', NULL), -- اِلِکترومغناطیس -> electromagnetism
+(11090, 'leftist', 'n', NULL, NULL, 1, 'B1', NULL), -- چَپی -> leftist (formal, political)
+(11091, 'future generations', 'n', NULL, NULL, 1, 'B1', NULL), -- آیندِگان -> future generations (formal)
+(11092, 'evening time', 'n', NULL, NULL, 1, 'EX', NULL), -- شَبانگاه -> evening time (formal, literary)
+(11093, 'houri', 'n', NULL, NULL, 1, 'EX', NULL), -- حوریه -> houri [heavenly maiden] (formal, religious)
+(11094, 'social circles', 'n', NULL, NULL, 1, 'B1', NULL), -- مَحافِل -> circles [social] (formal, plural of محفل)
+(11095, 'hemorrhoids', 'n', NULL, NULL, 1, 'EX', NULL), -- بَواسیر -> hemorrhoids (medical)
+(11096, 'apostles', 'n', NULL, NULL, 1, 'EX', NULL), -- حَواریون -> apostles (formal, religious)
+(11097, 'embolism', 'n', NULL, NULL, 1, 'EX', NULL), -- آمبولی -> embolism (medical)
+(11098, 'squatting', 'n', NULL, NULL, 1, 'B1', NULL), -- چَمباتَمه -> squatting (formal; چمباتمه زدن)
+(11099, 'military campaign', 'n', NULL, NULL, 1, 'B1', NULL), -- لَشکَرکِشی -> military campaign (formal)
+(11100, 'alchemist', 'n', NULL, NULL, 1, 'EX', NULL), -- کیمیاگَر -> alchemist (formal)
+(11101, 'annulment', 'n', NULL, NULL, 1, 'B2', NULL), -- اِبطال -> annulment / invalidation (formal, legal)
+(11102, 'sensual', 'adj', NULL, NULL, 1, 'B2', NULL), -- شَهوانی -> sensual / lustful (formal)
+(11103, 'healing', 'adj', NULL, NULL, 1, 'B1', NULL), -- شِفابَخش -> healing / curative (formal)
+(11104, 'capacitor', 'n', NULL, NULL, 1, 'EX', NULL), -- خازِن -> capacitor [electronics] (formal)
+(11105, 'pores', 'n', NULL, NULL, 1, 'B1', NULL), -- مَنافِذ -> pores (formal, plural of منفذ)
+(11106, 'incantation', 'n', NULL, NULL, 1, 'EX', NULL), -- وِرد -> incantation / chant (formal)
+(11107, 'ululation', 'n', NULL, NULL, 1, 'EX', NULL), -- هَلهَله -> cheering / ululation (formal)
+(11108, 'conceivable', 'adj', NULL, NULL, 1, 'B2', NULL), -- مُتَصَوَّر -> imaginable / conceivable (formal)
+(11109, 'revelations', 'n', NULL, NULL, 1, 'B1', NULL), -- مُکاشِفات -> revelations (formal, plural)
+(11110, 'hypocritically', 'adv', NULL, NULL, 1, 'B1', NULL), -- ریاکارانه -> hypocritically (formal)
+(11111, 'overlooking', 'adj', NULL, NULL, 1, 'B1', NULL), -- مُشرِف -> overlooking (formal)
+(11112, 'vanadium', 'n', NULL, NULL, 1, 'EX', NULL), -- واناديوم -> vanadium (loanword, chemistry)
+(11113, 'the late', 'adj', NULL, NULL, 1, 'B2', NULL), -- فَقید -> the late [deceased] (formal)
+(11114, 'distillation', 'n', NULL, NULL, 1, 'B1', NULL), -- تَقطیر -> distillation (formal)
+(11115, 'ambitiously', 'adv', NULL, NULL, 1, 'B1', NULL), -- بُلَندپَروازانه -> ambitiously (formal)
+(11116, 'excepted', 'adj', NULL, NULL, 1, 'B1', NULL), -- مُستَثنی -> excepted / exempted (formal)
+(11117, 'crescent-shaped', 'adj', NULL, NULL, 1, 'EX', NULL), -- هِلالی -> crescent-shaped (formal)
+(11118, 'tribes', 'n', NULL, NULL, 1, 'B1', NULL), -- ایلات -> tribes (formal, plural of ایل)
+(11119, 'unfounded', 'adj', NULL, NULL, 1, 'B1', NULL), -- واهی -> unfounded / baseless (formal)
+(11120, 'marriage officiant', 'n', NULL, NULL, 1, 'EX', NULL), -- عاقِد -> officiant [marriage] (formal)
+(11121, 'unholy', 'adj', NULL, NULL, 1, 'B1', NULL), -- نامُقَدَّس -> unholy (formal)
+(11122, 'forced labor', 'n', NULL, NULL, 1, 'B1', NULL), -- بیگاری -> forced labor (formal)
+(11123, 'psychoactive', 'adj', NULL, NULL, 1, 'EX', NULL), -- روان‌گَردان -> psychoactive / hallucinogenic (formal)
+(11124, 'impulse', 'n', NULL, NULL, 1, 'B1', NULL), -- تَکانه -> impulse [physics/psychology] (formal)
+(11125, 'cartilage', 'n', NULL, NULL, 1, 'EX', NULL), -- غُضروف -> cartilage (medical)
+(11126, 'personnel affairs', 'n', NULL, NULL, 1, 'EX', NULL), -- کارگُزینی -> personnel affairs [office] (formal)
+(11127, 'summer resort', 'n', NULL, NULL, 1, 'EX', NULL), -- ییلاق -> summer resort / highland pasture (formal)
+(11128, 'farsakh', 'n', NULL, NULL, 1, 'EX', NULL), -- فَرسَنگ -> farsakh [old unit of distance] (formal)
+(11129, 'off-track', 'adj', NULL, NULL, 1, 'B1', NULL), -- بیراه -> off-track / wrong path (formal)
+(11130, 'cyanide', 'n', NULL, NULL, 1, 'EX', NULL), -- سیانید -> cyanide (loanword)
+(11131, 'seeking justice', 'n', NULL, NULL, 1, 'B2', NULL), -- دادخواهی -> seeking justice (formal, legal)
+(11132, 'hereby', 'adv', NULL, NULL, 1, 'B2', NULL), -- بِدین‌وَسیله -> hereby (formal)
+(11133, 'abjectly', 'adv', NULL, NULL, 1, 'EX', NULL), -- حَقیرانه -> abjectly / humbly (formal)
+(11134, 'mystical', 'adj', NULL, NULL, 1, 'B2', NULL), -- عِرفانی -> mystical (formal)
+(11135, 'cosmic', 'adj', NULL, NULL, 1, 'B1', NULL), -- کیهانی -> cosmic (formal)
+(11136, 'lionhearted', 'adj', NULL, NULL, 1, 'EX', NULL), -- شیردِل -> lionhearted (formal)
+(11137, 'heron', 'n', NULL, NULL, 1, 'B1', NULL), -- ماهی‌خوار -> heron [fish-eating bird] (formal)
+(11138, 'arsenal', 'n', NULL, NULL, 1, 'B1', NULL), -- زَرادخانه -> arsenal (formal)
+(11139, 'innovatively', 'adv', NULL, NULL, 1, 'B1', NULL), -- مُبتِکرانه -> innovatively (formal)
+(11140, 'pennyroyal', 'n', NULL, NULL, 1, 'EX', NULL), -- پونه -> pennyroyal [mint herb] (formal)
+(11141, 'the Orient', 'n', NULL, NULL, 1, 'EX', NULL), -- مَشرِق -> the East / Orient (formal)
+(11142, 'contentment', 'n', NULL, NULL, 1, 'B1', NULL), -- قَناعَت -> contentment / frugality (formal)
+(11143, 'for a while', 'adv', NULL, NULL, 1, 'B2', NULL), -- چَندگاهی -> for a while (formal, literary)
+(11144, 'dishonorably', 'adv', NULL, NULL, 1, 'B2', NULL), -- ناجَوانمَردانه -> unfairly / dishonorably (formal)
+(11145, 'versified', 'adj', NULL, NULL, 1, 'EX', NULL), -- مَنظوم -> versified / in verse (formal)
+(11146, 'alkaline', 'adj', NULL, NULL, 1, 'EX', NULL), -- قَلیایی -> alkaline [chemistry] (formal)
+(11147, 'prevailing', 'adj', NULL, NULL, 1, 'B1', NULL), -- فائِق -> prevailing / overcoming (formal; فائق آمدن)
+(11148, 'frostbite', 'n', NULL, NULL, 1, 'EX', NULL), -- گازگِرِفتِگی -> frostbite (formal)
+(11149, 'legitimacy', 'n', NULL, NULL, 1, 'B1', NULL), -- مَشروعیَّت -> legitimacy (formal)
+(11150, 'menopause', 'n', NULL, NULL, 1, 'EX', NULL), -- یائِسگی -> menopause (medical)
+(11151, 'servants', 'n', NULL, NULL, 1, 'B1', NULL), -- خادِمان -> servants (formal, plural of خادم)
+(11152, 'chivalry', 'n', NULL, NULL, 1, 'B1', NULL), -- جَوانمَردی -> chivalry / nobility (formal)
+(11153, 'neigh', 'n', NULL, NULL, 1, 'EX', NULL), -- شیهه -> neigh [horse sound] (formal)
+(11154, 'trot', 'n', NULL, NULL, 1, 'EX', NULL), -- یورتمه -> trot [horse gait] (formal)
+(11155, 'glad tidings', 'n', NULL, NULL, 1, 'EX', NULL), -- نِوید -> good news / glad tidings (formal, literary)
+(11156, 'Romans', 'n', NULL, NULL, 1, 'EX', NULL), -- رومیان -> Romans (formal, plural)
+(11157, 'mufti', 'n', NULL, NULL, 1, 'EX', NULL), -- مُفتی -> mufti [Islamic scholar] (formal, religious)
+(11158, 'material things', 'n', NULL, NULL, 1, 'B1', NULL), -- مادّیات -> material things (formal)
+(11159, 'velvety', 'adj', NULL, NULL, 1, 'B1', NULL), -- مَخمَلی -> velvety (formal)
+(11160, 'hunter', 'n', NULL, NULL, 1, 'B1', NULL), -- صَیّاد -> hunter (formal, literary)
+(11161, 'arterial', 'adj', NULL, NULL, 1, 'EX', NULL), -- شِریانی -> arterial (formal)
+(11162, 'abscess', 'n', NULL, NULL, 1, 'EX', NULL), -- آبسه -> abscess (medical)
+(11163, 'the Allies', 'n', NULL, NULL, 1, 'EX', NULL), -- مُتَّفِقین -> the Allies (formal, historical)
+(11164, 'cerebellum', 'n', NULL, NULL, 1, 'EX', NULL), -- مُخچه -> cerebellum (medical)
+(11165, 'harem', 'n', NULL, NULL, 1, 'EX', NULL), -- حَرَمسَرا -> harem (formal)
+(11166, 'severed', 'adj', NULL, NULL, 1, 'B1', NULL), -- گُسِسته -> torn apart / severed (formal)
+(11167, 'sick leave', 'adj', NULL, NULL, 1, 'B1', NULL), -- اِستِعلاجی -> sick leave [formal; مرخصی استعلاجی]
+(11168, 'Antichrist', 'n', NULL, NULL, 1, 'EX', NULL), -- دَجّال -> Antichrist (formal, religious)
+(11169, 'innocently', 'adv', NULL, NULL, 1, 'B1', NULL), -- مَعصومانه -> innocently (formal)
+(11170, 'shapely', 'adj', NULL, NULL, 1, 'B1', NULL), -- شَکیل -> shapely / well-formed (formal)
+(11171, 'ballistic', 'adj', NULL, NULL, 1, 'EX', NULL), -- بالِستیک -> ballistic (formal)
+(11172, 'lofty', 'adj', NULL, NULL, 1, 'B1', NULL), -- والا -> lofty / exalted (formal)
+(11173, 'musk', 'n', NULL, NULL, 1, 'EX', NULL), -- مُشک -> musk (formal, literary)
+(11174, 'typhus', 'n', NULL, NULL, 1, 'EX', NULL), -- تیفوس -> typhus (medical)
+(11175, 'apostasy', 'n', NULL, NULL, 1, 'EX', NULL), -- اِرتِداد -> apostasy (formal, religious)
+(11176, 'adze', 'n', NULL, NULL, 1, 'EX', NULL), -- تیشه -> adze / hatchet (formal)
+(11177, 'Macedonian', 'adj', NULL, NULL, 1, 'EX', NULL), -- مَقدونی -> Macedonian (nationality)
+(11178, 'desires', 'n', NULL, NULL, 1, 'B1', NULL), -- اَمیال -> desires (formal, plural of میل)
+(11179, 'comrade in arms', 'n', NULL, NULL, 1, 'EX', NULL), -- هَمرَزم -> comrade in arms (formal)
+(11180, 'ambush spot', 'n', NULL, NULL, 1, 'EX', NULL), -- کَمینگاه -> ambush spot (formal)
+(11181, 'demonic', 'adj', NULL, NULL, 1, 'B1', NULL), -- اَهریمَنی -> demonic / devilish (formal)
+(11182, 'possessed', 'adj', NULL, NULL, 1, 'EX', NULL), -- تَسخیری -> possessed [formal, e.g. by jinn]
+(11183, 'groin', 'n', NULL, NULL, 1, 'EX', NULL), -- کِشاله -> groin (formal; کشاله ران)
+(11184, 'enchantment', 'n', NULL, NULL, 1, 'B1', NULL), -- اَفسونگَری -> enchantment / allure (formal)
+(11185, 'those who', 'pron', NULL, NULL, 1, 'C1', NULL), -- آنانی -> those who (formal, literary)
+(11186, 'statesmen', 'n', NULL, NULL, 1, 'B2', NULL), -- دَولَتمَردان -> statesmen (formal)
+(11187, 'good news', 'n', NULL, NULL, 1, 'A2', NULL), -- مژده -> good news (formal, literary)
+(11188, 'class-related', 'adj', NULL, NULL, 1, 'B1', NULL), -- طَبَقاتی -> class-related (formal, social)
+(11189, 'foods', 'n', NULL, NULL, 1, 'A2', NULL), -- اَغذیه -> foods (formal, plural of غذا)
+(11190, 'imamzadeh', 'n', NULL, NULL, 1, 'EX', NULL), -- اِمامزاده -> imamzadeh [shrine] (formal)
+(11191, 'countess', 'n', NULL, NULL, 1, 'EX', NULL), -- کُنتِس -> countess (formal, loanword)
+(11192, 'intellectually', 'adv', NULL, NULL, 1, 'B1', NULL), -- روشَنفِکرانه -> intellectually (formal)
+(11193, 'nanny', 'n', NULL, NULL, 1, 'B1', NULL), -- لَله -> nanny / governess (formal, historical/literary)
+(11194, 'shrew', 'n', NULL, NULL, 1, 'EX', NULL), -- سَلیطه -> shrew / nagging woman (formal, derogatory)
+(11195, 'irreligious', 'adj', NULL, NULL, 1, 'B1', NULL), -- لامَذهَب -> irreligious / godless (formal)
+(11196, 'captives', 'n', NULL, NULL, 1, 'B1', NULL), -- اَسرا -> captives (formal, plural of اسیر)
+(11197, 'lips', 'n', NULL, NULL, 1, 'A1', NULL), -- لَبان -> lips (formal, literary, plural of لب)
+(11198, 'excused', 'adj', NULL, NULL, 1, 'B1', NULL), -- مَعذور -> excused / exempted (formal)
+(11199, 'Cossack', 'n', NULL, NULL, 1, 'EX', NULL), -- قَزاق -> Cossack (formal, historical)
+(11200, 'explaining', 'n', NULL, NULL, 1, 'B1', NULL), -- تَفهیم -> making understood / explaining (formal)
+(11201, 'membrane', 'n', NULL, NULL, 1, 'EX', NULL), -- غِشا -> membrane (formal, biology)
+(11202, 'July', 'n', NULL, NULL, 1, 'A1', NULL), -- ژوئیه -> July [French calendar month name] (formal)
+(11203, 'sequined', 'adj', NULL, NULL, 1, 'EX', NULL), -- پولَکی -> sequined / glittery (formal)
+(11204, 'tiptoeing', 'adv', NULL, NULL, 1, 'B1', NULL), -- پاوَرچین -> tiptoeing (formal; پاورچین راه رفتن)
+(11205, 'most severe', 'adj', NULL, NULL, 1, 'B1', NULL), -- اَشَد -> most severe (formal, legal; اشد مجازات)
+(11206, 'blacksmithing', 'n', NULL, NULL, 1, 'EX', NULL), -- آهَنگَری -> blacksmithing (formal)
+(11207, 'Native American', 'n', NULL, NULL, 1, 'EX', NULL), -- سُرخپوست -> Native American (formal, dated term)
+(11208, 'female saint', 'n', NULL, NULL, 1, 'EX', NULL), -- قَدّیسه -> female saint (formal, religious)
+(11209, 'being a groom', 'n', NULL, NULL, 1, 'EX', NULL), -- دامادی -> being a groom / son-in-law status (formal)
+(11210, 'launcher', 'n', NULL, NULL, 1, 'B1', NULL), -- پَرتابگَر -> launcher / thrower (formal)
+(11211, 'the poor', 'n', NULL, NULL, 1, 'B1', NULL), -- فَقیران -> the poor (formal, plural of فقیر)
+(11212, 'hernia', 'n', NULL, NULL, 1, 'EX', NULL), -- فَتق -> hernia (medical)
+(11213, 'bedmate', 'n', NULL, NULL, 1, 'EX', NULL), -- هَمخواب -> bedmate / sexual partner (formal)
+(11214, 'schizophrenia', 'n', NULL, NULL, 1, 'EX', NULL), -- اسکیزوفرنی -> schizophrenia (loanword)
+(11215, 'functions', 'n', NULL, NULL, 1, 'B1', NULL), -- تَوابِع -> functions (formal, math, plural of تابع)
+(11216, 'piled up', 'adj', NULL, NULL, 1, 'B1', NULL), -- تَلنبار -> piled up / stacked (formal)
+(11217, 'gardens', 'n', NULL, NULL, 1, 'A2', NULL), -- جَنّات -> gardens (formal, religious, plural of جنت)
+(11218, 'bill of lading', 'n', NULL, NULL, 1, 'EX', NULL), -- بارنامه -> bill of lading / waybill (formal)
+(11219, 'insistently', 'adv', NULL, NULL, 1, 'B1', NULL), -- مُصِرّانه -> insistently (formal)
+(11220, 'arthritis', 'n', NULL, NULL, 1, 'EX', NULL), -- آرتروز -> arthritis (medical, loanword)
+(11221, 'talent scouting', 'n', NULL, NULL, 1, 'B1', NULL), -- اِستِعدادیابی -> talent scouting (formal)
+(11222, 'fragmentation', 'n', NULL, NULL, 1, 'B1', NULL), -- گُسِستگی -> disconnection / fragmentation (formal)
+(11223, 'listless', 'adj', NULL, NULL, 1, 'B1', NULL), -- وارَفته -> listless / limp (formal)
+(11224, 'biometric', 'adj', NULL, NULL, 1, 'EX', NULL), -- بیومتریک -> biometric (formal)
+(11225, 'all around', 'adv', NULL, NULL, 1, 'B1', NULL), -- دورتادور -> all around (formal)
+(11226, 'mysteriously', 'adv', NULL, NULL, 1, 'B1', NULL), -- مَرموزانه -> mysteriously (formal)
+(11227, 'adulterer', 'n', NULL, NULL, 1, 'B2', NULL), -- زِناکار -> adulterer (formal)
+(11228, 'gustatory', 'adj', NULL, NULL, 1, 'EX', NULL), -- چِشایی -> gustatory / taste (formal; حس چشایی)
+(11229, 'extravagance', 'n', NULL, NULL, 1, 'B1', NULL), -- اِسراف -> extravagance / wastefulness (formal)
+(11230, 'intercession', 'n', NULL, NULL, 1, 'EX', NULL), -- شَفاعَت -> intercession (formal, religious)
+(11231, 'banter', 'n', NULL, NULL, 1, 'B1', NULL), -- مِزاح -> joking / banter (formal)
+(11232, 'repellent', 'adj', NULL, NULL, 1, 'B1', NULL), -- مُنزَجِرکُننده -> disgusting / repellent (formal)
+(11233, 'photon', 'n', NULL, NULL, 1, 'EX', NULL), -- فوتون -> photon (loanword)
+(11234, 'lieutenant general', 'n', NULL, NULL, 1, 'EX', NULL), -- سِپَهبَد -> lieutenant general [military rank] (formal)
+(11235, 'reminding', 'adj', NULL, NULL, 1, 'B1', NULL), -- مُتَذَکِّر -> reminding / pointing out (formal)
+(11236, 'tobacco products', 'n', NULL, NULL, 1, 'B1', NULL), -- دُخانیات -> tobacco products (formal)
+(11237, 'lumbar', 'adj', NULL, NULL, 1, 'EX', NULL), -- کَمَری -> lumbar / waist-related (formal)
+(11238, 'protruding', 'adj', NULL, NULL, 1, 'B1', NULL), -- بَرآمَده -> protruding / arisen (formal)
+(11239, 'scribe', 'n', NULL, NULL, 1, 'B1', NULL), -- کاتِب -> scribe (formal)
+(11240, 'tensile', 'adj', NULL, NULL, 1, 'EX', NULL), -- کِششی -> tensile / pulling (formal)
+(11241, 'starling', 'n', NULL, NULL, 1, 'EX', NULL), -- سار -> starling [bird] (formal)
+(11242, 'bookkeeper', 'n', NULL, NULL, 1, 'B1', NULL), -- دَفتَردار -> bookkeeper / clerk (formal)
+(11243, 'hunting ground', 'n', NULL, NULL, 1, 'B1', NULL), -- شِکارگاه -> hunting ground (formal)
+(11244, 'yelling', 'n', NULL, NULL, 1, 'B1', NULL), -- عَربَده -> shouting / yelling (formal)
+(11245, 'gold brocade', 'n', NULL, NULL, 1, 'EX', NULL), -- زَری -> gold brocade fabric (formal)
+(11246, 'lasso', 'n', NULL, NULL, 1, 'B1', NULL), -- کَمَند -> lasso (formal, literary)
+(11247, 'eagerly watching', 'adv', NULL, NULL, 1, 'EX', NULL), -- چارچِشمی -> eagerly watching (formal; چارچشمی نگاه کردن)
+(11248, 'small town', 'n', NULL, NULL, 1, 'B1', NULL), -- قَصَبه -> small town (formal)
+(11249, 'pilgrimage site', 'n', NULL, NULL, 1, 'EX', NULL), -- زیارَتگاه -> pilgrimage site (formal)
+(11250, 'dervish', 'n', NULL, NULL, 1, 'EX', NULL), -- دَرویش -> dervish (formal, literary)
+(11251, 'mediation', 'n', NULL, NULL, 1, 'B1', NULL), -- وَساطَت -> mediation (formal)
+(11252, 'incurable', 'adj', NULL, NULL, 1, 'B1', NULL), -- لاعِلاج -> incurable (formal, medical)
+(11253, 'inspirational', 'adj', NULL, NULL, 1, 'B1', NULL), -- اِلهامی -> inspirational (formal)
+(11254, 'coinciding', 'adj', NULL, NULL, 1, 'B1', NULL), -- مُصادِف -> coinciding (formal)
+(11255, 'snake charmer', 'n', NULL, NULL, 1, 'EX', NULL), -- مارگیر -> snake charmer (formal)
+(11256, 'benevolently', 'adv', NULL, NULL, 1, 'B1', NULL), -- خَیرخواهانه -> benevolently (formal)
+(11257, 'convulsive', 'adj', NULL, NULL, 1, 'EX', NULL), -- تَشَنُّجی -> convulsive / tense (formal)
+(11258, 'radiant', 'adj', NULL, NULL, 1, 'B1', NULL), -- تابان -> shining / radiant (formal, literary)
+(11259, 'courtyard', 'n', NULL, NULL, 1, 'B1', NULL), -- صَحن -> courtyard (formal, esp. shrine)
+(11260, 'prostration', 'n', NULL, NULL, 1, 'EX', NULL), -- سَجده -> prostration (formal, religious)
+(11261, 'ambiguities', 'n', NULL, NULL, 1, 'B1', NULL), -- اِبهامات -> ambiguities (formal)
+(11262, 'windpipe', 'n', NULL, NULL, 1, 'EX', NULL), -- نای -> windpipe / trachea (formal, medical)
+(11263, 'cunningly', 'adv', NULL, NULL, 1, 'B1', NULL), -- موذیانه -> cunningly / deceitfully (formal)
+(11264, 'miscellaneous', 'adj', NULL, NULL, 1, 'B1', NULL), -- مُتَفَرِّقه -> miscellaneous (formal)
+(11265, 'plasma', 'n', NULL, NULL, 1, 'EX', NULL), -- پِلاسما -> plasma (loanword)
+(11266, 'bodies', 'n', NULL, NULL, 1, 'A2', NULL), -- اَبدان -> bodies (formal, plural of بدن)
+(11267, 'sisterly', 'adj', NULL, NULL, 1, 'B1', NULL), -- خواهَرانه -> sisterly (formal)
+(11268, 'punitive', 'adj', NULL, NULL, 1, 'B1', NULL), -- تَنبیهی -> punitive (formal)
+(11269, 'authoritative', 'adj', NULL, NULL, 1, 'B1', NULL), -- نافِذ -> penetrating / authoritative (formal)
+(11270, 'porridge', 'n', NULL, NULL, 1, 'B1', NULL), -- شُله -> porridge / stew (formal)
+(11271, 'carbonate', 'n', NULL, NULL, 1, 'EX', NULL), -- کَربُنات -> carbonate (formal, chemistry)
+(11272, 'dwelling place', 'n', NULL, NULL, 1, 'B1', NULL), -- مَنزِلگاه -> abode / dwelling place (formal, literary)
+(11273, 'combat skill', 'n', NULL, NULL, 1, 'EX', NULL), -- جَنگاوَری -> warriorship / combat skill (formal)
+(11274, 'shepherd', 'n', NULL, NULL, 1, 'B1', NULL), -- شُبان -> shepherd (formal, literary)
+(11275, 'saddle', 'n', NULL, NULL, 1, 'B1', NULL), -- زین -> saddle (formal)
+(11276, 'narrowness', 'n', NULL, NULL, 1, 'B1', NULL), -- تَنگی -> narrowness / tightness (formal)
+(11277, 'eczema', 'n', NULL, NULL, 1, 'EX', NULL), -- اگزما -> eczema (medical, loanword)
+(11278, 'rash', 'adj', NULL, NULL, 1, 'B1', NULL), -- نَسَنجیده -> ill-considered / rash (formal)
+(11279, 'forces', 'n', NULL, NULL, 1, 'B1', NULL), -- قُوا -> forces (formal, plural of قوه)
+(11280, 'hasty', 'adj', NULL, NULL, 1, 'B1', NULL), -- شِتابان -> hurrying / hasty (formal, literary)
+(11281, 'ornament', 'n', NULL, NULL, 1, 'B1', NULL), -- زیوَر -> ornament / adornment (formal)
+(11282, 'pests', 'n', NULL, NULL, 1, 'B1', NULL), -- آفات -> pests / blights (formal, agricultural)
+(11283, 'torso', 'n', NULL, NULL, 1, 'B1', NULL), -- بالاتَنه -> upper body / torso (formal)
+(11284, 'reclining', 'n', NULL, NULL, 1, 'B1', NULL), -- لَم -> lounging / reclining (formal; لم دادن)
+(11285, 'fruitful', 'adj', NULL, NULL, 1, 'B1', NULL), -- مُثمِر -> fruitful (formal; مثمر ثمر)
+(11286, 'guardians', 'n', NULL, NULL, 1, 'B1', NULL), -- اَولیا -> guardians / saints (formal, plural of ولی)
+(11287, 'wishbone', 'n', NULL, NULL, 1, 'EX', NULL), -- جَناغ -> wishbone (formal)
+(11288, 'ill-omened', 'adj', NULL, NULL, 1, 'EX', NULL), -- بَدشگون -> ill-omened / inauspicious (formal)
+(11289, 'ring-shaped', 'adj', NULL, NULL, 1, 'B1', NULL), -- حَلقَوی -> circular / ring-shaped (formal)
+(11290, 'decoction', 'n', NULL, NULL, 1, 'EX', NULL), -- جوشانده -> decoction / brewed drink (formal)
+(11291, 'computational', 'adj', NULL, NULL, 1, 'B1', NULL), -- مُحاسِباتی -> computational (formal)
+(11292, 'newton', 'n', NULL, NULL, 1, 'EX', NULL), -- نیوتُن -> newton [physics unit]
+(11293, 'poorly', 'adv', NULL, NULL, 1, 'B1', NULL), -- فَقیرانه -> poorly / in a poor manner (formal)
+(11294, 'shrewdly', 'adv', NULL, NULL, 1, 'B1', NULL), -- زیرَکانه -> shrewdly / cleverly (formal)
+(11295, 'tunic', 'n', NULL, NULL, 1, 'EX', NULL), -- تونیک -> tonic; tunic [dress] (loanword)
+(11296, 'imitative', 'adj', NULL, NULL, 1, 'B1', NULL), -- تَقلیدی -> imitative (formal)
+(11297, 'Trinity', 'n', NULL, NULL, 1, 'EX', NULL), -- تَثلیث -> Trinity (formal, religious)
+(11298, 'diligent', 'adj', NULL, NULL, 1, 'B1', NULL), -- سَخت‌کوش -> hardworking / diligent (formal)
+(11299, 'dynastic', 'adj', NULL, NULL, 1, 'EX', NULL), -- خانداني -> dynastic / of a family lineage (formal)
+(11300, 'pesticide spraying', 'n', NULL, NULL, 1, 'B1', NULL), -- سَم‌پاشی -> pesticide spraying (formal)
+(11301, 'resulting', 'adj', NULL, NULL, 1, 'B1', NULL), -- حاصِله -> resulting / obtained (formal)
+(11302, 'caliber', 'n', NULL, NULL, 1, 'B1', NULL), -- عِیار -> caliber / purity [gold] (formal)
+(11303, 'barbarian', 'n', NULL, NULL, 1, 'B1', NULL), -- بَربَر -> barbarian (formal)
+(11304, 'nettle', 'n', NULL, NULL, 1, 'EX', NULL), -- گَزنه -> nettle [plant] (formal)
+(11305, 'saccharin', 'n', NULL, NULL, 1, 'EX', NULL), -- ساخارین -> saccharin (loanword)
+(11306, 'passivity', 'n', NULL, NULL, 1, 'B1', NULL), -- اِنفِعال -> passivity (formal)
+(11307, 'kneecap', 'n', NULL, NULL, 1, 'EX', NULL), -- کِشکَک -> kneecap / patella (formal, medical)
+(11308, 'twinned', 'adj', NULL, NULL, 1, 'B1', NULL), -- توأَم -> twinned / combined (formal)
+(11309, 'quadrilateral', 'adj', NULL, NULL, 1, 'EX', NULL), -- چَهارگوش -> quadrilateral / square-shaped (formal)
+(11310, 'pun', 'n', NULL, NULL, 1, 'B1', NULL), -- جِناس -> pun / wordplay (formal, literary)
+(11311, 'meticulously', 'adv', NULL, NULL, 1, 'B1', NULL), -- موشکافانه -> meticulously / scrutinizingly (formal)
+(11312, 'madmen', 'n', NULL, NULL, 1, 'B1', NULL), -- دیوانگان -> madmen (formal, plural of دیوانه)
+(11313, 'Neanderthal', 'n', NULL, NULL, 1, 'EX', NULL), -- نئاندرتال -> Neanderthal (loanword)
+(11314, 'diaphragm', 'n', NULL, NULL, 1, 'EX', NULL), -- دیافراگم -> diaphragm (formal, medical, loanword)
+(11315, 'reactionary', 'adj', NULL, NULL, 1, 'B1', NULL), -- اِرتِجاعی -> reactionary (formal, political)
+(11316, 'priests', 'n', NULL, NULL, 1, 'B1', NULL), -- کاهِنان -> priests (formal, plural of کاهن)
+(11317, 'advance payment', 'n', NULL, NULL, 1, 'B1', NULL), -- آوانس -> advance payment (formal, loanword)
+(11318, 'sufferings', 'n', NULL, NULL, 1, 'B1', NULL), -- مَصائِب -> sufferings / tribulations (formal, plural of مصیبت)
+(11319, 'pancreas', 'n', NULL, NULL, 1, 'EX', NULL), -- پانکراس -> pancreas (medical, loanword)
+(11320, 'hoarding', 'n', NULL, NULL, 1, 'B1', NULL), -- اِحتِکار -> hoarding (formal, economic)
+(11321, 'interfering', 'adj', NULL, NULL, 1, 'B1', NULL), -- تَداخُلی -> interfering (formal)
+(11322, 'hot-tempered', 'adj', NULL, NULL, 1, 'B1', NULL), -- تُندخو -> hot-tempered (formal)
+(11323, 'wavy', 'adj', NULL, NULL, 1, 'B1', NULL), -- موّاج -> wavy / undulating (formal)
+(11324, 'weeping', 'adj', NULL, NULL, 1, 'B1', NULL), -- گِریان -> crying / weeping (formal)
+(11325, 'implicit', 'adj', NULL, NULL, 1, 'B1', NULL), -- ضِمنی -> implicit (formal)
+(11326, 'sharp-wittedness', 'n', NULL, NULL, 1, 'B1', NULL), -- تیزهوشی -> sharp-wittedness / giftedness (formal)
+(11327, 'noblest', 'adj', NULL, NULL, 1, 'B2', NULL), -- اَشرَف -> noblest (formal; اشرف مخلوقات)
+(11328, 'stickiness', 'n', NULL, NULL, 1, 'B1', NULL), -- چَسبَندگی -> adhesiveness / stickiness (formal)
+(11329, 'victims', 'n', NULL, NULL, 1, 'B1', NULL), -- مَقتولین -> victims / the murdered (formal, plural)
+(11330, 'fluttering', 'n', NULL, NULL, 1, 'B1', NULL), -- اِهتِزاز -> fluttering / waving (formal; پرچم در اهتزاز)
+(11331, 'immortality', 'n', NULL, NULL, 1, 'B1', NULL), -- فَناناپَذیری -> immortality / indestructibility (formal)
+(11332, 'discoveries', 'n', NULL, NULL, 1, 'B1', NULL), -- کَشفیّات -> discoveries (formal, plural)
+(11333, 'accruing', 'adj', NULL, NULL, 1, 'B1', NULL), -- عایِد -> accruing / resulting (formal)
+(11334, 'mystic', 'n', NULL, NULL, 1, 'B1', NULL), -- عارِف -> mystic (formal, religious)
+(11335, 'detached', 'adj', NULL, NULL, 1, 'B1', NULL), -- مُنفَصِل -> detached / separated (formal)
+(11336, 'field marshal', 'n', NULL, NULL, 1, 'EX', NULL), -- اَرتِشبَد -> field marshal (formal, military rank)
+(11337, 'steroid', 'n', NULL, NULL, 1, 'EX', NULL), -- اِستروئید -> steroid (formal, loanword)
+(11338, 'roller', 'n', NULL, NULL, 1, 'B1', NULL), -- غَلتَک -> roller [tool] (formal)
+(11339, 'initiator', 'n', NULL, NULL, 1, 'B1', NULL), -- آغازگَر -> initiator (formal)
+(11340, 'acacia', 'n', NULL, NULL, 1, 'EX', NULL), -- اَقاقیا -> acacia [tree] (formal)
+(11341, 'miniature', 'adj', NULL, NULL, 1, 'B1', NULL), -- مینیاتوری -> miniature [adjective] (formal)
+(11342, 'yeast', 'n', NULL, NULL, 1, 'B1', NULL), -- مُخمَر -> yeast (formal)
+(11343, 'known as', 'adj', NULL, NULL, 1, 'B1', NULL), -- موسوم -> known as / named (formal)
+(11344, 'cross-shaped', 'adj', NULL, NULL, 1, 'B1', NULL), -- ضَربدَری -> cross-shaped / X-marked (formal)
+(11345, 'radon', 'n', NULL, NULL, 1, 'EX', NULL), -- رادون -> radon (formal, chemistry, loanword)
+(11346, 'melancholic', 'adj', NULL, NULL, 1, 'B1', NULL), -- مالیخولیایی -> melancholic (formal, literary)
+(11347, 'errand-running', 'n', NULL, NULL, 1, 'EX', NULL), -- پادویی -> errand-running / servant work (formal)
+(11348, 'spring-loaded', 'adj', NULL, NULL, 1, 'B1', NULL), -- فَنَری -> spring-loaded [adjective] (formal)
+(11349, 'calculating', 'adj', NULL, NULL, 1, 'B1', NULL), -- حسابگَر -> calculating / shrewd (formal, figurative)
+(11350, 'diagonal', 'adj', NULL, NULL, 1, 'B1', NULL), -- مورَّب -> diagonal / slanted (formal)
+(11351, 'greedily', 'adv', NULL, NULL, 1, 'B1', NULL), -- حریصانه -> greedily (formal)
+(11352, 'old age', 'n', NULL, NULL, 1, 'B1', NULL), -- کُهولَت -> old age (formal)
+(11353, 'of the royal court', 'adj', NULL, NULL, 1, 'EX', NULL), -- دَرباری -> of the royal court (formal)
+(11354, 'extortionist', 'n', NULL, NULL, 1, 'B1', NULL), -- اَخّاذ -> extortionist / blackmailer (formal)
+(11355, 'downward slope', 'n', NULL, NULL, 1, 'B1', NULL), -- نِشیب -> downward slope (formal)
+(11356, 'divine will', 'n', NULL, NULL, 1, 'EX', NULL), -- مَشیَّت -> divine will (formal, religious, rare)
+(11357, 'conquests', 'n', NULL, NULL, 1, 'C1', NULL), -- فُتوح -> conquests (formal, plural of فتح, rare)
+(11358, 'gangrene', 'n', NULL, NULL, 1, 'EX', NULL), -- قانقاریا -> gangrene (formal, rare, medical)
+(11359, 'anointing', 'n', NULL, NULL, 1, 'EX', NULL), -- تَدهین -> anointing (formal, religious, rare)
+(11360, 'prohibited relations', 'n', NULL, NULL, 1, 'EX', NULL), -- مَحارِم -> prohibited relations (formal, legal/religious, rare)
+(11361, 'sarin', 'n', NULL, NULL, 1, 'EX', NULL), -- سارین -> sarin [nerve gas] (formal, rare)
+(11362, 'worthy of', 'adj', NULL, NULL, 1, 'C1', NULL), -- شایَستَن -> to be fitting / worthy of (archaic)
+(11363, 'Kurd', 'n', NULL, NULL, 1, 'EX', NULL), -- کُرد -> Kurd (ethnicity)
+(11364, 'America', 'n', NULL, NULL, 1, 'EX', NULL), -- آمریکا -> America (country name)
+(11365, 'Ali', 'n', NULL, NULL, 1, 'EX', NULL), -- عَلی -> Ali (name)
+(11366, 'Mohammad', 'n', NULL, NULL, 1, 'EX', NULL), -- مُحَمَّد -> Mohammad (name)
+(11367, 'Hasan', 'n', NULL, NULL, 1, 'EX', NULL), -- حَسَن -> Hasan (name)
+(11368, 'Christmas', 'n', NULL, NULL, 1, 'EX', NULL), -- کریسمَس -> Christmas
+(11369, 'England', 'n', NULL, NULL, 1, 'EX', NULL), -- اِنگِلِستان -> England (country name)
+(11370, 'Iraq', 'n', NULL, NULL, 1, 'EX', NULL), -- عِراق -> Iraq (country name)
+(11371, 'Pakistan', 'n', NULL, NULL, 1, 'EX', NULL), -- پاکِستان -> Pakistan (country name)
+(11372, 'Britain', 'n', NULL, NULL, 1, 'EX', NULL), -- بریتانیا -> Britain (country name)
+(11373, 'Palestine', 'n', NULL, NULL, 1, 'EX', NULL), -- فِلَسطین -> Palestine
+(11374, 'Bosnia', 'n', NULL, NULL, 1, 'EX', NULL), -- بوسنی -> Bosnia (country name)
+(11375, 'Kosovo', 'n', NULL, NULL, 1, 'EX', NULL), -- کوزوو -> Kosovo
+(11376, 'Macedonia', 'n', NULL, NULL, 1, 'EX', NULL), -- مَقدونیه -> Macedonia (country name)
+(11377, 'the Emirates', 'n', NULL, NULL, 1, 'EX', NULL), -- اِمارات -> the Emirates (country name)
+(11378, 'the Atlantic', 'n', NULL, NULL, 1, 'EX', NULL), -- آتلانتیک -> the Atlantic (ocean name)
+(11379, 'Taiwan', 'n', NULL, NULL, 1, 'EX', NULL), -- تایوان -> Taiwan (place name)
+(11380, 'Munich', 'n', NULL, NULL, 1, 'EX', NULL), -- مونیخ -> Munich (city name)
+(11381, 'Hawaii', 'n', NULL, NULL, 1, 'EX', NULL), -- هاوایی -> Hawaii (place name)
+(11382, 'Druze', 'n', NULL, NULL, 1, 'EX', NULL), -- دُروز -> Druze (ethnoreligious group)
+(11383, 'Lori', 'adj', NULL, NULL, 1, 'EX', NULL), -- لُری -> Lori [ethnic group/language]
+(11384, 'Chechen', 'adj', NULL, NULL, 1, 'EX', NULL), -- چِچِنی -> Chechen (nationality)
+(11385, 'Shirazi', 'adj', NULL, NULL, 1, 'EX', NULL), -- شیرازی -> Shirazi [from Shiraz]
+(11386, 'Ismaili', 'adj', NULL, NULL, 1, 'EX', NULL), -- اِسماعیلی -> Ismaili [religious sect]
+(11387, 'Ebola', 'n', NULL, NULL, 1, 'EX', NULL), -- ابولا -> Ebola (medical)
+(11388, 'Greenland', 'n', NULL, NULL, 1, 'EX', NULL), -- گرینلند -> Greenland (place name)
+(11389, 'Amazonian', 'adj', NULL, NULL, 1, 'EX', NULL), -- آمازونی -> Amazonian
+(11390, 'Kashmir', 'n', NULL, NULL, 1, 'EX', NULL), -- کَشمیر -> Kashmir (region name)
+(11391, 'Eurasia', 'n', NULL, NULL, 1, 'EX', NULL), -- اوراسیا -> Eurasia
+(11392, 'Mormon', 'n', NULL, NULL, 1, 'EX', NULL), -- مورمون -> Mormon
+(11393, 'Brahmin', 'n', NULL, NULL, 1, 'EX', NULL), -- بَرَهمَن -> Brahmin
+(11394, 'jihadist', 'adj', NULL, NULL, 1, 'EX', NULL), -- جِهادی -> jihadist
+(11395, 'Yakuza', 'n', NULL, NULL, 1, 'EX', NULL), -- یاکوزا -> Yakuza
+(11396, 'Napoleonic', 'adj', NULL, NULL, 1, 'EX', NULL), -- ناپلئونی -> Napoleonic
+(11397, 'Shia', 'n', NULL, NULL, 1, 'EX', NULL), -- شیعه -> Shia [Islam]
+(11398, 'Lebanese', 'adj', NULL, NULL, 1, 'EX', NULL), -- لُبنانی -> Lebanese
+(11399, 'lie down', 'v', NULL, NULL, 1, 'A2', NULL); -- دِراز کِشیدَن -> to lie down
