@@ -12,6 +12,7 @@ engine = create_async_engine(
     pool_size=settings.DB_POOL_MIN,
     max_overflow=settings.DB_POOL_MAX - settings.DB_POOL_MIN,
     pool_pre_ping=True,
+    connect_args={"ssl": True} if settings.DB_SSL else {},
 )
 
 # Create async session factory

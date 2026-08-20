@@ -18,6 +18,7 @@ class Settings(BaseSettings):
     DB_PASSWORD: str = "1234"
     DB_POOL_MIN: int = 2
     DB_POOL_MAX: int = 10
+    DB_SSL: bool = False
     
     # API Configuration
     API_V1_PREFIX: str = "/api/v1"
