@@ -1,5 +1,4 @@
 import express from 'express';
-import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import 'dotenv/config';
 import path from 'path';
@@ -7,11 +6,9 @@ import { fileURLToPath } from 'url';
 import swaggerUi from 'swagger-ui-express';
 
 // Import config
-import corsOptions from './config/corsOptions.js';
 import swaggerSpec from './config/swagger.js';
 
 // Import middleware
-import credentials from './middleware/credentials.js';
 import { logger } from './middleware/logEvents.js';
 import errorHandler from './middleware/errorHandler.js';
 
@@ -34,8 +31,6 @@ const API_VERSION = 'v1';
 
 // Middleware
 app.use(logger); // Custom logger
-app.use(credentials); // Handle credentials before CORS
-app.use(cors(corsOptions)); // CORS with options
 app.use(express.json()); // Parse JSON bodies
 app.use(express.urlencoded({ extended: false })); // Parse URL-encoded bodies
 app.use(cookieParser()); // Parse cookies
