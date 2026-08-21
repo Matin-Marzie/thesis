@@ -1,4 +1,18 @@
 import apiClient from './client.js';
+import * as FileSystem from 'expo-file-system/legacy';
+import * as VideoThumbnails from 'expo-video-thumbnails';
+
+const uploadToCdn = async (asset, presigned, contentType) => {
+  // The device sends bytes directly to R2; the API never receives the media body.
+  const upload = await FileSystem.uploadAsync(presigned.url, asset.uri, {
+    httpMethod: 'PUT',
+    uploadType: FileSystem.FileSystemUploadType.BINARY_CONTENT,
+    headers: { 'Content-Type': contentType },
+  });
+  if (upload.status < 200 || upload.status >= 300) {
+    throw new Error(`Media upload failed (${upload.status}): ${upload.body || 'Cloudflare R2 rejected the upload'}`);
+  }
+};
 
 /**
  * Upload a video and its synced subtitle lines to create a new reel.
@@ -6,7 +20,7 @@ import apiClient from './client.js';
  * (the read-only reels-service) - the Node backend owns the write path.
  * @param {Object} params
  * @param {import('../types/createReel').WizardVideoAsset} params.video
- * @param {import('../types/createReel').WizardImageAsset|null} [params.thumbnail] - Optional cover image; when omitted, the backend extracts one from the video's first frame.
+ * @param {import('../types/createReel').WizardImageAsset|null} [params.thumbnail] - Optional cover image; when omitted, the phone extracts one from the video.
  * @param {string|null} params.title
  * @param {number} params.languageId
  * @param {import('../types/createReel').DraftSubtitleLine[]} params.lines
@@ -17,28 +31,42 @@ export const createReel = async (
   { video, thumbnail, title, languageId, lines },
   onUploadProgress
 ) => {
-  const form = new FormData();
-  form.append('video', {
-    uri: video.uri,
-    name: video.fileName || `reel-${Date.now()}.mp4`,
-    type: video.mimeType || 'video/mp4',
-  });
-  if (thumbnail) {
-    form.append('thumbnail', {
-      uri: thumbnail.uri,
-      name: thumbnail.fileName || `thumbnail-${Date.now()}.jpg`,
-      type: thumbnail.mimeType || 'image/jpeg',
+  try {
+    let uploadThumbnail = thumbnail;
+    if (!uploadThumbnail) {
+      // Generate the fallback cover locally so large videos stay off the API server.
+      const generated = await VideoThumbnails.getThumbnailAsync(video.uri, { time: 100 });
+      uploadThumbnail = {
+        uri: generated.uri,
+        mimeType: 'image/jpeg',
+        fileName: `thumbnail-${Date.now()}.jpg`,
+      };
+    }
+
+    const videoFileName = video.fileName || `reel-${Date.now()}.mp4`;
+    const videoContentType = video.mimeType || 'video/mp4';
+    const thumbnailFileName = uploadThumbnail.fileName || `thumbnail-${Date.now()}.jpg`;
+    const thumbnailContentType = uploadThumbnail.mimeType || 'image/jpeg';
+    const thumbnailInfo = await FileSystem.getInfoAsync(uploadThumbnail.uri);
+    if (!thumbnailInfo.exists || !thumbnailInfo.size) {
+      throw new Error('The selected thumbnail file is unavailable on this device');
+    }
+    const presign = await apiClient.post('/reel/uploads/presign', {
+      video: { fileName: videoFileName, contentType: videoContentType, size: video.fileSizeBytes },
+      thumbnail: { fileName: thumbnailFileName, contentType: thumbnailContentType, size: thumbnailInfo.size },
     });
-  }
-  if (title) {
-    form.append('title', title);
-  }
-  form.append('language_id', String(languageId));
-  form.append('duration', String(Math.round(video.durationMs / 1000)));
-  form.append(
-    'lines',
-    JSON.stringify(
-      lines.map((line, index) => ({
+    await uploadToCdn(video, presign.data.video, videoContentType);
+    onUploadProgress?.({ loaded: 1, total: 2 });
+    await uploadToCdn(uploadThumbnail, presign.data.thumbnail, thumbnailContentType);
+    onUploadProgress?.({ loaded: 2, total: 2 });
+
+    const response = await apiClient.post('/reel', {
+      videoKey: presign.data.video.key,
+      thumbnailKey: presign.data.thumbnail?.key || null,
+      title: title || null,
+      language_id: languageId,
+      duration: Math.round(video.durationMs / 1000),
+      lines: lines.map((line, index) => ({
         position: index + 1,
         text: line.text,
         translations: line.translations
@@ -46,14 +74,7 @@ export const createReel = async (
           .map((t) => ({ text: t.text.trim(), translation_language_id: t.languageId })),
         start_time_ms: line.start_time_ms,
         end_time_ms: line.end_time_ms,
-      }))
-    )
-  );
-
-  try {
-    const response = await apiClient.post('/reel', form, {
-      headers: { 'Content-Type': 'multipart/form-data' },
-      onUploadProgress,
+      })),
     });
     return response.data;
   } catch (error) {

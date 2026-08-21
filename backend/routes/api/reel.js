@@ -1,7 +1,6 @@
 import express from 'express';
 import reelController from '../../controllers/reelController.js';
 import verifyJWT from '../../middleware/verifyJWT.js';
-import uploadReelVideo from '../../middleware/uploadReelVideo.js';
 import { createReelLimiter } from '../../middleware/rateLimiter.js';
 
 const router = express.Router();
@@ -51,7 +50,8 @@ const router = express.Router();
  *       500:
  *         description: Internal server error
  */
-router.post('/', verifyJWT, createReelLimiter, uploadReelVideo, reelController.createReel);
+router.post('/uploads/presign', verifyJWT, createReelLimiter, reelController.presignUploads);
+router.post('/', verifyJWT, createReelLimiter, reelController.createReel);
 
 /**
  * @swagger

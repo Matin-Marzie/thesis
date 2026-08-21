@@ -19,6 +19,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@aws-sdk/client-s3": "^3.1115.0",
+    "@aws-sdk/s3-request-presigner": "^3.1115.0",
     "bcrypt": "^5.1.1",
     "cookie-parser": "^1.4.6",
     "date-fns": "^4.1.0",
@@ -30,7 +32,6 @@
     "google-auth-library": "^9.15.0",
     "joi": "^17.13.3",
     "jsonwebtoken": "^9.0.2",
-    "multer": "^2.2.0",
     "nodemailer": "^9.0.3",
     "pg": "^8.13.1",
     "swagger-jsdoc": "^6.2.8",

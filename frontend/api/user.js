@@ -1,4 +1,5 @@
 import apiClient from './client.js';
+import * as FileSystem from 'expo-file-system/legacy';
 
 /**
  * Get current user profile with language preferences
@@ -118,17 +119,22 @@ export const updateUserProfile = async (userData) => {
  * @returns {Promise<Object>} - { message, data: { user } }
  */
 export const uploadProfilePicture = async (asset) => {
-  const form = new FormData();
-  form.append('profile_picture', {
-    uri: asset.uri,
-    name: asset.fileName || `profile-picture-${Date.now()}.jpg`,
-    type: asset.mimeType || 'image/jpeg',
-  });
-
   try {
-    const response = await apiClient.patch('/user/profile-picture', form, {
-      headers: { 'Content-Type': 'multipart/form-data' },
+    const fileName = asset.fileName || `profile-picture-${Date.now()}.jpg`;
+    const contentType = asset.mimeType || 'image/jpeg';
+    const info = await FileSystem.getInfoAsync(asset.uri);
+    const presign = await apiClient.post('/user/profile-picture/upload-url', {
+      fileName,
+      contentType,
+      size: info.exists ? info.size : undefined,
     });
+    const upload = await FileSystem.uploadAsync(presign.data.url, asset.uri, {
+      httpMethod: 'PUT',
+      uploadType: FileSystem.FileSystemUploadType.BINARY_CONTENT,
+      headers: { 'Content-Type': contentType },
+    });
+    if (upload.status < 200 || upload.status >= 300) throw new Error('Profile picture upload failed');
+    const response = await apiClient.patch('/user/profile-picture', { key: presign.data.key });
     return response.data;
   } catch (error) {
     const message =

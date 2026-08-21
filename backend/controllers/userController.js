@@ -1,5 +1,3 @@
-import fs from 'fs/promises';
-import path from 'path';
 import UserProfileSchema from '../validation/UserProfileSchema.js';
 import usersModel from '../models/usersModel.js';
 import userLanguagesModel from '../models/userLanguagesModel.js';
@@ -7,16 +5,9 @@ import userVocabularyModel from '../models/userVocabularyModel.js';
 import userSentencesModel from '../models/userSentencesModel.js';
 import reelModel from '../models/reelModel.js';
 import { logEvents } from '../middleware/logEvents.js';
-import { REEL_UPLOAD_DIR } from '../middleware/uploadReelVideo.js';
-import { PROFILE_PICTURE_UPLOAD_DIR } from '../middleware/uploadProfilePicture.js';
+import { CDN_PREFIXES, createObjectKey, deleteObject, deletePrefix, headObject, isOwnedObjectUrl, presignUpload, publicObjectUrl } from '../utils/cdn.js';
 
-const buildProfilePictureUrl = (userId, filename) =>
-  `http://localhost:3500/static/uploads/profile_pictures/${userId}/${filename}`;
-
-// Old profile pictures are only ours to delete if they live under our own
-// upload dir - a Google-linked avatar (or anything else external) is just a
-// URL we store, not a file we own.
-const isOwnedProfilePicture = (url) => typeof url === 'string' && url.includes('/static/uploads/profile_pictures/');
+const isValidImage = (type) => typeof type === 'string' && type.startsWith('image/');
 
 
 const userController = {
@@ -95,11 +86,11 @@ const userController = {
         });
       }
 
-      // Reel rows/dialogue/vocabulary etc. are gone via ON DELETE CASCADE,
-      // but the uploaded video/profile-picture files on disk aren't DB rows -
-      // remove the user's upload folders now that nothing references them.
-      await fs.rm(path.join(REEL_UPLOAD_DIR, String(userId)), { recursive: true, force: true });
-      await fs.rm(path.join(PROFILE_PICTURE_UPLOAD_DIR, String(userId)), { recursive: true, force: true });
+      // Account deletion removes all media owned by this user from R2.
+      await Promise.all([
+        deletePrefix(`${CDN_PREFIXES.reels}/${userId}/`),
+        deletePrefix(`${CDN_PREFIXES.profilePictures}/${userId}/`),
+      ]);
 
       logEvents(`User deleted account: ${deletedUser.email}`, 'authLog.log');
 
@@ -164,24 +155,31 @@ const userController = {
   },
 
 
+  // Get presigned URL for uploading a new profile picture to the CDN.
+  async presignProfilePicture(req, res) {
+    const { fileName, contentType, size } = req.body || {};
+    if (!isValidImage(contentType) || Number(size) > 5 * 1024 * 1024) {
+      return res.status(400).json({ message: 'A valid image under 5MB is required' });
+    }
+    // Generate the object key on the server to prevent arbitrary bucket writes.
+    const key = createObjectKey(CDN_PREFIXES.profilePictures, req.user.id, fileName);
+    return res.status(200).json({ key, url: await presignUpload({ key, contentType }) });
+  },
 
-  // Upload/replace current user's profile picture. The file is already
-  // saved to disk by the uploadProfilePicture middleware before this handler
-  // runs - if anything below fails, the catch block removes it so it isn't
-  // left as an orphan with no matching DB row.
+  // After the client uploads a new profile picture to the CDN, this endpoint verifies the upload and updates the user's profile with the new picture URL. It also deletes the previous profile picture if it was owned by the user.
   async updateProfilePicture(req, res) {
     const userId = req.user.id;
-    const uploadedFile = req.file;
+    const { key } = req.body || {};
 
     try {
-      if (!uploadedFile) {
-        return res.status(400).json({
-          message: 'A profile picture file is required',
-        });
+      if (typeof key !== 'string' || !key.startsWith(`${CDN_PREFIXES.profilePictures}/${userId}/`) || key.includes('..')) {
+        return res.status(400).json({ message: 'A valid uploaded profile picture is required' });
       }
+      // Only store a profile URL after confirming the direct upload completed.
+      await headObject(key);
 
       const previousUser = await usersModel.get(userId);
-      const newUrl = buildProfilePictureUrl(userId, uploadedFile.filename);
+      const newUrl = publicObjectUrl(key);
 
       const updatedUser = await usersModel.updateProfile(userId, { profile_picture: newUrl });
 
@@ -191,10 +189,8 @@ const userController = {
 
       // Best-effort - if the old file can't be deleted, it's just an orphan,
       // not something that should block a successful upload.
-      if (previousUser && isOwnedProfilePicture(previousUser.profile_picture)) {
-        await fs
-          .unlink(path.join(PROFILE_PICTURE_UPLOAD_DIR, String(userId), path.basename(previousUser.profile_picture)))
-          .catch(() => {});
+      if (previousUser && isOwnedObjectUrl(previousUser.profile_picture, CDN_PREFIXES.profilePictures, userId)) {
+        await deleteObject(new URL(previousUser.profile_picture).pathname.slice(1)).catch(() => {});
       }
 
       res.status(200).json({
@@ -205,9 +201,6 @@ const userController = {
       });
     } catch (error) {
       console.error('Update profile picture error:', error);
-      if (uploadedFile) {
-        await fs.unlink(uploadedFile.path).catch(() => {});
-      }
       res.status(500).json({
         message: 'Internal server error',
       });
@@ -245,10 +238,8 @@ const userController = {
 
       // Best-effort - if the file can't be deleted, it's just an orphan,
       // not something that should block a successful removal.
-      if (isOwnedProfilePicture(previousUser.profile_picture)) {
-        await fs
-          .unlink(path.join(PROFILE_PICTURE_UPLOAD_DIR, String(userId), path.basename(previousUser.profile_picture)))
-          .catch(() => {});
+      if (isOwnedObjectUrl(previousUser.profile_picture, CDN_PREFIXES.profilePictures, userId)) {
+        await deleteObject(new URL(previousUser.profile_picture).pathname.slice(1)).catch(() => {});
       }
 
       res.status(200).json({

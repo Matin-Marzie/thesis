@@ -1,85 +1,65 @@
-import fs from 'fs/promises';
-import path from 'path';
 import CreateReelSchema from '../validation/CreateReelSchema.js';
 import ReportReelSchema from '../validation/ReportReelSchema.js';
 import reelModel from '../models/reelModel.js';
-import { generateReelThumbnail } from '../utils/generateReelThumbnail.js';
-import { REEL_UPLOAD_DIR } from '../middleware/uploadReelVideo.js';
+import {
+  CDN_PREFIXES,
+  createObjectKey,
+  deleteObject,
+  headObject,
+  isOwnedObjectUrl,
+  presignUpload,
+  publicObjectUrl,
+} from '../utils/cdn.js';
 
-const buildStaticUrl = (userId, filename) =>
-  `http://localhost:3500/static/uploads/reels/${userId}/${filename}`;
-
-// Video/thumbnail are stored on disk under a per-user folder, keyed by
-// filename only (buildStaticUrl's path) - not by DB rows, so they have to
-// be removed by hand once the reel row is gone.
-const deleteReelFiles = async (userId, { url, thumbnail_url }) => {
-  const filenames = [url, thumbnail_url].filter(Boolean).map((fileUrl) => path.basename(fileUrl));
-  await Promise.all(
-    filenames.map((filename) =>
-      fs.unlink(path.join(REEL_UPLOAD_DIR, String(userId), filename)).catch(() => {})
-    )
-  );
-};
+const validVideoType = (type) => typeof type === 'string' && type.startsWith('video/');
+const validImageType = (type) => typeof type === 'string' && type.startsWith('image/');
+const ownedKey = (key, prefix, userId) => typeof key === 'string' && key.startsWith(`${prefix}/${userId}/`) && !key.includes('..');
 
 const reelController = {
-  // Creates a reel + its dialogue + subtitle sentences (with ms-precise
-  // timing) + optional per-line translations in one transaction. The video
-  // (and optional thumbnail) file is already saved to disk by the
-  // uploadReelVideo middleware before this handler runs - every non-success
-  // path below (validation failure or unexpected error) falls through to the
-  // single catch block so those files are always deleted rather than left as
-  // orphans with no matching DB row.
+
+  // Presign direct upload URLs for a new reel's video and thumbnail. The client must then upload the files directly to the CDN before calling createReel.
+  async presignUploads(req, res) {
+    const { video, thumbnail } = req.body || {};
+    if (!video || !validVideoType(video.contentType) || Number(video.size) > 100 * 1024 * 1024) {
+      return res.status(400).json({ message: 'A valid video under 100MB is required' });
+    }
+    if (thumbnail && (!validImageType(thumbnail.contentType) || Number(thumbnail.size) > 100 * 1024 * 1024)) {
+      return res.status(400).json({ message: 'Invalid thumbnail' });
+    }
+
+    // Keys are generated server-side; the client receives upload permission only for these objects.
+    const videoKey = createObjectKey(CDN_PREFIXES.reels, req.user.id, video.fileName);
+    const thumbnailKey = thumbnail ? createObjectKey(CDN_PREFIXES.reels, req.user.id, thumbnail.fileName) : null;
+    return res.status(200).json({
+      video: { key: videoKey, url: await presignUpload({ key: videoKey, contentType: video.contentType }) },
+      thumbnail: thumbnailKey ? { key: thumbnailKey, url: await presignUpload({ key: thumbnailKey, contentType: thumbnail.contentType }) } : null,
+    });
+  },
+
   async createReel(req, res) {
-    const videoFile = req.files?.video?.[0];
-    const thumbnailFile = req.files?.thumbnail?.[0];
-    // Set once a thumbnail is generated server-side, so the catch block
-    // knows to clean it up too (it isn't one of multer's uploaded files).
-    let generatedThumbnailPath = null;
-
     try {
-      if (!videoFile) {
-        throw { status: 400, message: 'A video file is required' };
-      }
-
-      let parsedLines;
-      try {
-        parsedLines = JSON.parse(req.body.lines || '[]');
-      } catch {
-        throw { status: 400, message: 'lines must be valid JSON' };
-      }
+      const { videoKey, thumbnailKey, title, language_id, duration, lines = [] } = req.body || {};
+      if (!ownedKey(videoKey, CDN_PREFIXES.reels, req.user.id)) throw { status: 400, message: 'A valid uploaded video is required' };
+      if (thumbnailKey && !ownedKey(thumbnailKey, CDN_PREFIXES.reels, req.user.id)) throw { status: 400, message: 'Invalid uploaded thumbnail' };
+      // Do not persist media URLs until R2 confirms both objects exist.
+      await headObject(videoKey);
+      if (thumbnailKey) await headObject(thumbnailKey);
 
       const { error, value } = CreateReelSchema.validate({
-        title: req.body.title,
-        language_id: Number(req.body.language_id),
-        duration: Number(req.body.duration),
-        lines: parsedLines,
+        title,
+        language_id: Number(language_id),
+        duration: Number(duration),
+        lines,
       });
 
       if (error) {
         throw { status: 400, message: error.details[0].message };
       }
 
-      const url = buildStaticUrl(req.user.id, videoFile.filename);
-
-      let thumbnailUrl = null;
-      if (thumbnailFile) {
-        thumbnailUrl = buildStaticUrl(req.user.id, thumbnailFile.filename);
-      } else {
-        // Best-effort - a thumbnail-extraction failure (e.g. an unusual
-        // codec) shouldn't block publishing a reel that otherwise succeeded.
-        try {
-          generatedThumbnailPath = await generateReelThumbnail(videoFile.path);
-          thumbnailUrl = buildStaticUrl(req.user.id, path.basename(generatedThumbnailPath));
-        } catch (thumbnailError) {
-          console.error('Reel thumbnail generation failed, publishing without one:', thumbnailError);
-          generatedThumbnailPath = null;
-        }
-      }
-
       const reel = await reelModel.createWithDialogue({
         createdBy: req.user.id,
-        url,
-        thumbnailUrl,
+        url: publicObjectUrl(videoKey),
+        thumbnailUrl: thumbnailKey ? publicObjectUrl(thumbnailKey) : null,
         title: value.title,
         languageId: value.language_id,
         duration: value.duration,
@@ -91,16 +71,6 @@ const reelController = {
         reel,
       });
     } catch (error) {
-      if (videoFile?.path) {
-        await fs.unlink(videoFile.path).catch(() => {});
-      }
-      if (thumbnailFile?.path) {
-        await fs.unlink(thumbnailFile.path).catch(() => {});
-      }
-      if (generatedThumbnailPath) {
-        await fs.unlink(generatedThumbnailPath).catch(() => {});
-      }
-
       if (error?.status) {
         return res.status(error.status).json({ message: error.message });
       }
@@ -110,9 +80,7 @@ const reelController = {
     }
   },
 
-  // Permanently deletes one of the current user's own reels. The DB trigger
-  // trigger_delete_dialogue_after_reel_delete cascades the dialogue and its
-  // dialogue_sentences; only the on-disk video/thumbnail need cleanup here.
+  // Delete the database row and its owned R2 objects.
   async deleteReel(req, res) {
     try {
       const reelId = Number(req.params.id);
@@ -126,7 +94,11 @@ const reelController = {
         return res.status(404).json({ message: 'Reel not found' });
       }
 
-      await deleteReelFiles(req.user.id, deletedReel);
+      const urls = [deletedReel.url, deletedReel.thumbnail_url];
+      await Promise.all(urls.map((url) => {
+        if (!isOwnedObjectUrl(url, CDN_PREFIXES.reels, req.user.id)) return null;
+        return deleteObject(new URL(url).pathname.slice(1));
+      }));
 
       res.status(200).json({ message: 'Reel deleted successfully' });
     } catch (error) {

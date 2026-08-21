@@ -3,7 +3,6 @@ import userController from '../../controllers/userController.js';
 import syncController from '../../controllers/syncController.js';
 import verifyJWT from '../../middleware/verifyJWT.js';
 import optionalVerifyJWT from '../../middleware/optionalVerifyJWT.js';
-import uploadProfilePicture from '../../middleware/uploadProfilePicture.js';
 import { profilePictureLimiter } from '../../middleware/rateLimiter.js';
 
 const router = express.Router();
@@ -259,7 +258,8 @@ router.patch('/profile', verifyJWT, userController.updateProfile);
  *             schema:
  *               $ref: '#/components/schemas/Error'
  */
-router.patch('/profile-picture', verifyJWT, profilePictureLimiter, uploadProfilePicture, userController.updateProfilePicture);
+router.post('/profile-picture/upload-url', verifyJWT, profilePictureLimiter, userController.presignProfilePicture);
+router.patch('/profile-picture', verifyJWT, profilePictureLimiter, userController.updateProfilePicture);
 
 /**
  * @swagger
