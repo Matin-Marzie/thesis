@@ -27,7 +27,7 @@ export default function AboutScreen() {
         <View style={styles.logoWrapper}>
           <Image source={require('@/assets/images/splash-icon.png')} style={styles.logo} />
         </View>
-        <Text style={[styles.appName, isDark && { color: DARK_COLORS.text }]}>Gloreels</Text>
+        <Text style={[styles.appName, isDark && { color: DARK_COLORS.text }]}>Glosy</Text>
         <Text style={[styles.tagline, isDark && { color: DARK_COLORS.textSecondary }]}>{APP_TAGLINE}</Text>
         <View style={badgeStyle}>
           <Text style={styles.badgeText}>Version {version}</Text>
@@ -61,7 +61,7 @@ export default function AboutScreen() {
         </View>
         <View style={dividerStyle} />
         <Text style={descriptionStyle}>
-          Gloreels was developed as part of a thesis on mobile-assisted language learning using
+          Glosy was developed as part of a thesis on mobile-assisted language learning using
           short-form video reels and hypercasual games.
         </Text>
       </View>

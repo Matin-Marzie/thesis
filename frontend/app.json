@@ -1,11 +1,11 @@
 {
   "expo": {
-    "name": "gloreels",
-    "slug": "gloreels",
+    "name": "glosy",
+    "slug": "glosy",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/splash-icon.png",
-    "scheme": "gloreels",
+    "scheme": "glosy",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "splash": {
@@ -15,7 +15,7 @@
     },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.gloreels.app"
+      "bundleIdentifier": "com.glosy.app"
     },
     "android": {
       "adaptiveIcon": {
@@ -24,7 +24,7 @@
       },
       "edgeToEdgeEnabled": true,
       "predictiveBackGestureEnabled": false,
-      "package": "com.gloreels.app"
+      "package": "com.glosy.app"
     },
     "androidNavigationBar": {
       "backgroundColor": "#0f8690",

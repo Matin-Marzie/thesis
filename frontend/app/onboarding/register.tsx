@@ -12,12 +12,7 @@ import {
 } from 'react-native';
 import { useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
-// @react-native-google-signin/google-signin is a native module and isn't
-// available in Expo Go - commented out while developing there. See
-// login.tsx for the same treatment. Re-enable by uncommenting this import,
-// the GoogleSignin.configure() effect, handleGoogleSignIn, and the
-// GoogleSigninButton block below when running a dev client/EAS build again.
-// import { GoogleSigninButton, GoogleSignin, statusCodes, isSuccessResponse, isErrorWithCode } from '@react-native-google-signin/google-signin';
+import { GoogleSigninButton, GoogleSignin, statusCodes, isSuccessResponse, isErrorWithCode } from '@react-native-google-signin/google-signin';
 import { PRIMARY_COLOR } from '@/constants/App';
 import { requestVerificationCode, registerWithGoogle } from '../../api/auth';
 import { useProfile } from '@/context/ProfileContext';
@@ -49,12 +44,12 @@ export default function RegisterScreen({ onRegisterSuccess }: RegisterScreenProp
   const height = Dimensions.get('window').height;
 
   // Configure Google Sign-In on mount
-  // useEffect(() => {
-  //   GoogleSignin.configure({
-  //     webClientId: GOOGLE_CLIENT_ID_WEB,
-  //     offlineAccess: true,
-  //   });
-  // }, []);
+  useEffect(() => {
+    GoogleSignin.configure({
+      webClientId: GOOGLE_CLIENT_ID_WEB,
+      offlineAccess: true,
+    });
+  }, []);
 
   const { userProfile, updateUserProfile } = useProfile();
   const { userProgress, setUserProgress } = useProgress();
@@ -143,71 +138,71 @@ export default function RegisterScreen({ onRegisterSuccess }: RegisterScreenProp
   };
 
 
-  // const handleGoogleSignIn = async () => {
-  //   setLoading(true);
-  //   setErrors({});
-  //   try {
-  //     await GoogleSignin.hasPlayServices({ showPlayServicesUpdateDialog: true });
-  //     const response = await GoogleSignin.signIn();
-  //
-  //     if (!isSuccessResponse(response)) {
-  //       // user cancelled the native picker
-  //       return;
-  //     }
-  //
-  //     const { idToken } = response.data;
-  //     const platform = Platform.OS === 'ios' ? 'ios' : 'android';
-  //
-  //     // This is the Sign up screen - always register, never silently log
-  //     // in. If an account already exists, registerWithGoogle rejects with
-  //     // a clear "please login instead" message rather than this screen
-  //     // logging the user in on their behalf.
-  //     if (!hasCompletedOnboarding) {
-  //       // No real profile data yet - collect it via onboarding, then
-  //       // questions.tsx finishes registration with this idToken.
-  //       setPendingGoogleAuth({ idToken, platform });
-  //       router.push('/onboarding/questions');
-  //       return;
-  //     }
-  //
-  //     const apiResponse = await registerWithGoogle({
-  //       idToken,
-  //       platform,
-  //       user_profile: userProfile,
-  //       user_progress: userProgress,
-  //       vocabulary_changes: vocabularyChanges,
-  //     });
-  //
-  //     if (apiResponse.status === 201 && apiResponse.data) {
-  //       setIsAuthenticated(true);
-  //       setHasCompletedOnboarding(true); // runtime only
-  //       await updateUserProfile(apiResponse.data.user_profile);
-  //       await setUserProgress(apiResponse.data.user_progress);
-  //       vocabularyDispatch({ type: VOCABULARY_ACTIONS.SET, payload: apiResponse.data.user_vocabulary });
-  //       // The manually-tracked changes just sent were already applied
-  //       // server-side - clear them so a later background sync doesn't
-  //       // try to re-insert them and hit a duplicate-key error.
-  //       setVocabularyChanges(DEFAULT_VOCABULARY_CHANGES);
-  //       router.replace('/(tabs)');
-  //     }
-  //   } catch (error: any) {
-  //     if (isErrorWithCode(error)) {
-  //       if (error.code === statusCodes.SIGN_IN_CANCELLED) {
-  //         // user cancelled
-  //       } else if (error.code === statusCodes.IN_PROGRESS) {
-  //         setErrors({ general: 'Google Sign-In is in progress.' });
-  //       } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
-  //         setErrors({ general: 'Google Play Services not available or outdated.' });
-  //       } else {
-  //         setErrors({ general: error.message || 'Google Sign-In failed.' });
-  //       }
-  //     } else {
-  //       setErrors({ general: error.message || 'Google Sign-In failed.' });
-  //     }
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
+  const handleGoogleSignIn = async () => {
+    setLoading(true);
+    setErrors({});
+    try {
+      await GoogleSignin.hasPlayServices({ showPlayServicesUpdateDialog: true });
+      const response = await GoogleSignin.signIn();
+
+      if (!isSuccessResponse(response)) {
+        // user cancelled the native picker
+        return;
+      }
+
+      const { idToken } = response.data;
+      const platform = Platform.OS === 'ios' ? 'ios' : 'android';
+
+      // This is the Sign up screen - always register, never silently log
+      // in. If an account already exists, registerWithGoogle rejects with
+      // a clear "please login instead" message rather than this screen
+      // logging the user in on their behalf.
+      if (!hasCompletedOnboarding) {
+        // No real profile data yet - collect it via onboarding, then
+        // questions.tsx finishes registration with this idToken.
+        setPendingGoogleAuth({ idToken, platform });
+        router.push('/onboarding/questions');
+        return;
+      }
+
+      const apiResponse = await registerWithGoogle({
+        idToken,
+        platform,
+        user_profile: userProfile,
+        user_progress: userProgress,
+        vocabulary_changes: vocabularyChanges,
+      });
+
+      if (apiResponse.status === 201 && apiResponse.data) {
+        setIsAuthenticated(true);
+        setHasCompletedOnboarding(true); // runtime only
+        await updateUserProfile(apiResponse.data.user_profile);
+        await setUserProgress(apiResponse.data.user_progress);
+        vocabularyDispatch({ type: VOCABULARY_ACTIONS.SET, payload: apiResponse.data.user_vocabulary });
+        // The manually-tracked changes just sent were already applied
+        // server-side - clear them so a later background sync doesn't
+        // try to re-insert them and hit a duplicate-key error.
+        setVocabularyChanges(DEFAULT_VOCABULARY_CHANGES);
+        router.replace('/(tabs)');
+      }
+    } catch (error: any) {
+      if (isErrorWithCode(error)) {
+        if (error.code === statusCodes.SIGN_IN_CANCELLED) {
+          // user cancelled
+        } else if (error.code === statusCodes.IN_PROGRESS) {
+          setErrors({ general: 'Google Sign-In is in progress.' });
+        } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
+          setErrors({ general: 'Google Play Services not available or outdated.' });
+        } else {
+          setErrors({ general: error.message || 'Google Sign-In failed.' });
+        }
+      } else {
+        setErrors({ general: error.message || 'Google Sign-In failed.' });
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
 
 
 
@@ -364,7 +359,7 @@ export default function RegisterScreen({ onRegisterSuccess }: RegisterScreenProp
         </View>
 
         {/* Google Sign-In Button */}
-        {/* <View style={{ alignItems: 'center' }}>
+        <View style={{ alignItems: 'center' }}>
           <GoogleSigninButton
             style={{ width: width * 0.8, height: 56 }}
             size={GoogleSigninButton.Size.Wide}
@@ -372,7 +367,7 @@ export default function RegisterScreen({ onRegisterSuccess }: RegisterScreenProp
             onPress={handleGoogleSignIn}
             disabled={loading}
           />
-        </View> */}
+        </View>
       </ScrollView>
     </KeyboardAvoidingView>
   );

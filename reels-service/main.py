@@ -20,7 +20,7 @@ async def lifespan(app: FastAPI):
 
 app = FastAPI(
     title=settings.PROJECT_NAME,
-    description="Reels microservice for language learning social media platform gloreels",
+    description="Reels microservice for language learning social media platform glosy",
     version="1.0.0",
     docs_url="/docs",
     redoc_url="/redoc",
