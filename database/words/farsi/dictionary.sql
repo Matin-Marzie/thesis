@@ -12921,4 +12921,1393 @@ VALUES
 (212955, 'مَفهوم', 'noun', NULL, NULL, 3, 'B1', NULL), -- concept
 (212956, 'نیرو', 'noun', NULL, NULL, 3, 'B1', NULL), -- force
 (212957, 'کارکَرد', 'noun', NULL, NULL, 3, 'B1', NULL), -- function
-(212958, 'مَسکَن (سُکونَتگاه)', 'noun', NULL, NULL, 3, 'B1', NULL); -- dwelling
+(212958, 'مَسکَن (سُکونَتگاه)', 'noun', NULL, NULL, 3, 'B1', NULL), -- dwelling
+(212959, 'بتا', 'letter', NULL, NULL, 3, 'N', NULL),   -- beta (Greek letter)
+(212960, 'گاما', 'letter', NULL, NULL, 3, 'N', NULL),   -- gamma (Greek letter)
+(212961, 'دلتا', 'letter', NULL, NULL, 3, 'N', NULL),   -- delta (Greek letter)
+(212962, 'اپسیلون', 'letter', NULL, NULL, 3, 'N', NULL),   -- epsilon (Greek letter)
+(212963, 'زتا', 'letter', NULL, NULL, 3, 'N', NULL),   -- zeta (Greek letter)
+(212964, 'اتا', 'letter', NULL, NULL, 3, 'N', NULL),   -- eta (Greek letter)
+(212965, 'تتا', 'letter', NULL, NULL, 3, 'N', NULL),   -- theta (Greek letter)
+(212966, 'کاپا', 'letter', NULL, NULL, 3, 'N', NULL),   -- kappa (Greek letter)
+(212967, 'لامبدا', 'letter', NULL, NULL, 3, 'N', NULL),   -- lambda (Greek letter)
+(212968, 'میو', 'letter', NULL, NULL, 3, 'N', NULL),   -- mu (Greek letter)
+(212969, 'نیو', 'letter', NULL, NULL, 3, 'N', NULL),   -- nu (Greek letter)
+(212970, 'کسی', 'letter', NULL, NULL, 3, 'N', NULL),   -- xi (Greek letter)
+(212971, 'اومیکرون', 'letter', NULL, NULL, 3, 'N', NULL),   -- omicron (Greek letter)
+(212972, 'پی', 'letter', NULL, NULL, 3, 'N', NULL),   -- pi (Greek letter)
+(212973, 'سیگما', 'letter', NULL, NULL, 3, 'N', NULL),   -- sigma (Greek letter)
+(212974, 'تاو', 'letter', NULL, NULL, 3, 'N', NULL),   -- tau (Greek letter)
+(212975, 'اوپسیلون', 'letter', NULL, NULL, 3, 'N', NULL),   -- upsilon (Greek letter)
+(212976, 'فی', 'letter', NULL, NULL, 3, 'N', NULL),   -- phi (Greek letter)
+(212977, 'خی', 'letter', NULL, NULL, 3, 'N', NULL),   -- chi (Greek letter)
+(212978, 'پسی', 'letter', NULL, NULL, 3, 'N', NULL),   -- psi (Greek letter)
+(212979, 'امگا', 'letter', NULL, NULL, 3, 'N', NULL),   -- omega (Greek letter)
+(212980, 'شِوید', 'noun', NULL, NULL, 3, 'A1', NULL),   -- dill
+(212981, 'مالِ', 'adjective', NULL, NULL, 3, 'A1', NULL),   -- own / belonging to
+(212982, 'عَلاقه‌مَند کَردَن', 'verb', NULL, NULL, 3, 'A1', NULL),   -- to interest
+(212983, 'مَنظور داشتَن', 'verb', NULL, NULL, 3, 'A1', NULL),   -- to mean
+(212984, 'اَز این پَس', 'adverb', NULL, NULL, 3, 'A1', NULL),   -- following / from now on
+(212985, 'اُروپایی', 'adjective', NULL, NULL, 3, 'A1', NULL),   -- European
+(212986, 'تا زَمانی که', 'conjunction', NULL, NULL, 3, 'A1', NULL),   -- as long as / provided that
+(212987, 'مُعتَبَر بودَن', 'verb', NULL, NULL, 3, 'A1', NULL),   -- to be valid / in effect
+(212988, 'دولَت', 'noun', NULL, NULL, 3, 'A1', NULL),   -- state / nation
+(212989, 'مَبادا', 'particle', NULL, NULL, 3, 'A1', NULL),   -- don't (negative imperative particle)
+(212990, 'اُلَمپیک', 'adjective', NULL, NULL, 3, 'A1', NULL),   -- Olympic
+(212991, 'هَر قَدَر', 'pronoun', NULL, NULL, 3, 'A1', NULL),   -- as much / as many as
+(212992, 'اَز نَظَرِ سیاسی', 'adverb', NULL, NULL, 3, 'A1', NULL),   -- politically
+(212993, 'بَرایِ اینکه', 'conjunction', NULL, NULL, 3, 'A1', NULL),   -- in order that
+(212994, 'قَرار اَست', 'verb', NULL, NULL, 3, 'A1', NULL),   -- to be about to / supposed to
+(212995, 'اِمروزی', 'adjective', NULL, NULL, 3, 'A1', NULL),   -- today's / current
+(212996, 'حِمایَت کَردَن', 'verb', NULL, NULL, 3, 'A1', NULL),   -- to support
+(212997, 'به نَفعِ', 'preposition', NULL, NULL, 3, 'A1', NULL),   -- in favor of
+(212998, 'هَدَر دادَن', 'verb', NULL, NULL, 3, 'A1', NULL),   -- to waste
+(212999, 'زَمینی', 'adjective', NULL, NULL, 3, 'A1', NULL),   -- terrestrial / land-
+(213000, 'رَنگ کَردَن', 'verb', NULL, NULL, 3, 'A1', NULL),   -- to color / paint
+(213001, 'اَنگلیسی', 'adjective', NULL, NULL, 3, 'A2', NULL),   -- English
+(213002, 'صَرفِ‌نَظَر اَز', 'adverb', NULL, NULL, 3, 'A2', NULL),   -- regardless / independently
+(213003, 'خِطاب کَردَن', 'verb', NULL, NULL, 3, 'A2', NULL),   -- to address
+(213004, 'قَطع کَردَن', 'verb', NULL, NULL, 3, 'A2', NULL),   -- to disconnect
+(213005, 'سَمتِ چَپ', 'adverb', NULL, NULL, 3, 'A2', NULL),   -- to the left
+(213006, 'کافی بودَن', 'verb', NULL, NULL, 3, 'A2', NULL),   -- to be enough / suffice
+(213007, 'چَسبان', 'adjective', NULL, NULL, 3, 'A2', NULL),   -- self-adhesive
+(213008, 'مُبتَنی ساختَن', 'verb', NULL, NULL, 3, 'A2', NULL),   -- to base (on)
+(213009, 'نُماینده مَجلِس', 'noun', NULL, NULL, 3, 'A2', NULL),   -- member of parliament
+(213010, 'مَدرِسه راهنمایی', 'noun', NULL, NULL, 3, 'A2', NULL),   -- middle school / lower secondary school
+(213011, 'شَکل دادَن', 'verb', NULL, NULL, 3, 'A2', NULL),   -- to shape / form
+(213012, 'مایِل بودَن', 'verb', NULL, NULL, 3, 'A2', NULL),   -- to be willing / disposed
+(213013, 'کَلیسایی', 'adjective', NULL, NULL, 3, 'A2', NULL),   -- ecclesiastical / church-related
+(213014, 'نَظارَتی', 'adjective', NULL, NULL, 3, 'A2', NULL),   -- controlling / regulatory
+(213015, 'فَوق‌العاده', 'adverb', NULL, NULL, 3, 'A2', NULL),   -- exceptionally
+(213016, 'نیم‌سال', 'noun', NULL, NULL, 3, 'A2', NULL),   -- semester
+(213017, 'به‌ظاهِر', 'adverb', NULL, NULL, 3, 'A2', NULL),   -- externally / outwardly
+(213018, 'اِقدام کَردَن', 'verb', NULL, NULL, 3, 'A2', NULL),   -- to attempt / undertake
+(213019, 'به‌طورِ مُثبَت', 'adverb', NULL, NULL, 3, 'A2', NULL),   -- positively
+(213020, 'جامِعِه‌ای', 'adjective', NULL, NULL, 3, 'A2', NULL),   -- communal / community-related
+(213021, 'خَسته کَردَن', 'verb', NULL, NULL, 3, 'A2', NULL),   -- to tire (someone)
+(213022, 'دَولَتی', 'adjective', NULL, NULL, 3, 'A2', NULL),   -- state-run / governmental
+(213023, 'تودِه‌ای', 'adjective', NULL, NULL, 3, 'A2', NULL),   -- mass- / of the masses
+(213024, 'مُتَمایِز بودَن', 'verb', NULL, NULL, 3, 'A2', NULL),   -- to stand out / be distinct
+(213025, 'خانوادِگی', 'adjective', NULL, NULL, 3, 'A2', NULL),   -- family- / familial
+(213026, 'اُرتودُکس', 'adjective', NULL, NULL, 3, 'A2', NULL),   -- Orthodox
+(213027, 'کودَکانِه', 'adjective', NULL, NULL, 3, 'A2', NULL),   -- childish / children's
+(213028, 'جَمعِ دوستانه', 'noun', NULL, NULL, 3, 'A2', NULL),   -- group of friends
+(213029, 'اَذیَت کَردَن', 'verb', NULL, NULL, 3, 'A2', NULL),   -- to tease / bother
+(213030, 'ایالَت', 'noun', NULL, NULL, 3, 'A2', NULL),   -- state (as in a country's states)
+(213031, 'عَمَلاً', 'adverb', NULL, NULL, 3, 'A2', NULL),   -- practically / in practice
+(213032, 'بِه نُمایِش گُذاشتَن', 'verb', NULL, NULL, 3, 'A2', NULL),   -- to project / display
+(213033, 'بِه‌مَوقِع رِسیدَن', 'verb', NULL, NULL, 3, 'A2', NULL),   -- to manage in time / catch up
+(213034, 'جَریان', 'noun', NULL, NULL, 3, 'A2', NULL),   -- current / stream
+(213035, 'تَشکیل‌دِهَنده', 'adjective', NULL, NULL, 3, 'A2', NULL),   -- constituent
+(213036, 'مَدرَسِه‌ای', 'adjective', NULL, NULL, 3, 'A2', NULL),   -- school-related
+(213037, 'گِرامی داشتَن', 'verb', NULL, NULL, 3, 'A2', NULL),   -- to honor
+(213038, 'گَردِشگَری', 'adjective', NULL, NULL, 3, 'A2', NULL),   -- touristic
+(213039, 'مادّی', 'adjective', NULL, NULL, 3, 'A2', NULL),   -- material
+(213040, 'اِمضا کَردَن', 'verb', NULL, NULL, 3, 'A2', NULL),   -- to sign
+(213041, 'دوست دُختَر', 'noun', NULL, NULL, 3, 'A2', NULL),   -- female friend / girlfriend
+(213042, 'مُقَصِّر بودَن', 'verb', NULL, NULL, 3, 'A2', NULL),   -- to be at fault / to blame
+(213043, 'کاغَذی', 'adjective', NULL, NULL, 3, 'A2', NULL),   -- made of paper
+(213044, 'زِمِستانی', 'adjective', NULL, NULL, 3, 'A2', NULL),   -- wintry
+(213045, 'دیروزی', 'adjective', NULL, NULL, 3, 'A2', NULL),   -- yesterday's
+(213046, 'مَسیح', 'noun', NULL, NULL, 3, 'A2', NULL),   -- Christ
+(213047, 'رَأی دادَن', 'verb', NULL, NULL, 3, 'A2', NULL),   -- to vote
+(213048, 'گازی', 'adjective', NULL, NULL, 3, 'B1', NULL),   -- gaseous
+(213049, 'تَحلیلی', 'adjective', NULL, NULL, 3, 'B1', NULL),   -- analytical / detailed
+(213050, 'بارگُذاری کَردَن', 'verb', NULL, NULL, 3, 'B1', NULL),   -- to post / upload
+(213051, 'آنارشیست', 'noun', NULL, NULL, 3, 'B1', NULL),   -- anarchist
+(213052, 'بِهرِه‌بَرداری', 'noun', NULL, NULL, 3, 'B1', NULL),   -- utilization
+(213053, 'باستان‌شناختی', 'adjective', NULL, NULL, 3, 'B1', NULL),   -- archaeological
+(213054, 'اُسقُفِ اَعظَم', 'noun', NULL, NULL, 3, 'B1', NULL),   -- archbishop
+(213055, 'بیمار بودَن', 'verb', NULL, NULL, 3, 'B1', NULL),   -- to be ill
+(213056, 'سِتارِه', 'noun', NULL, NULL, 3, 'B1', NULL),   -- star
+(213057, 'بیمِه‌ای', 'adjective', NULL, NULL, 3, 'B1', NULL),   -- insurance-related
+(213058, 'بی‌اَرتِباط', 'adverb', NULL, NULL, 3, 'B1', NULL),   -- irrelevantly / regardless
+(213059, 'خودُرویی', 'adjective', NULL, NULL, 3, 'B1', NULL),   -- automotive / car-related
+(213060, 'نُمَره‌دِهی', 'noun', NULL, NULL, 3, 'B1', NULL),   -- grading / scoring
+(213061, 'شتاب دادَن', 'verb', NULL, NULL, 3, 'B1', NULL),   -- to hurry (someone) / hasten
+(213062, 'کِتاب‌شِناسی', 'noun', NULL, NULL, 3, 'B1', NULL),   -- bibliography
+(213063, 'آسیب رِساندَن', 'verb', NULL, NULL, 3, 'B1', NULL),   -- to harm
+(213064, 'به سَمتِ شُمال', 'adverb', NULL, NULL, 3, 'B1', NULL),   -- northward
+(213065, 'فُحش دادَن', 'verb', NULL, NULL, 3, 'B1', NULL),   -- to curse / insult
+(213066, 'غَرق کَردَن', 'verb', NULL, NULL, 3, 'B1', NULL),   -- to sink / submerge (something)
+(213067, 'فِرانسَوی', 'noun', NULL, NULL, 3, 'B1', NULL),   -- Frenchman
+(213068, 'زَبانی', 'adjective', NULL, NULL, 3, 'B1', NULL),   -- linguistic
+(213069, 'جَنگَلی', 'adjective', NULL, NULL, 3, 'B1', NULL),   -- forest-related
+(213070, 'پَذیرُفتِه‌شُدِه', 'adjective', NULL, NULL, 3, 'B1', NULL),   -- accepted
+(213071, 'ثانیِه', 'noun', NULL, NULL, 3, 'B1', NULL),   -- second (time unit)
+(213072, 'طول کِشیدَن', 'verb', NULL, NULL, 3, 'B1', NULL),   -- to last / take time
+(213073, 'حَق داشتَن', 'verb', NULL, NULL, 3, 'B1', NULL),   -- to be entitled to
+(213074, 'شَبَکه‌ای', 'adjective', NULL, NULL, 3, 'B1', NULL),   -- network-related
+(213075, 'به سَختی', 'adverb', NULL, NULL, 3, 'B1', NULL),   -- with difficulty
+(213076, 'سَخت کَردَن', 'verb', NULL, NULL, 3, 'B1', NULL),   -- to make difficult
+(213077, 'در سَطحِ مِلّی', 'adverb', NULL, NULL, 3, 'B1', NULL),   -- nationally
+(213078, 'اِبراز کَردَن', 'verb', NULL, NULL, 3, 'B1', NULL),   -- to manifest / express
+(213079, 'در مَعرَض قَرار گِرِفتَن', 'verb', NULL, NULL, 3, 'B1', NULL),   -- to be exposed / exhibited
+(213080, 'رَوغَنِ زَیتون', 'noun', NULL, NULL, 3, 'B1', NULL),   -- olive oil
+(213081, 'اِنِرژِتیک', 'adjective', NULL, NULL, 3, 'B1', NULL),   -- energy-related
+(213082, 'مُطَّلِع شُدَن', 'verb', NULL, NULL, 3, 'B1', NULL),   -- to get informed / updated
+(213083, 'آکواریوم', 'noun', NULL, NULL, 3, 'B1', NULL),   -- aquarium
+(213084, 'شِش‌ماهه', 'adjective', NULL, NULL, 3, 'B1', NULL),   -- six-month / semester-long
+(213085, 'رَسماً', 'adverb', NULL, NULL, 3, 'B1', NULL),   -- officially
+(213086, 'کارآفرینی', 'adjective', NULL, NULL, 3, 'B1', NULL),   -- entrepreneurial / business-related
+(213087, 'عاشِق شُدَن', 'verb', NULL, NULL, 3, 'B1', NULL),   -- to fall in love
+(213088, 'قارِه', 'noun', NULL, NULL, 3, 'B1', NULL),   -- continent
+(213089, 'شِکَست', 'noun', NULL, NULL, 3, 'B1', NULL),   -- defeat
+(213090, 'مَوضوعی', 'adjective', NULL, NULL, 3, 'B1', NULL),   -- thematic
+(213091, 'دَرمان کَردَن', 'verb', NULL, NULL, 3, 'B1', NULL),   -- to treat / cure
+(213092, 'رِضایَت‌بَخش', 'adjective', NULL, NULL, 3, 'B1', NULL),   -- satisfactory
+(213093, 'نِرخِ بَرابَری', 'noun', NULL, NULL, 3, 'B1', NULL),   -- exchange rate / equivalence
+(213094, 'اَز نَظَرِ تاریخی', 'adverb', NULL, NULL, 3, 'B1', NULL),   -- historically
+(213095, 'زِندِگیِ روزَمَرّه', 'noun', NULL, NULL, 3, 'B1', NULL),   -- everyday life
+(213096, 'نِشاندَن', 'verb', NULL, NULL, 3, 'B1', NULL),   -- to seat (someone)
+(213097, 'عَصر بِخِیر', 'expression', NULL, NULL, 3, 'B1', NULL),   -- good evening
+(213098, 'سَرمایِه‌داری', 'adjective', NULL, NULL, 3, 'B1', NULL),   -- capitalist
+(213099, 'قَلبی', 'adjective', NULL, NULL, 3, 'B1', NULL),   -- cardiac
+(213100, 'در خَطَر بودَن', 'verb', NULL, NULL, 3, 'B1', NULL),   -- to be in danger
+(213101, 'اُمورِ عُمومی', 'noun', NULL, NULL, 3, 'B1', NULL),   -- public affairs / commons
+(213102, 'بودجه اِختِصاصی', 'noun', NULL, NULL, 3, 'B1', NULL),   -- budget line / earmarked fund
+(213103, 'کاهِش‌یافتِه', 'adjective', NULL, NULL, 3, 'B1', NULL),   -- reduced
+(213104, 'فِلِزّی', 'adjective', NULL, NULL, 3, 'B1', NULL),   -- metallic
+(213105, 'تَحصیلاتِ تَکمیلی', 'adjective', NULL, NULL, 3, 'B1', NULL),   -- postgraduate
+(213106, 'مُتَوَسِّط', 'adjective', NULL, NULL, 3, 'B1', NULL),   -- mediocre / average
+(213107, 'یونانیِ نُوین', 'adjective', NULL, NULL, 3, 'B1', NULL),   -- Modern Greek
+(213108, 'اُستانی', 'adjective', NULL, NULL, 3, 'B1', NULL),   -- prefectural / provincial
+(213109, 'اَز نَظَرِ حُقوقی', 'adverb', NULL, NULL, 3, 'B1', NULL),   -- legally
+(213110, 'طَرزِ فِکر', 'noun', NULL, NULL, 3, 'B1', NULL),   -- mentality
+(213111, 'خالی کَردَن', 'verb', NULL, NULL, 3, 'B1', NULL),   -- to unload
+(213112, 'به زیبایی', 'adverb', NULL, NULL, 3, 'B1', NULL),   -- beautifully
+(213113, 'پاس', 'noun', NULL, NULL, 3, 'B1', NULL),   -- pass
+(213114, 'عید پاک', 'noun', NULL, NULL, 3, 'B1', NULL),   -- Easter
+(213115, 'شاعِرانه', 'adjective', NULL, NULL, 3, 'B1', NULL),   -- poetic
+(213116, 'کیفی', 'adjective', NULL, NULL, 3, 'B1', NULL),   -- qualitative
+(213117, 'پیش اَز اِنتِخابات', 'adjective', NULL, NULL, 3, 'B1', NULL),   -- pre-election
+(213118, 'مُتَوَسِّل شُدَن', 'verb', NULL, NULL, 3, 'B1', NULL),   -- to resort to / appeal to
+(213119, 'پَریروزی', 'adjective', NULL, NULL, 3, 'B1', NULL),   -- from the day before yesterday
+(213120, 'اَوَّلاً', 'adverb', NULL, NULL, 3, 'B1', NULL),   -- firstly
+(213121, 'سِپتامبر', 'noun', NULL, NULL, 3, 'B1', NULL),   -- September
+(213122, 'شَرط‌بَندی', 'noun', NULL, NULL, 3, 'B1', NULL),   -- bet / wager
+(213123, 'تَشکیل دادَن', 'verb', NULL, NULL, 3, 'B1', NULL),   -- to form / constitute
+(213124, 'به‌طورِ تَصادُفی', 'adverb', NULL, NULL, 3, 'B1', NULL),   -- randomly
+(213125, 'به لِحاظِ مادّی', 'adverb', NULL, NULL, 3, 'B1', NULL),   -- materially
+(213126, 'فَرض می‌شَوَد', 'verb', NULL, NULL, 3, 'B1', NULL),   -- it is supposed / assumed
+(213127, 'دارویی', 'adjective', NULL, NULL, 3, 'B1', NULL),   -- pharmaceutical
+(213128, 'دوستانه', 'adverb', NULL, NULL, 3, 'B1', NULL),   -- in a friendly way
+(213129, 'دانِشجویی', 'adjective', NULL, NULL, 3, 'B1', NULL),   -- student-related
+(213130, 'بار زَدَن', 'verb', NULL, NULL, 3, 'B1', NULL),   -- to load
+(213131, 'روشَن کَردَن', 'verb', NULL, NULL, 3, 'B1', NULL),   -- to illuminate / light up
+(213132, 'عَکّاسی', 'adjective', NULL, NULL, 3, 'B1', NULL),   -- photographic
+(213133, 'هَزینه گِرِفتَن', 'verb', NULL, NULL, 3, 'B1', NULL),   -- to charge (money)
+(213134, 'تَأمین‌مالی', 'adjective', NULL, NULL, 3, 'B1', NULL),   -- financing-related
+(213135, 'قابِلِ اِستِفاده', 'adjective', NULL, NULL, 3, 'B1', NULL),   -- usable
+(213136, 'کریسمَسی', 'adjective', NULL, NULL, 3, 'B1', NULL),   -- Christmas-related
+(213137, 'جا شُدَن', 'verb', NULL, NULL, 3, 'B1', NULL),   -- to fit
+(213138, 'دُروغ', 'noun', NULL, NULL, 3, 'B1', NULL),   -- lie
+(213139, 'سَرمایِش', 'noun', NULL, NULL, 3, 'B1', NULL),   -- refrigeration / cooling
+(213140, 'وَحشیانه', 'adverb', NULL, NULL, 3, 'B2', NULL),   -- wildly / fiercely
+(213141, 'قادِر نَبودَن', 'verb', NULL, NULL, 3, 'B2', NULL),   -- to be unable
+(213142, 'هَوایی', 'adjective', NULL, NULL, 3, 'B2', NULL),   -- aviation- / air-
+(213143, 'بی‌حَرَکَت', 'adverb', NULL, NULL, 3, 'B2', NULL),   -- motionlessly
+(213144, 'بازساختاردِهی', 'noun', NULL, NULL, 3, 'B2', NULL),   -- restructuring
+(213145, 'به‌طورِ مُفَصَّل', 'adverb', NULL, NULL, 3, 'B2', NULL),   -- in detail / analytically
+(213146, 'تَوسِعِه‌ای', 'adjective', NULL, NULL, 3, 'B2', NULL),   -- developmental
+(213147, 'یادشُدِه', 'adjective', NULL, NULL, 3, 'B2', NULL),   -- referred to / aforementioned
+(213148, 'در ارتِباط با', 'adverb', NULL, NULL, 3, 'B2', NULL),   -- with reference to
+(213149, 'به راحَتی', 'adverb', NULL, NULL, 3, 'B2', NULL),   -- comfortably
+(213150, 'مُعاوِنِ رَئیس', 'noun', NULL, NULL, 3, 'B2', NULL),   -- vice president
+(213151, 'اِخراج کَردَن', 'verb', NULL, NULL, 3, 'B2', NULL),   -- to expel
+(213152, 'مُتَحَیِّر بودَن', 'verb', NULL, NULL, 3, 'B2', NULL),   -- to wonder / be puzzled
+(213153, 'به‌طورِ مَنفی', 'adverb', NULL, NULL, 3, 'B2', NULL),   -- negatively
+(213154, 'اِعمال‌کُنَنده', 'adjective', NULL, NULL, 3, 'B2', NULL),   -- exercising / practicing
+(213155, 'بی‌سیم', 'adjective', NULL, NULL, 3, 'B2', NULL),   -- wireless
+(213156, 'اَز یِک طَرَف', 'adverb', NULL, NULL, 3, 'B2', NULL),   -- on the one hand
+(213157, 'مُعاف اَز مالیات', 'adjective', NULL, NULL, 3, 'B2', NULL),   -- tax-free
+(213158, 'شِکَنجه دادَن', 'verb', NULL, NULL, 3, 'B2', NULL),   -- to torture / torment
+(213159, 'زِندِگی‌نامه‌ای', 'adjective', NULL, NULL, 3, 'B2', NULL),   -- biographical
+(213160, 'آبیِ روشَن', 'adjective', NULL, NULL, 3, 'B2', NULL),   -- light blue / azure
+(213161, 'مُعَلِّمِه', 'noun', NULL, NULL, 3, 'B2', NULL),   -- female teacher
+(213162, 'رَوزنامه‌نِگاری', 'adjective', NULL, NULL, 3, 'B2', NULL),   -- journalistic
+(213163, 'گویِش', 'noun', NULL, NULL, 3, 'B2', NULL),   -- dialect
+(213164, 'عُبور کَردَن اَز', 'verb', NULL, NULL, 3, 'B2', NULL),   -- to cross
+(213165, 'بیان', 'noun', NULL, NULL, 3, 'B2', NULL),   -- wording / formulation
+(213166, 'بَرگُزاری', 'noun', NULL, NULL, 3, 'B2', NULL),   -- conducting / holding (an event)
+(213167, 'مُدیرِ عامِل', 'noun', NULL, NULL, 3, 'B2', NULL),   -- managing director
+(213168, 'داستانِ کوتاه', 'noun', NULL, NULL, 3, 'B2', NULL),   -- short story
+(213169, 'دیکتاتوری', 'noun', NULL, NULL, 3, 'B2', NULL),   -- dictatorship
+(213170, 'با صِدایِ بُلَند', 'adverb', NULL, NULL, 3, 'B2', NULL),   -- loudly / strongly
+(213171, 'دَستِنامه', 'noun', NULL, NULL, 3, 'B2', NULL),   -- handbook / manual
+(213172, 'ناسیونالیسم', 'noun', NULL, NULL, 3, 'B2', NULL),   -- nationalism
+(213173, 'صَدُم', 'number', NULL, NULL, 3, 'B2', NULL),   -- hundredth (ordinal)
+(213174, 'اِنتِشاراتی', 'adjective', NULL, NULL, 3, 'B2', NULL),   -- publishing-related
+(213175, 'مَسئِلِه مُعَلَّق', 'noun', NULL, NULL, 3, 'B2', NULL),   -- pending matter
+(213176, 'پَخش کَردَن', 'verb', NULL, NULL, 3, 'B2', NULL),   -- to emit / broadcast
+(213177, 'نوسازی', 'noun', NULL, NULL, 3, 'B2', NULL),   -- modernization
+(213178, 'اِجرایی', 'adjective', NULL, NULL, 3, 'B2', NULL),   -- executive
+(213179, 'اَرتَجاعی', 'adjective', NULL, NULL, 3, 'B2', NULL),   -- elastic / flexible
+(213180, 'سُبُک', 'adjective', NULL, NULL, 3, 'B2', NULL),   -- light (weight)
+(213181, 'به‌طورِ غَیرِمُستَقیم', 'adverb', NULL, NULL, 3, 'B2', NULL),   -- indirectly
+(213182, 'آگاهی‌بَخش', 'adjective', NULL, NULL, 3, 'B2', NULL),   -- informative
+(213183, 'به‌طورِ یِکپارچه', 'adverb', NULL, NULL, 3, 'B2', NULL),   -- uniformly / as one
+(213184, 'اِمتِحانی', 'adjective', NULL, NULL, 3, 'B2', NULL),   -- examination-related / investigative
+(213185, 'یارانه دادَن', 'verb', NULL, NULL, 3, 'B2', NULL),   -- to subsidize
+(213186, 'اَخبارِ روز', 'noun', NULL, NULL, 3, 'B2', NULL),   -- current affairs / topicality
+(213187, 'مُناقِشِه‌بَرانگیز', 'adjective', NULL, NULL, 3, 'B2', NULL),   -- controversial / disputed
+(213188, 'اَز نَظَرِ عِلمی', 'adverb', NULL, NULL, 3, 'B2', NULL),   -- scientifically
+(213189, 'اِفتِخاری', 'adjective', NULL, NULL, 3, 'B2', NULL),   -- honorary
+(213190, 'بِه بار آوَردَن', 'verb', NULL, NULL, 3, 'B2', NULL),   -- to bring about / cause
+(213191, 'نامِ تِجاری', 'noun', NULL, NULL, 3, 'B2', NULL),   -- trade name / brand name
+(213192, 'آزمایِشگاهی', 'adjective', NULL, NULL, 3, 'B2', NULL),   -- laboratory-related
+(213193, 'خَطِّ راست', 'noun', NULL, NULL, 3, 'B2', NULL),   -- straight line
+(213194, 'مَسئول بودَن', 'verb', NULL, NULL, 3, 'B2', NULL),   -- to be responsible
+(213195, 'طَرَفداری کَردَن اَز', 'verb', NULL, NULL, 3, 'B2', NULL),   -- to favor
+(213196, 'اِداره مالیات', 'noun', NULL, NULL, 3, 'B2', NULL),   -- tax office
+(213197, 'گَرم کَردَن', 'verb', NULL, NULL, 3, 'B2', NULL),   -- to warm / heat
+(213198, 'حَسادَت کَردَن', 'verb', NULL, NULL, 3, 'B2', NULL),   -- to be jealous / envy
+(213199, 'عَصَبانی شُدَن', 'verb', NULL, NULL, 3, 'B2', NULL),   -- to get angry
+(213200, 'فِدا کَردَن', 'verb', NULL, NULL, 3, 'B2', NULL),   -- to sacrifice
+(213201, 'آرمان', 'noun', NULL, NULL, 3, 'B2', NULL),   -- ideal
+(213202, 'ویژِگیِ خاص', 'noun', NULL, NULL, 3, 'B2', NULL),   -- distinctiveness / peculiarity
+(213203, 'شَخصِ خُصوصی', 'noun', NULL, NULL, 3, 'B2', NULL),   -- private individual
+(213204, 'به‌طورِ خُصوصی', 'adverb', NULL, NULL, 3, 'B2', NULL),   -- privately
+(213205, 'اُستادِ زَن', 'noun', NULL, NULL, 3, 'B2', NULL),   -- female professor / teacher
+(213206, 'میخ کوبیدَن', 'verb', NULL, NULL, 3, 'B2', NULL),   -- to nail / pin
+(213207, 'تَبدیل شُدَن به', 'verb', NULL, NULL, 3, 'B2', NULL),   -- to end up (becoming)
+(213208, 'طَبَقه‌بَندی کَردَن', 'verb', NULL, NULL, 3, 'B2', NULL),   -- to classify / rank
+(213209, 'قَهوه‌خانه', 'noun', NULL, NULL, 3, 'B2', NULL),   -- coffee house
+(213210, 'حالِ خوش', 'noun', NULL, NULL, 3, 'B2', NULL),   -- good mood / high spirits
+(213211, 'سینِمایی', 'adjective', NULL, NULL, 3, 'B2', NULL),   -- cinematic
+(213212, 'شِکَمی', 'adjective', NULL, NULL, 3, 'B2', NULL),   -- abdominal
+(213213, 'پارلِمانی', 'adjective', NULL, NULL, 3, 'B2', NULL),   -- parliamentary
+(213214, 'کُمونیستی', 'adjective', NULL, NULL, 3, 'B2', NULL),   -- communist
+(213215, 'مورَب', 'adjective', NULL, NULL, 3, 'B2', NULL),   -- oblique / slanted
+(213216, 'مُتِأَسِّف بودَن', 'verb', NULL, NULL, 3, 'B2', NULL),   -- to be sorry / feel sad
+(213217, 'اِستِعاری', 'adjective', NULL, NULL, 3, 'B2', NULL),   -- figurative / metaphorical
+(213218, 'دَفتَرِ ثَبت', 'noun', NULL, NULL, 3, 'B2', NULL),   -- registry
+(213219, 'عایِق کَردَن', 'verb', NULL, NULL, 3, 'B2', NULL),   -- to insulate / isolate
+(213220, 'به سَمتِ جُنوب', 'adverb', NULL, NULL, 3, 'B2', NULL),   -- southward
+(213221, 'دوباره دیدَن', 'verb', NULL, NULL, 3, 'B2', NULL),   -- to see again
+(213222, 'دوباره گُفتَن', 'verb', NULL, NULL, 3, 'B2', NULL),   -- to say again
+(213223, 'طُغیان کَردَن', 'verb', NULL, NULL, 3, 'B2', NULL),   -- to break out / burst out
+(213224, 'جادِه‌ای', 'adjective', NULL, NULL, 3, 'B2', NULL),   -- road-related
+(213225, 'به اِتِّفاقِ آرا', 'adverb', NULL, NULL, 3, 'B2', NULL),   -- unanimously
+(213226, 'در سَراسَرِ جَهان', 'adverb', NULL, NULL, 3, 'B2', NULL),   -- globally / worldwide
+(213227, 'آسیب‌شِناختی', 'adjective', NULL, NULL, 3, 'B2', NULL),   -- pathological
+(213228, 'بَد بَرداشت کَردَن', 'verb', NULL, NULL, 3, 'B2', NULL),   -- to misunderstand
+(213229, 'وانِمود کَردَن', 'verb', NULL, NULL, 3, 'B2', NULL),   -- to pretend / portray
+(213230, 'مُراقَبَتِ پَزِشکی', 'noun', NULL, NULL, 3, 'B2', NULL),   -- medical care
+(213231, 'اِعتِباری', 'adjective', NULL, NULL, 3, 'B2', NULL),   -- credit-related
+(213232, 'ضَربه زَدَن', 'verb', NULL, NULL, 3, 'B2', NULL),   -- to strike / afflict
+(213233, 'اَز نَظَرِ مَعنَوی', 'adverb', NULL, NULL, 3, 'B2', NULL),   -- spiritually / intellectually
+(213234, 'فوتبالی', 'adjective', NULL, NULL, 3, 'B2', NULL),   -- football-related
+(213235, 'بِه فِکر واداشتَن', 'verb', NULL, NULL, 3, 'B2', NULL),   -- to trouble / give food for thought
+(213236, 'پیشنِهادی', 'adjective', NULL, NULL, 3, 'B2', NULL),   -- proposed / suggested
+(213237, 'پیش‌فَرض داشتَن', 'verb', NULL, NULL, 3, 'B2', NULL),   -- to presuppose
+(213238, 'آتِش‌نِشانی', 'adjective', NULL, NULL, 3, 'B2', NULL),   -- fire-fighting
+(213239, 'خَیّاطی', 'noun', NULL, NULL, 3, 'B2', NULL),   -- sewing / tailoring
+(213240, 'کِرکِره', 'noun', NULL, NULL, 3, 'B2', NULL),   -- roller blind
+(213241, 'خَم شُدَن', 'verb', NULL, NULL, 3, 'B2', NULL),   -- to bend down / stoop
+(213242, 'اِسپِرم', 'noun', NULL, NULL, 3, 'B2', NULL),   -- sperm / seed
+(213243, 'اِسکان دادَن', 'verb', NULL, NULL, 3, 'B2', NULL),   -- to house / shelter
+(213244, 'مَربوط به مَسکَن', 'adjective', NULL, NULL, 3, 'B2', NULL),   -- housing-related
+(213245, 'رواق', 'noun', NULL, NULL, 3, 'B2', NULL),   -- arcade / portico
+(213246, 'تَألیف کَردَن', 'verb', NULL, NULL, 3, 'B2', NULL),   -- to write / author (a book)
+(213247, 'مَشاوِره‌ای', 'adjective', NULL, NULL, 3, 'B2', NULL),   -- advisory / counseling
+(213248, 'سَندیکالیست', 'noun', NULL, NULL, 3, 'B2', NULL),   -- trade unionist
+(213249, 'سَندیکایی', 'adjective', NULL, NULL, 3, 'B2', NULL),   -- trade union-related
+(213250, 'تَعاوُنی', 'noun', NULL, NULL, 3, 'B2', NULL),   -- cooperative (organization)
+(213251, 'به‌طورِ سیستِماتیک', 'adverb', NULL, NULL, 3, 'B2', NULL),   -- systematically
+(213252, 'ذَبح کَردَن', 'verb', NULL, NULL, 3, 'B2', NULL),   -- to slaughter
+(213253, 'فُلان', 'pronoun', NULL, NULL, 3, 'B2', NULL),   -- so-and-so / such-and-such
+(213254, 'شومینه', 'noun', NULL, NULL, 3, 'B2', NULL),   -- fireplace
+(213255, 'بُرِش', 'noun', NULL, NULL, 3, 'B2', NULL),   -- incision / cross-section
+(213256, 'بانکی', 'adjective', NULL, NULL, 3, 'B2', NULL),   -- banking-related
+(213257, 'دیوانه کَردَن', 'verb', NULL, NULL, 3, 'B2', NULL),   -- to drive crazy
+(213258, 'تابِع بودَن', 'verb', NULL, NULL, 3, 'B2', NULL),   -- to fall under / be subordinate to
+(213259, 'مَشمول بودَن', 'verb', NULL, NULL, 3, 'B2', NULL),   -- to be subject to
+(213260, 'کاهِشِ اَرزِش', 'noun', NULL, NULL, 3, 'B2', NULL),   -- devaluation
+(213261, 'اِجباراً', 'adverb', NULL, NULL, 3, 'B2', NULL),   -- obligatorily
+(213262, 'مُعاوِنِ وَزیر', 'noun', NULL, NULL, 3, 'B2', NULL),   -- deputy minister
+(213263, 'اِمسالی', 'adjective', NULL, NULL, 3, 'B2', NULL),   -- this year's
+(213264, 'اَدَبیّات‌شِناسی', 'noun', NULL, NULL, 3, 'B2', NULL),   -- philology
+(213265, 'مالیاتی', 'adjective', NULL, NULL, 3, 'B2', NULL),   -- tax-related
+(213266, 'کِلاسِ تَقویَتی', 'noun', NULL, NULL, 3, 'B2', NULL),   -- cram school / tutoring center
+(213267, 'بَرف می‌بارَد', 'verb', NULL, NULL, 3, 'B2', NULL),   -- it is snowing
+(213268, 'اِستِفاده', 'noun', NULL, NULL, 3, 'B2', NULL),   -- usage / utilization
+(213269, 'به‌طوری‌که', 'conjunction', NULL, NULL, 3, 'B2', NULL),   -- so that
+(213270, 'با مِهرَبانی', 'adverb', NULL, NULL, 3, 'C1', NULL),   -- kindly
+(213271, 'مُقَدَّس کَردَن', 'verb', NULL, NULL, 3, 'C1', NULL),   -- to sanctify
+(213272, 'بی‌تَفاوَت بودَن', 'verb', NULL, NULL, 3, 'C1', NULL),   -- to be indifferent
+(213273, 'ظُلم کَردَن', 'verb', NULL, NULL, 3, 'C1', NULL),   -- to wrong / treat unjustly
+(213274, 'فَساد', 'noun', NULL, NULL, 3, 'C1', NULL),   -- deterioration / spoilage
+(213275, 'بی‌چون‌وچَرا', 'adjective', NULL, NULL, 3, 'C1', NULL),   -- indisputable
+(213276, 'تَنَفُّسی', 'adjective', NULL, NULL, 3, 'C1', NULL),   -- respiratory
+(213277, 'وارونه', 'adverb', NULL, NULL, 3, 'C1', NULL),   -- upside down / backwards
+(213278, 'در حالِ توسِعه', 'adjective', NULL, NULL, 3, 'C1', NULL),   -- developing (e.g. country)
+(213279, 'کُنترَل‌نشُده', 'adjective', NULL, NULL, 3, 'C1', NULL),   -- uncontrolled
+(213280, 'آشکارساز', 'noun', NULL, NULL, 3, 'C1', NULL),   -- detector
+(213281, 'قَطعِه‌یِ یَدَکی', 'noun', NULL, NULL, 3, 'C1', NULL),   -- spare part
+(213282, 'کپی‌بَرداری', 'noun', NULL, NULL, 3, 'C1', NULL),   -- copying
+(213283, 'پُمپاژ کَردَن', 'verb', NULL, NULL, 3, 'C1', NULL),   -- to pump / draw (resources)
+(213284, 'مُطالِبه کَردَن', 'verb', NULL, NULL, 3, 'C1', NULL),   -- to demand / claim
+(213285, 'بَعدِازظُهری', 'adjective', NULL, NULL, 3, 'C1', NULL),   -- afternoon-related
+(213286, 'دَفع کَردَن', 'verb', NULL, NULL, 3, 'C1', NULL),   -- to repel / deflect
+(213287, 'هَدَف داشتَن', 'verb', NULL, NULL, 3, 'C1', NULL),   -- to aim at
+(213288, 'غایِب بودَن', 'verb', NULL, NULL, 3, 'C1', NULL),   -- to be absent
+(213289, 'غَیرِقابِلِ‌پیش‌بینی', 'adjective', NULL, NULL, 3, 'C1', NULL),   -- unpredictable
+(213290, 'عَدَدی', 'adjective', NULL, NULL, 3, 'C1', NULL),   -- numerical
+(213291, 'باستان‌شِناس', 'noun', NULL, NULL, 3, 'C1', NULL),   -- archaeologist
+(213292, 'مُعَطَّر', 'adjective', NULL, NULL, 3, 'C1', NULL),   -- aromatic
+(213293, 'نُقره‌ای', 'adjective', NULL, NULL, 3, 'C1', NULL),   -- made of silver
+(213294, 'آسم', 'noun', NULL, NULL, 3, 'C1', NULL),   -- asthma
+(213295, 'غَیرِقابِلِ‌سازِش', 'adjective', NULL, NULL, 3, 'C1', NULL),   -- incompatible / uncompromising
+(213296, 'جَوّی', 'adjective', NULL, NULL, 3, 'C1', NULL),   -- atmospheric
+(213297, 'سَلطَنَت کَردَن', 'verb', NULL, NULL, 3, 'C1', NULL),   -- to reign / be king
+(213298, 'بِهینه‌سازی', 'noun', NULL, NULL, 3, 'C1', NULL),   -- optimization
+(213299, 'کِتاب‌فُروشی', 'noun', NULL, NULL, 3, 'C1', NULL),   -- bookstore
+(213300, 'پوشِشِ گیاهی', 'noun', NULL, NULL, 3, 'C1', NULL),   -- vegetation
+(213301, 'کُمَکی', 'adjective', NULL, NULL, 3, 'C1', NULL),   -- auxiliary
+(213302, 'شِلّیک', 'noun', NULL, NULL, 3, 'C1', NULL),   -- shot (of a weapon) / throw
+(213303, 'کَفِ دَریا', 'noun', NULL, NULL, 3, 'C1', NULL),   -- seabed / depths
+(213304, 'گُربِه نَر', 'noun', NULL, NULL, 3, 'C1', NULL),   -- tomcat
+(213305, 'تَعمیم دادَن', 'verb', NULL, NULL, 3, 'C1', NULL),   -- to generalize
+(213306, 'پیر شُدَن', 'verb', NULL, NULL, 3, 'C1', NULL),   -- to grow old
+(213307, 'دَستوری', 'adjective', NULL, NULL, 3, 'C1', NULL),   -- grammatical
+(213308, 'وام‌گیری', 'noun', NULL, NULL, 3, 'C1', NULL),   -- borrowing / lending
+(213309, 'نَظرسَنجی کَردَن', 'verb', NULL, NULL, 3, 'C1', NULL),   -- to poll (opinion)
+(213310, 'تَشخیصی', 'adjective', NULL, NULL, 3, 'C1', NULL),   -- diagnostic
+(213311, 'فَضایی', 'adjective', NULL, NULL, 3, 'C1', NULL),   -- space-related
+(213312, 'تَغذیه‌ای', 'adjective', NULL, NULL, 3, 'C1', NULL),   -- nutritional
+(213313, 'بی‌زَمان', 'adjective', NULL, NULL, 3, 'C1', NULL),   -- timeless
+(213314, 'دُکتَری', 'adjective', NULL, NULL, 3, 'C1', NULL),   -- doctoral
+(213315, 'در سَطحِ بین‌اَلمَللی', 'adverb', NULL, NULL, 3, 'C1', NULL),   -- internationally
+(213316, 'توضیح', 'noun', NULL, NULL, 3, 'C1', NULL),   -- clarification
+(213317, 'رِوایَت کَردَن', 'verb', NULL, NULL, 3, 'C1', NULL),   -- to narrate
+(213318, 'مَدارِکِ لازِم', 'noun', NULL, NULL, 3, 'C1', NULL),   -- supporting documents
+(213319, 'توجیهی', 'adjective', NULL, NULL, 3, 'C1', NULL),   -- justificatory
+(213320, 'بِه قَتل رِساندَن', 'verb', NULL, NULL, 3, 'C1', NULL),   -- to murder / assassinate
+(213321, 'ستایِش کَردَن', 'verb', NULL, NULL, 3, 'C1', NULL),   -- to glorify
+(213322, 'ماهواره‌ای', 'adjective', NULL, NULL, 3, 'C1', NULL),   -- satellite-related
+(213323, 'مُؤَثِّر', 'adjective', NULL, NULL, 3, 'C1', NULL),   -- drastic / effective
+(213324, 'به سَمتِ غَرب', 'adverb', NULL, NULL, 3, 'C1', NULL),   -- westward
+(213325, 'دائرِةُ‌المَعارِف', 'noun', NULL, NULL, 3, 'C1', NULL),   -- encyclopedia
+(213326, 'سَرزَمینی', 'adjective', NULL, NULL, 3, 'C1', NULL),   -- territorial
+(213327, 'ناسیونالیستی', 'adjective', NULL, NULL, 3, 'C1', NULL),   -- nationalistic
+(213328, 'بُت', 'noun', NULL, NULL, 3, 'C1', NULL),   -- idol
+(213329, 'دَرآمَدی', 'adjective', NULL, NULL, 3, 'C1', NULL),   -- income-related
+(213330, 'اِنفِجاری', 'adjective', NULL, NULL, 3, 'C1', NULL),   -- explosive
+(213331, 'کُنترَل‌شُده', 'adjective', NULL, NULL, 3, 'C1', NULL),   -- controlled
+(213332, 'آزاد کَردَن', 'verb', NULL, NULL, 3, 'C1', NULL),   -- to liberate / free
+(213333, 'زَنِ یونانی', 'noun', NULL, NULL, 3, 'C1', NULL),   -- Greek woman
+(213334, 'تِجارَت کَردَن', 'verb', NULL, NULL, 3, 'C1', NULL),   -- to trade in
+(213335, 'به‌طورِ نَمونه', 'adverb', NULL, NULL, 3, 'C1', NULL),   -- indicatively
+(213336, 'مُمکِن اَست', 'verb', NULL, NULL, 3, 'C1', NULL),   -- it is possible / may
+(213337, 'سَرمایِه‌گُذاری', 'adjective', NULL, NULL, 3, 'C1', NULL),   -- investment-related
+(213338, 'سَنگین کَردَن', 'verb', NULL, NULL, 3, 'C1', NULL),   -- to burden
+(213339, 'اَرتِباطی', 'adjective', NULL, NULL, 3, 'C1', NULL),   -- communication-related
+(213340, 'اَز داخِل', 'adverb', NULL, NULL, 3, 'C1', NULL),   -- internally
+(213341, 'آمادِگی', 'noun', NULL, NULL, 3, 'C1', NULL),   -- readiness
+(213342, 'صاحِبِ کِشتی', 'noun', NULL, NULL, 3, 'C1', NULL),   -- shipowner
+(213343, 'بُرجِ فَلَکی', 'noun', NULL, NULL, 3, 'C1', NULL),   -- zodiac sign
+(213344, 'حَیَوانی', 'adjective', NULL, NULL, 3, 'C1', NULL),   -- animal-related
+(213345, 'به‌صورَتِ زَنده', 'adverb', NULL, NULL, 3, 'C1', NULL),   -- live / vividly
+(213346, 'اَز نَظَرِ اَخلاقی', 'adverb', NULL, NULL, 3, 'C1', NULL),   -- morally
+(213347, 'نیمه‌نِهایی', 'adjective', NULL, NULL, 3, 'C1', NULL),   -- semi-final
+(213348, 'نیمه', 'noun', NULL, NULL, 3, 'C1', NULL),   -- half-time (sports)
+(213349, 'آرام شُدَن', 'verb', NULL, NULL, 3, 'C1', NULL),   -- to calm down
+(213350, 'قَهرَمانانه', 'adjective', NULL, NULL, 3, 'C1', NULL),   -- heroic
+(213351, 'حَرارَتی', 'adjective', NULL, NULL, 3, 'C1', NULL),   -- thermal
+(213352, 'اَز نَظَرِ تِئوری', 'adverb', NULL, NULL, 3, 'C1', NULL),   -- theoretically
+(213353, 'به‌طورِ ایده‌آل', 'adverb', NULL, NULL, 3, 'C1', NULL),   -- ideally
+(213354, 'خُصوصی‌سازی کَردَن', 'verb', NULL, NULL, 3, 'C1', NULL),   -- to privatize
+(213355, 'اِمپریالیستی', 'adjective', NULL, NULL, 3, 'C1', NULL),   -- imperialist
+(213356, 'نِشَسته', 'adjective', NULL, NULL, 3, 'C1', NULL),   -- seated
+(213357, 'نِسبَتاً زیاد', 'pronoun', NULL, NULL, 3, 'C1', NULL),   -- quite a lot of / several
+(213358, 'سیگاری', 'noun', NULL, NULL, 3, 'C1', NULL),   -- smoker
+(213359, 'مَصرَفی', 'adjective', NULL, NULL, 3, 'C1', NULL),   -- consumer-related
+(213360, 'فُرو ریختَن', 'verb', NULL, NULL, 3, 'C1', NULL),   -- to collapse
+(213361, 'تَدوین کَردَن', 'verb', NULL, NULL, 3, 'C1', NULL),   -- to draw up / compile
+(213362, 'ساختُمانی', 'adjective', NULL, NULL, 3, 'C1', NULL),   -- construction-related
+(213363, 'قاطِعانه', 'adverb', NULL, NULL, 3, 'C1', NULL),   -- categorically
+(213364, 'تَضمین کَردَن', 'verb', NULL, NULL, 3, 'C1', NULL),   -- to secure / safeguard
+(213365, 'تَهویه مُطبوع', 'noun', NULL, NULL, 3, 'C1', NULL),   -- air conditioning
+(213366, 'اَز نَظَرِ اِجتِماعی', 'adverb', NULL, NULL, 3, 'C1', NULL),   -- socially
+(213367, 'جامِعه‌شِناسی', 'noun', NULL, NULL, 3, 'C1', NULL),   -- sociology
+(213368, 'کُمونیسم', 'noun', NULL, NULL, 3, 'C1', NULL),   -- communism
+(213369, 'خَستِگی', 'noun', NULL, NULL, 3, 'C1', NULL),   -- tiredness
+(213370, 'بانگ زَدَن', 'verb', NULL, NULL, 3, 'C1', NULL),   -- to caw / cry out
+(213371, 'کرواتی', 'noun', NULL, NULL, 3, 'C1', NULL),   -- Croatian (person)
+(213372, 'اَحساسِ سَرما کَردَن', 'verb', NULL, NULL, 3, 'C1', NULL),   -- to feel cold
+(213373, 'نوسان داشتَن', 'verb', NULL, NULL, 3, 'C1', NULL),   -- to fluctuate / range
+(213374, 'پِنهان بودَن', 'verb', NULL, NULL, 3, 'C1', NULL),   -- to lie hidden / be latent
+(213375, 'آشپَزی', 'adjective', NULL, NULL, 3, 'C1', NULL),   -- culinary
+(213376, 'میانجیگَری کَردَن', 'verb', NULL, NULL, 3, 'C1', NULL),   -- to mediate / intervene
+(213377, 'بوزوکی', 'noun', NULL, NULL, 3, 'C1', NULL),   -- bouzouki (Greek instrument)
+(213378, 'نیرویِ دَریایی', 'noun', NULL, NULL, 3, 'C1', NULL),   -- navy
+(213379, 'جَوانانه', 'adjective', NULL, NULL, 3, 'C1', NULL),   -- youthful
+(213380, 'روزه', 'noun', NULL, NULL, 3, 'C1', NULL),   -- fasting
+(213381, 'به‌طورِ قانونی', 'adverb', NULL, NULL, 3, 'C1', NULL),   -- legally / lawfully
+(213382, 'قانونی کَردَن', 'verb', NULL, NULL, 3, 'C1', NULL),   -- to legalize
+(213383, 'دوباره پیدا کَردَن', 'verb', NULL, NULL, 3, 'C1', NULL),   -- to find again
+(213384, 'دوباره بَرگَشتَن', 'verb', NULL, NULL, 3, 'C1', NULL),   -- to return again
+(213385, 'هَنگامِ سَحَر', 'adverb', NULL, NULL, 3, 'C1', NULL),   -- at dawn / daybreak
+(213386, 'ساختمانی', 'adjective', NULL, NULL, 3, 'C1', NULL),   -- building- / construction-related
+(213387, 'هَمگَن', 'adjective', NULL, NULL, 3, 'C1', NULL),   -- homogeneous
+(213388, 'به‌طورِ قَطعی', 'adverb', NULL, NULL, 3, 'C1', NULL),   -- definitively
+(213389, 'آسِمانی', 'adjective', NULL, NULL, 3, 'C1', NULL),   -- celestial / heavenly
+(213390, 'به‌طورِ سُنَّتی', 'adverb', NULL, NULL, 3, 'C1', NULL),   -- traditionally
+(213391, 'کَمی جُلوتَر', 'adverb', NULL, NULL, 3, 'C1', NULL),   -- further on
+(213392, 'صَف‌آرایی کَردَن', 'verb', NULL, NULL, 3, 'C1', NULL),   -- to line up / deploy (troops)
+(213393, 'دَست بازی', 'noun', NULL, NULL, 3, 'C1', NULL),   -- batch / round of a game
+(213394, 'اِنضِباطی', 'adjective', NULL, NULL, 3, 'C1', NULL),   -- disciplinary
+(213395, 'به‌طورِ دَوره‌ای', 'adverb', NULL, NULL, 3, 'C1', NULL),   -- periodically
+(213396, 'قَدَم‌زَدَن', 'noun', NULL, NULL, 3, 'C1', NULL),   -- a walk / stroll
+(213397, 'پارسالی', 'adjective', NULL, NULL, 3, 'C1', NULL),   -- last year's
+(213398, 'نانِ پیتا', 'noun', NULL, NULL, 3, 'C1', NULL),   -- pita bread
+(213399, 'به‌طورِ غَنی', 'adverb', NULL, NULL, 3, 'C1', NULL),   -- richly
+(213400, 'مُتَمَدِّن', 'adjective', NULL, NULL, 3, 'C1', NULL),   -- civilized
+(213401, 'آب دادَن', 'verb', NULL, NULL, 3, 'C1', NULL),   -- to water (plants)
+(213402, 'پیش‌تَر اِشاره کَردَن', 'verb', NULL, NULL, 3, 'C1', NULL),   -- to mention beforehand
+(213403, 'تَحریک‌آمیز', 'adjective', NULL, NULL, 3, 'C1', NULL),   -- provocative
+(213404, 'پرولِتاریا', 'noun', NULL, NULL, 3, 'C1', NULL),   -- proletariat
+(213405, 'تَمرین دادَن', 'verb', NULL, NULL, 3, 'C1', NULL),   -- to coach / train
+(213406, 'پَرَستِش کَردَن', 'verb', NULL, NULL, 3, 'C1', NULL),   -- to worship / venerate
+(213407, 'سِبقَت گِرِفتَن', 'verb', NULL, NULL, 3, 'C1', NULL),   -- to overtake / pass by
+(213408, 'پَریروز', 'adverb', NULL, NULL, 3, 'C1', NULL),   -- the day before yesterday
+(213409, 'قَهرِمانِ زَن', 'noun', NULL, NULL, 3, 'C1', NULL),   -- female champion
+(213410, 'هِرَم', 'noun', NULL, NULL, 3, 'C1', NULL),   -- pyramid
+(213411, 'اِسکِلِت', 'noun', NULL, NULL, 3, 'C1', NULL),   -- skeleton
+(213412, 'بِه صَلیب کِشیدَن', 'verb', NULL, NULL, 3, 'C1', NULL),   -- to crucify
+(213413, 'تاج گُل', 'noun', NULL, NULL, 3, 'C1', NULL),   -- wreath / garland
+(213414, 'تَکان‌دِهَنده', 'adjective', NULL, NULL, 3, 'C1', NULL),   -- shocking / stunning
+(213415, 'اَوضاعِ زَمانه', 'noun', NULL, NULL, 3, 'C1', NULL),   -- conjuncture / circumstance
+(213416, 'به صَرفه بودَن', 'verb', NULL, NULL, 3, 'C1', NULL),   -- to be advantageous / profitable
+(213417, 'سِنتِتیک', 'adjective', NULL, NULL, 3, 'C1', NULL),   -- synthetic
+(213418, 'طَرَفِ گُفتگو', 'noun', NULL, NULL, 3, 'C1', NULL),   -- interlocutor
+(213419, 'مُهر زَدَن', 'verb', NULL, NULL, 3, 'C1', NULL),   -- to stamp / seal
+(213420, 'نَجات‌بَخش', 'adjective', NULL, NULL, 3, 'C1', NULL),   -- salutary / saving
+(213421, 'گُردان', 'noun', NULL, NULL, 3, 'C1', NULL),   -- battalion
+(213422, 'گاوِ نَر', 'noun', NULL, NULL, 3, 'C1', NULL),   -- bull
+(213423, 'پُستی', 'adjective', NULL, NULL, 3, 'C1', NULL),   -- postal
+(213424, 'مُرَبَّعی', 'adjective', NULL, NULL, 3, 'C1', NULL),   -- square-shaped
+(213425, 'اَز نَظَرِ فَنّی', 'adverb', NULL, NULL, 3, 'C1', NULL),   -- technically
+(213426, 'مَخابَراتی', 'adjective', NULL, NULL, 3, 'C1', NULL),   -- telecommunications-related
+(213427, 'تِجلیلی', 'adjective', NULL, NULL, 3, 'C1', NULL),   -- honorary / commemorative
+(213428, 'آوازی', 'adjective', NULL, NULL, 3, 'C1', NULL),   -- sung / singable
+(213429, 'تِروریستی', 'adjective', NULL, NULL, 3, 'C1', NULL),   -- terrorist
+(213430, 'ترافیکی', 'adjective', NULL, NULL, 3, 'C1', NULL),   -- traffic-related
+(213431, 'سوراخ کَردَن', 'verb', NULL, NULL, 3, 'C1', NULL),   -- to pierce / drill a hole
+(213432, 'تَنَزُّل دادَن', 'verb', NULL, NULL, 3, 'C1', NULL),   -- to downgrade
+(213433, 'پیراهَنِ ورزِشی', 'noun', NULL, NULL, 3, 'C1', NULL),   -- jersey
+(213434, 'فاشیسم', 'noun', NULL, NULL, 3, 'C1', NULL),   -- fascism
+(213435, 'فاشیستی', 'adjective', NULL, NULL, 3, 'C1', NULL),   -- fascist
+(213436, 'شُهرَت داشتَن', 'verb', NULL, NULL, 3, 'C1', NULL),   -- to be renowned
+(213437, 'شَکل', 'noun', NULL, NULL, 3, 'C1', NULL),   -- figure / shape
+(213438, 'قابِلِ‌حَمل', 'adjective', NULL, NULL, 3, 'C1', NULL),   -- portable
+(213439, 'مالیات گِرِفتَن', 'verb', NULL, NULL, 3, 'C1', NULL),   -- to tax
+(213440, 'باد کَردَن', 'verb', NULL, NULL, 3, 'C1', NULL),   -- to inflate / swell
+(213441, 'تُف کَردَن', 'verb', NULL, NULL, 3, 'C1', NULL),   -- to spit
+(213442, 'رَقصی', 'adjective', NULL, NULL, 3, 'C1', NULL),   -- dance-related
+(213443, 'رَقصَندِه زَن', 'noun', NULL, NULL, 3, 'C1', NULL),   -- female dancer
+(213444, 'حِمایَتِ مالی کَردَن', 'verb', NULL, NULL, 3, 'C1', NULL),   -- to sponsor / grant
+(213445, 'فِرِشتِه‌گونه', 'adjective', NULL, NULL, 3, 'C2', NULL),   -- angelic
+(213446, 'قُلّاب کَردَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to hook
+(213447, 'خانِه روستایی', 'noun', NULL, NULL, 3, 'C2', NULL),   -- farmhouse / country house
+(213448, 'بی‌وقفه', 'adverb', NULL, NULL, 3, 'C2', NULL),   -- incessantly
+(213449, 'خُداناباوَر', 'adjective', NULL, NULL, 3, 'C2', NULL),   -- atheist
+(213450, 'بی‌سَر و صِدا', 'adverb', NULL, NULL, 3, 'C2', NULL),   -- silently / noiselessly
+(213451, 'جَمع زَدَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to sum up / add
+(213452, 'اَثیر', 'noun', NULL, NULL, 3, 'C2', NULL),   -- ether / aether
+(213453, 'غافِلگیر کَردَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to catch by surprise
+(213454, 'به‌طورِ غافِلگیرکُنَنده', 'adverb', NULL, NULL, 3, 'C2', NULL),   -- unexpectedly
+(213455, 'تا اَبَد', 'adverb', NULL, NULL, 3, 'C2', NULL),   -- eternally
+(213456, 'مُعَلَّق بودَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to hover / float in air
+(213457, 'کَثافَت', 'noun', NULL, NULL, 3, 'C2', NULL),   -- impurity / filth
+(213458, 'تیز کَردَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to sharpen
+(213459, 'شِنیده شُدَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to be heard / to sound (like)
+(213460, 'آکوستیک', 'noun', NULL, NULL, 3, 'C2', NULL),   -- acoustics
+(213461, 'به‌شِدَّت', 'adverb', NULL, NULL, 3, 'C2', NULL),   -- extremely
+(213462, 'گِران شُدَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to become expensive
+(213463, 'اَشِعِّه ایکس', 'noun', NULL, NULL, 3, 'C2', NULL),   -- X-ray
+(213464, 'رادیولوژیست', 'noun', NULL, NULL, 3, 'C2', NULL),   -- radiologist
+(213465, 'اِعتیاد به اَلکُل', 'noun', NULL, NULL, 3, 'C2', NULL),   -- alcoholism
+(213466, 'دَفعِه دیگَر', 'expression', NULL, NULL, 3, 'C2', NULL),   -- another time
+(213467, 'هَمبَسته', 'adjective', NULL, NULL, 3, 'C2', NULL),   -- in solidarity / supportive
+(213468, 'دَلیلِ غیاب', 'noun', NULL, NULL, 3, 'C2', NULL),   -- alibi
+(213469, 'پاداش دادَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to reward / pay
+(213470, 'ساحِلِ شِنی', 'noun', NULL, NULL, 3, 'C2', NULL),   -- sandy beach
+(213471, 'شِنی', 'adjective', NULL, NULL, 3, 'C2', NULL),   -- sandy
+(213472, 'جوشیدَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to gush / spring forth
+(213473, 'چِشمَک زَدَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to flicker / blink
+(213474, 'بازآفرینی کَردَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to recreate
+(213475, 'نِفرین‌شُده', 'adjective', NULL, NULL, 3, 'C2', NULL),   -- damned / cursed
+(213476, 'بازبینی‌گَر', 'noun', NULL, NULL, 3, 'C2', NULL),   -- revisionist
+(213477, 'مُتِخَصِّصِ بیهوشی', 'noun', NULL, NULL, 3, 'C2', NULL),   -- anesthesiologist
+(213478, 'بازجویی کَردَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to interrogate
+(213479, 'بی‌نَمَک', 'adjective', NULL, NULL, 3, 'C2', NULL),   -- unsalted
+(213480, 'مُتَناسِب', 'adjective', NULL, NULL, 3, 'C2', NULL),   -- proportional
+(213481, 'رِقابَت کَردَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to measure against / compete with
+(213482, 'بی‌تَردید', 'adjective', NULL, NULL, 3, 'C2', NULL),   -- undoubted
+(213483, 'تازِه‌شُده', 'adjective', NULL, NULL, 3, 'C2', NULL),   -- renewed
+(213484, 'تَجدیدپَذیر', 'adjective', NULL, NULL, 3, 'C2', NULL),   -- renewable
+(213485, 'مَعلولیَّتی', 'adjective', NULL, NULL, 3, 'C2', NULL),   -- related to disability
+(213486, 'به یاد آوَردَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to reminisce / recall fondly
+(213487, 'بی‌اَثَر', 'adjective', NULL, NULL, 3, 'C2', NULL),   -- ineffective
+(213488, 'کَمی بالا بُردَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to raise slightly
+(213489, 'بِه‌هَم زَدَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to stir / rummage through
+(213490, 'تَغییرِ کابینه', 'noun', NULL, NULL, 3, 'C2', NULL),   -- cabinet reshuffle
+(213491, 'به سَمتِ شَرق', 'adverb', NULL, NULL, 3, 'C2', NULL),   -- eastward
+(213492, 'رَهگیری کَردَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to intercept / repel
+(213493, 'مُنتَشِرنشُده', 'adjective', NULL, NULL, 3, 'C2', NULL),   -- unpublished
+(213494, 'سوخت‌گیری کَردَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to resupply / refuel
+(213495, 'ناتوان', 'adjective', NULL, NULL, 3, 'C2', NULL),   -- incapacitated / helpless
+(213496, 'سَربالایی', 'noun', NULL, NULL, 3, 'C2', NULL),   -- uphill slope
+(213497, 'اَحمَقانه', 'adverb', NULL, NULL, 3, 'C2', NULL),   -- foolishly
+(213498, 'بَهاری', 'adjective', NULL, NULL, 3, 'C2', NULL),   -- spring- / springlike
+(213499, 'ناهَمگَن', 'adjective', NULL, NULL, 3, 'C2', NULL),   -- heterogeneous
+(213500, 'بی‌قانون', 'adjective', NULL, NULL, 3, 'C2', NULL),   -- lawless
+(213501, 'رِقابَت‌پَذیری', 'noun', NULL, NULL, 3, 'C2', NULL),   -- competitiveness
+(213502, 'اَز عُهدِه بَرآمَدَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to cope with / manage
+(213503, 'ضِدِّحَمله', 'noun', NULL, NULL, 3, 'C2', NULL),   -- counterattack
+(213504, 'طَنین‌اَنداختَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to resound / echo
+(213505, 'مَعکوس کَردَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to reverse / invert
+(213506, 'بی‌تاب بودَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to be impatient / eager
+(213507, 'بی‌فایِده', 'adverb', NULL, NULL, 3, 'C2', NULL),   -- uselessly
+(213508, 'اَرزِش داشتَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to be worth
+(213509, 'مَمنوع اَست', 'verb', NULL, NULL, 3, 'C2', NULL),   -- it is forbidden
+(213510, 'حَذف کَردَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to erase / eliminate
+(213511, 'مُعاف شُدَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to be exempted
+(213512, 'غَیرِانسانی', 'adjective', NULL, NULL, 3, 'C2', NULL),   -- inhumane
+(213513, 'اِعتِصاب کَردَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to strike / be on strike
+(213514, 'فِرِستاده', 'noun', NULL, NULL, 3, 'C2', NULL),   -- envoy / delegate
+(213515, 'مُراجِعه کَردَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to address oneself to / turn to
+(213516, 'ساده کَردَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to simplify
+(213517, 'پیاده کَردَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to disembark (someone)
+(213518, 'مات‌ومَبهوت', 'adjective', NULL, NULL, 3, 'C2', NULL),   -- dumbfounded / stupefied
+(213519, 'بِه پَرواز دَرآمَدَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to take off (aircraft)
+(213520, 'اَفشاگَرانه', 'adjective', NULL, NULL, 3, 'C2', NULL),   -- revealing
+(213521, 'فاش شُدَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to be revealed
+(213522, 'اِنحِراف داشتَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to deviate
+(213523, 'بِه خواب رَفتَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to fall asleep
+(213524, 'بُریدِه', 'noun', NULL, NULL, 3, 'C2', NULL),   -- clipping (newspaper)
+(213525, 'دور شُدَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to move away
+(213526, 'اَز هَم باز کَردَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to disassemble
+(213527, 'تَمام کَردَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to finish off
+(213528, 'خُداحافِظی کَردَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to bid farewell
+(213529, 'پیش‌بینی‌نشُده', 'adjective', NULL, NULL, 3, 'C2', NULL),   -- unforeseen
+(213530, 'پَس زَدَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to repel / repress
+(213531, 'اَشراف‌زاده', 'noun', NULL, NULL, 3, 'C2', NULL),   -- aristocrat
+(213532, 'شِکاری', 'adjective', NULL, NULL, 3, 'C2', NULL),   -- predatory
+(213533, 'نامزَدِ زَن', 'noun', NULL, NULL, 3, 'C2', NULL),   -- fiancée
+(213534, 'نامزَدِ مَرد', 'noun', NULL, NULL, 3, 'C2', NULL),   -- fiancé
+(213535, 'مَریض شُدَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to fall ill
+(213536, 'بایگانی کَردَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to file / archive
+(213537, 'آسیایی', 'adjective', NULL, NULL, 3, 'C2', NULL),   -- Asian
+(213538, 'بی‌هَدَف', 'adjective', NULL, NULL, 3, 'C2', NULL),   -- aimless / pointless
+(213539, 'شوخی کَردَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to joke
+(213540, 'شَهرنِشین', 'noun', NULL, NULL, 3, 'C2', NULL),   -- bourgeois / city-dweller
+(213541, 'خَفِه‌کُنَنده', 'adjective', NULL, NULL, 3, 'C2', NULL),   -- suffocating
+(213542, 'با کِشتی بُخار', 'adverb', NULL, NULL, 3, 'C2', NULL),   -- by steamship
+(213543, 'به‌صورَتِ فَردی', 'adverb', NULL, NULL, 3, 'C2', NULL),   -- individually
+(213544, 'فولادی', 'adjective', NULL, NULL, 3, 'C2', NULL),   -- made of steel
+(213545, 'فَردایی', 'adjective', NULL, NULL, 3, 'C2', NULL),   -- tomorrow's
+(213546, 'نابود شُدَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to be destroyed / vanish
+(213547, 'اَنتِزاعی', 'adjective', NULL, NULL, 3, 'C2', NULL),   -- abstract
+(213548, 'مَربوط به', 'adjective', NULL, NULL, 3, 'C2', NULL),   -- concerning
+(213549, 'خود را وَقف کَردَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to devote oneself
+(213550, 'آفریقایی', 'adjective', NULL, NULL, 3, 'C2', NULL),   -- African
+(213551, 'حَمّامِ کف', 'noun', NULL, NULL, 3, 'C2', NULL),   -- bubble bath
+(213552, 'غَیرِطَبیعی', 'adjective', NULL, NULL, 3, 'C2', NULL),   -- unnatural
+(213553, 'گُلابی', 'noun', NULL, NULL, 3, 'C2', NULL),   -- pear
+(213554, 'اَنبارِ کاه', 'noun', NULL, NULL, 3, 'C2', NULL),   -- barn
+(213555, 'بالتیک', 'adjective', NULL, NULL, 3, 'C2', NULL),   -- Baltic
+(213556, 'پَنبه‌ای', 'adjective', NULL, NULL, 3, 'C2', NULL),   -- made of cotton
+(213557, 'غُسلِ تَعمید دادَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to baptize
+(213558, 'غُسلِ تَعمید', 'noun', NULL, NULL, 3, 'C2', NULL),   -- baptism
+(213559, 'بارون', 'noun', NULL, NULL, 3, 'C2', NULL),   -- baron
+(213560, 'آرایِش کَردَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to put on makeup
+(213561, 'بِهبودیافته', 'adjective', NULL, NULL, 3, 'C2', NULL),   -- improved
+(213562, 'پُمپ بِنزین', 'noun', NULL, NULL, 3, 'C2', NULL),   -- gas station
+(213563, 'کِتابِ‌مُقَدَّسی', 'adjective', NULL, NULL, 3, 'C2', NULL),   -- biblical
+(213564, 'پیچ کَردَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to screw (in)
+(213565, 'صَنعَتکار', 'noun', NULL, NULL, 3, 'C2', NULL),   -- industrialist
+(213566, 'کُفر گُفتَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to curse / blaspheme
+(213567, 'ناله کَردَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to groan / moan
+(213568, 'گاوِ اِخته', 'noun', NULL, NULL, 3, 'C2', NULL),   -- ox
+(213569, 'راحَت شُدَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to make oneself comfortable / manage
+(213570, 'به سَمتِ شُمالِ‌شَرقی', 'adverb', NULL, NULL, 3, 'C2', NULL),   -- northeastward
+(213571, 'نُمایِندِگی', 'adjective', NULL, NULL, 3, 'C2', NULL),   -- parliamentary / MP-related
+(213572, 'قُلِّه', 'noun', NULL, NULL, 3, 'C2', NULL),   -- mountaintop / peak
+(213573, 'شامگاهی', 'adjective', NULL, NULL, 3, 'C2', NULL),   -- evening-related
+(213574, 'صَخره‌ای', 'adjective', NULL, NULL, 3, 'C2', NULL),   -- rocky
+(213575, 'بو گِرِفتَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to stink
+(213576, 'زَنِ فِرانسَوی', 'noun', NULL, NULL, 3, 'C2', NULL),   -- French woman
+(213577, 'گاییدَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to have sex (vulgar)
+(213578, 'میگو', 'noun', NULL, NULL, 3, 'C2', NULL),   -- shrimp
+(213579, 'تَزئین کَردَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to garnish
+(213580, 'میخَک', 'noun', NULL, NULL, 3, 'C2', NULL),   -- carnation / clove
+(213581, 'بَچِّه‌گُربه', 'noun', NULL, NULL, 3, 'C2', NULL),   -- kitten
+(213582, 'لُخت کَردَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to undress (someone)
+(213583, 'هَمسایِه زَن', 'noun', NULL, NULL, 3, 'C2', NULL),   -- female neighbor
+(213584, 'پُرکُنَنده', 'noun', NULL, NULL, 3, 'C2', NULL),   -- filling / stuffing
+(213585, 'اَز نَظَرِ ژِنِتیکی', 'adverb', NULL, NULL, 3, 'C2', NULL),   -- genetically
+(213586, 'ژِنِتیک‌دان', 'noun', NULL, NULL, 3, 'C2', NULL),   -- geneticist
+(213587, 'تَناسُلی', 'adjective', NULL, NULL, 3, 'C2', NULL),   -- genital / reproductive
+(213588, 'غَذا خوردَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to have a meal / dine
+(213589, 'ماست', 'noun', NULL, NULL, 3, 'C2', NULL),   -- yogurt
+(213590, 'غول‌پَیکَر', 'adjective', NULL, NULL, 3, 'C2', NULL),   -- gigantic
+(213591, 'دود شُدَن و به هَوا رَفتَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to vanish into thin air
+(213592, 'کُمُد لِباس', 'noun', NULL, NULL, 3, 'C2', NULL),   -- wardrobe / cloakroom
+(213593, 'سُر خوردَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to slip / slide
+(213594, 'آشنا شُدَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to get acquainted / meet each other
+(213595, 'گرَم', 'noun', NULL, NULL, 3, 'C2', NULL),   -- gram
+(213596, 'صُندوقِ‌پُستی', 'noun', NULL, NULL, 3, 'C2', NULL),   -- mailbox
+(213597, 'به‌صورَتِ کِتَبی', 'adverb', NULL, NULL, 3, 'C2', NULL),   -- in writing
+(213598, 'بوروکراتیک', 'adjective', NULL, NULL, 3, 'C2', NULL),   -- bureaucratic
+(213599, 'طَرّاحِ گرافیک', 'noun', NULL, NULL, 3, 'C2', NULL),   -- graphic designer
+(213600, 'سَریع‌تَر', 'adverb', NULL, NULL, 3, 'C2', NULL),   -- faster
+(213601, 'شیشه‌ای', 'adjective', NULL, NULL, 3, 'C2', NULL),   -- made of glass
+(213602, 'مُتِخَصِّصِ زَنان', 'noun', NULL, NULL, 3, 'C2', NULL),   -- gynecologist
+(213603, 'اَشک‌ریختَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to shed tears / well up
+(213604, 'با تَوَجُّه به اینکه', 'expression', NULL, NULL, 3, 'C2', NULL),   -- given that
+(213605, 'ده هِزار', 'number', NULL, NULL, 3, 'C2', NULL),   -- ten thousand
+(213606, 'اَعشاری', 'adjective', NULL, NULL, 3, 'C2', NULL),   -- decimal
+(213607, 'دو هَفته', 'noun', NULL, NULL, 3, 'C2', NULL),   -- fortnight
+(213608, 'دَهُم', 'adjective', NULL, NULL, 3, 'C2', NULL),   -- tenth
+(213609, 'پانزدَهُم', 'number', NULL, NULL, 3, 'C2', NULL),   -- fifteenth
+(213610, 'دِلتا', 'noun', NULL, NULL, 3, 'C2', NULL),   -- delta (river)
+(213611, 'دُلفین', 'noun', NULL, NULL, 3, 'C2', NULL),   -- dolphin
+(213612, 'بَسته‌شُده', 'adjective', NULL, NULL, 3, 'C2', NULL),   -- tied / bound
+(213613, 'پَیوَند خوردَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to be tied / form a bond
+(213614, 'چَرمی', 'adjective', NULL, NULL, 3, 'C2', NULL),   -- made of leather
+(213615, 'اِلزام‌آوَر', 'adjective', NULL, NULL, 3, 'C2', NULL),   -- binding (legally)
+(213616, 'دوشیزه', 'noun', NULL, NULL, 3, 'C2', NULL),   -- Miss (title)
+(213617, 'ایجاد شُدَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to be created
+(213618, 'دِموکرات', 'noun', NULL, NULL, 3, 'C2', NULL),   -- democrat
+(213619, 'بَخشِ دولَتی', 'noun', NULL, NULL, 3, 'C2', NULL),   -- the public sector
+(213620, 'عَلَنی کَردَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to make public / publicize
+(213621, 'زَبانِ عامیانه', 'noun', NULL, NULL, 3, 'C2', NULL),   -- Demotic / vernacular Greek
+(213622, 'دَرَجه‌بَندی', 'noun', NULL, NULL, 3, 'C2', NULL),   -- gradation / grading
+(213623, 'رَویه‌ای', 'adjective', NULL, NULL, 3, 'C2', NULL),   -- procedural
+(213624, 'پِیاپِی', 'adverb', NULL, NULL, 3, 'C2', NULL),   -- successively
+(213625, 'دَریافتَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to sense intuitively
+(213626, 'داوَری', 'noun', NULL, NULL, 3, 'C2', NULL),   -- arbitration / refereeing
+(213627, 'توزیع‌کُنَنده', 'noun', NULL, NULL, 3, 'C2', NULL),   -- distributor
+(213628, 'اِقامَتِ شَبانه', 'noun', NULL, NULL, 3, 'C2', NULL),   -- overnight stay
+(213629, 'بَرجَسته بودَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to excel / distinguish oneself
+(213630, 'نَشت کَردَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to leak
+(213631, 'پَراکَنده کَردَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to scatter / disperse
+(213632, 'تَقاطُع داشتَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to cross / intersect
+(213633, 'دَستور دادَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to order / command
+(213634, 'حِفظ شُدَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to be preserved / maintained
+(213635, 'دَرسی', 'adjective', NULL, NULL, 3, 'C2', NULL),   -- to be taught (curriculum)
+(213636, 'نُفوذ کَردَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to penetrate / infiltrate
+(213637, 'بَرگُزار شُدَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to be conducted / take place
+(213638, 'مُتَرجِمِ شِفاهی', 'noun', NULL, NULL, 3, 'C2', NULL),   -- interpreter
+(213639, 'عُبور کَردَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to pass through
+(213640, 'تَسهیل', 'noun', NULL, NULL, 3, 'C2', NULL),   -- facilitation
+(213641, 'بِه‌حَق', 'adverb', NULL, NULL, 3, 'C2', NULL),   -- justly / rightfully
+(213642, 'مالِ مَن', 'pronoun', NULL, NULL, 3, 'C2', NULL),   -- mine / yours / etc (fem.)
+(213643, 'وَکالَتی', 'adjective', NULL, NULL, 3, 'C2', NULL),   -- related to lawyers
+(213644, 'آیینِ‌دادرَسی', 'adjective', NULL, NULL, 3, 'C2', NULL),   -- procedural (law)
+(213645, 'دی‌اُکسیدِ کَربُن', 'noun', NULL, NULL, 3, 'C2', NULL),   -- carbon dioxide
+(213646, 'ضَبطِ‌موسیقی', 'adjective', NULL, NULL, 3, 'C2', NULL),   -- related to the record industry
+(213647, 'تِشنه بودَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to be thirsty
+(213648, 'دوطَبَقه', 'adjective', NULL, NULL, 3, 'C2', NULL),   -- two-story
+(213649, 'دوک', 'noun', NULL, NULL, 3, 'C2', NULL),   -- duke
+(213650, 'آپارتِمانِ دو اُتاقه', 'noun', NULL, NULL, 3, 'C2', NULL),   -- two-room apartment
+(213651, 'به‌طورِ پویا', 'adverb', NULL, NULL, 3, 'C2', NULL),   -- dynamically
+(213652, 'پویایی', 'noun', NULL, NULL, 3, 'C2', NULL),   -- dynamics
+(213653, 'دِشوار کَردَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to make difficult / hinder
+(213654, 'نَوه دُختَر', 'noun', NULL, NULL, 3, 'C2', NULL),   -- granddaughter
+(213655, 'نَوه پِسَر', 'noun', NULL, NULL, 3, 'C2', NULL),   -- grandson
+(213656, 'به‌مَوقِع', 'adverb', NULL, NULL, 3, 'C2', NULL),   -- timely / in time
+(213657, 'نَصب‌شُده', 'adjective', NULL, NULL, 3, 'C2', NULL),   -- installed / settled
+(213658, 'تَأیید‌شُده', 'adjective', NULL, NULL, 3, 'C2', NULL),   -- approved
+(213659, 'شیار', 'noun', NULL, NULL, 3, 'C2', NULL),   -- notch / groove
+(213660, 'عَمَل جَرّاحی کَردَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to operate on (surgery)
+(213661, 'ناسیونالیست', 'noun', NULL, NULL, 3, 'C2', NULL),   -- nationalist
+(213662, 'به‌طورِ خاص', 'adverb', NULL, NULL, 3, 'C2', NULL),   -- more specifically
+(213663, 'بُت‌پَرَستانه', 'adjective', NULL, NULL, 3, 'C2', NULL),   -- idolatrous / pagan
+(213664, 'بیستُم', 'number', NULL, NULL, 3, 'C2', NULL),   -- twentieth
+(213665, 'مَعلوم اَست که', 'verb', NULL, NULL, 3, 'C2', NULL),   -- it is known that
+(213666, 'به‌طورِ صُلح‌آمیز', 'adverb', NULL, NULL, 3, 'C2', NULL),   -- peacefully
+(213667, 'وارِد شُدَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to be imported / admitted
+(213668, 'مُقَدِّماتی', 'adjective', NULL, NULL, 3, 'C2', NULL),   -- introductory
+(213669, 'بَلیت‌گیر', 'noun', NULL, NULL, 3, 'C2', NULL),   -- ticket collector / bill collector
+(213670, 'اَز نو', 'adverb', NULL, NULL, 3, 'C2', NULL),   -- anew / again
+(213671, 'صَد هِزار', 'number', NULL, NULL, 3, 'C2', NULL),   -- hundred thousand
+(213672, 'بُروز کَردَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to manifest itself
+(213673, 'بِه‌شِدَّت سِتودَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to extol / praise highly
+(213674, 'راز گُفتَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to confide
+(213675, 'شُگِفت‌زَده شُدَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to be surprised
+(213676, 'بازدَم کَردَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to exhale
+(213677, 'نوسازی کَردَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to modernize
+(213678, 'نوسازی‌گَرایانه', 'adjective', NULL, NULL, 3, 'C2', NULL),   -- modernizing
+(213679, 'اِجرا شُدَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to be executed / carried out
+(213680, 'خود را بیان کَردَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to express oneself
+(213681, 'بیانگَر', 'adjective', NULL, NULL, 3, 'C2', NULL),   -- expressive
+(213682, 'سُخنَرانی کَردَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to recite / deliver a speech
+(213683, 'بِسیار کَم', 'adverb', NULL, NULL, 3, 'C2', NULL),   -- minimally / very little
+(213684, 'آتِش‌اَفروز', 'noun', NULL, NULL, 3, 'C2', NULL),   -- arsonist
+(213685, 'بُطری‌شُده', 'adjective', NULL, NULL, 3, 'C2', NULL),   -- bottled
+(213686, 'تِناوُب', 'noun', NULL, NULL, 3, 'C2', NULL),   -- alternation
+(213687, 'به‌طورِ جایگُزین', 'adverb', NULL, NULL, 3, 'C2', NULL),   -- alternatively
+(213688, 'جابِه‌جا کَردَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to alternate
+(213689, 'نُهُم', 'number', NULL, NULL, 3, 'C2', NULL),   -- ninth
+(213690, 'تَجویزشُده', 'adjective', NULL, NULL, 3, 'C2', NULL),   -- indicated / appropriate
+(213691, 'عَلاقِه‌مَند بودَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to be interested
+(213692, 'دَرونی', 'adjective', NULL, NULL, 3, 'C2', NULL),   -- innermost / secret
+(213693, 'نَوَدُم', 'number', NULL, NULL, 3, 'C2', NULL),   -- ninetieth
+(213694, 'فَعّال شُدَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to be activated
+(213695, 'مُستَأجِرِ زَن', 'noun', NULL, NULL, 3, 'C2', NULL),   -- female tenant
+(213696, 'حوزِه کَلیسایی', 'noun', NULL, NULL, 3, 'C2', NULL),   -- parish
+(213697, 'به‌طورِ فِشُرده', 'adverb', NULL, NULL, 3, 'C2', NULL),   -- intensively
+(213698, 'به‌طورِ چَشمگیر', 'adverb', NULL, NULL, 3, 'C2', NULL),   -- impressively
+(213699, 'یِکسان‌سازی کَردَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to equate / assimilate
+(213700, 'تَبعید کَردَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to exile
+(213701, 'اِستِخراج کَردَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to mine / extract
+(213702, 'تَسویه‌حِساب', 'noun', NULL, NULL, 3, 'C2', NULL),   -- payment in full / settlement
+(213703, 'دَرِ ورودی', 'noun', NULL, NULL, 3, 'C2', NULL),   -- front door
+(213704, 'به‌طورِ جَشنی', 'adverb', NULL, NULL, 3, 'C2', NULL),   -- festively
+(213705, 'جَشنی', 'adjective', NULL, NULL, 3, 'C2', NULL),   -- festive
+(213706, 'اَز نَظَرِ حِرفه‌ای', 'adverb', NULL, NULL, 3, 'C2', NULL),   -- professionally
+(213707, 'تِکرار شُدَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to repeat itself / recur
+(213708, 'نیرو گُماشتَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to man / staff
+(213709, 'بازبینی کَردَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to reconsider / re-examine
+(213710, 'توضیحی', 'adjective', NULL, NULL, 3, 'C2', NULL),   -- explanatory
+(213711, 'تأیید شُدَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to be confirmed
+(213712, 'سوار شُدَن', 'noun', NULL, NULL, 3, 'C2', NULL),   -- boarding (transport)
+(213713, 'کُند کَردَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to slow down
+(213714, 'به‌طورِ خَطَرناک', 'adverb', NULL, NULL, 3, 'C2', NULL),   -- dangerously
+(213715, 'بَررِسیِ اِجمالی', 'noun', NULL, NULL, 3, 'C2', NULL),   -- overview / review
+(213716, 'حاصِل‌شُده', 'adjective', NULL, NULL, 3, 'C2', NULL),   -- achieved
+(213717, 'اِجازه داشتَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to be allowed / permitted
+(213718, 'بودجه دادَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to subsidize / fund
+(213719, 'بَهرِه‌مَند شُدَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to benefit from
+(213720, 'پیمانکاری', 'noun', NULL, NULL, 3, 'C2', NULL),   -- contracting (construction)
+(213721, 'تَفسیری', 'adjective', NULL, NULL, 3, 'C2', NULL),   -- interpretive
+(213722, 'عَلامَتِ سُؤال', 'noun', NULL, NULL, 3, 'C2', NULL),   -- question mark
+(213723, 'حَتّی اَگَر', 'adverb', NULL, NULL, 3, 'C2', NULL),   -- even if
+(213724, 'مُؤَدَّبانه', 'adverb', NULL, NULL, 3, 'C2', NULL),   -- politely
+(213725, 'قابِلِ‌تِشخیص', 'adjective', NULL, NULL, 3, 'C2', NULL),   -- easily distinguishable
+(213726, 'کامیاب', 'adjective', NULL, NULL, 3, 'C2', NULL),   -- prosperous
+(213727, 'آسان‌تَر', 'adjective', NULL, NULL, 3, 'C2', NULL),   -- easier
+(213728, 'قابِلِ‌جابه‌جایی', 'adjective', NULL, NULL, 3, 'C2', NULL),   -- easily movable
+(213729, 'بِه‌جا', 'adjective', NULL, NULL, 3, 'C2', NULL),   -- apt / well-aimed
+(213730, 'به‌طورِ دِلپَذیر', 'adverb', NULL, NULL, 3, 'C2', NULL),   -- pleasantly
+(213731, 'با کَمالِ میل', 'adverb', NULL, NULL, 3, 'C2', NULL),   -- gladly / with pleasure
+(213732, 'کاربَرپَسَند', 'adjective', NULL, NULL, 3, 'C2', NULL),   -- easy to use / user-friendly
+(213733, 'یِکجا', 'adverb', NULL, NULL, 3, 'C2', NULL),   -- in one lump sum
+(213734, 'کاربُردی', 'adjective', NULL, NULL, 3, 'C2', NULL),   -- applied
+(213735, 'دادگاهِ تَجدیدنَظَر', 'noun', NULL, NULL, 3, 'C2', NULL),   -- appeals court
+(213736, 'ژاکَت', 'noun', NULL, NULL, 3, 'C2', NULL),   -- jacket / cardigan
+(213737, 'شیرینی‌فُروشی', 'noun', NULL, NULL, 3, 'C2', NULL),   -- pastry shop
+(213738, 'گَرم شُدَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to warm oneself
+(213739, 'زَنِ حَسود', 'noun', NULL, NULL, 3, 'C2', NULL),   -- jealous woman
+(213740, 'دَرخواست کَردَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to ask for / request
+(213741, 'حَمّامِ آفتاب', 'noun', NULL, NULL, 3, 'C2', NULL),   -- sunbathing
+(213742, 'رام', 'adjective', NULL, NULL, 3, 'C2', NULL),   -- tame / gentle
+(213743, 'قارّه‌ای', 'adjective', NULL, NULL, 3, 'C2', NULL),   -- continental
+(213744, 'آرام گِرِفتَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to calm down / rest
+(213745, 'پُرصِدا', 'adjective', NULL, NULL, 3, 'C2', NULL),   -- resonant / loud
+(213746, 'غَذایِ دَریایی', 'noun', NULL, NULL, 3, 'C2', NULL),   -- seafood
+(213747, 'به‌طورِ فَوق‌العاده', 'adverb', NULL, NULL, 3, 'C2', NULL),   -- wonderfully
+(213748, 'شیر دادَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to breastfeed
+(213749, 'نوکِ‌پِستان', 'noun', NULL, NULL, 3, 'C2', NULL),   -- nipple
+(213750, 'ماده', 'noun', NULL, NULL, 3, 'C2', NULL),   -- female (gender)
+(213751, 'ژاپُنی', 'adjective', NULL, NULL, 3, 'C2', NULL),   -- Japanese
+(213752, 'آرمانی', 'noun', NULL, NULL, 3, 'C2', NULL),   -- ideal
+(213753, 'بُنیان‌گُذارانه', 'adjective', NULL, NULL, 3, 'C2', NULL),   -- founding
+(213754, 'عَرَق‌کَرده', 'adjective', NULL, NULL, 3, 'C2', NULL),   -- sweaty
+(213755, 'عَرَق کَردَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to sweat
+(213756, 'به‌طورِ رِضایَت‌بَخش', 'adverb', NULL, NULL, 3, 'C2', NULL),   -- satisfactorily
+(213757, 'اَسب‌سَواری کَردَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to ride a horse
+(213758, 'اَسبِ‌آبی', 'noun', NULL, NULL, 3, 'C2', NULL),   -- hippopotamus
+(213759, 'ایرلَندی', 'adjective', NULL, NULL, 3, 'C2', NULL),   -- Irish
+(213760, 'اِسلام‌گَرا', 'noun', NULL, NULL, 3, 'C2', NULL),   -- Islamist
+(213761, 'ایسلَندی', 'adjective', NULL, NULL, 3, 'C2', NULL),   -- Icelandic
+(213762, 'تِراز‌نامه', 'noun', NULL, NULL, 3, 'C2', NULL),   -- balance sheet
+(213763, 'اِسرائیلی', 'adjective', NULL, NULL, 3, 'C2', NULL),   -- Israeli
+(213764, 'وِبلاگ', 'noun', NULL, NULL, 3, 'C2', NULL),   -- blog
+(213765, 'وِبلاگ‌نویسی کَردَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to blog
+(213766, 'قوی‌تَر', 'adjective', NULL, NULL, 3, 'C2', NULL),   -- stronger
+(213767, 'ماهی‌فُروشی', 'noun', NULL, NULL, 3, 'C2', NULL),   -- fish market / shop
+(213768, 'تَقدیس کَردَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to consecrate
+(213769, 'تَعیین شُدَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to be determined / defined
+(213770, 'بَدرَفتاری کَردَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to mistreat
+(213771, 'اَشتُباهاً', 'adverb', NULL, NULL, 3, 'C2', NULL),   -- wrongly
+(213772, 'شَب بِخِیر', 'expression', NULL, NULL, 3, 'C2', NULL),   -- good night
+(213773, 'خوشنویسی', 'noun', NULL, NULL, 3, 'C2', NULL),   -- calligraphy
+(213774, 'بِه‌خوبی', 'adverb', NULL, NULL, 3, 'C2', NULL),   -- very well / perfectly
+(213775, 'جوراب‌شَلواری', 'noun', NULL, NULL, 3, 'C2', NULL),   -- tights / pantyhose
+(213776, 'خِدمَتکارِ هُتِل', 'noun', NULL, NULL, 3, 'C2', NULL),   -- chambermaid
+(213777, 'قِرصِ نان', 'noun', NULL, NULL, 3, 'C2', NULL),   -- loaf of bread
+(213778, 'کاردینال', 'noun', NULL, NULL, 3, 'C2', NULL),   -- cardinal (clergy)
+(213779, 'مُتِخَصِّصِ قَلب', 'noun', NULL, NULL, 3, 'C2', NULL),   -- cardiologist
+(213780, 'تِلِفُنِ کارتی', 'noun', NULL, NULL, 3, 'C2', NULL),   -- card-operated phone
+(213781, 'جَعبِه چوبی', 'noun', NULL, NULL, 3, 'C2', NULL),   -- crate
+(213782, 'شاه‌بَلوط', 'noun', NULL, NULL, 3, 'C2', NULL),   -- chestnut
+(213783, 'غَواصی کَردَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to dive
+(213784, 'تَعَدّی', 'noun', NULL, NULL, 3, 'C2', NULL),   -- encroachment / trespassing
+(213785, 'دَست به کار شُدَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to get down to / tackle a task
+(213786, 'دَکَل', 'noun', NULL, NULL, 3, 'C2', NULL),   -- mast (ship)
+(213787, 'تَخریب کَردَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to demolish
+(213788, 'بِه سَمتِ ... حَرکَت کَردَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to head towards
+(213789, 'قابِلِ‌سُکونَت', 'adjective', NULL, NULL, 3, 'C2', NULL),   -- habitable
+(213790, 'اَدرار کَردَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to urinate
+(213791, 'واقِع بودَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to lie / be situated
+(213792, 'وَسَط‌چین کَردَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to center
+(213793, 'سودجویانه', 'adjective', NULL, NULL, 3, 'C2', NULL),   -- speculative / profit-oriented
+(213794, 'سودآوَری', 'noun', NULL, NULL, 3, 'C2', NULL),   -- profitability
+(213795, 'خود را حَبس کَردَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to shut oneself in
+(213796, 'تِشدید', 'noun', NULL, NULL, 3, 'C2', NULL),   -- escalation
+(213797, 'خود را نِگاه کَردَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to look at oneself
+(213798, 'گیرکَرده', 'adjective', NULL, NULL, 3, 'C2', NULL),   -- stuck
+(213799, 'تِکه‌تِکه کَردَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to tear / cut into pieces
+(213800, 'نَزدیک شُدَن به', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to be about to / nearly
+(213801, 'اِلَک کَردَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to sieve / sift
+(213802, 'رئیسِ دانِشکَده', 'noun', NULL, NULL, 3, 'C2', NULL),   -- dean (university)
+(213803, 'کوییز', 'noun', NULL, NULL, 3, 'C2', NULL),   -- quiz
+(213804, 'ساقدوش زَن', 'noun', NULL, NULL, 3, 'C2', NULL),   -- best woman / godmother
+(213805, 'خَسته‌کُنَنده', 'adjective', NULL, NULL, 3, 'C2', NULL),   -- tiring
+(213806, 'قَصّابی', 'noun', NULL, NULL, 3, 'C2', NULL),   -- butcher shop
+(213807, 'بِلور', 'noun', NULL, NULL, 3, 'C2', NULL),   -- crystal
+(213808, 'دُزدَکی نِگاه کَردَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to peek / spy
+(213809, 'یِکشَنبگی', 'adjective', NULL, NULL, 3, 'C2', NULL),   -- Sunday-related
+(213810, 'سُلولی', 'adjective', NULL, NULL, 3, 'C2', NULL),   -- cellular
+(213811, 'رَمزگُذاری کَردَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to encode / codify
+(213812, 'زَیتونی', 'adjective', NULL, NULL, 3, 'C2', NULL),   -- olive-colored
+(213813, 'بِرَق زَدَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to shine brightly
+(213814, 'سوسو زَدَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to twinkle / sparkle
+(213815, 'آرزو کَردَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to long for / crave
+(213816, 'دیگِ‌بُخار', 'noun', NULL, NULL, 3, 'C2', NULL),   -- boiler
+(213817, 'نامیده شُدَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to be called / named
+(213818, 'لِکِه‌دار کَردَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to stain
+(213819, 'لیموناد', 'noun', NULL, NULL, 3, 'C2', NULL),   -- lemonade
+(213820, 'دِرَختِ لیمو', 'noun', NULL, NULL, 3, 'C2', NULL),   -- lemon tree
+(213821, 'بِلاروسی', 'adjective', NULL, NULL, 3, 'C2', NULL),   -- Belarusian
+(213822, 'سانسور کَردَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to censor
+(213823, 'بِه‌طورِ مورَب', 'adverb', NULL, NULL, 3, 'C2', NULL),   -- obliquely
+(213824, 'بَعدِازظُهر', 'noun', NULL, NULL, 3, 'C2', NULL),   -- PM / afternoon
+(213825, 'گیر کَردَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to get jammed
+(213826, 'به‌طورِ اَنبوه', 'adverb', NULL, NULL, 3, 'C2', NULL),   -- massively / in bulk
+(213827, 'دانِش‌آموزی', 'adjective', NULL, NULL, 3, 'C2', NULL),   -- student-related
+(213828, 'آپارتِمانِ دوبِلِکس', 'noun', NULL, NULL, 3, 'C2', NULL),   -- maisonette / duplex apartment
+(213829, 'در دِرازمُدَّت', 'adverb', NULL, NULL, 3, 'C2', NULL),   -- long-term
+(213830, 'مارکسیسم', 'noun', NULL, NULL, 3, 'C2', NULL),   -- Marxism
+(213831, 'کارشناسیِ اَرشَد', 'noun', NULL, NULL, 3, 'C2', NULL),   -- master's degree
+(213832, 'سیاه کَردَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to blacken / tan
+(213833, 'قاشُق و چَنگال', 'noun', NULL, NULL, 3, 'C2', NULL),   -- cutlery
+(213834, 'کَلانشَهر', 'noun', NULL, NULL, 3, 'C2', NULL),   -- metropolis
+(213835, 'بُزُرگ‌تَر', 'adjective', NULL, NULL, 3, 'C2', NULL),   -- bigger / older
+(213836, 'مِزه', 'noun', NULL, NULL, 3, 'C2', NULL),   -- appetizer / meze
+(213837, 'سِبزه', 'adjective', NULL, NULL, 3, 'C2', NULL),   -- dark-haired / dark-complexioned
+(213838, 'رِسیدگی کَردَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to take care of / be concerned with
+(213839, 'در وَسَط', 'adverb', NULL, NULL, 3, 'C2', NULL),   -- in the middle
+(213840, 'اِنتِقالی', 'adjective', NULL, NULL, 3, 'C2', NULL),   -- transitional
+(213841, 'پیوَند زَدَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to transplant (organ)
+(213842, 'قابِلِ‌تَبدیل', 'adjective', NULL, NULL, 3, 'C2', NULL),   -- convertible
+(213843, 'مُتَرجِمِ زَن', 'noun', NULL, NULL, 3, 'C2', NULL),   -- female translator
+(213844, 'سَهامی', 'adjective', NULL, NULL, 3, 'C2', NULL),   -- share- / stock-related
+(213845, 'دِرَختِ سیب', 'noun', NULL, NULL, 3, 'C2', NULL),   -- apple tree
+(213846, 'میکروب‌شِناس', 'noun', NULL, NULL, 3, 'C2', NULL),   -- microbiologist
+(213847, 'اِجاره', 'noun', NULL, NULL, 3, 'C2', NULL),   -- leasing
+(213848, 'سَرِانجام', 'adverb', NULL, NULL, 3, 'C2', NULL),   -- fatally / inevitably
+(213849, 'به‌مَحضِ اینکه', 'conjunction', NULL, NULL, 3, 'C2', NULL),   -- as soon as
+(213850, 'با سُرب مُهر و موم کَردَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to seal with lead
+(213851, 'به‌طورِ مُنحَصِربه‌فَرد', 'adverb', NULL, NULL, 3, 'C2', NULL),   -- uniquely
+(213852, 'خانِه ویلایی', 'noun', NULL, NULL, 3, 'C2', NULL),   -- detached house
+(213853, 'اُتاقِ یِک‌نَفَره', 'noun', NULL, NULL, 3, 'C2', NULL),   -- single room (hotel)
+(213854, 'بی‌اَبهام', 'adjective', NULL, NULL, 3, 'C2', NULL),   -- unambiguous
+(213855, 'تَک‌رَنگ', 'adjective', NULL, NULL, 3, 'C2', NULL),   -- monochrome
+(213856, 'قالِب‌بَندی', 'noun', NULL, NULL, 3, 'C2', NULL),   -- formatting
+(213857, 'موتورگازی', 'noun', NULL, NULL, 3, 'C2', NULL),   -- moped
+(213858, 'بی‌حِسّی', 'noun', NULL, NULL, 3, 'C2', NULL),   -- numbness
+(213859, 'زیرِلَب حَرف زَدَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to mutter / murmur
+(213860, 'خَردَل', 'noun', NULL, NULL, 3, 'C2', NULL),   -- mustard
+(213861, 'جان کَندَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to toil / labor hard
+(213862, 'بَقّال', 'noun', NULL, NULL, 3, 'C2', NULL),   -- grocer
+(213863, 'حَرامزاده', 'noun', NULL, NULL, 3, 'C2', NULL),   -- bastard
+(213864, 'بِیکَن', 'noun', NULL, NULL, 3, 'C2', NULL),   -- bacon
+(213865, 'اَه', 'expression', NULL, NULL, 3, 'C2', NULL),   -- yuck!
+(213866, 'خَسته و دِلزَده', 'adjective', NULL, NULL, 3, 'C2', NULL),   -- fed up
+(213867, 'اِستِیک', 'noun', NULL, NULL, 3, 'C2', NULL),   -- steak / chop
+(213868, 'جُلو', 'adverb', NULL, NULL, 3, 'C2', NULL),   -- in front / go ahead
+(213869, 'اُسطوره‌ای', 'adjective', NULL, NULL, 3, 'C2', NULL),   -- mythical
+(213870, 'نازیسم', 'noun', NULL, NULL, 3, 'C2', NULL),   -- Nazism
+(213871, 'نازی', 'noun', NULL, NULL, 3, 'C2', NULL),   -- Nazi (person)
+(213872, 'نازیستی', 'adjective', NULL, NULL, 3, 'C2', NULL),   -- Nazi-related
+(213873, 'مُعتاد به مَواد', 'adjective', NULL, NULL, 3, 'C2', NULL),   -- drug-addicted
+(213874, 'کِشتی‌سازی', 'noun', NULL, NULL, 3, 'C2', NULL),   -- shipyard
+(213875, 'عَصَبی شُدَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to get irritated / annoyed
+(213876, 'جَزیره‌ای', 'adjective', NULL, NULL, 3, 'C2', NULL),   -- insular / island-related
+(213877, 'پیروزمَندانه', 'adjective', NULL, NULL, 3, 'C2', NULL),   -- winning / victorious
+(213878, 'رُوشویی', 'noun', NULL, NULL, 3, 'C2', NULL),   -- washbasin
+(213879, 'صاحِب‌خانه', 'noun', NULL, NULL, 3, 'C2', NULL),   -- householder / homeowner
+(213880, 'قانونی‌سازی', 'noun', NULL, NULL, 3, 'C2', NULL),   -- legalization
+(213881, 'پولی', 'adjective', NULL, NULL, 3, 'C2', NULL),   -- monetary
+(213882, 'بَستَری‌شُدَن', 'noun', NULL, NULL, 3, 'C2', NULL),   -- hospitalization
+(213883, 'بَستَری کَردَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to hospitalize
+(213884, 'بیمارِستانی', 'adjective', NULL, NULL, 3, 'C2', NULL),   -- hospital-related
+(213885, 'دِلتَنگ بودَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to feel nostalgic for
+(213886, 'نُت', 'noun', NULL, NULL, 3, 'C2', NULL),   -- musical note
+(213887, 'جُنوب‌غَربی', 'adjective', NULL, NULL, 3, 'C2', NULL),   -- southwestern
+(213888, 'رُمانِ کوتاه', 'noun', NULL, NULL, 3, 'C2', NULL),   -- novella
+(213889, 'لِباس پوشیدَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to get dressed
+(213890, 'خواب‌آلود بودَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to be sleepy
+(213891, 'لِباسِ خواب', 'noun', NULL, NULL, 3, 'C2', NULL),   -- nightgown
+(213892, 'دوباره آمَدَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to come again
+(213893, 'دوباره اَنجام دادَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to do again
+(213894, 'پیچ باز کَردَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to unscrew
+(213895, 'جُدا کَردَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to unstick / detach
+(213896, 'اِستِراحَت‌کَرده', 'adjective', NULL, NULL, 3, 'C2', NULL),   -- well-rested
+(213897, 'راهنُمایِ‌تور', 'noun', NULL, NULL, 3, 'C2', NULL),   -- tour guide
+(213898, 'تَسویه کَردَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to pay off (debt)
+(213899, 'رِیشه‌کَن کَردَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to uproot
+(213900, 'بَرمَلا کَردَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to uncover / expose
+(213901, 'گَردگیری کَردَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to dust
+(213902, 'خَلاص شُدَن اَز', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to get rid of
+(213903, 'جیغ زَدَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to scream / shriek
+(213904, 'سَحَر می‌شَوَد', 'verb', NULL, NULL, 3, 'C2', NULL),   -- day breaks / dawn breaks
+(213905, 'اَصلاحی', 'adjective', NULL, NULL, 3, 'C2', NULL),   -- shaving-related
+(213906, 'اَز راهِ زَمینی', 'adverb', NULL, NULL, 3, 'C2', NULL),   -- by road
+(213907, 'بوم‌شِناسی', 'noun', NULL, NULL, 3, 'C2', NULL),   -- ecology
+(213908, 'بوم‌شِناس', 'noun', NULL, NULL, 3, 'C2', NULL),   -- ecologist
+(213909, 'اُکتُبَری', 'adjective', NULL, NULL, 3, 'C2', NULL),   -- October-related
+(213910, 'لِیز خوردَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to slip / slide
+(213911, 'کُلِّیَّت', 'noun', NULL, NULL, 3, 'C2', NULL),   -- totality / wholeness
+(213912, 'گُروه‌بَندی', 'noun', NULL, NULL, 3, 'C2', NULL),   -- grouping
+(213913, 'به‌آرامی', 'adverb', NULL, NULL, 3, 'C2', NULL),   -- smoothly
+(213914, 'یِکنواخت', 'adjective', NULL, NULL, 3, 'C2', NULL),   -- uniform
+(213915, 'هَمجِنس‌گَرایی', 'noun', NULL, NULL, 3, 'C2', NULL),   -- homosexuality
+(213916, 'نامِ کامِل', 'noun', NULL, NULL, 3, 'C2', NULL),   -- full name
+(213917, 'عَقَبی', 'adjective', NULL, NULL, 3, 'C2', NULL),   -- rear / posterior
+(213918, 'بَرگُزارکُنَنده', 'noun', NULL, NULL, 3, 'C2', NULL),   -- organizer
+(213919, 'راست‌روده', 'noun', NULL, NULL, 3, 'C2', NULL),   -- rectum
+(213920, 'مُتِخَصِّصِ اُرتوپِدی', 'noun', NULL, NULL, 3, 'C2', NULL),   -- orthopedist
+(213921, 'دُرُستی', 'noun', NULL, NULL, 3, 'C2', NULL),   -- correctness
+(213922, 'نِهایی کَردَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to finalize
+(213923, 'هُجوم بُردَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to rush / charge
+(213924, 'تا جایی که', 'adverb', NULL, NULL, 3, 'C2', NULL),   -- as much as / while
+(213925, 'اُکراینی', 'adjective', NULL, NULL, 3, 'C2', NULL),   -- Ukrainian
+(213926, 'در واقِع', 'adverb', NULL, NULL, 3, 'C2', NULL),   -- in essence
+(213927, 'اوف', 'expression', NULL, NULL, 3, 'C2', NULL),   -- ugh / phew
+(213928, 'چِشم‌پِزِشک', 'noun', NULL, NULL, 3, 'C2', NULL),   -- ophthalmologist
+(213929, 'بِرایِ مِثال', 'expression', NULL, NULL, 3, 'C2', NULL),   -- e.g.
+(213930, 'مُتِخَصِّصِ داخِلی', 'noun', NULL, NULL, 3, 'C2', NULL),   -- pathologist / internist
+(213931, 'مُتِخَصِّصِ اَطفال', 'noun', NULL, NULL, 3, 'C2', NULL),   -- pediatrician
+(213932, 'عَجیب اینکه', 'adverb', NULL, NULL, 3, 'C2', NULL),   -- paradoxically
+(213933, 'تابِستان را گُذراندَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to spend the summer / vacation
+(213934, 'فَلَج شُدَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to become paralyzed
+(213935, 'کِنار زَدَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to push aside / set aside
+(213936, 'گُمراه کَردَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to mislead
+(213937, 'کلیسایِ‌کوچَک', 'noun', NULL, NULL, 3, 'C2', NULL),   -- chapel
+(213938, 'رِژه رَفتَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to parade / march
+(213939, 'آزار دادَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to harass
+(213940, 'دِلداری دادَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to console
+(213941, 'باکِره', 'noun', NULL, NULL, 3, 'C2', NULL),   -- virgin (fem.)
+(213942, 'پارکومِتر', 'noun', NULL, NULL, 3, 'C2', NULL),   -- parking meter
+(213943, 'میهَن‌پَرَست', 'noun', NULL, NULL, 3, 'C2', NULL),   -- patriot
+(213944, 'میهَن‌پَرَستانه', 'adjective', NULL, NULL, 3, 'C2', NULL),   -- patriotic
+(213945, 'چاق شُدَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to gain weight
+(213946, 'پیاده‌راه', 'noun', NULL, NULL, 3, 'C2', NULL),   -- pedestrian street
+(213947, 'مادَرِ هَمسَر', 'noun', NULL, NULL, 3, 'C2', NULL),   -- mother-in-law
+(213948, 'خانواده هَمسَر', 'noun', NULL, NULL, 3, 'C2', NULL),   -- in-laws
+(213949, 'پَنجاهُم', 'number', NULL, NULL, 3, 'C2', NULL),   -- fiftieth
+(213950, 'آلَتِ‌تَناسُلیِ مَرد', 'noun', NULL, NULL, 3, 'C2', NULL),   -- penis
+(213951, 'زودتَر خوب شَوید', 'expression', NULL, NULL, 3, 'C2', NULL),   -- get well soon
+(213952, 'مُراقَبَت کَردَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to care for / nurse
+(213953, 'به‌طورِ خُلاصه', 'adverb', NULL, NULL, 3, 'C2', NULL),   -- in summary
+(213954, 'مَحدود شُدَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to be limited / confined
+(213955, 'مَحدودکُنَنده', 'adjective', NULL, NULL, 3, 'C2', NULL),   -- restrictive
+(213956, 'با خود گَرداندَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to carry around
+(213957, 'به‌طورِ عالی', 'adverb', NULL, NULL, 3, 'C2', NULL),   -- splendidly / famously
+(213958, 'یِکهو بِلَند شُدَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to jump up / dart out
+(213959, 'گِل رُس', 'noun', NULL, NULL, 3, 'C2', NULL),   -- clay
+(213960, 'تَلخی', 'noun', NULL, NULL, 3, 'C2', NULL),   -- bitterness
+(213961, 'پینگ‌پونگ', 'noun', NULL, NULL, 3, 'C2', NULL),   -- ping-pong / table tennis
+(213962, 'باسِن', 'noun', NULL, NULL, 3, 'C2', NULL),   -- buttocks / rear
+(213963, 'باوَرکَردَنی', 'adjective', NULL, NULL, 3, 'C2', NULL),   -- believable
+(213964, 'واریز کَردَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to credit (account)
+(213965, 'پیتزافُروشی', 'noun', NULL, NULL, 3, 'C2', NULL),   -- pizzeria
+(213966, 'قاب کَردَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to frame / accompany
+(213967, 'ساختِگی', 'adjective', NULL, NULL, 3, 'C2', NULL),   -- fictitious
+(213968, 'اِضافی', 'adjective', NULL, NULL, 3, 'C2', NULL),   -- redundant / surplus
+(213969, 'کِسل‌کُنَنده', 'adjective', NULL, NULL, 3, 'C2', NULL),   -- boring
+(213970, 'سیل‌زَده شُدَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to flood
+(213971, 'اِطِّلاعاتی', 'adjective', NULL, NULL, 3, 'C2', NULL),   -- informational
+(213972, 'پیمایِش کَردَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to navigate
+(213973, 'ماشینِ لِباسشویی', 'noun', NULL, NULL, 3, 'C2', NULL),   -- washing machine
+(213974, 'دوچَرخِه‌سَوار', 'noun', NULL, NULL, 3, 'C2', NULL),   -- cyclist
+(213975, 'پوکِر', 'noun', NULL, NULL, 3, 'C2', NULL),   -- poker
+(213976, 'نِظامِ‌سیاسی', 'noun', NULL, NULL, 3, 'C2', NULL),   -- form of government
+(213977, 'کَثرَت', 'noun', NULL, NULL, 3, 'C2', NULL),   -- multiplicity
+(213978, 'صَندَلی راحَتی', 'noun', NULL, NULL, 3, 'C2', NULL),   -- armchair
+(213979, 'رَوسپیگَری', 'noun', NULL, NULL, 3, 'C2', NULL),   -- prostitution
+(213980, 'رَوسپی', 'noun', NULL, NULL, 3, 'C2', NULL),   -- prostitute
+(213981, 'آب‌پُرتُقال', 'noun', NULL, NULL, 3, 'C2', NULL),   -- orangeade
+(213982, 'دِرَختِ پُرتُقال', 'noun', NULL, NULL, 3, 'C2', NULL),   -- orange tree
+(213983, 'دَرصَدی', 'adjective', NULL, NULL, 3, 'C2', NULL),   -- percentage-related
+(213984, 'کَمّی', 'adjective', NULL, NULL, 3, 'C2', NULL),   -- quantitative
+(213985, 'اَکرانِ‌اَوَّل', 'noun', NULL, NULL, 3, 'C2', NULL),   -- premiere
+(213986, 'اِختیاری', 'adjective', NULL, NULL, 3, 'C2', NULL),   -- optional
+(213987, 'بَرنامه‌ای', 'adjective', NULL, NULL, 3, 'C2', NULL),   -- programmatic
+(213988, 'بَرنامه‌نویس', 'noun', NULL, NULL, 3, 'C2', NULL),   -- programmer
+(213989, 'با میل', 'adverb', NULL, NULL, 3, 'C2', NULL),   -- willingly
+(213990, 'داوَطَلَب شُدَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to volunteer / offer willingly
+(213991, 'پیشرَفت کَردَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to prosper / get ahead
+(213992, 'کُنسول', 'noun', NULL, NULL, 3, 'C2', NULL),   -- consul
+(213993, 'بیش اَز هَمه', 'adverb', NULL, NULL, 3, 'C2', NULL),   -- above all
+(213994, 'پیرارسال', 'adverb', NULL, NULL, 3, 'C2', NULL),   -- the year before last
+(213995, 'تُست', 'noun', NULL, NULL, 3, 'C2', NULL),   -- toast (drinking)
+(213996, 'جِهَت‌دِهی کَردَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to orient
+(213997, 'تَطبیق‌یافته', 'adjective', NULL, NULL, 3, 'C2', NULL),   -- adapted
+(213998, 'دِسترَسی‌پَذیری', 'noun', NULL, NULL, 3, 'C2', NULL),   -- accessibility
+(213999, 'تَعیین‌کُنَنده', 'adjective', NULL, NULL, 3, 'C2', NULL),   -- determining / definitive
+(214000, 'اِستِخدام‌شُده', 'noun', NULL, NULL, 3, 'C2', NULL),   -- hired person / recruit
+(214001, 'اَز پیش طَرّاحی کَردَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to pre-plan
+(214002, 'پروتِستانی', 'adjective', NULL, NULL, 3, 'C2', NULL),   -- Protestant-related
+(214003, 'تَرجیح‌داده‌شُده', 'adjective', NULL, NULL, 3, 'C2', NULL),   -- preferred
+(214004, 'دَستِ‌وپاشِکَسته', 'adjective', NULL, NULL, 3, 'C2', NULL),   -- makeshift / improvised
+(214005, 'رَئیسِ دانِشگاه', 'noun', NULL, NULL, 3, 'C2', NULL),   -- university rector
+(214006, 'نَقشِ اَصلی را بازی کَردَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to star / play the lead role
+(214007, 'در دَرَجِه اَوَّل', 'adverb', NULL, NULL, 3, 'C2', NULL),   -- primarily
+(214008, 'کپسولِ آتِش‌نِشانی', 'noun', NULL, NULL, 3, 'C2', NULL),   -- fire extinguisher
+(214009, 'سازمانِ آتِش‌نِشانی', 'noun', NULL, NULL, 3, 'C2', NULL),   -- fire department
+(214010, 'رِئالیسم', 'noun', NULL, NULL, 3, 'C2', NULL),   -- realism
+(214011, 'ریشه دَواندَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to take root
+(214012, 'آلایَنده', 'noun', NULL, NULL, 3, 'C2', NULL),   -- pollutant / dirt
+(214013, 'زَنِ روسی', 'noun', NULL, NULL, 3, 'C2', NULL),   -- Russian woman
+(214014, 'فَریفتَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to captivate / charm
+(214015, 'کیسه', 'noun', NULL, NULL, 3, 'C2', NULL),   -- bag / sack
+(214016, 'لَرزِش', 'noun', NULL, NULL, 3, 'C2', NULL),   -- shaking
+(214017, 'لَرزِه‌ای', 'adjective', NULL, NULL, 3, 'C2', NULL),   -- seismic
+(214018, 'صِربی', 'adjective', NULL, NULL, 3, 'C2', NULL),   -- Serbian
+(214019, 'گارسُن زَن', 'noun', NULL, NULL, 3, 'C2', NULL),   -- waitress
+(214020, 'نِشانِه‌گُذاری کَردَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to signal / mark
+(214021, 'آرام‌آرام جوشاندَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to simmer
+(214022, 'اُتوکَردَن', 'noun', NULL, NULL, 3, 'C2', NULL),   -- ironing
+(214023, 'راه‌آهَنی', 'adjective', NULL, NULL, 3, 'C2', NULL),   -- railway-related
+(214024, 'با قِطار', 'adverb', NULL, NULL, 3, 'C2', NULL),   -- by rail
+(214025, 'صِهیونیسم', 'noun', NULL, NULL, 3, 'C2', NULL),   -- Zionism
+(214026, 'صِهیونیست', 'noun', NULL, NULL, 3, 'C2', NULL),   -- Zionist
+(214027, 'سُکوت کَردَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to remain silent
+(214028, 'گُه', 'noun', NULL, NULL, 3, 'C2', NULL),   -- shit (vulgar)
+(214029, 'طَرح زَدَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to outline / sketch
+(214030, 'کُلاهِ‌بافتَنی', 'noun', NULL, NULL, 3, 'C2', NULL),   -- cap / beanie
+(214031, 'اِسلاوی', 'adjective', NULL, NULL, 3, 'C2', NULL),   -- Slavic
+(214032, 'شوروی', 'adjective', NULL, NULL, 3, 'C2', NULL),   -- Soviet
+(214033, 'ماهیِ‌آزاد', 'noun', NULL, NULL, 3, 'C2', NULL),   -- salmon
+(214034, 'سوسیال‌دِموکِراتیک', 'adjective', NULL, NULL, 3, 'C2', NULL),   -- social-democratic
+(214035, 'سوسیال‌دِموکرات', 'noun', NULL, NULL, 3, 'C2', NULL),   -- social democrat
+(214036, 'سیخ‌کَباب', 'noun', NULL, NULL, 3, 'C2', NULL),   -- souvlaki / skewer
+(214037, 'چروک کَردَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to pucker / wrinkle
+(214038, 'در خانه', 'adverb', NULL, NULL, 3, 'C2', NULL),   -- at home
+(214039, 'صاحِب‌خانه زَن', 'noun', NULL, NULL, 3, 'C2', NULL),   -- landlady
+(214040, 'چِکِّه کَردَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to drip
+(214041, 'ایستا', 'adjective', NULL, NULL, 3, 'C2', NULL),   -- static
+(214042, 'نیروگُماری', 'noun', NULL, NULL, 3, 'C2', NULL),   -- staffing
+(214043, 'تَنگ کَردَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to narrow
+(214044, 'پوندِ اِستِرلینگ', 'noun', NULL, NULL, 3, 'C2', NULL),   -- sterling (currency)
+(214045, 'تَلّ', 'noun', NULL, NULL, 3, 'C2', NULL),   -- stack / pile
+(214046, 'رویِ‌هَم چیدَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to stack / pile
+(214047, 'اَز نَظَرِ نِظامی', 'adverb', NULL, NULL, 3, 'C2', NULL),   -- militarily
+(214048, 'اِسترِس دادَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to stress (someone) out
+(214049, 'چَرخاندَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to whirl / spin
+(214050, 'نویسِندگی', 'adjective', NULL, NULL, 3, 'C2', NULL),   -- authorial / writing-related
+(214051, 'حَمل‌ونَقلِ عُمومی', 'noun', NULL, NULL, 3, 'C2', NULL),   -- public transportation
+(214052, 'به‌طورِ مُقایِسه‌ای', 'adverb', NULL, NULL, 3, 'C2', NULL),   -- comparatively
+(214053, 'تَبریک‌آمیز', 'adjective', NULL, NULL, 3, 'C2', NULL),   -- congratulatory
+(214054, 'تَسلیت‌آمیز', 'adjective', NULL, NULL, 3, 'C2', NULL),   -- condolence-related
+(214055, 'هَم‌کِلاسیِ زَن', 'noun', NULL, NULL, 3, 'C2', NULL),   -- female classmate
+(214056, 'هَم‌تیمی', 'noun', NULL, NULL, 3, 'C2', NULL),   -- teammate
+(214057, 'هَموَطَنِ زَن', 'noun', NULL, NULL, 3, 'C2', NULL),   -- female compatriot
+(214058, 'فِشُرده کَردَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to compress
+(214059, 'هَم‌شَهری', 'noun', NULL, NULL, 3, 'C2', NULL),   -- fellow citizen
+(214060, 'هَم‌دانِشجو', 'noun', NULL, NULL, 3, 'C2', NULL),   -- fellow (male) student
+(214061, 'هَم‌دانِشجویِ زَن', 'noun', NULL, NULL, 3, 'C2', NULL),   -- fellow female student
+(214062, 'مُعامِله کَردَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to do business / transact
+(214063, 'هَم‌سَفَر', 'noun', NULL, NULL, 3, 'C2', NULL),   -- fellow passenger
+(214064, 'طَرَفداری کَردَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to advocate for
+(214065, 'هَوایِ اَبری', 'noun', NULL, NULL, 3, 'C2', NULL),   -- cloudy weather
+(214066, 'هَم‌راننده', 'noun', NULL, NULL, 3, 'C2', NULL),   -- co-pilot / front passenger
+(214067, 'گُفتگو کَردَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to converse
+(214068, 'هَماهَنگ‌کُنَنده', 'adjective', NULL, NULL, 3, 'C2', NULL),   -- coordinating
+(214069, 'هَمزیستی داشتَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to coexist
+(214070, 'کِشو', 'noun', NULL, NULL, 3, 'C2', NULL),   -- drawer
+(214071, 'سِفارِشی', 'adjective', NULL, NULL, 3, 'C2', NULL),   -- registered (mail)
+(214072, 'رَفت‌وآمَد کَردَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to frequent (a place)
+(214073, 'تی کِشیدَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to mop
+(214074, 'ساکِت شُدَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to fall silent
+(214075, 'مُرَتَّب شُدَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to settle / get organized
+(214076, 'کاغَذدیواری', 'noun', NULL, NULL, 3, 'C2', NULL),   -- wallpaper / upholstery
+(214077, 'سینی فِر', 'noun', NULL, NULL, 3, 'C2', NULL),   -- baking pan / tray
+(214078, 'فارِغ‌التَّحصیل', 'noun', NULL, NULL, 3, 'C2', NULL),   -- graduating student
+(214079, 'تَمام‌شُده', 'adjective', NULL, NULL, 3, 'C2', NULL),   -- finished / over
+(214080, 'هیولاوار', 'adjective', NULL, NULL, 3, 'C2', NULL),   -- monstrous
+(214081, 'چِهِلُم', 'number', NULL, NULL, 3, 'C2', NULL),   -- fortieth
+(214082, 'سُرخ‌شُده', 'adjective', NULL, NULL, 3, 'C2', NULL),   -- fried
+(214083, 'بیننده تِلِویزیون', 'noun', NULL, NULL, 3, 'C2', NULL),   -- TV viewer
+(214084, 'کارتِ تِلِفُن', 'noun', NULL, NULL, 3, 'C2', NULL),   -- phone card
+(214085, 'تِماسِ تِلِفُنی', 'noun', NULL, NULL, 3, 'C2', NULL),   -- phone call
+(214086, 'عُنوان دادَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to title / entitle
+(214087, 'به‌صورَتِ اَقساطی', 'adverb', NULL, NULL, 3, 'C2', NULL),   -- in installments / partially
+(214088, 'به‌طورِ مَحَلّی', 'adverb', NULL, NULL, 3, 'C2', NULL),   -- locally
+(214089, 'نانِ تُست', 'noun', NULL, NULL, 3, 'C2', NULL),   -- toast (bread)
+(214090, 'تُرک', 'noun', NULL, NULL, 3, 'C2', NULL),   -- Turk
+(214091, 'تِپّه کَردَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to pile / mound up
+(214092, 'تِصادُف کَردَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to crash / collide
+(214093, 'به‌شِدَّت تَکان دادَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to shake violently
+(214094, 'اُتاقِ ناهارخوری', 'noun', NULL, NULL, 3, 'C2', NULL),   -- dining room
+(214095, 'سیُّم', 'number', NULL, NULL, 3, 'C2', NULL),   -- thirtieth
+(214096, 'آپارتِمانِ سه‌اُتاقه', 'noun', NULL, NULL, 3, 'C2', NULL),   -- three-room apartment
+(214097, 'پَرسه زَدَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to wander around
+(214098, 'اُتاقِ سه‌نَفَره', 'noun', NULL, NULL, 3, 'C2', NULL),   -- triple room
+(214099, 'پوستِ‌سَر', 'noun', NULL, NULL, 3, 'C2', NULL),   -- scalp
+(214100, 'سه‌طَبَقه', 'adjective', NULL, NULL, 3, 'C2', NULL),   -- three-story
+(214101, 'تِرولی‌بوس', 'noun', NULL, NULL, 3, 'C2', NULL),   -- trolleybus
+(214102, 'پلیسِ‌راهُنمایی', 'noun', NULL, NULL, 3, 'C2', NULL),   -- traffic police
+(214103, 'مَأمورِ راهنُمایی', 'noun', NULL, NULL, 3, 'C2', NULL),   -- traffic officer
+(214104, 'چِکی', 'adjective', NULL, NULL, 3, 'C2', NULL),   -- Czech
+(214105, 'کولی', 'noun', NULL, NULL, 3, 'C2', NULL),   -- Roma / gypsy
+(214106, 'نیشگون گِرِفتَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to pinch / nibble
+(214107, 'پیراشکیِ‌پِنیر', 'noun', NULL, NULL, 3, 'C2', NULL),   -- cheese pie
+(214108, 'ناودان', 'noun', NULL, NULL, 3, 'C2', NULL),   -- gutter / drainpipe
+(214109, 'زیرِدَریایی', 'adjective', NULL, NULL, 3, 'C2', NULL),   -- underwater / submarine
+(214110, 'زیرِزَمینی', 'adverb', NULL, NULL, 3, 'C2', NULL),   -- underground
+(214111, 'فَکس', 'noun', NULL, NULL, 3, 'C2', NULL),   -- fax
+(214112, 'دارو‌ساز', 'noun', NULL, NULL, 3, 'C2', NULL),   -- pharmacist
+(214113, 'فانوسِ‌دَریایی', 'noun', NULL, NULL, 3, 'C2', NULL),   -- lighthouse
+(214114, 'فِمینیستی', 'adjective', NULL, NULL, 3, 'C2', NULL),   -- feminist
+(214115, 'پاییزی', 'adjective', NULL, NULL, 3, 'C2', NULL),   -- autumnal
+(214116, 'غَیرَت', 'noun', NULL, NULL, 3, 'C2', NULL),   -- sense of honor / dignity
+(214117, 'فیلتَر کَردَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to filter
+(214118, 'دانِشجویِ زَن', 'noun', NULL, NULL, 3, 'C2', NULL),   -- female university student
+(214119, 'بارکِش', 'adjective', NULL, NULL, 3, 'C2', NULL),   -- cargo-carrying
+(214120, 'صورَتیِ‌پُررَنگ', 'adjective', NULL, NULL, 3, 'C2', NULL),   -- fuchsia (color)
+(214121, 'مالیات بَر اَرزِشِ اَفزوده', 'noun', NULL, NULL, 3, 'C2', NULL),   -- VAT
+(214122, 'توت‌فَرَنگی', 'noun', NULL, NULL, 3, 'C2', NULL),   -- strawberry
+(214123, 'تَرَمز کَردَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to brake
+(214124, 'کافی اَست', 'verb', NULL, NULL, 3, 'C2', NULL),   -- that's enough / it suffices
+(214125, 'بیل زَدَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to shovel
+(214126, 'وَرَق زَدَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to browse / leaf through
+(214127, 'جوانه زَدَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to sprout / germinate
+(214128, 'نَوازِش کَردَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to caress / pet
+(214129, 'خوشحال بودَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to be glad / happy
+(214130, 'پایین آوَردَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to lower
+(214131, 'هَدیه دادَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to give as a gift
+(214132, 'خوشحال کَردَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to make happy
+(214133, 'نَقشه‌بَرداری', 'noun', NULL, NULL, 3, 'C2', NULL),   -- mapping / cartography
+(214134, 'نَقشه‌بَرداری کَردَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to map
+(214135, 'کیفِ‌اَسناد', 'noun', NULL, NULL, 3, 'C2', NULL),   -- briefcase
+(214136, 'ریدَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to shit (vulgar)
+(214137, 'دَستی', 'adjective', NULL, NULL, 3, 'C2', NULL),   -- manually-operated
+(214138, 'شِبِه‌جَزیره', 'noun', NULL, NULL, 3, 'C2', NULL),   -- peninsula
+(214139, 'بیوه‌مَرد', 'noun', NULL, NULL, 3, 'C2', NULL),   -- widower
+(214140, 'هِزاره', 'noun', NULL, NULL, 3, 'C2', NULL),   -- millennium
+(214141, 'تَأمینِ‌مالی کَردَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to finance
+(214142, 'تاریخ‌گُذاری کَردَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to date (something)
+(214143, 'شانه زَدَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to comb
+(214144, 'فَلِه', 'adverb', NULL, NULL, 3, 'C2', NULL),   -- in bulk / loose
+(214145, 'فُرو کَردَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to shove / stuff
+(214146, 'مَزمور', 'noun', NULL, NULL, 3, 'C2', NULL),   -- psalm
+(214147, 'پولِ‌خُرد', 'noun', NULL, NULL, 3, 'C2', NULL),   -- small change (coins)
+(214148, 'ریز خُرد کَردَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to mince / chop finely
+(214149, 'نم‌نم باران می‌آید', 'verb', NULL, NULL, 3, 'C2', NULL),   -- it drizzles
+(214150, 'سود رِساندَن', 'verb', NULL, NULL, 3, 'C2', NULL),   -- to benefit / be of use to
+(214151, 'ارمنستان', 'noun', NULL, NULL, 3, 'EX', NULL),   -- Armenia (country name)
+(214152, 'ساحل عاج', 'noun', NULL, NULL, 3, 'EX', NULL),   -- Ivory Coast (country name)
+(214153, 'ترکمنستان', 'noun', NULL, NULL, 3, 'EX', NULL),   -- Turkmenistan (country name)
+(214154, 'لواندا', 'noun', NULL, NULL, 3, 'EX', NULL),   -- Luanda (capital of Angola)
+(214155, 'سنت جانز', 'noun', NULL, NULL, 3, 'EX', NULL),   -- St. John's (capital of Antigua and Barbuda)
+(214156, 'کانبرا', 'noun', NULL, NULL, 3, 'EX', NULL),   -- Canberra (capital of Australia)
+(214157, 'پورتو نوو', 'noun', NULL, NULL, 3, 'EX', NULL),   -- Porto-Novo (capital of Benin)
+(214158, 'گابورونه', 'noun', NULL, NULL, 3, 'EX', NULL),   -- Gaborone (capital of Botswana)
+(214159, 'اوآگادوگو', 'noun', NULL, NULL, 3, 'EX', NULL),   -- Ouagadougou (capital of Burkina Faso)
+(214160, 'گیتگا', 'noun', NULL, NULL, 3, 'EX', NULL),   -- Gitega (capital of Burundi)
+(214161, 'پرایا', 'noun', NULL, NULL, 3, 'EX', NULL),   -- Praia (capital of Cape Verde)
+(214162, 'یائوندی', 'noun', NULL, NULL, 3, 'EX', NULL),   -- Yaoundé (capital of Cameroon)
+(214163, 'بانگی', 'noun', NULL, NULL, 3, 'EX', NULL),   -- Bangui (capital of Central African Republic)
+(214164, 'انجامنا', 'noun', NULL, NULL, 3, 'EX', NULL),   -- N'Djamena (capital of Chad)
+(214165, 'مورونی', 'noun', NULL, NULL, 3, 'EX', NULL),   -- Moroni (capital of Comoros)
+(214166, 'برازاویل', 'noun', NULL, NULL, 3, 'EX', NULL),   -- Brazzaville (capital of Republic of the Congo)
+(214167, 'یاماسوکرو', 'noun', NULL, NULL, 3, 'EX', NULL),   -- Yamoussoukro (capital of Ivory Coast)
+(214168, 'نیکوزیا', 'noun', NULL, NULL, 3, 'EX', NULL),   -- Nicosia (capital of Cyprus)
+(214169, 'مالابو', 'noun', NULL, NULL, 3, 'EX', NULL),   -- Malabo (capital of Equatorial Guinea)
+(214170, 'اسمره', 'noun', NULL, NULL, 3, 'EX', NULL),   -- Asmara (capital of Eritrea)
+(214171, 'مبابانه', 'noun', NULL, NULL, 3, 'EX', NULL),   -- Mbabane (capital of Eswatini)
+(214172, 'سووا', 'noun', NULL, NULL, 3, 'EX', NULL),   -- Suva (capital of Fiji)
+(214173, 'لیبرویل', 'noun', NULL, NULL, 3, 'EX', NULL),   -- Libreville (capital of Gabon)
+(214174, 'بانجول', 'noun', NULL, NULL, 3, 'EX', NULL),   -- Banjul (capital of Gambia)
+(214175, 'سنت جورج', 'noun', NULL, NULL, 3, 'EX', NULL),   -- St. George's (capital of Grenada)
+(214176, 'کوناکری', 'noun', NULL, NULL, 3, 'EX', NULL),   -- Conakry (capital of Guinea)
+(214177, 'بیسائو', 'noun', NULL, NULL, 3, 'EX', NULL),   -- Bissau (capital of Guinea-Bissau)
+(214178, 'تاراوا', 'noun', NULL, NULL, 3, 'EX', NULL),   -- Tarawa (capital of Kiribati)
+(214179, 'ماسرو', 'noun', NULL, NULL, 3, 'EX', NULL),   -- Maseru (capital of Lesotho)
+(214180, 'مونروویا', 'noun', NULL, NULL, 3, 'EX', NULL),   -- Monrovia (capital of Liberia)
+(214181, 'آنتاناناریوو', 'noun', NULL, NULL, 3, 'EX', NULL),   -- Antananarivo (capital of Madagascar)
+(214182, 'لیلونگوه', 'noun', NULL, NULL, 3, 'EX', NULL),   -- Lilongwe (capital of Malawi)
+(214183, 'باماکو', 'noun', NULL, NULL, 3, 'EX', NULL),   -- Bamako (capital of Mali)
+(214184, 'ماجورو', 'noun', NULL, NULL, 3, 'EX', NULL),   -- Majuro (capital of Marshall Islands)
+(214185, 'نواکشوت', 'noun', NULL, NULL, 3, 'EX', NULL),   -- Nouakchott (capital of Mauritania)
+(214186, 'پورت لوئیس', 'noun', NULL, NULL, 3, 'EX', NULL),   -- Port Louis (capital of Mauritius)
+(214187, 'پالیکیر', 'noun', NULL, NULL, 3, 'EX', NULL),   -- Palikir (capital of Micronesia)
+(214188, 'یارن', 'noun', NULL, NULL, 3, 'EX', NULL),   -- Yaren (capital of Nauru)
+(214189, 'ولینگتون', 'noun', NULL, NULL, 3, 'EX', NULL),   -- Wellington (capital of New Zealand)
+(214190, 'نیامی', 'noun', NULL, NULL, 3, 'EX', NULL),   -- Niamey (capital of Niger)
+(214191, 'نگرولمود', 'noun', NULL, NULL, 3, 'EX', NULL),   -- Ngerulmud (capital of Palau)
+(214192, 'رام‌الله', 'noun', NULL, NULL, 3, 'EX', NULL),   -- Ramallah (city in Palestine)
+(214193, 'پورت مورزبی', 'noun', NULL, NULL, 3, 'EX', NULL),   -- Port Moresby (capital of Papua New Guinea)
+(214194, 'کیگالی', 'noun', NULL, NULL, 3, 'EX', NULL),   -- Kigali (capital of Rwanda)
+(214195, 'آپیا', 'noun', NULL, NULL, 3, 'EX', NULL),   -- Apia (capital of Samoa)
+(214196, 'سائوتومه', 'noun', NULL, NULL, 3, 'EX', NULL),   -- São Tomé (capital of São Tomé and Príncipe)
+(214197, 'ویکتوریا', 'noun', NULL, NULL, 3, 'EX', NULL),   -- Victoria (capital of Seychelles)
+(214198, 'فریتاون', 'noun', NULL, NULL, 3, 'EX', NULL),   -- Freetown (capital of Sierra Leone)
+(214199, 'هونیارا', 'noun', NULL, NULL, 3, 'EX', NULL),   -- Honiara (capital of Solomon Islands)
+(214200, 'مقدیشو', 'noun', NULL, NULL, 3, 'EX', NULL),   -- Mogadishu (capital of Somalia)
+(214201, 'جوبا', 'noun', NULL, NULL, 3, 'EX', NULL),   -- Juba (capital of South Sudan)
+(214202, 'دودوما', 'noun', NULL, NULL, 3, 'EX', NULL),   -- Dodoma (capital of Tanzania)
+(214203, 'لومه', 'noun', NULL, NULL, 3, 'EX', NULL),   -- Lomé (capital of Togo)
+(214204, 'نوکوآلوفا', 'noun', NULL, NULL, 3, 'EX', NULL),   -- Nuku'alofa (capital of Tonga)
+(214205, 'آنکارا', 'noun', NULL, NULL, 3, 'EX', NULL),   -- Ankara (capital of Turkey)
+(214206, 'فونافوتی', 'noun', NULL, NULL, 3, 'EX', NULL),   -- Funafuti (capital of Tuvalu)
+(214207, 'پورت ویلا', 'noun', NULL, NULL, 3, 'EX', NULL),   -- Port Vila (capital of Vanuatu)
+(214208, 'دو و میدانی', 'noun', NULL, NULL, 3, 'EX', NULL),   -- athletics / track and field
+(214209, 'هندبال', 'noun', NULL, NULL, 3, 'EX', NULL),   -- handball
+(214210, 'اسکیت هنری', 'noun', NULL, NULL, 3, 'EX', NULL),   -- figure skating
+(214211, 'پنج‌گانه', 'noun', NULL, NULL, 3, 'EX', NULL),   -- pentathlon
+(214212, 'فوتبال آمریکایی', 'noun', NULL, NULL, 3, 'EX', NULL),   -- American football
+(214213, 'بیلیارد', 'noun', NULL, NULL, 3, 'EX', NULL),   -- billiards
+(214214, 'دارت', 'noun', NULL, NULL, 3, 'EX', NULL),   -- darts
+(214215, 'کرلینگ', 'noun', NULL, NULL, 3, 'EX', NULL),   -- curling
+(214216, 'بابسلد', 'noun', NULL, NULL, 3, 'EX', NULL),   -- bobsleigh
+(214217, 'اسکواش', 'noun', NULL, NULL, 3, 'EX', NULL),   -- squash
+(214218, 'قایقرانی کایاک', 'noun', NULL, NULL, 3, 'EX', NULL),   -- canoe-kayak
+(214219, 'موج‌سواری بادبانی', 'noun', NULL, NULL, 3, 'EX', NULL),   -- windsurfing
+(214220, 'ورزش موتوری', 'noun', NULL, NULL, 3, 'EX', NULL),   -- motorsport
+(214221, 'اسکیت‌بورد', 'noun', NULL, NULL, 3, 'EX', NULL),   -- skateboarding
+(214222, 'والیبال ساحلی', 'noun', NULL, NULL, 3, 'EX', NULL),   -- beach volleyball
+(214223, 'فوتسال', 'noun', NULL, NULL, 3, 'EX', NULL),   -- futsal
+(214224, 'پرش طول', 'noun', NULL, NULL, 3, 'EX', NULL),   -- long jump
+(214225, 'پرش ارتفاع', 'noun', NULL, NULL, 3, 'EX', NULL),   -- high jump
+(214226, 'پرش با نیزه', 'noun', NULL, NULL, 3, 'EX', NULL),   -- pole vault
+(214227, 'پرتاب نیزه', 'noun', NULL, NULL, 3, 'EX', NULL),   -- javelin throw
+(214228, 'پرتاب دیسک', 'noun', NULL, NULL, 3, 'EX', NULL),   -- discus throw
+(214229, 'پرتاب وزنه', 'noun', NULL, NULL, 3, 'EX', NULL),   -- shot put
+(214230, 'پرتاب چکش', 'noun', NULL, NULL, 3, 'EX', NULL),   -- hammer throw
+(214231, 'پرتوزایی', 'noun', NULL, NULL, 3, 'EX', NULL),   -- radioactivity
+(214232, 'مکانیک کوانتومی', 'noun', NULL, NULL, 3, 'EX', NULL),   -- quantum mechanics
+(214233, 'ترکیب شیمیایی', 'noun', NULL, NULL, 3, 'EX', NULL),   -- chemical compound
+(214234, 'واکنش شیمیایی', 'noun', NULL, NULL, 3, 'EX', NULL),   -- chemical reaction
+(214235, 'کاتالیز', 'noun', NULL, NULL, 3, 'EX', NULL),   -- catalysis
+(214236, 'جدول تناوبی', 'noun', NULL, NULL, 3, 'EX', NULL),   -- periodic table
+(214237, 'مولکول آب', 'noun', NULL, NULL, 3, 'EX', NULL),   -- water molecule
+(214238, 'زمین‌شناسی', 'noun', NULL, NULL, 3, 'EX', NULL),   -- geology
+(214239, 'سنگ', 'noun', NULL, NULL, 3, 'EX', NULL),   -- rock (petrology)
+(214240, 'صفحه تکتونیکی', 'noun', NULL, NULL, 3, 'EX', NULL),   -- tectonic plate
+(214241, 'سنگ آذرین', 'noun', NULL, NULL, 3, 'EX', NULL),   -- igneous rock
+(214242, 'هوش مصنوعی', 'noun', NULL, NULL, 3, 'EX', NULL),   -- artificial intelligence
+(214243, 'الفبایی‌عددی', 'adjective', NULL, NULL, 3, 'EX', NULL),   -- alphanumeric
+(214244, 'پادتن‌ها', 'noun', NULL, NULL, 3, 'EX', NULL),   -- antibodies
+(214245, 'سیستم ایمنی', 'noun', NULL, NULL, 3, 'EX', NULL),   -- immune system
+(214246, 'نیویورک', 'noun', NULL, NULL, 3, 'EX', NULL),   -- New York City
+(214247, 'لس‌آنجلس', 'noun', NULL, NULL, 3, 'EX', NULL),   -- Los Angeles
+(214248, 'شیکاگو', 'noun', NULL, NULL, 3, 'EX', NULL),   -- Chicago
+(214249, 'شانگهای', 'noun', NULL, NULL, 3, 'EX', NULL),   -- Shanghai
+(214250, 'هنگ‌کنگ', 'noun', NULL, NULL, 3, 'EX', NULL),   -- Hong Kong
+(214251, 'بمبئی', 'noun', NULL, NULL, 3, 'EX', NULL),   -- Mumbai
+(214252, 'سائوپائولو', 'noun', NULL, NULL, 3, 'EX', NULL),   -- São Paulo
+(214253, 'ریودوژانیرو', 'noun', NULL, NULL, 3, 'EX', NULL),   -- Rio de Janeiro
+(214254, 'استانبول', 'noun', NULL, NULL, 3, 'EX', NULL),   -- Istanbul
+(214255, 'دبی', 'noun', NULL, NULL, 3, 'EX', NULL),   -- Dubai
+(214256, 'سیدنی', 'noun', NULL, NULL, 3, 'EX', NULL),   -- Sydney
+(214257, 'تورنتو', 'noun', NULL, NULL, 3, 'EX', NULL),   -- Toronto
+(214258, 'بارسلونا', 'noun', NULL, NULL, 3, 'EX', NULL),   -- Barcelona
+(214259, 'میلان', 'noun', NULL, NULL, 3, 'EX', NULL),   -- Milan
+(214260, 'تسالونیکی', 'noun', NULL, NULL, 3, 'EX', NULL),   -- Thessaloniki
+(214261, 'سان‌فرانسیسکو', 'noun', NULL, NULL, 3, 'EX', NULL),   -- San Francisco
+(214262, 'ملبورن', 'noun', NULL, NULL, 3, 'EX', NULL),   -- Melbourne
+(214263, 'فرانکفورت', 'noun', NULL, NULL, 3, 'EX', NULL),   -- Frankfurt
+(214264, 'هامبورگ', 'noun', NULL, NULL, 3, 'EX', NULL),   -- Hamburg
+(214265, 'زوریخ', 'noun', NULL, NULL, 3, 'EX', NULL),   -- Zurich
+(214266, 'کرت', 'noun', NULL, NULL, 3, 'EX', NULL),   -- Crete (Greek island)
+(214267, 'رودس', 'noun', NULL, NULL, 3, 'EX', NULL),   -- Rhodes (Greek island)
+(214268, 'سانتورینی', 'noun', NULL, NULL, 3, 'EX', NULL),   -- Santorini (Greek island)
+(214269, 'میکونوس', 'noun', NULL, NULL, 3, 'EX', NULL),   -- Mykonos (Greek island)
+(214270, 'کورفو', 'noun', NULL, NULL, 3, 'EX', NULL),   -- Corfu (Greek island)
+(214271, 'زاکینتوس', 'noun', NULL, NULL, 3, 'EX', NULL),   -- Zakynthos (Greek island)
+(214272, 'سیسیل', 'noun', NULL, NULL, 3, 'EX', NULL),   -- Sicily
+(214273, 'ساردنی', 'noun', NULL, NULL, 3, 'EX', NULL),   -- Sardinia
+(214274, 'بالی', 'noun', NULL, NULL, 3, 'EX', NULL),   -- Bali
+(214275, 'ایبیزا', 'noun', NULL, NULL, 3, 'EX', NULL),   -- Ibiza
+(214276, 'جاوه', 'noun', NULL, NULL, 3, 'EX', NULL),   -- Java (island)
+(214277, 'بورنئو', 'noun', NULL, NULL, 3, 'EX', NULL),   -- Borneo
+(214278, 'تاسمانی', 'noun', NULL, NULL, 3, 'EX', NULL),   -- Tasmania
+(214279, 'جزیره ایستر', 'noun', NULL, NULL, 3, 'EX', NULL),   -- Easter Island
+(214280, 'جزایر گالاپاگوس', 'noun', NULL, NULL, 3, 'EX', NULL),   -- Galápagos Islands
+(214281, 'جزایر قناری', 'noun', NULL, NULL, 3, 'EX', NULL),   -- Canary Islands
+(214282, 'دریای مدیترانه', 'noun', NULL, NULL, 3, 'EX', NULL),   -- Mediterranean Sea
+(214283, 'دریای اژه', 'noun', NULL, NULL, 3, 'EX', NULL),   -- Aegean Sea
+(214284, 'دریای یونیه', 'noun', NULL, NULL, 3, 'EX', NULL),   -- Ionian Sea
+(214285, 'دریای سرخ', 'noun', NULL, NULL, 3, 'EX', NULL),   -- Red Sea
+(214286, 'دریای سیاه', 'noun', NULL, NULL, 3, 'EX', NULL),   -- Black Sea
+(214287, 'دریای خزر', 'noun', NULL, NULL, 3, 'EX', NULL),   -- Caspian Sea
+(214288, 'دریای مرده', 'noun', NULL, NULL, 3, 'EX', NULL),   -- Dead Sea
+(214289, 'دریای شمال', 'noun', NULL, NULL, 3, 'EX', NULL),   -- North Sea
+(214290, 'دریای بالتیک', 'noun', NULL, NULL, 3, 'EX', NULL),   -- Baltic Sea
+(214291, 'دریای عرب', 'noun', NULL, NULL, 3, 'EX', NULL),   -- Arabian Sea
+(214292, 'دریای زرد', 'noun', NULL, NULL, 3, 'EX', NULL),   -- Yellow Sea
+(214293, 'دریای آدریاتیک', 'noun', NULL, NULL, 3, 'EX', NULL),   -- Adriatic Sea
+(214294, 'دریاچه آرال', 'noun', NULL, NULL, 3, 'EX', NULL),   -- Aral Sea
+(214295, 'دریای ژاپن', 'noun', NULL, NULL, 3, 'EX', NULL),   -- Sea of Japan
+(214296, 'دریای برینگ', 'noun', NULL, NULL, 3, 'EX', NULL),   -- Bering Sea
+(214297, 'دین سیک', 'noun', NULL, NULL, 3, 'EX', NULL),   -- Sikhism
+(214298, 'تائوئیسم', 'noun', NULL, NULL, 3, 'EX', NULL),   -- Taoism
+(214299, 'کنفوسیوس‌گرایی', 'noun', NULL, NULL, 3, 'EX', NULL),   -- Confucianism
+(214300, 'شینتو', 'noun', NULL, NULL, 3, 'EX', NULL),   -- Shinto
+(214301, 'زرتشتی‌گری', 'noun', NULL, NULL, 3, 'EX', NULL),   -- Zoroastrianism
+(214302, 'بهائیت', 'noun', NULL, NULL, 3, 'EX', NULL),   -- Baháʼí Faith
+(214303, 'پروتستانتیسم', 'noun', NULL, NULL, 3, 'EX', NULL),   -- Protestantism
+(214304, 'هرا', 'noun', NULL, NULL, 3, 'EX', NULL),   -- Hera (Greek goddess)
+(214305, 'آتنا', 'noun', NULL, NULL, 3, 'EX', NULL),   -- Athena (Greek goddess)
+(214306, 'آپولو', 'noun', NULL, NULL, 3, 'EX', NULL),   -- Apollo (Greek god)
+(214307, 'آرتمیس', 'noun', NULL, NULL, 3, 'EX', NULL),   -- Artemis (Greek goddess)
+(214308, 'دیونیزوس', 'noun', NULL, NULL, 3, 'EX', NULL),   -- Dionysus (Greek god)
+(214309, 'هفائستوس', 'noun', NULL, NULL, 3, 'EX', NULL),   -- Hephaestus (Greek god)
+(214310, 'هراکلس', 'noun', NULL, NULL, 3, 'EX', NULL),   -- Heracles (Greek hero)
+(214311, 'آشیل', 'noun', NULL, NULL, 3, 'EX', NULL),   -- Achilles (Greek hero)
+(214312, 'اودیسئوس', 'noun', NULL, NULL, 3, 'EX', NULL),   -- Odysseus (Greek hero)
+(214313, 'اسکندر مقدونی', 'noun', NULL, NULL, 3, 'EX', NULL),   -- Alexander the Great
+(214314, 'ناپلئون', 'noun', NULL, NULL, 3, 'EX', NULL),   -- Napoleon
+(214315, 'ارسطو', 'noun', NULL, NULL, 3, 'EX', NULL),   -- Aristotle
+(214316, 'سقراط', 'noun', NULL, NULL, 3, 'EX', NULL),   -- Socrates
+(214317, 'افلاطون', 'noun', NULL, NULL, 3, 'EX', NULL),   -- Plato
+(214318, 'بقراط', 'noun', NULL, NULL, 3, 'EX', NULL),   -- Hippocrates
+(214319, 'فیثاغورس', 'noun', NULL, NULL, 3, 'EX', NULL),   -- Pythagoras
+(214320, 'کلئوپاترا', 'noun', NULL, NULL, 3, 'EX', NULL),   -- Cleopatra
+(214321, 'درجه سلسیوس', 'noun', NULL, NULL, 3, 'EX', NULL),   -- degree Celsius
+(214322, 'درجه فارنهایت', 'noun', NULL, NULL, 3, 'EX', NULL),   -- degree Fahrenheit
+(214323, 'ولت', 'noun', NULL, NULL, 3, 'EX', NULL),   -- volt
+(214324, 'وات', 'noun', NULL, NULL, 3, 'EX', NULL),   -- watt
+(214325, 'هرتز', 'noun', NULL, NULL, 3, 'EX', NULL),   -- hertz
+(214326, 'پاسکال', 'noun', NULL, NULL, 3, 'EX', NULL),   -- pascal
+(214327, 'ژول', 'noun', NULL, NULL, 3, 'EX', NULL),   -- joule
+(214328, 'مکزیکی', 'adjective', NULL, NULL, 3, 'EX', NULL),   -- Mexican
+(214329, 'پرتغالی', 'adjective', NULL, NULL, 3, 'EX', NULL),   -- Portuguese
+(214330, 'هلندی', 'adjective', NULL, NULL, 3, 'EX', NULL),   -- Dutch
+(214331, 'ساکسیفون', 'noun', NULL, NULL, 3, 'EX', NULL),   -- saxophone
+(214332, 'ویولن‌سل', 'noun', NULL, NULL, 3, 'EX', NULL),   -- cello
+(214333, 'چنگ', 'noun', NULL, NULL, 3, 'EX', NULL),   -- harp
+(214334, 'آکاردئون', 'noun', NULL, NULL, 3, 'EX', NULL),   -- accordion
+(214335, 'کلارینت', 'noun', NULL, NULL, 3, 'EX', NULL),   -- clarinet
+(214336, 'باس', 'noun', NULL, NULL, 3, 'EX', NULL),   -- bass (instrument)
+(214337, 'هارمونیوم', 'noun', NULL, NULL, 3, 'EX', NULL),   -- harmonium
+(214338, 'خوابیدِه', 'adjective', NULL, NULL, 3, 'A2', NULL),   -- asleep
+(214339, 'با خوشحالی', 'adverb', NULL, NULL, 3, 'A2', NULL),   -- happily
+(214340, 'طَرحِ داستان', 'noun', NULL, NULL, 3, 'B1', NULL),   -- plot (of a story)
+(214341, 'دورافتاده', 'adjective', NULL, NULL, 3, 'B1', NULL),   -- remote / distant
+(214342, 'تِک‌نوازی', 'noun', NULL, NULL, 3, 'C1', NULL),   -- solo (music)
+(214343, 'تَرَکیدَن', 'verb', NULL, NULL, 3, 'EX', NULL),   -- to crack / rupture
+(214344, 'رو به زَوال رَفتَن', 'verb', NULL, NULL, 3, 'EX', NULL),   -- to wane / decline
+(214345, 'مَشغول بودَن به', 'verb', NULL, NULL, 3, 'A2', NULL),   -- to be occupied with / deal with
+(214346, 'به‌جایِ آن', 'adverb', NULL, NULL, 3, 'A2', NULL),   -- instead of that
+(214347, 'هَدَررَفتِه', 'adjective', NULL, NULL, 3, 'B1', NULL);   -- wasted / squandered
