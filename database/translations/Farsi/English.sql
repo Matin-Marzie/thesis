@@ -1,4 +1,4 @@
-INSERT INTO translations (word_id, translation_word_id, level)
+INSERT INTO word_translations (word_id, translation_word_id, level)
 VALUES
 (200000, 726, 'A1'),   -- آب -> water
 (200001, 7233, 'A1'),   -- آبی -> blue
