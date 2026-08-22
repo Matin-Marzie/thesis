@@ -1,5 +1,13 @@
 # Developing a Mobile-Assisted Language Learning Application Utilizing Short-Form Video Reels and Hypercasual games
 
+## Download the App (Android)
+
+[![Download APK](https://img.shields.io/badge/Download-APK-3DDC84?style=for-the-badge&logo=android&logoColor=white)](https://github.com/Matin-Marzie/thesis/releases/download/v1.0.0/app-release.apk)
+
+Or grab the latest from the [Releases page](https://github.com/Matin-Marzie/thesis/releases/latest).
+
+Open the link on your phone, download the APK, and install it (you may need to allow installs from your browser/file manager in Android's settings).
+
 ## Prerequisites
 
 - Node.js 18+ & npm
