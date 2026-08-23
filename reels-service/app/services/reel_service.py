@@ -1,5 +1,4 @@
 from sqlalchemy import select, func, and_
-from sqlalchemy.dialects.postgresql import insert as pg_insert
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import selectinload, joinedload
 from typing import List, Optional, Tuple
@@ -233,16 +232,9 @@ class ReelService:
                 joinedload(Reel.dialogue)
             )
             .where(Reel.language_id == learning_language.id)
+            .order_by(func.random())
+            .limit(limit)
         )
-
-        if user_id:
-            # A reel_interactions row (created below, or from an earlier
-            # like/save/etc.) means this user has already seen it - exclude
-            # it so the feed doesn't repeat itself.
-            viewed_reel_ids = select(ReelInteraction.reel_id).where(ReelInteraction.user_id == user_id)
-            query = query.where(Reel.id.notin_(viewed_reel_ids))
-
-        query = query.order_by(func.random()).limit(limit)
 
         result = await self.db.execute(query)
         reels = result.unique().scalars().all()
@@ -318,18 +310,4 @@ class ReelService:
                 dialogue=dialogue_response
             ))
 
-        if user_id and reels:
-            await self.mark_reels_viewed(user_id, [reel.id for reel in reels])
-
         return reels_response, total
-
-    async def mark_reels_viewed(self, user_id: int, reel_ids: List[int]):
-        """Record a view for each reel this user was just served, so a later
-        call to get_random_reels excludes them. Uses ON CONFLICT DO NOTHING
-        on (reel_id, user_id) so an existing like/save/comment row (which
-        already implies the reel was seen) is left untouched."""
-        stmt = pg_insert(ReelInteraction).values([
-            {"reel_id": reel_id, "user_id": user_id} for reel_id in reel_ids
-        ]).on_conflict_do_nothing(index_elements=["reel_id", "user_id"])
-        await self.db.execute(stmt)
-        await self.db.commit()
