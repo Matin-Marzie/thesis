@@ -10,7 +10,7 @@ export const SUPPORTED_LANGUAGES = {
   english: {
     label: 'I speak English',
     options: [
-      { id: 'improve_english', label: 'Improve my English', native: LANGUAGES_META.english, target: LANGUAGES_META.english },
+      // { id: 'improve_english', label: 'Improve my English', native: LANGUAGES_META.english, target: LANGUAGES_META.english },
       { id: 'learn_greek',     label: 'Learn Greek',        native: LANGUAGES_META.english, target: LANGUAGES_META.greek },
       { id: 'learn_farsi',     label: 'Learn Farsi',        native: LANGUAGES_META.english, target: LANGUAGES_META.farsi },
     ],
@@ -20,7 +20,7 @@ export const SUPPORTED_LANGUAGES = {
     options: [
       // { id: 'improve_greek',   label: 'Βελτίωσε τα Ελληνικά μου', native: LANGUAGES_META.greek, target: LANGUAGES_META.greek },
       { id: 'learn_english',   label: 'Μάθε Αγγλικά',           native: LANGUAGES_META.greek, target: LANGUAGES_META.english },
-      // { id: 'learn_farsi',     label: 'Μάθε Φαρσί',             native: LANGUAGES_META.greek, target: LANGUAGES_META.farsi },
+      { id: 'learn_farsi',     label: 'Μάθε Φαρσί',             native: LANGUAGES_META.greek, target: LANGUAGES_META.farsi },
     ],
   },
   farsi: {
@@ -28,7 +28,7 @@ export const SUPPORTED_LANGUAGES = {
     options: [
       // { id: 'improve_farsi',   label: 'فارسیم رو قوی کن',   native: LANGUAGES_META.farsi, target: LANGUAGES_META.farsi },
       { id: 'learn_english',   label: 'انگلیسی یاد بگیر',   native: LANGUAGES_META.farsi, target: LANGUAGES_META.english },
-      // { id: 'learn_greek',     label: 'یونانی یاد بگیر',    native: LANGUAGES_META.farsi, target: LANGUAGES_META.greek },
+      { id: 'learn_greek',     label: 'یونانی یاد بگیر',    native: LANGUAGES_META.farsi, target: LANGUAGES_META.greek },
     ],
   },
 };
