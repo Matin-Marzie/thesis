@@ -7,7 +7,7 @@
     \subsection{Sociocultural Theory (Vygotsky)}
         Lev Vygotsky's Sociocultural Theory \cite{vygotsky1978mind} holds that cognitive development arises through social interaction mediated by cultural tools, of which language is the primary instrument. Central to the theory is the concept of the \textbf{Zone of Proximal Development (ZPD)}: the distance between what a learner can accomplish independently and what they can achieve under guidance or in collaboration. Effective instruction operates within the ZPD—content that is too easy provides no developmental stimulus, while content that is too difficult cannot be processed without first establishing prerequisite knowledge.
 
-        In GloReels, the ZPD is operationalised through the comprehensibility threshold of the recommendation engine. A reel is considered suitable for a given learner when that learner already knows at least 98\% of its vocabulary—a threshold informed by Nation's \cite{nation2001learning} research on the vocabulary coverage required for unassisted reading comprehension. The remaining 2\% constitutes the ``i+1'' challenge (one step beyond the learner's current knowledge), which falls squarely within the ZPD.
+        In Glosy, the ZPD is operationalised through the comprehensibility threshold of the recommendation engine. A reel is considered suitable for a given learner when that learner already knows at least 98\% of its vocabulary—a threshold informed by Nation's \cite{nation2001learning} research on the vocabulary coverage required for unassisted reading comprehension. The remaining 2\% constitutes the ``i+1'' challenge (one step beyond the learner's current knowledge), which falls squarely within the ZPD.
 
     \subsection{Cognitive Load Theory} % maybe delete these section
     
@@ -15,15 +15,18 @@
         \subsubsection{Ebbinghaus's forgetting curve}
             Hermann Ebbinghaus's empirical research demonstrated that memory retention decays exponentially over time in the absence of review \cite{ebbinghaus1885memory}. The resulting \textbf{forgetting curve} underpins all modern spaced-repetition systems (SRS): by scheduling review of a word at increasing intervals timed to precede the moment of forgetting, the system converts short-term exposure into durable long-term memory.
 
-            GloReels implements a six-level mastery model in the \texttt{user\_vocabulary} table. Each word entry records a \texttt{mastery\_level} (1–6) and a \texttt{last\_review} timestamp. The recommendation engine uses these values to prioritise reels containing words whose review is overdue, ensuring that vocabulary resurfaces at intervals calibrated to each learner's individual retention rate.
+            Glosy implements a six-level mastery model in the \texttt{user\_vocabulary} table. Each word entry records a \texttt{mastery\_level} (1–6) and a \texttt{last\_review} timestamp. The recommendation engine uses these values to prioritise reels containing words whose review is overdue, ensuring that vocabulary resurfaces at intervals calibrated to each learner's individual retention rate.
         \subsubsection{Duolingo Half Life Regression}
-            Duolingo's proprietary half-life regression model predicts the optimal timing for reviewing each word in a learner's vocabulary, based on their individual forgetting curve. This model informs the scheduling of spaced repetition exercises within GloReels, ensuring that learners encounter each word at intervals that maximize long-term retention.
+            Duolingo's proprietary half-life regression model predicts the optimal timing for reviewing each word in a learner's vocabulary, based on their individual forgetting curve. This model informs the scheduling of spaced repetition exercises within Glosy, ensuring that learners encounter each word at intervals that maximize long-term retention.
+    \subsection{micro-learning}
+        
+
 
 
 \section{Gamification in Education} From hypercasual gaming to "serious games."
     Genuine gamification—as opposed to the point-and-streak overlays critiqued in Section~2.2.4—involves embedding core game mechanics into the learning activity itself, such that the challenge of the game is inseparable from the learning objective \cite{munday2017duolingo}. Hypercasual games are well suited to this purpose: their short session length, immediate feedback loops, and escalating difficulty can be parametrically linked to a learner's vocabulary model.
 
-    GloReels integrates two hypercasual game formats: a Wordle variant, in which the target word is drawn from the learner's vocabulary model, and Word of Wonders, a grid-based word-construction game whose level vocabulary is similarly personalised. In both cases, success requires active recall rather than passive recognition, engaging a fundamentally different and more durable memory process than translation drills.
+    Glosy integrates two hypercasual game formats: a Wordle variant, in which the target word is drawn from the learner's vocabulary model, and Word of Wonders, a grid-based word-construction game whose level vocabulary is similarly personalised. In both cases, success requires active recall rather than passive recognition, engaging a fundamentally different and more durable memory process than translation drills.
 
     
 \section{Short-Form Media in Second Language Acquisition}
@@ -32,7 +35,7 @@
     
     Authentic audiovisual materials have long been recognised as valuable in Second Language Acquisition (SLA) research. Short-form video, in particular, provides a dense multimodal signal: spoken language, prosodic variation, facial expression, gesture, and cultural context are all co-present, reinforcing one another in ways that text-based instruction cannot replicate.
 
-    The challenge is retention. Without active processing, vocabulary encountered during video viewing follows the Ebbinghaus forgetting curve as surely as any other exposure. GloReels addresses this by treating each reel not as a standalone learning event but as a contextualised encounter with target vocabulary in the learner's personal vocabulary model. Words seen in a reel are subsequently reinforced in game sessions, and the recommendation engine surfaces those words again in future reels, creating a multi-context learning loop that supports durable acquisition.
+    The challenge is retention. Without active processing, vocabulary encountered during video viewing follows the Ebbinghaus forgetting curve as surely as any other exposure. Glosy addresses this by treating each reel not as a standalone learning event but as a contextualised encounter with target vocabulary in the learner's personal vocabulary model. Words seen in a reel are subsequently reinforced in game sessions, and the recommendation engine surfaces those words again in future reels, creating a multi-context learning loop that supports durable acquisition.
 
 
 \section{Limitations of Current Platforms}
@@ -47,9 +50,9 @@
         Duolingo's primary instructional mode is text and audio built around translation exercises. This approach does not exploit visual memory—a well-documented channel for vocabulary retention—nor does it expose learners to the prosodic and paralinguistic cues present in natural speech.
         
     \subsection{Lack of authentic, real-world content}
-        Most platforms—Duolingo, Busuu, Memrise, and Rosetta Stone—lack authentic, real-world materials in their instructional design. LingQ partially integrates such content; however, as noted by Karasimos \cite{karasimos2022battle}, it is not recommended as a starting point for beginners. Gilmore \cite{gilmore2007authentic} demonstrates that authentic materials are crucial for developing communicative competence and for sustaining learner motivation. At the same time, Liu and Dong \cite{liu2024authentic} caution that authentic language materials can create comprehension difficulties for learners who lack the cultural background knowledge assumed by native-speaker communication. In GloReels, this tension is addressed by pairing authentic video content with cultural annotations and adaptive vocabulary scaffolding, ensuring that exposure to real-world language does not exceed the learner's Zone of Proximal Development (ZPD).
+        Most platforms—Duolingo, Busuu, Memrise, and Rosetta Stone—lack authentic, real-world materials in their instructional design. LingQ partially integrates such content; however, as noted by Karasimos \cite{karasimos2022battle}, it is not recommended as a starting point for beginners. Gilmore \cite{gilmore2007authentic} demonstrates that authentic materials are crucial for developing communicative competence and for sustaining learner motivation. At the same time, Liu and Dong \cite{liu2024authentic} caution that authentic language materials can create comprehension difficulties for learners who lack the cultural background knowledge assumed by native-speaker communication. In Glosy, this tension is addressed by pairing authentic video content with cultural annotations and adaptive vocabulary scaffolding, ensuring that exposure to real-world language does not exceed the learner's Zone of Proximal Development (ZPD).
 
-    \subsection{Drilling and masquaradilng as gamification - shallow gamification mechanics}
+    \subsection{Drilling and masquerading as gamification - shallow gamification mechanics}
         All platforms employ gamification, but it is largely limited to superficial elements such as points, badges, and leaderboards. These features may enhance engagement and motivation but do not substantively contribute to learning outcomes. The proposed system will implement gamification that is deeply integrated with the learning process, using hypercasual game mechanics that adapt to the learner's vocabulary state and reinforce retention through spaced repetition.
 
     \subsection{Lack of Support for Advanced Proficiency Development}
@@ -58,7 +61,7 @@
     \subsection{Absence of Sociocultural Context}
         Language is inseparable from culture. The five reviewed platforms treat vocabulary and grammar as context-free systems, ignoring the sociocultural theory articulated by Vygotsky, which holds that language development is fundamentally mediated by social interaction and cultural context. Short-Form video content, as proposed in this thesis, provides a rich medium for embedding language learning within authentic sociocultural contexts, thereby aligning with Vygotsky's theoretical framework.
 
-    % Add a comparison table in Related Work. A table of GloReels vs. Duolingo/Memrise/Busuu/LingQ across your six identified gaps
+    % Add a comparison table in Related Work. A table of Glosy vs. Duolingo/Memrise/Busuu/LingQ across your six identified gaps
 
 
 \section{Recommendation Systems}

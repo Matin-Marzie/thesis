@@ -11,7 +11,7 @@
     The following directions are identified as high-value:
     \begin{itemize}
         \item \textbf{Automated content annotation pipeline:} A pipeline that ingests a raw video URL, transcribes speech using a large language model, aligns the transcript to video timestamps, tokenises and POS-tags the output, maps tokens to the word database, and produces a fully annotated reel record—reducing the per-reel curation cost from hours to minutes.
-        \item \textbf{Empirical evaluation:} A randomised controlled study measuring vocabulary gain, retention at one week and one month, and learner engagement metrics, comparing GloReels against a no-game control condition and against Duolingo.
+        \item \textbf{Empirical evaluation:} A randomised controlled study measuring vocabulary gain, retention at one week and one month, and learner engagement metrics, comparing Glosy against a no-game control condition and against Duolingo.
         \item \textbf{Multi-language expansion:} The schema and service layer are language-agnostic (language is a foreign key throughout); adding a new language requires only content ingestion, not code changes.
         \item \textbf{Collaborative learning features:} Shared vocabulary challenges, leaderboards scoped to friend groups, and comment-driven vocabulary discussion on individual reels, supporting the social dimension of Vygotsky's theory.
         \item \textbf{Vocabulary synchronisation performance:} Replacing the serial per-word UPDATE loop in \texttt{syncController.js} with a bulk \texttt{INSERT ... ON CONFLICT DO UPDATE} statement to support large offline sessions without latency degradation.

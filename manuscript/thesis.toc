@@ -12,12 +12,12 @@
 \babel@toc {english}{}\relax 
 \contentsline {chapter}{\numberline {A}Introduction}{1}{}%
 \contentsline {section}{\numberline {A.1}Motivation}{1}{}%
-\contentsline {section}{\numberline {A.2}Background}{2}{}%
-\contentsline {subsection}{\numberline {A.2.1}Short-form Video}{2}{}%
+\contentsline {section}{\numberline {A.2}Background}{1}{}%
+\contentsline {subsection}{\numberline {A.2.1}Short-form Video}{1}{}%
 \contentsline {subsection}{\numberline {A.2.2}Hypercasual Games}{2}{}%
-\contentsline {section}{\numberline {A.3}Problem Statement and Research Questions}{3}{}%
-\contentsline {section}{\numberline {A.4}Significance}{4}{}%
-\contentsline {section}{\numberline {A.5}Thesis Structure}{4}{}%
+\contentsline {section}{\numberline {A.3}Problem Statement and Research Questions}{2}{}%
+\contentsline {section}{\numberline {A.4}Significance}{3}{}%
+\contentsline {section}{\numberline {A.5}Thesis Structure}{3}{}%
 \contentsline {chapter}{\numberline {B}Literature Review}{5}{}%
 \contentsline {section}{\numberline {B.1}The Landscape of Mobile-Assisted Language Learning (MALL)}{5}{}%
 \contentsline {section}{\numberline {B.2}Pedagogical Foundations:}{5}{}%
@@ -26,13 +26,14 @@
 \contentsline {subsection}{\numberline {B.2.3}Spaced Repetition and Memory Retention}{6}{}%
 \contentsline {subsubsection}{\numberline {B.2.3.1}Ebbinghaus's forgetting curve}{6}{}%
 \contentsline {subsubsection}{\numberline {B.2.3.2}Duolingo Half Life Regression}{6}{}%
+\contentsline {subsection}{\numberline {B.2.4}micro-learning}{7}{}%
 \contentsline {section}{\numberline {B.3}Gamification in Education}{7}{}%
 \contentsline {section}{\numberline {B.4}Short-Form Media in Second Language Acquisition}{7}{}%
 \contentsline {section}{\numberline {B.5}Limitations of Current Platforms}{8}{}%
 \contentsline {subsection}{\numberline {B.5.1}Uniform Content Regardless of Learner Demographics}{8}{}%
 \contentsline {subsection}{\numberline {B.5.2}Insufficient multimedia Integration}{8}{}%
 \contentsline {subsection}{\numberline {B.5.3}Lack of authentic, real-world content}{8}{}%
-\contentsline {subsection}{\numberline {B.5.4}Drilling and masquaradilng as gamification - shallow gamification mechanics}{9}{}%
+\contentsline {subsection}{\numberline {B.5.4}Drilling and masquerading as gamification - shallow gamification mechanics}{9}{}%
 \contentsline {subsection}{\numberline {B.5.5}Lack of Support for Advanced Proficiency Development}{9}{}%
 \contentsline {subsection}{\numberline {B.5.6}Absence of Sociocultural Context}{9}{}%
 \contentsline {section}{\numberline {B.6}Recommendation Systems}{9}{}%

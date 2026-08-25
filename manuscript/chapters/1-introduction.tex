@@ -1,26 +1,35 @@
 % ----------Introduction----------
 \section{Motivation}
-The global spread of digital communication has intensified demand for foreign language proficiency, particularly among younger generations who combine professional ambitions with mobile-first lifestyles. Language learning platforms (LLPs) have become the primary vehicle for this demand: the global market reached USD 5.8 billion in 2025 and is projected to grow at a compound annual growth rate (CAGR) of 15.43\%, reaching USD 21.1 billion by 2034 \cite{businessResearch2024language}. Despite this growth, dominant platforms such as Duolingo, Memrise, and Busuu share a structural limitation: content is largely decontextualised, translation-centred, and disconnected from the authentic, socially situated language that learners encounter in everyday life.
 
-Concurrently, short-form video content—referred to here as Reels—has become the dominant entertainment medium for younger audiences. Platforms such as Instagram, TikTok, and YouTube Shorts command extraordinary daily engagement, yet the language encountered in these videos is consumed passively and leaves no measurable trace in the learner's long-term memory. The question this thesis addresses is whether these two phenomena—ubiquitous short-form video and mobile language learning—can be productively combined into a system that turns passive viewing into active vocabulary acquisition.
-
-This thesis proposes \textbf{GloReels}, a cross-platform mobile application that addresses the identified gaps by embedding vocabulary acquisition within short-form authentic video content and reinforcing it through personalised hypercasual games. The system tracks each learner's vocabulary state at the word level, uses that state to select contextually appropriate reels, and adapts game difficulty to the same vocabulary model.
+The demand for foreign language acquisition has reached an unprecedented global scale. In an increasingly interconnected global economy, over X.X billion people are actively learning second languages worldwide \cite{}.
 
 
 % ----------BACKGROUND----------
-\section{Background} The paradox of passive consumption: Why short-form content (Reels/TikTok) is high-engagement but low-retention?
+\section{Background}
+
+    To address these completion and engagement deficits, modern Mobile-Assisted Language Learning (MALL) must align with the media consumption realities of contemporary learners. This thesis explores the integration of two prominent digital phenomena: short-form video and hypercasual game mechanics.
 
     \subsection{Short-form Video}
+    Short-form video is a media format characterized by its brevity, typically ranging from 15 seconds to 3 minutes, and is designed for rapid consumption.
+
+    Short-form video has become the dominant interface of digital attention. Statistically, YouTube Shorts has achieved over 200 billion daily views \cite{mohan2026letter}, 
+    While Meta Platfrom announced: Video is a particular bright spot, with video time spent on Instagram up more than 30\% since last year and 5\% more time spent on Facebook \cite{zuckerberg2025q3}.
+    TikTok's global active advertising audience has reached 1.59 billion adults, representing 27.5\% of the global population aged 18 and older \cite{kepios2025tiktok}. 
+
+
     % FIND RESEATCH ON: How short-form content dominates attention (Reels, Tiktok, Shorts).
     Short-form video content has come to dominate online attention. Generation Z—the primary demographic for language learning applications—allocates a disproportionate share of screen time to Reels and similar formats. [roman2024genz]
     Research indicates that more than half of this cohort watches long-form video content on social media platforms, suggesting a sustained appetite for video-based information delivery [lebow2024genz]
     However, high engagement does not translate to retention: without active processing, vocabulary encountered in video dissolves rapidly following the forgetting curve described by Hermann Ebbinghaus in the 19th century. Unless a word is deliberately reviewed at increasing intervals, memory of it decays exponentially.
 
     \subsection{Hypercasual Games}
-    In the meanwhile Hypercasual games are rising.Hypercasual games—defined by their minimal ramp-up time, single-mechanic loops, and session lengths suited to short commutes—represent a similarly underutilised learning medium. Their accessibility and habitual engagement patterns make them natural candidates for spaced-repetition delivery. GloReels integrates two such games, Wordle and Word of Wonders, both of which select their target words directly from the learner's active vocabulary model, creating a closed loop between video exposure and game-based reinforcement.
+    
+    In the meanwhile Hypercasual games are rising. Hypercasual games—defined by their minimal ramp-up time, single-mechanic loops, and session lengths suited to short commutes—represent a similarly underutilised learning medium. Their accessibility and habitual engagement patterns make them natural candidates for spaced-repetition delivery. Glosy integrates two such games, Wordle and Word of Wonders, both of which select their target words directly from the learner's active vocabulary model, creating a closed loop between video exposure and game-based reinforcement.
+
     
 % ----------PROBLEM-STATEMENT----------
 \section{Problem Statement and Research Questions}
+The paradox of passive consumption: Why short-form content (Reels/TikTok) is high-engagement but low-retention?
 People watch a lot but do they learn;
 The gap between entertainment and pedagogical efficacy (Ebbinghaus Forgetting Curve, Vygotsky).
     The question is: Can't i learn language by watching Reels from existing social media platforms?
@@ -38,7 +47,7 @@ The gap between entertainment and pedagogical efficacy (Ebbinghaus Forgetting Cu
 
     The central research problem is the absence of a language learning system that simultaneously leverages (i) the authentic contextual richness of user-generated short-form video, (ii) word-level learner modelling grounded in established memory theory, and (iii) gamified reinforcement adapted to the individual learner's vocabulary state.
 
-    This thesis addresses the following research questions:
+    Research questions:
 
     \begin{enumerate}
         \item[\textbf{RQ1.}] How can a mobile application integrate authentic short-form video content with a word-level vocabulary tracking model to support second language acquisition?
@@ -49,10 +58,8 @@ The gap between entertainment and pedagogical efficacy (Ebbinghaus Forgetting Cu
 % ----------SIGNIFICANCE----------
 \section{Significance}
     Helps learners use their daily habits for productive learning.
-    The application will be based on smart phones that everyone has one.
+    The application is mobile-first.
     Supports Offline game play and practice. 3/4 use offline mode.
-
-    The significance of this work is threefold. First, it addresses ...
 
 \section{Thesis Structure}
 The remainder of this thesis is organised as follows. Chapter~\ref{chapter:related_work} reviews mobile-assisted language learning platforms, identifies their limitations, and establishes the pedagogical framework. Chapter~\ref{methodology} presents the system architecture, technology stack, data model, and recommendation engine design. Chapter~\ref{chapter:discussion} documents the implementation of each component with reference to the source code and database schema. Chapter~\ref{chapter:evaluation_results} evaluates the system against its design objectives and discusses performance. Chapter~\ref{chapter:conclusions} states the contributions, acknowledges limitations, and proposes future work.
