@@ -15,9 +15,9 @@
 \contentsline {section}{\numberline {A.2}Background}{1}{}%
 \contentsline {subsection}{\numberline {A.2.1}Short-form Video}{1}{}%
 \contentsline {subsection}{\numberline {A.2.2}Hypercasual Games}{2}{}%
-\contentsline {section}{\numberline {A.3}Problem Statement and Research Questions}{2}{}%
-\contentsline {section}{\numberline {A.4}Significance}{3}{}%
-\contentsline {section}{\numberline {A.5}Thesis Structure}{3}{}%
+\contentsline {section}{\numberline {A.3}Problem Statement and Research Questions}{3}{}%
+\contentsline {section}{\numberline {A.4}Significance}{4}{}%
+\contentsline {section}{\numberline {A.5}Thesis Structure}{4}{}%
 \contentsline {chapter}{\numberline {B}Literature Review}{5}{}%
 \contentsline {section}{\numberline {B.1}The Landscape of Mobile-Assisted Language Learning (MALL)}{5}{}%
 \contentsline {section}{\numberline {B.2}Pedagogical Foundations:}{5}{}%
