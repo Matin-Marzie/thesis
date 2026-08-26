@@ -9,7 +9,9 @@
 
         In Glosy, the ZPD is operationalised through the comprehensibility threshold of the recommendation engine. A reel is considered suitable for a given learner when that learner already knows at least 98\% of its vocabulary—a threshold informed by Nation's \cite{nation2001learning} research on the vocabulary coverage required for unassisted reading comprehension. The remaining 2\% constitutes the ``i+1'' challenge (one step beyond the learner's current knowledge), which falls squarely within the ZPD.
 
-    \subsection{Cognitive Load Theory} % maybe delete these section
+    \subsection{Cognitive Load Theory} % maybe delete these section, Maybe merge with micro-learning section 
+    \subsection{micro-learning}
+        This structural friction has catalyzed a pedagogical shift toward adaptive, mobile-assisted microlearning frameworks. Currently, over 72\% of self-directed and institutional learning structures have integrated bite-sized delivery as a core strategy to prevent cognitive overload and accommodate busy schedules (up from 54\% in 2023) \cite{mordor2026micro, linkedin2025}. Pedagogically, microlearning modules---typically structured in 3-to-10 minute sessions \cite{engageli2026}---support cognitive mapping by preventing information overload and leveraging the spacing effect. Research in instructional design consistently demonstrates that this micro-targeted approach improves knowledge retention by 25\% to 60\% compared to traditional, long-form methods by presenting manageable, focused cognitive units \cite{elearningindustry2025}.
     
     \subsection{Spaced Repetition and Memory Retention}
         \subsubsection{Ebbinghaus's forgetting curve}
@@ -18,7 +20,6 @@
             Glosy implements a six-level mastery model in the \texttt{user\_vocabulary} table. Each word entry records a \texttt{mastery\_level} (1–6) and a \texttt{last\_review} timestamp. The recommendation engine uses these values to prioritise reels containing words whose review is overdue, ensuring that vocabulary resurfaces at intervals calibrated to each learner's individual retention rate.
         \subsubsection{Duolingo Half Life Regression}
             Duolingo's proprietary half-life regression model predicts the optimal timing for reviewing each word in a learner's vocabulary, based on their individual forgetting curve. This model informs the scheduling of spaced repetition exercises within Glosy, ensuring that learners encounter each word at intervals that maximize long-term retention.
-    \subsection{micro-learning}
         
 
 

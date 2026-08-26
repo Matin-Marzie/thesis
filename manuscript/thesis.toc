@@ -12,69 +12,69 @@
 \babel@toc {english}{}\relax 
 \contentsline {chapter}{\numberline {A}Introduction}{1}{}%
 \contentsline {section}{\numberline {A.1}Motivation}{1}{}%
-\contentsline {section}{\numberline {A.2}Background}{1}{}%
-\contentsline {subsection}{\numberline {A.2.1}Short-form Video}{1}{}%
-\contentsline {subsection}{\numberline {A.2.2}Hypercasual Games}{2}{}%
-\contentsline {section}{\numberline {A.3}Problem Statement and Research Questions}{3}{}%
-\contentsline {section}{\numberline {A.4}Significance}{4}{}%
-\contentsline {section}{\numberline {A.5}Thesis Structure}{4}{}%
-\contentsline {chapter}{\numberline {B}Literature Review}{5}{}%
-\contentsline {section}{\numberline {B.1}The Landscape of Mobile-Assisted Language Learning (MALL)}{5}{}%
-\contentsline {section}{\numberline {B.2}Pedagogical Foundations:}{5}{}%
-\contentsline {subsection}{\numberline {B.2.1}Sociocultural Theory (Vygotsky)}{5}{}%
-\contentsline {subsection}{\numberline {B.2.2}Cognitive Load Theory}{6}{}%
-\contentsline {subsection}{\numberline {B.2.3}Spaced Repetition and Memory Retention}{6}{}%
-\contentsline {subsubsection}{\numberline {B.2.3.1}Ebbinghaus's forgetting curve}{6}{}%
-\contentsline {subsubsection}{\numberline {B.2.3.2}Duolingo Half Life Regression}{6}{}%
-\contentsline {subsection}{\numberline {B.2.4}micro-learning}{7}{}%
-\contentsline {section}{\numberline {B.3}Gamification in Education}{7}{}%
-\contentsline {section}{\numberline {B.4}Short-Form Media in Second Language Acquisition}{7}{}%
-\contentsline {section}{\numberline {B.5}Limitations of Current Platforms}{8}{}%
-\contentsline {subsection}{\numberline {B.5.1}Uniform Content Regardless of Learner Demographics}{8}{}%
-\contentsline {subsection}{\numberline {B.5.2}Insufficient multimedia Integration}{8}{}%
-\contentsline {subsection}{\numberline {B.5.3}Lack of authentic, real-world content}{8}{}%
-\contentsline {subsection}{\numberline {B.5.4}Drilling and masquerading as gamification - shallow gamification mechanics}{9}{}%
-\contentsline {subsection}{\numberline {B.5.5}Lack of Support for Advanced Proficiency Development}{9}{}%
-\contentsline {subsection}{\numberline {B.5.6}Absence of Sociocultural Context}{9}{}%
-\contentsline {section}{\numberline {B.6}Recommendation Systems}{9}{}%
-\contentsline {subsection}{\numberline {B.6.1}Content-Based Recommendation}{9}{}%
-\contentsline {subsection}{\numberline {B.6.2}Collaborative Filtering}{9}{}%
-\contentsline {subsection}{\numberline {B.6.3}Hybrid Approaches}{9}{}%
-\contentsline {chapter}{\numberline {C}System Architecture \bbl@greek@ampersand Methodology}{10}{}%
-\contentsline {section}{\numberline {C.1}System Overview}{10}{}%
-\contentsline {section}{\numberline {C.2}Technology Stack}{11}{}%
-\contentsline {subsection}{\numberline {C.2.1}Frontend — React Native / Expo}{11}{}%
-\contentsline {subsection}{\numberline {C.2.2}Backend — Node.js / Express}{11}{}%
-\contentsline {subsection}{\numberline {C.2.3}Reels Service — Python / FastAPI}{11}{}%
-\contentsline {subsection}{\numberline {C.2.4}Database — PostgreSQL 16}{11}{}%
-\contentsline {section}{\numberline {C.3}Data Modelling}{12}{}%
-\contentsline {section}{\numberline {C.4}Recommendation Engine Design}{12}{}%
-\contentsline {subsection}{\numberline {C.4.1}Stage 1: Comprehensibility Filtering}{12}{}%
-\contentsline {subsection}{\numberline {C.4.2}Stage 2: Spaced-Repetition Scoring}{12}{}%
-\contentsline {subsection}{\numberline {C.4.3}Stage 3: Content Personalisation}{13}{}%
-\contentsline {section}{\numberline {C.5}Gamification Design}{13}{}%
-\contentsline {section}{\numberline {C.6}Vocabulary-Driven Games}{13}{}%
-\contentsline {subsection}{\numberline {C.6.1}Wordle-style Game}{13}{}%
-\contentsline {subsection}{\numberline {C.6.2}Word of Wonders}{13}{}%
-\contentsline {chapter}{\numberline {D}Implementation Details}{14}{}%
-\contentsline {section}{\numberline {D.1}Database Schema}{14}{}%
-\contentsline {section}{\numberline {D.2}Backend API}{14}{}%
-\contentsline {subsection}{\numberline {D.2.1}Authentication Module}{14}{}%
-\contentsline {subsection}{\numberline {D.2.2}Registration and Vocabulary Initialisation}{14}{}%
-\contentsline {subsection}{\numberline {D.2.3}Vocabulary Synchronisation}{14}{}%
-\contentsline {section}{\numberline {D.3}Frontend Architecture}{14}{}%
-\contentsline {section}{\numberline {D.4}Reels Service}{15}{}%
-\contentsline {subsection}{\numberline {D.4.1}Service Architecture}{15}{}%
-\contentsline {subsection}{\numberline {D.4.2}Creating Reels}{15}{}%
-\contentsline {subsection}{\numberline {D.4.3}Dialogue Enrichment}{15}{}%
-\contentsline {subsection}{\numberline {D.4.4}Personalisation Implementation Status}{15}{}%
-\contentsline {section}{\numberline {D.5}Game Modules}{15}{}%
-\contentsline {subsection}{\numberline {D.5.1}Wordle-style Game}{15}{}%
-\contentsline {subsection}{\numberline {D.5.2}Word of Wonders}{15}{}%
-\contentsline {chapter}{\numberline {E}Evaluation \bbl@greek@ampersand Results}{16}{}%
-\contentsline {chapter}{\numberline {F}Conclusions \bbl@greek@ampersand Future work}{17}{}%
-\contentsline {section}{\numberline {F.1}Contributions}{17}{}%
-\contentsline {section}{\numberline {F.2}Limitations}{17}{}%
-\contentsline {section}{\numberline {F.3}Future Work}{17}{}%
-\contentsline {chapter}{Abbreviations}{20}{}%
-\contentsline {chapter}{Glossary}{21}{}%
+\contentsline {section}{\numberline {A.2}Background}{2}{}%
+\contentsline {subsection}{\numberline {A.2.1}Short-form Video}{2}{}%
+\contentsline {subsection}{\numberline {A.2.2}Hypercasual Games}{3}{}%
+\contentsline {section}{\numberline {A.3}Problem Statement and Research Questions}{4}{}%
+\contentsline {section}{\numberline {A.4}Significance}{5}{}%
+\contentsline {section}{\numberline {A.5}Thesis Structure}{5}{}%
+\contentsline {chapter}{\numberline {B}Literature Review}{6}{}%
+\contentsline {section}{\numberline {B.1}The Landscape of Mobile-Assisted Language Learning (MALL)}{6}{}%
+\contentsline {section}{\numberline {B.2}Pedagogical Foundations:}{6}{}%
+\contentsline {subsection}{\numberline {B.2.1}Sociocultural Theory (Vygotsky)}{6}{}%
+\contentsline {subsection}{\numberline {B.2.2}Cognitive Load Theory}{7}{}%
+\contentsline {subsection}{\numberline {B.2.3}micro-learning}{7}{}%
+\contentsline {subsection}{\numberline {B.2.4}Spaced Repetition and Memory Retention}{7}{}%
+\contentsline {subsubsection}{\numberline {B.2.4.1}Ebbinghaus's forgetting curve}{7}{}%
+\contentsline {subsubsection}{\numberline {B.2.4.2}Duolingo Half Life Regression}{8}{}%
+\contentsline {section}{\numberline {B.3}Gamification in Education}{8}{}%
+\contentsline {section}{\numberline {B.4}Short-Form Media in Second Language Acquisition}{8}{}%
+\contentsline {section}{\numberline {B.5}Limitations of Current Platforms}{9}{}%
+\contentsline {subsection}{\numberline {B.5.1}Uniform Content Regardless of Learner Demographics}{9}{}%
+\contentsline {subsection}{\numberline {B.5.2}Insufficient multimedia Integration}{9}{}%
+\contentsline {subsection}{\numberline {B.5.3}Lack of authentic, real-world content}{10}{}%
+\contentsline {subsection}{\numberline {B.5.4}Drilling and masquerading as gamification - shallow gamification mechanics}{10}{}%
+\contentsline {subsection}{\numberline {B.5.5}Lack of Support for Advanced Proficiency Development}{10}{}%
+\contentsline {subsection}{\numberline {B.5.6}Absence of Sociocultural Context}{10}{}%
+\contentsline {section}{\numberline {B.6}Recommendation Systems}{11}{}%
+\contentsline {subsection}{\numberline {B.6.1}Content-Based Recommendation}{11}{}%
+\contentsline {subsection}{\numberline {B.6.2}Collaborative Filtering}{11}{}%
+\contentsline {subsection}{\numberline {B.6.3}Hybrid Approaches}{11}{}%
+\contentsline {chapter}{\numberline {C}System Architecture \bbl@greek@ampersand Methodology}{12}{}%
+\contentsline {section}{\numberline {C.1}System Overview}{12}{}%
+\contentsline {section}{\numberline {C.2}Technology Stack}{13}{}%
+\contentsline {subsection}{\numberline {C.2.1}Frontend — React Native / Expo}{13}{}%
+\contentsline {subsection}{\numberline {C.2.2}Backend — Node.js / Express}{13}{}%
+\contentsline {subsection}{\numberline {C.2.3}Reels Service — Python / FastAPI}{13}{}%
+\contentsline {subsection}{\numberline {C.2.4}Database — PostgreSQL 16}{13}{}%
+\contentsline {section}{\numberline {C.3}Data Modelling}{14}{}%
+\contentsline {section}{\numberline {C.4}Recommendation Engine Design}{14}{}%
+\contentsline {subsection}{\numberline {C.4.1}Stage 1: Comprehensibility Filtering}{14}{}%
+\contentsline {subsection}{\numberline {C.4.2}Stage 2: Spaced-Repetition Scoring}{14}{}%
+\contentsline {subsection}{\numberline {C.4.3}Stage 3: Content Personalisation}{15}{}%
+\contentsline {section}{\numberline {C.5}Gamification Design}{15}{}%
+\contentsline {section}{\numberline {C.6}Vocabulary-Driven Games}{15}{}%
+\contentsline {subsection}{\numberline {C.6.1}Wordle-style Game}{15}{}%
+\contentsline {subsection}{\numberline {C.6.2}Word of Wonders}{15}{}%
+\contentsline {chapter}{\numberline {D}Implementation Details}{16}{}%
+\contentsline {section}{\numberline {D.1}Database Schema}{16}{}%
+\contentsline {section}{\numberline {D.2}Backend API}{16}{}%
+\contentsline {subsection}{\numberline {D.2.1}Authentication Module}{16}{}%
+\contentsline {subsection}{\numberline {D.2.2}Registration and Vocabulary Initialisation}{16}{}%
+\contentsline {subsection}{\numberline {D.2.3}Vocabulary Synchronisation}{16}{}%
+\contentsline {section}{\numberline {D.3}Frontend Architecture}{16}{}%
+\contentsline {section}{\numberline {D.4}Reels Service}{17}{}%
+\contentsline {subsection}{\numberline {D.4.1}Service Architecture}{17}{}%
+\contentsline {subsection}{\numberline {D.4.2}Creating Reels}{17}{}%
+\contentsline {subsection}{\numberline {D.4.3}Dialogue Enrichment}{17}{}%
+\contentsline {subsection}{\numberline {D.4.4}Personalisation Implementation Status}{17}{}%
+\contentsline {section}{\numberline {D.5}Game Modules}{17}{}%
+\contentsline {subsection}{\numberline {D.5.1}Wordle-style Game}{17}{}%
+\contentsline {subsection}{\numberline {D.5.2}Word of Wonders}{17}{}%
+\contentsline {chapter}{\numberline {E}Evaluation \bbl@greek@ampersand Results}{18}{}%
+\contentsline {chapter}{\numberline {F}Conclusions \bbl@greek@ampersand Future work}{19}{}%
+\contentsline {section}{\numberline {F.1}Contributions}{19}{}%
+\contentsline {section}{\numberline {F.2}Limitations}{19}{}%
+\contentsline {section}{\numberline {F.3}Future Work}{19}{}%
+\contentsline {chapter}{Abbreviations}{22}{}%
+\contentsline {chapter}{Glossary}{23}{}%
