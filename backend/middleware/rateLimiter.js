@@ -119,6 +119,18 @@ export const lettersLimiter = rateLimit({
   message: { message: 'Too many letters requests.\nYou have reached the limit.\nPlease try again later.' },
 });
 
+// No auth required. A short, fixed curated list (~45 videos), fetched once
+// per app open rather than per-item, so this stays generous like
+// lettersLimiter - it just guards against scripted scraping/hammering.
+// 20 requests per 15 minutes per IP
+export const videosLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 20,
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { message: 'Too many video requests.\nYou have reached the limit.\nPlease try again later.' },
+});
+
 // Public, no-auth endpoint (see feedback.html) - keyed by IP since there's
 // no user to key by. Generous enough for a real person submitting feedback,
 // tight enough to blunt spam/abuse of the open form.

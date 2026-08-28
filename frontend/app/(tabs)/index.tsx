@@ -150,11 +150,18 @@ export default function HomeScreen() {
           </Text>
         </TouchableOpacity>
         <TouchableOpacity
-          style={styles.lettersButton}
+          style={styles.navIconButton}
           onPress={() => router.push('/letters')}
           hitSlop={12}
         >
           <FontAwesome name="font" size={18} color={isDark ? DARK_COLORS.textSecondary : '#9ca3af'} />
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.navIconButton}
+          onPress={() => router.push('/videos')}
+          hitSlop={12}
+        >
+          <FontAwesome name="youtube-play" size={18} color={isDark ? DARK_COLORS.textSecondary : '#9ca3af'} />
         </TouchableOpacity>
       </View>
 
@@ -212,7 +219,7 @@ const styles = StyleSheet.create({
   tabButtonTextActive: {
     color: PRIMARY_COLOR,
   },
-  lettersButton: {
+  navIconButton: {
     paddingHorizontal: 16,
     justifyContent: 'center',
     alignItems: 'center',

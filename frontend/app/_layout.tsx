@@ -104,6 +104,7 @@ function RootLayoutNav() {
     const inTabsGroup = segments[0] === '(tabs)';
     const inSettingsScreen = segments[0] === 'settings';
     const inLettersScreen = segments[0] === 'letters';
+    const inVideosScreen = segments[0] === 'videos';
     const inModal = segments[0] === 'modal';
     const inGames = segments[0] === 'games';
     const inReelScreen = segments[0] === 'profileReel';
@@ -124,7 +125,7 @@ function RootLayoutNav() {
     } else {
       // [] Main app — allow access to app (tabs, settings, modal, games)
       // Also allow access to login/register for guest users
-      if (!inTabsGroup && !inSettingsScreen && !inLettersScreen && !inModal && !inGames && !inReelScreen && !inCreatorScreen && !inLoginOrRegister) {
+      if (!inTabsGroup && !inSettingsScreen && !inLettersScreen && !inVideosScreen && !inModal && !inGames && !inReelScreen && !inCreatorScreen && !inLoginOrRegister) {
         router.replace('/(tabs)');
       }
     }
@@ -243,6 +244,21 @@ function RootLayoutNav() {
             presentation: 'modal',
             headerShown: true,
             title: 'Letters',
+            headerStyle: {
+              backgroundColor: PRIMARY_COLOR,
+            },
+            headerTintColor: '#fff',
+            headerTitleStyle: {
+              fontWeight: 'bold',
+            },
+          }}
+        />
+        <Stack.Screen
+          name="videos"
+          options={{
+            presentation: 'modal',
+            headerShown: true,
+            title: 'Videos',
             headerStyle: {
               backgroundColor: PRIMARY_COLOR,
             },

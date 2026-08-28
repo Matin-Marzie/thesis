@@ -488,6 +488,54 @@ const options = {
             },
           },
         },
+        Video: {
+          type: 'object',
+          properties: {
+            id: {
+              type: 'integer',
+              description: 'Video ID',
+            },
+            youtube_url: {
+              type: 'string',
+              description: 'The YouTube video URL',
+            },
+            title: {
+              type: 'string',
+              description: 'Video title',
+              nullable: true,
+            },
+            created_at: {
+              type: 'string',
+              format: 'date-time',
+              description: 'When the video was added to the collection',
+            },
+          },
+        },
+        VideosResponse: {
+          type: 'object',
+          properties: {
+            language_code: {
+              type: 'string',
+              description: 'Learning language code (e.g., en, el, fa)',
+            },
+            videos: {
+              type: 'array',
+              items: {
+                $ref: '#/components/schemas/Video',
+              },
+              description: 'The curated video collection for this language',
+            },
+          },
+        },
+        VideosError: {
+          type: 'object',
+          properties: {
+            message: {
+              type: 'string',
+              description: 'Error message',
+            },
+          },
+        },
       },
     },
   },

@@ -761,6 +761,42 @@ ALTER SEQUENCE public.users_id_seq OWNED BY public.users.id;
 
 
 --
+-- Name: grammer_videos; Type: TABLE; Schema: public; Owner: root
+--
+
+CREATE TABLE public.grammer_videos (
+    id bigint NOT NULL,
+    youtube_url text NOT NULL,
+    title text,
+    created_at timestamp with time zone DEFAULT now() NOT NULL,
+    learning_language_id bigint NOT NULL
+);
+
+
+ALTER TABLE public.grammer_videos OWNER TO thesis_db_koxh_user;
+
+--
+-- Name: grammer_videos_id_seq; Type: SEQUENCE; Schema: public; Owner: root
+--
+
+CREATE SEQUENCE public.grammer_videos_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.grammer_videos_id_seq OWNER TO thesis_db_koxh_user;
+
+--
+-- Name: grammer_videos_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: root
+--
+
+ALTER SEQUENCE public.grammer_videos_id_seq OWNED BY public.grammer_videos.id;
+
+
+--
 -- Name: words; Type: TABLE; Schema: public; Owner: root
 --
 
@@ -890,6 +926,13 @@ ALTER TABLE ONLY public.user_vocabulary ALTER COLUMN id SET DEFAULT nextval('pub
 --
 
 ALTER TABLE ONLY public.users ALTER COLUMN id SET DEFAULT nextval('public.users_id_seq'::regclass);
+
+
+--
+-- Name: grammer_videos id; Type: DEFAULT; Schema: public; Owner: root
+--
+
+ALTER TABLE ONLY public.grammer_videos ALTER COLUMN id SET DEFAULT nextval('public.grammer_videos_id_seq'::regclass);
 
 
 --
@@ -1155,6 +1198,22 @@ ALTER TABLE ONLY public.users
 
 
 --
+-- Name: grammer_videos grammer_videos_pkey; Type: CONSTRAINT; Schema: public; Owner: root
+--
+
+ALTER TABLE ONLY public.grammer_videos
+    ADD CONSTRAINT grammer_videos_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: grammer_videos grammer_videos_youtube_url_key; Type: CONSTRAINT; Schema: public; Owner: root
+--
+
+ALTER TABLE ONLY public.grammer_videos
+    ADD CONSTRAINT grammer_videos_youtube_url_key UNIQUE (youtube_url);
+
+
+--
 -- Name: words words_pkey; Type: CONSTRAINT; Schema: public; Owner: root
 --
 
@@ -1271,6 +1330,14 @@ ALTER TABLE ONLY public.user_vocabulary
 
 ALTER TABLE ONLY public.letters
     ADD CONSTRAINT letters_language_id_fkey FOREIGN KEY (language_id) REFERENCES public.languages(id) ON DELETE CASCADE;
+
+
+--
+-- Name: grammer_videos grammer_videos_learning_language_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: root
+--
+
+ALTER TABLE ONLY public.grammer_videos
+    ADD CONSTRAINT grammer_videos_learning_language_id_fkey FOREIGN KEY (learning_language_id) REFERENCES public.languages(id) ON DELETE CASCADE;
 
 
 --
