@@ -1,0 +1,27 @@
+-- Greek alphabet (alpha-omega). Vowels: alpha, epsilon, eta, iota, omicron, upsilon, omega.
+-- Sigma's final form (ς) is stored combined with σ as a single row, matching how `words` stored it.
+INSERT INTO letters (letter_sign, type, language_id) VALUES
+('α', 'vowel', 2),
+('β', 'consonant', 2),
+('γ', 'consonant', 2),
+('δ', 'consonant', 2),
+('ε', 'vowel', 2),
+('ζ', 'consonant', 2),
+('η', 'vowel', 2),
+('θ', 'consonant', 2),
+('ι', 'vowel', 2),
+('κ', 'consonant', 2),
+('λ', 'consonant', 2),
+('μ', 'consonant', 2),
+('ν', 'consonant', 2),
+('ξ', 'consonant', 2),
+('ο', 'vowel', 2),
+('π', 'consonant', 2),
+('ρ', 'consonant', 2),
+('σ, ς', 'consonant', 2),
+('τ', 'consonant', 2),
+('υ', 'vowel', 2),
+('φ', 'consonant', 2),
+('χ', 'consonant', 2),
+('ψ', 'consonant', 2),
+('ω', 'vowel', 2);

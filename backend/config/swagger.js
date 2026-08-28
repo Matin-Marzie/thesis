@@ -426,6 +426,68 @@ const options = {
             },
           },
         },
+        Letter: {
+          type: 'object',
+          properties: {
+            id: {
+              type: 'integer',
+              description: 'Letter ID',
+            },
+            writing_style: {
+              type: 'string',
+              description: 'Writing style variant (e.g., print, cursive)',
+              nullable: true,
+            },
+            letter_sign: {
+              type: 'string',
+              description: 'The letter itself',
+            },
+            type: {
+              type: 'string',
+              enum: ['vowel', 'consonant'],
+              description: 'Letter classification',
+            },
+            audio_url: {
+              type: 'string',
+              description: 'URL to pronunciation audio',
+              nullable: true,
+            },
+            image_url: {
+              type: 'string',
+              description: 'URL to an illustrative image',
+              nullable: true,
+            },
+            language_id: {
+              type: 'integer',
+              description: 'Language ID this letter belongs to',
+            },
+          },
+        },
+        LettersResponse: {
+          type: 'object',
+          properties: {
+            language_code: {
+              type: 'string',
+              description: 'Language code (e.g., en, el, fa)',
+            },
+            letters: {
+              type: 'array',
+              items: {
+                $ref: '#/components/schemas/Letter',
+              },
+              description: "List of the language's letters",
+            },
+          },
+        },
+        LettersError: {
+          type: 'object',
+          properties: {
+            message: {
+              type: 'string',
+              description: 'Error message',
+            },
+          },
+        },
       },
     },
   },

@@ -1,37 +1,5 @@
 INSERT INTO words (id, written_form, part_of_speech, image_url, audio_url, language_id, level, article)
 VALUES
-(200000, 'الف', 'letter', NULL, NULL, 3, 'N', NULL), -- Alef
-(200001, 'ب', 'letter', NULL, NULL, 3, 'N', NULL),   -- Be
-(200002, 'پ', 'letter', NULL, NULL, 3, 'N', NULL),   -- Pe
-(200003, 'ت', 'letter', NULL, NULL, 3, 'N', NULL),   -- Te
-(200004, 'ث', 'letter', NULL, NULL, 3, 'N', NULL),   -- Se
-(200005, 'ج', 'letter', NULL, NULL, 3, 'N', NULL),   -- Jim
-(200006, 'چ', 'letter', NULL, NULL, 3, 'N', NULL),   -- Che
-(200007, 'ح', 'letter', NULL, NULL, 3, 'N', NULL),   -- He
-(200008, 'خ', 'letter', NULL, NULL, 3, 'N', NULL),   -- Khe
-(200009, 'د', 'letter', NULL, NULL, 3, 'N', NULL),   -- Dal
-(200010, 'ذ', 'letter', NULL, NULL, 3, 'N', NULL),   -- Zal
-(200011, 'ر', 'letter', NULL, NULL, 3, 'N', NULL),   -- Re
-(200012, 'ز', 'letter', NULL, NULL, 3, 'N', NULL),   -- Ze
-(200013, 'ژ', 'letter', NULL, NULL, 3, 'N', NULL),   -- Zhe
-(200014, 'س', 'letter', NULL, NULL, 3, 'N', NULL),   -- Sin
-(200015, 'ش', 'letter', NULL, NULL, 3, 'N', NULL),   -- Shin
-(200016, 'ص', 'letter', NULL, NULL, 3, 'N', NULL),   -- Sad
-(200017, 'ض', 'letter', NULL, NULL, 3, 'N', NULL),   -- Zad
-(200018, 'ط', 'letter', NULL, NULL, 3, 'N', NULL),   -- Ta
-(200019, 'ظ', 'letter', NULL, NULL, 3, 'N', NULL),   -- Za
-(200020, 'ع', 'letter', NULL, NULL, 3, 'N', NULL),   -- Ayn
-(200021, 'غ', 'letter', NULL, NULL, 3, 'N', NULL),   -- Ghayn
-(200022, 'ف', 'letter', NULL, NULL, 3, 'N', NULL),   -- Fe
-(200023, 'ق', 'letter', NULL, NULL, 3, 'N', NULL),   -- Qaf
-(200024, 'ک', 'letter', NULL, NULL, 3, 'N', NULL),   -- Kaf
-(200025, 'گ', 'letter', NULL, NULL, 3, 'N', NULL),   -- Gaf
-(200026, 'ل', 'letter', NULL, NULL, 3, 'N', NULL),   -- Lam
-(200027, 'م', 'letter', NULL, NULL, 3, 'N', NULL),   -- Mim
-(200028, 'ن', 'letter', NULL, NULL, 3, 'N', NULL),   -- Nun
-(200029, 'و', 'letter', NULL, NULL, 3, 'N', NULL),   -- Vav
-(200030, 'ه', 'letter', NULL, NULL, 3, 'N', NULL),   -- He
-(200031, 'ی', 'letter', NULL, NULL, 3, 'N', NULL),   -- Ye
 (200032, 'آب', 'noun', NULL, NULL, 3, 'N', NULL),    -- water
 (200033, 'آبی', 'adj', NULL, NULL, 3, 'N', NULL),    -- blue
 (200034, 'آپارتِمان', 'noun', NULL, NULL, 3, 'N', NULL), -- apartment

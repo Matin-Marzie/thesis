@@ -220,7 +220,8 @@ CREATE TABLE public.letters (
     type character varying(9) NOT NULL,
     audio_url text,
     image_url text,
-    language_id bigint NOT NULL
+    language_id bigint NOT NULL,
+    CONSTRAINT letters_type_check CHECK (((type)::text = ANY (ARRAY['vowel'::text, 'consonant'::text])))
 );
 
 

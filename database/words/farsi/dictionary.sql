@@ -16,7 +16,6 @@ VALUES
 (200013, 'آهو', 'noun', NULL, NULL, 3, 'N', NULL),   -- deer / doe
 (200014, 'آپارتِمان', 'noun', NULL, NULL, 3, 'N', NULL), -- apartment
 (200015, 'آیِنه', 'noun', NULL, NULL, 3, 'N', NULL), -- mirror
-(200016, 'الف', 'letter', NULL, NULL, 3, 'N', NULL), -- Alef
 (200017, 'او', 'pronoun', NULL, NULL, 3, 'N', NULL), -- he or she
 (200018, 'اورژانس', 'noun', NULL, NULL, 3, 'N', NULL), -- emergency
 (200019, 'اوکراین', 'noun', NULL, NULL, 3, 'N', NULL), -- Ukraine (country name)
@@ -46,7 +45,6 @@ VALUES
 (200043, 'ایتالیا', 'noun', NULL, NULL, 3, 'N', NULL), -- Italy (country name)
 (200044, 'ایران', 'noun', NULL, NULL, 3, 'N', NULL), -- Iran (country name)
 (200045, 'ایرلَند', 'noun', NULL, NULL, 3, 'N', NULL), -- Ireland (country name)
-(200046, 'ب', 'letter', NULL, NULL, 3, 'N', NULL),   -- Be
 (200047, 'بابا', 'noun', NULL, NULL, 3, 'N', NULL),  -- daddy
 (200048, 'باد', 'noun', NULL, NULL, 3, 'N', NULL),   -- wind
 (200049, 'بادام', 'noun', NULL, NULL, 3, 'N', NULL), -- almond
@@ -78,7 +76,6 @@ VALUES
 (200075, 'بیابان', 'noun', NULL, NULL, 3, 'N', NULL), -- desert
 (200076, 'بیمار', 'noun', NULL, NULL, 3, 'N', NULL), -- patient
 (200077, 'بینی', 'noun', NULL, NULL, 3, 'N', NULL),  -- nose
-(200078, 'ت', 'letter', NULL, NULL, 3, 'N', NULL),   -- Te
 (200079, 'تاب', 'noun', NULL, NULL, 3, 'N', NULL),   -- swing
 (200080, 'تاج', 'noun', NULL, NULL, 3, 'N', NULL),   -- crown
 (200081, 'تاکسی', 'noun', NULL, NULL, 3, 'N', NULL), -- taxi
@@ -98,12 +95,10 @@ VALUES
 (200095, 'تی', 'noun', NULL, NULL, 3, 'N', NULL),    -- squeegee / mop
 (200096, 'تیغ', 'noun', NULL, NULL, 3, 'N', NULL),   -- blade
 (200097, 'تیم', 'noun', NULL, NULL, 3, 'N', NULL),   -- team
-(200098, 'ث', 'letter', NULL, NULL, 3, 'N', NULL),   -- Se
 (200099, 'ثانیه', 'noun', NULL, NULL, 3, 'N', NULL), -- second
 (200100, 'ثانیه‌شُمار', 'noun', NULL, NULL, 3, 'N', NULL), -- stopwatch
 (200101, 'ثَبت‌نام', 'noun', NULL, NULL, 3, 'N', NULL), -- registration
 (200102, 'ثِروَتمَند', 'adj', NULL, NULL, 3, 'N', NULL), -- wealthy
-(200103, 'ج', 'letter', NULL, NULL, 3, 'N', NULL),   -- Jim
 (200104, 'جارو', 'noun', NULL, NULL, 3, 'N', NULL),  -- broom / sweep
 (200105, 'جامِدادی', 'noun', NULL, NULL, 3, 'N', NULL), -- pencil case
 (200106, 'جوجه', 'noun', NULL, NULL, 3, 'N', NULL),  -- chicken
@@ -111,13 +106,11 @@ VALUES
 (200108, 'جَزیره', 'noun', NULL, NULL, 3, 'N', NULL), -- island
 (200109, 'جَعبه', 'noun', NULL, NULL, 3, 'N', NULL), -- box
 (200110, 'جَنگَل', 'noun', NULL, NULL, 3, 'N', NULL), -- forest
-(200111, 'ح', 'letter', NULL, NULL, 3, 'N', NULL),   -- He
 (200112, 'حوض', 'noun', NULL, NULL, 3, 'N', NULL),   -- pond
 (200113, 'حوله', 'noun', NULL, NULL, 3, 'N', NULL),  -- towel
 (200114, 'حَیاط', 'noun', NULL, NULL, 3, 'N', NULL), -- yard
 (200115, 'حُباب', 'noun', NULL, NULL, 3, 'N', NULL), -- bubble
 (200116, 'حِیوانات', 'noun', NULL, NULL, 3, 'N', NULL), -- animals
-(200117, 'خ', 'letter', NULL, NULL, 3, 'N', NULL),   -- Khe
 (200118, 'خانه', 'noun', NULL, NULL, 3, 'N', NULL),  -- house
 (200119, 'خانُم', 'noun', NULL, NULL, 3, 'N', NULL), -- lady
 (200120, 'خاک', 'noun', NULL, NULL, 3, 'N', NULL),   -- soil
@@ -138,7 +131,6 @@ VALUES
 (200135, 'خِرس', 'noun', NULL, NULL, 3, 'N', NULL),  -- bear
 (200136, 'خیابان', 'noun', NULL, NULL, 3, 'N', NULL), -- street
 (200137, 'خیار', 'noun', NULL, NULL, 3, 'N', NULL),  -- cucumber
-(200138, 'د', 'letter', NULL, NULL, 3, 'N', NULL),   -- Dal
 (200139, 'دامَن', 'noun', NULL, NULL, 3, 'N', NULL), -- skirt
 (200140, 'دانِشجو', 'noun', NULL, NULL, 3, 'N', NULL), -- student
 (200141, 'داوَر', 'noun', NULL, NULL, 3, 'N', NULL), -- referee
@@ -161,10 +153,8 @@ VALUES
 (200158, 'دیدَن', 'verb', NULL, NULL, 3, 'N', NULL), -- to see
 (200159, 'دیو', 'noun', NULL, NULL, 3, 'N', NULL),   -- demon
 (200160, 'دیوار', 'noun', NULL, NULL, 3, 'N', NULL), -- wall
-(200161, 'ذ', 'letter', NULL, NULL, 3, 'N', NULL),   -- Zal
 (200162, 'ذَرّه‌بین', 'noun', NULL, NULL, 3, 'N', NULL), -- magnifier
 (200163, 'ذُرَّت', 'noun', NULL, NULL, 3, 'N', NULL), -- corn
-(200164, 'ر', 'letter', NULL, NULL, 3, 'N', NULL),   -- Re
 (200165, 'رود', 'noun', NULL, NULL, 3, 'N', NULL),   -- river
 (200166, 'روز', 'noun', NULL, NULL, 3, 'N', NULL),   -- day
 (200167, 'روزنامه', 'noun', NULL, NULL, 3, 'N', NULL), -- newspaper
@@ -180,14 +170,12 @@ VALUES
 (200177, 'رُز', 'noun', NULL, NULL, 3, 'N', NULL),   -- rose
 (200178, 'ریاضی', 'noun', NULL, NULL, 3, 'N', NULL), -- mathematics
 (200179, 'ریش', 'noun', NULL, NULL, 3, 'N', NULL),   -- beard
-(200180, 'ز', 'letter', NULL, NULL, 3, 'N', NULL),   -- Ze
 (200181, 'زَبان', 'noun', NULL, NULL, 3, 'N', NULL), -- tongue
 (200182, 'زَرد', 'adj', NULL, NULL, 3, 'N', NULL),   -- yellow
 (200183, 'زَردآلو', 'noun', NULL, NULL, 3, 'N', NULL), -- apricot
 (200184, 'زَن', 'noun', NULL, NULL, 3, 'N', NULL),   -- woman
 (200185, 'زَنبور', 'noun', NULL, NULL, 3, 'N', NULL), -- bee
 (200186, 'زیپ', 'noun', NULL, NULL, 3, 'N', NULL),   -- zipper
-(200187, 'س', 'letter', NULL, NULL, 3, 'N', NULL),   -- Sin
 (200188, 'ساحِل', 'noun', NULL, NULL, 3, 'N', NULL), -- beach
 (200189, 'ساعَت', 'noun', NULL, NULL, 3, 'N', NULL), -- watch / clock
 (200190, 'سال', 'noun', NULL, NULL, 3, 'N', NULL),   -- year
@@ -210,7 +198,6 @@ VALUES
 (200207, 'سیب', 'noun', NULL, NULL, 3, 'N', NULL),   -- apple
 (200208, 'سیر', 'noun', NULL, NULL, 3, 'N', NULL),   -- garlic
 (200209, 'سیم', 'noun', NULL, NULL, 3, 'N', NULL),   -- wire
-(200210, 'ش', 'letter', NULL, NULL, 3, 'N', NULL),   -- Shin
 (200211, 'شاخ', 'noun', NULL, NULL, 3, 'N', NULL),   -- horn
 (200212, 'شامپو', 'noun', NULL, NULL, 3, 'N', NULL), -- shampoo
 (200213, 'شَب', 'noun', NULL, NULL, 3, 'N', NULL),   -- night
@@ -222,7 +209,6 @@ VALUES
 (200219, 'شُنیدَن', 'verb', NULL, NULL, 3, 'N', NULL), -- to hear
 (200220, 'شِکَر', 'noun', NULL, NULL, 3, 'N', NULL), -- sugar
 (200221, 'شیر', 'noun', NULL, NULL, 3, 'N', NULL),   -- milk / lion
-(200222, 'ص', 'letter', NULL, NULL, 3, 'N', NULL),   -- Sad
 (200223, 'صابون', 'noun', NULL, NULL, 3, 'N', NULL), -- soap
 (200224, 'صورت', 'noun', NULL, NULL, 3, 'N', NULL),  -- face
 (200225, 'صورَتی', 'adj', NULL, NULL, 3, 'N', NULL), -- pink
@@ -230,38 +216,31 @@ VALUES
 (200227, 'صَندَلی', 'noun', NULL, NULL, 3, 'N', NULL), -- chair
 (200228, 'صُبح', 'noun', NULL, NULL, 3, 'N', NULL),  -- morning
 (200229, 'صُبحانه', 'noun', NULL, NULL, 3, 'N', NULL), -- breakfast
-(200230, 'ض', 'letter', NULL, NULL, 3, 'N', NULL),   -- Zad
 (200231, 'ضَبطِ‌صوت', 'noun', NULL, NULL, 3, 'N', NULL), -- tape recorder
 (200232, 'ضَرب', 'noun', NULL, NULL, 3, 'N', NULL),  -- multiplication
 (200233, 'ضَعیف', 'adj', NULL, NULL, 3, 'N', NULL),  -- weak
-(200234, 'ط', 'letter', NULL, NULL, 3, 'N', NULL),   -- Ta
 (200235, 'طالِبی', 'noun', NULL, NULL, 3, 'N', NULL), -- cantaloupe
 (200236, 'طوطی', 'noun', NULL, NULL, 3, 'N', NULL),  -- parrot
 (200237, 'طَبیعَت', 'noun', NULL, NULL, 3, 'N', NULL), -- nature
 (200238, 'طَلا', 'noun', NULL, NULL, 3, 'N', NULL),  -- gold
 (200239, 'طَناب', 'noun', NULL, NULL, 3, 'N', NULL), -- rope
-(200240, 'ظ', 'letter', NULL, NULL, 3, 'N', NULL),   -- Za
 (200241, 'ظَرف', 'noun', NULL, NULL, 3, 'N', NULL),  -- container
 (200242, 'ظُهر', 'noun', NULL, NULL, 3, 'N', NULL),  -- noon
-(200243, 'ع', 'letter', NULL, NULL, 3, 'N', NULL),   -- Ayn
 (200244, 'عَرض', 'noun', NULL, NULL, 3, 'N', NULL),  -- width
 (200245, 'عَروس', 'noun', NULL, NULL, 3, 'N', NULL), -- bride
 (200246, 'عَروسَک', 'noun', NULL, NULL, 3, 'N', NULL), -- doll
 (200247, 'عَسَل', 'noun', NULL, NULL, 3, 'N', NULL), -- honey
 (200248, 'عَصا', 'noun', NULL, NULL, 3, 'N', NULL),  -- walking stick
 (200249, 'عِینَک', 'noun', NULL, NULL, 3, 'N', NULL), -- glasses
-(200250, 'غ', 'letter', NULL, NULL, 3, 'N', NULL),   -- Ghayn
 (200251, 'غاز', 'noun', NULL, NULL, 3, 'N', NULL),   -- goose
 (200252, 'غَذا', 'noun', NULL, NULL, 3, 'N', NULL),  -- food
 (200253, 'غُروب', 'noun', NULL, NULL, 3, 'N', NULL), -- sunset
-(200254, 'ف', 'letter', NULL, NULL, 3, 'N', NULL),   -- Fe
 (200255, 'فوتبال', 'noun', NULL, NULL, 3, 'N', NULL), -- soccer
 (200256, 'فَرش', 'noun', NULL, NULL, 3, 'N', NULL),  -- carpet
 (200257, 'فَضا', 'noun', NULL, NULL, 3, 'N', NULL),  -- space
 (200258, 'فَضانَوَرد', 'noun', NULL, NULL, 3, 'N', NULL), -- astronaut
 (200259, 'فُندُق', 'noun', NULL, NULL, 3, 'N', NULL), -- hazelnut
 (200260, 'فِلفِل', 'noun', NULL, NULL, 3, 'N', NULL), -- pepper
-(200261, 'ق', 'letter', NULL, NULL, 3, 'N', NULL),   -- Qaf
 (200262, 'قاب', 'noun', NULL, NULL, 3, 'N', NULL),   -- frame
 (200263, 'قارچ', 'noun', NULL, NULL, 3, 'N', NULL),  -- mushroom
 (200264, 'قاشُق', 'noun', NULL, NULL, 3, 'N', NULL), -- spoon
@@ -276,7 +255,6 @@ VALUES
 (200273, 'قِرمِز', 'adj', NULL, NULL, 3, 'N', NULL), -- red
 (200274, 'قِطار', 'noun', NULL, NULL, 3, 'N', NULL), -- train
 (200275, 'قِیچی', 'noun', NULL, NULL, 3, 'N', NULL), -- scissors
-(200276, 'ل', 'letter', NULL, NULL, 3, 'N', NULL),   -- Lam
 (200277, 'لامپ', 'noun', NULL, NULL, 3, 'N', NULL),  -- lamp
 (200278, 'لوله', 'noun', NULL, NULL, 3, 'N', NULL),  -- pipe
 (200279, 'لَب', 'noun', NULL, NULL, 3, 'N', NULL),   -- lip
@@ -285,7 +263,6 @@ VALUES
 (200282, 'لِباس', 'noun', NULL, NULL, 3, 'N', NULL), -- clothes
 (200283, 'لیمو', 'noun', NULL, NULL, 3, 'N', NULL),  -- lemon / lime
 (200284, 'لیوان', 'noun', NULL, NULL, 3, 'N', NULL), -- mug / glass
-(200285, 'م', 'letter', NULL, NULL, 3, 'N', NULL),   -- Mim
 (200286, 'مادَر', 'noun', NULL, NULL, 3, 'N', NULL), -- mother
 (200287, 'ماشین', 'noun', NULL, NULL, 3, 'N', NULL), -- car
 (200288, 'ماه', 'noun', NULL, NULL, 3, 'N', NULL),   -- moon
@@ -299,7 +276,6 @@ VALUES
 (200296, 'مِدادرَنگی', 'noun', NULL, NULL, 3, 'N', NULL), -- colored pencil
 (200297, 'میز', 'noun', NULL, NULL, 3, 'N', NULL),   -- table
 (200298, 'میوه', 'noun', NULL, NULL, 3, 'N', NULL),  -- fruit
-(200299, 'ن', 'letter', NULL, NULL, 3, 'N', NULL),   -- Nun
 (200300, 'نارِنجی', 'adj', NULL, NULL, 3, 'N', NULL), -- orange (color)
 (200301, 'نارِنگی', 'noun', NULL, NULL, 3, 'N', NULL), -- tangerine / mandarin
 (200302, 'نامه', 'noun', NULL, NULL, 3, 'N', NULL),  -- letter
@@ -309,13 +285,10 @@ VALUES
 (200306, 'نَزدیک', 'adj', NULL, NULL, 3, 'N', NULL), -- near / close
 (200307, 'نیمکت', 'noun', NULL, NULL, 3, 'N', NULL), -- bench
 (200308, 'نیک‌تَخت', 'noun', NULL, NULL, 3, 'N', NULL), -- nightstand
-(200309, 'ه', 'letter', NULL, NULL, 3, 'N', NULL),   -- He
 (200310, 'هواپیما', 'noun', NULL, NULL, 3, 'N', NULL), -- airplane
 (200311, 'هویج', 'noun', NULL, NULL, 3, 'N', NULL),  -- carrot
 (200312, 'هَندوانه', 'noun', NULL, NULL, 3, 'N', NULL), -- watermelon
 (200313, 'هِلیکوپتِر', 'noun', NULL, NULL, 3, 'N', NULL), -- helicopter
-(200314, 'و', 'letter', NULL, NULL, 3, 'N', NULL),   -- Vav
-(200315, 'پ', 'letter', NULL, NULL, 3, 'N', NULL),   -- Pe
 (200316, 'پا', 'noun', NULL, NULL, 3, 'N', NULL),    -- foot
 (200317, 'پارو', 'noun', NULL, NULL, 3, 'N', NULL),  -- oar
 (200318, 'پارچ', 'noun', NULL, NULL, 3, 'N', NULL),  -- pitcher
@@ -345,7 +318,6 @@ VALUES
 (200342, 'پِلّه', 'noun', NULL, NULL, 3, 'N', NULL), -- stair
 (200343, 'پیاده‌رو', 'noun', NULL, NULL, 3, 'N', NULL), -- sidewalk
 (200344, 'پیاز', 'noun', NULL, NULL, 3, 'N', NULL),  -- onion
-(200345, 'چ', 'letter', NULL, NULL, 3, 'N', NULL),   -- Che
 (200346, 'چاقو', 'noun', NULL, NULL, 3, 'N', NULL),  -- knife
 (200347, 'چای', 'noun', NULL, NULL, 3, 'N', NULL),   -- tea
 (200348, 'چَتر', 'noun', NULL, NULL, 3, 'N', NULL),  -- umbrella
@@ -353,12 +325,10 @@ VALUES
 (200350, 'چِراغ', 'noun', NULL, NULL, 3, 'N', NULL), -- lamp
 (200351, 'چِراغ‌خواب', 'noun', NULL, NULL, 3, 'N', NULL), -- night light
 (200352, 'چِشم', 'noun', NULL, NULL, 3, 'N', NULL),  -- eye
-(200353, 'ژ', 'letter', NULL, NULL, 3, 'N', NULL),   -- Zhe
 (200354, 'ژاپُن', 'noun', NULL, NULL, 3, 'N', NULL), -- Japan (country name)
 (200355, 'ژاکِت', 'noun', NULL, NULL, 3, 'N', NULL), -- jacket
 (200356, 'ژِل', 'noun', NULL, NULL, 3, 'N', NULL),   -- gel
 (200357, 'ژِله', 'noun', NULL, NULL, 3, 'N', NULL),  -- jelly
-(200358, 'ک', 'letter', NULL, NULL, 3, 'N', NULL),   -- Kaf
 (200359, 'کاج', 'noun', NULL, NULL, 3, 'N', NULL),   -- pine
 (200360, 'کاخ', 'noun', NULL, NULL, 3, 'N', NULL),   -- castle
 (200361, 'کارت‌خوان', 'noun', NULL, NULL, 3, 'N', NULL), -- Point of Sale (POS)
@@ -383,7 +353,6 @@ VALUES
 (200380, 'کِلاس', 'noun', NULL, NULL, 3, 'N', NULL), -- class
 (200381, 'کیف', 'noun', NULL, NULL, 3, 'N', NULL),   -- bag
 (200382, 'کیلوگَرَم', 'noun', NULL, NULL, 3, 'N', NULL), -- kilogram
-(200383, 'گ', 'letter', NULL, NULL, 3, 'N', NULL),   -- Gaf
 (200384, 'گاراژ', 'noun', NULL, NULL, 3, 'N', NULL), -- garage
 (200385, 'گوجه‌فَرَنگی', 'noun', NULL, NULL, 3, 'N', NULL), -- tomato
 (200386, 'گوش', 'noun', NULL, NULL, 3, 'N', NULL),   -- ear
@@ -397,7 +366,6 @@ VALUES
 (200394, 'گُلف', 'noun', NULL, NULL, 3, 'N', NULL),  -- golf
 (200395, 'گُنجِشک', 'noun', NULL, NULL, 3, 'N', NULL), -- sparrow
 (200396, 'گِردو', 'noun', NULL, NULL, 3, 'N', NULL), -- walnut
-(200397, 'ی', 'letter', NULL, NULL, 3, 'N', NULL),   -- Ye
 (200398, 'یَخچال', 'noun', NULL, NULL, 3, 'N', NULL), -- refrigerator
 (200399, 'یَقه', 'noun', NULL, NULL, 3, 'N', NULL),  -- collar
 (200400, 'آب‌میوه', 'noun', NULL, NULL, 3, 'A1', NULL),          -- juice

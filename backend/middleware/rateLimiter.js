@@ -107,6 +107,18 @@ export const dictionaryLimiter = rateLimit({
   message: { message: 'Too many dictionary requests.\nYou have reached the limit.\nPlease try again later.' },
 });
 
+// No auth required. A language's alphabet is small (tens of rows, not
+// thousands like the dictionary), so this stays far more permissive than
+// dictionaryLimiter - it just guards against scripted scraping/hammering.
+// 20 requests per 15 minutes per IP
+export const lettersLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 20,
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { message: 'Too many letters requests.\nYou have reached the limit.\nPlease try again later.' },
+});
+
 // Public, no-auth endpoint (see feedback.html) - keyed by IP since there's
 // no user to key by. Generous enough for a real person submitting feedback,
 // tight enough to blunt spam/abuse of the open form.

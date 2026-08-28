@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useRef, useMemo, useCallback } from 'react';
 import { View, StyleSheet, Keyboard, Text, TouchableOpacity, ActivityIndicator } from 'react-native';
+import { useRouter } from 'expo-router';
+import { FontAwesome } from '@expo/vector-icons';
 import { useVocabularyContext } from '@/context/VocabularyContext';
 import { useSentenceContext } from '@/context/SentenceContext';
 import { useDictionaryContext } from '@/context/DictionaryContext';
@@ -13,6 +15,7 @@ import { DARK_COLORS, PRIMARY_COLOR } from '@/constants/App';
 
 export default function HomeScreen() {
   const isDark = useColorScheme() === 'dark';
+  const router = useRouter();
   const { userVocabulary } = useVocabularyContext();
   const { userSentences } = useSentenceContext();
   const { dictionary } = useDictionaryContext();
@@ -146,6 +149,13 @@ export default function HomeScreen() {
             Sentences
           </Text>
         </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.lettersButton}
+          onPress={() => router.push('/letters')}
+          hitSlop={12}
+        >
+          <FontAwesome name="font" size={18} color={isDark ? DARK_COLORS.textSecondary : '#9ca3af'} />
+        </TouchableOpacity>
       </View>
 
       {activeTab === 'words' ? (
@@ -201,6 +211,11 @@ const styles = StyleSheet.create({
   },
   tabButtonTextActive: {
     color: PRIMARY_COLOR,
+  },
+  lettersButton: {
+    paddingHorizontal: 16,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   searchingContainer: {
     flex: 1,

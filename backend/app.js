@@ -20,6 +20,7 @@ import logoutRouter from './routes/logout.js';
 import userRouter from './routes/api/user.js';
 import languageRouter from './routes/api/language.js';
 import dictionaryRouter from './routes/api/dictionary.js';
+import lettersRouter from './routes/api/letters.js';
 import reelRouter from './routes/api/reel.js';
 import feedbackRouter from './routes/api/feedback.js';
 
@@ -52,6 +53,7 @@ app.use(`/api/${API_VERSION}/logout`, logoutRouter);
 app.use(`/api/${API_VERSION}/user`, userRouter);
 app.use(`/api/${API_VERSION}/language`, languageRouter);
 app.use(`/api/${API_VERSION}/dictionary`, dictionaryRouter);
+app.use(`/api/${API_VERSION}/letters`, lettersRouter);
 app.use(`/api/${API_VERSION}/reel`, reelRouter);
 app.use(`/api/${API_VERSION}/feedback`, feedbackRouter);
 // Root route
