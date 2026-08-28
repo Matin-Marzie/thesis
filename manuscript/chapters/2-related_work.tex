@@ -1,74 +1,165 @@
-\section{The Landscape of Mobile-Assisted Language Learning (MALL)} A critical review of current platforms (Duolingo, Memrise, LingQ).
-
-    Digital language learning platforms (LLPs) have become dominant in foreign language education, with over 70 applications serving millions of users through Mobile-Assisted Language Learning (MALL)\cite{karasimos2022battle}. The global market size for these platforms was valued at USD 5.8 billion in 2025, growing further to USD 21.1 billion by 2034 at an estimated CAGR of 15.43\% from 2025 to 2034 by Duolingo commanding over 50\% of global downloads in 2023 \cite{businessresearch2024languageapps}. This rapid expansion has been further driven with the advent of Large Language Models (LLMs), enhancing personalization and the generation of rich learning content. While it took 12 years to create 100 language courses for Duolingo with the use of AI they added 148 new courses in early 2025\cite{duolingo2025launch148}.
+% Reordered the sections with daddy gemini to retain the coherence
 
 
-\section{Pedagogical Foundations:}
-    \subsection{Sociocultural Theory (Vygotsky)}
-        Lev Vygotsky's Sociocultural Theory \cite{vygotsky1978mind} holds that cognitive development arises through social interaction mediated by cultural tools, of which language is the primary instrument. Central to the theory is the concept of the \textbf{Zone of Proximal Development (ZPD)}: the distance between what a learner can accomplish independently and what they can achieve under guidance or in collaboration. Effective instruction operates within the ZPD—content that is too easy provides no developmental stimulus, while content that is too difficult cannot be processed without first establishing prerequisite knowledge.
+% Section 1: The Landscape of Mobile-Assisted Language Learning (MALL)
+%            1.1 Market Evolution and Platform Proliferation
+%            1.2 Critical Review and Systematic Limitations of Current Platforms
 
-        In Glosy, the ZPD is operationalised through the comprehensibility threshold of the recommendation engine. A reel is considered suitable for a given learner when that learner already knows at least 98\% of its vocabulary—a threshold informed by Nation's \cite{nation2001learning} research on the vocabulary coverage required for unassisted reading comprehension. The remaining 2\% constitutes the ``i+1'' challenge (one step beyond the learner's current knowledge), which falls squarely within the ZPD.
+% Section 2: Pedagogical Foundations
+%            2.1 Sociocultural Theory in language learning
+%            2.2 Cognitive Load Theory and Microlearning Frameworks
+%            2.3 Memory Decay, Spaced Repetition, and Retention Models
+%               2.3.1 Ebbinghaus Forgetting Curve
+%               2.3.2 Half-Life Regression & Retention Tracking
 
-    \subsection{Cognitive Load Theory} % maybe delete these section, Maybe merge with micro-learning section 
-    \subsection{micro-learning}
-        This structural friction has catalyzed a pedagogical shift toward adaptive, mobile-assisted microlearning frameworks. Currently, over 72\% of self-directed and institutional learning structures have integrated bite-sized delivery as a core strategy to prevent cognitive overload and accommodate busy schedules (up from 54\% in 2023) \cite{mordor2026micro, linkedin2025}. Pedagogically, microlearning modules---typically structured in 3-to-10 minute sessions \cite{engageli2026}---support cognitive mapping by preventing information overload and leveraging the spacing effect. Research in instructional design consistently demonstrates that this micro-targeted approach improves knowledge retention by 25\% to 60\% compared to traditional, long-form methods by presenting manageable, focused cognitive units \cite{elearningindustry2025}.
-    
-    \subsection{Spaced Repetition and Memory Retention}
-        \subsubsection{Ebbinghaus's forgetting curve}
-            Hermann Ebbinghaus's empirical research demonstrated that memory retention decays exponentially over time in the absence of review \cite{ebbinghaus1885memory}. The resulting \textbf{forgetting curve} underpins all modern spaced-repetition systems (SRS): by scheduling review of a word at increasing intervals timed to precede the moment of forgetting, the system converts short-term exposure into durable long-term memory.
+% Section 3: Modalities for Language Acquisition
+%            3.1 Short-Form Video in second language acquisition (SLA)
+%                3.1.1 The Passive Consumption Paradox
+%                3.1.2 Authentic Audio-Visual Scaffolding
+%            3.2 Serious Games and Gamification in language learning
+%                3.2.1 Serious Games
+%                3.2.2 Active Recall Mechanics (Wordle, Word of Wonders)
 
-            Glosy implements a six-level mastery model in the \texttt{user\_vocabulary} table. Each word entry records a \texttt{mastery\_level} (1–6) and a \texttt{last\_review} timestamp. The recommendation engine uses these values to prioritise reels containing words whose review is overdue, ensuring that vocabulary resurfaces at intervals calibrated to each learner's individual retention rate.
-        \subsubsection{Duolingo Half Life Regression}
-            Duolingo's proprietary half-life regression model predicts the optimal timing for reviewing each word in a learner's vocabulary, based on their individual forgetting curve. This model informs the scheduling of spaced repetition exercises within Glosy, ensuring that learners encounter each word at intervals that maximize long-term retention.
-        
+% Section 4: Algorithmic Frameworks for Personalized Vocabulary Delivery
+%           4.1 Content-Based Recommendation (Lexical Profiling & Comprehensibility Thresholds)
+%           4.2 Collaborative Filtering
+%           4.3 Hybrid Approaches in Educational Scaffolding
 
-
-
-\section{Gamification in Education} From hypercasual gaming to "serious games."
-    Genuine gamification—as opposed to the point-and-streak overlays critiqued in Section~2.2.4—involves embedding core game mechanics into the learning activity itself, such that the challenge of the game is inseparable from the learning objective \cite{munday2017duolingo}. Hypercasual games are well suited to this purpose: their short session length, immediate feedback loops, and escalating difficulty can be parametrically linked to a learner's vocabulary model.
-
-    Glosy integrates two hypercasual game formats: a Wordle variant, in which the target word is drawn from the learner's vocabulary model, and Word of Wonders, a grid-based word-construction game whose level vocabulary is similarly personalised. In both cases, success requires active recall rather than passive recognition, engaging a fundamentally different and more durable memory process than translation drills.
-
-    
-\section{Short-Form Media in Second Language Acquisition}
-    connects with the previous section of sociocultural theory of Vygotsky [vygotsky1978mind]
-    Effectiveness of nano-learning (NL).
-    
-    Authentic audiovisual materials have long been recognised as valuable in Second Language Acquisition (SLA) research. Short-form video, in particular, provides a dense multimodal signal: spoken language, prosodic variation, facial expression, gesture, and cultural context are all co-present, reinforcing one another in ways that text-based instruction cannot replicate.
-
-    The challenge is retention. Without active processing, vocabulary encountered during video viewing follows the Ebbinghaus forgetting curve as surely as any other exposure. Glosy addresses this by treating each reel not as a standalone learning event but as a contextualised encounter with target vocabulary in the learner's personal vocabulary model. Words seen in a reel are subsequently reinforced in game sessions, and the recommendation engine surfaces those words again in future reels, creating a multi-context learning loop that supports durable acquisition.
+% Section 5: Summary & System Conceptualization Bridge
 
 
-\section{Limitations of Current Platforms}
+% ==============================================================================
+% SECTION 1: THE LANDSCAPE OF MOBILE-ASSISTED LANGUAGE LEARNING (MALL)
+% ==============================================================================
+\section{The Landscape of Mobile-Assisted Language Learning (MALL)}
+\label{sec:mall_landscape}
 
-        Karasimos \cite{karasimos2022battle} conducted a systematic cross-platform review of five representative LLPs—Duolingo, Memrise, Busuu, Rosetta Stone, and LingQ—against a set of pedagogical and usability criteria. While all five platforms demonstrate strengths in structured vocabulary delivery and habit formation, the review reveals consistent gaps that motivate the present work.
+    \subsection{Market Evolution and Platform Proliferation}
+    \label{subsec:market_evolution}
+    Digital language learning platforms (LLPs) have become dominant in foreign language education, with over 70 major commercial applications serving millions of active learners through Mobile-Assisted Language Learning (MALL) \cite{karasimos2022battle}. The global market for digital language platforms was valued at USD 5.8 billion in 2025 and is projected to reach USD 21.1 billion by 2034, expanding at a Compound Annual Growth Rate (CAGR) of 15.43\%, with Duolingo commanding over 50\% of global downloads \cite{businessresearch2026languageapps}. 
 
-    \subsection{Uniform Content Regardless of Learner Demographics}
-        All platforms present uniform content regardless of user demographics (children, Gen Z, adults, elderly), interests, or sociocultural perspectives, as well as the cultural differences inherent in languages other than English.\\
-        With over 500 million learners, Duolingo is using Machine Learning algorithms to provide learning material, only for the difficulty level \cite{duolingo2025approach}.
-        
-    \subsection{Insufficient multimedia Integration}
-        Duolingo's primary instructional mode is text and audio built around translation exercises. This approach does not exploit visual memory—a well-documented channel for vocabulary retention—nor does it expose learners to the prosodic and paralinguistic cues present in natural speech.
-        
-    \subsection{Lack of authentic, real-world content}
-        Most platforms—Duolingo, Busuu, Memrise, and Rosetta Stone—lack authentic, real-world materials in their instructional design. LingQ partially integrates such content; however, as noted by Karasimos \cite{karasimos2022battle}, it is not recommended as a starting point for beginners. Gilmore \cite{gilmore2007authentic} demonstrates that authentic materials are crucial for developing communicative competence and for sustaining learner motivation. At the same time, Liu and Dong \cite{liu2024authentic} caution that authentic language materials can create comprehension difficulties for learners who lack the cultural background knowledge assumed by native-speaker communication. In Glosy, this tension is addressed by pairing authentic video content with cultural annotations and adaptive vocabulary scaffolding, ensuring that exposure to real-world language does not exceed the learner's Zone of Proximal Development (ZPD).
+    This rapid expansion has been further accelerated by Generative Artificial Intelligence and Large Language Models (LLMs), which have streamlined content authoring and curriculum scaling. While authoring the first 100 language courses on Duolingo required over 12 years of manual pedagogical design, generative models facilitated the deployment of 148 additional courses in early 2025 alone \cite{duolingo2025launch148}.
 
-    \subsection{Drilling and masquerading as gamification - shallow gamification mechanics}
-        All platforms employ gamification, but it is largely limited to superficial elements such as points, badges, and leaderboards. These features may enhance engagement and motivation but do not substantively contribute to learning outcomes. The proposed system will implement gamification that is deeply integrated with the learning process, using hypercasual game mechanics that adapt to the learner's vocabulary state and reinforce retention through spaced repetition.
+    \subsection{Critical Review and Systematic Limitations of Current Platforms}
+    \label{subsec:platform_limitations}
+    Karasimos \cite{karasimos2022battle} conducted a systematic cross-platform evaluation of five representative LLPs—Duolingo, Memrise, Busuu, Rosetta Stone, and LingQ—evaluating their pedagogical efficacy and interactive design. While these applications exhibit strength in habit formation and foundational syntax acquisition, a critical analysis reveals structural shortcomings across contemporary commercial architectures:
 
-    \subsection{Lack of Support for Advanced Proficiency Development}
-        With the exception of LingQ, no platform in Karasimos's review provides adequate support for learners at B2 level and above. Advanced learners require exposure to authentic idiomatic usage, domain-specific vocabulary, and complex syntactic structures—precisely the content available in user-generated short-form video but absent from structured drills.
-
-    \subsection{Absence of Sociocultural Context}
-        Language is inseparable from culture. The five reviewed platforms treat vocabulary and grammar as context-free systems, ignoring the sociocultural theory articulated by Vygotsky, which holds that language development is fundamentally mediated by social interaction and cultural context. Short-Form video content, as proposed in this thesis, provides a rich medium for embedding language learning within authentic sociocultural contexts, thereby aligning with Vygotsky's theoretical framework.
-
-    % Add a comparison table in Related Work. A table of Glosy vs. Duolingo/Memrise/Busuu/LingQ across your six identified gaps
+    \begin{enumerate}
+        \item \textbf{Uniform Content Delivery Across Learner Demographics:} Existing platforms deliver static, uniform curricula that do not account for variations in age cohorts (e.g., Gen Z, adults, seniors), communicative objectives, or cultural nuances across non-English language pairs. Machine learning implementations in mainstream platforms focus predominantly on tuning exercise difficulty rather than personalizing semantic context \cite{businessresearch2026languageapps}.
+        \item \textbf{Insufficient Multimodal Integration:} Primary instructional routines rely predominantly on isolated text prompts and synthetic audio translation drills. This structure underutilizes visual and paralinguistic memory channels that reinforce natural conversational patterns and prosody.
+        \item \textbf{Absence of Authentic, Real-World Linguistic Context:} Mainstream curricula frequently isolate vocabulary into synthetic sentences. While LingQ incorporates real-world texts, its interface poses steep onboarding barriers for novice learners \cite{karasimos2022battle}. Authentic input is vital for communicative competence \cite{Gilmore_2007}; however, uncurated native materials risk cognitive overload if cultural and lexical scaffolding are missing \cite{LiuDong2024AuthenticLanguageModelsClassrooms}.
+        \item \textbf{Superficial Gamification vs.\ Deep Mechanics:} Gamification in LLPs is largely restricted to extrinsic feedback mechanisms (e.g., XP points, daily streaks, leaderboards) that do not directly stimulate deep linguistic recall.
+        \item \textbf{Limited Advanced Proficiency Support (B2+):} Current mobile platforms focus heavily on A1–B1 grammar foundations, offering sparse resources for upper-intermediate and advanced learners requiring idiomatic fluency, register variation, and natural speech rates.
+        \item \textbf{Absence of Sociocultural Grounding:} Mainstream platforms frequently isolate grammar rules from their social contexts, abstracting linguistic mechanics from the cultural dynamics highlighted by Sociocultural Theory.
+    \end{enumerate}
 
 
-\section{Recommendation Systems}
-    \subsection{Content-Based Recommendation}
-    \subsection{Collaborative Filtering}
-    \subsection{Hybrid Approaches}
+    Table~\ref{tab:platform_comparison} outlines the architectural and pedagogical differences between established commercial LLPs and the proposed \textit{Glosy} platform.
 
-    
+    \begin{table}[htbp]
+        \centering
+        \small
+        \caption{Comparative feature matrix: Established LLPs vs. Glosy framework.}
+        \label{tab:platform_comparison}
+        \begin{tabular}{lcccccc}
+            \hline
+            \textbf{Feature / Dimension} & \textbf{Duolingo} & \textbf{Memrise} & \textbf{Busuu} & \textbf{LingQ} & \textbf{Glosy} \\
+            \hline
+            Authentic Multimodal Video   & Low               & Medium           & Low            & Medium         & \textbf{High}  \\
+            Deep Gameplay Mechanics      & Low (Extrinsic)   & Low              & Low            & None           & \textbf{High}  \\
+            Adaptive SRS Tracking        & High              & High             & Medium         & High           & \textbf{High}  \\
+            Sociocultural Scaffolding    & Low               & Low              & Medium         & Medium         & \textbf{High}  \\
+            B2+ Proficiency Support      & Low               & Low              & Medium         & High           & \textbf{High}  \\
+            Automated Transcript Parsing & Low               & Low              & None           & Medium         & \textbf{High}  \\
+            \hline
+        \end{tabular}
+    \end{table}
+
+
+% ==============================================================================
+% SECTION 2: Pedagogical Foundations
+% ==============================================================================
+\section{Pedagogical Foundations}
+\label{sec:pedagogical_foundations}
+
+    \subsection{Sociocultural Theory in language learning}
+    \label{subsec:sociocultural_theory}
+    Vygotsky's Sociocultural Theory posits that cognitive development occurs through socially mediated communication and cultural artifacts, wherein language functions as the primary cognitive tool. Central to this paradigm is the \textbf{Zone of Proximal Development (ZPD)}: the gap between a learner's independent competence and their potential development when assisted by structured scaffolding. Instructional design remains optimal when educational stimuli avoid cognitive oversimplification without exceeding learner comprehension.
+
+    In the \textit{Glosy} architecture, the ZPD is operationalized computationally through a lexical comprehensibility threshold. A short-form video unit is recommended when the user's historical vocabulary profile covers at least 98\% of the target transcript tokens—a metric aligned with lexical threshold models for unassisted comprehension. The remaining $\sim$2\% constitutes an ``$i+1$'' linguistic challenge, contextualized within authentic communicative scenarios.
+
+
+    \subsection{Micro-learning in language learning}
+    Cognitive Load Theory (CLT) states that working memory capacity is strictly bounded, requiring instructional systems to minimize extraneous cognitive load to facilitate schema construction in long-term memory. 
+
+    To mitigate cognitive fatigue, modern educational technologies leverage mobile \textbf{microlearning} structures. Currently, over 72\% of instructional organizations utilize bite-sized learning frameworks to accommodate divided attention spans \cite{mordor2026micro, linkedin2025}. Structured microlearning modules—typically lasting between 3 to 10 minutes \cite{engageli2026}—reduce cognitive overhead and harness the spacing effect, increasing knowledge retention by 25\% to 60\% relative to uninterrupted long-form instruction \cite{elearningindustry2025}.
+
+    \subsection{Memory Decay and Spaced Repetition Models}
+    \label{subsec:srs_models}
+
+    \subsubsection{The Ebbinghaus Forgetting Curve}
+    Ebbinghaus demonstrated that mnemonic decay follows an exponential decay trajectory in the absence of spaced reinforcement. Spaced Repetition Systems (SRS) counteract this decay by dynamically scheduling vocabulary review immediately before predicted memory consolidation failure. 
+
+    In \textit{Glosy}, this mechanism is operationalized within the \texttt{user\_vocabulary} datastore through a 6-tier parametric mastery model. Every lexical entry tracks an explicit \texttt{mastery\_level} ($1 \le m \le 6$) coupled with a \texttt{last\_review} timestamp to dynamically schedule target review intervals.
+
+        \subsubsection{Half-Life Regression and Retention Tracking}
+        To predict memory state transitions accurately, parametric half-life regression (HLR) models estimate the probability $p$ of successful recall as a function of the time elapsed $\Delta t$ since the last exposure and the word's current memory half-life $h$:
+        \begin{equation}
+            p = 2^{-\frac{\Delta t}{h}}
+        \end{equation}
+        By integrating HLR-based scoring within the video recommendation and game-generation pipelines, \textit{Glosy} schedules lexical items to reinforce retention across both consumption and gameplay loops.
+
+
+% ==============================================================================
+% SECTION 3: MODALITIES FOR ACQUISITION AND ACTIVE REINFORCEMENT
+% ==============================================================================
+\section{Modalities for Language Acquisition}
+
+    \subsection{Short-Form Video in Second Language Acquisition (SLA)}
+        Authentic audio-visual materials provide a dense multimodal stream combining spoken phonology, pitch inflection, kinesics, facial cues, and sociocultural context. However, passive video consumption on social networks (e.g., TikTok, Instagram Reels, YouTube Shorts) presents an instructional paradox: high user engagement often yields poor long-term retention due to the absence of active cognitive retrieval. Without structured retrieval opportunities, passive lexical exposure remains subject to standard Ebbinghaus decay.
+
+        \subsubsection{The Passive Consumption Paradox}
+        \subsubsection{Authentic Audio-Visual Scaffolding}
+
+    \textit{Glosy} mitigates this dynamic by treating each video stream as an input channel tied directly to a persistent learner lexicon. Vocabulary encountered within a video reel is tagged and subsequently routed to active evaluation loops within the application's gameplay framework.
+
+    \subsection{Serious Games and Gamification in language learning}
+        \subsubsection{Serious Games}
+        Rather than relying on superficial badge mechanics, deep gamification tightly couples game completion criteria with target pedagogical objectives. Hypercasual and hybrid-casual mechanics—characterized by intuitive touch interactions, minimal onboarding latency, and rapid core loops—serve as ideal vehicles for active linguistic retrieval \cite{pizzo2023hypercasual, Zelevskaya2022thesis}.
+        \subsubsection{Active Recall Mechanics (Wordle, Word of Wonders)}
+
+    \textit{Glosy} integrates two primary hypercasual gameplay modalities:
+    \begin{itemize}
+        \item \textbf{Lexical Deduction (Wordle Variant):} Learners reconstruct target vocabulary through iterative orthographic validation, drawing target words directly from recently encountered video transcripts.
+        \item \textbf{Combinatorial Anagram Grids (Word of Wonders Variant):} Learners construct valid target words from a fixed set of phonemes/letters, forcing active orthographic retrieval rather than passive visual recognition.
+    \end{itemize}
+
+
+% ==============================================================================
+% SECTION 4: ALGORITHMIC FRAMEWORKS FOR PERSONALIZED VOCABULARY SCATTERING
+% ==============================================================================
+\section{Algorithmic Frameworks for Personalized Recommendation}
+\label{sec:recommendation_algorithms}
+% Search on scholar.google.com: Algorithmic Frameworks for Personalized Vocabulary Delivery
+
+    \subsection{Content-Based Filtering via Lexical Profiling}
+    \label{subsec:content_based}
+    The content-based recommendation subsystem analyzes subtitle transcripts generated from short-form video units. Each transcript is tokenized, normalized, and mapped against the user's documented knowledge state in the \texttt{user\_vocabulary} table. The candidate reel scoring function prioritizes videos that satisfy the pedagogical constraint:
+    \begin{equation}
+        \text{Coverage}(U, R) = \frac{|V_R \cap V_U|}{|V_R|} \ge 0.98
+    \end{equation}
+    where $V_R$ is the unique set of lexical tokens in reel $R$, and $V_U$ represents the known vocabulary lexicon of user $U$.
+
+    \subsection{Collaborative Filtering for Cohort-Based Difficulty Calibration}
+    \label{subsec:collaborative_filtering}
+    Collaborative filtering constructs user-item interaction matrices based on playback completion metrics, word lookup frequencies, and downstream game accuracy across peer learner cohorts. This identifies engagement and difficulty patterns that pure lexical indexing cannot detect.
+
+    \subsection{Hybrid Pedagogical Recommendation Architecture}
+    \label{subsec:hybrid_engine}
+    The unified recommendation engine integrates content-based lexical filtering, collaborative behavioral patterns, and HLR memory-decay timers into a multi-objective ranking function:
+    \begin{equation}
+        S(U, R) = w_1 \cdot \text{ZPD\_Fit}(U, R) + w_2 \cdot \text{SRS\_Urgency}(U, R) + w_3 \cdot \text{CollaborativeScore}(U, R)
+    \end{equation}
+    This formulation ensures that recommendations balance conversational authenticity, immediate comprehensibility ($i+1$), and overdue vocabulary reinforcement.
+
 \newpage
