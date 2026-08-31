@@ -7,16 +7,13 @@ import { useColorScheme } from '@/components/useColorScheme';
 import { DARK_COLORS } from '@/constants/App';
 import { LANGUAGES_META } from '@/constants/SupportedLanguages';
 import { useCreateReelWizard } from '@/context/CreateReelWizardContext';
-import { useProfile } from '@/context/ProfileContext';
 import { useProgress } from '@/context/ProgressContext';
-import { useReelsContext } from '@/context/ReelsContext';
 import { useUserReels } from '@/context/UserReelsContext';
 import { createReel } from '@/api/reelCreation';
 import { SubtitleVideoPreview } from '@/components/create/sync-subtitles/SubtitleVideoPreview';
 import { SubtitleRecordPanel } from '@/components/create/sync-subtitles/SubtitleRecordPanel';
 import { SubtitleReviewPanel } from '@/components/create/sync-subtitles/SubtitleReviewPanel';
 import type { DraftSubtitleLine, DraftTranslation } from '@/types/createReel';
-import type { Reel } from '@/types/dialogue';
 
 const LANGUAGE_OPTIONS = Object.values(LANGUAGES_META);
 
@@ -36,9 +33,7 @@ export default function SyncSubtitlesScreen() {
     title,
     reset,
   } = useCreateReelWizard();
-  const { userProfile } = useProfile();
   const { userProgress } = useProgress();
-  const { prependReel } = useReelsContext();
   const { prependUserReel } = useUserReels();
 
   // The reel's own subtitle language can't also be picked as a translation
@@ -300,55 +295,6 @@ export default function SyncSubtitlesScreen() {
         }
       );
 
-      const subtitleLanguage = LANGUAGE_OPTIONS.find((l) => l.id === languageId);
-
-      const optimisticReel: Reel = {
-        id: response.reel.id,
-        url: response.reel.url,
-        thumbnail_url: response.reel.thumbnail_url || '',
-        title: response.reel.title,
-        duration: response.reel.duration,
-        created_at: response.reel.created_at,
-        language: {
-          id: languageId,
-          code: subtitleLanguage?.code || '',
-          name: subtitleLanguage?.name || '',
-        },
-        created_by: {
-          id: userProfile?.id,
-          username: userProfile?.username,
-          profile_picture: userProfile?.profile_picture,
-        },
-        stats: { views: 0, likes: 0, comments: 0, saves: 0 },
-        user_interaction: {
-          viewed_at: new Date().toISOString(),
-          is_liked: false,
-          is_saved: false,
-          is_shared: false,
-          comment: null,
-        },
-        dialogue: {
-          id: response.reel.dialogue_id,
-          created_at: response.reel.created_at,
-          sentences: lines.map((line, index) => ({
-            id: -(index + 1),
-            position: index + 1,
-            start_time_ms: line.start_time_ms,
-            end_time_ms: line.end_time_ms,
-            text: line.text,
-            normalized_text: line.text,
-            // Mirrors get_sentence_translation's per-viewer lookup: once this
-            // reel is actually fetched, the server resolves the translation
-            // matching the viewer's own native language - so for this
-            // optimistic preview (viewed by the publisher themselves) we
-            // pick the same one from what was just typed in.
-            translation: line.translations.find((t) => t.languageId === nativeLanguageId)?.text || '',
-            tokens: [],
-          })),
-        },
-      };
-
-      prependReel(optimisticReel);
       // Mirrors the shape authController.js/getLatestByUser returns at
       // login, so the profile screen's "My Reels" grid can render this
       // straight away instead of waiting for the next login's fetch.
@@ -368,7 +314,7 @@ export default function SyncSubtitlesScreen() {
     } finally {
       setIsPublishing(false);
     }
-  }, [videoAsset, thumbnailAsset, languageId, nativeLanguageId, title, lines, userProfile, prependReel, prependUserReel, reset, router]);
+  }, [videoAsset, thumbnailAsset, languageId, nativeLanguageId, title, lines, prependUserReel, reset, router]);
 
   const handlePressPublish = useCallback(() => {
     const hasInvalid = lines.some((l) => l.end_time_ms <= l.start_time_ms || !l.text.trim());

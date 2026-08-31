@@ -16,7 +16,11 @@ interface SentenceRowProps {
 }
 
 export function SentenceRow({ sentence, isCurrentLine, isDark, isRightToLeft, isSaved, onPress, onTokenPress, onSavePress }: SentenceRowProps) {
-    const hasTokens = sentence.tokens && sentence.tokens.length > 0;
+    const words = sentence.text
+        .trim()
+        .split(/\s+/)
+        .map((word, index) => ({ word, position: index + 1 }));
+    const orderedWords = isRightToLeft ? [...words].reverse() : words;
 
     return (
         <Pressable
@@ -32,27 +36,38 @@ export function SentenceRow({ sentence, isCurrentLine, isDark, isRightToLeft, is
                 {/* Token buttons — not nested in Pressable to avoid touch conflicts */}
                 <View style={[styles.sentenceTextContainer, isRightToLeft && styles.sentenceTextContainerRtl]}>
                     <View style={[styles.tokensRow, isRightToLeft && styles.tokensRowRtl]}>
-                        {hasTokens ? (
-                            sentence.tokens.map((token) => (
+                        {orderedWords.map(({ word, position }) => {
+                            const token = sentence.tokens?.find((t) => t.position === position);
+
+                            if (!token) {
+                                return (
+                                    <Text
+                                        key={`${sentence.id}-${position}`}
+                                        style={[styles.sentenceText, isDark && { color: DARK_COLORS.text }, isRightToLeft && styles.textRtl]}
+                                    >
+                                        {word}
+                                    </Text>
+                                );
+                            }
+
+                            return (
                                 <Pressable
-                                    key={token.id}
-                                    style={[styles.tokenButton, isDark && { borderColor: DARK_COLORS.border }]}
+                                    key={`${sentence.id}-${position}`}
+                                    style={styles.tokenButton}
                                     onPress={(event) => {
                                         event.stopPropagation();
                                         onTokenPress(token, sentence.id);
                                     }}
                                 >
-                                    <Text style={[styles.tokenText, isDark && { color: DARK_COLORS.text }, isRightToLeft && styles.textRtl]}>{token.word.written_form}</Text>
+                                    <Text style={[styles.tokenText, isDark && { color: DARK_COLORS.text }, isRightToLeft && styles.textRtl]}>{word}</Text>
                                 </Pressable>
-                            ))
-                        ) : (
-                            <Text style={[styles.sentenceText, isDark && { color: DARK_COLORS.text }, isRightToLeft && styles.textRtl]}>{sentence.text}</Text>
-                        )}
+                            );
+                        })}
                     </View>
                 </View>
 
                 <View style={[styles.translationWrap, isRightToLeft && styles.translationWrapRtl]}>
-                    <Text style={[styles.translationText, isDark && { color: DARK_COLORS.textSecondary }, isRightToLeft && styles.textRtl]}>{sentence.translation}</Text>
+                    <Text style={[styles.translationText, isDark && { color: DARK_COLORS.textSecondary }]}>{sentence.translation}</Text>
                 </View>
 
                 {/* Save button — not nested with the token buttons, single per-row action */}
@@ -109,35 +124,34 @@ const styles = StyleSheet.create({
     tokensRow: {
         flexDirection: 'row',
         flexWrap: 'wrap',
+        alignItems: 'center',
+        gap: 4,
     },
     tokensRowRtl: {
         justifyContent: 'flex-end',
     },
     tokenButton: {
-        backgroundColor: 'blue',
-        borderRadius: 8,
-        paddingHorizontal: 10,
-        paddingVertical: 6,
-        borderWidth: 1,
-        borderColor: '#d1d5db',
+        paddingVertical: 2,
     },
     tokenText: {
-        fontSize: 14,
+        fontSize: 18,
         fontWeight: '500',
         color: '#1f2937',
     },
     sentenceText: {
-        fontSize: 14,
+        fontSize: 18,
         fontWeight: '500',
         color: '#1f2937',
-        lineHeight: 20,
+        lineHeight: 26,
     },
     translationText: {
-        fontSize: 13,
+        fontSize: 16,
         color: '#6b7280',
         fontStyle: 'italic',
-        lineHeight: 18,
+        lineHeight: 22,
         marginTop: 2,
+        textAlign: 'left',
+        writingDirection: 'ltr',
     },
     translationWrap: {
         marginLeft: 8,
