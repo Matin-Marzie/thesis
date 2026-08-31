@@ -1,84 +1,12 @@
-import CreateReelSchema from '../validation/CreateReelSchema.js';
 import ReportReelSchema from '../validation/ReportReelSchema.js';
 import reelModel from '../models/reelModel.js';
 import {
   CDN_PREFIXES,
-  createObjectKey,
   deleteObject,
-  headObject,
   isOwnedObjectUrl,
-  presignUpload,
-  publicObjectUrl,
 } from '../utils/cdn.js';
 
-const validVideoType = (type) => typeof type === 'string' && type.startsWith('video/');
-const validImageType = (type) => typeof type === 'string' && type.startsWith('image/');
-const ownedKey = (key, prefix, userId) => typeof key === 'string' && key.startsWith(`${prefix}/${userId}/`) && !key.includes('..');
-
 const reelController = {
-
-  // Presign direct upload URLs for a new reel's video and thumbnail. The client must then upload the files directly to the CDN before calling createReel.
-  async presignUploads(req, res) {
-    const { video, thumbnail } = req.body || {};
-    if (!video || !validVideoType(video.contentType) || Number(video.size) > 100 * 1024 * 1024) {
-      return res.status(400).json({ message: 'A valid video under 100MB is required' });
-    }
-    if (thumbnail && (!validImageType(thumbnail.contentType) || Number(thumbnail.size) > 100 * 1024 * 1024)) {
-      return res.status(400).json({ message: 'Invalid thumbnail' });
-    }
-
-    // Keys are generated server-side; the client receives upload permission only for these objects.
-    const videoKey = createObjectKey(CDN_PREFIXES.reels, req.user.id, video.fileName);
-    const thumbnailKey = thumbnail ? createObjectKey(CDN_PREFIXES.reels, req.user.id, thumbnail.fileName) : null;
-    return res.status(200).json({
-      video: { key: videoKey, url: await presignUpload({ key: videoKey, contentType: video.contentType }) },
-      thumbnail: thumbnailKey ? { key: thumbnailKey, url: await presignUpload({ key: thumbnailKey, contentType: thumbnail.contentType }) } : null,
-    });
-  },
-
-  async createReel(req, res) {
-    try {
-      const { videoKey, thumbnailKey, title, language_id, duration, lines = [] } = req.body || {};
-      if (!ownedKey(videoKey, CDN_PREFIXES.reels, req.user.id)) throw { status: 400, message: 'A valid uploaded video is required' };
-      if (thumbnailKey && !ownedKey(thumbnailKey, CDN_PREFIXES.reels, req.user.id)) throw { status: 400, message: 'Invalid uploaded thumbnail' };
-      // Do not persist media URLs until R2 confirms both objects exist.
-      await headObject(videoKey);
-      if (thumbnailKey) await headObject(thumbnailKey);
-
-      const { error, value } = CreateReelSchema.validate({
-        title,
-        language_id: Number(language_id),
-        duration: Number(duration),
-        lines,
-      });
-
-      if (error) {
-        throw { status: 400, message: error.details[0].message };
-      }
-
-      const reel = await reelModel.createWithDialogue({
-        createdBy: req.user.id,
-        url: publicObjectUrl(videoKey),
-        thumbnailUrl: thumbnailKey ? publicObjectUrl(thumbnailKey) : null,
-        title: value.title,
-        languageId: value.language_id,
-        duration: value.duration,
-        lines: value.lines,
-      });
-
-      res.status(201).json({
-        message: 'Reel published successfully',
-        reel,
-      });
-    } catch (error) {
-      if (error?.status) {
-        return res.status(error.status).json({ message: error.message });
-      }
-
-      console.error('Create reel error:', error);
-      res.status(500).json({ message: 'Internal server error' });
-    }
-  },
 
   // Delete the database row and its owned R2 objects.
   async deleteReel(req, res) {

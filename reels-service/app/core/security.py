@@ -1,6 +1,7 @@
 from jose import jwt, JWTError
 from typing import Optional, Tuple
 from pydantic import BaseModel
+from fastapi import Header, HTTPException, status
 
 from app.core.config import settings
 
@@ -64,5 +65,29 @@ def extract_token_from_header(authorization: Optional[str]) -> Optional[str]:
     parts = authorization.split(" ")
     if len(parts) != 2 or parts[0].lower() != "bearer":
         return None
-    
+
     return parts[1]
+
+
+def get_current_user(authorization: Optional[str] = Header(None)) -> Tuple[int, Optional[str]]:
+    """
+    FastAPI dependency that requires a valid access token, mirroring the
+    Node backend's verifyJWT middleware. Unlike decode_access_token/
+    extract_token_from_header (used directly by GET /reels to support
+    anonymous requests), this raises rather than returning (None, None).
+    """
+    token = extract_token_from_header(authorization)
+    if not token:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Unauthorized - No token provided",
+        )
+
+    user_id, username = decode_access_token(token)
+    if user_id is None:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Forbidden - Invalid token",
+        )
+
+    return user_id, username

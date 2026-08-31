@@ -1,4 +1,5 @@
 import apiClient from './client.js';
+import reelsClient from './reelsClient.js';
 import * as FileSystem from 'expo-file-system/legacy';
 import * as VideoThumbnails from 'expo-video-thumbnails';
 
@@ -16,8 +17,9 @@ const uploadToCdn = async (asset, presigned, contentType) => {
 
 /**
  * Upload a video and its synced subtitle lines to create a new reel.
- * Uses `apiClient` (the main Node backend on API_BASE_URL), not `reelsClient`
- * (the read-only reels-service) - the Node backend owns the write path.
+ * Uses `reelsClient` (the reels-service on REELS_API_BASE_URL) - reel
+ * creation lives there alongside the rest of the reels domain, not on the
+ * main Node backend (`apiClient`), which still owns delete/report/like/save.
  * @param {Object} params
  * @param {import('../types/createReel').WizardVideoAsset} params.video
  * @param {import('../types/createReel').WizardImageAsset|null} [params.thumbnail] - Optional cover image; when omitted, the phone extracts one from the video.
@@ -51,7 +53,7 @@ export const createReel = async (
     if (!thumbnailInfo.exists || !thumbnailInfo.size) {
       throw new Error('The selected thumbnail file is unavailable on this device');
     }
-    const presign = await apiClient.post('/reel/uploads/presign', {
+    const presign = await reelsClient.post('/reel/uploads/presign', {
       video: { fileName: videoFileName, contentType: videoContentType, size: video.fileSizeBytes },
       thumbnail: { fileName: thumbnailFileName, contentType: thumbnailContentType, size: thumbnailInfo.size },
     });
@@ -60,7 +62,7 @@ export const createReel = async (
     await uploadToCdn(uploadThumbnail, presign.data.thumbnail, thumbnailContentType);
     onUploadProgress?.({ loaded: 2, total: 2 });
 
-    const response = await apiClient.post('/reel', {
+    const response = await reelsClient.post('/reel', {
       videoKey: presign.data.video.key,
       thumbnailKey: presign.data.thumbnail?.key || null,
       title: title || null,

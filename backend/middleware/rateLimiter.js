@@ -71,20 +71,6 @@ export const resetPasswordLimiter = rateLimit({
   message: { message: 'Too many attempts.\nYou have reached the limit.\nPlease try again later.' },
 });
 
-// Video upload + ffmpeg transcoding is by far the most CPU/disk/bandwidth
-// expensive thing this server does (up to 100MB per file). Placed before
-// the multer middleware on its route so an over-limit request is rejected
-// before spending any bandwidth/disk on the upload body itself.
-// 10 uploads per hour for a single user
-export const createReelLimiter = rateLimit({
-  windowMs: 60 * 60 * 1000,
-  max: 10,
-  standardHeaders: true,
-  legacyHeaders: false,
-  keyGenerator: keyByUser,
-  message: { message: 'Too many reel uploads.\nYou have reached the limit.\nYou can upload 10 reels per hour.\nPlease try again later.' },
-});
-
 // Cheaper than video (5MB, no transcoding), but still a disk write worth capping.
 export const profilePictureLimiter = rateLimit({
   windowMs: 15 * 60 * 1000,

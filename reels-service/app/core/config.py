@@ -26,7 +26,14 @@ class Settings(BaseSettings):
     
     # JWT Configuration
     ACCESS_TOKEN_SECRET: str = ""
-    
+
+    # CDN (Cloudflare R2) Configuration - shared bucket with the Node backend
+    CDN_ENDPOINT: str = ""
+    CDN_ACCESS_KEY_ID: str = ""
+    CDN_SECRET_ACCESS_KEY: str = ""
+    CDN_BUCKET_NAME: str = ""
+    CDN_PUBLIC_URL: str = ""
+
     @property
     def database_url(self) -> str:
         """Construct the database connection URL."""

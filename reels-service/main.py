@@ -1,9 +1,14 @@
 from contextlib import asynccontextmanager
-from fastapi import FastAPI
+from fastapi import FastAPI, Request, status
+from fastapi.exceptions import RequestValidationError
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import JSONResponse
+from slowapi.errors import RateLimitExceeded
+from starlette.exceptions import HTTPException as StarletteHTTPException
 
 from app.core.config import settings
-from app.routers import reels_router
+from app.core.limiter import limiter
+from app.routers import reels_router, reel_creation_router
 from app.db.session import engine
 
 
@@ -37,9 +42,46 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+app.state.limiter = limiter
+
+
+@app.exception_handler(RateLimitExceeded)
+async def rate_limit_exceeded_handler(request: Request, exc: RateLimitExceeded) -> JSONResponse:
+    return JSONResponse(
+        status_code=status.HTTP_429_TOO_MANY_REQUESTS,
+        content={
+            "message": "Too many reel uploads.\nYou have reached the limit.\nYou can upload 10 reels per hour.\nPlease try again later."
+        },
+    )
+
+
+# The Node backend returns errors as {"message": ...}; mirror that here (in
+# addition to FastAPI's default {"detail": ...}) so the frontend's shared
+# `error.response?.data?.message` handling works for both backends.
+@app.exception_handler(StarletteHTTPException)
+async def http_exception_handler(request: Request, exc: StarletteHTTPException) -> JSONResponse:
+    return JSONResponse(status_code=exc.status_code, content={"message": exc.detail, "detail": exc.detail})
+
+
+@app.exception_handler(RequestValidationError)
+async def validation_exception_handler(request: Request, exc: RequestValidationError) -> JSONResponse:
+    errors = exc.errors()
+    message = errors[0]["msg"] if errors else "Validation error"
+    if message.startswith("Value error, "):
+        message = message[len("Value error, "):]
+    return JSONResponse(
+        status_code=status.HTTP_400_BAD_REQUEST,
+        content={"message": message, "detail": errors},
+    )
+
+
 # Include routers
 app.include_router(
     reels_router,
+    prefix=settings.API_V1_PREFIX,
+)
+app.include_router(
+    reel_creation_router,
     prefix=settings.API_V1_PREFIX,
 )
 
