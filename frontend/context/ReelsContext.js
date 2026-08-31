@@ -55,6 +55,33 @@ export const ReelsProvider = ({ children }) => {
   const nativeLanguageCode = currentLanguage?.native_language?.code || 'en';
 
   /**
+   * A sentence carries every available translation (all languages) - reels-service
+   * caches the whole set rather than picking one server-side, so the same
+   * cached dialogue serves every native language. Resolve the one matching
+   * this viewer's native language once here, so downstream components can
+   * keep reading a plain `sentence.translation` string as before.
+   */
+  const resolveSentenceTranslation = useCallback((sentence) => {
+    const match = sentence.translations?.find((t) => t.language_code === nativeLanguageCode);
+    return match?.text ?? null;
+  }, [nativeLanguageCode]);
+
+  const resolveReelTranslations = useCallback((reel) => {
+    const sentences = reel?.dialogue?.sentences;
+    if (!sentences) return reel;
+    return {
+      ...reel,
+      dialogue: {
+        ...reel.dialogue,
+        sentences: sentences.map((sentence) => ({
+          ...sentence,
+          translation: resolveSentenceTranslation(sentence),
+        })),
+      },
+    };
+  }, [resolveSentenceTranslation]);
+
+  /**
    * Fetch reels - handles both initial load and fetching more
    * Backend returns random reels each time
    * @param {boolean} refresh - If true, replaces existing reels
@@ -83,7 +110,7 @@ export const ReelsProvider = ({ children }) => {
         isAuthenticated,
       });
 
-      const newReels = response?.reels || [];
+      const newReels = (response?.reels || []).map(resolveReelTranslations);
       const totalAvailable = response?.total_reels_available_in_db_for_learning_language || 0;
 
       if (refresh) {
@@ -114,6 +141,7 @@ export const ReelsProvider = ({ children }) => {
     learningLanguageCode,
     nativeLanguageCode,
     isAuthenticated,
+    resolveReelTranslations,
   ]);
 
   /**

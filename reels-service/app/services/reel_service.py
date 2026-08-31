@@ -1,12 +1,11 @@
 from sqlalchemy import select, func, and_
 from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy.orm import selectinload, joinedload
+from sqlalchemy.orm import joinedload
 from typing import List, Optional, Tuple
 
 from app.models.reel import Reel, ReelInteraction
 from app.models.language import Language
-from app.models.dialogue import Dialogue, DialogueSentence
-from app.models.sentence import Sentence, SentenceToken, SentenceTranslation
+from app.models.dialogue import Dialogue
 from app.schemas.reel import (
     ReelResponse,
     ReelStatsResponse,
@@ -17,7 +16,6 @@ from app.schemas.language import LanguageResponse
 from app.schemas.user import CreatorResponse
 from app.schemas.dialogue import DialogueResponse
 from app.schemas.sentence import SentenceResponse
-from app.schemas.word import TokenResponse, WordResponse
 
 
 class ReelService:
@@ -83,93 +81,15 @@ class ReelService:
             saves=saves
         )
 
-    async def get_sentence_translation(
-        self,
-        sentence_id: int,
-        native_language_id: int
-    ) -> Optional[str]:
-        """Get translation of a sentence in the native language."""
-        # A sentence can have more than one translation_sentence in the same
-        # language - e.g. two different reels each contributing their own
-        # phrasing for the same original sentence - so this isn't guaranteed
-        # to be unique. Pick one deterministically rather than assuming a
-        # single match (scalar_one_or_none would raise MultipleResultsFound).
-        result = await self.db.execute(
-            select(Sentence.text)
-            .join(
-                SentenceTranslation,
-                SentenceTranslation.translation_sentence_id == Sentence.id
-            )
-            .where(
-                and_(
-                    SentenceTranslation.sentence_id == sentence_id,
-                    Sentence.language_id == native_language_id
-                )
-            )
-            .order_by(Sentence.id)
-            .limit(1)
-        )
-        translation = result.scalar()
-        return translation
-
-    async def build_dialogue_response(
-        self,
-        dialogue: Dialogue,
-        native_language_id: int
-    ) -> DialogueResponse:
-        """Build dialogue response with sentences, tokens, and translations."""
-        sentences_response = []
-
-        # Get dialogue sentences with related data
-        result = await self.db.execute(
-            select(DialogueSentence)
-            .options(
-                joinedload(DialogueSentence.sentence).selectinload(Sentence.tokens).joinedload(SentenceToken.word)
-            )
-            .where(DialogueSentence.dialogue_id == dialogue.id)
-            .order_by(DialogueSentence.position)
-        )
-        dialogue_sentences = result.unique().scalars().all()
-
-        for ds in dialogue_sentences:
-            sentence = ds.sentence
-            
-            # Get translation
-            translation = await self.get_sentence_translation(
-                sentence.id, 
-                native_language_id
-            )
-
-            # Build tokens
-            tokens_response = []
-            for token in sorted(sentence.tokens, key=lambda t: t.position):
-                word = token.word
-                word_response = WordResponse(
-                    id=word.id,
-                    written_form=word.written_form,
-                    part_of_speech=word.part_of_speech,
-                    level=word.level,
-                    article=word.article,
-                    audio_url=word.audio_url,
-                    image_url=word.image_url
-                )
-                tokens_response.append(TokenResponse(
-                    id=token.id,
-                    position=token.position,
-                    part_of_speech=token.part_of_speech,
-                    word=word_response
-                ))
-
-            sentences_response.append(SentenceResponse(
-                id=sentence.id,
-                position=ds.position,
-                start_time_ms=ds.start_time_ms,
-                end_time_ms=ds.end_time_ms,
-                text=sentence.text,
-                normalized_text=sentence.normalized_text,
-                translation=translation,
-                tokens=tokens_response
-            ))
+    async def build_dialogue_response(self, dialogue: Dialogue) -> DialogueResponse:
+        """Build dialogue response from the precomputed sentences_json
+        snapshot (see ReelCreationService.create_with_dialogue) - no query,
+        since dialogue.sentences_json is already eager-loaded alongside the
+        reel itself. Contains every sentence's full translation set (all
+        languages, not just one) - the client picks the entry matching the
+        viewer's native language."""
+        sentences_json = dialogue.sentences_json or []
+        sentences_response = [SentenceResponse.model_validate(s) for s in sentences_json]
 
         return DialogueResponse(
             id=dialogue.id,
@@ -278,10 +198,7 @@ class ReelService:
             # Build dialogue response
             dialogue_response = None
             if reel.dialogue:
-                dialogue_response = await self.build_dialogue_response(
-                    reel.dialogue,
-                    native_language.id
-                )
+                dialogue_response = await self.build_dialogue_response(reel.dialogue)
 
             # Reflect this user's own like/save/etc. state, if any
             interaction = interactions_by_reel.get(reel.id)

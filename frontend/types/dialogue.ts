@@ -15,6 +15,11 @@ export interface Token {
   word: Word;
 }
 
+export interface SentenceTranslation {
+  language_code: string;
+  text: string;
+}
+
 export interface Sentence {
   id: number;
   position: number;
@@ -22,7 +27,11 @@ export interface Sentence {
   end_time_ms: number;
   text: string;
   normalized_text: string;
-  translation: string;
+  // Raw from the API: every available translation, across all languages.
+  translations: SentenceTranslation[];
+  // Resolved client-side (ReelsContext.fetchReels) to the viewer's native
+  // language, from `translations` - null if none exists for that language.
+  translation: string | null;
   tokens: Token[];
 }
 

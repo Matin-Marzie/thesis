@@ -92,7 +92,8 @@ ALTER SEQUENCE public.dialogue_sentences_id_seq OWNED BY public.dialogue_sentenc
 CREATE TABLE public.dialogues (
     id bigint NOT NULL,
     language_id integer NOT NULL,
-    created_at timestamp with time zone DEFAULT now() NOT NULL
+    created_at timestamp with time zone DEFAULT now() NOT NULL,
+    sentences_json jsonb
 );
 
 
