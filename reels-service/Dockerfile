@@ -14,10 +14,12 @@ COPY requirements.txt .
 # Install Python dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 
-# spaCy models aren't on PyPI - downloaded separately (en/el, for
-# lemmatizer.py). Farsi uses hazm, which needs no extra model download.
-RUN python -m spacy download en_core_web_sm \
-    && python -m spacy download el_core_news_sm
+# spaCy's English model isn't on PyPI - downloaded separately (lemmatizer.py).
+RUN python -m spacy download en_core_web_sm
+
+# Stanza's Greek model (lemmatizer.py) - noticeably more accurate than
+# spaCy's small Greek model. Farsi uses hazm, which needs no model download.
+RUN python -c "import stanza; stanza.download('el')"
 
 # Copy application code
 COPY . .

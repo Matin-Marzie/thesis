@@ -3,7 +3,7 @@ from typing import List, NamedTuple, Optional
 
 # sentence_tokens.part_of_speech is VARCHAR(10) - short, consistent codes
 # regardless of which library/tagset produced them.
-_SPACY_POS_MAP = {
+_UPOS_MAP = {
     "NOUN": "noun", "PROPN": "noun", "VERB": "verb", "AUX": "verb",
     "ADJ": "adjective", "ADV": "adverb", "ADP": "prep", "DET": "determiner",
     "PRON": "pronoun", "CCONJ": "conj", "SCONJ": "conj", "NUM": "num",
@@ -12,7 +12,12 @@ _SPACY_POS_MAP = {
 
 _SPACY_MODEL_BY_LANGUAGE = {
     "en": "en_core_web_sm",
-    "el": "el_core_news_sm",
+}
+
+# Stanza's UD-based upos tags use the same tagset as spaCy's, so one map
+# covers both.
+_STANZA_MODEL_BY_LANGUAGE = {
+    "el": "el",
 }
 
 # spaCy splits contractions into multiple linguistic tokens (e.g. "I'm" ->
@@ -95,7 +100,7 @@ def _lemmatize_spacy_group(group: list) -> "LemmaToken":
         # never matches a dictionary word, the same as any other lemma with
         # no match (see ReelCreationService._tokenize_sentence).
         lemma = strip_diacritics(tok.lemma_.strip().lower())
-        return LemmaToken(lemma=lemma, part_of_speech=_SPACY_POS_MAP.get(tok.pos_))
+        return LemmaToken(lemma=lemma, part_of_speech=_UPOS_MAP.get(tok.pos_))
 
     # A contraction: "I'm" -> "i am", "don't" -> "do not" - a multi-word
     # phrase lemma, looked up in `words` the same way a single-word lemma
@@ -106,6 +111,42 @@ def _lemmatize_spacy_group(group: list) -> "LemmaToken":
         for tok in group
     ]
     return LemmaToken(lemma=strip_diacritics(" ".join(parts)), part_of_speech="phrase")
+
+
+_stanza_pipelines = {}
+
+
+def _get_stanza_pipeline(lang_code: str):
+    # Lazy + cached, same as _get_spacy_model. stanza.Pipeline downloads
+    # its model resources on first use if missing (pre-downloaded in
+    # Docker builds instead, so this is a no-op there).
+    if lang_code not in _stanza_pipelines:
+        import stanza
+        _stanza_pipelines[lang_code] = stanza.Pipeline(lang_code, processors="tokenize,pos,lemma", verbose=False)
+    return _stanza_pipelines[lang_code]
+
+
+def _lemmatize_stanza_token(tok) -> LemmaToken:
+    # Stanza distinguishes surface tokens from the (possibly several)
+    # dependency-tree "words" they expand to - e.g. Greek "στη" is one
+    # token but two words ("σε" + "ο", roughly "to" + "the"). This is the
+    # same shape of problem spaCy's English contractions caused, and the
+    # same fix: one LemmaToken per token, joining multiple words into a
+    # phrase rather than letting them consume separate positions.
+    words = tok.words
+    if len(words) == 1:
+        w = words[0]
+        lemma = strip_diacritics((w.lemma or w.text).strip().lower())
+        # Every Greek definite article form (ο/η/το/της/τα/των/...)
+        # lemmatizes to the same citation form "ο" regardless of its
+        # actual gender/case/number - linking every occurrence to that one
+        # generic dictionary entry isn't useful, so skip rather than match.
+        if w.upos == "DET" and lemma == "ο":
+            return LemmaToken(lemma="", part_of_speech=None)
+        return LemmaToken(lemma=lemma, part_of_speech=_UPOS_MAP.get(w.upos))
+
+    parts = [strip_diacritics((w.lemma or w.text).strip().lower()) for w in words]
+    return LemmaToken(lemma=" ".join(parts), part_of_speech="phrase")
 
 
 _hazm_normalizer = None
@@ -134,6 +175,16 @@ def lemmatize(text: str, language_code: str) -> Optional[List[LemmaToken]]:
         doc = nlp(text)
         groups = _group_spacy_tokens_by_surface_word(doc)
         return [_lemmatize_spacy_group(group) for group in groups]
+
+    if language_code in _STANZA_MODEL_BY_LANGUAGE:
+        nlp = _get_stanza_pipeline(_STANZA_MODEL_BY_LANGUAGE[language_code])
+        doc = nlp(text)
+        return [
+            _lemmatize_stanza_token(tok)
+            for sent in doc.sentences
+            for tok in sent.tokens
+            if not (len(tok.words) == 1 and tok.words[0].upos == "PUNCT")
+        ]
 
     if language_code == "fa":
         normalizer, lemmatizer = _get_hazm()
