@@ -97,6 +97,76 @@ class ReelService:
             sentences=sentences_response
         )
 
+    async def get_reel_by_id(self, reel_id: int) -> Optional[Reel]:
+        """Fetch a single reel with the same relationships get_random_reels
+        eager-loads, so build_reel_response can be reused for it."""
+        result = await self.db.execute(
+            select(Reel)
+            .options(
+                joinedload(Reel.language),
+                joinedload(Reel.creator),
+                joinedload(Reel.dialogue)
+            )
+            .where(Reel.id == reel_id)
+        )
+        return result.unique().scalar_one_or_none()
+
+    async def build_reel_response(self, reel: Reel, user_id: Optional[int] = None) -> ReelResponse:
+        """Build the full ReelResponse (stats, creator, language, dialogue,
+        user_interaction) for one reel - the per-reel body of
+        get_random_reels, factored out so other endpoints (e.g. reel
+        creation) can return the identical shape."""
+        stats = await self.get_reel_stats(reel.id)
+
+        creator_response = None
+        if reel.creator:
+            creator_response = CreatorResponse(
+                id=reel.creator.id,
+                username=reel.creator.username,
+                profile_picture=reel.creator.profile_picture
+            )
+
+        language_response = None
+        if reel.language:
+            language_response = LanguageResponse(
+                id=reel.language.id,
+                code=reel.language.code,
+                name=reel.language.name
+            )
+
+        dialogue_response = None
+        if reel.dialogue:
+            dialogue_response = await self.build_dialogue_response(reel.dialogue)
+
+        interactions_by_reel = await self.get_reel_interactions_for_user(
+            user_id, [reel.id]
+        ) if user_id else {}
+        interaction = interactions_by_reel.get(reel.id)
+        if interaction:
+            user_interaction = UserInteractionResponse(
+                viewed_at=interaction.viewed_at,
+                is_liked=interaction.is_liked,
+                is_saved=interaction.is_saved,
+                is_shared=interaction.is_shared,
+                comment=interaction.comment
+            )
+        else:
+            user_interaction = UserInteractionResponse()
+
+        return ReelResponse(
+            id=reel.id,
+            url=reel.url,
+            thumbnail_url=reel.thumbnail_url,
+            title=reel.title,
+            duration=reel.duration,
+            created_at=reel.created_at,
+            language=language_response,
+            created_by=creator_response,
+            stats=stats,
+            user_interaction=user_interaction,
+            dialogue=dialogue_response
+        )
+
     async def get_reel_interactions_for_user(
         self,
         user_id: int,

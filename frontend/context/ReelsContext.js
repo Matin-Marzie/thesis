@@ -3,6 +3,7 @@ import { fetchReels as fetchReelsApi } from '../api/reels';
 import { useProgress } from './ProgressContext';
 import { useAuth } from './AuthContext';
 import { REELS_LIMIT } from '../constants/Reels';
+import { getNativeLanguageCode, resolveReelTranslations as resolveReelTranslationsFor } from '../utils/resolveReelTranslations';
 
 /**
  * @typedef {Object} Reel
@@ -52,34 +53,12 @@ export const ReelsProvider = ({ children }) => {
   }, [userProgress?.languages]);
 
   const learningLanguageCode = currentLanguage?.learning_language?.code || 'el';
-  const nativeLanguageCode = currentLanguage?.native_language?.code || 'en';
+  const nativeLanguageCode = getNativeLanguageCode(userProgress);
 
-  /**
-   * A sentence carries every available translation (all languages) - reels-service
-   * caches the whole set rather than picking one server-side, so the same
-   * cached dialogue serves every native language. Resolve the one matching
-   * this viewer's native language once here, so downstream components can
-   * keep reading a plain `sentence.translation` string as before.
-   */
-  const resolveSentenceTranslation = useCallback((sentence) => {
-    const match = sentence.translations?.find((t) => t.language_code === nativeLanguageCode);
-    return match?.text ?? null;
-  }, [nativeLanguageCode]);
-
-  const resolveReelTranslations = useCallback((reel) => {
-    const sentences = reel?.dialogue?.sentences;
-    if (!sentences) return reel;
-    return {
-      ...reel,
-      dialogue: {
-        ...reel.dialogue,
-        sentences: sentences.map((sentence) => ({
-          ...sentence,
-          translation: resolveSentenceTranslation(sentence),
-        })),
-      },
-    };
-  }, [resolveSentenceTranslation]);
+  const resolveReelTranslations = useCallback(
+    (reel) => resolveReelTranslationsFor(reel, nativeLanguageCode),
+    [nativeLanguageCode]
+  );
 
   /**
    * Fetch reels - handles both initial load and fetching more

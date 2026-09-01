@@ -12,7 +12,11 @@ interface ProfileReel {
   id: string | number;
   thumbnail_url?: string;
   duration?: number;
+  // Login seeds this list with a flat `language_id`; a reel prepended
+  // right after creation carries the full `language` object instead
+  // (same shape reels-service's GET /reels returns).
   language_id?: number;
+  language?: { id: number };
 }
 
 // Built once at module load, not on every render/reel - a plain id -> flag
@@ -41,7 +45,7 @@ export function ProfileReels({ isDark, reels, title = 'My Reels', onReelPress }:
       <Text style={[styles.sectionTitle, isDark && { color: DARK_COLORS.text }]}>{title}</Text>
       <View style={styles.reelsGrid}>
         {reels.map((reel) => {
-          const languageFlag = getLanguageFlag(reel.language_id);
+          const languageFlag = getLanguageFlag(reel.language_id ?? reel.language?.id);
           return (
             <TouchableOpacity
               key={reel.id}

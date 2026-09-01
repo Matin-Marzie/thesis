@@ -1,3 +1,5 @@
+import type { Reel } from './dialogue';
+
 export interface WizardVideoAsset {
   uri: string;
   durationMs: number;
@@ -49,15 +51,8 @@ export interface CreateReelPayload {
 
 export interface CreateReelResponse {
   message: string;
-  reel: {
-    id: number;
-    language_id: number;
-    dialogue_id: number;
-    created_by: number;
-    url: string;
-    thumbnail_url: string | null;
-    title: string | null;
-    duration: number;
-    created_at: string;
-  };
+  // Same full shape GET /reels returns (language, created_by, stats,
+  // user_interaction, dialogue.sentences with tokens/translations) - see
+  // reels-service's ReelService.build_reel_response.
+  reel: Reel;
 }

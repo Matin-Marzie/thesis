@@ -295,18 +295,11 @@ export default function SyncSubtitlesScreen() {
         }
       );
 
-      // Mirrors the shape authController.js/getLatestByUser returns at
-      // login, so the profile screen's "My Reels" grid can render this
-      // straight away instead of waiting for the next login's fetch.
-      prependUserReel({
-        id: response.reel.id,
-        url: response.reel.url,
-        thumbnail_url: response.reel.thumbnail_url || null,
-        title: response.reel.title,
-        duration: response.reel.duration,
-        language_id: languageId,
-        created_at: response.reel.created_at,
-      });
+      // reels-service's POST /reel now returns the full reel (dialogue
+      // sentences/tokens/translations + stats + user_interaction included,
+      // same shape as GET /reels), so it can be prepended as-is without
+      // waiting for the next login's fetch to surface it.
+      prependUserReel(response.reel);
       reset();
       router.replace('/(tabs)/profile');
     } catch (error: any) {

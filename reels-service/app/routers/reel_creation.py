@@ -16,12 +16,12 @@ from app.db import get_db
 from app.schemas.reel_creation import (
     CreateReelPublishResponse,
     CreateReelRequest,
-    CreateReelResponse,
     PresignedFile,
     PresignUploadsRequest,
     PresignUploadsResponse,
 )
 from app.services.reel_creation_service import ReelCreationService
+from app.services.reel_service import ReelService
 
 router = APIRouter(prefix="/reel", tags=["reel-creation"])
 
@@ -132,7 +132,14 @@ async def create_reel(
         lines=body.lines,
     )
 
+    # create_with_dialogue only refreshes reel's own columns, not its
+    # language/creator/dialogue relationships - re-fetch with those
+    # eager-loaded so the response matches GET /reels' full shape exactly.
+    reel_service = ReelService(db)
+    full_reel = await reel_service.get_reel_by_id(reel.id)
+    reel_response = await reel_service.build_reel_response(full_reel, user_id=user_id)
+
     return CreateReelPublishResponse(
         message="Reel published successfully",
-        reel=CreateReelResponse.model_validate(reel),
+        reel=reel_response,
     )

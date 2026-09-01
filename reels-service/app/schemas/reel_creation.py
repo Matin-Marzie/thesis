@@ -1,7 +1,8 @@
-from datetime import datetime
 from typing import List, Optional
 
 from pydantic import BaseModel, Field, field_validator, model_validator
+
+from app.schemas.reel import ReelResponse
 
 # Mirrors backend/validation/CreateReelSchema.js's limits exactly, since both
 # services write into the same reels/dialogues/sentences tables.
@@ -108,21 +109,6 @@ class CreateReelRequest(BaseModel):
         return self
 
 
-class CreateReelResponse(BaseModel):
-    id: int
-    language_id: Optional[int] = None
-    dialogue_id: Optional[int] = None
-    created_by: Optional[int] = None
-    url: str
-    thumbnail_url: Optional[str] = None
-    title: Optional[str] = None
-    duration: Optional[int] = None
-    created_at: datetime
-
-    class Config:
-        from_attributes = True
-
-
 class CreateReelPublishResponse(BaseModel):
     message: str
-    reel: CreateReelResponse
+    reel: ReelResponse

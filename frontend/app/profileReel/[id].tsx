@@ -6,10 +6,12 @@ import { FontAwesome } from '@expo/vector-icons';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import type { BottomSheetModal } from '@gorhom/bottom-sheet';
 import { useUserReels } from '@/context/UserReelsContext';
+import { useProgress } from '@/context/ProgressContext';
 import { ReelItem } from '@/components/reels/ReelItem';
 import { ReelOptionsBottomSheetModal } from '@/components/profile/ReelOptionsBottomSheetModal';
 import TouchableOpacity from '@/components/TouchableOpacity';
 import { deleteReel as deleteReelRequest } from '@/api/reelCreation';
+import { getNativeLanguageCode, resolveReelTranslations } from '@/utils/resolveReelTranslations';
 import type { Reel } from '@/types/dialogue';
 
 const { height: SCREEN_HEIGHT } = Dimensions.get('window');
@@ -21,11 +23,22 @@ export default function ProfileReelScreen() {
   const router = useRouter();
   const isFocused = useIsFocused();
   const { userReels, removeUserReel } = useUserReels();
+  const { userProgress } = useProgress();
+
+  // userReels carries the raw, all-languages `translations` array (same
+  // shape reels-service returns from POST /reel and GET /reels) - resolve
+  // each sentence's single `translation` string here, since (unlike the
+  // main feed) nothing else in the userReels pipeline does this.
+  const nativeLanguageCode = getNativeLanguageCode(userProgress);
+  const resolvedUserReels = useMemo(
+    () => userReels.map((reel: Reel) => resolveReelTranslations(reel, nativeLanguageCode)),
+    [userReels, nativeLanguageCode]
+  );
 
   const initialIndex = useMemo(() => {
-    const index = userReels.findIndex((r: Reel) => r.id.toString() === id);
+    const index = resolvedUserReels.findIndex((r: Reel) => r.id.toString() === id);
     return index >= 0 ? index : 0;
-  }, [userReels, id]);
+  }, [resolvedUserReels, id]);
 
   const [activeIndex, setActiveIndex] = useState(initialIndex);
   const flatListRef = useRef<any>(null);
@@ -108,7 +121,7 @@ export default function ProfileReelScreen() {
       <StatusBar barStyle="light-content" backgroundColor="transparent" translucent />
       <FlatList
         ref={flatListRef}
-        data={userReels}
+        data={resolvedUserReels}
         renderItem={renderItem}
         keyExtractor={keyExtractor}
         initialScrollIndex={initialIndex}
