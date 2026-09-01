@@ -162,6 +162,41 @@ def _get_hazm():
     return _hazm_normalizer, _hazm_lemmatizer
 
 
+_hazm_informal_normalizer = None
+
+
+def _get_hazm_informal():
+    global _hazm_informal_normalizer
+    if _hazm_informal_normalizer is None:
+        from hazm import InformalNormalizer
+        _hazm_informal_normalizer = InformalNormalizer()
+    return _hazm_informal_normalizer
+
+
+def _resolve_hazm_lemma(lemmatizer, informal_normalizer, tok: str) -> str:
+    """Try the token as typed first. Only if hazm's Lemmatizer doesn't
+    recognize it at all (returns it unchanged) do we try
+    InformalNormalizer's first candidate instead - e.g. "میخوام" (typed
+    without the standard half-space) isn't recognized directly, but
+    InformalNormalizer corrects it to "می‌خواهم" first, which IS
+    recognized. Trying the informal-normalized form unconditionally
+    instead would also "fix" already-correctly-typed words into garbled
+    nonsense (tested: "می‌خواستم" -> "می‌خواهستم", not a real word) - so
+    this try-original-first order matters.
+    """
+    raw_lemma = lemmatizer.lemmatize(tok)
+    if raw_lemma != tok:
+        return raw_lemma
+
+    candidates = informal_normalizer.normalize(tok)
+    if len(candidates) == 1 and len(candidates[0]) == 1:
+        first_candidate = candidates[0][0][0]
+        if first_candidate != tok:
+            return lemmatizer.lemmatize(first_candidate)
+
+    return raw_lemma
+
+
 def lemmatize(text: str, language_code: str) -> Optional[List[LemmaToken]]:
     """One LemmaToken per surface token, in sentence order.
 
@@ -188,12 +223,13 @@ def lemmatize(text: str, language_code: str) -> Optional[List[LemmaToken]]:
 
     if language_code == "fa":
         normalizer, lemmatizer = _get_hazm()
+        informal_normalizer = _get_hazm_informal()
         from hazm import word_tokenize
 
         tokens = word_tokenize(normalizer.normalize(text))
         result = []
         for tok in tokens:
-            raw_lemma = lemmatizer.lemmatize(tok)
+            raw_lemma = _resolve_hazm_lemma(lemmatizer, informal_normalizer, tok)
             if "#" in raw_lemma:
                 # hazm returns "pastRoot#presentRoot" for recognized verbs
                 # (e.g. "رفت#رو" for می‌روم) - the dictionary stores
