@@ -23,7 +23,7 @@ const PATHS = [
     {  midX: 90, midY:  -30, p1: 0.35 }, // hard right, slight rise
 ];
 
-export default function FinishScreen({ visible = false, onCollect, coinTarget, gridWords = {}, dictionarySet = {} }) {
+export default function FinishScreen({ visible = false, onCollect, coinTarget, gridWords = {}, getWordsByWrittenForm = () => [] }) {
     const vibrate = useVibration();
     const badgeScale = useRef(new Animated.Value(0)).current;
     const badgeOpacity = useRef(new Animated.Value(1)).current;
@@ -54,7 +54,7 @@ export default function FinishScreen({ visible = false, onCollect, coinTarget, g
     const foundWords = Object.keys(gridWords).filter(w => gridWords[w].isFound);
     const foundWordItems = foundWords
         .map((word) => {
-            const items = dictionarySet[word] ?? [];
+            const items = getWordsByWrittenForm(word);
             if (!items.length) return null;
 
             const dictionaryId = gridWords[word]?.DictionaryId;

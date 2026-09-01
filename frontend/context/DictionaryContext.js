@@ -1,6 +1,7 @@
 import { createContext, useState, useEffect, useContext, useCallback, useRef, useMemo } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { getDictionaryByCodes } from '../api/dictionary';
+import { normalizeWord } from '../utils/wordNormalizer';
 import { useProgress } from './ProgressContext';
 import { useNetwork } from './NetworkContext';
 import { useAuth } from './AuthContext';
@@ -12,7 +13,7 @@ const DICTIONARY_TTL = 7 * 24 * 60 * 60 * 1000; // 7 days in milliseconds
  * @property {Object|null} dictionary - The dictionary data
  * @property {boolean} dictionaryLoading - Whether dictionary is loading
  * @property {string|null} dictionaryError - Error message if any
- * @property {Object} getWordsByWrittenForm - written_form -> array of dictionary word entries (homographs share a bucket; disambiguate by id)
+ * @property {(writtenForm: string) => Object[]} getWordsByWrittenForm - looks up dictionary word entries by written_form (normalized per the current learning language before hashing/comparing); homographs come back together in one array - disambiguate by id
  * @property {(learningCode: string, nativeCode: string) => Promise<Object|null>} fetchDictionary - Manual fetch function, returns dictionary data
  * @property {() => Promise<void>} reload - Reload current dictionary
  */
@@ -134,26 +135,33 @@ export const DictionaryProvider = ({ children }) => {
     fetchDictionary,
   ]);
 
-  // Bucket dictionary words by written_form so string lookups (e.g. resolving
-  // the word tapped in a reel subtitle) are O(1) instead of scanning the
-  // full ~11k-word list. Homographs (same written_form, different word id -
-  // e.g. different meaning/POS) share a bucket; callers with a known id
-  // should disambiguate within it. Same pattern as Wordle's wordleDictionary
-  // and WordOfWonders' dictionarySet.
-  const getWordsByWrittenForm = useMemo(() => {
+  // Bucket dictionary words by written_form (normalized per the current
+  // learning language via utils/wordNormalizer.js - trim/case/diacritics
+  // don't matter for identity) so string lookups (e.g. resolving the word
+  // tapped in a reel subtitle, or a Wordle/WordOfWonders guess) are O(1)
+  // instead of scanning the full ~11k-word list. Homographs (same
+  // written_form, different word id - e.g. different meaning/POS) share a
+  // bucket; callers with a known id should disambiguate within it.
+  const learningLanguageCode = currentLang?.learning_language?.code;
+
+  const writtenFormBuckets = useMemo(() => {
     const map = Object.create(null);
     const words = dictionary?.words;
     if (!Array.isArray(words)) return map;
 
     for (const item of words) {
-      const key = item?.written_form;
+      const key = normalizeWord(item?.written_form, learningLanguageCode);
       if (!key) continue;
       if (!map[key]) map[key] = [];
       map[key].push(item);
     }
 
     return map;
-  }, [dictionary]);
+  }, [dictionary, learningLanguageCode]);
+
+  const getWordsByWrittenForm = useCallback((writtenForm) => {
+    return writtenFormBuckets[normalizeWord(writtenForm, learningLanguageCode)] ?? [];
+  }, [writtenFormBuckets, learningLanguageCode]);
 
   const value = useMemo(() => ({
     dictionary,

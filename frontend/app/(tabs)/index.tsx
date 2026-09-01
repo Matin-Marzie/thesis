@@ -9,9 +9,14 @@ import FilterBottomSheetModal from '@/components/vocabulary/FilterBottomSheetMod
 import VocabularySearchField from '@/components/vocabulary/VocabularySearchField';
 import VocabularyList from '@/components/vocabulary/VocabularyList';
 import SentenceList from '@/components/sentences/SentenceList';
-import { normalizeQuery } from '@/utils/normalize';
 import { useColorScheme } from '@/components/useColorScheme';
 import { DARK_COLORS, PRIMARY_COLOR } from '@/constants/App';
+
+// Strips Arabic tashkeel (harakat, U+0610–U+061A and U+064B–U+065F) so that
+// bare-consonant queries match fully-vowelled text, and vice versa.
+function normalizeQuery(text: string): string {
+  return text.trim().toLowerCase().replace(/[ؐ-ًؚ-ٟ]/g, '');
+}
 
 export default function HomeScreen() {
   const isDark = useColorScheme() === 'dark';

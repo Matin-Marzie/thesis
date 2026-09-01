@@ -1,5 +1,6 @@
 // ================== Crossword Generator ==================
-import { normalizeWord, isValidWordForLang } from './languageUtils';
+import { isValidWordForLang } from './languageUtils';
+import { normalizeWord } from '@/utils/wordNormalizer';
 
 /* Utils */
 function randomInt(min, max) {

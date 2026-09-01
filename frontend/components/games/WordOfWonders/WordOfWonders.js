@@ -26,7 +26,7 @@ import { GREEN, MAX_WIDTH, width, height, horizontalOffset, BACKGROUND_IMAGE_URI
 import { useVocabularyContext } from '@/context/VocabularyContext';
 import { useProgress } from '@/context/ProgressContext';
 import { useDictionaryContext } from '@/context/DictionaryContext';
-import { normalizeWord, isRTL } from './languageUtils';
+import { isRTL } from './languageUtils';
 import { formatCompactNumber } from '@/utils/formatCompactNumber';
 import { useVibration } from '@/hooks/useVibration';
 import VibrantTouchableOpacity from '@/components/TouchableOpacity';
@@ -46,7 +46,7 @@ export default function WordOfWonders({ boxData: initialBoxData, gridWords: init
 
     const { userVocabulary } = useVocabularyContext();
     const { userProgress, setUserProgress } = useProgress();
-    const { dictionary } = useDictionaryContext();
+    const { getWordsByWrittenForm } = useDictionaryContext();
     const vibrate = useVibration();
 
     const insets = useSafeAreaInsets();
@@ -84,23 +84,6 @@ export default function WordOfWonders({ boxData: initialBoxData, gridWords: init
     useEffect(() => {
         availableHeightRef.current = availableHeight;
     }, [availableHeight]);
-
-    // Normalize written_form the same way LevelGenerator did so lookups always match
-    // (e.g. Greek "αδελφός" → "αδελφος", Farsi "بَرادَر" → "برادر")
-    const dictionarySet = useMemo(() => {
-        const map = Object.create(null);
-        if (!Array.isArray(dictionary?.words)) return map;
-
-        for (const item of dictionary.words) {
-            const key = normalizeWord(item?.written_form, langCode).toLowerCase();
-            if (!key) continue;
-
-            if (!map[key]) map[key] = [];
-            map[key].push(item);
-        }
-
-        return map;
-    }, [dictionary?.words, langCode]);
 
     const [boxData, setBoxData] = useState(initialBoxData);
     const [gridWords] = useState(initialGridWords);
@@ -683,7 +666,7 @@ export default function WordOfWonders({ boxData: initialBoxData, gridWords: init
                 setFoundWords((prev) => [...prev, word]);
                 setSelectedLetters([]);
             }
-        } else if (selectedLetters.length > 1 && dictionarySet[word]?.length) {
+        } else if (selectedLetters.length > 1 && getWordsByWrittenForm(word).length) {
             // Check if word is in dictionary (extra word)
             if (foundWords.includes(word)) {
                 // Extra word already found - animate score board
@@ -768,7 +751,7 @@ export default function WordOfWonders({ boxData: initialBoxData, gridWords: init
             ]).start();
 
         }
-    }, [selectedLetters, letterAnimations, foundWords, handleGridWord, shuffledLetters, wordAnimationPosition, wordAnimationOpacity, wordAnimationScale, vibrate, availableHeight]);
+    }, [selectedLetters, letterAnimations, foundWords, handleGridWord, shuffledLetters, wordAnimationPosition, wordAnimationOpacity, wordAnimationScale, vibrate, availableHeight, getWordsByWrittenForm]);
 
 
     const renderSelectedWord = () => {
@@ -868,7 +851,7 @@ export default function WordOfWonders({ boxData: initialBoxData, gridWords: init
                         shakeWord={shakeWord}
                         shakeAnimation={shakeAnimation}
                         langCode={langCode}
-                        dictionarySet={dictionarySet}
+                        getWordsByWrittenForm={getWordsByWrittenForm}
                         canvasHeight={availableHeight}
                     />
 
@@ -1012,8 +995,8 @@ export default function WordOfWonders({ boxData: initialBoxData, gridWords: init
                     <ExtraWordsPopup
                         visible={extraWordsVisible}
                         onClose={() => setExtraWordsVisible(false)}
-                        extraWords={foundWords.filter(w => dictionarySet[w]?.length && !gridWords[w])}
-                        dictionarySet={dictionarySet}
+                        extraWords={foundWords.filter(w => getWordsByWrittenForm(w).length && !gridWords[w])}
+                        getWordsByWrittenForm={getWordsByWrittenForm}
                         score={extraWordsScore}
                         progress={extraWordsScore - extraWordsCollected}
                         batchSize={EXTRA_WORDS_BATCH_SIZE}
@@ -1028,7 +1011,7 @@ export default function WordOfWonders({ boxData: initialBoxData, gridWords: init
                         onCollect={handleCollect}
                         coinTarget={coinTarget}
                         gridWords={gridWords}
-                        dictionarySet={dictionarySet}
+                        getWordsByWrittenForm={getWordsByWrittenForm}
                     />
 
                     {/* Settings Popup */}

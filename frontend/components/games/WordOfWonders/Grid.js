@@ -4,7 +4,7 @@ import { GREEN, MAX_GRID_WIDTH, width, height } from './gameConstants';
 import { isRTL } from './languageUtils';
 import SeeMeaningPopUp from './pop-ups/SeeMeaningPopUp';
 
-const Grid = memo(({ boxData, gridWords, foundWords, filledBoxes, boxAnimations, shakeWord, shakeAnimation, langCode = 'en', dictionarySet = {}, canvasHeight = height }) => {
+const Grid = memo(({ boxData, gridWords, foundWords, filledBoxes, boxAnimations, shakeWord, shakeAnimation, langCode = 'en', getWordsByWrittenForm = () => [], canvasHeight = height }) => {
   const rtl = isRTL(langCode);
   const [seeMeaningVisible, setSeeMeaningVisible] = useState(false);
   const [seeMeaningWords, setSeeMeaningWords] = useState([]);
@@ -47,7 +47,7 @@ const Grid = memo(({ boxData, gridWords, foundWords, filledBoxes, boxAnimations,
   // Resolve the original dictionary written_form so we can show diacritics(shor vowels).
   // Falls back to the normalized grid word when no dictionary match exists.
   const getDisplayLetters = (word) => {
-    const items = dictionarySet[word] ?? [];
+    const items = getWordsByWrittenForm(word);
     let writtenForm = items[0]?.written_form ?? word;
 
     // Each word of gridWords has dictionaryId which is the id of corresponding word in the dictionary.
@@ -234,7 +234,7 @@ const Grid = memo(({ boxData, gridWords, foundWords, filledBoxes, boxAnimations,
     })();
 
     const foundSeeMeaningItems = foundSeeMeaningWords.flatMap((word) => {
-      const items = dictionarySet[word] ?? [];
+      const items = getWordsByWrittenForm(word);
       if (!items.length) return [];
       return items;
     });

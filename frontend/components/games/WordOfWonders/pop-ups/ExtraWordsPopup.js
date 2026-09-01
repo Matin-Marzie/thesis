@@ -33,7 +33,7 @@ export default function ExtraWordsPopup({
     visible,
     onClose,
     extraWords = [],
-    dictionarySet = {},
+    getWordsByWrittenForm = () => [],
     score = 0,
     progress = 0,
     batchSize = 10,
@@ -68,8 +68,8 @@ export default function ExtraWordsPopup({
         if (!extraWords.length) return [];
         // extraWords arrives in the order words were found (oldest first) -
         // reverse so the most recently found word shows at the top of the list.
-        return [...extraWords].reverse().flatMap((word) => dictionarySet[word] ?? []);
-    }, [extraWords, dictionarySet]);
+        return [...extraWords].reverse().flatMap((word) => getWordsByWrittenForm(word));
+    }, [extraWords, getWordsByWrittenForm]);
 
     const canCollect = progress >= batchSize && !collecting;
     const fillPercent = Math.min(100, (progress / batchSize) * 100);

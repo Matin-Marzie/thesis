@@ -21,6 +21,7 @@ import ConfirmationPopup from '../ConfirmationPopup';
 import WordleInfoPopup from './pop-ups/WordleInfoPopup';
 import { PRIMARY_COLOR } from '@/constants/App';
 import { getWordleConfig } from '@/constants/wordleConfig';
+import { normalizeWord } from '@/utils/wordNormalizer';
 import WordleCellPopup from './pop-ups/WordleCellPopup';
 import { formatCompactNumber } from '@/utils/formatCompactNumber';
 import { SCREEN_WIDTH } from '@gorhom/bottom-sheet';
@@ -36,7 +37,7 @@ const COLORS = {
 
 export default function Wordle({ onClose }) {
     const { userProgress, setUserProgress } = useProgress();
-    const { dictionary } = useDictionaryContext();
+    const { dictionary, getWordsByWrittenForm } = useDictionaryContext();
     const vibrate = useVibration();
 
     // Derive language code from the user's current learning language
@@ -47,31 +48,7 @@ export default function Wordle({ onClose }) {
 
     const config = useMemo(() => getWordleConfig(langCode), [langCode]);
 
-    const normalizeKey = useCallback((word) => {
-        const raw = (word ?? '').trim();
-        if (!raw) return '';
-        return config.normalize(raw);
-    }, [config]);
-
-    // Hash: normalized written_form -> [wordItem, wordItem, ...]
-    // Includes only words with length == config.wordLength (length is computed AFTER normalization).
-    const wordleDictionary = useMemo(() => {
-        const map = Object.create(null);
-        const words = dictionary?.words;
-        if (!Array.isArray(words) || words.length === 0) return map;
-
-        for (const item of words) {
-            const key = normalizeKey(item?.written_form);
-            if (!key) continue;
-            if (!config.letterRegex.test(key)) continue;
-            if ([...key].length !== config.wordLength) continue;
-
-            if (!map[key]) map[key] = [];
-            map[key].push(item);
-        }
-
-        return map;
-    }, [dictionary, normalizeKey, config]);
+    const normalizeKey = useCallback((word) => normalizeWord(word, langCode), [langCode]);
 
     const [secretWordItem, setSecretWordItem] = useState(null);
     const [wordLength, setWordLength] = useState(config.wordLength);
@@ -89,28 +66,16 @@ export default function Wordle({ onClose }) {
     const [infoVisible, setInfoVisible] = useState(false);
     const coinsViewRef = useRef(null);
 
-    useEffect(() => {
-        initializeGame();
-    }, [wordleDictionary, config.wordLength]);
-
-    useEffect(() => {
-        const subscription = BackHandler.addEventListener('hardwareBackPress', () => {
-            if (confirmVisible) return false;
-            setConfirmVisible(true);
-            return true;
-        });
-        return () => subscription.remove();
-    }, [confirmVisible]);
-
+    // Picking the secret word only runs once per game/language change, so a
+    // linear scan over the full dictionary (filtered to the target length,
+    // computed AFTER normalization - e.g. Farsi harakat shrink the length)
+    // is fine here, unlike the O(1) getWordsByWrittenForm lookups below that
+    // run on every guess.
     const initializeGame = useCallback(() => {
-        const keys = Object.keys(wordleDictionary);
-        if (keys.length === 0) {
-            setLoading(false);
-            return;
-        }
-
-        const randomKey = keys[Math.floor(Math.random() * keys.length)];
-        const candidates = wordleDictionary[randomKey] ?? [];
+        const words = dictionary?.words;
+        const candidates = Array.isArray(words)
+            ? words.filter((item) => [...normalizeKey(item?.written_form)].length === config.wordLength)
+            : [];
         const randomItem = candidates[Math.floor(Math.random() * candidates.length)] ?? null;
 
         if (!randomItem) {
@@ -126,7 +91,20 @@ export default function Wordle({ onClose }) {
         setGameOver(false);
         setWon(false);
         setLoading(false);
-    }, [wordleDictionary, config.wordLength]);
+    }, [dictionary, normalizeKey, config.wordLength]);
+
+    useEffect(() => {
+        initializeGame();
+    }, [initializeGame]);
+
+    useEffect(() => {
+        const subscription = BackHandler.addEventListener('hardwareBackPress', () => {
+            if (confirmVisible) return false;
+            setConfirmVisible(true);
+            return true;
+        });
+        return () => subscription.remove();
+    }, [confirmVisible]);
 
     // Guesses are stored as hash keys (FA-normalized; others as-is). Use spread to index Unicode chars.
     const secretWord = secretWordItem ? normalizeKey(secretWordItem.written_form) : '';
@@ -169,8 +147,7 @@ export default function Wordle({ onClose }) {
                 return;
             }
 
-            const matches = wordleDictionary[normalizedGuess];
-            const wordExists = Array.isArray(matches) && matches.length > 0;
+            const wordExists = getWordsByWrittenForm(normalizedGuess).length > 0;
 
             if (!wordExists) {
                 vibrate([0, 80, 60, 80, 60, 80], { type: 'animation', game: 'wordle' });
@@ -199,7 +176,7 @@ export default function Wordle({ onClose }) {
         if ([...currentGuess].length < wordLength) {
             setCurrentGuess(prev => prev + letter);
         }
-    }, [currentGuess, gameOver, won, guesses, secretWord, wordleDictionary, normalizeKey, config.maxAttempts, wordLength, vibrate]);
+    }, [currentGuess, gameOver, won, guesses, secretWord, getWordsByWrittenForm, normalizeKey, config.maxAttempts, wordLength, vibrate]);
 
     if (loading) {
         return (
@@ -255,8 +232,7 @@ export default function Wordle({ onClose }) {
                         onCellPress={(rowIndex) => {
                             const normalizedGuess = guesses[rowIndex];
                             if (!normalizedGuess) return;
-                            const candidates = wordleDictionary[normalizedGuess];
-                            setSelectedWordItems(Array.isArray(candidates) ? candidates : []);
+                            setSelectedWordItems(getWordsByWrittenForm(normalizedGuess));
                             setCellPopupVisible(true);
                         }}
                         invalidTrigger={invalidTrigger}
