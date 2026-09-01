@@ -1,21 +1,6 @@
 import pool from '../config/db.js';
 
 const reelModel = {
-  // Latest reels created by a user, newest first - used to show a preview
-  // of "my reels" right after login without a separate round trip.
-  async getLatestByUser(userId, limit = 6) {
-    const result = await pool.query(
-      `SELECT id, url, thumbnail_url, title, duration, language_id, created_at
-       FROM reels
-       WHERE created_by = $1
-       ORDER BY created_at DESC
-       LIMIT $2`,
-      [userId, limit]
-    );
-    // Same bigint-as-string normalization as createWithDialogue.
-    return result.rows.map((row) => ({ ...row, id: Number(row.id) }));
-  },
-
   // Scoped to created_by so a user can only ever delete their own reel - a
   // non-owner (or nonexistent id) simply gets no row back, no separate
   // ownership check needed. The reel's dialogue/dialogue_sentences are

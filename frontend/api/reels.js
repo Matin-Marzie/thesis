@@ -32,6 +32,22 @@ export const fetchReels = async ({
   }
 };
 
+/**
+ * Fetch the current user's own reels, full shape (dialogue sentences,
+ * tokens, translations, stats) - reels-service's GET /reels/mine, used to
+ * populate the profile "My Reels" list right after login, since the Node
+ * backend's login payload only carries a few flat columns with no dialogue.
+ * @param {number} [limit=30]
+ * @returns {Promise<{reels: Object[], total: number}>}
+ */
+export const fetchMyReels = async (limit = 30) => {
+  const response = await reelsClient.get('/reels/mine', {
+    params: { limit },
+  });
+  return response.data;
+};
+
 export default {
   fetchReels,
+  fetchMyReels,
 };

@@ -4,8 +4,8 @@ from typing import Optional, Union
 
 from app.db import get_db
 from app.services.reel_service import ReelService
-from app.schemas.reel import ReelsListResponse
-from app.core.security import decode_access_token, extract_token_from_header
+from app.schemas.reel import ReelsListResponse, UserReelsListResponse
+from app.core.security import decode_access_token, extract_token_from_header, get_current_user
 
 
 router = APIRouter(prefix="/reels", tags=["reels"])
@@ -114,3 +114,39 @@ async def get_reels(
         reels=reels,
         total_reels_available_in_db_for_learning_language=total
     )
+
+
+@router.get(
+    "/mine",
+    response_model=UserReelsListResponse,
+    summary="Get the current user's own reels",
+    description=(
+        "Retrieve the authenticated user's own reels, full shape (dialogue "
+        "sentences, tokens, translations, stats). Used to populate the "
+        "profile 'My Reels' list, since the Node backend's login/register "
+        "payload only carries a few flat columns with no dialogue."
+    ),
+    responses={
+        401: {"description": "Unauthorized - Missing or invalid token"},
+    }
+)
+async def get_my_reels(
+    limit: int = Query(
+        default=30,
+        ge=1,
+        le=50,
+        description="Number of reels to return (default: 30, max: 50)"
+    ),
+    current_user: tuple = Depends(get_current_user),
+    db: AsyncSession = Depends(get_db)
+) -> UserReelsListResponse:
+    user_id, _ = current_user
+
+    service = ReelService(db)
+    reels, total = await service.get_reels_by_creator(
+        creator_id=user_id,
+        viewer_id=user_id,
+        limit=limit
+    )
+
+    return UserReelsListResponse(reels=reels, total=total)

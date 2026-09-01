@@ -51,7 +51,7 @@ export default function LoginScreen() {
   const { userProgress, setUserProgress } = useProgress();
   const { vocabularyChanges, vocabularyDispatch, setVocabularyChanges } = useVocabularyContext();
   const { sentenceChanges, sentenceDispatch, setSentenceChanges } = useSentenceContext();
-  const { setUserReels } = useUserReels();
+  const { refreshUserReels } = useUserReels();
   const { setIsAuthenticated, setHasCompletedOnboarding, hasCompletedOnboarding, setPendingGoogleAuth } = useAuth();
   const router = useRouter();
   const colorScheme = useColorScheme();
@@ -142,7 +142,17 @@ export default function LoginScreen() {
             await setUserProgress(response.data?.user_progress);
             vocabularyDispatch({ type: VOCABULARY_ACTIONS.SET, payload: response.data?.user_vocabulary });
             sentenceDispatch({ type: SENTENCE_ACTIONS.SET, payload: response.data?.user_sentences });
-            setUserReels(response.data?.user_reels || []);
+            // Node's login response no longer carries reel data at all -
+            // the profile "My Reels" list comes entirely from
+            // reels-service's GET /reels/mine (full shape: dialogue
+            // sentences, translations, stats). setUserProgress/
+            // setHasCompletedOnboarding above trigger DictionaryContext's
+            // and ReelsContext's own auto-fetch effects immediately, so
+            // this one is delayed to not compete with those for bandwidth -
+            // userReels isn't needed until the user visits their profile.
+            // Not tied to this screen's lifecycle - refreshUserReels lives
+            // in a root-level context, so it still fires after navigation.
+            setTimeout(() => refreshUserReels(), 5000);
           }
           // Overwrite discarded the local session entirely; Merge already
           // applied these changes server-side - either way, nothing local
@@ -349,7 +359,6 @@ export default function LoginScreen() {
           </View>
         </View>
 
-        {/* Google Sign-In Button */}
         <View style={{ alignItems: 'center', marginTop: 24 }}>
             <GoogleSigninButton
               style={{ width: width * 0.8, height: 56 }}

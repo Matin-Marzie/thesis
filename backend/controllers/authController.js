@@ -6,7 +6,6 @@ import usersModel from '../models/usersModel.js';
 import userLanguagesModel from '../models/userLanguagesModel.js';
 import userVocabularyModel from '../models/userVocabularyModel.js';
 import userSentencesModel from '../models/userSentencesModel.js';
-import reelModel from '../models/reelModel.js';
 import mergeGuestProgress from '../utils/mergeGuestProgress.js';
 
 const authController = async (req, res) => {
@@ -101,9 +100,6 @@ const authController = async (req, res) => {
       current_language.id,
     );
 
-    // Latest reels created by this user, for the profile screen's preview
-    const user_reels_in_db = await reelModel.getLatestByUser(user.id, 9);
-
     // Log login
     logEvents(`User logged in: ${user.username}`, 'authLog.log');
 
@@ -128,7 +124,6 @@ const authController = async (req, res) => {
       },
       user_vocabulary: user_vocabulary_in_db,
       user_sentences: user_sentences_in_db,
-      user_reels: user_reels_in_db,
       accessToken,
       refreshToken,
     });

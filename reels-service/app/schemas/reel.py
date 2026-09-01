@@ -46,6 +46,16 @@ class ReelResponse(BaseModel):
 
 class ReelsListResponse(BaseModel):
     """Schema for list of reels in API responses."""
-    
+
     reels: List[ReelResponse]
     total_reels_available_in_db_for_learning_language: int
+
+
+class UserReelsListResponse(BaseModel):
+    """Schema for a user's own reels - full shape (dialogue, stats,
+    user_interaction included), used to power the profile 'My Reels' list
+    right after login/register, since the Node backend's login/register
+    payload only carries a few flat columns with no dialogue."""
+
+    reels: List[ReelResponse]
+    total: int

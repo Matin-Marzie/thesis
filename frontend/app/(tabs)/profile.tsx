@@ -23,7 +23,7 @@ export default function ProfileScreen() {
   const isDark = useColorScheme() === 'dark';
   const { userProfile, setUserProfile } = useProfile();
   const { userProgress } = useProgress();
-  const { userReels } = useUserReels();
+  const { userReels, isFetchingUserReels } = useUserReels();
   const { isAuthenticated } = useAuth();
   const router = useRouter();
   const [changingPicture, setChangingPicture] = useState(false);
@@ -113,7 +113,7 @@ export default function ProfileScreen() {
                 energy={userProgress?.energy || 0}
               />
 
-              <ProfileReels isDark={isDark} reels={userReels} />
+              <ProfileReels isDark={isDark} reels={userReels} isLoading={isFetchingUserReels} />
             </>
           )}
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, Image } from 'react-native';
+import { View, Text, StyleSheet, Image, ActivityIndicator } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import { DARK_COLORS } from '@/constants/App';
@@ -33,45 +33,55 @@ interface ProfileReelsProps {
   reels: ProfileReel[];
   title?: string;
   onReelPress?: (reel: ProfileReel) => void;
+  // True while refetching the full-shape list from reels-service (e.g.
+  // right after login) - shown in place of the thumbnail grid, since
+  // userReels is typically still empty at that point.
+  isLoading?: boolean;
 }
 
-export function ProfileReels({ isDark, reels, title = 'My Reels', onReelPress }: ProfileReelsProps) {
+export function ProfileReels({ isDark, reels, title = 'My Reels', onReelPress, isLoading = false }: ProfileReelsProps) {
   const router = useRouter();
 
-  if (!reels?.length) return null;
+  if (!isLoading && !reels?.length) return null;
 
   return (
     <View style={styles.reelsSection}>
       <Text style={[styles.sectionTitle, isDark && { color: DARK_COLORS.text }]}>{title}</Text>
-      <View style={styles.reelsGrid}>
-        {reels.map((reel) => {
-          const languageFlag = getLanguageFlag(reel.language_id ?? reel.language?.id);
-          return (
-            <TouchableOpacity
-              key={reel.id}
-              style={[styles.reelTile, isDark && { backgroundColor: DARK_COLORS.surface }]}
-              onPress={() => (onReelPress ? onReelPress(reel) : router.push(`/profileReel/${reel.id}`))}
-              activeOpacity={0.85}
-            >
-              {reel.thumbnail_url ? (
-                <Image source={{ uri: getMediaUrl(reel.thumbnail_url) }} style={styles.reelThumbnail} />
-              ) : (
-                <View style={styles.reelPlaceholder}>
-                  <Ionicons name="film-outline" size={28} color={isDark ? DARK_COLORS.textSecondary : '#bbb'} />
+      {isLoading ? (
+        <View style={styles.loadingContainer}>
+          <ActivityIndicator color={isDark ? DARK_COLORS.textSecondary : '#999'} />
+        </View>
+      ) : (
+        <View style={styles.reelsGrid}>
+          {reels.map((reel) => {
+            const languageFlag = getLanguageFlag(reel.language_id ?? reel.language?.id);
+            return (
+              <TouchableOpacity
+                key={reel.id}
+                style={[styles.reelTile, isDark && { backgroundColor: DARK_COLORS.surface }]}
+                onPress={() => (onReelPress ? onReelPress(reel) : router.push(`/profileReel/${reel.id}`))}
+                activeOpacity={0.85}
+              >
+                {reel.thumbnail_url ? (
+                  <Image source={{ uri: getMediaUrl(reel.thumbnail_url) }} style={styles.reelThumbnail} />
+                ) : (
+                  <View style={styles.reelPlaceholder}>
+                    <Ionicons name="film-outline" size={28} color={isDark ? DARK_COLORS.textSecondary : '#bbb'} />
+                  </View>
+                )}
+                {languageFlag && (
+                  <View style={styles.reelLanguageBadge}>
+                    <Text style={styles.reelLanguageText}>{languageFlag}</Text>
+                  </View>
+                )}
+                <View style={styles.reelDurationBadge}>
+                  <Text style={styles.reelDurationText}>{formatDuration(reel.duration)}</Text>
                 </View>
-              )}
-              {languageFlag && (
-                <View style={styles.reelLanguageBadge}>
-                  <Text style={styles.reelLanguageText}>{languageFlag}</Text>
-                </View>
-              )}
-              <View style={styles.reelDurationBadge}>
-                <Text style={styles.reelDurationText}>{formatDuration(reel.duration)}</Text>
-              </View>
-            </TouchableOpacity>
-          );
-        })}
-      </View>
+              </TouchableOpacity>
+            );
+          })}
+        </View>
+      )}
     </View>
   );
 }
@@ -93,6 +103,11 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     gap: '0.5%',
     rowGap: 2,
+  },
+  loadingContainer: {
+    height: 120,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   reelTile: {
     width: '33%',

@@ -186,6 +186,43 @@ class ReelService:
         )
         return {interaction.reel_id: interaction for interaction in result.scalars().all()}
 
+    async def get_reels_by_creator(
+        self,
+        creator_id: int,
+        viewer_id: Optional[int] = None,
+        limit: int = 30
+    ) -> Tuple[List[ReelResponse], int]:
+        """Get a user's own reels, most recent first, full shape - powers
+        the profile 'My Reels' list. `viewer_id` is normally the same as
+        `creator_id` here (a user viewing their own reels right after
+        login), but is kept separate from `creator_id` since it's what
+        build_reel_response uses to resolve user_interaction."""
+        query = (
+            select(Reel)
+            .options(
+                joinedload(Reel.language),
+                joinedload(Reel.creator),
+                joinedload(Reel.dialogue)
+            )
+            .where(Reel.created_by == creator_id)
+            .order_by(Reel.created_at.desc())
+            .limit(limit)
+        )
+        result = await self.db.execute(query)
+        reels = result.unique().scalars().all()
+
+        count_result = await self.db.execute(
+            select(func.count(Reel.id)).where(Reel.created_by == creator_id)
+        )
+        total = count_result.scalar() or 0
+
+        reels_response = [
+            await self.build_reel_response(reel, user_id=viewer_id)
+            for reel in reels
+        ]
+
+        return reels_response, total
+
     async def get_random_reels(
         self,
         native_language_code: str,
