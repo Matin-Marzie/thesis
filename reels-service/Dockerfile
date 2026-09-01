@@ -14,6 +14,11 @@ COPY requirements.txt .
 # Install Python dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 
+# spaCy models aren't on PyPI - downloaded separately (en/el, for
+# lemmatizer.py). Farsi uses hazm, which needs no extra model download.
+RUN python -m spacy download en_core_web_sm \
+    && python -m spacy download el_core_news_sm
+
 # Copy application code
 COPY . .
 

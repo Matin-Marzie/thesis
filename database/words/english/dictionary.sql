@@ -13339,4 +13339,11 @@ VALUES
 (13591, 'graver', 'adj', NULL, NULL, 1, 'B1', NULL),
 (13592, 'brocade', 'n', NULL, NULL, 1, 'EX', NULL),
 (13593, 'Luri', 'n', NULL, NULL, 1, 'EX', NULL),
-(13594, 'comrade', 'n', NULL, NULL, 1, 'B1', NULL);
+(13594, 'comrade', 'n', NULL, NULL, 1, 'B1', NULL),
+(13595, 'I am', 'expression', NULL, NULL, 1, 'EX', NULL),
+(13596, 'you are', 'expression', NULL, NULL, 1, 'EX', NULL),
+(13597, 'he is', 'expression', NULL, NULL, 1, 'EX', NULL),
+(13598, 'she is', 'expression', NULL, NULL, 1, 'EX', NULL),
+(13599, 'it is', 'expression', NULL, NULL, 1, 'EX', NULL),
+(13600, 'we are', 'expression', NULL, NULL, 1, 'EX', NULL),
+(13601, 'they are', 'expression', NULL, NULL, 1, 'EX', NULL);
