@@ -41,7 +41,6 @@ export const ReelItem = React.memo(
     const [isDialogueOpen, setIsDialogueOpen] = useState(false);
     const [isPaused, setIsPaused] = useState(false);
     const [popupWord, setPopupWord] = useState<Word | null>(null);
-    const [popupTranslation, setPopupTranslation] = useState('');
     const pauseIconOpacity = useSharedValue(0);
     const animatedPauseIconStyle = useAnimatedStyle(() => ({
       opacity: pauseIconOpacity.value,
@@ -154,9 +153,8 @@ export const ReelItem = React.memo(
     const handleCommentClose = useCallback(() => setIsCommentOpen(false), []);
     const handleDialogueOpen = useCallback(() => setIsDialogueOpen(true), []);
     const handleDialogueClose = useCallback(() => setIsDialogueOpen(false), []);
-    const handleWordPress = useCallback((word: Word, translation: string) => {
+    const handleWordPress = useCallback((word: Word) => {
       setPopupWord(word);
-      setPopupTranslation(translation);
     }, []);
     const handlePopupClose = useCallback(() => setPopupWord(null), []);
     const handleAddToVocabulary = useCallback(() => {
@@ -219,7 +217,6 @@ export const ReelItem = React.memo(
 
         <WordMeaningPopup
           word={popupWord}
-          translation={popupTranslation}
           isVisible={!!popupWord}
           onClose={handlePopupClose}
           onAddToVocabulary={handleAddToVocabulary}

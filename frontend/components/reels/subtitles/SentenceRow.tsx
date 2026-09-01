@@ -11,7 +11,7 @@ interface SentenceRowProps {
     isRightToLeft: boolean;
     isSaved: boolean;
     onPress: (sentence: Sentence) => void;
-    onTokenPress: (token: Token, sentenceId: number) => void;
+    onTokenPress: (token: Token) => void;
     onSavePress: (sentence: Sentence) => void;
 }
 
@@ -56,7 +56,7 @@ export function SentenceRow({ sentence, isCurrentLine, isDark, isRightToLeft, is
                                     style={styles.tokenButton}
                                     onPress={(event) => {
                                         event.stopPropagation();
-                                        onTokenPress(token, sentence.id);
+                                        onTokenPress(token);
                                     }}
                                 >
                                     <Text style={[styles.tokenText, isDark && { color: DARK_COLORS.text }, isRightToLeft && styles.textRtl]}>{word}</Text>

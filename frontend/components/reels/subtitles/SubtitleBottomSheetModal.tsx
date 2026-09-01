@@ -218,12 +218,10 @@ export function DialogueBottomSheetModal({
     }, []);
 
     const handleTokenPress = useCallback(
-        (token: Token, sentenceId: number) => {
-            const sentence = sentences.find((s) => s.id === sentenceId);
-            const tokenTranslation = sentence?.translation || '';
-            onWordPress(token.word, tokenTranslation);
+        (token: Token) => {
+            onWordPress(token.word);
         },
-        [sentences, onWordPress]
+        [onWordPress]
     );
 
     // Optimistic local-only save, synced later by useBackendSync - same

@@ -8,7 +8,7 @@ export interface DialogueBottomSheetModalProps {
     onClose: () => void;
     reel?: Reel;
     player?: VideoPlayer;
-    onWordPress: (word: Word, translation: string) => void;
+    onWordPress: (word: Word) => void;
     // Drives the phantom spacer in ReelItem that pushes the video upward via flex
     sheetHeight: SharedValue<number>;
 }

@@ -12,6 +12,7 @@ const DICTIONARY_TTL = 7 * 24 * 60 * 60 * 1000; // 7 days in milliseconds
  * @property {Object|null} dictionary - The dictionary data
  * @property {boolean} dictionaryLoading - Whether dictionary is loading
  * @property {string|null} dictionaryError - Error message if any
+ * @property {Object} getWordsByWrittenForm - written_form -> array of dictionary word entries (homographs share a bucket; disambiguate by id)
  * @property {(learningCode: string, nativeCode: string) => Promise<Object|null>} fetchDictionary - Manual fetch function, returns dictionary data
  * @property {() => Promise<void>} reload - Reload current dictionary
  */
@@ -133,13 +134,35 @@ export const DictionaryProvider = ({ children }) => {
     fetchDictionary,
   ]);
 
+  // Bucket dictionary words by written_form so string lookups (e.g. resolving
+  // the word tapped in a reel subtitle) are O(1) instead of scanning the
+  // full ~11k-word list. Homographs (same written_form, different word id -
+  // e.g. different meaning/POS) share a bucket; callers with a known id
+  // should disambiguate within it. Same pattern as Wordle's wordleDictionary
+  // and WordOfWonders' dictionarySet.
+  const getWordsByWrittenForm = useMemo(() => {
+    const map = Object.create(null);
+    const words = dictionary?.words;
+    if (!Array.isArray(words)) return map;
+
+    for (const item of words) {
+      const key = item?.written_form;
+      if (!key) continue;
+      if (!map[key]) map[key] = [];
+      map[key].push(item);
+    }
+
+    return map;
+  }, [dictionary]);
+
   const value = useMemo(() => ({
     dictionary,
     dictionaryLoading: loading,
     dictionaryError: error,
+    getWordsByWrittenForm,
     fetchDictionary,
     reload,
-  }), [dictionary, loading, error, fetchDictionary, reload]);
+  }), [dictionary, loading, error, getWordsByWrittenForm, fetchDictionary, reload]);
 
   return (
     <DictionaryContext.Provider value={value}>

@@ -11,12 +11,12 @@ import { FontAwesome } from '@expo/vector-icons';
 import { Word } from '../../../types/dialogue';
 import { useColorScheme } from '@/components/useColorScheme';
 import { DARK_COLORS } from '@/constants/App';
+import { useDictionaryContext } from '@/context/DictionaryContext';
 
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
 
 interface WordMeaningPopupProps {
   word: Word | null;
-  translation: string;
   isVisible: boolean;
   onClose: () => void;
   onAddToVocabulary: () => void;
@@ -25,14 +25,27 @@ interface WordMeaningPopupProps {
 
 export const WordMeaningPopup = ({
   word,
-  translation,
   isVisible,
   onClose,
   onAddToVocabulary,
   isPlayingAudio = false,
 }: WordMeaningPopupProps) => {
   const isDark = useColorScheme() === 'dark';
+  const { getWordsByWrittenForm } = useDictionaryContext();
   if (!word || !isVisible) return null;
+
+  // O(1) bucket lookup by written_form instead of scanning the whole
+  // dictionary. Most buckets hold a single entry; when a written_form has
+  // homographs (same spelling, different word id - e.g. different meaning
+  // or part of speech), disambiguate by id - same pattern as Wordle/WordOfWonders.
+  // dictionary.words comes from the Node API, where node-postgres returns
+  // bigint columns as strings; word.id comes from reels-service (Python),
+  // which serializes it as a JSON number - coerce both sides to compare.
+  const candidates = getWordsByWrittenForm[word.written_form] ?? [];
+  const dictionaryEntry = candidates.length > 1
+    ? candidates.find((entry: { id: unknown }) => String(entry.id) === String(word.id)) ?? candidates[0]
+    : candidates[0];
+  const translation = dictionaryEntry?.translations?.join(', ') || '';
 
   return (
     <Modal
