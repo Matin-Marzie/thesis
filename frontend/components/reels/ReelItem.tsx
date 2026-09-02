@@ -157,10 +157,6 @@ export const ReelItem = React.memo(
       setPopupWord(word);
     }, []);
     const handlePopupClose = useCallback(() => setPopupWord(null), []);
-    const handleAddToVocabulary = useCallback(() => {
-      if (!popupWord) return;
-      console.log('Adding word to vocabulary:', popupWord.written_form);
-    }, [popupWord]);
 
     return (
       <View style={styles.reelContainer}>
@@ -219,7 +215,6 @@ export const ReelItem = React.memo(
           word={popupWord}
           isVisible={!!popupWord}
           onClose={handlePopupClose}
-          onAddToVocabulary={handleAddToVocabulary}
         />
       </View>
     );

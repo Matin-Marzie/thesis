@@ -12,6 +12,8 @@ import { Word } from '../../../types/dialogue';
 import { useColorScheme } from '@/components/useColorScheme';
 import { DARK_COLORS } from '@/constants/App';
 import { useDictionaryContext } from '@/context/DictionaryContext';
+import { useVocabularyContext } from '@/context/VocabularyContext';
+import { VOCABULARY_ACTIONS } from '@/hooks/useVocabulary';
 
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
 
@@ -19,19 +21,16 @@ interface WordMeaningPopupProps {
   word: Word | null;
   isVisible: boolean;
   onClose: () => void;
-  onAddToVocabulary: () => void;
-  isPlayingAudio?: boolean;
 }
 
 export const WordMeaningPopup = ({
   word,
   isVisible,
   onClose,
-  onAddToVocabulary,
-  isPlayingAudio = false,
 }: WordMeaningPopupProps) => {
   const isDark = useColorScheme() === 'dark';
   const { getWordsByWrittenForm } = useDictionaryContext();
+  const { userVocabulary, vocabularyDispatch } = useVocabularyContext();
   if (!word || !isVisible) return null;
 
   // O(1) bucket lookup by written_form instead of scanning the whole
@@ -49,6 +48,18 @@ export const WordMeaningPopup = ({
     : candidates[0];
   const translation = dictionaryEntry?.translations?.join(', ') || '';
 
+  // userVocabulary is keyed by the dictionary word's own id, not the reels
+  // token's id (same id-source distinction as the translation lookup above)
+  // - use the resolved dictionaryEntry, not word.id.
+  const isInVocabulary = dictionaryEntry ? !!userVocabulary[dictionaryEntry.id] : false;
+  const handleToggleVocabulary = () => {
+    if (!dictionaryEntry) return;
+    vocabularyDispatch({
+      type: isInVocabulary ? VOCABULARY_ACTIONS.REMOVE : VOCABULARY_ACTIONS.ADD,
+      payload: { wordId: dictionaryEntry.id },
+    });
+  };
+
   return (
     <Modal
       visible={isVisible && !!word}
@@ -62,45 +73,24 @@ export const WordMeaningPopup = ({
           <View style={styles.header}>
             <View style={styles.wordSection}>
               <Text style={[styles.wordText, isDark && { color: DARK_COLORS.text }]}>{word.written_form}</Text>
-              <Text style={[styles.posText, isDark && { color: DARK_COLORS.textSecondary }]}>{word.part_of_speech}</Text>
+              <Text style={[styles.translationText, isDark && { color: DARK_COLORS.text }]}>{translation}</Text>
             </View>
-            {word.audio_url && (
-              <Pressable
-                style={[styles.audioButton, isPlayingAudio && styles.audioButtonActive]}
-                onPress={() => {
-                  // Audio will be handled by parent component
-                }}
-              >
-                <FontAwesome
-                  name="volume-up"
-                  size={20}
-                  color={isPlayingAudio ? '#2563eb' : (isDark ? DARK_COLORS.textSecondary : '#666')}
-                />
-              </Pressable>
-            )}
           </View>
 
           {/* Level badge */}
           <View style={[styles.levelBadge, isDark && { backgroundColor: '#312e81' }]}>
-            <Text style={[styles.levelText, isDark && { color: '#c7d2fe' }]}>{word.level}</Text>
+            <Text style={[styles.levelText, isDark && { color: '#c7d2fe' }]}>{dictionaryEntry?.level}</Text>
           </View>
 
-          {/* Translation */}
-          <View style={[styles.translationSection, isDark && { borderBottomColor: DARK_COLORS.border }]}>
-            <Text style={[styles.translationLabel, isDark && { color: DARK_COLORS.textSecondary }]}>Translation</Text>
-            <Text style={[styles.translationText, isDark && { color: DARK_COLORS.text }]}>{translation}</Text>
-          </View>
-
-          {/* Add to vocabulary button */}
+          {/* Add/remove vocabulary button */}
           <Pressable
-            style={styles.addButton}
-            onPress={() => {
-              onAddToVocabulary();
-              onClose();
-            }}
+            style={[styles.addButton, isInVocabulary && styles.addButtonActive]}
+            onPress={handleToggleVocabulary}
           >
-            <FontAwesome name="bookmark" size={18} color="#fff" />
-            <Text style={styles.addButtonText}>Add to Vocabulary</Text>
+            <FontAwesome name={isInVocabulary ? 'bookmark' : 'bookmark-o'} size={18} color="#fff" />
+            <Text style={styles.addButtonText}>
+              {isInVocabulary ? 'Remove from Vocabulary' : 'Add to Vocabulary'}
+            </Text>
           </Pressable>
 
           {/* Close button */}
@@ -147,19 +137,6 @@ const styles = StyleSheet.create({
     color: '#1f2937',
     marginBottom: 4,
   },
-  posText: {
-    fontSize: 14,
-    color: '#6b7280',
-    fontStyle: 'italic',
-  },
-  audioButton: {
-    padding: 8,
-    marginLeft: 12,
-  },
-  audioButtonActive: {
-    backgroundColor: '#dbeafe',
-    borderRadius: 8,
-  },
   levelBadge: {
     backgroundColor: '#e0e7ff',
     borderRadius: 6,
@@ -172,19 +149,6 @@ const styles = StyleSheet.create({
     fontSize: 12,
     fontWeight: '600',
     color: '#4f46e5',
-  },
-  translationSection: {
-    marginBottom: 16,
-    paddingBottom: 16,
-    borderBottomWidth: 1,
-    borderBottomColor: '#e5e7eb',
-  },
-  translationLabel: {
-    fontSize: 12,
-    fontWeight: '600',
-    color: '#9ca3af',
-    marginBottom: 6,
-    textTransform: 'uppercase',
   },
   translationText: {
     fontSize: 16,
@@ -200,6 +164,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     marginBottom: 12,
+  },
+  addButtonActive: {
+    backgroundColor: '#e74c3c',
   },
   addButtonText: {
     color: '#fff',

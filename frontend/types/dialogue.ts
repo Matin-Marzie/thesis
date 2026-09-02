@@ -2,7 +2,6 @@ export interface Word {
   id: number;
   written_form: string;
   part_of_speech: string;
-  level: string;
   article: string | null;
   audio_url: string;
   image_url: string | null;
