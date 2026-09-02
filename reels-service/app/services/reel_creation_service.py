@@ -1,22 +1,13 @@
-import asyncio
 from typing import List, Optional
 
-from sqlalchemy import func, select, text
+from sqlalchemy import select, text
 from sqlalchemy.dialects.postgresql import insert as pg_insert
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.models.dialogue import Dialogue, DialogueSentence
-from app.models.language import Language
 from app.models.reel import Reel
-from app.models.sentence import Sentence, SentenceToken, SentenceTranslation
-from app.models.word import Word
+from app.models.sentence import Sentence, SentenceTranslation
 from app.schemas.reel_creation import SubtitleLineIn
-from app.services.lemmatizer import lemmatize
-
-# Undoes lemmatizer output's diacritic stripping on the words side too, so
-# "خواستن" (lemma) matches "خواستَن" (dictionary entry, stored with
-# harakat) - see app/services/lemmatizer.py's strip_diacritics.
-_STRIP_DIACRITICS_SQL = r"[ً-ْٰ]"
 
 # Builds the entire sentence list for a dialogue - text, every available
 # translation across all languages (not just one - the client picks the
@@ -97,51 +88,6 @@ class ReelCreationService:
         )
         await self.db.execute(stmt)
 
-    # Best-effort: lemmatizes `text` (spaCy for en/el, hazm for fa - see
-    # lemmatizer.py) and, for each token whose lemma matches an existing
-    # dictionary word, inserts a sentence_tokens row linking to it. A lemma
-    # with no dictionary match is skipped entirely - nothing is created for
-    # that position, per design (no auto-creating new words from
-    # automatically-derived lemmas, which can be wrong for colloquial
-    # forms - see lemmatizer.py's hazm notes). Idempotent: does nothing if
-    # this sentence already has tokens (a reused sentence from an earlier
-    # reel, or tokens added by hand).
-    async def _tokenize_sentence(self, sentence_id: int, language_id: int, language_code: str, sentence_text: str) -> None:
-        already_tokenized = await self.db.execute(
-            select(func.count()).select_from(SentenceToken).where(SentenceToken.sentence_id == sentence_id)
-        )
-        if already_tokenized.scalar():
-            return
-
-        lemma_tokens = await asyncio.to_thread(lemmatize, sentence_text, language_code)
-        if not lemma_tokens:
-            return
-
-        for position, lemma_token in enumerate(lemma_tokens, start=1):
-            # Diacritic-stripped comparison can match more than one dictionary
-            # row (near-duplicate entries differing only by vocalization) -
-            # order by id so the choice is at least deterministic rather than
-            # whatever the query planner happens to return first.
-            matched_word = await self.db.execute(
-                select(Word.id)
-                .where(
-                    Word.language_id == language_id,
-                    func.lower(func.regexp_replace(Word.written_form, _STRIP_DIACRITICS_SQL, "", "g")) == lemma_token.lemma,
-                )
-                .order_by(Word.id)
-                .limit(1)
-            )
-            word_id = matched_word.scalar_one_or_none()
-            if word_id is None:
-                continue
-
-            self.db.add(SentenceToken(
-                sentence_id=sentence_id,
-                word_id=word_id,
-                position=position,
-                part_of_speech=lemma_token.part_of_speech,
-            ))
-
     async def create_with_dialogue(
         self,
         created_by: int,
@@ -153,9 +99,6 @@ class ReelCreationService:
         lines: List[SubtitleLineIn],
     ) -> Reel:
         try:
-            language = await self.db.get(Language, language_id)
-            language_code = language.code if language else None
-
             dialogue = Dialogue(language_id=language_id)
             self.db.add(dialogue)
             await self.db.flush()
@@ -177,9 +120,11 @@ class ReelCreationService:
                     )
                 )
 
-                if language_code:
-                    await self._tokenize_sentence(sentence_id, language_id, language_code, line.text)
-
+                # Tokenizing (lemmatize + link sentence_tokens) doesn't happen
+                # here - spaCy/Stanza/hazm are too heavy for this service's
+                # 512MB host. scripts/reels/backfill_tokens.py does it
+                # locally instead and refreshes sentences_json below's
+                # 'tokens' arrays once it runs.
                 for translation in line.translations:
                     translation_sentence_id = await self._find_or_create_sentence(
                         translation.translation_language_id, translation.text

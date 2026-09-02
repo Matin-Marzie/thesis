@@ -31,13 +31,16 @@ boto3>=1.34.0
 # Per-user rate limiting on upload endpoints
 slowapi>=0.1.9
 
-# NLP: lemmatization for auto-populating sentence_tokens at reel creation.
-# en uses spaCy (model downloaded separately, see Dockerfile), el uses
-# Stanza (model downloaded separately too - noticeably more accurate than
-# spaCy's small Greek model), fa uses hazm (no separate model download).
-spacy>=3.8.0
-stanza>=1.8.0
-hazm>=0.10.0
+# NLP: lemmatization for auto-populating sentence_tokens. Commented out -
+# this service runs on a 512MB host and can't afford spaCy/Stanza/hazm's
+# model memory footprint at request time. Tokenization now runs locally
+# instead, via scripts/reels/backfill_tokens.py (which pulls these same
+# packages in scripts/reels/requirements.txt) - re-enable here (and the
+# in-process call in reel_creation_service.py) if this service ever moves
+# to a host with more RAM to spare.
+# spacy>=3.8.0
+# stanza>=1.8.0
+# hazm>=0.10.0
 
 # Testing
 pytest>=7.4.0

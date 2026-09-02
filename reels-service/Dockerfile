@@ -14,12 +14,11 @@ COPY requirements.txt .
 # Install Python dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 
-# spaCy's English model isn't on PyPI - downloaded separately (lemmatizer.py).
-RUN python -m spacy download en_core_web_sm
-
-# Stanza's Greek model (lemmatizer.py) - noticeably more accurate than
-# spaCy's small Greek model. Farsi uses hazm, which needs no model download.
-RUN python -c "import stanza; stanza.download('el')"
+# spaCy/Stanza model downloads - commented out along with the NLP packages
+# in requirements.txt (see that file's comment; tokenization now runs
+# locally via scripts/reels/backfill_tokens.py, not in this 512MB service).
+# RUN python -m spacy download en_core_web_sm
+# RUN python -c "import stanza; stanza.download('el')"
 
 # Copy application code
 COPY . .
