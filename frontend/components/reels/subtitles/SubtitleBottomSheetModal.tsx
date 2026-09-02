@@ -224,13 +224,19 @@ export function DialogueBottomSheetModal({
         [onWordPress]
     );
 
-    // Optimistic local-only save, synced later by useBackendSync - same
-    // pattern as adding a word to vocabulary. text/translation are carried
-    // along for display only (not sent to the backend, which resolves
-    // sentence text itself via a JOIN when re-fetching user_sentences).
+    // Optimistic local-only save/unsave, synced later by useBackendSync -
+    // same pattern as adding/removing a word from vocabulary. text/translation
+    // are carried along for display only (not sent to the backend, which
+    // resolves sentence text itself via a JOIN when re-fetching user_sentences).
     const handleSaveSentence = useCallback(
         (sentence: Sentence) => {
-            if (savedSentences[sentence.id]) return;
+            if (savedSentences[sentence.id]) {
+                sentenceDispatch({
+                    type: SENTENCE_ACTIONS.REMOVE,
+                    payload: { sentenceId: sentence.id },
+                });
+                return;
+            }
             sentenceDispatch({
                 type: SENTENCE_ACTIONS.ADD,
                 payload: { sentenceId: sentence.id, text: sentence.text, translation: sentence.translation },
