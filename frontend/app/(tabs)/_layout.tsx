@@ -1,6 +1,6 @@
 import React from 'react';
 import { Tabs } from 'expo-router';
-import { getFocusedRouteNameFromRoute } from '@react-navigation/native';
+import { getFocusedRouteNameFromRoute } from "expo-router/react-navigation";
 
 import Colors from '@/constants/Colors';
 import { useColorScheme } from '@/components/useColorScheme';

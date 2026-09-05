@@ -7,12 +7,6 @@
     "icon": "./assets/images/splash-icon.png",
     "scheme": "glosy",
     "userInterfaceStyle": "automatic",
-    "newArchEnabled": true,
-    "splash": {
-      "image": "./assets/images/splash-icon.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#0f8690"
-    },
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.glosy.app"
@@ -22,14 +16,8 @@
         "foregroundImage": "./assets/images/splash-icon.png",
         "backgroundColor": "#0f8690"
       },
-      "edgeToEdgeEnabled": true,
       "predictiveBackGestureEnabled": false,
       "package": "com.glosy.app"
-    },
-    "androidNavigationBar": {
-      "backgroundColor": "#0f8690",
-      "barStyle": "light-content",
-      "enforceContrast": false
     },
     "web": {
       "bundler": "metro",
@@ -61,7 +49,11 @@
         {
           "photosPermission": "Allow $(PRODUCT_NAME) to access your videos so you can create a reel."
         }
-      ]
+      ],
+      "expo-font",
+      "expo-secure-store",
+      "expo-web-browser",
+      "expo-status-bar"
     ],
     "experiments": {
       "typedRoutes": true

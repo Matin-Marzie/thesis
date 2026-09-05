@@ -229,7 +229,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#000',
   },
   playOverlay: {
-    ...StyleSheet.absoluteFillObject,
+    ...StyleSheet.absoluteFill,
     justifyContent: 'center',
     alignItems: 'center',
   },

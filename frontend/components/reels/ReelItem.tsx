@@ -6,6 +6,7 @@ import {
 } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
 import { useVideoPlayer, VideoView } from 'expo-video';
+import type { BottomSheetModal } from '@gorhom/bottom-sheet';
 import { Gesture, GestureDetector } from 'react-native-gesture-handler';
 import Animated, {
   useSharedValue,
@@ -37,10 +38,11 @@ export const ReelItem = React.memo(
     const { isAuthenticated } = useAuth();
     const [isLiked, setIsLiked] = useState(item.user_interaction?.is_liked || false);
     const [likesCount, setLikesCount] = useState(item.stats?.likes || 0);
-    const [isCommentOpen, setIsCommentOpen] = useState(false);
-    const [isDialogueOpen, setIsDialogueOpen] = useState(false);
     const [isPaused, setIsPaused] = useState(false);
+    const commentSheetRef = useRef<BottomSheetModal>(null);
+    const dialogueSheetRef = useRef<BottomSheetModal>(null);
     const [popupWord, setPopupWord] = useState<Word | null>(null);
+    const [popupExpanded, setPopupExpanded] = useState<string | null>(null);
     const pauseIconOpacity = useSharedValue(0);
     const animatedPauseIconStyle = useAnimatedStyle(() => ({
       opacity: pauseIconOpacity.value,
@@ -134,7 +136,11 @@ export const ReelItem = React.memo(
     }, [applyLikeChange, isLiked, triggerLikeBounce]);
 
     const singleTap = Gesture.Tap()
-      .maxDuration(250)
+      // Must stay comfortably above doubleTap's maxDelay: Exclusive() makes
+      // singleTap wait for doubleTap to resolve (up to maxDelay after
+      // release) before activating, so its own window has to cover that
+      // wait on top of the physical tap duration, or it times out first.
+      .maxDuration(400)
       .onEnd(() => {
         runOnJS(handleTogglePause)();
       });
@@ -149,12 +155,13 @@ export const ReelItem = React.memo(
     // Single tap waits for the double tap to fail before toggling pause
     const tapGesture = Gesture.Exclusive(doubleTap, singleTap);
 
-    const handleCommentOpen = useCallback(() => setIsCommentOpen(true), []);
-    const handleCommentClose = useCallback(() => setIsCommentOpen(false), []);
-    const handleDialogueOpen = useCallback(() => setIsDialogueOpen(true), []);
-    const handleDialogueClose = useCallback(() => setIsDialogueOpen(false), []);
-    const handleWordPress = useCallback((word: Word) => {
+    const handleCommentOpen = useCallback(() => commentSheetRef.current?.present(), []);
+    const handleCommentClose = useCallback(() => commentSheetRef.current?.dismiss(), []);
+    const handleDialogueOpen = useCallback(() => dialogueSheetRef.current?.present(), []);
+    const handleDialogueClose = useCallback(() => dialogueSheetRef.current?.dismiss(), []);
+    const handleWordPress = useCallback((word: Word, expanded: string | null) => {
       setPopupWord(word);
+      setPopupExpanded(expanded);
     }, []);
     const handlePopupClose = useCallback(() => setPopupWord(null), []);
 
@@ -195,15 +202,15 @@ export const ReelItem = React.memo(
         />
 
         <CommentBottomSheetModal
+          ref={commentSheetRef}
           reelId={item.id}
-          visible={isCommentOpen}
           onClose={handleCommentClose}
           sheetHeight={sheetHeight}
         />
 
         <DialogueBottomSheetModal
+          ref={dialogueSheetRef}
           reelId={item.id}
-          visible={isDialogueOpen}
           onClose={handleDialogueClose}
           reel={item}
           player={player}
@@ -213,6 +220,7 @@ export const ReelItem = React.memo(
 
         <WordMeaningPopup
           word={popupWord}
+          expanded={popupExpanded}
           isVisible={!!popupWord}
           onClose={handlePopupClose}
         />
@@ -234,10 +242,10 @@ const styles = StyleSheet.create({
   },
   video: {
     // Fills the container; contentFit="contain" scales the video to fit
-    ...StyleSheet.absoluteFillObject,
+    ...StyleSheet.absoluteFill,
   },
   tapOverlay: {
-    ...StyleSheet.absoluteFillObject,
+    ...StyleSheet.absoluteFill,
     justifyContent: 'center',
     alignItems: 'center',
   },

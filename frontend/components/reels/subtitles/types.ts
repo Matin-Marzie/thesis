@@ -4,11 +4,10 @@ import type { Reel, Word } from '../../../types/dialogue';
 
 export interface DialogueBottomSheetModalProps {
     reelId: number;
-    visible: boolean;
     onClose: () => void;
     reel?: Reel;
     player?: VideoPlayer;
-    onWordPress: (word: Word) => void;
+    onWordPress: (word: Word, expanded: string | null) => void;
     // Drives the phantom spacer in ReelItem that pushes the video upward via flex
     sheetHeight: SharedValue<number>;
 }

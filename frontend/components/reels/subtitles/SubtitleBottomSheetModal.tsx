@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState, useMemo } from 'react';
+import React, { forwardRef, useCallback, useEffect, useRef, useState, useMemo } from 'react';
 import { StyleSheet, BackHandler, View } from 'react-native';
 import {
     BottomSheetModal,
@@ -29,26 +29,29 @@ const RTL_LANGUAGE_CODES = new Set(
         .map((language) => language.code.toLowerCase())
 );
 
-export function DialogueBottomSheetModal({
+// Present/dismiss is driven by the parent calling the forwarded ref directly
+// from its onPress handler (same pattern as ReelActionsBottomSheetModal) -
+// going through a `visible` prop + useEffect instead delayed the call by a
+// render, which is unreliable with Reanimated v4 in this app.
+export const DialogueBottomSheetModal = forwardRef<BottomSheetModal, DialogueBottomSheetModalProps>(({
     reelId,
-    visible,
     onClose,
     reel,
     player,
     onWordPress,
     sheetHeight,
-}: DialogueBottomSheetModalProps) {
+}, ref) => {
     const isDark = useColorScheme() === 'dark';
     const { userSentences, sentenceDispatch } = useSentenceContext();
     // SentenceContext's userSentences is typed as a plain Object (JSDoc, no
     // index signature) - narrow it here rather than indexing it untyped below.
     const savedSentences = userSentences as Record<number, { text?: string; translation?: string }>;
-    const sheetRef = useRef<BottomSheetModal>(null);
     const listRef = useRef<BottomSheetFlatListMethods>(null);
     const sentenceStopTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
     const [currentLineIndex, setCurrentLineIndex] = useState(0);
     const [isPlaying, setIsPlaying] = useState(false);
+    const [isOpen, setIsOpen] = useState(false);
 
     const sentences = useMemo(() => reel?.dialogue?.sentences || [], [reel]);
     const isRightToLeft = useMemo(
@@ -74,7 +77,7 @@ export function DialogueBottomSheetModal({
 
     // Keep highlight in sync with player progress.
     useEffect(() => {
-        if (!player || !visible) return;
+        if (!player || !isOpen) return;
 
         player.timeUpdateEventInterval = 0.1;
         syncCurrentLineByTime((player.currentTime || 0) * 1000);
@@ -84,10 +87,10 @@ export function DialogueBottomSheetModal({
         });
 
         return () => sub.remove();
-    }, [player, syncCurrentLineByTime, visible]);
+    }, [player, syncCurrentLineByTime, isOpen]);
 
     useEffect(() => {
-        if (!visible || currentLineIndex < 0 || currentLineIndex >= sentences.length) {
+        if (!isOpen || currentLineIndex < 0 || currentLineIndex >= sentences.length) {
             return;
         }
 
@@ -101,7 +104,7 @@ export function DialogueBottomSheetModal({
         }, 80);
 
         return () => clearTimeout(timer);
-    }, [currentLineIndex, sentences, visible]);
+    }, [currentLineIndex, sentences, isOpen]);
 
     const handleScrollToIndexFailed = useCallback(
         (info: { index: number }) => {
@@ -118,16 +121,6 @@ export function DialogueBottomSheetModal({
     );
 
     useEffect(() => {
-        if (visible) {
-            sheetRef.current?.present();
-            sheetHeight.value = withSpring(SCREEN_HEIGHT * snapPointsRatio[0], { damping: 20 });
-        } else {
-            sheetRef.current?.dismiss();
-            sheetHeight.value = withSpring(0, { damping: 20 });
-        }
-    }, [visible, sheetHeight]);
-
-    useEffect(() => {
         if (!player) {
             setIsPlaying(false);
             return;
@@ -142,13 +135,13 @@ export function DialogueBottomSheetModal({
     }, [player]);
 
     useEffect(() => {
-        if (!visible) return;
+        if (!isOpen) return;
         const sub = BackHandler.addEventListener('hardwareBackPress', () => {
-            onClose();
+            if (ref && 'current' in ref) ref.current?.dismiss();
             return true;
         });
         return () => sub.remove();
-    }, [visible, onClose]);
+    }, [isOpen, ref]);
 
     const renderBackdrop = useCallback(
         (props: BottomSheetBackdropProps) => (
@@ -165,6 +158,7 @@ export function DialogueBottomSheetModal({
 
     const handleSheetChange = useCallback(
         (index: number) => {
+            setIsOpen(index >= 0);
             if (index === -1) {
                 sheetHeight.value = withSpring(0, { damping: 20 });
                 onClose();
@@ -219,7 +213,7 @@ export function DialogueBottomSheetModal({
 
     const handleTokenPress = useCallback(
         (token: Token) => {
-            onWordPress(token.word);
+            onWordPress(token.word, token.expanded);
         },
         [onWordPress]
     );
@@ -261,13 +255,15 @@ export function DialogueBottomSheetModal({
         [currentLineIndex, handleSentencePress, handleTokenPress, handleSaveSentence, savedSentences, isRightToLeft, isDark]
     );
 
-    if (!reel || !sentences.length) {
-        return;
-    }
+    // BottomSheetModal is always mounted (so the portal is ready before
+    // `present()` is ever called by the parent via the forwarded ref) -
+    // only its content is conditional on data being available, same
+    // pattern as CommentBottomSheetModal.
+    const hasContent = !!reel && sentences.length > 0;
 
     return (
         <BottomSheetModal
-            ref={sheetRef}
+            ref={ref}
             snapPoints={snapPoints}
             enableDynamicSizing={false}
             enablePanDownToClose={true}
@@ -278,23 +274,27 @@ export function DialogueBottomSheetModal({
             handleIndicatorStyle={styles.handle}
             backgroundStyle={styles.background}
         >
-            <SafeAreaView edges={['bottom']} style={styles.sheetContent}>
-                <PlaybackControls isPlaying={isPlaying} isDark={isDark} onTogglePlayPause={handleTogglePlayPause} />
+            {hasContent && (
+                <SafeAreaView edges={['bottom']} style={styles.sheetContent}>
+                    <PlaybackControls isPlaying={isPlaying} isDark={isDark} onTogglePlayPause={handleTogglePlayPause} />
 
-                <BottomSheetFlatList
-                    ref={listRef}
-                    data={sentences}
-                    keyExtractor={(item: Sentence, index: number) => `sentence-${item.id}-${item.position}-${index}`}
-                    renderItem={renderSentence}
-                    contentContainerStyle={styles.contentContainer}
-                    showsVerticalScrollIndicator={true}
-                    ItemSeparatorComponent={() => <View style={styles.separator} />}
-                    onScrollToIndexFailed={handleScrollToIndexFailed}
-                />
-            </SafeAreaView>
+                    <BottomSheetFlatList
+                        ref={listRef}
+                        data={sentences}
+                        keyExtractor={(item: Sentence, index: number) => `sentence-${item.id}-${item.position}-${index}`}
+                        renderItem={renderSentence}
+                        contentContainerStyle={styles.contentContainer}
+                        showsVerticalScrollIndicator={true}
+                        ItemSeparatorComponent={() => <View style={styles.separator} />}
+                        onScrollToIndexFailed={handleScrollToIndexFailed}
+                    />
+                </SafeAreaView>
+            )}
         </BottomSheetModal>
     );
-}
+});
+
+DialogueBottomSheetModal.displayName = 'DialogueBottomSheetModal';
 
 const styles = StyleSheet.create({
     background: {

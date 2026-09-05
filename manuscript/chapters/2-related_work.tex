@@ -97,17 +97,20 @@
     \subsection{Memory Decay and Spaced Repetition Models}
     \label{subsec:srs_models}
 
-    \subsubsection{The Ebbinghaus Forgetting Curve}
+    \subsubsection{The Ebbinghaus Forgetting Curves and Spaced Repetition Systems (SRS)}
     Ebbinghaus demonstrated that mnemonic decay follows an exponential decay trajectory in the absence of spaced reinforcement. Spaced Repetition Systems (SRS) counteract this decay by dynamically scheduling vocabulary review immediately before predicted memory consolidation failure. 
 
-    In \textit{Glosy}, this mechanism is operationalized within the \texttt{user\_vocabulary} datastore through a 6-tier parametric mastery model. Every lexical entry tracks an explicit \texttt{mastery\_level} ($1 \le m \le 6$) coupled with a \texttt{last\_review} timestamp to dynamically schedule target review intervals.
+    
 
-        \subsubsection{Half-Life Regression and Retention Tracking}
+        \subsubsection{Leitner's Algorithm}
+
+        \subsubsection{SuperMemo's SM-2 Algorithm}
+
+        \subsubsection{Duolingo & Half-Life Regression}
         To predict memory state transitions accurately, parametric half-life regression (HLR) models estimate the probability $p$ of successful recall as a function of the time elapsed $\Delta t$ since the last exposure and the word's current memory half-life $h$:
         \begin{equation}
             p = 2^{-\frac{\Delta t}{h}}
         \end{equation}
-        By integrating HLR-based scoring within the video recommendation and game-generation pipelines, \textit{Glosy} schedules lexical items to reinforce retention across both consumption and gameplay loops.
 
 
 % ==============================================================================
@@ -138,7 +141,7 @@
 % ==============================================================================
 % SECTION 4: ALGORITHMIC FRAMEWORKS FOR PERSONALIZED VOCABULARY SCATTERING
 % ==============================================================================
-\section{Algorithmic Frameworks for Personalized Recommendation}
+\section{Algorithmic Frameworks for Personalized    Recommendation}
 \label{sec:recommendation_algorithms}
 % Search on scholar.google.com: Algorithmic Frameworks for Personalized Vocabulary Delivery
 

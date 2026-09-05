@@ -2,6 +2,7 @@ export interface Word {
   id: number;
   written_form: string;
   part_of_speech: string;
+  level: string;
   article: string | null;
   audio_url: string;
   image_url: string | null;
@@ -12,6 +13,10 @@ export interface Token {
   position: number;
   part_of_speech: string;
   word: Word;
+  // Farsi only - "مادر من" for "مادرم", when the word is a dictionary root
+  // reached by stripping a possessive suffix off the original text. Null
+  // otherwise (nothing to show).
+  expanded: string | null;
 }
 
 export interface SentenceTranslation {

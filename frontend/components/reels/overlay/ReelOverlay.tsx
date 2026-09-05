@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-import { View, Text, StyleSheet, Platform, Share, StyleProp, ViewStyle } from 'react-native';
+import { StyleSheet, Platform, Share, StyleProp, ViewStyle } from 'react-native';
 import Animated, { AnimatedStyle } from 'react-native-reanimated';
 import { useRouter } from 'expo-router';
 import { getMediaUrl } from '@/utils/mediaUrl';
@@ -73,7 +73,7 @@ export const ReelOverlay = React.memo(
 
 const styles = StyleSheet.create({
   overlay: {
-    ...StyleSheet.absoluteFillObject,
+    ...StyleSheet.absoluteFill,
     justifyContent: 'space-between',
   },
   profilePicture: {

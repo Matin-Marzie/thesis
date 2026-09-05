@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef } from 'react';
+import React, { forwardRef, useCallback, useEffect, useState } from 'react';
 import { View, Text, StyleSheet, BackHandler, Dimensions } from 'react-native';
 import {
   BottomSheetModal,
@@ -38,35 +38,23 @@ const MOCK_COMMENTS: Comment[] = [
 const snapPoints = ['60%', '96%'];
 const snapPointsRatio = [0.57];
 
-export function CommentBottomSheetModal({
-  reelId,
-  visible,
-  onClose,
-  sheetHeight,
-}: CommentBottomSheetModalProps) {
-  const sheetRef = useRef<BottomSheetModal>(null);
-
-  // BottomSheetModal is always mounted but shown/hidden imperatively via present/dismiss.
-  // This lets it render through the BottomSheetModalProvider portal (above the FlatList).
-  useEffect(() => {
-    if (visible) {
-      sheetRef.current?.present();
-      sheetHeight.value = withSpring(SCREEN_HEIGHT * snapPointsRatio[0], { damping: 20 });
-    } else {
-      sheetRef.current?.dismiss();
-      sheetHeight.value = withSpring(0, { damping: 20 });
-    }
-  }, [visible, sheetHeight]);
+// Present/dismiss is driven by the parent calling the forwarded ref directly
+// from its onPress handler (same pattern as ReelActionsBottomSheetModal) -
+// going through a `visible` prop + useEffect instead delayed the call by a
+// render, which is unreliable with Reanimated v4 in this app.
+export const CommentBottomSheetModal = forwardRef<BottomSheetModal, CommentBottomSheetModalProps>(
+  ({ reelId, onClose, sheetHeight }, ref) => {
+  const [isOpen, setIsOpen] = useState(false);
 
   // Close sheet on Android hardware back button
   useEffect(() => {
-    if (!visible) return;
+    if (!isOpen) return;
     const sub = BackHandler.addEventListener('hardwareBackPress', () => {
-      onClose();
+      if (ref && 'current' in ref) ref.current?.dismiss();
       return true;
     });
     return () => sub.remove();
-  }, [visible, onClose]);
+  }, [isOpen, ref]);
 
   // Dim backdrop — tapping it closes the sheet
   const renderBackdrop = useCallback(
@@ -85,6 +73,7 @@ export function CommentBottomSheetModal({
   // Animate the spacer height in ReelItem so the video is pushed upward via flex.
   const handleSheetChange = useCallback(
     (index: number) => {
+      setIsOpen(index >= 0);
       if (index === -1) {
         sheetHeight.value = withSpring(0, { damping: 20 });
         onClose();
@@ -130,7 +119,7 @@ export function CommentBottomSheetModal({
 
   return (
     <BottomSheetModal
-      ref={sheetRef}
+      ref={ref}
       snapPoints={snapPoints}
       enableDynamicSizing={false}
       enablePanDownToClose={true}
@@ -156,7 +145,10 @@ export function CommentBottomSheetModal({
 
     </BottomSheetModal>
   );
-}
+  }
+);
+
+CommentBottomSheetModal.displayName = 'CommentBottomSheetModal';
 
 const styles = StyleSheet.create({
   background: {

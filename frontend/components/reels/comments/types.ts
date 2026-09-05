@@ -12,7 +12,6 @@ export interface Comment {
 
 export interface CommentBottomSheetModalProps {
   reelId: number;
-  visible: boolean;
   onClose: () => void;
   // Drives the phantom spacer in ReelItem that pushes the video upward via flex
   sheetHeight: SharedValue<number>;

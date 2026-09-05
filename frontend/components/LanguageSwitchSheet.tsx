@@ -673,7 +673,7 @@ const styles = StyleSheet.create({
         marginBottom: 28,
     },
     addOverlay: {
-        ...StyleSheet.absoluteFillObject,
+        ...StyleSheet.absoluteFill,
         alignItems: 'center',
         justifyContent: 'center',
         backgroundColor: 'rgba(255, 255, 255, 0.6)',

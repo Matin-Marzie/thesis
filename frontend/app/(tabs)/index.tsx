@@ -33,7 +33,7 @@ export default function HomeScreen() {
   // 'words' shows the vocabulary list (search/filter included); 'sentences'
   // shows sentences saved from reel subtitles.
   const [activeTab, setActiveTab] = useState('words');
-  const debounceTimeout = useRef(null);
+  const debounceTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   // Sort by created_at descending without re-allocating Date objects inside
   // the comparator (decorate-sort-undecorate) - a plain `new Date(...)`
@@ -132,7 +132,7 @@ export default function HomeScreen() {
       setIsSearching(false);
     }, 500);
 
-    return () => clearTimeout(debounceTimeout.current);
+    return () => clearTimeout(debounceTimeout.current ?? undefined);
   }, [search, normalizedWordEntries, wordsById, userVocabulary, sortByCreatedAtDesc]);
 
   return (

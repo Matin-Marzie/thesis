@@ -6,6 +6,7 @@ import {
   Pressable,
   Modal,
   Dimensions,
+  ScrollView,
 } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
 import { Word } from '../../../types/dialogue';
@@ -15,16 +16,19 @@ import { useDictionaryContext } from '@/context/DictionaryContext';
 import { useVocabularyContext } from '@/context/VocabularyContext';
 import { VOCABULARY_ACTIONS } from '@/hooks/useVocabulary';
 
-const { width: SCREEN_WIDTH } = Dimensions.get('window');
+const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get('window');
 
 interface WordMeaningPopupProps {
   word: Word | null;
+  // Farsi only - "مادر من" for "مادرم" - null when there's nothing to show.
+  expanded: string | null;
   isVisible: boolean;
   onClose: () => void;
 }
 
 export const WordMeaningPopup = ({
   word,
+  expanded,
   isVisible,
   onClose,
 }: WordMeaningPopupProps) => {
@@ -69,31 +73,41 @@ export const WordMeaningPopup = ({
     >
       <Pressable style={styles.backdrop} onPress={onClose}>
         <Pressable style={[styles.popupContainer, isDark && { backgroundColor: DARK_COLORS.surface }]} onPress={(e) => e.stopPropagation()}>
-          {/* Word header */}
-          <View style={styles.header}>
-            <View style={styles.wordSection}>
-              <Text style={[styles.wordText, isDark && { color: DARK_COLORS.text }]}>{word.written_form}</Text>
-              <Text style={[styles.translationText, isDark && { color: DARK_COLORS.text }]}>{translation}</Text>
+          <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.scrollContent}>
+            {/* Word header */}
+            <View style={styles.header}>
+              <View style={styles.wordSection}>
+                <Text style={[styles.wordText, isDark && { color: DARK_COLORS.text }]}>{word.written_form}</Text>
+                <Text style={[styles.translationText, isDark && { color: DARK_COLORS.text }]}>{translation}</Text>
+              </View>
             </View>
-          </View>
 
-          {/* Level badge */}
-          <View style={[styles.levelBadge, isDark && { backgroundColor: '#312e81' }]}>
-            <Text style={[styles.levelText, isDark && { color: '#c7d2fe' }]}>{dictionaryEntry?.level}</Text>
-          </View>
+            {/* Level badge */}
+            <View style={[styles.levelBadge, isDark && { backgroundColor: '#312e81' }]}>
+              <Text style={[styles.levelText, isDark && { color: '#c7d2fe' }]}>{dictionaryEntry?.level}</Text>
+            </View>
 
-          {/* Add/remove vocabulary button */}
-          <Pressable
-            style={[styles.addButton, isInVocabulary && styles.addButtonActive]}
-            onPress={handleToggleVocabulary}
-          >
-            <FontAwesome name={isInVocabulary ? 'bookmark' : 'bookmark-o'} size={18} color="#fff" />
-            <Text style={styles.addButtonText}>
-              {isInVocabulary ? 'Remove from Vocabulary' : 'Add to Vocabulary'}
-            </Text>
-          </Pressable>
+            {/* Expanded form (e.g. "مادر من" for "مادرم") - Farsi only, absent otherwise */}
+            {!!expanded && (
+              <View style={styles.expandedSection}>
+                <Text style={[styles.expandedLabel, isDark && { color: DARK_COLORS.textSecondary }]}>Full form</Text>
+                <Text style={[styles.expandedText, isDark && { color: DARK_COLORS.text }]}>{expanded}</Text>
+              </View>
+            )}
 
-          {/* Close button */}
+            {/* Add/remove vocabulary button */}
+            <Pressable
+              style={[styles.addButton, isInVocabulary && styles.addButtonActive]}
+              onPress={handleToggleVocabulary}
+            >
+              <FontAwesome name={isInVocabulary ? 'bookmark' : 'bookmark-o'} size={18} color="#fff" />
+              <Text style={styles.addButtonText}>
+                {isInVocabulary ? 'Remove from Vocabulary' : 'Add to Vocabulary'}
+              </Text>
+            </Pressable>
+          </ScrollView>
+
+          {/* Close button - stays fixed above the scrollable content */}
           <Pressable style={styles.closeButton} onPress={onClose}>
             <FontAwesome name="times" size={24} color={isDark ? DARK_COLORS.textSecondary : '#666'} />
           </Pressable>
@@ -116,11 +130,17 @@ const styles = StyleSheet.create({
     padding: 20,
     width: SCREEN_WIDTH - 40,
     maxWidth: 400,
+    maxHeight: SCREEN_HEIGHT * 0.7,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.25,
     shadowRadius: 4,
     elevation: 5,
+  },
+  scrollContent: {
+    // Room for the fixed close button in the top-right corner so it never
+    // overlaps the word title.
+    paddingRight: 28,
   },
   header: {
     flexDirection: 'row',
@@ -151,6 +171,24 @@ const styles = StyleSheet.create({
     color: '#4f46e5',
   },
   translationText: {
+    fontSize: 16,
+    color: '#374151',
+    lineHeight: 24,
+  },
+  expandedSection: {
+    marginBottom: 16,
+    paddingBottom: 16,
+    borderBottomWidth: 1,
+    borderBottomColor: '#e5e7eb',
+  },
+  expandedLabel: {
+    fontSize: 12,
+    fontWeight: '600',
+    color: '#9ca3af',
+    marginBottom: 6,
+    textTransform: 'uppercase',
+  },
+  expandedText: {
     fontSize: 16,
     color: '#374151',
     lineHeight: 24,

@@ -71,12 +71,11 @@ export const ReelActions = React.memo(
         <Text style={styles.actionText}>{formatCount(likesCount)}</Text>
       </TouchableOpacity>
 
-      {/* Comment — temporarily disabled
+      {/* Comment */}
       <TouchableOpacity style={styles.actionButton} onPress={onComment}>
         <FontAwesome name="comment-o" size={28} color="#fff" />
         <Text style={styles.actionText}>{formatCount(commentsCount)}</Text>
       </TouchableOpacity>
-      */}
 
       {/* Share */}
       <TouchableOpacity style={[styles.actionButton, { paddingHorizontal: 7 }]} onPress={onShare}>
