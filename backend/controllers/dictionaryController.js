@@ -1,5 +1,12 @@
 import LanguageSchema from '../validation/LanguageSchema.js';
 import dictionaryModel from '../models/dictionaryModel.js';
+import { toColumnar } from '../utils/columnar.js';
+
+// Must match the SELECT column order in dictionaryModel.js's respective queries.
+const WORD_COLUMNS = ['id', 'written_form', 'part_of_speech', 'level'];
+const WORD_WITH_TRANSLATIONS_COLUMNS = [
+  'id', 'level', 'written_form', 'translations', 'part_of_speech', 'translation_levels',
+];
 
 const dictionaryController = {
   async getLanguageDictionary(req, res) {
@@ -23,7 +30,7 @@ const dictionaryController = {
       res.json({
         language_code: language_code,
         language_id,
-        words,
+        words: toColumnar(words, WORD_COLUMNS),
       });
     } catch (err) {
       console.error(err);
@@ -56,10 +63,12 @@ const dictionaryController = {
         });
       }
 
+      const sameLanguage = language_code === translation_language_code;
+
       const [language_id, translation_language_id, words] = await Promise.all([
         dictionaryModel.getLanguageIdByCode(language_code),
         dictionaryModel.getLanguageIdByCode(translation_language_code),
-        language_code === translation_language_code
+        sameLanguage
           ? dictionaryModel.getWordsByLanguageCode(language_code)
           : dictionaryModel.getWordsWithTranslations_byLanguageCodes(
             language_code,
@@ -72,7 +81,7 @@ const dictionaryController = {
         language_id,
         translation_language_code: translation_language_code,
         translation_language_id,
-        words,
+        words: toColumnar(words, sameLanguage ? WORD_COLUMNS : WORD_WITH_TRANSLATIONS_COLUMNS),
       });
     } catch (err) {
       console.error(err);

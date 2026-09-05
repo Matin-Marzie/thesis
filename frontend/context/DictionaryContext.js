@@ -8,6 +8,27 @@ import { useAuth } from './AuthContext';
 
 const DICTIONARY_TTL = 7 * 24 * 60 * 60 * 1000; // 7 days in milliseconds
 
+// The API (and the cache, which stores the raw API response) sends `words`
+// as columnar JSON ({ columns, rows }) to avoid repeating the same keys
+// across ~11k word objects. Expand it back to row objects once here so
+// every other consumer (Wordle, WordOfWonders, VocabularySearchField, etc.)
+// can keep reading `word.written_form` etc. as before.
+function expandColumnarWords(words) {
+  if (!words || Array.isArray(words)) return words ?? [];
+  const { columns, rows } = words;
+  if (!Array.isArray(columns) || !Array.isArray(rows)) return [];
+  return rows.map((row) => {
+    const obj = {};
+    for (let i = 0; i < columns.length; i++) obj[columns[i]] = row[i];
+    return obj;
+  });
+}
+
+function expandDictionaryPayload(raw) {
+  if (!raw) return raw;
+  return { ...raw, words: expandColumnarWords(raw.words) };
+}
+
 /**
  * @typedef {Object} DictionaryContextType
  * @property {Object|null} dictionary - The dictionary data
@@ -65,25 +86,27 @@ export const DictionaryProvider = ({ children }) => {
 
     // --- Fresh cache: return early ---
     if (cached?.timestamp && Date.now() - cached.timestamp < DICTIONARY_TTL) {
+      const expanded = expandDictionaryPayload(cached.data);
       if (requestIdRef.current === currentRequestId) {
-        setDictionary(cached.data);
+        setDictionary(expanded);
         setLoading(false);
       }
-      return cached.data;
+      return expanded;
     }
 
     // --- Offline strategy ---
     if (!isOnline) {
+      const expanded = cached?.data ? expandDictionaryPayload(cached.data) : null;
       if (requestIdRef.current === currentRequestId) {
-        if (cached?.data) setDictionary(cached.data);
+        if (expanded) setDictionary(expanded);
         setLoading(false);
       }
-      return cached?.data || null;
+      return expanded;
     }
 
     // --- Use stale cache while fetching ---
     if (cached?.data && requestIdRef.current === currentRequestId) {
-      setDictionary(cached.data);
+      setDictionary(expandDictionaryPayload(cached.data));
     }
 
     try {
@@ -98,8 +121,9 @@ export const DictionaryProvider = ({ children }) => {
       };
 
       await AsyncStorage.setItem(cacheKey, JSON.stringify(payload));
-      setDictionary(res);
-      return res;
+      const expanded = expandDictionaryPayload(res);
+      setDictionary(expanded);
+      return expanded;
     } catch (err) {
       if (requestIdRef.current !== currentRequestId) return null;
       setError(err.message);
