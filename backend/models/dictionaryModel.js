@@ -2,19 +2,21 @@ import pool from "../config/db.js";
 
 const dictionaryModel = {
 
+    async getLanguageIdByCode(language_code) {
+        const query = `SELECT id FROM languages WHERE code = $1`;
+        const result = await pool.query(query, [language_code]);
+        return result.rows[0]?.id ?? null;
+    },
+
     async getWordsWithTranslations_byLanguageCodes(learning_language_code, native_language_code) {
         const query = `
         SELECT
             w.id,
             w.level,
-            w.article,
             w.written_form,
             ARRAY_AGG(tw.written_form)
                 FILTER (WHERE tw.id IS NOT NULL) AS translations,
             w.part_of_speech,
-            w.language_id,
-            w.image_url,
-            w.audio_url,
             ARRAY_AGG(t.level)
                 FILTER (WHERE tw.id IS NOT NULL) AS translation_levels
         FROM words w
@@ -43,7 +45,11 @@ const dictionaryModel = {
 
     async getWordsByLanguageCode(language_code) {
         const query = `
-            SELECT w.*
+            SELECT
+                w.id,
+                w.written_form,
+                w.part_of_speech,
+                w.level
             FROM words w
             JOIN languages l ON l.id = w.language_id
             WHERE l.code = $1
@@ -58,14 +64,10 @@ const dictionaryModel = {
         SELECT
             w.id,
             w.level,
-            w.article,
             w.written_form,
             ARRAY_AGG(tw.written_form)
                 FILTER (WHERE tw.id IS NOT NULL) AS translations,
             w.part_of_speech,
-            w.language_id,
-            w.image_url,
-            w.audio_url,
 
             ARRAY_AGG(t.level)
                 FILTER (WHERE tw.id IS NOT NULL) AS translation_levels
@@ -90,7 +92,10 @@ const dictionaryModel = {
     async getWordsByLanguageId(language_id) {
         const query = `
             SELECT
-                w.*
+                w.id,
+                w.written_form,
+                w.part_of_speech,
+                w.level
             FROM words w
             WHERE w.language_id = $1
         `;

@@ -15,10 +15,14 @@ const dictionaryController = {
         });
       }
 
-      const words = await dictionaryModel.getWordsByLanguageCode(language_code);
+      const [language_id, words] = await Promise.all([
+        dictionaryModel.getLanguageIdByCode(language_code),
+        dictionaryModel.getWordsByLanguageCode(language_code),
+      ]);
 
       res.json({
         language_code: language_code,
+        language_id,
         words,
       });
     } catch (err) {
@@ -52,17 +56,22 @@ const dictionaryController = {
         });
       }
 
-      const words =
+      const [language_id, translation_language_id, words] = await Promise.all([
+        dictionaryModel.getLanguageIdByCode(language_code),
+        dictionaryModel.getLanguageIdByCode(translation_language_code),
         language_code === translation_language_code
-          ? await dictionaryModel.getWordsByLanguageCode(language_code)
-          : await dictionaryModel.getWordsWithTranslations_byLanguageCodes(
+          ? dictionaryModel.getWordsByLanguageCode(language_code)
+          : dictionaryModel.getWordsWithTranslations_byLanguageCodes(
             language_code,
             translation_language_code
-          );
+          ),
+      ]);
 
       res.json({
         language_code: language_code,
+        language_id,
         translation_language_code: translation_language_code,
+        translation_language_id,
         words,
       });
     } catch (err) {
