@@ -23,6 +23,13 @@ class TokenResponse(BaseModel):
     position: int # "position" will be renamed to "order"
     part_of_speech: Optional[str] = None
     word: WordResponse
+    # Farsi only - "مادر من" for "مادرم", when the root was reached by
+    # stripping a possessive suffix (see scripts/reels/lemmatizer.py).
+    # Display-only, not stored anywhere - merged directly into
+    # dialogues.sentences_json by scripts/reels/backfill_tokens.py, which
+    # does this service's tokenization offline (see
+    # ReelCreationService.create_with_dialogue's comment).
+    expanded: Optional[str] = None
 
     class Config:
         from_attributes = True
