@@ -16,6 +16,7 @@ import { useAuth } from '@/context/AuthContext';
 import { useVocabularyContext } from '@/context/VocabularyContext';
 import { useSentenceContext } from '@/context/SentenceContext';
 import { VOCABULARY_ACTIONS, DEFAULT_VOCABULARY_CHANGES } from '@/hooks/useVocabulary';
+import { expandUserVocabulary } from '@/utils/expandVocabulary';
 import { SENTENCE_ACTIONS, DEFAULT_SENTENCE_CHANGES } from '@/hooks/useSentences';
 import { switchCurrentLanguage, addLanguage as addLanguageApi, deleteLanguage as deleteLanguageApi } from '@/api/language';
 import LanguageSelectionSlide from '@/app/onboarding/components/LanguageSelectionSlide';
@@ -208,7 +209,7 @@ const LanguageSwitchSheet = forwardRef<BottomSheetModal>((_props, ref) => {
                     ...prev,
                     languages: response.user_progress.languages,
                 }));
-                vocabularyDispatch({ type: VOCABULARY_ACTIONS.SET, payload: response.user_vocabulary });
+                vocabularyDispatch({ type: VOCABULARY_ACTIONS.SET, payload: expandUserVocabulary(response.user_vocabulary) });
                 sentenceDispatch({ type: SENTENCE_ACTIONS.SET, payload: response.user_sentences });
                 // Defensive: the flush above should have already cleared this,
                 // but the new vocabulary/sentences just replaced local state
@@ -260,7 +261,7 @@ const LanguageSwitchSheet = forwardRef<BottomSheetModal>((_props, ref) => {
             // otherwise the current language (and its vocabulary/sentences/
             // *Changes) is untouched.
             if (response.user_vocabulary) {
-                vocabularyDispatch({ type: VOCABULARY_ACTIONS.SET, payload: response.user_vocabulary });
+                vocabularyDispatch({ type: VOCABULARY_ACTIONS.SET, payload: expandUserVocabulary(response.user_vocabulary) });
                 await setVocabularyChanges(DEFAULT_VOCABULARY_CHANGES);
             }
             if (response.user_sentences) {
@@ -368,7 +369,7 @@ const LanguageSwitchSheet = forwardRef<BottomSheetModal>((_props, ref) => {
                 ...prev,
                 languages: response.user_progress.languages,
             }));
-            vocabularyDispatch({ type: VOCABULARY_ACTIONS.SET, payload: response.user_vocabulary });
+            vocabularyDispatch({ type: VOCABULARY_ACTIONS.SET, payload: expandUserVocabulary(response.user_vocabulary) });
             await setVocabularyChanges(DEFAULT_VOCABULARY_CHANGES);
             // Always empty for a newly-added pair (no proficiency-based seed
             // for sentences) - dispatched anyway for uniform response handling.

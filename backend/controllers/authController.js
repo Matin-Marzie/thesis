@@ -4,9 +4,10 @@ import { comparePassword } from '../utils/password.js';
 import { logEvents } from '../middleware/logEvents.js';
 import usersModel from '../models/usersModel.js';
 import userLanguagesModel from '../models/userLanguagesModel.js';
-import userVocabularyModel from '../models/userVocabularyModel.js';
+import userVocabularyModel, { VOCABULARY_FIELD_COLUMNS } from '../models/userVocabularyModel.js';
 import userSentencesModel from '../models/userSentencesModel.js';
 import mergeGuestProgress from '../utils/mergeGuestProgress.js';
+import { toColumnarFromKeyedObject } from '../utils/columnar.js';
 
 const authController = async (req, res) => {
   try {
@@ -122,7 +123,7 @@ const authController = async (req, res) => {
         coins: user.coins,
         languages: userLanguages,
       },
-      user_vocabulary: user_vocabulary_in_db,
+      user_vocabulary: toColumnarFromKeyedObject(user_vocabulary_in_db, 'word_id', VOCABULARY_FIELD_COLUMNS),
       user_sentences: user_sentences_in_db,
       accessToken,
       refreshToken,

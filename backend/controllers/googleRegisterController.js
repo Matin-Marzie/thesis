@@ -1,11 +1,12 @@
 import usersModel from '../models/usersModel.js';
 import { issueTokenPair } from '../utils/tokens.js';
 import userLanguagesModel from '../models/userLanguagesModel.js';
-import userVocabularyModel from '../models/userVocabularyModel.js';
+import userVocabularyModel, { VOCABULARY_FIELD_COLUMNS } from '../models/userVocabularyModel.js';
 import userSentencesModel from '../models/userSentencesModel.js';
 import { generateUsernameFromName } from '../utils/username.js';
 import { logEvents } from '../middleware/logEvents.js';
 import GoogleRegisterSchema from '../validation/GoogleRegisterSchema.js';
+import { toColumnarFromKeyedObject } from '../utils/columnar.js';
 
 const googleRegisterController = async (req, res) => {
   try {
@@ -152,7 +153,7 @@ const googleRegisterController = async (req, res) => {
         coins: user.coins,
         languages: userLanguages,
       },
-      user_vocabulary: userVocabulary,
+      user_vocabulary: toColumnarFromKeyedObject(userVocabulary, 'word_id', VOCABULARY_FIELD_COLUMNS),
       user_sentences: userSentences,
       accessToken,
       refreshToken,

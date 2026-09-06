@@ -1,11 +1,12 @@
 import UserProfileSchema from '../validation/UserProfileSchema.js';
 import usersModel from '../models/usersModel.js';
 import userLanguagesModel from '../models/userLanguagesModel.js';
-import userVocabularyModel from '../models/userVocabularyModel.js';
+import userVocabularyModel, { VOCABULARY_FIELD_COLUMNS } from '../models/userVocabularyModel.js';
 import userSentencesModel from '../models/userSentencesModel.js';
 import reelModel from '../models/reelModel.js';
 import { logEvents } from '../middleware/logEvents.js';
 import { CDN_PREFIXES, createObjectKey, deleteObject, deletePrefix, headObject, isOwnedObjectUrl, presignUpload, publicObjectUrl } from '../utils/cdn.js';
+import { toColumnarFromKeyedObject } from '../utils/columnar.js';
 
 const isValidImage = (type) => typeof type === 'string' && type.startsWith('image/');
 
@@ -60,7 +61,7 @@ const userController = {
           coins: fetchedUser.coins,
           languages: userLanguages,
         },
-        user_vocabulary: learned_vocabulary,
+        user_vocabulary: toColumnarFromKeyedObject(learned_vocabulary, 'word_id', VOCABULARY_FIELD_COLUMNS),
         user_sentences: saved_sentences,
       });
     } catch (error) {

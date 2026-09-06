@@ -19,6 +19,7 @@ import { useAuth } from '@/context/AuthContext';
 import { useDictionaryContext } from '@/context/DictionaryContext';
 import { getLevelsBelowProficiency, getMasteryLevelForWordLevel } from '@/constants/Vocabulary';
 import { VOCABULARY_ACTIONS, DEFAULT_VOCABULARY_CHANGES } from '@/hooks/useVocabulary';
+import { expandUserVocabulary } from '@/utils/expandVocabulary';
 import { SENTENCE_ACTIONS, DEFAULT_SENTENCE_CHANGES } from '@/hooks/useSentences';
 
 export default function OnboardingQuestions() {
@@ -158,7 +159,7 @@ export default function OnboardingQuestions() {
           setIsAuthenticated(true);
           await updateUserProfile(apiResponse.data.user_profile);
           await setUserProgress(apiResponse.data.user_progress);
-          vocabularyDispatch({ type: VOCABULARY_ACTIONS.SET, payload: apiResponse.data.user_vocabulary });
+          vocabularyDispatch({ type: VOCABULARY_ACTIONS.SET, payload: expandUserVocabulary(apiResponse.data.user_vocabulary) });
           sentenceDispatch({ type: SENTENCE_ACTIONS.SET, payload: apiResponse.data.user_sentences });
           // The manually-tracked changes just sent were already applied
           // server-side - clear them so a later background sync doesn't

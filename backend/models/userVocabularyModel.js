@@ -1,5 +1,9 @@
 import pool from '../config/db.js';
 
+// Field order used whenever a controller serializes user_vocabulary (keyed
+// by word_id) as columnar JSON - see utils/columnar.js's toColumnarFromKeyedObject.
+export const VOCABULARY_FIELD_COLUMNS = ['mastery_level', 'last_review', 'created_at', 'review_count', 'next_review_at'];
+
 const userVocabularyModel = {
 
      // fetch user vocabulary of current language

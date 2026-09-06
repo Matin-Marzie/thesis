@@ -5,10 +5,11 @@ import { logEvents } from '../middleware/logEvents.js';
 import RegisterSchema from '../validation/RegisterSchema.js';
 import usersModel from '../models/usersModel.js';
 import userLanguagesModel from '../models/userLanguagesModel.js';
-import userVocabularyModel from '../models/userVocabularyModel.js';
+import userVocabularyModel, { VOCABULARY_FIELD_COLUMNS } from '../models/userVocabularyModel.js';
 import userSentencesModel from '../models/userSentencesModel.js';
 import emailVerificationModel from '../models/emailVerificationModel.js';
 import { verifyCode, attemptsExceeded } from '../utils/EmailVerificationCode.js';
+import { toColumnarFromKeyedObject } from '../utils/columnar.js';
 
 const registerController = async (req, res) => {
   try {
@@ -213,7 +214,7 @@ const registerController = async (req, res) => {
         coins: newUser.coins,
         languages: new_user_languages,
       },
-      user_vocabulary: new_user_vocabulary,
+      user_vocabulary: toColumnarFromKeyedObject(new_user_vocabulary, 'word_id', VOCABULARY_FIELD_COLUMNS),
       user_sentences: new_user_sentences,
       accessToken,
       refreshToken,

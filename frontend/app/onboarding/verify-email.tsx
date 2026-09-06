@@ -19,6 +19,7 @@ import { useVocabularyContext } from '../../context/VocabularyContext';
 import { useSentenceContext } from '../../context/SentenceContext';
 import { useAuth } from '../../context/AuthContext';
 import { VOCABULARY_ACTIONS, DEFAULT_VOCABULARY_CHANGES } from '@/hooks/useVocabulary';
+import { expandUserVocabulary } from '@/utils/expandVocabulary';
 import { SENTENCE_ACTIONS, DEFAULT_SENTENCE_CHANGES } from '@/hooks/useSentences';
 import { useColorScheme } from '@/components/useColorScheme';
 import TouchableOpacity from '@/components/TouchableOpacity';
@@ -105,7 +106,7 @@ export default function VerifyEmailScreen() {
         if (response.data) {
           await updateUserProfile(response.data?.user_profile);
           await setUserProgress(response.data?.user_progress);
-          vocabularyDispatch({ type: VOCABULARY_ACTIONS.SET, payload: response.data?.user_vocabulary });
+          vocabularyDispatch({ type: VOCABULARY_ACTIONS.SET, payload: expandUserVocabulary(response.data?.user_vocabulary) });
           sentenceDispatch({ type: SENTENCE_ACTIONS.SET, payload: response.data?.user_sentences });
         }
         // The manually-tracked changes just sent were already applied

@@ -8,3 +8,15 @@ export function toColumnar(rows, columns) {
     rows: rows.map((row) => cols.map((col) => row[col])),
   };
 }
+
+// Same idea, for a { id: { field: value, ... } } keyed object (e.g.
+// user_vocabulary, keyed by word_id) - folds the id in as the first column.
+export function toColumnarFromKeyedObject(obj, idColumnName, fieldColumns) {
+  return {
+    columns: [idColumnName, ...fieldColumns],
+    rows: Object.entries(obj).map(([id, fields]) => [
+      id,
+      ...fieldColumns.map((col) => fields[col]),
+    ]),
+  };
+}

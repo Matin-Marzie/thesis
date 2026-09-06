@@ -1,8 +1,9 @@
 import SwitchLanguageSchema from '../validation/SwitchLanguageSchema.js';
 import AddLanguageSchema from '../validation/AddLanguageSchema.js';
 import userLanguagesModel from '../models/userLanguagesModel.js';
-import userVocabularyModel from '../models/userVocabularyModel.js';
+import userVocabularyModel, { VOCABULARY_FIELD_COLUMNS } from '../models/userVocabularyModel.js';
 import userSentencesModel from '../models/userSentencesModel.js';
+import { toColumnarFromKeyedObject } from '../utils/columnar.js';
 
 const languageController = {
   // Switch the authenticated user's current learning language.
@@ -47,7 +48,7 @@ const languageController = {
         user_progress: {
           languages: updatedLanguages,
         },
-        user_vocabulary,
+        user_vocabulary: toColumnarFromKeyedObject(user_vocabulary, 'word_id', VOCABULARY_FIELD_COLUMNS),
         user_sentences,
       });
     } catch (error) {
@@ -127,7 +128,7 @@ const languageController = {
         user_progress: {
           languages: updatedLanguages,
         },
-        user_vocabulary,
+        user_vocabulary: toColumnarFromKeyedObject(user_vocabulary, 'word_id', VOCABULARY_FIELD_COLUMNS),
         // Always empty for a new pair - sentences has no level column, so
         // there's no proficiency-based seed to run (unlike user_vocabulary
         // above). Returned explicitly (not omitted) so the response shape
@@ -206,7 +207,9 @@ const languageController = {
         user_progress: {
           languages: updatedLanguages,
         },
-        ...(user_vocabulary !== undefined && { user_vocabulary }),
+        ...(user_vocabulary !== undefined && {
+          user_vocabulary: toColumnarFromKeyedObject(user_vocabulary, 'word_id', VOCABULARY_FIELD_COLUMNS),
+        }),
         ...(user_sentences !== undefined && { user_sentences }),
       });
     } catch (error) {
