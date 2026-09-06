@@ -54,6 +54,28 @@ const SyncSchema = Joi.object({
         next_review_at: Joi.date().allow(null).messages({
           'date.base': 'next_review_at must be a valid date or null',
         }),
+        stability: Joi.number().allow(null).messages({
+          'number.base': 'stability must be a number or null',
+        }),
+        difficulty: Joi.number().allow(null).messages({
+          'number.base': 'difficulty must be a number or null',
+        }),
+        lapses: Joi.number().integer().min(0).messages({
+          'number.base': 'lapses must be a number',
+          'number.integer': 'lapses must be an integer',
+          'number.min': 'lapses must be at least 0',
+        }),
+        fsrs_state: Joi.number().integer().min(0).max(3).messages({
+          'number.base': 'fsrs_state must be a number',
+          'number.integer': 'fsrs_state must be an integer',
+          'number.min': 'fsrs_state must be at least 0',
+          'number.max': 'fsrs_state must be at most 3',
+        }),
+        learning_steps: Joi.number().integer().min(0).messages({
+          'number.base': 'learning_steps must be a number',
+          'number.integer': 'learning_steps must be an integer',
+          'number.min': 'learning_steps must be at least 0',
+        }),
       })
     ).default({}).messages({
       'object.base': 'inserts must be an object',
@@ -70,6 +92,36 @@ const SyncSchema = Joi.object({
         }),
         last_review: Joi.date().allow(null).messages({
           'date.base': 'last_review must be a valid date or null',
+        }),
+        review_count: Joi.number().integer().min(0).messages({
+          'number.base': 'review_count must be a number',
+          'number.integer': 'review_count must be an integer',
+          'number.min': 'review_count must be at least 0',
+        }),
+        next_review_at: Joi.date().allow(null).messages({
+          'date.base': 'next_review_at must be a valid date or null',
+        }),
+        stability: Joi.number().allow(null).messages({
+          'number.base': 'stability must be a number or null',
+        }),
+        difficulty: Joi.number().allow(null).messages({
+          'number.base': 'difficulty must be a number or null',
+        }),
+        lapses: Joi.number().integer().min(0).messages({
+          'number.base': 'lapses must be a number',
+          'number.integer': 'lapses must be an integer',
+          'number.min': 'lapses must be at least 0',
+        }),
+        fsrs_state: Joi.number().integer().min(0).max(3).messages({
+          'number.base': 'fsrs_state must be a number',
+          'number.integer': 'fsrs_state must be an integer',
+          'number.min': 'fsrs_state must be at least 0',
+          'number.max': 'fsrs_state must be at most 3',
+        }),
+        learning_steps: Joi.number().integer().min(0).messages({
+          'number.base': 'learning_steps must be a number',
+          'number.integer': 'learning_steps must be an integer',
+          'number.min': 'learning_steps must be at least 0',
         }),
       }).min(1).messages({
         'object.min': 'Each update entry must have at least one field',

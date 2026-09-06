@@ -40,6 +40,17 @@ export default function HomeScreen() {
   // shows sentences saved from reel subtitles.
   const [activeTab, setActiveTab] = useState('words');
   const debounceTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
+  // Bumped on pull-to-refresh so VocabularyListItem recomputes its "next
+  // review in X" countdown against the current time - that display is
+  // otherwise only recalculated when next_review_at itself changes (i.e.
+  // after an actual review), so it goes stale the longer the list sits open.
+  const [refreshedAt, setRefreshedAt] = useState(() => Date.now());
+  const [isRefreshing, setIsRefreshing] = useState(false);
+  const handleRefresh = useCallback(() => {
+    setIsRefreshing(true);
+    setRefreshedAt(Date.now());
+    setIsRefreshing(false);
+  }, []);
 
   // Sort by created_at descending without re-allocating Date objects inside
   // the comparator (decorate-sort-undecorate) - a plain `new Date(...)`
@@ -197,7 +208,12 @@ export default function HomeScreen() {
               <ActivityIndicator size="large" color={PRIMARY_COLOR} />
             </View>
           ) : (
-            <VocabularyList words={filteredWords} />
+            <VocabularyList
+              words={filteredWords}
+              refreshedAt={refreshedAt}
+              refreshing={isRefreshing}
+              onRefresh={handleRefresh}
+            />
           )}
 
           {/* Filter Bottom Sheet Modal */}

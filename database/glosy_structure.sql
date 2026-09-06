@@ -682,6 +682,11 @@ CREATE TABLE public.user_vocabulary (
     review_count integer DEFAULT 0 NOT NULL,
     next_review_at timestamp with time zone DEFAULT now() NOT NULL,
     updated_at timestamp with time zone DEFAULT now() NOT NULL,
+    stability double precision,
+    difficulty double precision,
+    lapses smallint DEFAULT 0 NOT NULL,
+    fsrs_state smallint DEFAULT 0 NOT NULL,
+    learning_steps smallint DEFAULT 0 NOT NULL,
     CONSTRAINT user_vocabulary_mastery_level_check CHECK (((mastery_level >= 1) AND (mastery_level <= 6)))
 );
 

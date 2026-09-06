@@ -1,11 +1,11 @@
 import React, { useCallback } from 'react';
-import { Animated } from 'react-native';
+import { Animated, RefreshControl } from 'react-native';
 import VocabularyListItem from '@/components/vocabulary/VocabularyListItem';
 
-export default function VocabularyList({ words }) {
+export default function VocabularyList({ words, refreshedAt, refreshing, onRefresh }) {
   const renderWordItem = useCallback(
-    ({ item }) => <VocabularyListItem item={item} />,
-    []
+    ({ item }) => <VocabularyListItem item={item} refreshedAt={refreshedAt} />,
+    [refreshedAt]
   );
 
   return (
@@ -14,6 +14,12 @@ export default function VocabularyList({ words }) {
       keyExtractor={item => `word-${item.id}`}
       renderItem={renderWordItem}
       keyboardShouldPersistTaps="handled"
+      extraData={refreshedAt}
+      refreshControl={
+        onRefresh ? (
+          <RefreshControl refreshing={!!refreshing} onRefresh={onRefresh} />
+        ) : undefined
+      }
     />
   );
 }

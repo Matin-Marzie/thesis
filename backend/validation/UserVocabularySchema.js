@@ -23,6 +23,28 @@ const UserVocabularySchema = Joi.object()
         'date.base': 'created_at must be a valid date',
         'any.required': 'created_at is required',
       }),
+      stability: Joi.number().allow(null).messages({
+        'number.base': 'stability must be a number or null',
+      }),
+      difficulty: Joi.number().allow(null).messages({
+        'number.base': 'difficulty must be a number or null',
+      }),
+      lapses: Joi.number().integer().min(0).messages({
+        'number.base': 'lapses must be a number',
+        'number.integer': 'lapses must be an integer',
+        'number.min': 'lapses must be at least 0',
+      }),
+      fsrs_state: Joi.number().integer().min(0).max(3).messages({
+        'number.base': 'fsrs_state must be a number',
+        'number.integer': 'fsrs_state must be an integer',
+        'number.min': 'fsrs_state must be at least 0',
+        'number.max': 'fsrs_state must be at most 3',
+      }),
+      learning_steps: Joi.number().integer().min(0).messages({
+        'number.base': 'learning_steps must be a number',
+        'number.integer': 'learning_steps must be an integer',
+        'number.min': 'learning_steps must be at least 0',
+      }),
     })
   )
   .max(30000) // max 30000 words

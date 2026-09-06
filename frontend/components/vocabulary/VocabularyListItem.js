@@ -14,7 +14,7 @@ import VibrantTouchableOpacity from '@/components/TouchableOpacity';
 import { useColorScheme } from '@/components/useColorScheme';
 import { DARK_COLORS } from '@/constants/App';
 
-function WordItem({ item }) {
+function WordItem({ item, refreshedAt }) {
 
     const isDark = useColorScheme() === 'dark';
     const { userVocabulary, vocabularyDispatch } = useVocabularyContext();
@@ -42,6 +42,27 @@ function WordItem({ item }) {
 
     const UserVocabularyEntry = word ? userVocabulary[word.id] : null;
     const swipeableRef = useRef(null);
+
+    // "now" is pinned to the last pull-to-refresh (falling back to mount
+    // time), not read fresh on every render - otherwise this would need a
+    // ticking timer to stay accurate. Pulling to refresh (see VocabularyList/
+    // index.tsx) bumps refreshedAt, which recomputes this against the
+    // current time even though next_review_at itself hasn't changed.
+    const now = refreshedAt ?? Date.now();
+    const isNextReviewDue = UserVocabularyEntry?.next_review_at
+        ? new Date(UserVocabularyEntry.next_review_at).getTime() <= now
+        : false;
+    const nextReviewLabel = useMemo(() => {
+        if (!UserVocabularyEntry?.next_review_at) return '';
+        const msRemaining = new Date(UserVocabularyEntry.next_review_at).getTime() - now;
+        if (msRemaining <= 0) return '';
+        const totalMinutes = Math.floor(msRemaining / 60000);
+        const days = Math.floor(totalMinutes / 1440);
+        const hours = Math.floor(totalMinutes / 60);
+        if (days > 0) return `${days} days`;
+        if (hours > 0) return `${hours} hours`;
+        return `${totalMinutes} minutes`;
+    }, [UserVocabularyEntry?.next_review_at, now]);
     
     // Get half of screen width for swipe threshold
     const screenWidth = Dimensions.get('window').width;
@@ -160,6 +181,11 @@ function WordItem({ item }) {
                     <View style={styles.written_formTranslationRow}>
                         <Text style={[styles.written_form, isDark && { color: DARK_COLORS.text }]}>{written_form}</Text>
                         <Text style={[styles.translationText, isDark && { color: DARK_COLORS.textSecondary }]}>{translations}</Text>
+                        {UserVocabularyEntry?.next_review_at && (
+                            <Text style={[styles.nextReviewText, isDark && { color: DARK_COLORS.textSecondary }, isNextReviewDue && styles.nextReviewDueText]}>
+                                {isNextReviewDue ? 'Due now' : `Next review: ${nextReviewLabel}`}
+                            </Text>
+                        )}
                     </View>
                 </View>
                 <View>
@@ -281,6 +307,15 @@ const styles = StyleSheet.create({
         fontSize: 14,
         color: '#666',
     },
+    nextReviewText: {
+        fontSize: 12,
+        color: '#999',
+        marginTop: 2,
+    },
+    nextReviewDueText: {
+        color: '#e07b00',
+        fontWeight: '600',
+    },
     addButton: {
         width: 38,
         height: 38,
@@ -376,5 +411,5 @@ const styles = StyleSheet.create({
 });
 export default memo(WordItem, (prevProps, nextProps) => {
     // Return true if props are equal (don't re-render), false if they differ (re-render)
-    return prevProps.item === nextProps.item;
+    return prevProps.item === nextProps.item && prevProps.refreshedAt === nextProps.refreshedAt;
 });
