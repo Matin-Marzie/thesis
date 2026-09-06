@@ -80,7 +80,7 @@ export default function LoginScreen() {
     Alert.alert(
       'You have progress on this device',
       "This device has an active language-learning session - energy, coins, your selected language, and word progress - that isn't linked to any account yet.\n\n" +
-      "Merge combines it with the account's saved progress: whichever has more coins/energy is kept, any languages you have here that the account doesn't are added to it, and for words you've studied in both places, the better mastery level wins.\n\n" +
+      "Merge combines it with the account's saved progress: whichever has more coins/energy is kept, any languages you have here that the account doesn't are added to it, and for words you've studied in both places, the more advanced progress wins.\n\n" +
       "Overwrite discards this device's current session entirely and replaces it with whatever is already saved on that account.\n\n" +
       "This can't be undone once you continue.",
       [

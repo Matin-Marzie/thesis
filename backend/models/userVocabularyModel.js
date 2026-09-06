@@ -2,7 +2,7 @@ import pool from '../config/db.js';
 
 // Field order used whenever a controller serializes user_vocabulary (keyed
 // by word_id) as columnar JSON - see utils/columnar.js's toColumnarFromKeyedObject.
-export const VOCABULARY_FIELD_COLUMNS = ['mastery_level', 'last_review', 'created_at', 'review_count', 'next_review_at', 'stability', 'difficulty', 'lapses', 'fsrs_state', 'learning_steps'];
+export const VOCABULARY_FIELD_COLUMNS = ['last_review', 'created_at', 'review_count', 'next_review_at', 'stability', 'difficulty', 'lapses', 'fsrs_state', 'learning_steps'];
 
 const userVocabularyModel = {
 
@@ -12,7 +12,6 @@ const userVocabularyModel = {
         SELECT
             word_id,
             user_languages_id,
-            mastery_level,
             last_review,
             created_at,
             review_count,
@@ -27,10 +26,9 @@ const userVocabularyModel = {
     `;
 
         const result = await pool.query(query, [userId, userLanguagesId]);
-        // reshape → { wordId: { mastery_level, last_review, created_at, review_count, next_review_at, stability, difficulty, lapses, fsrs_state, learning_steps } }
+        // reshape → { wordId: { last_review, created_at, review_count, next_review_at, stability, difficulty, lapses, fsrs_state, learning_steps } }
         return result.rows.reduce((acc, row) => {
             acc[row.word_id] = {
-                mastery_level: row.mastery_level,
                 last_review: row.last_review,
                 created_at: row.created_at,
                 review_count: row.review_count,
@@ -49,12 +47,11 @@ const userVocabularyModel = {
     async add(userId, userVocabulary, currentUserLanguagesId) {
         const values = [];
         const placeholders = userVocabulary.map(([wordId, data], i) => {
-            const base = i * 13;
+            const base = i * 12;
             values.push(
                 userId,
                 Number(wordId),
                 currentUserLanguagesId,
-                data.mastery_level,
                 data.last_review,
                 data.created_at,
                 data.review_count ?? 0,
@@ -65,21 +62,20 @@ const userVocabularyModel = {
                 data.fsrs_state ?? 0,
                 data.learning_steps ?? 0
             );
-            return `($${base + 1}, $${base + 2}, $${base + 3}, $${base + 4}, $${base + 5}, $${base + 6}, $${base + 7}, $${base + 8}, $${base + 9}, $${base + 10}, $${base + 11}, $${base + 12}, $${base + 13})`;
+            return `($${base + 1}, $${base + 2}, $${base + 3}, $${base + 4}, $${base + 5}, $${base + 6}, $${base + 7}, $${base + 8}, $${base + 9}, $${base + 10}, $${base + 11}, $${base + 12})`;
         }).join(',');
         // Add filter param
         values.push(currentUserLanguagesId);
         const query = `
             WITH inserted AS (
             INSERT INTO user_vocabulary
-                (user_id, word_id, user_languages_id, mastery_level, last_review, created_at, review_count, next_review_at, stability, difficulty, lapses, fsrs_state, learning_steps)
+                (user_id, word_id, user_languages_id, last_review, created_at, review_count, next_review_at, stability, difficulty, lapses, fsrs_state, learning_steps)
             VALUES ${placeholders}
             RETURNING *
             )
             SELECT
                 word_id,
                 user_languages_id,
-                mastery_level,
                 last_review,
                 created_at,
                 review_count,
@@ -93,10 +89,9 @@ const userVocabularyModel = {
             WHERE user_languages_id = $${values.length};
         `;
         const result = await pool.query(query, values);
-        // reshape → { wordId: { mastery_level, last_review, created_at, review_count, next_review_at, stability, difficulty, lapses, fsrs_state, learning_steps } }
+        // reshape → { wordId: { last_review, created_at, review_count, next_review_at, stability, difficulty, lapses, fsrs_state, learning_steps } }
         return result.rows.reduce((acc, row) => {
             acc[row.word_id] = {
-                mastery_level: row.mastery_level,
                 last_review: row.last_review,
                 created_at: row.created_at,
                 review_count: row.review_count,
@@ -115,17 +110,11 @@ const userVocabularyModel = {
     // Update vocabulary words
     async update(userId, userLanguagesId, updates) {
         const results = [];
-        
+
         for (const [wordId, data] of Object.entries(updates)) {
             const fields = [];
             const values = [userId, Number(wordId), userLanguagesId];
             let paramCount = 4;
-            
-            if (data.mastery_level !== undefined) {
-                fields.push(`mastery_level = $${paramCount}`);
-                values.push(data.mastery_level);
-                paramCount++;
-            }
 
             if (data.last_review !== undefined) {
                 fields.push(`last_review = $${paramCount}`);
@@ -180,7 +169,7 @@ const userVocabularyModel = {
                     UPDATE user_vocabulary
                     SET ${fields.join(', ')}
                     WHERE user_id = $1 AND word_id = $2 AND user_languages_id = $3
-                    RETURNING word_id, user_languages_id, mastery_level, last_review, created_at, review_count, next_review_at, stability, difficulty, lapses, fsrs_state, learning_steps
+                    RETURNING word_id, user_languages_id, last_review, created_at, review_count, next_review_at, stability, difficulty, lapses, fsrs_state, learning_steps
                 `;
 
                 const result = await pool.query(query, values);
@@ -193,7 +182,6 @@ const userVocabularyModel = {
         // Reshape results to match expected format
         return results.reduce((acc, row) => {
             acc[row.word_id] = {
-                mastery_level: row.mastery_level,
                 last_review: row.last_review,
                 created_at: row.created_at,
                 review_count: row.review_count,
@@ -227,11 +215,13 @@ const userVocabularyModel = {
      * during login-merge to backfill the gap when a language's proficiency
      * level gets bumped up without a fresh registration.
      *
-     * mastery_level is derived per word from how many levels below the target
-     * proficiencyLevel the word's own level is (distance 1 = the level just below target):
-     *   distance 1  -> 3 (Understood)
-     *   distance 2  -> 4 (Usable)
-     *   distance 3+ -> 5 (Mastered), capped there
+     * Seeded words go straight into FSRS Review state (not New), with an
+     * initial stability based on how many levels below the target
+     * proficiencyLevel the word's own level is (distance 1 = the level just
+     * below target):
+     *   distance 1  -> 7 days
+     *   distance 2  -> 20 days
+     *   distance 3+ -> 60 days
      * The intuition: the closer a word's level is to the target, the more
      * recently it would've been learned and the less reinforced it is;
      * more foundational levels further below are assumed well-known.
@@ -242,7 +232,7 @@ const userVocabularyModel = {
      * @param {string} proficiencyLevel - Level to seed up to (N, A1, A2, B1, B2, C1, C2, EX)
      * @param {Date|string} joinedDate - Date to use for created_at and last_review
      * @param {string} fromProficiencyLevel - Level to seed from, exclusive (default 'N', i.e. seed everything below proficiencyLevel)
-     * @returns {Object} Vocabulary object { wordId: { mastery_level, last_review, created_at, review_count, next_review_at, stability, difficulty, lapses, fsrs_state, learning_steps } }
+     * @returns {Object} Vocabulary object { wordId: { last_review, created_at, review_count, next_review_at, stability, difficulty, lapses, fsrs_state, learning_steps } }
      */
     async addByProficiencyLevel(userId, userLanguagesId, learningLanguageId, proficiencyLevel, joinedDate = null, fromProficiencyLevel = 'N') {
         // Proficiency levels in order - get all levels below the target level
@@ -258,16 +248,6 @@ const userVocabularyModel = {
         // Get levels in [fromProficiencyLevel, proficiencyLevel)
         const levelsBelowProficiency = PROFICIENCY_LEVELS.slice(fromIndex, levelIndex);
 
-        const masteryLevelForDistance = (distance) => {
-            if (distance <= 1) return 3; // Understood
-            if (distance === 2) return 4; // Usable
-            return 5; // Mastered
-        };
-
-        // Seeded words are treated as already-learned (FSRS state = Review,
-        // not New), with an initial stability roughly matching how recently
-        // reinforced a word at that distance would plausibly be - same
-        // intuition as masteryLevelForDistance, just in scheduling terms.
         const stabilityForDistance = (distance) => {
             if (distance <= 1) return 7; // days
             if (distance === 2) return 20;
@@ -279,20 +259,16 @@ const userVocabularyModel = {
         // Use joinedDate if provided, otherwise use NOW()
         const dateValue = joinedDate || new Date().toISOString();
 
-        // Build CASE w.level WHEN ... THEN ... END blocks so each word gets a
-        // mastery_level and initial FSRS stability based on the distance of
-        // its own level from the target, instead of one flat value for
-        // everything seeded.
+        // Build a CASE w.level WHEN ... THEN ... END block so each word gets
+        // an initial FSRS stability based on the distance of its own level
+        // from the target, instead of one flat value for everything seeded.
         const values = [userId, userLanguagesId, learningLanguageId, dateValue];
-        let masteryCaseWhens = '';
         let stabilityCaseWhens = '';
         for (const level of levelsBelowProficiency) {
             const distance = levelIndex - PROFICIENCY_LEVELS.indexOf(level);
-            values.push(level, masteryLevelForDistance(distance), stabilityForDistance(distance));
-            const levelParam = `$${values.length - 2}`;
-            const masteryParam = `$${values.length - 1}`;
+            values.push(level, stabilityForDistance(distance));
+            const levelParam = `$${values.length - 1}`;
             const stabilityParam = `$${values.length}`;
-            masteryCaseWhens += ` WHEN ${levelParam} THEN ${masteryParam}`;
             stabilityCaseWhens += ` WHEN ${levelParam} THEN ${stabilityParam}`;
         }
         values.push(levelsBelowProficiency);
@@ -302,9 +278,8 @@ const userVocabularyModel = {
         const fsrsStateParam = `$${values.length}`;
 
         const query = `
-            INSERT INTO user_vocabulary (user_id, word_id, user_languages_id, mastery_level, last_review, created_at, review_count, next_review_at, stability, difficulty, lapses, fsrs_state, learning_steps)
+            INSERT INTO user_vocabulary (user_id, word_id, user_languages_id, last_review, created_at, review_count, next_review_at, stability, difficulty, lapses, fsrs_state, learning_steps)
             SELECT $1, w.id, $2,
-                (CASE w.level${masteryCaseWhens} END)::smallint,
                 $4, $4, 0,
                 $4::timestamptz + (INTERVAL '1 day' * (CASE w.level${stabilityCaseWhens} END)::double precision),
                 (CASE w.level${stabilityCaseWhens} END)::double precision,
@@ -312,15 +287,14 @@ const userVocabularyModel = {
             FROM words w
             WHERE w.language_id = $3
               AND w.level = ANY(${levelsArrayParam})
-            RETURNING word_id, mastery_level, last_review, created_at, review_count, next_review_at, stability, difficulty, lapses, fsrs_state, learning_steps
+            RETURNING word_id, last_review, created_at, review_count, next_review_at, stability, difficulty, lapses, fsrs_state, learning_steps
         `;
 
         const result = await pool.query(query, values);
 
-        // Reshape to { wordId: { mastery_level, last_review, created_at, review_count, next_review_at, stability, difficulty, lapses, fsrs_state, learning_steps } }
+        // Reshape to { wordId: { last_review, created_at, review_count, next_review_at, stability, difficulty, lapses, fsrs_state, learning_steps } }
         return result.rows.reduce((acc, row) => {
             acc[row.word_id] = {
-                mastery_level: row.mastery_level,
                 last_review: row.last_review,
                 created_at: row.created_at,
                 review_count: row.review_count,

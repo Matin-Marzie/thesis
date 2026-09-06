@@ -17,7 +17,8 @@ import { useVocabularyContext } from '@/context/VocabularyContext';
 import { useSentenceContext } from '@/context/SentenceContext';
 import { useAuth } from '@/context/AuthContext';
 import { useDictionaryContext } from '@/context/DictionaryContext';
-import { getLevelsBelowProficiency, getMasteryLevelForWordLevel } from '@/constants/Vocabulary';
+import { getLevelsBelowProficiency, getDistanceForWordLevel } from '@/constants/Vocabulary';
+import { seedFieldsForDistance } from '@/utils/fsrs';
 import { VOCABULARY_ACTIONS, DEFAULT_VOCABULARY_CHANGES } from '@/hooks/useVocabulary';
 import { expandUserVocabulary } from '@/utils/expandVocabulary';
 import { SENTENCE_ACTIONS, DEFAULT_SENTENCE_CHANGES } from '@/hooks/useSentences';
@@ -115,24 +116,24 @@ export default function OnboardingQuestions() {
     if (selectedLearningLanguage?.code && selectedNativeLanguage?.code) {
       const dictionaryData = await fetchDictionary(selectedLearningLanguage.code, selectedNativeLanguage.code) as { words?: Array<{ id: number; level: string }> } | null;
 
-      // Add words below proficiency level to user's vocabulary, with a
-      // mastery_level based on how far below the target level each word's
-      // own level is - mirrors the backend's auto-seed exactly (see
-      // getMasteryLevelForWordLevel / userVocabularyModel.addByProficiencyLevel)
+      // Add words below proficiency level to user's vocabulary, seeded into
+      // FSRS Review state with stability based on how far below the target
+      // level each word's own level is - mirrors the backend's auto-seed
+      // exactly (see seedFieldsForDistance / userVocabularyModel.addByProficiencyLevel)
       if (dictionaryData?.words && selectedLevel) {
         const levelsBelowProficiency = getLevelsBelowProficiency(selectedLevel);
-        const wordIdsByMastery = new Map<number, number[]>();
+        const wordIdsByDistance = new Map<number, number[]>();
 
         for (const word of dictionaryData.words) {
           if (!levelsBelowProficiency.includes(word.level)) continue;
-          const mastery = getMasteryLevelForWordLevel(selectedLevel, word.level);
-          const bucket = wordIdsByMastery.get(mastery) ?? [];
+          const distance = getDistanceForWordLevel(selectedLevel, word.level);
+          const bucket = wordIdsByDistance.get(distance) ?? [];
           bucket.push(word.id);
-          wordIdsByMastery.set(mastery, bucket);
+          wordIdsByDistance.set(distance, bucket);
         }
 
-        for (const [mastery, wordIds] of wordIdsByMastery) {
-          bulkAddVocabulary(wordIds, mastery);
+        for (const [distance, wordIds] of wordIdsByDistance) {
+          bulkAddVocabulary(wordIds, seedFieldsForDistance(distance));
         }
       }
     }

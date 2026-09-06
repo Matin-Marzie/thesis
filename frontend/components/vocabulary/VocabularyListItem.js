@@ -5,7 +5,6 @@ import { FontAwesome5 } from '@expo/vector-icons';
 import React, { useState, useCallback, useMemo, useRef, memo } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, ActivityIndicator, Image, Animated, Dimensions } from 'react-native';
 import { getWikimediaDictionary, extractDefinitions } from '@/api/dictionary';
-import MasteryLevelButton from '@/components/vocabulary/MasteryLevelButton';
 import { Swipeable, ScrollView } from 'react-native-gesture-handler';
 import { Ionicons } from '@expo/vector-icons';
 import { VOCABULARY_ACTIONS } from '@/hooks/useVocabulary';
@@ -192,10 +191,9 @@ function WordItem({ item, refreshedAt }) {
                     <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end', gap: 8, marginHorizontal: 10 }}>
                         <Text style={isDark && { color: DARK_COLORS.text }}>{level}</Text>
 
-                        {UserVocabularyEntry ? (
-                            <MasteryLevelButton masteryLevel={UserVocabularyEntry?.mastery_level} wordId={word.id} vocabularyDispatch={vocabularyDispatch} />
-                        ) : (
-                            // Add new Vocabulary word
+                        {!UserVocabularyEntry && (
+                            // Add new Vocabulary word - tracked words show no button here,
+                            // just the due-date badge above (see nextReviewLabel)
                             <VibrantTouchableOpacity style={styles.addButton} onPress={handleAddWord}>
                                 <Text style={styles.addButtonText}>+</Text>
                             </VibrantTouchableOpacity>

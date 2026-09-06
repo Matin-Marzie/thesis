@@ -129,7 +129,7 @@ const registerController = async (req, res) => {
     const proficiencyLevel = current_language.proficiency_level;
     const learningLanguageId = current_language.learning_language.id;
     
-    // Bulk add words below proficiency level with mastery_level = 3
+    // Bulk add words below proficiency level, seeded straight into FSRS Review state
     new_user_vocabulary = await userVocabularyModel.addByProficiencyLevel(
       newUser.id,
       current_language.id,
@@ -152,7 +152,7 @@ const registerController = async (req, res) => {
         new_user_vocabulary = { ...new_user_vocabulary, ...insertedVocabulary };
       }
       
-      // Handle updates (in case user modified mastery of existing words)
+      // Handle updates (in case the client already has review progress for existing words)
       if (vocabulary_changes.updates && Object.keys(vocabulary_changes.updates).length > 0) {
         const updatedVocabulary = await userVocabularyModel.update(
           newUser.id,

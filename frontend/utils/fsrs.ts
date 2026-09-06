@@ -100,6 +100,23 @@ export function scheduleReview(
 }
 
 /**
+ * Initial FSRS state for a word seeded as "already known" (onboarding
+ * auto-fill), based on how many proficiency levels below the user's stated
+ * level the word's own level is (distance 1 = the level just below target).
+ * Mirrors the backend's auto-seed exactly (userVocabularyModel.js
+ * addByProficiencyLevel) - seeded words go straight into Review state
+ * instead of New, with stability standing in for how recently/well
+ * reinforced a word at that distance would plausibly be:
+ *   distance 1  -> 7 days
+ *   distance 2  -> 20 days
+ *   distance 3+ -> 60 days
+ */
+export function seedFieldsForDistance(distance: number): { stability: number; difficulty: number; fsrsState: number } {
+  const stability = distance <= 1 ? 7 : distance === 2 ? 20 : 60;
+  return { stability, difficulty: 5.0, fsrsState: State.Review };
+}
+
+/**
  * Words currently due for review (next_review_at has passed), most-overdue
  * first. Used by review/exercise screens (and games like Wordle) to pick
  * what to practice next.

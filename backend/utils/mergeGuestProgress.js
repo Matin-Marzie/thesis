@@ -26,7 +26,10 @@ const higherProficiency = (a, b) => {
  *   (inserts/updates) are ever sent, not the full local vocabulary
  *   and it's only scoped to the guest's current local language anyway.
  *     - if the matched account pair's proficiency_level is the SAME as the
- *       local one: merge word-by-word, higher mastery_level wins
+ *       local one: merge word-by-word, higher FSRS stability wins (the
+ *       entry judged more durably learned), carrying over the full FSRS
+ *       state (stability/difficulty/lapses/fsrs_state/learning_steps) of
+ *       whichever side wins, not just the stability number alone
  *     - otherwise (levels differ, or the pair is brand new to the account):
  *       apply the local changes outright (no comparison), and backfill the
  *       vocabulary gap with the same proficiency-level auto-seed
@@ -174,23 +177,41 @@ const mergeGuestProgress = async (userId, { user_profile, user_progress, vocabul
 
         for (const wordId of localWordIds) {
           const localWord = localWordChanges[wordId];
-          // An update entry can carry only last_review with no
-          // mastery_level - nothing meaningful to compare or insert then.
-          if (localWord.mastery_level === undefined) continue;
+          // An update entry can carry only last_review with no FSRS
+          // state - nothing meaningful to compare or insert then.
+          if (localWord.stability === undefined) continue;
 
           const accountWord = accountVocab[wordId];
 
           if (!accountWord) {
             toInsert.push([wordId, {
-              mastery_level: localWord.mastery_level,
               last_review: localWord.last_review ?? null,
               created_at: localWord.created_at ?? localWord.last_review ?? new Date().toISOString(),
+              review_count: localWord.review_count,
+              next_review_at: localWord.next_review_at,
+              stability: localWord.stability,
+              difficulty: localWord.difficulty,
+              lapses: localWord.lapses,
+              fsrs_state: localWord.fsrs_state,
+              learning_steps: localWord.learning_steps,
             }]);
-          } else if (!levelsAreSame || localWord.mastery_level > accountWord.mastery_level) {
+          } else if (!levelsAreSame || (localWord.stability ?? 0) > (accountWord.stability ?? 0)) {
             // Levels matched going in: only take the local value if it's
-            // actually better. Levels differed (or this is a new pair):
-            // trust the local session's tracked changes outright.
-            toUpdate[wordId] = { mastery_level: localWord.mastery_level, last_review: localWord.last_review };
+            // actually better (more durably learned). Levels differed (or
+            // this is a new pair): trust the local session's tracked
+            // changes outright. Either way, carry the full FSRS state, not
+            // just stability - taking one field but not the rest would
+            // leave the word's difficulty/state stale/inconsistent.
+            toUpdate[wordId] = {
+              last_review: localWord.last_review,
+              review_count: localWord.review_count,
+              next_review_at: localWord.next_review_at,
+              stability: localWord.stability,
+              difficulty: localWord.difficulty,
+              lapses: localWord.lapses,
+              fsrs_state: localWord.fsrs_state,
+              learning_steps: localWord.learning_steps,
+            };
           }
         }
 

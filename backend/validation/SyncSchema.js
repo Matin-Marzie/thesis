@@ -32,13 +32,6 @@ const SyncSchema = Joi.object({
     inserts: Joi.object().pattern(
       wordIdKey,
       Joi.object({
-        mastery_level: Joi.number().integer().min(0).max(6).required().messages({
-          'number.base': 'mastery_level must be a number',
-          'number.integer': 'mastery_level must be an integer',
-          'number.min': 'mastery_level must be at least 0',
-          'number.max': 'mastery_level must be at most 6',
-          'any.required': 'mastery_level is required for inserts',
-        }),
         last_review: Joi.date().allow(null).messages({
           'date.base': 'last_review must be a valid date or null',
         }),
@@ -84,12 +77,6 @@ const SyncSchema = Joi.object({
     updates: Joi.object().pattern(
       wordIdKey,
       Joi.object({
-        mastery_level: Joi.number().integer().min(0).max(6).messages({
-          'number.base': 'mastery_level must be a number',
-          'number.integer': 'mastery_level must be an integer',
-          'number.min': 'mastery_level must be at least 0',
-          'number.max': 'mastery_level must be at most 6',
-        }),
         last_review: Joi.date().allow(null).messages({
           'date.base': 'last_review must be a valid date or null',
         }),

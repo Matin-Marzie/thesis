@@ -7,16 +7,28 @@ const VocabularyChangesSchema = Joi.object({
   inserts: Joi.object().pattern(
     wordIdKey,
     Joi.object({
-      mastery_level: Joi.number().integer().min(0).max(6).required(),
       last_review: Joi.date().allow(null),
       created_at: Joi.date().required(),
+      review_count: Joi.number().integer().min(0),
+      next_review_at: Joi.date().allow(null),
+      stability: Joi.number().allow(null),
+      difficulty: Joi.number().allow(null),
+      lapses: Joi.number().integer().min(0),
+      fsrs_state: Joi.number().integer().min(0).max(3),
+      learning_steps: Joi.number().integer().min(0),
     })
   ).default({}),
   updates: Joi.object().pattern(
     wordIdKey,
     Joi.object({
-      mastery_level: Joi.number().integer().min(0).max(6),
       last_review: Joi.date().allow(null),
+      review_count: Joi.number().integer().min(0),
+      next_review_at: Joi.date().allow(null),
+      stability: Joi.number().allow(null),
+      difficulty: Joi.number().allow(null),
+      lapses: Joi.number().integer().min(0),
+      fsrs_state: Joi.number().integer().min(0).max(3),
+      learning_steps: Joi.number().integer().min(0),
     }).min(1)
   ).default({}),
   deletes: Joi.object().pattern(

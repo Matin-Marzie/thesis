@@ -9,7 +9,7 @@ import { scheduleReview } from '../utils/fsrs';
  * @property {Object} userVocabulary
  * @property {Function} setUserVocabulary
  * @property {Function} vocabularyDispatch
- * @property {(wordIds: number[], mastery_level?: number) => void} bulkAddVocabulary
+ * @property {(wordIds: number[], seed: {stability: number, difficulty: number, fsrsState: number}) => void} bulkAddVocabulary
  * @property {(wordId: number|string, rating: number, now?: Date) => void} reviewWord
  * @property {Object} vocabularyChanges
  * @property {Function} setVocabularyChanges
@@ -41,11 +41,13 @@ export const VocabularyProvider = ({ children }) => {
     }
   }, [setUserVocabulary, setVocabularyChanges]);
 
-  // Bulk add vocabulary without tracking changes(vocabularyChanges) (for onboarding auto-fill)
-  const bulkAddVocabulary = useCallback((wordIds, mastery_level = 3) => {
+  // Bulk add vocabulary without tracking changes(vocabularyChanges) (for onboarding auto-fill).
+  // seed carries the FSRS state to seed words as already-known with -
+  // mirrors the backend's addByProficiencyLevel auto-seed.
+  const bulkAddVocabulary = useCallback((wordIds, { stability, difficulty, fsrsState }) => {
     setUserVocabulary((prev) => vocabularyReducer(prev, {
       type: VOCABULARY_ACTIONS.ADD_MANY,
-      payload: { wordIds, mastery_level },
+      payload: { wordIds, stability, difficulty, fsrsState },
     }));
     // Note: We do NOT update vocabularyChanges here - these are not synced to backend
   }, [setUserVocabulary]);

@@ -1,6 +1,5 @@
 /**
  * @typedef {Object} WordProgress
- * @property {number} mastery_level - 1-5 mastery level
  * @property {string} last_review - ISO date string
  * @property {string} created_at - ISO date string
  * @property {number} review_count - number of times the word has been reviewed
@@ -32,11 +31,10 @@ export const vocabularyReducer = (state, action) => {
 
   switch (action.type) {
     case VOCABULARY_ACTIONS.ADD: {
-      const { wordId, mastery_level = 1 } = action.payload;
+      const { wordId } = action.payload;
       return {
         ...state,
         [wordId]: {
-          mastery_level,
           last_review: now,
           created_at: now,
           review_count: 0,
@@ -53,23 +51,25 @@ export const vocabularyReducer = (state, action) => {
     }
 
     case VOCABULARY_ACTIONS.ADD_MANY: {
-      // Bulk add words with specified mastery_level
-      // payload: { wordIds: number[], mastery_level: number }
-      const { wordIds, mastery_level = 1 } = action.payload;
+      // Bulk add words seeded as already-known (onboarding auto-fill),
+      // straight into FSRS Review state with the given stability/difficulty
+      // - mirrors the backend's addByProficiencyLevel auto-seed.
+      // payload: { wordIds: number[], stability: number, difficulty: number, fsrsState: number }
+      const { wordIds, stability, difficulty, fsrsState } = action.payload;
+      const nextReviewAt = new Date(Date.now() + stability * 86_400_000).toISOString();
       const newEntries = {};
       for (const wordId of wordIds) {
         // Skip if word already exists
         if (!state[wordId]) {
           newEntries[wordId] = {
-            mastery_level,
             last_review: now,
             created_at: now,
             review_count: 0,
-            next_review_at: now,
-            stability: null,
-            difficulty: null,
+            next_review_at: nextReviewAt,
+            stability,
+            difficulty,
             lapses: 0,
-            fsrs_state: 0, // New
+            fsrs_state: fsrsState,
             learning_steps: 0,
           };
         }
@@ -81,13 +81,12 @@ export const vocabularyReducer = (state, action) => {
     }
 
     case VOCABULARY_ACTIONS.UPDATE: {
-      const { wordId, mastery_level, review_count, next_review_at, last_review, stability, difficulty, lapses, fsrs_state, learning_steps } = action.payload;
+      const { wordId, review_count, next_review_at, last_review, stability, difficulty, lapses, fsrs_state, learning_steps } = action.payload;
       if (!state[wordId]) return state;
       return {
         ...state,
         [wordId]: {
           ...state[wordId],
-          ...(mastery_level !== undefined && { mastery_level }),
           last_review: last_review ?? now,
           ...(review_count !== undefined && { review_count }),
           ...(next_review_at !== undefined && { next_review_at }),
@@ -143,10 +142,10 @@ export const vocabularyChangesReducer = (state, action) => {
 
   switch (action.type) {
     case VOCABULARY_ACTIONS.ADD: {
-      const { wordId, mastery_level = 1 } = action.payload;
+      const { wordId } = action.payload;
       const now = new Date().toISOString();
       const entry = {
-        mastery_level, last_review: now, created_at: now, review_count: 0, next_review_at: now,
+        last_review: now, created_at: now, review_count: 0, next_review_at: now,
         stability: null, difficulty: null, lapses: 0, fsrs_state: 0, learning_steps: 0,
       };
 
@@ -158,7 +157,7 @@ export const vocabularyChangesReducer = (state, action) => {
           updates: {
             ...updates,
             [wordId]: {
-              mastery_level, last_review: now, review_count: 0, next_review_at: now,
+              last_review: now, review_count: 0, next_review_at: now,
               stability: null, difficulty: null, lapses: 0, fsrs_state: 0, learning_steps: 0,
             },
           },
@@ -177,7 +176,7 @@ export const vocabularyChangesReducer = (state, action) => {
     }
 
     case VOCABULARY_ACTIONS.UPDATE: {
-      const { wordId, mastery_level, review_count, next_review_at, last_review, stability, difficulty, lapses, fsrs_state, learning_steps } = action.payload;
+      const { wordId, review_count, next_review_at, last_review, stability, difficulty, lapses, fsrs_state, learning_steps } = action.payload;
       const now = new Date().toISOString();
       const resolvedLastReview = last_review
         ? (last_review instanceof Date ? last_review.toISOString() : last_review)
@@ -187,7 +186,6 @@ export const vocabularyChangesReducer = (state, action) => {
       if (deletes[wordId]) return state;
 
       const updatedFields = {
-        ...(mastery_level !== undefined && { mastery_level }),
         last_review: resolvedLastReview,
         ...(review_count !== undefined && { review_count }),
         ...(next_review_at !== undefined && {
