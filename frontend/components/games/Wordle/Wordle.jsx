@@ -43,18 +43,25 @@ export default function Wordle({ onClose }) {
     const { userVocabulary, reviewWord } = useVocabularyContext();
     const vibrate = useVibration();
 
-    // Words the user is actually due to recall right now - Wordle prefers
-    // these as the secret word, so finding it counts as a successful FSRS
-    // review and missing it counts as a lapse (see initializeGame/handleKeyPress).
+    // The secret word always comes from the user's own tracked vocabulary,
+    // never the full dictionary - so every round doubles as an FSRS review
+    // (see initializeGame/handleKeyPress). Words currently due are
+    // preferred; other tracked words fill in when nothing's due yet.
+    const trackedWordIds = useMemo(
+        () => new Set(Object.keys(userVocabulary)),
+        [userVocabulary]
+    );
     const dueWordIds = useMemo(
         () => new Set(getDueWords(userVocabulary).map((w) => String(w.wordId))),
         [userVocabulary]
     );
-    // initializeGame reads this via the ref (not the memo directly) so a
+    // initializeGame reads these via refs (not the memos directly) so a
     // reviewWord() call mid-round (which updates userVocabulary, and so
-    // dueWordIds) doesn't change initializeGame's identity and retrigger the
+    // these sets) doesn't change initializeGame's identity and retrigger the
     // mount effect below - that was silently restarting the round right after
     // a win/loss, before the player ever touched Collect.
+    const trackedWordIdsRef = useRef(trackedWordIds);
+    trackedWordIdsRef.current = trackedWordIds;
     const dueWordIdsRef = useRef(dueWordIds);
     dueWordIdsRef.current = dueWordIds;
 
@@ -69,7 +76,6 @@ export default function Wordle({ onClose }) {
     const normalizeKey = useCallback((word) => normalizeWord(word, langCode), [langCode]);
 
     const [secretWordItem, setSecretWordItem] = useState(null);
-    const [isRecallRound, setIsRecallRound] = useState(false);
     const [wordLength, setWordLength] = useState(config.wordLength);
     const [guesses, setGuesses] = useState([]);
     const [currentGuess, setCurrentGuess] = useState('');
@@ -92,24 +98,27 @@ export default function Wordle({ onClose }) {
     // run on every guess.
     const initializeGame = useCallback(() => {
         const words = dictionary?.words;
+        // Only words already in the user's own vocabulary are eligible -
+        // never the full dictionary - so every round is a real FSRS review.
         const candidates = Array.isArray(words)
-            ? words.filter((item) => [...normalizeKey(item?.written_form)].length === config.wordLength)
+            ? words.filter((item) =>
+                [...normalizeKey(item?.written_form)].length === config.wordLength &&
+                trackedWordIdsRef.current.has(String(item?.id))
+              )
             : [];
-        // Prefer a word the user is actually due to recall; fall back to a
-        // fully random dictionary word when nothing is due (or vocabulary is
-        // empty), so the game stays playable either way.
+        // Prefer a word actually due to recall; fall back to any other
+        // tracked word (not due yet) so the round can still happen.
         const dueCandidates = candidates.filter((item) => dueWordIdsRef.current.has(String(item?.id)));
         const pool = dueCandidates.length > 0 ? dueCandidates : candidates;
         const randomItem = pool[Math.floor(Math.random() * pool.length)] ?? null;
 
         if (!randomItem) {
             setLoading(false);
-            Alert.alert('Error', 'No valid words found for Wordle');
+            Alert.alert('Error', 'Add some words to your vocabulary to play Wordle');
             return;
         }
 
         setSecretWordItem(randomItem);
-        setIsRecallRound(dueCandidates.length > 0);
         setWordLength(config.wordLength);
         setGuesses([]);
         setCurrentGuess('');
@@ -186,8 +195,8 @@ export default function Wordle({ onClose }) {
             if (normalizedGuess === secretWord) {
                 setWon(true);
                 setGameOver(true);
-                // Recall round + found it = successful FSRS review.
-                if (isRecallRound && secretWordItem) {
+                // The secret word is always tracked vocabulary - found it = successful FSRS review.
+                if (secretWordItem) {
                     reviewWord(secretWordItem.id, Rating.Good);
                 }
                 return;
@@ -195,8 +204,8 @@ export default function Wordle({ onClose }) {
 
             if (newGuesses.length >= config.maxAttempts) {
                 setGameOver(true);
-                // Recall round + ran out of guesses = forgotten (lapse).
-                if (isRecallRound && secretWordItem) {
+                // Ran out of guesses = forgotten (lapse).
+                if (secretWordItem) {
                     reviewWord(secretWordItem.id, Rating.Again);
                 }
                 return;
@@ -209,7 +218,7 @@ export default function Wordle({ onClose }) {
         if ([...currentGuess].length < wordLength) {
             setCurrentGuess(prev => prev + letter);
         }
-    }, [currentGuess, gameOver, won, guesses, secretWord, getWordsByWrittenForm, normalizeKey, config.maxAttempts, wordLength, vibrate, isRecallRound, secretWordItem, reviewWord]);
+    }, [currentGuess, gameOver, won, guesses, secretWord, getWordsByWrittenForm, normalizeKey, config.maxAttempts, wordLength, vibrate, secretWordItem, reviewWord]);
 
     if (loading) {
         return (

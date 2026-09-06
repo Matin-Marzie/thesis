@@ -1,52 +1,69 @@
-import React from 'react';
-import { View, Text, StyleSheet, ScrollView, Image } from 'react-native';
+import React, { useMemo } from 'react';
+import { View, Text, StyleSheet, ScrollView, Image, Alert } from 'react-native';
 import { useRouter } from 'expo-router';
 import TouchableOpacity from '@/components/TouchableOpacity';
 import { useColorScheme } from '@/components/useColorScheme';
+import { useProgress } from '@/context/ProgressContext';
+import { useVocabularyContext } from '@/context/VocabularyContext';
+import { useDictionaryContext } from '@/context/DictionaryContext';
+import { GAMES } from '@/constants/games';
 import { DARK_COLORS } from '@/constants/App';
 
 export default function PracticeScreen() {
   const isDark = useColorScheme() === 'dark';
   const router = useRouter();
+  const { userProgress } = useProgress();
+  const { userVocabulary } = useVocabularyContext();
+  const { dictionary } = useDictionaryContext();
 
-  const handlePlayWordOfWonders = () => {
-    router.push('/games/wordofwonders');
-  };
+  const langCode = useMemo(() => {
+    const current = userProgress?.languages?.find((l) => l.is_current_language);
+    return current?.learning_language?.code ?? 'en';
+  }, [userProgress?.languages]);
 
-  const handlePlayWordle = () => {
-    router.push('/games/wordle');
+  // Recomputed only when the inputs each game's isPlayable() reads actually
+  // change, not on every render - Wordle's check scans the full dictionary.
+  const gamesWithAvailability = useMemo(() => {
+    const ctx = { userVocabulary, dictionaryWords: dictionary?.words ?? [], langCode };
+    return GAMES.map((game) => ({ game, availability: game.isPlayable(ctx) }));
+  }, [userVocabulary, dictionary, langCode]);
+
+  const handlePress = (game, availability) => {
+    if (!availability.playable) {
+      Alert.alert('Not available yet', availability.reason ?? 'This game is not available right now.');
+      return;
+    }
+    router.push(game.route);
   };
 
   return (
     <ScrollView style={[styles.container, isDark && { backgroundColor: DARK_COLORS.background }]}>
       <View style={styles.content}>
         <Text style={[styles.title, isDark && { color: DARK_COLORS.text }]}>games</Text>
-        <ScrollView 
-          horizontal 
+        <ScrollView
+          horizontal
           showsHorizontalScrollIndicator={false}
           style={styles.gamesScroll}
         >
-          <TouchableOpacity style={styles.gameThumbnail} onPress={handlePlayWordOfWonders}>
-            <Image 
-              source={require('../../assets/images/games/thumbnail-wordofwonders.png')}
-              style={styles.thumbnailImage}
-              resizeMode="cover"
-            />
-            <View style={styles.thumbnailOverlay}>
-              <Text style={styles.gameName}>Word of Wonders</Text>
-            </View>
-          </TouchableOpacity>
-
-          <TouchableOpacity style={styles.gameThumbnail} onPress={handlePlayWordle}>
-            <Image 
-              source={require('../../assets/images/games/wordle-thumbnail.jpeg')}
-              style={styles.thumbnailImage}
-              resizeMode="cover"
-            />
-            <View style={styles.thumbnailOverlay}>
-              <Text style={styles.gameName}>Wordle</Text>
-            </View>
-          </TouchableOpacity>
+          {gamesWithAvailability.map(({ game, availability }) => (
+            <TouchableOpacity
+              key={game.id}
+              style={[styles.gameThumbnail, !availability.playable && styles.gameThumbnailLocked]}
+              onPress={() => handlePress(game, availability)}
+            >
+              <Image
+                source={game.thumbnail}
+                style={styles.thumbnailImage}
+                resizeMode="cover"
+              />
+              <View style={styles.thumbnailOverlay}>
+                <Text style={styles.gameName}>{game.name}</Text>
+                {!availability.playable && (
+                  <Text style={styles.lockedText}>{availability.reason}</Text>
+                )}
+              </View>
+            </TouchableOpacity>
+          ))}
         </ScrollView>
       </View>
     </ScrollView>
@@ -79,6 +96,9 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
+  },
+  gameThumbnailLocked: {
+    opacity: 0.5,
   },
   thumbnailImage: {
     width: '100%',
@@ -114,5 +134,11 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 20,
     fontWeight: 'bold',
+  },
+  lockedText: {
+    color: '#fff',
+    fontSize: 12,
+    marginTop: 4,
+    opacity: 0.9,
   },
 });
