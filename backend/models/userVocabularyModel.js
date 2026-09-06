@@ -218,10 +218,12 @@ const userVocabularyModel = {
      * Seeded words go straight into FSRS Review state (not New), with an
      * initial stability based on how many levels below the target
      * proficiencyLevel the word's own level is (distance 1 = the level just
-     * below target):
-     *   distance 1  -> 7 days
-     *   distance 2  -> 20 days
-     *   distance 3+ -> 60 days
+     * below target) - each word's actual stability is randomized uniformly
+     * across [1, base] days rather than all sharing the flat base value, so
+     * a large vocabulary doesn't all become due on the exact same day:
+     *   distance 1  -> up to 7 days
+     *   distance 2  -> up to 20 days
+     *   distance 3+ -> up to 60 days
      * The intuition: the closer a word's level is to the target, the more
      * recently it would've been learned and the less reinforced it is;
      * more foundational levels further below are assumed well-known.
@@ -277,16 +279,29 @@ const userVocabularyModel = {
         const difficultyParam = `$${values.length - 1}`;
         const fsrsStateParam = `$${values.length}`;
 
+        // Every word at the same distance would otherwise get the exact same
+        // stability and next_review_at (same created_at, same CASE value) -
+        // seeding a large vocabulary this way means thousands of words all
+        // becoming due on the same single day. Spread them out instead: each
+        // word gets its own stability picked uniformly from [1, base] days,
+        // computed once per row (seed_words CTE) and reused for both
+        // next_review_at and stability so the two stay consistent with each
+        // other, matching a genuinely-reviewed FSRS card's shape.
         const query = `
+            WITH seed_words AS (
+                SELECT w.id AS word_id,
+                    1 + random() * ((CASE w.level${stabilityCaseWhens} END)::double precision - 1) AS seeded_stability
+                FROM words w
+                WHERE w.language_id = $3
+                  AND w.level = ANY(${levelsArrayParam})
+            )
             INSERT INTO user_vocabulary (user_id, word_id, user_languages_id, last_review, created_at, review_count, next_review_at, stability, difficulty, lapses, fsrs_state, learning_steps)
-            SELECT $1, w.id, $2,
+            SELECT $1, word_id, $2,
                 $4, $4, 0,
-                $4::timestamptz + (INTERVAL '1 day' * (CASE w.level${stabilityCaseWhens} END)::double precision),
-                (CASE w.level${stabilityCaseWhens} END)::double precision,
+                $4::timestamptz + (INTERVAL '1 day' * seeded_stability),
+                seeded_stability,
                 ${difficultyParam}, 0, ${fsrsStateParam}, 0
-            FROM words w
-            WHERE w.language_id = $3
-              AND w.level = ANY(${levelsArrayParam})
+            FROM seed_words
             RETURNING word_id, last_review, created_at, review_count, next_review_at, stability, difficulty, lapses, fsrs_state, learning_steps
         `;
 

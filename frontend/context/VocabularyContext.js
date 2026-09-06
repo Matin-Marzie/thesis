@@ -9,7 +9,7 @@ import { scheduleReview } from '../utils/fsrs';
  * @property {Object} userVocabulary
  * @property {Function} setUserVocabulary
  * @property {Function} vocabularyDispatch
- * @property {(wordIds: number[], seed: {stability: number, difficulty: number, fsrsState: number}) => void} bulkAddVocabulary
+ * @property {(wordIds: number[], seed: {baseStability: number, difficulty: number, fsrsState: number}) => void} bulkAddVocabulary
  * @property {(wordId: number|string, rating: number, now?: Date) => void} reviewWord
  * @property {Object} vocabularyChanges
  * @property {Function} setVocabularyChanges
@@ -43,11 +43,13 @@ export const VocabularyProvider = ({ children }) => {
 
   // Bulk add vocabulary without tracking changes(vocabularyChanges) (for onboarding auto-fill).
   // seed carries the FSRS state to seed words as already-known with -
-  // mirrors the backend's addByProficiencyLevel auto-seed.
-  const bulkAddVocabulary = useCallback((wordIds, { stability, difficulty, fsrsState }) => {
+  // mirrors the backend's addByProficiencyLevel auto-seed. baseStability is
+  // an upper bound, not a shared value - the reducer randomizes each word's
+  // actual stability from it so a whole bucket doesn't share one due date.
+  const bulkAddVocabulary = useCallback((wordIds, { baseStability, difficulty, fsrsState }) => {
     setUserVocabulary((prev) => vocabularyReducer(prev, {
       type: VOCABULARY_ACTIONS.ADD_MANY,
-      payload: { wordIds, stability, difficulty, fsrsState },
+      payload: { wordIds, baseStability, difficulty, fsrsState },
     }));
     // Note: We do NOT update vocabularyChanges here - these are not synced to backend
   }, [setUserVocabulary]);

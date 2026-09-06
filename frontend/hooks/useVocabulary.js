@@ -52,20 +52,25 @@ export const vocabularyReducer = (state, action) => {
 
     case VOCABULARY_ACTIONS.ADD_MANY: {
       // Bulk add words seeded as already-known (onboarding auto-fill),
-      // straight into FSRS Review state with the given stability/difficulty
-      // - mirrors the backend's addByProficiencyLevel auto-seed.
-      // payload: { wordIds: number[], stability: number, difficulty: number, fsrsState: number }
-      const { wordIds, stability, difficulty, fsrsState } = action.payload;
-      const nextReviewAt = new Date(Date.now() + stability * 86_400_000).toISOString();
+      // straight into FSRS Review state - mirrors the backend's
+      // addByProficiencyLevel auto-seed.
+      // payload: { wordIds: number[], baseStability: number, difficulty: number, fsrsState: number }
+      const { wordIds, baseStability, difficulty, fsrsState } = action.payload;
       const newEntries = {};
       for (const wordId of wordIds) {
         // Skip if word already exists
         if (!state[wordId]) {
+          // Every word in this bucket shares the same baseStability - if
+          // they all got that exact value, they'd all share the same
+          // next_review_at too, and a large vocabulary would become due all
+          // on one day. Pick a random stability per word from [1,
+          // baseStability] instead, same fix as the backend's seed_words CTE.
+          const stability = 1 + Math.random() * (baseStability - 1);
           newEntries[wordId] = {
             last_review: now,
             created_at: now,
             review_count: 0,
-            next_review_at: nextReviewAt,
+            next_review_at: new Date(Date.now() + stability * 86_400_000).toISOString(),
             stability,
             difficulty,
             lapses: 0,

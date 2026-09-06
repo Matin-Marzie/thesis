@@ -100,20 +100,24 @@ export function scheduleReview(
 }
 
 /**
- * Initial FSRS state for a word seeded as "already known" (onboarding
+ * Base FSRS state for words seeded as "already known" (onboarding
  * auto-fill), based on how many proficiency levels below the user's stated
  * level the word's own level is (distance 1 = the level just below target).
  * Mirrors the backend's auto-seed exactly (userVocabularyModel.js
  * addByProficiencyLevel) - seeded words go straight into Review state
- * instead of New, with stability standing in for how recently/well
+ * instead of New, with baseStability standing in for how recently/well
  * reinforced a word at that distance would plausibly be:
- *   distance 1  -> 7 days
- *   distance 2  -> 20 days
- *   distance 3+ -> 60 days
+ *   distance 1  -> up to 7 days
+ *   distance 2  -> up to 20 days
+ *   distance 3+ -> up to 60 days
+ * baseStability is the upper bound of a [1, baseStability] range, not the
+ * actual value to seed each word with - vocabularyReducer's ADD_MANY picks
+ * a random stability per word from that range, so a whole bucket of words
+ * doesn't all get the exact same next_review_at (see its comment for why).
  */
-export function seedFieldsForDistance(distance: number): { stability: number; difficulty: number; fsrsState: number } {
-  const stability = distance <= 1 ? 7 : distance === 2 ? 20 : 60;
-  return { stability, difficulty: 5.0, fsrsState: State.Review };
+export function seedFieldsForDistance(distance: number): { baseStability: number; difficulty: number; fsrsState: number } {
+  const baseStability = distance <= 1 ? 7 : distance === 2 ? 20 : 60;
+  return { baseStability, difficulty: 5.0, fsrsState: State.Review };
 }
 
 /**
