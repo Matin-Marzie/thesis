@@ -14,8 +14,14 @@ import { DARK_COLORS, PRIMARY_COLOR } from '@/constants/App';
 
 // Strips Arabic tashkeel (harakat, U+0610–U+061A and U+064B–U+065F) so that
 // bare-consonant queries match fully-vowelled text, and vice versa.
+// Written as \u escapes, not literal glyphs - the two ranges are disjoint,
+// and it's too easy to swap an endpoint by mistake with invisible bidi
+// characters typed directly in the source (which is exactly what happened
+// before: the old literal-glyph regex had the ranges' end points crossed,
+// producing two wide overlapping ranges that swallowed ordinary Arabic/Farsi
+// letters too, not just diacritics - e.g. "خانه" reduced to "").
 function normalizeQuery(text: string): string {
-  return text.trim().toLowerCase().replace(/[ؐ-ًؚ-ٟ]/g, '');
+  return text.trim().toLowerCase().replace(/[\u0610-\u061A\u064B-\u065F]/g, '');
 }
 
 export default function HomeScreen() {
@@ -88,12 +94,15 @@ export default function HomeScreen() {
   // time the debounce fired - the word's own text never changes, only the
   // query does, so there's no reason to redo that work per search.
   const normalizedWordEntries = useMemo(
-    () => words.map((word) => ({ word, normalized: normalizeQuery(word.written_form ?? '') })),
+    () => words.map((word) => ({
+      word,
+      normalized: normalizeQuery(word.written_form ?? ''),
+      normalizedTranslations: (word.translations ?? []).map((t) => normalizeQuery(t ?? '')),
+    })),
     [words]
   );
 
   // Debounced search effect
-  // TO DO: depending on query language, search written_form or translations
   useEffect(() => {
     const query = normalizeQuery(search);
 
@@ -120,13 +129,17 @@ export default function HomeScreen() {
 
     debounceTimeout.current = setTimeout(() => {
       // Filter by search query using each word's precomputed normalized
-      // form (see normalizedWordEntries) - only a cheap startsWith() per
-      // word now, not a fresh normalize+compare on every keystroke.
+      // form (see normalizedWordEntries) - only a cheap startsWith()/includes()
+      // per word now, not a fresh normalize+compare on every keystroke.
+      // Matches either the word's own spelling (prefix) or any of its
+      // translations (substring) - so searching in your native language
+      // finds the target-language word too.
       const filtered = normalizedWordEntries
-        .filter((entry) => entry.normalized.startsWith(query))
+        .filter((entry) =>
+          entry.normalized.startsWith(query) ||
+          entry.normalizedTranslations.some((t) => t.includes(query))
+        )
         .map((entry) => entry.word);
-      // const translationMatch = word.translations?.some(t => t?.toLowerCase().includes(query));
-      // return writtenMatch || translationMatch;
 
       setFilteredWords(sortByCreatedAtDesc(filtered, (word) => userVocabulary?.[word.id]?.created_at));
       setIsSearching(false);
