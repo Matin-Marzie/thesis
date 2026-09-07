@@ -2,7 +2,7 @@
 
 ## Download the App (Android)
 
-[![Download APK](https://img.shields.io/badge/Download-APK-3DDC84?style=for-the-badge&logo=android&logoColor=white)](https://github.com/Matin-Marzie/thesis/releases/download/v1.0.0/app-release.apk)
+[![Download APK](https://img.shields.io/badge/Download-APK-3DDC84?style=for-the-badge&logo=android&logoColor=white)](https://github.com/Matin-Marzie/thesis/releases/download/v1.1.0/app-release.apk)
 
 Or grab the latest from the [Releases page](https://github.com/Matin-Marzie/thesis/releases/latest).
 
