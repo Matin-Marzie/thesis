@@ -17,8 +17,9 @@ class ReelStatsResponse(BaseModel):
 
 class UserInteractionResponse(BaseModel):
     """Schema for user interaction data in reel responses."""
-    
-    viewed_at: Optional[datetime] = None
+
+    last_view_at: Optional[datetime] = None
+    view_count: int = 0
     is_liked: bool = False
     is_saved: bool = False
     is_shared: bool = False

@@ -169,7 +169,8 @@ class ReelService:
         interaction = interactions_by_reel.get(reel.id)
         if interaction:
             user_interaction = UserInteractionResponse(
-                viewed_at=interaction.viewed_at,
+                last_view_at=interaction.last_view_at,
+                view_count=interaction.view_count,
                 is_liked=interaction.is_liked,
                 is_saved=interaction.is_saved,
                 is_shared=interaction.is_shared,
@@ -337,7 +338,8 @@ class ReelService:
             interaction = interactions_by_reel.get(reel.id)
             if interaction:
                 user_interaction = UserInteractionResponse(
-                    viewed_at=interaction.viewed_at,
+                    last_view_at=interaction.last_view_at,
+                    view_count=interaction.view_count,
                     is_liked=interaction.is_liked,
                     is_saved=interaction.is_saved,
                     is_shared=interaction.is_shared,

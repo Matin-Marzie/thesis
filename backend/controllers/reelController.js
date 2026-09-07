@@ -107,6 +107,30 @@ const reelController = {
       res.status(500).json({ message: 'Internal server error' });
     }
   },
+
+  // Records one real watch of a reel (any reel, not just others' - a view
+  // is per (reel, user), enforced by reel_interactions' unique constraint).
+  // The frontend only calls this after a reel has actually played for a
+  // minimum watch time, not on every fetch/scroll-past.
+  async recordView(req, res) {
+    try {
+      const reelId = Number(req.params.id);
+      if (!Number.isInteger(reelId)) {
+        return res.status(400).json({ message: 'Invalid reel id' });
+      }
+
+      const { viewCount } = await reelModel.recordView(reelId, req.user.id);
+
+      res.status(200).json({ view_count: viewCount });
+    } catch (error) {
+      if (error?.code === '23503') {
+        return res.status(404).json({ message: 'Reel not found' });
+      }
+
+      console.error('Record reel view error:', error);
+      res.status(500).json({ message: 'Internal server error' });
+    }
+  },
 };
 
 export default reelController;

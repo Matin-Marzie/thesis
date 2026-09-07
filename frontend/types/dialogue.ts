@@ -52,7 +52,8 @@ export interface Language {
 }
 
 export interface UserInteraction {
-  viewed_at: string;
+  last_view_at: string;
+  view_count: number;
   is_liked: boolean;
   is_saved: boolean;
   is_shared: boolean;

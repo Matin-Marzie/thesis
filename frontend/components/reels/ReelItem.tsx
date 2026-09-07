@@ -20,11 +20,15 @@ import { ReelOverlay } from './overlay/ReelOverlay';
 import { CommentBottomSheetModal } from './comments/CommentBottomSheetModal';
 import { DialogueBottomSheetModal } from './subtitles/SubtitleBottomSheetModal';
 import { WordMeaningPopup } from './subtitles/WordMeaningPopup';
-import { toggleLikeReel } from '@/api/reelCreation';
+import { toggleLikeReel, recordReelView } from '@/api/reelCreation';
 import { useAuth } from '@/context/AuthContext';
 import type { Reel, Word } from '../../types/dialogue';
 
 const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get('window');
+
+// A reel only counts as "viewed" once it's actually played continuously
+// for this long - distinguishes a real watch from a quick scroll-past.
+const MIN_WATCH_MS = 2000;
 
 interface ReelItemProps {
   item: Reel;
@@ -93,6 +97,27 @@ export const ReelItem = React.memo(
         ? withTiming(1, { duration: 150 })
         : withTiming(0, { duration: 300 });
     }, [isPaused, pauseIconOpacity]);
+
+    // Records a view once this reel has actually played continuously for
+    // MIN_WATCH_MS - not on every render/fetch, and not on a quick
+    // scroll-past that clears the timer before it fires. Guarded by
+    // item.id (not a plain boolean) so it still fires again if this
+    // component instance ever gets reused for a different reel; guests
+    // get no persistence, same as likes/saves.
+    const recordedViewIdRef = useRef<number | null>(null);
+    useEffect(() => {
+      if (!shouldPlay || !isAuthenticated) return;
+      if (recordedViewIdRef.current === item.id) return;
+
+      const timer = setTimeout(() => {
+        recordedViewIdRef.current = item.id;
+        recordReelView(item.id).catch(() => {
+          // Best-effort - a missed view isn't worth retrying.
+        });
+      }, MIN_WATCH_MS);
+
+      return () => clearTimeout(timer);
+    }, [shouldPlay, isAuthenticated, item.id]);
 
     const handleTogglePause = useCallback(() => {
       setIsPaused((prev) => !prev);

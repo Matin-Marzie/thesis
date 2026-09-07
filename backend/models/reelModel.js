@@ -76,6 +76,26 @@ const reelModel = {
     return { isSaved: toggleResult.rows[0].is_saved };
   },
 
+  // Records one real (frontend-debounced, not just "fetched") watch of a
+  // reel by the current user - an upsert like toggleLike/toggleSave, but
+  // always sets rather than toggles: unlike a like/save, a view can't be
+  // undone. First watch inserts the row with view_count = 1; each repeat
+  // watch bumps view_count and refreshes last_view_at on the existing
+  // (reel_id, user_id) row instead of creating a duplicate. Throws the raw
+  // pg error (caller checks .code === '23503') if reelId doesn't exist.
+  async recordView(reelId, userId) {
+    const result = await pool.query(
+      `INSERT INTO reel_interactions (reel_id, user_id, last_view_at, view_count)
+       VALUES ($1, $2, now(), 1)
+       ON CONFLICT (reel_id, user_id)
+       DO UPDATE SET last_view_at = now(), view_count = reel_interactions.view_count + 1
+       RETURNING view_count`,
+      [reelId, userId]
+    );
+
+    return { viewCount: result.rows[0].view_count };
+  },
+
   // A user's own published reels, for viewing their public profile grid +
   // reel viewer. Shaped to satisfy both consumers in one response: flat
   // language_id (ProfileReels' grid) and nested stats/user_interaction

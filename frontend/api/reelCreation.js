@@ -147,3 +147,20 @@ export const toggleSaveReel = async (reelId) => {
     throw new Error(message);
   }
 };
+
+/**
+ * Record a real watch of a reel - only call this once a reel has actually
+ * played for a minimum watch time, not on every fetch/scroll-past.
+ * Idempotent per (reel, user): repeat watches just bump the count.
+ * @param {number|string} reelId
+ * @returns {Promise<{view_count: number}>}
+ */
+export const recordReelView = async (reelId) => {
+  try {
+    const response = await apiClient.post(`/reel/${reelId}/view`);
+    return response.data;
+  } catch (error) {
+    const message = error.response?.data?.message || error.message || 'Failed to record reel view';
+    throw new Error(message);
+  }
+};

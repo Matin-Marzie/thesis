@@ -159,4 +159,42 @@ router.post('/:id/like', verifyJWT, reelController.toggleLike);
  */
 router.post('/:id/save', verifyJWT, reelController.toggleSave);
 
+/**
+ * @swagger
+ * /reel/{id}/view:
+ *   post:
+ *     summary: Record a real watch of a reel
+ *     description: Records the current user's watch of a reel - called by the frontend once a reel has actually played for a minimum watch time, not on every fetch/scroll-past. Idempotent per (reel, user) row - repeat watches bump view_count and refresh last_view_at instead of creating a duplicate.
+ *     tags: [Reel]
+ *     security:
+ *       - bearerAuth: []
+ *       - cookieAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: Reel ID
+ *     responses:
+ *       200:
+ *         description: View recorded successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 view_count:
+ *                   type: integer
+ *       400:
+ *         description: Invalid reel id
+ *       401:
+ *         description: Unauthorized - Missing or invalid token
+ *       404:
+ *         description: Reel not found
+ *       500:
+ *         description: Internal server error
+ */
+router.post('/:id/view', verifyJWT, reelController.recordView);
+
 export default router;
