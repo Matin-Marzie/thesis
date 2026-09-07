@@ -1,5 +1,6 @@
 import random
 from collections import Counter
+from datetime import datetime, timedelta, timezone
 import numpy as np
 from sklearn.feature_extraction import DictVectorizer
 from sklearn.feature_extraction.text import TfidfTransformer
@@ -396,6 +397,30 @@ class ReelService:
         )
         return set(result.scalars().all())
 
+    async def get_recently_viewed_reel_ids(
+        self, user_id: int, reel_ids: List[int]
+    ) -> Set[int]:
+        """Reel ids this user watched within the last
+        settings.RECENTLY_VIEWED_COOLDOWN_HOURS hours - stage 1 excludes
+        these outright so a reel doesn't reappear in the feed right after
+        being seen."""
+        if not reel_ids:
+            return set()
+
+        cutoff = datetime.now(timezone.utc) - timedelta(
+            hours=settings.RECENTLY_VIEWED_COOLDOWN_HOURS
+        )
+        result = await self.db.execute(
+            select(ReelInteraction.reel_id).where(
+                and_(
+                    ReelInteraction.user_id == user_id,
+                    ReelInteraction.reel_id.in_(reel_ids),
+                    ReelInteraction.last_view_at >= cutoff,
+                )
+            )
+        )
+        return set(result.scalars().all())
+
     async def get_due_word_ids(self, user_languages_id: int) -> Set[int]:
         """Word ids in the user's vocabulary whose FSRS next_review_at has
         already passed - i.e. due for review right now."""
@@ -501,10 +526,13 @@ class ReelService:
         """
         Multistage recommendation engine.
 
-        Stage 1 - ComprehensibilityFilter: a candidate reel passes only if
-        at least settings.COMPREHENSIBILITY_THRESHOLD of its unique word
-        tokens are already in the user's vocabulary for this language pair;
-        the comprehensibility percentage is attached to each surviving reel
+        Stage 1 - ComprehensibilityFilter: a candidate reel is dropped
+        outright if the user watched it within the last
+        settings.RECENTLY_VIEWED_COOLDOWN_HOURS hours (no reappearing
+        right after being seen); otherwise it passes only if at least
+        settings.COMPREHENSIBILITY_THRESHOLD of its unique word tokens are
+        already in the user's vocabulary for this language pair. The
+        comprehensibility percentage is attached to each surviving reel
         for the frontend to display.
 
         Stage 2 - SpacedRepetitionPrioritizer: among stage 1's survivors,
@@ -595,8 +623,16 @@ class ReelService:
                 weighted_rows = content_matrix[rows].multiply(np.array(weights).reshape(-1, 1))
                 profile_vector = np.asarray(weighted_rows.sum(axis=0))
 
+        recently_viewed_ids = await self.get_recently_viewed_reel_ids(
+            user_id, [reel.id for reel in candidates]
+        )
+
         passing: List[Tuple[Reel, float, Set[int]]] = []
         for reel in candidates:
+            if reel.id in recently_viewed_ids:
+                # Already seen recently - don't show it again so soon,
+                # regardless of how comprehensible it is.
+                continue
             reel_word_ids = self._unique_word_ids(reel)
             if not reel_word_ids:
                 # No tokens to measure comprehension against - can't

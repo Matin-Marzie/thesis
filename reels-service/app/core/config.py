@@ -30,7 +30,11 @@ class Settings(BaseSettings):
     # threshold for comfortable comprehension at 98%; kept low for now
     # since the reel catalog is still tiny.
     COMPREHENSIBILITY_THRESHOLD: float = 0.5
-    
+
+    # Stage 1 also excludes any reel the user watched within this many
+    # hours, so a reel doesn't reappear in the feed right after being seen.
+    RECENTLY_VIEWED_COOLDOWN_HOURS: int = 24
+
     # JWT Configuration
     ACCESS_TOKEN_SECRET: str = ""
 
