@@ -380,6 +380,19 @@ class ReelService:
         )
         return set(result.scalars().all())
 
+    async def get_due_word_ids(self, user_languages_id: int) -> Set[int]:
+        """Word ids in the user's vocabulary whose FSRS next_review_at has
+        already passed - i.e. due for review right now."""
+        result = await self.db.execute(
+            select(UserVocabulary.word_id).where(
+                and_(
+                    UserVocabulary.user_languages_id == user_languages_id,
+                    UserVocabulary.next_review_at <= func.now(),
+                )
+            )
+        )
+        return set(result.scalars().all())
+
     @staticmethod
     def _unique_word_ids(reel: Reel) -> Set[int]:
         """Every distinct word id used across a reel's dialogue, read
@@ -404,14 +417,22 @@ class ReelService:
         limit: int = 10,
     ) -> Tuple[List[ReelResponse], int]:
         """
-        Multistage recommendation engine - stage 1: ComprehensibilityFilter.
+        Multistage recommendation engine.
 
-        A candidate reel passes only if at least
-        settings.COMPREHENSIBILITY_THRESHOLD of its unique word tokens are
-        already in the user's vocabulary for this language pair; the
-        comprehensibility percentage is attached to each surviving reel for
-        the frontend to display. Later stages will replace the random pick
-        among survivors below with actual ranking.
+        Stage 1 - ComprehensibilityFilter: a candidate reel passes only if
+        at least settings.COMPREHENSIBILITY_THRESHOLD of its unique word
+        tokens are already in the user's vocabulary for this language pair;
+        the comprehensibility percentage is attached to each surviving reel
+        for the frontend to display.
+
+        Stage 2 - SpacedRepetitionPrioritizer: among stage 1's survivors,
+        reels covering more words that are due for FSRS review right now
+        (next_review_at already passed) are ranked first, so watching one
+        doubles as review. This re-ranks stage 1's output, it doesn't
+        filter it further - reels with no due words still fill out `limit`
+        if there aren't enough "due" reels to go around. Skipped entirely
+        (falls back to a random pick, like before) when the user has no
+        words due for review right now.
 
         Falls back to get_random_reels when the user hasn't set up this
         language pair yet (nothing to filter on: no user_languages row to
@@ -453,7 +474,7 @@ class ReelService:
         candidates = candidates_result.unique().scalars().all()
         total = len(candidates)
 
-        passing: List[Tuple[Reel, float]] = []
+        passing: List[Tuple[Reel, float, Set[int]]] = []
         for reel in candidates:
             reel_word_ids = self._unique_word_ids(reel)
             if not reel_word_ids:
@@ -462,15 +483,32 @@ class ReelService:
                 continue
             comprehensibility = len(reel_word_ids & known_word_ids) / len(reel_word_ids)
             if comprehensibility >= settings.COMPREHENSIBILITY_THRESHOLD:
-                passing.append((reel, comprehensibility))
+                passing.append((reel, comprehensibility, reel_word_ids))
 
-        sample = random.sample(passing, min(limit, len(passing)))
+        due_word_ids = await self.get_due_word_ids(user_languages_id)
+
+        if due_word_ids:
+            # Stage 2: rank by due-word coverage, random tiebreak within
+            # equal coverage (shuffle before the stable sort).
+            scored = [
+                (reel, pct, len(reel_word_ids & due_word_ids))
+                for reel, pct, reel_word_ids in passing
+            ]
+            random.shuffle(scored)
+            scored.sort(key=lambda entry: entry[2], reverse=True)
+            selection = [(reel, pct) for reel, pct, _ in scored[:limit]]
+        else:
+            # Nothing due for review - skip stage 2, random pick like before.
+            selection = [
+                (reel, pct) for reel, pct, _ in
+                random.sample(passing, min(limit, len(passing)))
+            ]
 
         reels_response = [
             await self.build_reel_response(
                 reel, user_id=user_id, comprehensibility_percentage=round(pct * 100, 1)
             )
-            for reel, pct in sample
+            for reel, pct in selection
         ]
 
         return reels_response, total
