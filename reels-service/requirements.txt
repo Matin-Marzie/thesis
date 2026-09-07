@@ -31,6 +31,12 @@ boto3>=1.34.0
 # Per-user rate limiting on upload endpoints
 slowapi>=0.1.9
 
+# Recommendation engine stage 3 (ContentBasedRanker): TF-IDF + cosine
+# similarity over each reel's word-id bag. Lightweight/CPU-only, no
+# pretrained models to load - unlike spaCy/Stanza/hazm below, this is
+# fine on this service's 512MB host.
+scikit-learn>=1.4.0
+
 # NLP: lemmatization for auto-populating sentence_tokens. Commented out -
 # this service runs on a 512MB host and can't afford spaCy/Stanza/hazm's
 # model memory footprint at request time. Tokenization now runs locally

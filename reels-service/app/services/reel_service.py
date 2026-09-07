@@ -1,8 +1,13 @@
 import random
+from collections import Counter
+import numpy as np
+from sklearn.feature_extraction import DictVectorizer
+from sklearn.feature_extraction.text import TfidfTransformer
+from sklearn.metrics.pairwise import cosine_similarity
 from sqlalchemy import select, func, and_
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import joinedload
-from typing import List, Optional, Set, Tuple
+from typing import Dict, List, Optional, Set, Tuple
 
 from app.core.config import settings
 from app.models.reel import Reel, ReelInteraction
@@ -24,6 +29,15 @@ from app.schemas.sentence import SentenceResponse
 
 class ReelService:
     """Service class for reel-related business logic."""
+
+    # Stage 3 (ContentBasedRanker) implicit-feedback weights: every
+    # reel_interactions row implies at least a view (BASE_VIEW_WEIGHT),
+    # stacked with one bonus per engagement signal present on that row.
+    BASE_VIEW_WEIGHT = 0.2
+    LIKE_WEIGHT = 1.0
+    SAVE_WEIGHT = 1.5
+    SHARE_WEIGHT = 1.0
+    COMMENT_WEIGHT = 1.5
 
     def __init__(self, db: AsyncSession):
         self.db = db
@@ -409,6 +423,72 @@ class ReelService:
                     word_ids.add(word_id)
         return word_ids
 
+    @staticmethod
+    def _word_id_counts(reel: Reel) -> Counter:
+        """Every word id used across a reel's dialogue, counted by
+        occurrence (not deduped like _unique_word_ids) - the term-frequency
+        input for stage 3's TF-IDF content vectors."""
+        counts: Counter = Counter()
+        if not reel.dialogue or not reel.dialogue.sentences_json:
+            return counts
+        for sentence in reel.dialogue.sentences_json:
+            for token in sentence.get("tokens") or []:
+                word_id = (token.get("word") or {}).get("id")
+                if word_id is not None:
+                    counts[word_id] += 1
+        return counts
+
+    @staticmethod
+    def _build_content_vectors(reels: List[Reel]) -> Tuple[Optional[object], Dict[int, int]]:
+        """Stage 3 (ContentBasedRanker) content representation: each reel's
+        dialogue reduced to a bag of word ids, TF-IDF weighted across the
+        given reel pool. Reuses the same structured word-id data as stages
+        1/2 instead of raw multilingual text, so no extra NLP/tokenization
+        is needed. Returns (tfidf_matrix, {reel_id: row_index}) -
+        (None, {}) if no reel in `reels` has any tokens yet."""
+        word_counts = [
+            {str(word_id): count for word_id, count in ReelService._word_id_counts(reel).items()}
+            for reel in reels
+        ]
+        if not any(word_counts):
+            return None, {}
+
+        count_matrix = DictVectorizer().fit_transform(word_counts)
+        tfidf_matrix = TfidfTransformer().fit_transform(count_matrix)
+        row_index = {reel.id: i for i, reel in enumerate(reels)}
+        return tfidf_matrix, row_index
+
+    async def get_interaction_weights(self, user_id: int, reel_ids: List[int]) -> Dict[int, float]:
+        """Stage 3's implicit-feedback weight per reel this user has
+        interacted with, restricted to `reel_ids` (scoped by the caller to
+        the current learning language - word-id content vectors aren't
+        comparable across languages)."""
+        if not reel_ids:
+            return {}
+
+        result = await self.db.execute(
+            select(ReelInteraction).where(
+                and_(
+                    ReelInteraction.user_id == user_id,
+                    ReelInteraction.reel_id.in_(reel_ids),
+                )
+            )
+        )
+
+        weights: Dict[int, float] = {}
+        for interaction in result.scalars().all():
+            weight = self.BASE_VIEW_WEIGHT
+            if interaction.is_liked:
+                weight += self.LIKE_WEIGHT
+            if interaction.is_saved:
+                weight += self.SAVE_WEIGHT
+            if interaction.is_shared:
+                weight += self.SHARE_WEIGHT
+            if interaction.comment is not None:
+                weight += self.COMMENT_WEIGHT
+            weights[interaction.reel_id] = weight
+        return weights
+
     async def get_personalized_reels(
         self,
         user_id: int,
@@ -430,9 +510,23 @@ class ReelService:
         (next_review_at already passed) are ranked first, so watching one
         doubles as review. This re-ranks stage 1's output, it doesn't
         filter it further - reels with no due words still fill out `limit`
-        if there aren't enough "due" reels to go around. Skipped entirely
-        (falls back to a random pick, like before) when the user has no
-        words due for review right now.
+        if there aren't enough "due" reels to go around.
+
+        Stage 3 - ContentBasedRanker: within equal stage 2 due-word
+        coverage, reels whose content (word-id TF-IDF vector) is more
+        similar to the reels this user has previously engaged with
+        (reel_interactions, weighted by BASE_VIEW_WEIGHT/LIKE_WEIGHT/etc.)
+        are ranked first - the classic content-based recommendation
+        approach ("more like the things you engaged with").
+
+        Both stage 2 and stage 3 are re-ranks over the same stage 1
+        survivors, applied as a single sort key: (due_word_coverage,
+        content_similarity), most-important first, random tiebreak after
+        both. Either signal degrades to a constant 0 for every candidate
+        when it has nothing to work with (no due words; no interaction
+        history yet to build a profile from), which makes that half of the
+        sort key a no-op - so the whole ranking falls back to the original
+        random pick when neither stage has any signal at all.
 
         Falls back to get_random_reels when the user hasn't set up this
         language pair yet (nothing to filter on: no user_languages row to
@@ -474,6 +568,31 @@ class ReelService:
         candidates = candidates_result.unique().scalars().all()
         total = len(candidates)
 
+        # Stage 3 setup: TF-IDF content vectors for the whole candidate
+        # pool (not just stage 1's survivors, so IDF stats reflect the
+        # full corpus), then the user's profile vector - a weighted
+        # average of the vectors of reels they've positively interacted
+        # with in this same learning language.
+        content_matrix, content_row_index = self._build_content_vectors(candidates)
+        profile_vector = None
+        if content_matrix is not None:
+            interaction_weights = await self.get_interaction_weights(
+                user_id, [reel.id for reel in candidates]
+            )
+            rows = [
+                content_row_index[reel_id]
+                for reel_id in interaction_weights
+                if reel_id in content_row_index
+            ]
+            weights = [
+                weight
+                for reel_id, weight in interaction_weights.items()
+                if reel_id in content_row_index
+            ]
+            if rows:
+                weighted_rows = content_matrix[rows].multiply(np.array(weights).reshape(-1, 1))
+                profile_vector = np.asarray(weighted_rows.sum(axis=0))
+
         passing: List[Tuple[Reel, float, Set[int]]] = []
         for reel in candidates:
             reel_word_ids = self._unique_word_ids(reel)
@@ -485,20 +604,33 @@ class ReelService:
             if comprehensibility >= settings.COMPREHENSIBILITY_THRESHOLD:
                 passing.append((reel, comprehensibility, reel_word_ids))
 
+        # Stage 3 content-similarity scores, batched in one call over all
+        # of stage 1's survivors rather than one call per reel.
+        similarities = [0.0] * len(passing)
+        if profile_vector is not None:
+            row_indices = [content_row_index.get(reel.id) for reel, _, _ in passing]
+            valid = [(i, idx) for i, idx in enumerate(row_indices) if idx is not None]
+            if valid:
+                sims = cosine_similarity(profile_vector, content_matrix[[idx for _, idx in valid]])[0]
+                for (i, _), sim in zip(valid, sims):
+                    similarities[i] = float(sim)
+
         due_word_ids = await self.get_due_word_ids(user_languages_id)
 
-        if due_word_ids:
-            # Stage 2: rank by due-word coverage, random tiebreak within
-            # equal coverage (shuffle before the stable sort).
+        if due_word_ids or profile_vector is not None:
+            # Stages 2+3: sort by (due-word coverage, content similarity),
+            # random tiebreak when both are equal (shuffle before the
+            # stable sort). Either component is a constant 0 across every
+            # entry when that stage has no signal, making it a no-op.
             scored = [
-                (reel, pct, len(reel_word_ids & due_word_ids))
-                for reel, pct, reel_word_ids in passing
+                (reel, pct, len(reel_word_ids & due_word_ids), sim)
+                for (reel, pct, reel_word_ids), sim in zip(passing, similarities)
             ]
             random.shuffle(scored)
-            scored.sort(key=lambda entry: entry[2], reverse=True)
-            selection = [(reel, pct) for reel, pct, _ in scored[:limit]]
+            scored.sort(key=lambda entry: (entry[2], entry[3]), reverse=True)
+            selection = [(reel, pct) for reel, pct, _, _ in scored[:limit]]
         else:
-            # Nothing due for review - skip stage 2, random pick like before.
+            # Nothing to rank on - random pick, same as before stage 2/3.
             selection = [
                 (reel, pct) for reel, pct, _ in
                 random.sample(passing, min(limit, len(passing)))
