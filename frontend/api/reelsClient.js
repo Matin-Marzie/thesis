@@ -43,6 +43,11 @@ reelsClient.interceptors.response.use(
     } else if (error.response?.status >= 500) {
       error.userMessage = 'Server Error';
       error.isServerUnreachable = true;
+    } else if (error.response?.data?.detail) {
+      // Surface FastAPI's HTTPException detail (e.g. the comprehensibility
+      // filter's "Populate your vocabulary and try again") instead of
+      // axios's generic "Request failed with status code 404".
+      error.userMessage = error.response.data.detail;
     }
     return Promise.reject(error);
   }

@@ -23,6 +23,13 @@ class Settings(BaseSettings):
     # API Configuration
     API_V1_PREFIX: str = "/api/v1"
     PROJECT_NAME: str = "Reels Service"
+
+    # Recommendation engine - stage 1, ComprehensibilityFilter: minimum
+    # proportion of a reel's unique word tokens that must already be in the
+    # user's vocabulary for the reel to pass. Nation (2001) puts the
+    # threshold for comfortable comprehension at 98%; kept low for now
+    # since the reel catalog is still tiny.
+    COMPREHENSIBILITY_THRESHOLD: float = 0.5
     
     # JWT Configuration
     ACCESS_TOKEN_SECRET: str = ""

@@ -52,7 +52,9 @@ async def get_reels(
     This endpoint returns random reels in the learning language with
     translations provided in the native language.
     
-    - If authenticated: Returns personalized reels (future: ML/Cosine similarity)
+    - If authenticated: Returns reels passing the comprehensibility filter
+      (stage 1 of the recommendation engine), each carrying a
+      comprehensibility_percentage (future stages will add ranking on top)
     - If not authenticated: Returns random reels
     
     Parameters:
@@ -85,25 +87,26 @@ async def get_reels(
     service = ReelService(db)
 
     if user_id: # Authenticated user
-        # reels, total = await service.get_personalized_reels(
-        #     user_id=user_id,
-        #     native_language_code=native_language_code,
-        #     learning_language_code=learning_language_code,
-        #     limit=limit
-        # )
-        reels, total = await service.get_random_reels(
-        native_language_code=native_language_code,
-        learning_language_code=learning_language_code,
-        limit=limit,
-        user_id=user_id
+        reels, total = await service.get_personalized_reels(
+            user_id=user_id,
+            native_language_code=native_language_code,
+            learning_language_code=learning_language_code,
+            limit=limit
         )
+        # total > 0 but nothing survived the comprehensibility filter -
+        # distinct from "no reels for this language at all" below.
+        if total > 0 and len(reels) == 0:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail="Populate your vocabulary and try again"
+            )
     else: # Not authenticated user
         reels, total = await service.get_random_reels(
             native_language_code=native_language_code,
             learning_language_code=learning_language_code,
             limit=limit
         )
-    
+
     if total == 0:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,

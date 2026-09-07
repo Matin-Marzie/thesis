@@ -1,5 +1,5 @@
-import React from 'react';
-import { View, Text, Image, StyleSheet, StyleProp, ViewStyle } from 'react-native';
+import React, { useCallback } from 'react';
+import { View, Text, Image, StyleSheet, StyleProp, ViewStyle, Alert } from 'react-native';
 import { FontAwesome, MaterialIcons } from '@expo/vector-icons';
 import Animated, { AnimatedStyle } from 'react-native-reanimated';
 import TouchableOpacity from '@/components/TouchableOpacity';
@@ -10,6 +10,10 @@ interface ReelActionsProps {
   commentsCount: number;
   sharesCount: number;
   hasDialogue: boolean;
+  // Recommendation engine stage 1 (ComprehensibilityFilter) output - percent
+  // of this reel's unique words already in the viewer's vocabulary. Only
+  // present for authenticated, personalized reels.
+  comprehensibilityPercentage?: number | null;
   // Creator's avatar, shown pinned above the like button (TikTok/Instagram-style)
   creatorProfilePicture?: string | null;
   // Navigates to the creator's public profile when the avatar is tapped
@@ -41,6 +45,7 @@ export const ReelActions = React.memo(
     commentsCount,
     sharesCount,
     hasDialogue,
+    comprehensibilityPercentage,
     creatorProfilePicture,
     onAvatarPress,
     animatedLikeStyle,
@@ -49,7 +54,15 @@ export const ReelActions = React.memo(
     onDialogue,
     onShare,
     onMoreOptions,
-  }: ReelActionsProps) => (
+  }: ReelActionsProps) => {
+    const handleComprehensibilityPress = useCallback(() => {
+      Alert.alert(
+        'Comprehensibility',
+        `You know ${comprehensibilityPercentage}% of the unique words of this video`
+      );
+    }, [comprehensibilityPercentage]);
+
+    return (
     <View style={styles.actionsContainer}>
       {/* Creator avatar */}
       <TouchableOpacity style={styles.avatarContainer} onPress={onAvatarPress} disabled={!onAvatarPress}>
@@ -97,8 +110,16 @@ export const ReelActions = React.memo(
       <TouchableOpacity style={[styles.actionButton, { paddingHorizontal: 9 }]} onPress={onMoreOptions}>
         <FontAwesome name="ellipsis-h" size={28} color="#fff" />
       </TouchableOpacity>
+
+      {/* Comprehensibility percentage - recommendation engine stage 1 output */}
+      {comprehensibilityPercentage != null && (
+        <TouchableOpacity style={styles.actionButton} onPress={handleComprehensibilityPress}>
+          <Text style={styles.comprehensibilityText}>{`${comprehensibilityPercentage}%`}</Text>
+        </TouchableOpacity>
+      )}
     </View>
-  )
+    );
+  }
 );
 
 const styles = StyleSheet.create({
@@ -129,6 +150,14 @@ const styles = StyleSheet.create({
   actionText: {
     color: '#fff',
     fontSize: 12,
+    textShadowColor: 'rgba(0, 0, 0, 0.75)',
+    textShadowOffset: { width: 1, height: 1 },
+    textShadowRadius: 3,
+  },
+  comprehensibilityText: {
+    color: '#fff',
+    fontSize: 13,
+    fontWeight: '700',
     textShadowColor: 'rgba(0, 0, 0, 0.75)',
     textShadowOffset: { width: 1, height: 1 },
     textShadowRadius: 3,

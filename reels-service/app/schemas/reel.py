@@ -39,6 +39,10 @@ class ReelResponse(BaseModel):
     stats: ReelStatsResponse
     user_interaction: Optional[UserInteractionResponse] = None
     dialogue: Optional[DialogueResponse] = None
+    # Recommendation engine stage 1 (ComprehensibilityFilter) output: percent
+    # (0-100) of this reel's unique word tokens already in the viewer's
+    # vocabulary. Only populated for authenticated, personalized results.
+    comprehensibility_percentage: Optional[float] = None
 
     class Config:
         from_attributes = True

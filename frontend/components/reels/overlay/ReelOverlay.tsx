@@ -55,6 +55,7 @@ export const ReelOverlay = React.memo(
           likesCount={likesCount}
           commentsCount={item.stats?.comments || 0}
           sharesCount={item.stats?.shares || 0}
+          comprehensibilityPercentage={item.comprehensibility_percentage}
           creatorProfilePicture={getMediaUrl(item.created_by?.profile_picture)}
           onAvatarPress={handleAvatarPress}
           animatedLikeStyle={animatedLikeStyle}
@@ -65,7 +66,7 @@ export const ReelOverlay = React.memo(
           onShare={handleShare}
           onMoreOptions={handleMoreOptions}
         />
-        
+
       </Animated.View>
     );
   }

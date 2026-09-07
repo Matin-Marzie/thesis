@@ -84,4 +84,8 @@ export interface Reel {
   stats: Stats;
   user_interaction: UserInteraction;
   dialogue: Dialogue;
+  // Recommendation engine stage 1 (ComprehensibilityFilter): percent of this
+  // reel's unique words already in the viewer's vocabulary. Only present for
+  // authenticated, personalized results.
+  comprehensibility_percentage?: number | null;
 }

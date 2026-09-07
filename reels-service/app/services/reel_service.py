@@ -1,11 +1,15 @@
+import random
 from sqlalchemy import select, func, and_
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import joinedload
-from typing import List, Optional, Tuple
+from typing import List, Optional, Set, Tuple
 
+from app.core.config import settings
 from app.models.reel import Reel, ReelInteraction
 from app.models.language import Language
 from app.models.dialogue import Dialogue
+from app.models.user_language import UserLanguage
+from app.models.user_vocabulary import UserVocabulary
 from app.schemas.reel import (
     ReelResponse,
     ReelStatsResponse,
@@ -111,11 +115,18 @@ class ReelService:
         )
         return result.unique().scalar_one_or_none()
 
-    async def build_reel_response(self, reel: Reel, user_id: Optional[int] = None) -> ReelResponse:
+    async def build_reel_response(
+        self,
+        reel: Reel,
+        user_id: Optional[int] = None,
+        comprehensibility_percentage: Optional[float] = None,
+    ) -> ReelResponse:
         """Build the full ReelResponse (stats, creator, language, dialogue,
         user_interaction) for one reel - the per-reel body of
         get_random_reels, factored out so other endpoints (e.g. reel
-        creation) can return the identical shape."""
+        creation) can return the identical shape. `comprehensibility_percentage`
+        is only ever passed by get_personalized_reels (stage 1 of the
+        recommendation engine's output)."""
         stats = await self.get_reel_stats(reel.id)
 
         creator_response = None
@@ -164,7 +175,8 @@ class ReelService:
             created_by=creator_response,
             stats=stats,
             user_interaction=user_interaction,
-            dialogue=dialogue_response
+            dialogue=dialogue_response,
+            comprehensibility_percentage=comprehensibility_percentage
         )
 
     async def get_reel_interactions_for_user(
@@ -333,5 +345,132 @@ class ReelService:
                 user_interaction=user_interaction,
                 dialogue=dialogue_response
             ))
+
+        return reels_response, total
+
+    async def get_user_languages_id(
+        self,
+        user_id: int,
+        native_language_id: int,
+        learning_language_id: int
+    ) -> Optional[int]:
+        """Resolve the user_languages row backing this (user, native,
+        learning) pair - user_vocabulary is scoped by user_languages_id
+        (not directly by language), mirroring the Node backend's
+        userVocabularyModel."""
+        result = await self.db.execute(
+            select(UserLanguage.id).where(
+                and_(
+                    UserLanguage.user_id == user_id,
+                    UserLanguage.native_language_id == native_language_id,
+                    UserLanguage.learning_language_id == learning_language_id,
+                )
+            ).limit(1)
+        )
+        return result.scalar_one_or_none()
+
+    async def get_known_word_ids(self, user_languages_id: int) -> Set[int]:
+        """All word ids in the user's vocabulary for one user_languages
+        pair. Membership only - FSRS review state doesn't matter for
+        comprehensibility, a word either has been introduced or hasn't."""
+        result = await self.db.execute(
+            select(UserVocabulary.word_id).where(
+                UserVocabulary.user_languages_id == user_languages_id
+            )
+        )
+        return set(result.scalars().all())
+
+    @staticmethod
+    def _unique_word_ids(reel: Reel) -> Set[int]:
+        """Every distinct word id used across a reel's dialogue, read
+        straight from the precomputed dialogue.sentences_json snapshot -
+        no extra query needed."""
+        if not reel.dialogue or not reel.dialogue.sentences_json:
+            return set()
+
+        word_ids: Set[int] = set()
+        for sentence in reel.dialogue.sentences_json:
+            for token in sentence.get("tokens") or []:
+                word_id = (token.get("word") or {}).get("id")
+                if word_id is not None:
+                    word_ids.add(word_id)
+        return word_ids
+
+    async def get_personalized_reels(
+        self,
+        user_id: int,
+        native_language_code: str,
+        learning_language_code: str,
+        limit: int = 10,
+    ) -> Tuple[List[ReelResponse], int]:
+        """
+        Multistage recommendation engine - stage 1: ComprehensibilityFilter.
+
+        A candidate reel passes only if at least
+        settings.COMPREHENSIBILITY_THRESHOLD of its unique word tokens are
+        already in the user's vocabulary for this language pair; the
+        comprehensibility percentage is attached to each surviving reel for
+        the frontend to display. Later stages will replace the random pick
+        among survivors below with actual ranking.
+
+        Falls back to get_random_reels when the user hasn't set up this
+        language pair yet (nothing to filter on: no user_languages row to
+        scope user_vocabulary by).
+
+        Returns (reels, total_candidates_in_learning_language) - an empty
+        reels list with total > 0 means the filter rejected every
+        candidate (distinct from total == 0, meaning the language itself
+        has no reels at all).
+        """
+        native_language = await self.get_language_by_code(native_language_code)
+        learning_language = await self.get_language_by_code(learning_language_code)
+
+        if not native_language or not learning_language:
+            return [], 0
+
+        user_languages_id = await self.get_user_languages_id(
+            user_id, native_language.id, learning_language.id
+        )
+        if user_languages_id is None:
+            return await self.get_random_reels(
+                native_language_code, learning_language_code, limit, user_id
+            )
+
+        known_word_ids = await self.get_known_word_ids(user_languages_id)
+
+        # Candidate pool: every reel in the learning language. The catalog
+        # is tiny for now, so scoring the whole thing in Python is fine;
+        # this should move to a SQL-side computation once it grows.
+        candidates_result = await self.db.execute(
+            select(Reel)
+            .options(
+                joinedload(Reel.language),
+                joinedload(Reel.creator),
+                joinedload(Reel.dialogue),
+            )
+            .where(Reel.language_id == learning_language.id)
+        )
+        candidates = candidates_result.unique().scalars().all()
+        total = len(candidates)
+
+        passing: List[Tuple[Reel, float]] = []
+        for reel in candidates:
+            reel_word_ids = self._unique_word_ids(reel)
+            if not reel_word_ids:
+                # No tokens to measure comprehension against - can't
+                # confirm the reel is comprehensible, so it doesn't pass.
+                continue
+            comprehensibility = len(reel_word_ids & known_word_ids) / len(reel_word_ids)
+            if comprehensibility >= settings.COMPREHENSIBILITY_THRESHOLD:
+                passing.append((reel, comprehensibility))
+
+        sample = random.sample(passing, min(limit, len(passing)))
+
+        reels_response = [
+            await self.build_reel_response(
+                reel, user_id=user_id, comprehensibility_percentage=round(pct * 100, 1)
+            )
+            for reel, pct in sample
+        ]
 
         return reels_response, total
