@@ -1,1 +1,1 @@
-export const REELS_LIMIT = 4;
+export const REELS_LIMIT = 10;
