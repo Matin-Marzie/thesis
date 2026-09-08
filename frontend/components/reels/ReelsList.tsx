@@ -34,7 +34,7 @@ interface ReelsListProps {
 export function ReelsList({ onRetry }: ReelsListProps) {
   const isFocused = useIsFocused();
   const { isAuthenticated } = useAuth();
-  const { reels, isFetchingMore, hasMore, fetchReels } = useReelsContext();
+  const { reels, isLoading, isFetchingMore, error, fetchReels } = useReelsContext();
   const [activeIndex, setActiveIndex] = useState(0);
   const flatListRef = useRef<FlatList>(null);
 
@@ -124,12 +124,24 @@ export function ReelsList({ onRetry }: ReelsListProps) {
       : !!optionsReel.user_interaction?.is_saved
   );
 
-  // Fetch the next page when the user approaches the end of the list
+  // Fetch the next page when the user approaches the end of the list.
+  // Backs off once a fetch has failed (error set) instead of retrying on
+  // every subsequent onEndReached firing - FlatList can re-fire this
+  // repeatedly on its own (layout recalculation, no new content added),
+  // and a failing personalized fetch was previously retried forever since
+  // Alert.alert doesn't block JS execution.
   const handleEndReached = useCallback(() => {
-    if (!isFetchingMore && hasMore) {
+    if (!isFetchingMore && !error) {
       fetchReels(false);
     }
-  }, [fetchReels, isFetchingMore, hasMore]);
+  }, [fetchReels, isFetchingMore, error]);
+
+  // Pull-to-refresh - the only way to clear a set `error` and try again
+  // once handleEndReached has backed off, so it must always call
+  // fetchReels(true) unconditionally (unlike handleEndReached above).
+  const handleRefresh = useCallback(() => {
+    fetchReels(true);
+  }, [fetchReels]);
 
   // Memoised render keeps ReelItem from re-rendering unless activeIndex or focus changes
   const renderItem = useCallback(
@@ -202,13 +214,17 @@ export function ReelsList({ onRetry }: ReelsListProps) {
         onEndReachedThreshold={0.5}
         ListFooterComponent={ListFooterComponent}
         ListEmptyComponent={ListEmptyComponent}
+        // Pull-to-refresh - the only way to clear a stuck `error` and try
+        // loading more again once handleEndReached has backed off. Required
+        // dropping the previous bounces={false}/overScrollMode="never",
+        // since the pull gesture relies on bounce/overscroll being enabled.
+        refreshing={isLoading}
+        onRefresh={handleRefresh}
         // Render budget — keep low to reduce memory pressure
         initialNumToRender={2}
         maxToRenderPerBatch={2}
         windowSize={3}
         removeClippedSubviews={Platform.OS === 'android'}
-        bounces={false}
-        overScrollMode="never"
       />
 
       <ReelActionsBottomSheetModal

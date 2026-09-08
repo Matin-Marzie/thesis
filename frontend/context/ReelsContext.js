@@ -1,4 +1,5 @@
 import { createContext, useState, useContext, useCallback, useMemo, useEffect, useRef } from 'react';
+import { Alert } from 'react-native';
 import { fetchReels as fetchReelsApi } from '../api/reels';
 import { useProgress } from './ProgressContext';
 import { useAuth } from './AuthContext';
@@ -25,7 +26,6 @@ import { getNativeLanguageCode, resolveReelTranslations as resolveReelTranslatio
  * @property {Reel[]} reels
  * @property {boolean} isLoading
  * @property {boolean} isFetchingMore
- * @property {boolean} hasMore
  * @property {string|null} error
  * @property {(refresh?: boolean) => Promise<void>} fetchReels
  * @property {() => void} resetReels
@@ -43,7 +43,6 @@ export const ReelsProvider = ({ children }) => {
   const [reels, setReels] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isFetchingMore, setIsFetchingMore] = useState(false);
-  const [hasMore, setHasMore] = useState(true);
   const [error, setError] = useState(null);
 
   // Get current language settings from userProgress
@@ -68,9 +67,6 @@ export const ReelsProvider = ({ children }) => {
   const fetchReels = useCallback(async (refresh = false) => {
     // Prevent duplicate requests
     if (isLoading || isFetchingMore) return;
-    
-    // Don't fetch more if we've reached the end (unless refreshing)
-    if (!refresh && !hasMore) return;
 
     const isInitialLoad = reels.length === 0 || refresh;
 
@@ -90,7 +86,6 @@ export const ReelsProvider = ({ children }) => {
       });
 
       const newReels = (response?.reels || []).map(resolveReelTranslations);
-      const totalAvailable = response?.total_reels_available_in_db_for_learning_language || 0;
 
       if (refresh) {
         setReels(newReels);
@@ -103,11 +98,16 @@ export const ReelsProvider = ({ children }) => {
         });
       }
 
-      // Check if there are more reels available
-      setHasMore(reels.length + newReels.length < totalAvailable);
-
     } catch (err) {
-      setError(err?.userMessage || err?.message || 'Failed to fetch reels');
+      const message = err?.userMessage || err?.message || 'Failed to fetch reels';
+      setError(message);
+      // ReelsScreen's full-screen error state only shows when the list is
+      // empty - with reels already on screen, surface the failure (a
+      // failed refresh or "load more") as an Alert instead, so it doesn't
+      // get silently swallowed.
+      if (reels.length > 0) {
+        Alert.alert('Error', message);
+      }
     } finally {
       setIsLoading(false);
       setIsFetchingMore(false);
@@ -115,7 +115,6 @@ export const ReelsProvider = ({ children }) => {
   }, [
     isLoading,
     isFetchingMore,
-    hasMore,
     reels.length,
     learningLanguageCode,
     nativeLanguageCode,
@@ -128,7 +127,6 @@ export const ReelsProvider = ({ children }) => {
    */
   const resetReels = useCallback(() => {
     setReels([]);
-    setHasMore(true);
     setError(null);
   }, []);
 
@@ -173,7 +171,6 @@ export const ReelsProvider = ({ children }) => {
     if (prevLanguageKeyRef.current === languageKey) return;
     prevLanguageKeyRef.current = languageKey;
     setReels([]);
-    setHasMore(true);
     setError(null);
     fetchReels(true);
   }, [languageKey, fetchReels, isProgressLoaded]);
@@ -182,7 +179,6 @@ export const ReelsProvider = ({ children }) => {
     reels,
     isLoading,
     isFetchingMore,
-    hasMore,
     error,
     fetchReels,
     resetReels,
@@ -191,7 +187,6 @@ export const ReelsProvider = ({ children }) => {
     reels,
     isLoading,
     isFetchingMore,
-    hasMore,
     error,
     fetchReels,
     resetReels,
