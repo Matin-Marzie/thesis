@@ -40,6 +40,12 @@ class ReelService:
     SHARE_WEIGHT = 1.0
     COMMENT_WEIGHT = 1.5
 
+    # get_personalized_reels' machine-readable reasons for returning an
+    # empty reels list (total > 0) - the router maps each to its own
+    # user-facing message.
+    NO_REELS_REASON_ALL_RECENTLY_VIEWED = "all_recently_viewed"
+    NO_REELS_REASON_COMPREHENSION_FILTER = "comprehension_filter"
+
     def __init__(self, db: AsyncSession):
         self.db = db
 
@@ -522,7 +528,7 @@ class ReelService:
         native_language_code: str,
         learning_language_code: str,
         limit: int = 10,
-    ) -> Tuple[List[ReelResponse], int]:
+    ) -> Tuple[List[ReelResponse], int, Optional[str]]:
         """
         Multistage recommendation engine.
 
@@ -562,24 +568,28 @@ class ReelService:
         language pair yet (nothing to filter on: no user_languages row to
         scope user_vocabulary by).
 
-        Returns (reels, total_candidates_in_learning_language) - an empty
-        reels list with total > 0 means the filter rejected every
-        candidate (distinct from total == 0, meaning the language itself
-        has no reels at all).
+        Returns (reels, total_candidates_in_learning_language, reason) -
+        `reason` is None whenever `reels` is non-empty, or when total == 0
+        (the language itself has no reels at all - the router already has
+        its own message for that case). Otherwise it's one of
+        NO_REELS_REASON_ALL_RECENTLY_VIEWED (every candidate was viewed
+        within the cooldown window) or NO_REELS_REASON_COMPREHENSION_FILTER
+        (some candidates were unseen, but none passed comprehensibility).
         """
         native_language = await self.get_language_by_code(native_language_code)
         learning_language = await self.get_language_by_code(learning_language_code)
 
         if not native_language or not learning_language:
-            return [], 0
+            return [], 0, None
 
         user_languages_id = await self.get_user_languages_id(
             user_id, native_language.id, learning_language.id
         )
         if user_languages_id is None:
-            return await self.get_random_reels(
+            reels, total = await self.get_random_reels(
                 native_language_code, learning_language_code, limit, user_id
             )
+            return reels, total, None
 
         known_word_ids = await self.get_known_word_ids(user_languages_id)
 
@@ -626,13 +636,16 @@ class ReelService:
         recently_viewed_ids = await self.get_recently_viewed_reel_ids(
             user_id, [reel.id for reel in candidates]
         )
+        unseen_candidates = [reel for reel in candidates if reel.id not in recently_viewed_ids]
+
+        if candidates and not unseen_candidates:
+            # Every reel in this language has been watched within the
+            # cooldown window - nothing left to even check comprehension
+            # on, distinct from stage 1 rejecting everything below.
+            return [], total, self.NO_REELS_REASON_ALL_RECENTLY_VIEWED
 
         passing: List[Tuple[Reel, float, Set[int]]] = []
-        for reel in candidates:
-            if reel.id in recently_viewed_ids:
-                # Already seen recently - don't show it again so soon,
-                # regardless of how comprehensible it is.
-                continue
+        for reel in unseen_candidates:
             reel_word_ids = self._unique_word_ids(reel)
             if not reel_word_ids:
                 # No tokens to measure comprehension against - can't
@@ -681,4 +694,5 @@ class ReelService:
             for reel, pct in selection
         ]
 
-        return reels_response, total
+        reason = None if reels_response else self.NO_REELS_REASON_COMPREHENSION_FILTER
+        return reels_response, total, reason

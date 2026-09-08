@@ -87,19 +87,20 @@ async def get_reels(
     service = ReelService(db)
 
     if user_id: # Authenticated user
-        reels, total = await service.get_personalized_reels(
+        reels, total, reason = await service.get_personalized_reels(
             user_id=user_id,
             native_language_code=native_language_code,
             learning_language_code=learning_language_code,
             limit=limit
         )
-        # total > 0 but nothing survived the comprehensibility filter -
-        # distinct from "no reels for this language at all" below.
+        # total > 0 but nothing survived stage 1 - distinct from "no reels
+        # for this language at all" below, and distinct from each other.
         if total > 0 and len(reels) == 0:
-            raise HTTPException(
-                status_code=status.HTTP_404_NOT_FOUND,
-                detail="Populate your vocabulary and try again"
-            )
+            if reason == ReelService.NO_REELS_REASON_ALL_RECENTLY_VIEWED:
+                detail = "You have viewed all of the videos of the database"
+            else:
+                detail = "Populate your vocabulary and try again"
+            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=detail)
     else: # Not authenticated user
         reels, total = await service.get_random_reels(
             native_language_code=native_language_code,
