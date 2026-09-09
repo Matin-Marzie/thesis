@@ -47,7 +47,21 @@ export const fetchMyReels = async (limit = 30) => {
   return response.data;
 };
 
+/**
+ * Fetch one reel's dialogue (sentences, tokens, all-language translations)
+ * on demand - reels-service's GET /reels/{id}/dialogue. Used to lazily load
+ * subtitles when the viewer presses the subtitle button on a reel that
+ * arrived without dialogue (e.g. the Node-backed creator-profile reel list).
+ * @param {number|string} reelId
+ * @returns {Promise<import('../types/dialogue').Dialogue>}
+ */
+export const fetchReelDialogue = async (reelId) => {
+  const response = await reelsClient.get(`/reels/${reelId}/dialogue`);
+  return response.data;
+};
+
 export default {
   fetchReels,
   fetchMyReels,
+  fetchReelDialogue,
 };

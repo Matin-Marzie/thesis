@@ -84,7 +84,9 @@ export interface Reel {
   created_by: CreatedBy;
   stats: Stats;
   user_interaction: UserInteraction;
-  dialogue: Dialogue;
+  // Absent/null for reels fetched without dialogue (e.g. the Node-backed
+  // creator-profile reel list) - see ReelItem's lazy dialogue fetch.
+  dialogue: Dialogue | null;
   // Recommendation engine stage 1 (ComprehensibilityFilter): percent of this
   // reel's unique words already in the viewer's vocabulary. Only present for
   // authenticated, personalized results.

@@ -1,5 +1,5 @@
 import React, { forwardRef, useCallback, useEffect, useRef, useState, useMemo } from 'react';
-import { StyleSheet, BackHandler, View } from 'react-native';
+import { StyleSheet, BackHandler, View, ActivityIndicator } from 'react-native';
 import {
     BottomSheetModal,
     BottomSheetBackdrop,
@@ -37,6 +37,7 @@ export const DialogueBottomSheetModal = forwardRef<BottomSheetModal, DialogueBot
     reelId,
     onClose,
     reel,
+    isLoading,
     player,
     onWordPress,
     sheetHeight,
@@ -274,6 +275,12 @@ export const DialogueBottomSheetModal = forwardRef<BottomSheetModal, DialogueBot
             handleIndicatorStyle={styles.handle}
             backgroundStyle={styles.background}
         >
+            {isLoading && !hasContent && (
+                <SafeAreaView edges={['bottom']} style={styles.loadingContainer}>
+                    <ActivityIndicator size="large" color="#fff" />
+                </SafeAreaView>
+            )}
+
             {hasContent && (
                 <SafeAreaView edges={['bottom']} style={styles.sheetContent}>
                     <PlaybackControls isPlaying={isPlaying} isDark={isDark} onTogglePlayPause={handleTogglePlayPause} />
@@ -306,6 +313,12 @@ const styles = StyleSheet.create({
     },
     sheetContent: {
         flex: 1,
+    },
+    loadingContainer: {
+        flex: 1,
+        justifyContent: 'flex-start',
+        alignItems: 'center',
+        paddingTop: 24,
     },
     contentContainer: {
         paddingHorizontal: 6,

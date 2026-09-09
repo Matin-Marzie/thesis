@@ -9,7 +9,6 @@ interface ReelOverlayProps {
   item: any;
   isLiked: boolean;
   likesCount: number;
-  hasDialogue: boolean;
   animatedLikeStyle: StyleProp<AnimatedStyle<StyleProp<ViewStyle>>>;
   onLike: () => void;
   onComment: () => void;
@@ -20,7 +19,7 @@ interface ReelOverlayProps {
 // Translucent overlay rendered on top of the video.
 // Splits into three zones: creator info (top), action bar (right), title + tag (bottom).
 export const ReelOverlay = React.memo(
-  ({ item, isLiked, likesCount, hasDialogue, animatedLikeStyle, onLike, onComment, onDialogue, onMoreOptions }: ReelOverlayProps) => {
+  ({ item, isLiked, likesCount, animatedLikeStyle, onLike, onComment, onDialogue, onMoreOptions }: ReelOverlayProps) => {
     const router = useRouter();
 
     const handleAvatarPress = useCallback(() => {
@@ -61,7 +60,6 @@ export const ReelOverlay = React.memo(
           animatedLikeStyle={animatedLikeStyle}
           onLike={onLike}
           onComment={onComment}
-          hasDialogue={hasDialogue}
           onDialogue={onDialogue}
           onShare={handleShare}
           onMoreOptions={handleMoreOptions}

@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import {
   View,
   StyleSheet,
@@ -21,8 +21,11 @@ import { CommentBottomSheetModal } from './comments/CommentBottomSheetModal';
 import { DialogueBottomSheetModal } from './subtitles/SubtitleBottomSheetModal';
 import { WordMeaningPopup } from './subtitles/WordMeaningPopup';
 import { toggleLikeReel, recordReelView } from '@/api/reelCreation';
+import { fetchReelDialogue } from '@/api/reels';
 import { useAuth } from '@/context/AuthContext';
-import type { Reel, Word } from '../../types/dialogue';
+import { useProgress } from '@/context/ProgressContext';
+import { getNativeLanguageCode, resolveSentenceTranslation } from '@/utils/resolveReelTranslations';
+import type { Reel, Word, Dialogue } from '../../types/dialogue';
 
 const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get('window');
 
@@ -40,11 +43,19 @@ interface ReelItemProps {
 export const ReelItem = React.memo(
   ({ item, isActive, isScreenFocused, onMoreOptions }: ReelItemProps) => {
     const { isAuthenticated } = useAuth();
+    const { userProgress } = useProgress();
     const [isLiked, setIsLiked] = useState(item.user_interaction?.is_liked || false);
     const [likesCount, setLikesCount] = useState(item.stats?.likes || 0);
     const [isPaused, setIsPaused] = useState(false);
     const commentSheetRef = useRef<BottomSheetModal>(null);
     const dialogueSheetRef = useRef<BottomSheetModal>(null);
+
+    // Some reel lists (e.g. the Node-backed creator profile) arrive without
+    // dialogue at all. Fetched lazily below, the first time the subtitle
+    // button is pressed, rather than upfront for every reel in the list.
+    const [dialogue, setDialogue] = useState<Dialogue | null>(item.dialogue ?? null);
+    const [isDialogueLoading, setIsDialogueLoading] = useState(false);
+    const dialogueRequestedRef = useRef(false);
     const [popupWord, setPopupWord] = useState<Word | null>(null);
     const [popupExpanded, setPopupExpanded] = useState<string | null>(null);
     const pauseIconOpacity = useSharedValue(0);
@@ -182,13 +193,45 @@ export const ReelItem = React.memo(
 
     const handleCommentOpen = useCallback(() => commentSheetRef.current?.present(), []);
     const handleCommentClose = useCallback(() => commentSheetRef.current?.dismiss(), []);
-    const handleDialogueOpen = useCallback(() => dialogueSheetRef.current?.present(), []);
+
+    // Opens immediately (so the sheet's spinner is visible right away), and
+    // kicks off the dialogue fetch the first time this reel turns out to
+    // have none - dialogueRequestedRef makes that a one-shot per reel
+    // instance, so a failed fetch doesn't retry on every subsequent press.
+    const handleDialogueOpen = useCallback(() => {
+      dialogueSheetRef.current?.present();
+
+      if (dialogue?.sentences?.length || dialogueRequestedRef.current) return;
+      dialogueRequestedRef.current = true;
+
+      const nativeLanguageCode = getNativeLanguageCode(userProgress);
+      setIsDialogueLoading(true);
+      fetchReelDialogue(item.id)
+        .then((data: Dialogue) => {
+          setDialogue({
+            ...data,
+            sentences: data.sentences.map((sentence) => ({
+              ...sentence,
+              translation: resolveSentenceTranslation(sentence, nativeLanguageCode),
+            })),
+          });
+        })
+        .catch(() => {
+          // Swallow - the sheet just falls back to its empty state.
+        })
+        .finally(() => setIsDialogueLoading(false));
+    }, [dialogue, item.id, userProgress]);
+
     const handleDialogueClose = useCallback(() => dialogueSheetRef.current?.dismiss(), []);
     const handleWordPress = useCallback((word: Word, expanded: string | null) => {
       setPopupWord(word);
       setPopupExpanded(expanded);
     }, []);
     const handlePopupClose = useCallback(() => setPopupWord(null), []);
+
+    // item.dialogue may be null/absent for reels fetched without dialogue
+    // (see the lazy fetch above) - merge in whatever's been loaded since.
+    const reelForDialogueSheet = useMemo(() => ({ ...item, dialogue }), [item, dialogue]);
 
     return (
       <View style={styles.reelContainer}>
@@ -218,7 +261,6 @@ export const ReelItem = React.memo(
           item={item}
           isLiked={isLiked}
           likesCount={likesCount}
-          hasDialogue={!!(item.dialogue?.sentences?.length)}
           animatedLikeStyle={animatedLikeStyle}
           onComment={handleCommentOpen}
           onDialogue={handleDialogueOpen}
@@ -237,7 +279,8 @@ export const ReelItem = React.memo(
           ref={dialogueSheetRef}
           reelId={item.id}
           onClose={handleDialogueClose}
-          reel={item}
+          reel={reelForDialogueSheet}
+          isLoading={isDialogueLoading}
           player={player}
           onWordPress={handleWordPress}
           sheetHeight={sheetHeight}

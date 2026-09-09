@@ -9,7 +9,6 @@ interface ReelActionsProps {
   likesCount: number;
   commentsCount: number;
   sharesCount: number;
-  hasDialogue: boolean;
   // Recommendation engine stage 1 (ComprehensibilityFilter) output - percent
   // of this reel's unique words already in the viewer's vocabulary. Only
   // present for authenticated, personalized reels.
@@ -44,7 +43,6 @@ export const ReelActions = React.memo(
     likesCount,
     commentsCount,
     sharesCount,
-    hasDialogue,
     comprehensibilityPercentage,
     creatorProfilePicture,
     onAvatarPress,
@@ -96,13 +94,11 @@ export const ReelActions = React.memo(
         <Text style={styles.actionText}>{formatCount(sharesCount)}</Text>
       </TouchableOpacity>
 
-      {/* Dialogue */}
-      <TouchableOpacity
-        style={[styles.actionButton, !hasDialogue && styles.actionButtonDisabled]}
-        onPress={hasDialogue ? onDialogue : undefined}
-        disabled={!hasDialogue}
-      >
-        <MaterialIcons name="subtitles" size={28} color={hasDialogue ? '#fff' : 'rgba(255,255,255,0.35)'} />
+      {/* Dialogue - always tappable; if this reel has no dialogue loaded
+          yet, the parent fetches it on demand and shows a spinner in the
+          bottom sheet while it loads. */}
+      <TouchableOpacity style={styles.actionButton} onPress={onDialogue}>
+        <MaterialIcons name="subtitles" size={28} color="#fff" />
       </TouchableOpacity>
 
 
@@ -143,9 +139,6 @@ const styles = StyleSheet.create({
   actionButton: {
     alignItems: 'center',
     padding: 6,
-  },
-  actionButtonDisabled: {
-    opacity: 0.4,
   },
   actionText: {
     color: '#fff',

@@ -5,6 +5,7 @@ from typing import Optional, Union
 from app.db import get_db
 from app.services.reel_service import ReelService
 from app.schemas.reel import ReelsListResponse, UserReelsListResponse
+from app.schemas.dialogue import DialogueResponse
 from app.core.security import decode_access_token, extract_token_from_header, get_current_user
 
 
@@ -154,3 +155,34 @@ async def get_my_reels(
     )
 
     return UserReelsListResponse(reels=reels, total=total)
+
+
+@router.get(
+    "/{reel_id}/dialogue",
+    response_model=DialogueResponse,
+    summary="Get a reel's dialogue (subtitles)",
+    description=(
+        "Retrieve one reel's dialogue - sentences, tokens, and all-language "
+        "translations - on demand. Lets the frontend lazily load subtitles "
+        "for a reel it already has but that arrived without dialogue (e.g. "
+        "the Node backend's creator-profile reel list), by fetching this "
+        "when the subtitle button is pressed instead of upfront."
+    ),
+    responses={
+        404: {"description": "Reel not found, or has no dialogue"},
+    }
+)
+async def get_reel_dialogue(
+    reel_id: int,
+    db: AsyncSession = Depends(get_db)
+) -> DialogueResponse:
+    service = ReelService(db)
+    reel = await service.get_reel_by_id(reel_id)
+
+    if not reel or not reel.dialogue:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Dialogue not found for this reel"
+        )
+
+    return await service.build_dialogue_response(reel.dialogue)
