@@ -204,10 +204,7 @@ export default function Wordle({ onClose }) {
 
             if (newGuesses.length >= config.maxAttempts) {
                 setGameOver(true);
-                // Ran out of guesses = forgotten (lapse).
-                if (secretWordItem) {
-                    reviewWord(secretWordItem.id, Rating.Again);
-                }
+                // Ran out of guesses - leave the FSRS card untouched (no review recorded).
                 return;
             }
 
