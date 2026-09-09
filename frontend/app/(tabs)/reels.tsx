@@ -2,6 +2,7 @@ import React, { useCallback, useEffect } from 'react';
 import { View, Text, ActivityIndicator, StyleSheet, StatusBar } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
 import { useReelsContext } from '@/context/ReelsContext';
+import { useAuth } from '@/context/AuthContext';
 import { PRIMARY_COLOR } from '@/constants/App';
 import { ReelsList } from '@/components/reels/ReelsList';
 import TouchableOpacity from '@/components/TouchableOpacity';
@@ -10,18 +11,27 @@ import TouchableOpacity from '@/components/TouchableOpacity';
 // Owns only the global loading / error states; the list itself lives in ReelsList.
 export default function ReelsScreen() {
   const { reels, isLoading, error, fetchReels } = useReelsContext();
+  const { isLoading: isAuthLoading } = useAuth();
 
-  // Fetch on mount — skip if the context already has data (e.g. returning to tab)
+  // Fetch on mount — skip if the context already has data (e.g. returning to
+  // tab). Waits for AuthContext's initial refresh-token check to settle
+  // first: firing immediately on mount would capture a stale closure where
+  // isAuthenticated is still its initial `false`, sending this first fetch
+  // out as a guest request (no comprehensibility_percentage) even for a
+  // logged-in user, with nothing left to retry once auth actually resolves.
   useEffect(() => {
+    if (isAuthLoading) return;
     if (reels.length === 0) {
       fetchReels(true);
     }
-  }, []);
+  }, [isAuthLoading]);
 
   const handleRetry = useCallback(() => fetchReels(true), [fetchReels]);
 
-  // Full-screen spinner shown on the very first load
-  if (isLoading && reels.length === 0) {
+  // Full-screen spinner shown on the very first load - also covers the brief
+  // window before the initial fetch even starts, while auth is still
+  // resolving (see the mount effect above).
+  if ((isLoading || isAuthLoading) && reels.length === 0) {
     return (
       <View style={styles.centeredContainer}>
         <StatusBar barStyle="light-content" backgroundColor="#000" />
