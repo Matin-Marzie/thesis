@@ -7,6 +7,7 @@ import { GREEN, GAME_WIN_REWARD } from '../gameConstants';
 import VocabularyListItem from '../../../vocabulary/VocabularyListItem';
 import { useVibration } from '@/hooks/useVibration';
 import TouchableOpacity from '@/components/TouchableOpacity';
+import ReviewFeedbackRow from '@/components/SR/ReviewFeedbackRow';
 
 const COIN_COUNT = 6;
 const REWARD = GAME_WIN_REWARD;
@@ -23,13 +24,17 @@ const PATHS = [
     {  midX: 90, midY:  -30, p1: 0.35 }, // hard right, slight rise
 ];
 
-export default function FinishScreen({ visible = false, onCollect, coinTarget, gridWords = {}, getWordsByWrittenForm = () => [] }) {
+export default function FinishScreen({ visible = false, onCollect, coinTarget, gridWords = {}, getWordsByWrittenForm = () => [], reviewWordText = null, onRateReviewWord }) {
     const vibrate = useVibration();
     const badgeScale = useRef(new Animated.Value(0)).current;
     const badgeOpacity = useRef(new Animated.Value(1)).current;
     const cardScale = useRef(new Animated.Value(1)).current;
     const overlayOpacity = useRef(new Animated.Value(1)).current;
     const [collecting, setCollecting] = useState(false);
+    // Radio-style selection: tapping a rating just changes the current pick
+    // immediately (no locking) - the actual FSRS grading only happens once,
+    // on Collect, so switching your mind doesn't call reviewWord repeatedly.
+    const [selectedRating, setSelectedRating] = useState(null);
 
     const badgeRef = useRef(null);
     const originRef = useRef({ x: screenHeight * 0.8, y: screenHeight * 0.8 });
@@ -74,6 +79,7 @@ export default function FinishScreen({ visible = false, onCollect, coinTarget, g
     useEffect(() => {
         if (!visible) return;
         setCollecting(false);
+        setSelectedRating(null);
         coinAnims.forEach(c => {
             c.translateX.setValue(0);
             c.translateY.setValue(0);
@@ -94,6 +100,10 @@ export default function FinishScreen({ visible = false, onCollect, coinTarget, g
     const handleCollect = () => {
         if (collecting) return;
         setCollecting(true);
+
+        if (selectedRating != null) {
+            onRateReviewWord?.(selectedRating);
+        }
 
         Animated.timing(badgeOpacity, {
             toValue: 0,
@@ -234,6 +244,16 @@ export default function FinishScreen({ visible = false, onCollect, coinTarget, g
 
                     <View style={styles.divider} />
 
+                    {/* Review word + FSRS rating buttons - only rendered when
+                        this round was actually built on a real due word */}
+                    <ReviewFeedbackRow
+                        word={reviewWordText}
+                        value={selectedRating}
+                        onChange={setSelectedRating}
+                        game="wordOfWonders"
+                        style={styles.reviewFeedback}
+                    />
+
                     {/* Reward + Collect row */}
                     <View style={styles.rewardRow}>
                         <View ref={badgeRef} onLayout={onBadgeLayout}>
@@ -289,6 +309,10 @@ export default function FinishScreen({ visible = false, onCollect, coinTarget, g
 const styles = StyleSheet.create({
     popup: {
         height: screenHeight * 0.70,
+    },
+    reviewFeedback: {
+        marginHorizontal: 16,
+        marginVertical: 10,
     },
     rewardRow: {
         flexDirection: 'row',

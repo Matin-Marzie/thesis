@@ -4,6 +4,8 @@ import { FontAwesome5 } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import { useDictionaryContext } from '@/context/DictionaryContext';
 import { useProgress } from '@/context/ProgressContext';
+import { useVocabularyContext } from '@/context/VocabularyContext';
+import { getDueWords } from '@/utils/fsrs';
 import GenerateWordOfWonderLevel from './LevelGenerator';
 import WordOfWonders from './WordOfWonders';
 import ConfirmationPopup from '../ConfirmationPopup';
@@ -12,6 +14,7 @@ import { BACKGROUND_IMAGE_URI, width, MAX_WIDTH, height } from './gameConstants'
 export default function GameLoader() {
     const { dictionary } = useDictionaryContext();
     const { userProgress } = useProgress();
+    const { userVocabulary } = useVocabularyContext();
     const router = useRouter();
     const [levelData, setLevelData] = useState(null);
     const [isGenerating, setIsGenerating] = useState(true);
@@ -43,24 +46,59 @@ export default function GameLoader() {
         return () => anim.stop();
     }, [spinValue]);
 
+    // Board words are drawn from the user's own tracked vocabulary, not the
+    // full dictionary, so finding a grid word doubles as a real FSRS review
+    // (mirrors Wordle - see games.ts's isPlayable gate on tracked word count).
+    const trackedWords = React.useMemo(
+        () => (dictionary?.words ?? []).filter((w) => userVocabulary[w.id]),
+        [dictionary, userVocabulary]
+    );
+
+    // Currently-due tracked words, read via ref so generateLevel can pick a
+    // fresh random one on every call (including "play again") instead of a
+    // single choice memoized once per userVocabulary change.
+    const dueWords = React.useMemo(() => getDueWords(userVocabulary), [userVocabulary]);
+    const dueWordsRef = useRef(dueWords);
+    dueWordsRef.current = dueWords;
+
     const generateLevel = (words) => {
         setIsGenerating(true);
         setTimeout(() => {
-            const [board, gridWords, generatedLetters] = GenerateWordOfWonderLevel(words, learningLangCode);
+            // If any tracked word is currently due, force the crossword's
+            // practice word to be a random one of those (mirrors Wordle
+            // preferring due words) - otherwise LevelGenerator falls back to
+            // picking a random practice word.
+            const due = dueWordsRef.current;
+            const dueWordId = due.length > 0 ? due[Math.floor(Math.random() * due.length)].wordId : null;
+            const [board, gridWords, generatedLetters, reviewWordId] = GenerateWordOfWonderLevel(words, learningLangCode, dueWordId);
             setLevelData({
                 boxData: board,
                 gridWords: gridWords,
-                letters: generatedLetters
+                letters: generatedLetters,
+                // Non-null only when this round was actually built on a real
+                // due word (see LevelGenerator) - drives the FSRS rating
+                // prompt on the finish screen.
+                reviewWordId,
             });
             setIsGenerating(false);
         }, 0);
     };
 
-    // Generate level when dictionary loads
+    // Generate the level once tracked vocabulary words first become
+    // available - NOT on every subsequent trackedWords/userVocabulary change.
+    // reviewWord() (called from the finish screen's Collect handler) updates
+    // userVocabulary, which would otherwise change this memo's identity and
+    // re-fire this effect, silently swapping in a new level mid-animation
+    // before the player ever pressed Collect (same class of bug Wordle's
+    // initializeGame refs work around - see its comment). Every subsequent
+    // level comes only from an explicit onPlayAgain call below.
+    const hasGeneratedRef = useRef(false);
     useEffect(() => {
-        if (!dictionary?.words || dictionary.words.length === 0) return;
-        generateLevel(dictionary.words);
-    }, [dictionary]);
+        if (hasGeneratedRef.current) return;
+        if (trackedWords.length === 0) return;
+        hasGeneratedRef.current = true;
+        generateLevel(trackedWords);
+    }, [trackedWords]);
 
     // Show loading screen while generating
     const spin = spinValue.interpolate({ inputRange: [0, 1], outputRange: ['0deg', '360deg'] });
@@ -99,8 +137,9 @@ export default function GameLoader() {
             boxData={levelData.boxData}
             gridWords={levelData.gridWords}
             letters={levelData.letters}
+            reviewWordId={levelData.reviewWordId}
             langCode={learningLangCode}
-            onPlayAgain={() => generateLevel(dictionary.words)}
+            onPlayAgain={() => generateLevel(trackedWords)}
         />
     );
 }

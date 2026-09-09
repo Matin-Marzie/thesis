@@ -208,7 +208,7 @@ function wordPriority(word) {
 
 
 // ================== RUN ==================
-export default function GenerateWordOfWonderLevel(dictionary, langCode = 'en') {
+export default function GenerateWordOfWonderLevel(dictionary, langCode = 'en', dueWordId = null) {
     // Reset global variables to prevent accumulation across multiple calls
     board = Array.from({ length: BOARD_SIZE }, () =>
         Array(BOARD_SIZE).fill(0)
@@ -225,8 +225,14 @@ export default function GenerateWordOfWonderLevel(dictionary, langCode = 'en') {
         }))
         .filter(({ normalized }) => normalized.length > 2 && normalized.length <= 8 && isValidWordForLang(normalized, langCode));
 
-    // Pick a random practice word (already normalized from wordList)
-    const practiceWord = wordList[Math.floor(Math.random() * wordList.length)];
+    // Prefer the requested due word (see GameLoader's getDueWords check) as
+    // the practice word, so finding it is a real FSRS review; fall back to a
+    // random word when nothing is due, or the due word didn't survive the
+    // filters above.
+    const dueWord = dueWordId != null
+        ? wordList.find((w) => String(w.id) === String(dueWordId))
+        : null;
+    const practiceWord = dueWord ?? wordList[Math.floor(Math.random() * wordList.length)];
 
     const startRow = randomInt(2, 5);
     const startCol = randomInt(0, BOARD_SIZE - practiceWord.normalized.length);
@@ -303,7 +309,13 @@ export default function GenerateWordOfWonderLevel(dictionary, langCode = 'en') {
     });
     
 
-    return [trimmedBoard, gridWords, letters];
+    // Only surface a review word when the practice word actually came from
+    // the requested due word - not when it fell back to a random tracked
+    // word because nothing was due - so the finish screen only offers FSRS
+    // rating buttons for a real spaced-repetition review.
+    const reviewWordId = dueWord ? dueWord.id : null;
+
+    return [trimmedBoard, gridWords, letters, reviewWordId];
 }
 
 // Execution example

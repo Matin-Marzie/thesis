@@ -24,6 +24,7 @@ import TutorialOverlay from './pop-ups/TutorialOverlay';
 import ConfirmationPopup from '../ConfirmationPopup';
 import { GREEN, MAX_WIDTH, width, height, horizontalOffset, BACKGROUND_IMAGE_URI, BACKGROUND_OVERLAY_OPACITY, EXTRA_WORDS_BATCH_SIZE, EXTRA_WORDS_REWARD, GAME_WIN_REWARD } from './gameConstants';
 import { useVocabularyContext } from '@/context/VocabularyContext';
+import { Rating } from '@/utils/fsrs';
 import { useProgress } from '@/context/ProgressContext';
 import { useDictionaryContext } from '@/context/DictionaryContext';
 import { isRTL } from './languageUtils';
@@ -42,11 +43,11 @@ const shuffleArray = (array) => {
     return shuffled;
 };
 
-export default function WordOfWonders({ boxData: initialBoxData, gridWords: initialGridWords, letters: initialLetters, onPlayAgain, langCode = 'en' }) {
+export default function WordOfWonders({ boxData: initialBoxData, gridWords: initialGridWords, letters: initialLetters, reviewWordId = null, onPlayAgain, langCode = 'en' }) {
 
-    const { userVocabulary } = useVocabularyContext();
+    const { userVocabulary, reviewWord } = useVocabularyContext();
     const { userProgress, setUserProgress } = useProgress();
-    const { getWordsByWrittenForm } = useDictionaryContext();
+    const { dictionary, getWordsByWrittenForm } = useDictionaryContext();
     const vibrate = useVibration();
 
     const insets = useSafeAreaInsets();
@@ -598,6 +599,24 @@ export default function WordOfWonders({ boxData: initialBoxData, gridWords: init
         onPlayAgain?.();
     }, [onPlayAgain, setUserProgress]);
 
+    // The word this round's crossword was actually built around from a real
+    // due tracked word (null when the level fell back to a random practice
+    // word - see LevelGenerator/GameLoader) - the finish screen grades this
+    // one with an FSRS rating, matching Wordle's reviewWord call on a win.
+    // Looked up straight from the dictionary (not gridWords) so it displays
+    // the word's real written_form - gridWords only stores the normalized
+    // (diacritics-stripped, lowercased) form used for on-grid letter matching.
+    const reviewWordText = useMemo(() => {
+        if (reviewWordId == null) return null;
+        const entry = dictionary?.words?.find((w) => w.id === reviewWordId);
+        return entry?.written_form ?? null;
+    }, [dictionary, reviewWordId]);
+
+    const handleRateReviewWord = useCallback((rating) => {
+        if (reviewWordId == null) return;
+        reviewWord(reviewWordId, rating);
+    }, [reviewWordId, reviewWord]);
+
     // Cashes in one batch of EXTRA_WORDS_BATCH_SIZE extra words for
     // EXTRA_WORDS_REWARD coins. Deducts only one batch per call - e.g. at
     // 15/10 progress, one press leaves 5/10; if the player had already
@@ -1012,6 +1031,8 @@ export default function WordOfWonders({ boxData: initialBoxData, gridWords: init
                         coinTarget={coinTarget}
                         gridWords={gridWords}
                         getWordsByWrittenForm={getWordsByWrittenForm}
+                        reviewWordText={reviewWordText}
+                        onRateReviewWord={handleRateReviewWord}
                     />
 
                     {/* Settings Popup */}

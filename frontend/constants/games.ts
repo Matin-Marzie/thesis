@@ -25,6 +25,9 @@ export interface GameDef {
   isPlayable: (ctx: GameContext) => GameAvailability;
 }
 
+/** Word of Wonders needs at least this many tracked words for spaced-repetition grading to be meaningful. */
+const WORD_OF_WONDERS_MIN_TRACKED_WORDS = 10;
+
 /**
  * Games shown on the practice screen, each with its own eligibility check -
  * run before navigating so a game is never entered in a state it can't
@@ -37,10 +40,15 @@ export const GAMES: GameDef[] = [
     name: 'Word of Wonders',
     route: '/games/wordofwonders',
     thumbnail: require('../assets/images/games/thumbnail-wordofwonders.png'),
-    // Draws from the full dictionary, not tracked vocabulary - always playable
-    // once a dictionary is loaded at all (practice screen doesn't render
-    // without one, so no separate check needed here).
-    isPlayable: () => ({ playable: true }),
+    // Board generation still draws from the full dictionary (the crossword
+    // needs many intersecting words), but mirrors Wordle's gate: requires a
+    // minimum amount of tracked vocabulary so a round is worth playing.
+    isPlayable: ({ userVocabulary }) => {
+      const trackedCount = Object.keys(userVocabulary).length;
+      return trackedCount >= WORD_OF_WONDERS_MIN_TRACKED_WORDS
+        ? { playable: true }
+        : { playable: false, reason: `Add at least ${WORD_OF_WONDERS_MIN_TRACKED_WORDS} words to your vocabulary to play Word of Wonders.` };
+    },
   },
   {
     id: 'wordle',
