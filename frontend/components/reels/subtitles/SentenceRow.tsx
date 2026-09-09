@@ -66,7 +66,7 @@ export function SentenceRow({ sentence, isCurrentLine, isDark, isRightToLeft, is
                 style={[
                     styles.sentenceContainer,
                     isDark && { backgroundColor: DARK_COLORS.surface, borderColor: DARK_COLORS.border },
-                    isCurrentLine && styles.sentenceContainerHighlighted,
+                    isCurrentLine && (isDark ? styles.sentenceContainerHighlightedDark : styles.sentenceContainerHighlighted),
                     isRightToLeft && styles.sentenceContainerRtl,
                 ]}
             >
@@ -135,6 +135,11 @@ const styles = StyleSheet.create({
     sentenceContainerHighlighted: {
         borderColor: '#3b82f6',
         backgroundColor: '#eff6ff',
+        borderWidth: 2,
+    },
+    sentenceContainerHighlightedDark: {
+        borderColor: '#3b82f6',
+        backgroundColor: '#1e3a5f',
         borderWidth: 2,
     },
     sentenceTextContainer: {
