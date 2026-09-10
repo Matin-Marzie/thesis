@@ -98,22 +98,23 @@ async def get_reels(
         # for this language at all" below, and distinct from each other.
         if total > 0 and len(reels) == 0:
             if reason == ReelService.NO_REELS_REASON_ALL_RECENTLY_VIEWED:
-                detail = "You have viewed all of the videos of the database"
+                detail = "You have watched all of the reels of the database, come back tomorrow"
             else:
-                detail = "Populate your vocabulary and try again"
+                detail = "You've already watched all the reels in the database that match your current vocabulary. Keep learning new words to unlock more!"
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=detail)
     else: # Not authenticated user
-        reels, total = await service.get_random_reels(
+        reels, total, reason = await service.get_random_reels(
             native_language_code=native_language_code,
             learning_language_code=learning_language_code,
             limit=limit
         )
 
     if total == 0:
-        raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND,
-            detail=f"No reels found for language '{learning_language_code}'"
-        )
+        if reason == ReelService.NO_REELS_REASON_EMPTY_DATABASE:
+            detail = "There are no videos in the database"
+        else:
+            detail = f"No reels found for language '{learning_language_code}'"
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=detail)
     
     return ReelsListResponse(
         reels=reels,

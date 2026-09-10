@@ -24,6 +24,12 @@ import type { Reel } from '@/types/dialogue';
 
 const { height: SCREEN_HEIGHT } = Dimensions.get('window');
 
+// Minimum time between two onEndReached-triggered fetch attempts - long
+// enough to absorb FlatList re-firing onEndReached several times in a row
+// for the same swipe (layout recalculation, no new content added), short
+// enough that a genuine later swipe-up-at-the-end isn't left waiting.
+const END_REACHED_RETRY_COOLDOWN_MS = 3000;
+
 interface ReelsListProps {
   // Called by the parent screen to render the loading / error states before this list mounts
   onRetry: () => void;
@@ -34,7 +40,7 @@ interface ReelsListProps {
 export function ReelsList({ onRetry }: ReelsListProps) {
   const isFocused = useIsFocused();
   const { isAuthenticated } = useAuth();
-  const { reels, isLoading, isFetchingMore, error, fetchReels } = useReelsContext();
+  const { reels, isLoading, isFetchingMore, fetchReels } = useReelsContext();
   const [activeIndex, setActiveIndex] = useState(0);
   const flatListRef = useRef<FlatList>(null);
 
@@ -125,20 +131,22 @@ export function ReelsList({ onRetry }: ReelsListProps) {
   );
 
   // Fetch the next page when the user approaches the end of the list.
-  // Backs off once a fetch has failed (error set) instead of retrying on
-  // every subsequent onEndReached firing - FlatList can re-fire this
-  // repeatedly on its own (layout recalculation, no new content added),
-  // and a failing personalized fetch was previously retried forever since
-  // Alert.alert doesn't block JS execution.
+  // Debounced by time (not by a persistent `error` flag) so a failed
+  // attempt - e.g. the recommendation engine genuinely has nothing new
+  // left within the cooldown window - doesn't permanently block every
+  // later swipe-up-at-the-end from trying again; it only suppresses
+  // FlatList re-firing this repeatedly on its own within the same swipe
+  // (layout recalculation, no new content added).
+  const lastEndReachedAttemptRef = useRef(0);
   const handleEndReached = useCallback(() => {
-    if (!isFetchingMore && !error) {
-      fetchReels(false);
-    }
-  }, [fetchReels, isFetchingMore, error]);
+    if (isFetchingMore) return;
+    const now = Date.now();
+    if (now - lastEndReachedAttemptRef.current < END_REACHED_RETRY_COOLDOWN_MS) return;
+    lastEndReachedAttemptRef.current = now;
+    fetchReels(false);
+  }, [fetchReels, isFetchingMore]);
 
-  // Pull-to-refresh - the only way to clear a set `error` and try again
-  // once handleEndReached has backed off, so it must always call
-  // fetchReels(true) unconditionally (unlike handleEndReached above).
+  // Pull-to-refresh (top of the list)
   const handleRefresh = useCallback(() => {
     fetchReels(true);
   }, [fetchReels]);
@@ -167,16 +175,6 @@ export function ReelsList({ onRetry }: ReelsListProps) {
     }),
     []
   );
-
-  // Spinner shown at the bottom while the next page is loading
-  const ListFooterComponent = useCallback(() => {
-    if (!isFetchingMore) return null;
-    return (
-      <View style={styles.footerLoader}>
-        <ActivityIndicator size="large" color={PRIMARY_COLOR} />
-      </View>
-    );
-  }, [isFetchingMore]);
 
   // Shown when the list is empty and not in a loading / error state
   const ListEmptyComponent = useCallback(
@@ -212,12 +210,10 @@ export function ReelsList({ onRetry }: ReelsListProps) {
         // Infinite scroll
         onEndReached={handleEndReached}
         onEndReachedThreshold={0.5}
-        ListFooterComponent={ListFooterComponent}
         ListEmptyComponent={ListEmptyComponent}
-        // Pull-to-refresh - the only way to clear a stuck `error` and try
-        // loading more again once handleEndReached has backed off. Required
-        // dropping the previous bounces={false}/overScrollMode="never",
-        // since the pull gesture relies on bounce/overscroll being enabled.
+        // Pull-to-refresh (top of the list). Requires bounces/overscroll
+        // enabled, so this stays even though bounces={false} would
+        // otherwise be the natural fit for a paged feed.
         refreshing={isLoading}
         onRefresh={handleRefresh}
         // Render budget — keep low to reduce memory pressure
@@ -226,6 +222,17 @@ export function ReelsList({ onRetry }: ReelsListProps) {
         windowSize={3}
         removeClippedSubviews={Platform.OS === 'android'}
       />
+
+      {/* Overlay, not a ListFooterComponent - a footer adds real height to
+          the scrollable content, which breaks pagingEnabled's
+          snapToInterval={SCREEN_HEIGHT} grid (the list settles into a
+          partial extra "page" while this is visible, leaving a gap below
+          the last reel). */}
+      {isFetchingMore && (
+        <View style={styles.loadingOverlay} pointerEvents="none">
+          <ActivityIndicator size="large" color={PRIMARY_COLOR} />
+        </View>
+      )}
 
       <ReelActionsBottomSheetModal
         ref={reelActionsSheetRef}
@@ -249,9 +256,11 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#000',
   },
-  footerLoader: {
-    height: 80,
-    justifyContent: 'center',
+  loadingOverlay: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    bottom: 40,
     alignItems: 'center',
   },
   // Takes the full screen height so the empty state is vertically centred

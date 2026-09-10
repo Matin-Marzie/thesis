@@ -36,6 +36,13 @@ class ReelInteraction(Base):
     user_id = Column(BigInteger, ForeignKey("users.id"), nullable=False)
     last_view_at = Column(DateTime(timezone=True), server_default=func.now(), nullable=False)
     view_count = Column(Integer, default=0, nullable=False)
+    # Last time the recommendation engine served this reel to this user
+    # (regardless of whether they actually watched it) - see ReelService's
+    # ComprehensibilityFilter, which excludes reels recommended within
+    # settings.RECENTLY_VIEWED_COOLDOWN_HOURS instead of relying on
+    # last_view_at (which only updates after 2s of continuous playback and
+    # never fires at all for a reel the user scrolls past).
+    last_recommended_at = Column(DateTime(timezone=True), nullable=True)
     is_liked = Column(Boolean, default=False, nullable=False)
     is_saved = Column(Boolean, default=False, nullable=False)
     comment = Column(Text, nullable=True)

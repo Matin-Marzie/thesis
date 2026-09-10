@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef, useMemo, useCallback } from 'react'
 import { View, StyleSheet, Keyboard, Text, TouchableOpacity, ActivityIndicator } from 'react-native';
 import { useRouter } from 'expo-router';
 import { FontAwesome } from '@expo/vector-icons';
+import { useAuth } from '@/context/AuthContext';
 import { useVocabularyContext } from '@/context/VocabularyContext';
 import { useSentenceContext } from '@/context/SentenceContext';
 import { useDictionaryContext } from '@/context/DictionaryContext';
@@ -27,6 +28,7 @@ function normalizeQuery(text: string): string {
 export default function HomeScreen() {
   const isDark = useColorScheme() === 'dark';
   const router = useRouter();
+  const { forceSync } = useAuth();
   const { userVocabulary } = useVocabularyContext();
   const { userSentences } = useSentenceContext();
   const { dictionary } = useDictionaryContext();
@@ -46,11 +48,16 @@ export default function HomeScreen() {
   // after an actual review), so it goes stale the longer the list sits open.
   const [refreshedAt, setRefreshedAt] = useState(() => Date.now());
   const [isRefreshing, setIsRefreshing] = useState(false);
-  const handleRefresh = useCallback(() => {
+  // Pushes any pending local vocabulary changes to the backend (POST
+  // /user/sync) before refreshing, so e.g. FSRS review state recorded
+  // offline is flushed and next_review_at countdowns reflect the latest
+  // synced state, not just stale local data.
+  const handleRefresh = useCallback(async () => {
     setIsRefreshing(true);
+    await forceSync();
     setRefreshedAt(Date.now());
     setIsRefreshing(false);
-  }, []);
+  }, [forceSync]);
 
   // Sort by created_at descending without re-allocating Date objects inside
   // the comparator (decorate-sort-undecorate) - a plain `new Date(...)`

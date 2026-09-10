@@ -6,6 +6,7 @@ from sklearn.feature_extraction import DictVectorizer
 from sklearn.feature_extraction.text import TfidfTransformer
 from sklearn.metrics.pairwise import cosine_similarity
 from sqlalchemy import select, func, and_
+from sqlalchemy.dialects.postgresql import insert as pg_insert
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import joinedload
 from typing import Dict, List, Optional, Set, Tuple
@@ -40,9 +41,10 @@ class ReelService:
     SHARE_WEIGHT = 1.0
     COMMENT_WEIGHT = 1.5
 
-    # get_personalized_reels' machine-readable reasons for returning an
-    # empty reels list (total > 0) - the router maps each to its own
-    # user-facing message.
+    # Machine-readable reasons for returning zero reels (total == 0) or an
+    # empty reels list despite candidates existing (total > 0) - the router
+    # maps each to its own user-facing message.
+    NO_REELS_REASON_EMPTY_DATABASE = "empty_database"
     NO_REELS_REASON_ALL_RECENTLY_VIEWED = "all_recently_viewed"
     NO_REELS_REASON_COMPREHENSION_FILTER = "comprehension_filter"
 
@@ -263,28 +265,78 @@ class ReelService:
         learning_language_code: str,
         limit: int = 10,
         user_id: Optional[int] = None
-    ) -> Tuple[List[ReelResponse], int]:
+    ) -> Tuple[List[ReelResponse], int, Optional[str]]:
         """
-        Get random reels for the specified language pair.
+        Get random reels for the specified language pair. When user_id is
+        given, excludes reels recommended to this user within the last
+        settings.RECENTLY_VIEWED_COOLDOWN_HOURS hours (see
+        get_recently_recommended_reel_ids) and stamps last_recommended_at on
+        whatever it returns (see record_recommended) - same cooldown
+        get_personalized_reels' Stage 1 applies, so this method's callers
+        (guest browsing, and get_personalized_reels' own no-vocabulary-yet
+        fallback) don't keep getting the same random sample back on every
+        "load more".
 
         Args:
             native_language_code: ISO code for user's native language
             learning_language_code: ISO code for language being learned
             limit: Maximum number of reels to return
             user_id: Authenticated user's id, used to populate each reel's
-                user_interaction (e.g. whether they already liked it)
+                user_interaction (e.g. whether they already liked it) and to
+                apply/record the recently-recommended exclusion above. None
+                for guests, who get pure random reels with no exclusion.
 
         Returns:
-            Tuple of (list of reels, total count)
+            Tuple of (list of reels, total count, reason) - `reason` is
+            NO_REELS_REASON_EMPTY_DATABASE when total == 0 because the
+            reels table has no rows at all (as opposed to just having none
+            for this language pair, which the router messages on its own),
+            or NO_REELS_REASON_ALL_RECENTLY_VIEWED when user_id is given and
+            every reel in this language was already recommended to them
+            within the cooldown window.
         """
         # Get language IDs
         native_language = await self.get_language_by_code(native_language_code)
         learning_language = await self.get_language_by_code(learning_language_code)
 
         if not native_language or not learning_language:
-            return [], 0
+            return [], 0, None
+
+        # Get total count (unfiltered by exclusions) - reported to the
+        # caller as the catalog size, and used to tell "no reels in this
+        # language" apart from "no reels in the whole database" below.
+        count_result = await self.db.execute(
+            select(func.count(Reel.id)).where(Reel.language_id == learning_language.id)
+        )
+        total = count_result.scalar() or 0
+
+        if total == 0:
+            reason = None
+            all_count_result = await self.db.execute(select(func.count(Reel.id)))
+            if (all_count_result.scalar() or 0) == 0:
+                reason = self.NO_REELS_REASON_EMPTY_DATABASE
+            return [], total, reason
+
+        # Exclude reels already recommended to this user within the cooldown
+        # window (mirrors get_personalized_reels' Stage 1) - without this, an
+        # authenticated user gets re-served the same random sample on every
+        # "load more" (e.g. get_personalized_reels' no-vocabulary-yet
+        # fallback, which calls this method directly).
+        excluded_ids: Set[int] = set()
+        if user_id:
+            language_reel_ids_result = await self.db.execute(
+                select(Reel.id).where(Reel.language_id == learning_language.id)
+            )
+            language_reel_ids = list(language_reel_ids_result.scalars().all())
+            excluded_ids = await self.get_recently_recommended_reel_ids(user_id, language_reel_ids)
+            if len(excluded_ids) >= len(language_reel_ids):
+                return [], total, self.NO_REELS_REASON_ALL_RECENTLY_VIEWED
 
         # Query for reels in the learning language
+        conditions = [Reel.language_id == learning_language.id]
+        if excluded_ids:
+            conditions.append(Reel.id.notin_(excluded_ids))
+
         query = (
             select(Reel)
             .options(
@@ -292,7 +344,7 @@ class ReelService:
                 joinedload(Reel.creator),
                 joinedload(Reel.dialogue)
             )
-            .where(Reel.language_id == learning_language.id)
+            .where(and_(*conditions))
             .order_by(func.random())
             .limit(limit)
         )
@@ -300,11 +352,7 @@ class ReelService:
         result = await self.db.execute(query)
         reels = result.unique().scalars().all()
 
-        # Get total count
-        count_result = await self.db.execute(
-            select(func.count(Reel.id)).where(Reel.language_id == learning_language.id)
-        )
-        total = count_result.scalar() or 0
+        reason = None
 
         # Batch-fetch this user's like/save/etc. state for the returned reels
         # (one query for the whole page rather than one per reel).
@@ -369,7 +417,10 @@ class ReelService:
                 dialogue=dialogue_response
             ))
 
-        return reels_response, total
+        if user_id and reels:
+            await self.record_recommended(user_id, [reel.id for reel in reels])
+
+        return reels_response, total, reason
 
     async def get_user_languages_id(
         self,
@@ -403,13 +454,17 @@ class ReelService:
         )
         return set(result.scalars().all())
 
-    async def get_recently_viewed_reel_ids(
+    async def get_recently_recommended_reel_ids(
         self, user_id: int, reel_ids: List[int]
     ) -> Set[int]:
-        """Reel ids this user watched within the last
+        """Reel ids recommended to this user within the last
         settings.RECENTLY_VIEWED_COOLDOWN_HOURS hours - stage 1 excludes
         these outright so a reel doesn't reappear in the feed right after
-        being seen."""
+        being served. Keyed off last_recommended_at (set by
+        record_recommended whenever a reel is actually returned to this
+        user), not last_view_at - a view only gets recorded after 2s of
+        continuous playback on the frontend, so it can't be relied on to
+        catch reels the user scrolled past without watching."""
         if not reel_ids:
             return set()
 
@@ -421,24 +476,54 @@ class ReelService:
                 and_(
                     ReelInteraction.user_id == user_id,
                     ReelInteraction.reel_id.in_(reel_ids),
-                    ReelInteraction.last_view_at >= cutoff,
+                    ReelInteraction.last_recommended_at >= cutoff,
                 )
             )
         )
         return set(result.scalars().all())
 
-    async def get_due_word_ids(self, user_languages_id: int) -> Set[int]:
-        """Word ids in the user's vocabulary whose FSRS next_review_at has
-        already passed - i.e. due for review right now."""
+    async def record_recommended(self, user_id: int, reel_ids: List[int]) -> None:
+        """Stamps last_recommended_at = now() on this user's
+        (reel_id, user_id) reel_interactions row for every reel actually
+        returned in a recommendation response, creating the row if it
+        doesn't exist yet - same upsert-on-(reel_id, user_id) shape as the
+        Node backend's toggleLike/toggleSave/recordView. Called from both
+        get_personalized_reels and get_random_reels (when authenticated)
+        right before returning, so the next request's
+        get_recently_recommended_reel_ids sees it."""
+        if not reel_ids:
+            return
+
+        now = datetime.now(timezone.utc)
+        stmt = pg_insert(ReelInteraction).values([
+            {"reel_id": reel_id, "user_id": user_id, "last_recommended_at": now}
+            for reel_id in reel_ids
+        ])
+        stmt = stmt.on_conflict_do_update(
+            index_elements=[ReelInteraction.reel_id, ReelInteraction.user_id],
+            set_={"last_recommended_at": now},
+        )
+        await self.db.execute(stmt)
+        await self.db.commit()
+
+    async def get_next_due_word_id(self, user_languages_id: int) -> Optional[int]:
+        """The single word id in the user's vocabulary that has been due
+        for FSRS review the longest (oldest next_review_at that has still
+        passed) - i.e. the most-elapsed due word. FIFO: whichever word
+        became due first is served first. None if nothing is due right
+        now."""
         result = await self.db.execute(
-            select(UserVocabulary.word_id).where(
+            select(UserVocabulary.word_id)
+            .where(
                 and_(
                     UserVocabulary.user_languages_id == user_languages_id,
                     UserVocabulary.next_review_at <= func.now(),
                 )
             )
+            .order_by(UserVocabulary.next_review_at.asc())
+            .limit(1)
         )
-        return set(result.scalars().all())
+        return result.scalar_one_or_none()
 
     @staticmethod
     def _unique_word_ids(reel: Reel) -> Set[int]:
@@ -533,20 +618,25 @@ class ReelService:
         Multistage recommendation engine.
 
         Stage 1 - ComprehensibilityFilter: a candidate reel is dropped
-        outright if the user watched it within the last
-        settings.RECENTLY_VIEWED_COOLDOWN_HOURS hours (no reappearing
-        right after being seen); otherwise it passes only if at least
-        settings.COMPREHENSIBILITY_THRESHOLD of its unique word tokens are
-        already in the user's vocabulary for this language pair. The
-        comprehensibility percentage is attached to each surviving reel
-        for the frontend to display.
+        outright if it was recommended to this user within the last
+        settings.RECENTLY_VIEWED_COOLDOWN_HOURS hours - tracked via
+        last_recommended_at (stamped by record_recommended below on every
+        reel actually returned), not last_view_at, since a real "view" only
+        gets recorded after 2s of continuous playback on the frontend and
+        never at all for a reel scrolled past unwatched; otherwise it
+        passes only if at least settings.COMPREHENSIBILITY_THRESHOLD of its
+        unique word tokens are already in the user's vocabulary for this
+        language pair. The comprehensibility percentage is attached to each
+        surviving reel for the frontend to display.
 
         Stage 2 - SpacedRepetitionPrioritizer: among stage 1's survivors,
-        reels covering more words that are due for FSRS review right now
-        (next_review_at already passed) are ranked first, so watching one
-        doubles as review. This re-ranks stage 1's output, it doesn't
-        filter it further - reels with no due words still fill out `limit`
-        if there aren't enough "due" reels to go around.
+        reels containing the single most-overdue FSRS word (oldest
+        next_review_at that has already passed - FIFO, whichever word
+        became due first is drilled first) are ranked first, so watching
+        one doubles as review of that word. This re-ranks stage 1's
+        output, it doesn't filter it further - reels not containing that
+        word still fill out `limit` if there aren't enough matching reels
+        to go around.
 
         Stage 3 - ContentBasedRanker: within equal stage 2 due-word
         coverage, reels whose content (word-id TF-IDF vector) is more
@@ -556,13 +646,14 @@ class ReelService:
         approach ("more like the things you engaged with").
 
         Both stage 2 and stage 3 are re-ranks over the same stage 1
-        survivors, applied as a single sort key: (due_word_coverage,
+        survivors, applied as a single sort key: (has_next_due_word,
         content_similarity), most-important first, random tiebreak after
         both. Either signal degrades to a constant 0 for every candidate
-        when it has nothing to work with (no due words; no interaction
-        history yet to build a profile from), which makes that half of the
-        sort key a no-op - so the whole ranking falls back to the original
-        random pick when neither stage has any signal at all.
+        when it has nothing to work with (no word due right now; no
+        interaction history yet to build a profile from), which makes that
+        half of the sort key a no-op - so the whole ranking falls back to
+        the original random pick when neither stage has any signal at
+        all.
 
         Falls back to get_random_reels when the user hasn't set up this
         language pair yet (nothing to filter on: no user_languages row to
@@ -570,11 +661,13 @@ class ReelService:
 
         Returns (reels, total_candidates_in_learning_language, reason) -
         `reason` is None whenever `reels` is non-empty, or when total == 0
-        (the language itself has no reels at all - the router already has
+        because just this language has no reels (the router already has
         its own message for that case). Otherwise it's one of
-        NO_REELS_REASON_ALL_RECENTLY_VIEWED (every candidate was viewed
-        within the cooldown window) or NO_REELS_REASON_COMPREHENSION_FILTER
-        (some candidates were unseen, but none passed comprehensibility).
+        NO_REELS_REASON_EMPTY_DATABASE (the reels table has no rows at
+        all), NO_REELS_REASON_ALL_RECENTLY_VIEWED (every candidate was
+        viewed within the cooldown window), or
+        NO_REELS_REASON_COMPREHENSION_FILTER (some candidates were unseen,
+        but none passed comprehensibility).
         """
         native_language = await self.get_language_by_code(native_language_code)
         learning_language = await self.get_language_by_code(learning_language_code)
@@ -586,10 +679,9 @@ class ReelService:
             user_id, native_language.id, learning_language.id
         )
         if user_languages_id is None:
-            reels, total = await self.get_random_reels(
+            return await self.get_random_reels(
                 native_language_code, learning_language_code, limit, user_id
             )
-            return reels, total, None
 
         known_word_ids = await self.get_known_word_ids(user_languages_id)
 
@@ -607,6 +699,12 @@ class ReelService:
         )
         candidates = candidates_result.unique().scalars().all()
         total = len(candidates)
+
+        if total == 0:
+            all_count_result = await self.db.execute(select(func.count(Reel.id)))
+            if (all_count_result.scalar() or 0) == 0:
+                return [], 0, self.NO_REELS_REASON_EMPTY_DATABASE
+            return [], 0, None
 
         # Stage 3 setup: TF-IDF content vectors for the whole candidate
         # pool (not just stage 1's survivors, so IDF stats reflect the
@@ -633,15 +731,16 @@ class ReelService:
                 weighted_rows = content_matrix[rows].multiply(np.array(weights).reshape(-1, 1))
                 profile_vector = np.asarray(weighted_rows.sum(axis=0))
 
-        recently_viewed_ids = await self.get_recently_viewed_reel_ids(
+        recently_recommended_ids = await self.get_recently_recommended_reel_ids(
             user_id, [reel.id for reel in candidates]
         )
-        unseen_candidates = [reel for reel in candidates if reel.id not in recently_viewed_ids]
+        unseen_candidates = [reel for reel in candidates if reel.id not in recently_recommended_ids]
 
         if candidates and not unseen_candidates:
-            # Every reel in this language has been watched within the
-            # cooldown window - nothing left to even check comprehension
-            # on, distinct from stage 1 rejecting everything below.
+            # Every reel in this language was recommended to this user
+            # within the cooldown window - nothing left to even check
+            # comprehension on, distinct from stage 1 rejecting everything
+            # below.
             return [], total, self.NO_REELS_REASON_ALL_RECENTLY_VIEWED
 
         passing: List[Tuple[Reel, float, Set[int]]] = []
@@ -666,15 +765,16 @@ class ReelService:
                 for (i, _), sim in zip(valid, sims):
                     similarities[i] = float(sim)
 
-        due_word_ids = await self.get_due_word_ids(user_languages_id)
+        due_word_id = await self.get_next_due_word_id(user_languages_id)
 
-        if due_word_ids or profile_vector is not None:
-            # Stages 2+3: sort by (due-word coverage, content similarity),
-            # random tiebreak when both are equal (shuffle before the
-            # stable sort). Either component is a constant 0 across every
-            # entry when that stage has no signal, making it a no-op.
+        if due_word_id is not None or profile_vector is not None:
+            # Stages 2+3: sort by (has the single most-overdue due word,
+            # content similarity), random tiebreak when both are equal
+            # (shuffle before the stable sort). Either component is a
+            # constant 0 across every entry when that stage has no
+            # signal, making it a no-op.
             scored = [
-                (reel, pct, len(reel_word_ids & due_word_ids), sim)
+                (reel, pct, 1 if due_word_id in reel_word_ids else 0, sim)
                 for (reel, pct, reel_word_ids), sim in zip(passing, similarities)
             ]
             random.shuffle(scored)
@@ -693,6 +793,9 @@ class ReelService:
             )
             for reel, pct in selection
         ]
+
+        if selection:
+            await self.record_recommended(user_id, [reel.id for reel, _ in selection])
 
         reason = None if reels_response else self.NO_REELS_REASON_COMPREHENSION_FILTER
         return reels_response, total, reason
