@@ -38,10 +38,11 @@ interface ReelItemProps {
   isActive: boolean;
   isScreenFocused: boolean;
   onMoreOptions?: (item: Reel) => void;
+  onReview?: (item: Reel) => void;
 }
 
 export const ReelItem = React.memo(
-  ({ item, isActive, isScreenFocused, onMoreOptions }: ReelItemProps) => {
+  ({ item, isActive, isScreenFocused, onMoreOptions, onReview }: ReelItemProps) => {
     const { isAuthenticated } = useAuth();
     const { userProgress } = useProgress();
     const [isLiked, setIsLiked] = useState(item.user_interaction?.is_liked || false);
@@ -266,6 +267,7 @@ export const ReelItem = React.memo(
           onDialogue={handleDialogueOpen}
           onLike={handleLike}
           onMoreOptions={onMoreOptions}
+          onReview={onReview}
         />
 
         <CommentBottomSheetModal

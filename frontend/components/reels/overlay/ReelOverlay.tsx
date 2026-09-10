@@ -14,12 +14,13 @@ interface ReelOverlayProps {
   onComment: () => void;
   onDialogue: () => void;
   onMoreOptions?: (item: any) => void;
+  onReview?: (item: any) => void;
 }
 
 // Translucent overlay rendered on top of the video.
 // Splits into three zones: creator info (top), action bar (right), title + tag (bottom).
 export const ReelOverlay = React.memo(
-  ({ item, isLiked, likesCount, animatedLikeStyle, onLike, onComment, onDialogue, onMoreOptions }: ReelOverlayProps) => {
+  ({ item, isLiked, likesCount, animatedLikeStyle, onLike, onComment, onDialogue, onMoreOptions, onReview }: ReelOverlayProps) => {
     const router = useRouter();
 
     const handleAvatarPress = useCallback(() => {
@@ -46,6 +47,10 @@ export const ReelOverlay = React.memo(
       console.log('More options pressed for reel:', item.id);
     }, [item, onMoreOptions]);
 
+    const handleReview = useCallback(() => {
+      onReview?.(item);
+    }, [item, onReview]);
+
     return (
       <Animated.View style={styles.overlay} pointerEvents="box-none">
         {/* Right: vertical action bar */}
@@ -63,6 +68,8 @@ export const ReelOverlay = React.memo(
           onDialogue={onDialogue}
           onShare={handleShare}
           onMoreOptions={handleMoreOptions}
+          hasDueWordReview={!!item.review_word}
+          onReview={handleReview}
         />
 
       </Animated.View>

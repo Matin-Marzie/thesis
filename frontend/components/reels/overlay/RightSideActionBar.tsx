@@ -24,6 +24,11 @@ interface ReelActionsProps {
   onDialogue: () => void;
   onShare: () => void;
   onMoreOptions: () => void;
+  // Recommendation engine stage 2 (SpacedRepetitionPrioritizer) output -
+  // whether this reel carries a due word to review. The button only
+  // renders when true.
+  hasDueWordReview?: boolean;
+  onReview?: () => void;
 }
 
 // Compact number formatter: 1200 → "1.2K", 1500000 → "1.5M"
@@ -52,6 +57,8 @@ export const ReelActions = React.memo(
     onDialogue,
     onShare,
     onMoreOptions,
+    hasDueWordReview,
+    onReview,
   }: ReelActionsProps) => {
     const handleComprehensibilityPress = useCallback(() => {
       Alert.alert(
@@ -101,6 +108,14 @@ export const ReelActions = React.memo(
         <MaterialIcons name="subtitles" size={28} color="#fff" />
       </TouchableOpacity>
 
+      {/* Review - manual entry point into the same spaced-repetition
+          review sheet the forward-swipe gate opens automatically. Only
+          shown when this reel actually carries a due word. */}
+      {hasDueWordReview && (
+        <TouchableOpacity style={styles.actionButton} onPress={onReview}>
+          <MaterialIcons name="school" size={28} color="#FFD60A" />
+        </TouchableOpacity>
+      )}
 
       {/* More options (ellipsis) */}
       <TouchableOpacity style={[styles.actionButton, { paddingHorizontal: 9 }]} onPress={onMoreOptions}>

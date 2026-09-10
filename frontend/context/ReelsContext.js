@@ -19,6 +19,8 @@ import { getNativeLanguageCode, resolveReelTranslations as resolveReelTranslatio
  * @property {Object} stats
  * @property {Object} user_interaction
  * @property {Object} dialogue
+ * @property {number} [comprehensibility_percentage]
+ * @property {{id: number, written_form: string}} [review_word]
  */
 
 /**

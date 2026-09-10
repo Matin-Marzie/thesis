@@ -91,4 +91,8 @@ export interface Reel {
   // reel's unique words already in the viewer's vocabulary. Only present for
   // authenticated, personalized results.
   comprehensibility_percentage?: number | null;
+  // Recommendation engine stage 2 (SpacedRepetitionPrioritizer): the single
+  // FSRS due word this reel doubles as review for. Set on at most one reel
+  // per personalized response - see ReelItem's review prompt overlay.
+  review_word?: { id: number; written_form: string } | null;
 }

@@ -14,12 +14,16 @@ import { FontAwesome } from '@expo/vector-icons';
 import type { BottomSheetModal } from '@gorhom/bottom-sheet';
 import { useReelsContext } from '@/context/ReelsContext';
 import { useAuth } from '@/context/AuthContext';
-import { PRIMARY_COLOR } from '@/constants/App';
+import { useVocabularyContext } from '@/context/VocabularyContext';
+import { useProgress } from '@/context/ProgressContext';
+import { PRIMARY_COLOR, REVIEW_COIN_REWARD } from '@/constants/App';
 import { ReelItem } from './ReelItem';
 import { ReelActionsBottomSheetModal } from './ReelActionsBottomSheetModal';
 import { ReportReelBottomSheetModal } from './ReportReelBottomSheetModal';
+import { ReviewBottomSheetModal } from './ReviewBottomSheetModal';
 import TouchableOpacity from '@/components/TouchableOpacity';
 import { reportReel as reportReelRequest, toggleSaveReel } from '@/api/reelCreation';
+import { Rating } from '@/utils/fsrs';
 import type { Reel } from '@/types/dialogue';
 
 const { height: SCREEN_HEIGHT } = Dimensions.get('window');
@@ -40,6 +44,8 @@ interface ReelsListProps {
 export function ReelsList({ onRetry }: ReelsListProps) {
   const isFocused = useIsFocused();
   const { isAuthenticated } = useAuth();
+  const { reviewWord } = useVocabularyContext();
+  const { setUserProgress } = useProgress();
   const { reels, isLoading, isFetchingMore, fetchReels } = useReelsContext();
   const [activeIndex, setActiveIndex] = useState(0);
   const flatListRef = useRef<FlatList>(null);
@@ -67,6 +73,92 @@ export function ReelsList({ onRetry }: ReelsListProps) {
 
   const [reportReelTarget, setReportReelTarget] = useState<Reel | null>(null);
   const reportReelSheetRef = useRef<BottomSheetModal>(null);
+
+  // Spaced-repetition review gate: when the user tries to swipe FORWARD
+  // (to the next reel) away from a reel carrying a Stage 2 due word
+  // (item.review_word), clamp them back to it and open this sheet instead
+  // of letting them proceed - "watch it, then rate the word before moving
+  // on". Swiping backward (to a previous reel) is never touched.
+  //
+  // Clamped in real time from onScroll (not corrected after the fact from
+  // onMomentumScrollEnd) - reacting only once the gesture has already
+  // settled meant the user saw the next reel first, and depending on that
+  // event firing/ordering reliably turned out to be flaky. onScroll fires
+  // continuously during the drag, so the very first pixel past the
+  // resting boundary gets clamped before the next reel is ever visible.
+  // activeIndex is safe to read directly here (not a drag-start snapshot):
+  // it only updates once the NEXT item crosses 50% visibility, which is
+  // far later in the gesture than "one pixel past the boundary".
+  //
+  // reviewedReelIdsRef tracks which gated reels have already been rated
+  // this session, so scrolling back to one doesn't re-gate it. gatingReel
+  // itself doubles as an in-flight guard so repeated onScroll firings
+  // while pinned at the boundary don't re-trigger .present() every frame.
+  // A manual dismiss without rating clears gatingReel without marking it
+  // reviewed, so the next forward attempt re-gates the same reel - no way
+  // to permanently get stuck, but also no way to skip it without trying.
+  const [gatingReel, setGatingReel] = useState<Reel | null>(null);
+  const [reviewRating, setReviewRating] = useState<Rating | null>(null);
+  // Bumped (never reset to 0) each time a rating actually earns coins, so
+  // CoinRewardBadge can re-trigger its animation on a later, different
+  // reel's reward within the same mounted sheet instance.
+  const [coinRewardTrigger, setCoinRewardTrigger] = useState(0);
+  const reviewedReelIdsRef = useRef<Set<string | number>>(new Set());
+  const reviewSheetRef = useRef<BottomSheetModal>(null);
+
+  const handleScroll = useCallback((event: any) => {
+    if (gatingReel) return;
+    const activeReel = reels[activeIndex] as Reel | undefined;
+    if (!activeReel?.review_word || reviewedReelIdsRef.current.has(activeReel.id)) return;
+
+    const boundary = activeIndex * SCREEN_HEIGHT;
+    if (event.nativeEvent.contentOffset.y > boundary + 1) {
+      flatListRef.current?.scrollToOffset({ offset: boundary, animated: false });
+      setGatingReel(activeReel);
+      reviewSheetRef.current?.present();
+    }
+  }, [reels, activeIndex, gatingReel]);
+
+  const handleReviewRatingChange = useCallback((rating: Rating) => {
+    if (!gatingReel?.review_word) return;
+    setReviewRating(rating);
+    reviewWord(gatingReel.review_word.id, rating);
+
+    // Coins are a one-time reward per reel - check membership before
+    // marking it reviewed below, so re-rating the same reel (e.g. via the
+    // manual review button after already answering it once) never pays
+    // out twice.
+    const isFirstReview = !reviewedReelIdsRef.current.has(gatingReel.id);
+    if (isFirstReview) {
+      setUserProgress((prev: any) => ({ ...prev, coins: (prev.coins || 0) + REVIEW_COIN_REWARD }));
+      setCoinRewardTrigger((prev) => prev + 1);
+    }
+    reviewedReelIdsRef.current.add(gatingReel.id);
+
+    // Brief pause so the tapped rating's highlight is visible before the
+    // sheet closes, instead of vanishing the instant it's picked - longer
+    // on a first review so the coin badge's animation isn't cut short.
+    setTimeout(() => {
+      reviewSheetRef.current?.dismiss();
+    }, isFirstReview ? 900 : 400);
+  }, [gatingReel, reviewWord, setUserProgress]);
+
+  const handleReviewSheetChange = useCallback((index: number) => {
+    if (index < 0) {
+      setGatingReel(null);
+      setReviewRating(null);
+    }
+  }, []);
+
+  // Manual entry point into the same review sheet the forward-swipe gate
+  // (handleScroll) opens automatically - lets the user rate a due word
+  // proactively instead of waiting to be stopped by it. RightSideActionBar
+  // only ever calls this for a reel that actually has review_word set.
+  const handleOpenReview = useCallback((reel: Reel) => {
+    if (!reel.review_word) return;
+    setGatingReel(reel);
+    reviewSheetRef.current?.present();
+  }, []);
 
   const handleMoreOptions = useCallback((reel: Reel) => {
     setOptionsReel(reel);
@@ -159,9 +251,10 @@ export function ReelsList({ onRetry }: ReelsListProps) {
         isActive={index === activeIndex}
         isScreenFocused={isFocused}
         onMoreOptions={handleMoreOptions}
+        onReview={handleOpenReview}
       />
     ),
-    [activeIndex, isFocused, handleMoreOptions]
+    [activeIndex, isFocused, handleMoreOptions, handleOpenReview]
   );
 
   const keyExtractor = useCallback((item: any) => item.id.toString(), []);
@@ -211,6 +304,12 @@ export function ReelsList({ onRetry }: ReelsListProps) {
         onEndReached={handleEndReached}
         onEndReachedThreshold={0.5}
         ListEmptyComponent={ListEmptyComponent}
+        // Spaced-repetition review gate - forward-only real-time clamp,
+        // see handleScroll above. scrollEventThrottle keeps onScroll firing
+        // often enough (~60fps) that the clamp catches the boundary before
+        // the next reel becomes visible.
+        onScroll={handleScroll}
+        scrollEventThrottle={16}
         // Pull-to-refresh (top of the list). Requires bounces/overscroll
         // enabled, so this stays even though bounces={false} would
         // otherwise be the natural fit for a paged feed.
@@ -246,6 +345,15 @@ export function ReelsList({ onRetry }: ReelsListProps) {
         ref={reportReelSheetRef}
         reel={reportReelTarget}
         onSelectReason={handleSelectReportReason}
+      />
+
+      <ReviewBottomSheetModal
+        ref={reviewSheetRef}
+        word={gatingReel?.review_word ?? null}
+        value={reviewRating}
+        onChange={handleReviewRatingChange}
+        onSheetChange={handleReviewSheetChange}
+        coinRewardTrigger={coinRewardTrigger}
       />
     </View>
   );

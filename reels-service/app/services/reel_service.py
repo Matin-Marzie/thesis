@@ -22,6 +22,7 @@ from app.schemas.reel import (
     ReelStatsResponse,
     UserInteractionResponse,
     ReelsListResponse,
+    ReviewWordResponse,
 )
 from app.schemas.language import LanguageResponse
 from app.schemas.user import CreatorResponse
@@ -506,12 +507,12 @@ class ReelService:
         await self.db.execute(stmt)
         await self.db.commit()
 
-    async def get_next_due_word_id(self, user_languages_id: int) -> Optional[int]:
-        """The single word id in the user's vocabulary that has been due
-        for FSRS review the longest (oldest next_review_at that has still
-        passed) - i.e. the most-elapsed due word. FIFO: whichever word
-        became due first is served first. None if nothing is due right
-        now."""
+    async def get_due_word_ids_fifo(self, user_languages_id: int) -> List[int]:
+        """Every word id in the user's vocabulary that's due for FSRS
+        review right now (next_review_at already passed), ordered oldest
+        next_review_at first - i.e. most-elapsed due word first. FIFO:
+        whichever word became due first is served first. Empty list if
+        nothing is due right now."""
         result = await self.db.execute(
             select(UserVocabulary.word_id)
             .where(
@@ -521,9 +522,8 @@ class ReelService:
                 )
             )
             .order_by(UserVocabulary.next_review_at.asc())
-            .limit(1)
         )
-        return result.scalar_one_or_none()
+        return list(result.scalars().all())
 
     @staticmethod
     def _unique_word_ids(reel: Reel) -> Set[int]:
@@ -540,6 +540,21 @@ class ReelService:
                 if word_id is not None:
                     word_ids.add(word_id)
         return word_ids
+
+    @staticmethod
+    def _word_written_form(reel: Reel, word_id: int) -> Optional[str]:
+        """written_form of one specific word id as it appears in this
+        reel's dialogue tokens (already embedded there - see TokenResponse/
+        WordResponse), or None if this reel doesn't contain it. Used to
+        attach Stage 2's due word to a ReelResponse without an extra query."""
+        if not reel.dialogue or not reel.dialogue.sentences_json:
+            return None
+        for sentence in reel.dialogue.sentences_json:
+            for token in sentence.get("tokens") or []:
+                word = token.get("word") or {}
+                if word.get("id") == word_id:
+                    return word.get("written_form")
+        return None
 
     @staticmethod
     def _word_id_counts(reel: Reel) -> Counter:
@@ -630,13 +645,19 @@ class ReelService:
         surviving reel for the frontend to display.
 
         Stage 2 - SpacedRepetitionPrioritizer: among stage 1's survivors,
-        reels containing the single most-overdue FSRS word (oldest
-        next_review_at that has already passed - FIFO, whichever word
-        became due first is drilled first) are ranked first, so watching
-        one doubles as review of that word. This re-ranks stage 1's
-        output, it doesn't filter it further - reels not containing that
-        word still fill out `limit` if there aren't enough matching reels
-        to go around.
+        reels containing any FSRS-due word (next_review_at already passed)
+        are ranked first, so watching one doubles as review. This re-ranks
+        stage 1's output, it doesn't filter it further - reels containing
+        no due word still fill out `limit` if there aren't enough matching
+        reels to go around. After ranking, due words are assigned to reels
+        FIFO (oldest next_review_at first), each to the first still-
+        unclaimed reel in the final selection that contains it - see the
+        assignment loop at the bottom of this method and
+        ReviewWordResponse. One review_word per reel, one reel per word:
+        a single page can end up carrying anywhere from zero to
+        min(due words, reels returned) of them, so watching a full page can
+        surface review prompts for several different due words at once,
+        not just one.
 
         Stage 3 - ContentBasedRanker: within equal stage 2 due-word
         coverage, reels whose content (word-id TF-IDF vector) is more
@@ -646,7 +667,7 @@ class ReelService:
         approach ("more like the things you engaged with").
 
         Both stage 2 and stage 3 are re-ranks over the same stage 1
-        survivors, applied as a single sort key: (has_next_due_word,
+        survivors, applied as a single sort key: (has_any_due_word,
         content_similarity), most-important first, random tiebreak after
         both. Either signal degrades to a constant 0 for every candidate
         when it has nothing to work with (no word due right now; no
@@ -765,16 +786,20 @@ class ReelService:
                 for (i, _), sim in zip(valid, sims):
                     similarities[i] = float(sim)
 
-        due_word_id = await self.get_next_due_word_id(user_languages_id)
+        due_word_ids_fifo = await self.get_due_word_ids_fifo(user_languages_id)
+        due_word_id_set = set(due_word_ids_fifo)
 
-        if due_word_id is not None or profile_vector is not None:
-            # Stages 2+3: sort by (has the single most-overdue due word,
-            # content similarity), random tiebreak when both are equal
-            # (shuffle before the stable sort). Either component is a
-            # constant 0 across every entry when that stage has no
-            # signal, making it a no-op.
+        if due_word_id_set or profile_vector is not None:
+            # Stages 2+3: sort by (contains any due word, content
+            # similarity), random tiebreak when both are equal (shuffle
+            # before the stable sort). Either component is a constant 0
+            # across every entry when that stage has no signal, making it
+            # a no-op. Ranking on "any due word" rather than just the
+            # single oldest one is what gives the attach step below a
+            # realistic chance at finding a distinct reel for more than
+            # one due word per page.
             scored = [
-                (reel, pct, 1 if due_word_id in reel_word_ids else 0, sim)
+                (reel, pct, 1 if reel_word_ids & due_word_id_set else 0, sim)
                 for (reel, pct, reel_word_ids), sim in zip(passing, similarities)
             ]
             random.shuffle(scored)
@@ -796,6 +821,26 @@ class ReelService:
 
         if selection:
             await self.record_recommended(user_id, [reel.id for reel, _ in selection])
+
+        # Assign due words to reels FIFO (oldest word first), each to the
+        # first still-unclaimed reel in the response that contains it - one
+        # review_word per reel, one reel per word. A page can end up with
+        # anywhere from zero attaches (no due word appears in any selected
+        # reel) up to min(len(due_word_ids_fifo), len(selection)) of them,
+        # capped by whichever runs out first: due words needing review, or
+        # reels available to carry them.
+        claimed_indices: Set[int] = set()
+        for word_id in due_word_ids_fifo:
+            for idx, (reel, _) in enumerate(selection):
+                if idx in claimed_indices:
+                    continue
+                written_form = self._word_written_form(reel, word_id)
+                if written_form is not None:
+                    reels_response[idx].review_word = ReviewWordResponse(
+                        id=word_id, written_form=written_form
+                    )
+                    claimed_indices.add(idx)
+                    break
 
         reason = None if reels_response else self.NO_REELS_REASON_COMPREHENSION_FILTER
         return reels_response, total, reason
