@@ -69,9 +69,17 @@ async def validation_exception_handler(request: Request, exc: RequestValidationE
     message = errors[0]["msg"] if errors else "Validation error"
     if message.startswith("Value error, "):
         message = message[len("Value error, "):]
+
+    # exc.errors() embeds the raw exception under ctx.error for ValueErrors
+    # raised from field/model validators (e.g. SubtitleLineIn's duplicate-
+    # translation-language checks) - not JSON-serializable, which crashed
+    # this handler's own JSONResponse with an unrelated 500. Drop it; the
+    # human-readable message is already in `msg`/`message` above.
+    safe_errors = [{k: v for k, v in error.items() if k != "ctx"} for error in errors]
+
     return JSONResponse(
         status_code=status.HTTP_400_BAD_REQUEST,
-        content={"message": message, "detail": errors},
+        content={"message": message, "detail": safe_errors},
     )
 
 

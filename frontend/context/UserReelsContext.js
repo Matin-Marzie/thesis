@@ -8,6 +8,7 @@ import { fetchMyReels } from '../api/reels';
  * @property {Array} userReels
  * @property {Function} setUserReels
  * @property {(reel: Object) => void} prependUserReel
+ * @property {(reel: Object) => void} updateUserReel
  * @property {(reelId: number|string) => void} removeUserReel
  * @property {boolean} isUserReelsLoaded
  * @property {boolean} isFetchingUserReels
@@ -55,11 +56,17 @@ export const UserReelsProvider = ({ children }) => {
     setUserReels((prev) => prev.filter((r) => r.id !== reelId));
   }, [setUserReels]);
 
+  // Swaps a reel in place (e.g. after editing its subtitles) so the change
+  // shows up immediately without moving it to the front like prependUserReel.
+  const updateUserReel = useCallback((reel) => {
+    setUserReels((prev) => prev.map((r) => (r.id === reel.id ? reel : r)));
+  }, [setUserReels]);
+
   const value = useMemo(() => ({
-    userReels, setUserReels, prependUserReel, removeUserReel,
+    userReels, setUserReels, prependUserReel, updateUserReel, removeUserReel,
     isUserReelsLoaded, isFetchingUserReels, refreshUserReels,
   }), [
-    userReels, setUserReels, prependUserReel, removeUserReel,
+    userReels, setUserReels, prependUserReel, updateUserReel, removeUserReel,
     isUserReelsLoaded, isFetchingUserReels, refreshUserReels,
   ]);
 

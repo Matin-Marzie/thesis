@@ -283,6 +283,20 @@ function RootLayoutNav() {
           options={{ headerShown: false }}
         />
         <Stack.Screen
+          name="profileReel/edit-subtitles/[id]"
+          options={{
+            headerShown: true,
+            title: 'Edit Subtitles',
+            headerStyle: {
+              backgroundColor: PRIMARY_COLOR,
+            },
+            headerTintColor: '#fff',
+            headerTitleStyle: {
+              fontWeight: 'bold',
+            },
+          }}
+        />
+        <Stack.Screen
           name="creator/[id]"
           options={{
             headerShown: true,

@@ -19,6 +19,7 @@ from app.schemas.reel_creation import (
     PresignedFile,
     PresignUploadsRequest,
     PresignUploadsResponse,
+    UpdateDialogueRequest,
 )
 from app.services.reel_creation_service import ReelCreationService
 from app.services.reel_service import ReelService
@@ -141,5 +142,63 @@ async def create_reel(
 
     return CreateReelPublishResponse(
         message="Reel published successfully",
+        reel=reel_response,
+    )
+
+
+@router.put(
+    "/{reel_id}/dialogue",
+    response_model=CreateReelPublishResponse,
+    summary="Replace a reel's subtitle lines",
+    description=(
+        "Replaces every sentence, timing, and translation in an existing reel's "
+        "dialogue - lets the creator fix or rewrite subtitles after publish. "
+        "Only the reel's own creator may call this."
+    ),
+    responses={
+        400: {"description": "Validation error"},
+        401: {"description": "Unauthorized - Missing or invalid token"},
+        403: {"description": "Not the reel's creator"},
+        404: {"description": "Reel not found, or has no dialogue"},
+    },
+)
+@limiter.limit("30/hour")
+async def update_reel_dialogue(
+    request: Request,
+    reel_id: int,
+    body: UpdateDialogueRequest,
+    current_user: tuple = Depends(get_current_user),
+    db: AsyncSession = Depends(get_db),
+) -> CreateReelPublishResponse:
+    user_id, _ = current_user
+
+    reel_service = ReelService(db)
+    reel = await reel_service.get_reel_by_id(reel_id)
+    if not reel:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Reel not found")
+    if reel.created_by != user_id:
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="You can only edit your own reels")
+    if not reel.dialogue:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="This reel has no dialogue to edit")
+
+    # Mirrors CreateReelRequest.check_translation_languages - the request
+    # schema alone can't know the reel's language, so it's checked here
+    # instead of a model_validator.
+    for line in body.lines:
+        for translation in line.translations:
+            if translation.translation_language_id == reel.language_id:
+                raise HTTPException(
+                    status_code=status.HTTP_400_BAD_REQUEST,
+                    detail=f"line {line.position}: a translation cannot be in the same language as the reel itself",
+                )
+
+    creation_service = ReelCreationService(db)
+    await creation_service.replace_dialogue_lines(reel.dialogue, body.lines)
+
+    full_reel = await reel_service.get_reel_by_id(reel.id)
+    reel_response = await reel_service.build_reel_response(full_reel, user_id=user_id)
+
+    return CreateReelPublishResponse(
+        message="Subtitles updated successfully",
         reel=reel_response,
     )

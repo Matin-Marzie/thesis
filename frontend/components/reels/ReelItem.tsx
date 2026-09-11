@@ -57,6 +57,19 @@ export const ReelItem = React.memo(
     const [dialogue, setDialogue] = useState<Dialogue | null>(item.dialogue ?? null);
     const [isDialogueLoading, setIsDialogueLoading] = useState(false);
     const dialogueRequestedRef = useRef(false);
+
+    // The useState initializer above only runs on first mount, so it goes
+    // stale if this same ReelItem instance later receives a new item.dialogue
+    // (e.g. the profile pager's ReelItem stays mounted while the user
+    // navigates to edit-subtitles and back - the saved subtitles land in
+    // item.dialogue but the old snapshot above would otherwise linger).
+    // Guarded to non-null so it never clobbers a dialogue this component
+    // already lazily fetched for a reel whose item.dialogue is still null.
+    useEffect(() => {
+      if (item.dialogue) {
+        setDialogue(item.dialogue);
+      }
+    }, [item.dialogue]);
     const [popupWord, setPopupWord] = useState<Word | null>(null);
     const [popupExpanded, setPopupExpanded] = useState<string | null>(null);
     const pauseIconOpacity = useSharedValue(0);

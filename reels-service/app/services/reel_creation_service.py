@@ -1,6 +1,6 @@
 from typing import List, Optional
 
-from sqlalchemy import select, text
+from sqlalchemy import delete, select, text
 from sqlalchemy.dialects.postgresql import insert as pg_insert
 from sqlalchemy.ext.asyncio import AsyncSession
 
@@ -157,3 +157,51 @@ class ReelCreationService:
 
         await self.db.refresh(reel)
         return reel
+
+    async def replace_dialogue_lines(
+        self,
+        dialogue: Dialogue,
+        lines: List[SubtitleLineIn],
+    ) -> None:
+        """Replaces every sentence/timing/translation on an existing
+        dialogue in one transaction - powers PUT /reel/{id}/dialogue, which
+        lets a creator edit their reel's subtitles after publish. Mirrors
+        create_with_dialogue's insert loop; the only difference is clearing
+        the dialogue's existing dialogue_sentences rows first. The
+        underlying `sentences` rows themselves are left alone (text may
+        still be reused elsewhere via _find_or_create_sentence) - only this
+        dialogue's links to them are replaced."""
+        try:
+            await self.db.execute(
+                delete(DialogueSentence).where(DialogueSentence.dialogue_id == dialogue.id)
+            )
+
+            for index, line in enumerate(lines):
+                sentence_id = await self._find_or_create_sentence(dialogue.language_id, line.text)
+
+                self.db.add(
+                    DialogueSentence(
+                        dialogue_id=dialogue.id,
+                        sentence_id=sentence_id,
+                        position=index + 1,
+                        start_time_ms=line.start_time_ms,
+                        end_time_ms=line.end_time_ms,
+                    )
+                )
+
+                for translation in line.translations:
+                    translation_sentence_id = await self._find_or_create_sentence(
+                        translation.translation_language_id, translation.text
+                    )
+                    await self._link_translation(sentence_id, translation_sentence_id)
+
+            await self.db.flush()
+            sentences_json_result = await self.db.execute(
+                _DIALOGUE_SENTENCES_JSON_SQL, {"dialogue_id": dialogue.id}
+            )
+            dialogue.sentences_json = sentences_json_result.scalar() or []
+
+            await self.db.commit()
+        except Exception:
+            await self.db.rollback()
+            raise

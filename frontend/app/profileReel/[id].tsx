@@ -69,6 +69,10 @@ export default function ProfileReelScreen() {
     console.log('Edit title for reel', reel.id);
   }, []);
 
+  const handleEditSubtitles = useCallback((reel: Reel) => {
+    router.push(`/profileReel/edit-subtitles/${reel.id}`);
+  }, [router]);
+
   const handleDeleteReel = useCallback((reel: Reel) => {
     Alert.alert(
       'Delete reel?',
@@ -151,6 +155,7 @@ export default function ProfileReelScreen() {
         ref={reelOptionsSheetRef}
         reel={optionsReel}
         onEditTitle={handleEditTitle}
+        onEditSubtitles={handleEditSubtitles}
         onDelete={handleDeleteReel}
       />
     </View>

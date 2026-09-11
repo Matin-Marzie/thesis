@@ -112,3 +112,13 @@ class CreateReelRequest(BaseModel):
 class CreateReelPublishResponse(BaseModel):
     message: str
     reel: ReelResponse
+
+
+class UpdateDialogueRequest(BaseModel):
+    """Replaces every line of an existing reel's dialogue - see
+    PUT /reel/{reel_id}/dialogue. Reuses SubtitleLineIn so edits go through
+    the exact same per-line validation reel creation does; `position` is
+    still ignored in favor of array order (see
+    ReelCreationService.replace_dialogue_lines)."""
+
+    lines: List[SubtitleLineIn] = Field(min_length=1, max_length=MAX_LINES)

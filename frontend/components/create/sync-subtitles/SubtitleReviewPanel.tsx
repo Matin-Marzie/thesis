@@ -28,6 +28,12 @@ interface SubtitleReviewPanelProps {
   onRemoveLine: (localId: string) => void;
   onAddAnotherLine: () => void;
   onPublish: () => void;
+  // Lets the edit-subtitles screen (no video upload, so no progress to
+  // show) relabel the primary button and drop the percentage readout,
+  // without forking this component. Both default to the create-wizard's
+  // original publish-with-upload-progress behavior.
+  publishLabel?: string;
+  showProgressPercent?: boolean;
 }
 
 export function SubtitleReviewPanel({
@@ -48,6 +54,8 @@ export function SubtitleReviewPanel({
   onRemoveLine,
   onAddAnotherLine,
   onPublish,
+  publishLabel = 'Publish',
+  showProgressPercent = true,
 }: SubtitleReviewPanelProps) {
   const listRef = useRef<FlatList<DraftSubtitleLine>>(null);
 
@@ -105,10 +113,12 @@ export function SubtitleReviewPanel({
           {isPublishing ? (
             <View style={styles.publishingRow}>
               <ActivityIndicator color="#fff" />
-              <Text style={styles.primaryButtonText}>{Math.round(progress * 100)}%</Text>
+              {showProgressPercent && (
+                <Text style={styles.primaryButtonText}>{Math.round(progress * 100)}%</Text>
+              )}
             </View>
           ) : (
-            <Text style={styles.primaryButtonText}>Publish</Text>
+            <Text style={styles.primaryButtonText}>{publishLabel}</Text>
           )}
         </Pressable>
       </View>

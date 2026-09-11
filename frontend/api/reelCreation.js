@@ -86,6 +86,32 @@ export const createReel = async (
 };
 
 /**
+ * Replace all subtitle lines on one of the current user's own reels.
+ * @param {number|string} reelId
+ * @param {import('../types/createReel').DraftSubtitleLine[]} lines
+ * @returns {Promise<import('../types/createReel').CreateReelResponse>}
+ */
+export const updateReelDialogue = async (reelId, lines) => {
+  try {
+    const response = await reelsClient.put(`/reel/${reelId}/dialogue`, {
+      lines: lines.map((line, index) => ({
+        position: index + 1,
+        text: line.text,
+        translations: line.translations
+          .filter((t) => t.text.trim() && t.languageId)
+          .map((t) => ({ text: t.text.trim(), translation_language_id: t.languageId })),
+        start_time_ms: line.start_time_ms,
+        end_time_ms: line.end_time_ms,
+      })),
+    });
+    return response.data;
+  } catch (error) {
+    const message = error.response?.data?.message || error.message || 'Failed to update subtitles';
+    throw new Error(message);
+  }
+};
+
+/**
  * Permanently delete one of the current user's reels.
  * @param {number|string} reelId
  * @returns {Promise<{message: string}>}

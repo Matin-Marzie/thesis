@@ -13,12 +13,13 @@ interface ReelOptionsBottomSheetModalProps {
   onSheetChange?: (index: number) => void;
   onDelete: (reel: Reel) => void;
   onEditTitle: (reel: Reel) => void;
+  onEditSubtitles: (reel: Reel) => void;
 }
 
-// Bottom sheet with reel-management actions (edit / delete), opened from the
-// "More options" button in the profile reel viewer.
+// Bottom sheet with reel-management actions (edit title / edit subtitles /
+// delete), opened from the "More options" button in the profile reel viewer.
 export const ReelOptionsBottomSheetModal = forwardRef<BottomSheetModal, ReelOptionsBottomSheetModalProps>(
-  ({ reel, onSheetChange, onDelete, onEditTitle }, ref) => {
+  ({ reel, onSheetChange, onDelete, onEditTitle, onEditSubtitles }, ref) => {
     const isDark = useColorScheme() === 'dark';
     const snapPoints = useMemo(() => ['30%'], []);
     const [isOpen, setIsOpen] = useState(false);
@@ -68,6 +69,13 @@ export const ReelOptionsBottomSheetModal = forwardRef<BottomSheetModal, ReelOpti
       if (reel) onEditTitle(reel);
     }, [ref, reel, onEditTitle]);
 
+    const handleEditSubtitles = useCallback(() => {
+      if (ref && 'current' in ref) {
+        ref.current?.dismiss();
+      }
+      if (reel) onEditSubtitles(reel);
+    }, [ref, reel, onEditSubtitles]);
+
     const handleDelete = useCallback(() => {
       if (ref && 'current' in ref) {
         ref.current?.dismiss();
@@ -91,6 +99,13 @@ export const ReelOptionsBottomSheetModal = forwardRef<BottomSheetModal, ReelOpti
             <TouchableOpacity style={styles.row} onPress={handleEditTitle}>
               <Ionicons name="create-outline" size={22} color={isDark ? DARK_COLORS.text : '#333'} />
               <Text style={[styles.rowText, isDark && { color: DARK_COLORS.text }]}>Edit title</Text>
+            </TouchableOpacity>
+
+            <View style={[styles.divider, isDark && { backgroundColor: DARK_COLORS.border }]} />
+
+            <TouchableOpacity style={styles.row} onPress={handleEditSubtitles}>
+              <Ionicons name="text-outline" size={22} color={isDark ? DARK_COLORS.text : '#333'} />
+              <Text style={[styles.rowText, isDark && { color: DARK_COLORS.text }]}>Edit subtitles</Text>
             </TouchableOpacity>
 
             <View style={[styles.divider, isDark && { backgroundColor: DARK_COLORS.border }]} />
