@@ -138,6 +138,20 @@ export default function OnboardingQuestions() {
       }
     }
 
+    // Farsi beginners (level 'N') have no lower level for the dictionary-based
+    // seeding above to draw from, so they'd otherwise start with an empty
+    // vocabulary - give them a handful of everyday words to learn instead, as
+    // brand-new (not-yet-known) words rather than pre-seeded as already known.
+    // Uses vocabularyDispatch (not bulkAddVocabulary) so these are tracked in
+    // vocabularyChanges and actually sent to the backend as manual inserts -
+    // bulkAddVocabulary only updates local state and is never synced.
+    if (selectedLearningLanguage?.code === 'fa' && selectedLevel === 'N') {
+      const FARSI_STARTER_WORD_IDS = [203488, 200000, 200047, 200347]; // سلام, آب, بابا, چای
+      for (const wordId of FARSI_STARTER_WORD_IDS) {
+        vocabularyDispatch({ type: VOCABULARY_ACTIONS.ADD, payload: { wordId } });
+      }
+    }
+
     // If the user started signing up with Google, we now have real profile
     // data to send - finish creating the account with the idToken stashed
     // by login.tsx/register.tsx before routing here.
