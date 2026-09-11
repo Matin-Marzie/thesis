@@ -17,8 +17,8 @@ import Animated, {
 } from 'react-native-reanimated';
 import { getMediaUrl } from '@/utils/mediaUrl';
 import { ReelOverlay } from './overlay/ReelOverlay';
-import { CommentBottomSheetModal } from './comments/CommentBottomSheetModal';
-import { DialogueBottomSheetModal } from './subtitles/SubtitleBottomSheetModal';
+import { CommentBottomSheetModal, snapPointsRatio as commentSnapPointsRatio } from './comments/CommentBottomSheetModal';
+import { DialogueBottomSheetModal, snapPointsRatio as dialogueSnapPointsRatio } from './subtitles/SubtitleBottomSheetModal';
 import { WordMeaningPopup } from './subtitles/WordMeaningPopup';
 import { toggleLikeReel, recordReelView } from '@/api/reelCreation';
 import { fetchReelDialogue } from '@/api/reels';
@@ -192,7 +192,14 @@ export const ReelItem = React.memo(
     // Single tap waits for the double tap to fail before toggling pause
     const tapGesture = Gesture.Exclusive(doubleTap, singleTap);
 
-    const handleCommentOpen = useCallback(() => commentSheetRef.current?.present(), []);
+    // Starts the video's push-up animation in the same tap that opens the
+    // sheet, rather than waiting for the sheet's own onChange to fire (which
+    // only happens once its opening animation is already under way) - that
+    // gap was visible as the sheet appearing before the video moved.
+    const handleCommentOpen = useCallback(() => {
+      sheetHeight.value = withTiming(SCREEN_HEIGHT * commentSnapPointsRatio[0], { duration: 250 });
+      commentSheetRef.current?.present();
+    }, [sheetHeight]);
     const handleCommentClose = useCallback(() => commentSheetRef.current?.dismiss(), []);
 
     // Opens immediately (so the sheet's spinner is visible right away), and
@@ -200,6 +207,7 @@ export const ReelItem = React.memo(
     // have none - dialogueRequestedRef makes that a one-shot per reel
     // instance, so a failed fetch doesn't retry on every subsequent press.
     const handleDialogueOpen = useCallback(() => {
+      sheetHeight.value = withTiming(SCREEN_HEIGHT * dialogueSnapPointsRatio[0], { duration: 250 });
       dialogueSheetRef.current?.present();
 
       if (dialogue?.sentences?.length || dialogueRequestedRef.current) return;
@@ -221,7 +229,7 @@ export const ReelItem = React.memo(
           // Swallow - the sheet just falls back to its empty state.
         })
         .finally(() => setIsDialogueLoading(false));
-    }, [dialogue, item.id, userProgress]);
+    }, [dialogue, item.id, userProgress, sheetHeight]);
 
     const handleDialogueClose = useCallback(() => dialogueSheetRef.current?.dismiss(), []);
     const handleWordPress = useCallback((word: Word, expanded: string | null) => {

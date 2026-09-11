@@ -7,7 +7,7 @@ import {
   BottomSheetFooter,
 } from '@gorhom/bottom-sheet';
 import type { BottomSheetBackdropProps, BottomSheetFooterProps } from '@gorhom/bottom-sheet';
-import { withSpring } from 'react-native-reanimated';
+import { withTiming } from 'react-native-reanimated';
 import { CommentRow } from './CommentRow';
 import { Footer } from './Footer';
 import type { Comment, CommentBottomSheetModalProps } from './types';
@@ -36,7 +36,10 @@ const MOCK_COMMENTS: Comment[] = [
 
 // Snap points: the sheet opens at 60 % and can be expanded to 96 %.
 const snapPoints = ['60%', '96%'];
-const snapPointsRatio = [0.57];
+// Exported so ReelItem can start the video's push-up animation the instant
+// the comment button is tapped, instead of waiting for this sheet's onChange
+// to fire (see ReelItem's handleCommentOpen).
+export const snapPointsRatio = [0.57];
 
 // Present/dismiss is driven by the parent calling the forwarded ref directly
 // from its onPress handler (same pattern as ReelActionsBottomSheetModal) -
@@ -75,10 +78,10 @@ export const CommentBottomSheetModal = forwardRef<BottomSheetModal, CommentBotto
     (index: number) => {
       setIsOpen(index >= 0);
       if (index === -1) {
-        sheetHeight.value = withSpring(0, { damping: 20 });
+        sheetHeight.value = withTiming(0, { duration: 250 });
         onClose();
       } else if (index >= 0 && index < snapPointsRatio.length) {
-        sheetHeight.value = withSpring(SCREEN_HEIGHT * snapPointsRatio[index], { damping: 20 });
+        sheetHeight.value = withTiming(SCREEN_HEIGHT * snapPointsRatio[index], { duration: 250 });
       }
     },
     [onClose, sheetHeight],

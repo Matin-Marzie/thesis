@@ -8,7 +8,7 @@ import {
 import type { BottomSheetBackdropProps, BottomSheetFlatListMethods } from '@gorhom/bottom-sheet';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import type { SharedValue } from 'react-native-reanimated';
-import { withSpring } from 'react-native-reanimated';
+import { withTiming } from 'react-native-reanimated';
 import { Dimensions } from 'react-native';
 import type { Sentence, Token } from '../../../types/dialogue';
 import { LANGUAGES_META } from '../../../constants/SupportedLanguages';
@@ -22,7 +22,10 @@ import type { DialogueBottomSheetModalProps } from './types';
 const { height: SCREEN_HEIGHT } = Dimensions.get('window');
 
 const snapPoints = ['28%', '60%', '96%'];
-const snapPointsRatio = [0.1, 0.57];
+// Exported so ReelItem can start the video's push-up animation the instant
+// the subtitle button is tapped, instead of waiting for this sheet's
+// onChange to fire (see ReelItem's handleDialogueOpen).
+export const snapPointsRatio = [0.1, 0.57];
 const RTL_LANGUAGE_CODES = new Set(
     Object.values(LANGUAGES_META)
         .filter((language) => language.rightToLeft)
@@ -178,10 +181,10 @@ export const DialogueBottomSheetModal = forwardRef<BottomSheetModal, DialogueBot
         (index: number) => {
             setIsOpen(index >= 0);
             if (index === -1) {
-                sheetHeight.value = withSpring(0, { damping: 20 });
+                sheetHeight.value = withTiming(0, { duration: 250 });
                 onClose();
             } else if (index >= 0 && index < snapPointsRatio.length) {
-                sheetHeight.value = withSpring(SCREEN_HEIGHT * snapPointsRatio[index], { damping: 20 });
+                sheetHeight.value = withTiming(SCREEN_HEIGHT * snapPointsRatio[index], { duration: 250 });
             }
         },
         [onClose, sheetHeight]
