@@ -28,6 +28,14 @@ const RTL_LANGUAGE_CODES = new Set(
         .filter((language) => language.rightToLeft)
         .map((language) => language.code.toLowerCase())
 );
+// Fallback for reels missing the nested `language` object (the Node-backed
+// creator-profile reel list only has a flat `language_id` column - see
+// ProfileReels.tsx's identical id-based fallback for the language flag).
+const RTL_LANGUAGE_IDS = new Set(
+    Object.values(LANGUAGES_META)
+        .filter((language) => language.rightToLeft)
+        .map((language) => language.id)
+);
 
 // Present/dismiss is driven by the parent calling the forwarded ref directly
 // from its onPress handler (same pattern as ReelActionsBottomSheetModal) -
@@ -55,10 +63,19 @@ export const DialogueBottomSheetModal = forwardRef<BottomSheetModal, DialogueBot
     const [isOpen, setIsOpen] = useState(false);
 
     const sentences = useMemo(() => reel?.dialogue?.sentences || [], [reel]);
-    const isRightToLeft = useMemo(
-        () => RTL_LANGUAGE_CODES.has((reel?.language?.code || '').toLowerCase()),
-        [reel?.language?.code]
-    );
+    // Always keyed off the reel's own (learning) language, never the
+    // viewer's native language - a reel only ever has one content language,
+    // and that's what determines which side it renders on. `language.code`
+    // covers the common nested shape; `language_id`/`language.id` fall back
+    // for the Node-backed creator-profile reel list, which never joins in
+    // the language row (see the Reel type's `language_id` comment).
+    const isRightToLeft = useMemo(() => {
+        const code = reel?.language?.code?.toLowerCase();
+        if (code) return RTL_LANGUAGE_CODES.has(code);
+
+        const languageId = reel?.language_id ?? reel?.language?.id;
+        return languageId != null && RTL_LANGUAGE_IDS.has(languageId);
+    }, [reel?.language?.code, reel?.language_id, reel?.language?.id]);
 
     const syncCurrentLineByTime = useCallback(
         (currentTimeMs: number) => {

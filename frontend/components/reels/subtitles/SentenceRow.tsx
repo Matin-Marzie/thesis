@@ -20,11 +20,17 @@ interface SentenceRowProps {
 }
 
 export function SentenceRow({ sentence, isCurrentLine, isDark, isRightToLeft, isSaved, onPress, onTokenPress, onSavePress }: SentenceRowProps) {
+    // Always kept in logical (reading) order - reversing this array before
+    // wrapping would reverse the WHOLE sentence into lines (last words
+    // filling the first line), not just the word order within each line.
+    // `tokensRowRtl`'s flexDirection: 'row-reverse' below is what flips
+    // each line right-to-left; flex-wrap still assigns words to lines in
+    // array order regardless of row vs row-reverse, so line 1 always gets
+    // the sentence's first words.
     const words = sentence.text
         .trim()
         .split(/\s+/)
         .map((word, index) => ({ word, position: index + 1 }));
-    const orderedWords = isRightToLeft ? [...words].reverse() : words;
 
     const swipeableRef = useRef<Swipeable>(null);
 
@@ -74,7 +80,7 @@ export function SentenceRow({ sentence, isCurrentLine, isDark, isRightToLeft, is
                     {/* Token buttons — not nested in Pressable to avoid touch conflicts */}
                     <View style={[styles.sentenceTextContainer, isRightToLeft && styles.sentenceTextContainerRtl]}>
                         <View style={[styles.tokensRow, isRightToLeft && styles.tokensRowRtl]}>
-                            {orderedWords.map(({ word, position }) => {
+                            {words.map(({ word, position }) => {
                                 const token = sentence.tokens?.find((t) => t.position === position);
 
                                 if (!token) {
@@ -156,7 +162,11 @@ const styles = StyleSheet.create({
         gap: 4,
     },
     tokensRowRtl: {
-        justifyContent: 'flex-end',
+        // Reverses word order within each wrapped line only - flex-wrap
+        // still assigns words to lines in array order either way, so this
+        // must NOT be paired with a reversed words array (see the comment
+        // by `words` above) or whole lines end up swapped instead of words.
+        flexDirection: 'row-reverse',
     },
     tokenButton: {
         paddingVertical: 2,

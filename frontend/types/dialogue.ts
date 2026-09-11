@@ -80,7 +80,13 @@ export interface Reel {
   title: string | null;
   duration: number;
   created_at: string;
-  language: Language;
+  // Nested {id, code, name} from reels-service's GET /reels and /reels/mine.
+  // The Node-backed creator-profile reel list (GET /users/:id/reels) only
+  // has the flat `language_id` column instead - see `language_id` below.
+  language?: Language;
+  // Present only on reels from the Node-backed creator-profile list, which
+  // queries the `reels` table directly and never joins in the language row.
+  language_id?: number;
   created_by: CreatedBy;
   stats: Stats;
   user_interaction: UserInteraction;
