@@ -7,6 +7,15 @@ import reelsClient from './reelsClient';
  * @param {string} params.native_language_code - Native language code (e.g., 'en')
  * @param {number} params.limit - Number of reels to fetch (default: 10)
  * @param {boolean} params.isAuthenticated - Whether user is authenticated
+ * @param {Array<number|string>} [params.dueWordIds] - FIFO-ordered (oldest due
+ *   first) word ids from the on-device FSRS queue (see utils/fsrs.getDueWords),
+ *   sent so the recommendation engine's Stage 2 (SpacedRepetitionPrioritizer)
+ *   can rank reels covering a due word first. Sent for guests too - reels-service
+ *   ranks guest results by due-word coverage the same way, just without a
+ *   comprehensibility filter or content-based ranking (both need a known account).
+ * @param {Array<number|string>} [params.excludeReelIds] - Reel ids already shown
+ *   this session, so guests (no server-side account to dedup against) don't
+ *   keep seeing the same due-word reel resurface on every "load more".
  * @returns {Promise<Object>} - Reels data
  */
 export const fetchReels = async ({
@@ -14,14 +23,20 @@ export const fetchReels = async ({
   native_language_code,
   limit = 10,
   isAuthenticated = false,
+  dueWordIds = [],
+  excludeReelIds = [],
 }) => {
   try {
+    const params = {
+      learning_language_code,
+      native_language_code,
+      limit,
+      ...(dueWordIds.length > 0 && { due_word_ids: dueWordIds.join(',') }),
+      ...(excludeReelIds.length > 0 && { exclude_reel_ids: excludeReelIds.join(',') }),
+    };
+
     const response = await reelsClient.get('/reels', {
-      params: {
-        learning_language_code,
-        native_language_code,
-        limit,
-      },
+      params,
       // Skip auth header for guest users to get random reels
       skipAuth: !isAuthenticated,
     });

@@ -16,12 +16,13 @@ class ReelStatsResponse(BaseModel):
 
 
 class ReviewWordResponse(BaseModel):
-    """The single FSRS due word this reel doubles as review for (Stage 2's
-    get_due_word_ids_fifo, assigned oldest-word-first to the first
-    still-unclaimed reel that contains it). At most one review_word per
-    reel, and at most one reel per due word - a personalized response can
-    carry several of these across different reels in the same page, one
-    per distinct due word it managed to cover."""
+    """The single due word (from the frontend-supplied due_word_ids
+    queue) this reel doubles as review for - Stage 2 assigns it
+    oldest-word-first to the first still-unclaimed reel that contains it.
+    At most one review_word per reel, and at most one reel per due word -
+    a personalized response can carry several of these across different
+    reels in the same page, one per distinct due word it managed to
+    cover."""
 
     id: int
     written_form: str

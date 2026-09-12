@@ -12,6 +12,21 @@ from app.core.security import decode_access_token, extract_token_from_header, ge
 router = APIRouter(prefix="/reels", tags=["reels"])
 
 
+def _parse_csv_int_list(raw: Optional[str], field_name: str) -> Optional[list]:
+    """Parses a comma-separated query param (e.g. 'due_word_ids=12,45,9')
+    into a list of ints, or None if not given. Shared by due_word_ids and
+    exclude_reel_ids, both plain frontend-supplied id lists."""
+    if not raw:
+        return None
+    try:
+        return [int(value) for value in raw.split(",") if value.strip()]
+    except ValueError:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail=f"{field_name} must be a comma-separated list of integers"
+        )
+
+
 @router.get(
     "",
     response_model=None,
@@ -44,6 +59,27 @@ async def get_reels(
         le=50,
         description="Number of reels to return (default: 10, max: 50)"
     ),
+    due_word_ids: Optional[str] = Query(
+        None,
+        description=(
+            "Comma-separated word ids from the frontend's spaced-repetition "
+            "(Duo words) due queue, oldest-due-first (e.g. '12,45,9'). Feeds "
+            "the recommendation engine's Stage 2 (SpacedRepetitionPrioritizer), "
+            "which ranks reels containing one of these words first - applies "
+            "to guests too, not just authenticated requests."
+        ),
+        examples=["12,45,9"]
+    ),
+    exclude_reel_ids: Optional[str] = Query(
+        None,
+        description=(
+            "Comma-separated reel ids the frontend has already shown this "
+            "session (e.g. '101,202,303'). Mainly for guests, who have no "
+            "server-side account to key an already-seen exclusion off of - "
+            "authenticated requests already get that server-side."
+        ),
+        examples=["101,202,303"]
+    ),
     authorization: Optional[str] = Header(None, description="Bearer access token"),
     db: AsyncSession = Depends(get_db)
 ) -> Union[ReelsListResponse, dict]:
@@ -72,10 +108,10 @@ async def get_reels(
     # Check for authentication
     token = extract_token_from_header(authorization)
     user_id, username = None, None
-    
+
     if token:
         user_id, username = decode_access_token(token)
-    
+
 
     # Validate that the languages are different
     if native_language_code == learning_language_code:
@@ -83,7 +119,12 @@ async def get_reels(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail="Native and learning language codes must be different"
         )
-    
+
+    # Parse the frontend-supplied, per-request signals - see
+    # ReelService.get_personalized_reels/get_random_reels for how each is used.
+    due_word_ids_fifo = _parse_csv_int_list(due_word_ids, "due_word_ids")
+    exclude_reel_ids_list = _parse_csv_int_list(exclude_reel_ids, "exclude_reel_ids")
+
     # Chech /services/reel_service.py
     service = ReelService(db)
 
@@ -92,22 +133,32 @@ async def get_reels(
             user_id=user_id,
             native_language_code=native_language_code,
             learning_language_code=learning_language_code,
-            limit=limit
+            limit=limit,
+            due_word_ids_fifo=due_word_ids_fifo,
+            exclude_reel_ids=exclude_reel_ids_list
         )
-        # total > 0 but nothing survived stage 1 - distinct from "no reels
-        # for this language at all" below, and distinct from each other.
-        if total > 0 and len(reels) == 0:
-            if reason == ReelService.NO_REELS_REASON_ALL_RECENTLY_VIEWED:
-                detail = "You have watched all of the reels of the database, come back tomorrow"
-            else:
-                detail = "You've already watched all the reels in the database that match your current vocabulary. Keep learning new words to unlock more!"
-            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=detail)
     else: # Not authenticated user
         reels, total, reason = await service.get_random_reels(
             native_language_code=native_language_code,
             learning_language_code=learning_language_code,
-            limit=limit
+            limit=limit,
+            due_word_ids_fifo=due_word_ids_fifo,
+            exclude_reel_ids=exclude_reel_ids_list
         )
+
+    # total > 0 but nothing came back - distinct from "no reels for this
+    # language at all" below, and distinct from each other reason. Applies
+    # to guests now too: get_random_reels can hit NO_REELS_REASON_ALL_RECENTLY_VIEWED
+    # via a frontend-supplied exclude_reel_ids that covers the whole language,
+    # same as an authenticated user's server-tracked cooldown exclusion.
+    if total > 0 and len(reels) == 0:
+        if reason == ReelService.NO_REELS_REASON_ALL_RECENTLY_VIEWED:
+            detail = "You have watched all of the reels of the database, come back tomorrow"
+        elif reason == ReelService.NO_REELS_REASON_COMPREHENSION_FILTER:
+            detail = "You've already watched all the reels in the database that match your current vocabulary. Keep learning new words to unlock more!"
+        else:
+            detail = f"No reels found for language '{learning_language_code}'"
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=detail)
 
     if total == 0:
         if reason == ReelService.NO_REELS_REASON_EMPTY_DATABASE:

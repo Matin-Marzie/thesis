@@ -3,8 +3,10 @@ import { Alert } from 'react-native';
 import { fetchReels as fetchReelsApi } from '../api/reels';
 import { useProgress } from './ProgressContext';
 import { useAuth } from './AuthContext';
+import { useVocabularyContext } from './VocabularyContext';
 import { REELS_LIMIT } from '../constants/Reels';
 import { getNativeLanguageCode, resolveReelTranslations as resolveReelTranslationsFor } from '../utils/resolveReelTranslations';
+import { getDueWords } from '../utils/fsrs';
 
 /**
  * @typedef {Object} Reel
@@ -40,6 +42,7 @@ const ReelsContext = createContext({});
 export const ReelsProvider = ({ children }) => {
   const { userProgress, isProgressLoaded } = useProgress();
   const { isAuthenticated } = useAuth();
+  const { userVocabulary } = useVocabularyContext();
   
   // State
   const [reels, setReels] = useState([]);
@@ -80,11 +83,23 @@ export const ReelsProvider = ({ children }) => {
       }
       setError(null);
 
+      // FIFO-ordered (oldest due first) due-word ids from the on-device FSRS
+      // queue, forwarded to reels-service's Stage 2 (SpacedRepetitionPrioritizer)
+      // - it no longer computes this itself, since the frontend already owns
+      // the review schedule. Sent for guests too now.
+      const dueWordIds = getDueWords(userVocabulary).map((w) => w.wordId);
+      // Reel ids already shown this session - lets reels-service dedup guest
+      // results server-side (guests have no account to key that off of),
+      // same ids this callback's own append step below already tracks.
+      const excludeReelIds = reels.map((r) => r.id);
+
       const response = await fetchReelsApi({
         learning_language_code: learningLanguageCode,
         native_language_code: nativeLanguageCode,
         limit: REELS_LIMIT,
         isAuthenticated,
+        dueWordIds,
+        excludeReelIds,
       });
 
       const newReels = (response?.reels || []).map(resolveReelTranslations);
@@ -117,10 +132,11 @@ export const ReelsProvider = ({ children }) => {
   }, [
     isLoading,
     isFetchingMore,
-    reels.length,
+    reels,
     learningLanguageCode,
     nativeLanguageCode,
     isAuthenticated,
+    userVocabulary,
     resolveReelTranslations,
   ]);
 
