@@ -14278,4 +14278,43 @@ VALUES
 (214344, 'رو به زَوال رَفتَن', 'verb', NULL, NULL, 3, 'EX', NULL),   -- to wane / decline
 (214345, 'مَشغول بودَن به', 'verb', NULL, NULL, 3, 'A2', NULL),   -- to be occupied with / deal with
 (214346, 'به‌جایِ آن', 'adverb', NULL, NULL, 3, 'A2', NULL),   -- instead of that
-(214347, 'هَدَررَفتِه', 'adjective', NULL, NULL, 3, 'B1', NULL);   -- wasted / squandered
+(214347, 'هَدَررَفتِه', 'adjective', NULL, NULL, 3, 'B1', NULL),   -- wasted / squandered
+-- Farsi alphabet, as its own dictionary entries (letters table already has
+-- these for the Letters screen, including the short/long vowels added in
+-- migration 0012; these mirror them as reviewable words).
+(214348, 'الف', 'letter', NULL, NULL, 3, 'N', NULL),   -- Alef
+(214349, 'ب', 'letter', NULL, NULL, 3, 'N', NULL),   -- Be
+(214350, 'پ', 'letter', NULL, NULL, 3, 'N', NULL),   -- Pe
+(214351, 'ت', 'letter', NULL, NULL, 3, 'N', NULL),   -- Te
+(214352, 'ث', 'letter', NULL, NULL, 3, 'N', NULL),   -- Se
+(214353, 'ج', 'letter', NULL, NULL, 3, 'N', NULL),   -- Jim
+(214354, 'چ', 'letter', NULL, NULL, 3, 'N', NULL),   -- Che
+(214355, 'ح', 'letter', NULL, NULL, 3, 'N', NULL),   -- He
+(214356, 'خ', 'letter', NULL, NULL, 3, 'N', NULL),   -- Khe
+(214357, 'د', 'letter', NULL, NULL, 3, 'N', NULL),   -- Dal
+(214358, 'ذ', 'letter', NULL, NULL, 3, 'N', NULL),   -- Zal
+(214359, 'ر', 'letter', NULL, NULL, 3, 'N', NULL),   -- Re
+(214360, 'ز', 'letter', NULL, NULL, 3, 'N', NULL),   -- Ze
+(214361, 'ژ', 'letter', NULL, NULL, 3, 'N', NULL),   -- Zhe
+(214362, 'س', 'letter', NULL, NULL, 3, 'N', NULL),   -- Sin
+(214363, 'ش', 'letter', NULL, NULL, 3, 'N', NULL),   -- Shin
+(214364, 'ص', 'letter', NULL, NULL, 3, 'N', NULL),   -- Sad
+(214365, 'ض', 'letter', NULL, NULL, 3, 'N', NULL),   -- Zad
+(214366, 'ط', 'letter', NULL, NULL, 3, 'N', NULL),   -- Ta
+(214367, 'ظ', 'letter', NULL, NULL, 3, 'N', NULL),   -- Za
+(214368, 'ع', 'letter', NULL, NULL, 3, 'N', NULL),   -- Ayn
+(214369, 'غ', 'letter', NULL, NULL, 3, 'N', NULL),   -- Ghayn
+(214370, 'ف', 'letter', NULL, NULL, 3, 'N', NULL),   -- Fe
+(214371, 'ق', 'letter', NULL, NULL, 3, 'N', NULL),   -- Qaf
+(214372, 'ک', 'letter', NULL, NULL, 3, 'N', NULL),   -- Kaf
+(214373, 'گ', 'letter', NULL, NULL, 3, 'N', NULL),   -- Gaf
+(214374, 'ل', 'letter', NULL, NULL, 3, 'N', NULL),   -- Lam
+(214375, 'م', 'letter', NULL, NULL, 3, 'N', NULL),   -- Mim
+(214376, 'ن', 'letter', NULL, NULL, 3, 'N', NULL),   -- Nun
+(214377, 'و', 'letter', NULL, NULL, 3, 'N', NULL),   -- Vav
+(214378, 'ه', 'letter', NULL, NULL, 3, 'N', NULL),   -- He
+(214379, 'ی', 'letter', NULL, NULL, 3, 'N', NULL),   -- Ye
+(214380, 'اَ َ', 'letter', NULL, NULL, 3, 'N', NULL),   -- Zebar/Fatha (short a)
+(214381, 'اِ ِ', 'letter', NULL, NULL, 3, 'N', NULL),   -- Zir/Kasra (short e/i)
+(214382, 'اُ ُ', 'letter', NULL, NULL, 3, 'N', NULL),   -- Pish/Damma (short o/u)
+(214383, 'او و', 'letter', NULL, NULL, 3, 'N', NULL);   -- initial-position long "u"

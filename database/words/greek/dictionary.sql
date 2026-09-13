@@ -13697,4 +13697,32 @@ VALUES
 (185031, 'προσκύνηση (θρησκευτική)', 'n', NULL, NULL, 2, 'EX', NULL),
 (185032, 'λουρικά (γλώσσα)', 'n', NULL, NULL, 2, 'EX', NULL),
 (185033, 'σύντροφος (συμπολεμιστής)', 'n', NULL, NULL, 2, 'B1', NULL),
-(185034, 'κατοικία (τόπος διαμονής)', 'n', NULL, NULL, 2, 'B1', NULL);
+(185034, 'κατοικία (τόπος διαμονής)', 'n', NULL, NULL, 2, 'B1', NULL),
+-- Greek alphabet, as its own dictionary entries (letters table already has
+-- these for the Letters screen; these mirror them as reviewable words).
+-- Sigma's final form (ς) is combined with σ into one row, matching the
+-- letters table and how `words` stores it elsewhere in this file.
+(185035, 'α', 'letter', NULL, NULL, 2, 'N', 'το'),
+(185036, 'β', 'letter', NULL, NULL, 2, 'N', 'το'),
+(185037, 'γ', 'letter', NULL, NULL, 2, 'N', 'το'),
+(185038, 'δ', 'letter', NULL, NULL, 2, 'N', 'το'),
+(185039, 'ε', 'letter', NULL, NULL, 2, 'N', 'το'),
+(185040, 'ζ', 'letter', NULL, NULL, 2, 'N', 'το'),
+(185041, 'η', 'letter', NULL, NULL, 2, 'N', 'το'),
+(185042, 'θ', 'letter', NULL, NULL, 2, 'N', 'το'),
+(185043, 'ι', 'letter', NULL, NULL, 2, 'N', 'το'),
+(185044, 'κ', 'letter', NULL, NULL, 2, 'N', 'το'),
+(185045, 'λ', 'letter', NULL, NULL, 2, 'N', 'το'),
+(185046, 'μ', 'letter', NULL, NULL, 2, 'N', 'το'),
+(185047, 'ν', 'letter', NULL, NULL, 2, 'N', 'το'),
+(185048, 'ξ', 'letter', NULL, NULL, 2, 'N', 'το'),
+(185049, 'ο', 'letter', NULL, NULL, 2, 'N', 'το'),
+(185050, 'π', 'letter', NULL, NULL, 2, 'N', 'το'),
+(185051, 'ρ', 'letter', NULL, NULL, 2, 'N', 'το'),
+(185052, 'σ, ς', 'letter', NULL, NULL, 2, 'N', 'το'),
+(185053, 'τ', 'letter', NULL, NULL, 2, 'N', 'το'),
+(185054, 'υ', 'letter', NULL, NULL, 2, 'N', 'το'),
+(185055, 'φ', 'letter', NULL, NULL, 2, 'N', 'το'),
+(185056, 'χ', 'letter', NULL, NULL, 2, 'N', 'το'),
+(185057, 'ψ', 'letter', NULL, NULL, 2, 'N', 'το'),
+(185058, 'ω', 'letter', NULL, NULL, 2, 'N', 'το');
