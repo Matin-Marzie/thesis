@@ -5,6 +5,7 @@ import { useProgress } from '@/context/ProgressContext';
 import { getLettersByCode } from '@/api/letters';
 import { useColorScheme } from '@/components/useColorScheme';
 import { DARK_COLORS, PRIMARY_COLOR } from '@/constants/App';
+import { LANGUAGES_META } from '@/constants/SupportedLanguages';
 
 export default function LettersScreen() {
   const isDark = useColorScheme() === 'dark';
@@ -18,6 +19,11 @@ export default function LettersScreen() {
   }, [userProgress?.languages]);
 
   const learningLanguageCode = currentLang?.learning_language?.code;
+
+  const isRTL = useMemo(
+    () => Object.values(LANGUAGES_META).some((lang) => lang.code === learningLanguageCode && lang.rightToLeft),
+    [learningLanguageCode]
+  );
 
   useEffect(() => {
     if (!learningLanguageCode) {
@@ -50,12 +56,12 @@ export default function LettersScreen() {
 
   const LETTERS_PER_ROW = 4;
 
-  // Group letters into vowel/consonant sections, in the order returned by
-  // the API, then chunk each section's letters into fixed-size rows -
-  // SectionList has no built-in grid/numColumns support like FlatList does,
-  // so the grid has to be built by hand as rows of items.
+  // Group letters into sections by type, in the order returned by the API,
+  // then chunk each section's letters into fixed-size rows - SectionList has
+  // no built-in grid/numColumns support like FlatList does, so the grid has
+  // to be built by hand as rows of items.
   const sections = useMemo(() => {
-    const byType = { vowel: [], consonant: [] };
+    const byType = { vowel: [], short_vowel: [], long_vowel: [], consonant: [] };
     for (const letter of letters) {
       if (byType[letter.type]) byType[letter.type].push(letter);
     }
@@ -68,13 +74,15 @@ export default function LettersScreen() {
     };
     return [
       { title: 'Vowels', data: chunk(byType.vowel) },
+      { title: 'Short Vowels', data: chunk(byType.short_vowel) },
+      { title: 'Long Vowels', data: chunk(byType.long_vowel) },
       { title: 'Consonants', data: chunk(byType.consonant) },
     ].filter((section) => section.data.length > 0);
   }, [letters]);
 
   const renderItem = useCallback(
     ({ item: row }) => (
-      <View style={styles.row}>
+      <View style={[styles.row, isRTL && styles.rowRTL]}>
         {row.map((letter) => (
           <View
             key={letter.id}
@@ -93,7 +101,7 @@ export default function LettersScreen() {
           ))}
       </View>
     ),
-    [isDark]
+    [isDark, isRTL]
   );
 
   const renderSectionHeader = useCallback(
@@ -174,6 +182,9 @@ const styles = StyleSheet.create({
   },
   row: {
     flexDirection: 'row',
+  },
+  rowRTL: {
+    flexDirection: 'row-reverse',
   },
   letterCard: {
     flex: 1,
