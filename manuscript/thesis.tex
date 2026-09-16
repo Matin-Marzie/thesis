@@ -1,11 +1,18 @@
-\documentclass[a4paper,11pt,oneside,openany]{styles/ioniothesis}
+\documentclass[a4paper,11pt,twoside,openany]{styles/ioniothesis}
 
 % Required packages
 \usepackage{graphicx}
 \usepackage{url}
+\usepackage{xurl} % url-breaking that works under fontspec/LuaLaTeX (loaded after url on purpose)
 \usepackage{makeidx}
 \usepackage[greek,english]{babel}
-\usepackage[utf8]{inputenc}
+
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[utf8]{inputenc}
+  \usepackage[T1]{fontenc}
+\fi
+
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{amsfonts}
@@ -13,6 +20,18 @@
 \usepackage{styles/ioniostyle}
 \usepackage{algorithm}
 \usepackage{algorithmic}
+\usepackage[section]{placeins} % stop floats (tables/figures) from drifting past a \section boundary
+\usepackage{wrapfig} % lets a small figure sit inline with text that wraps around it
+
+% Main font: Times New Roman is not freely redistributable, so we use
+% Liberation Serif, its metric-compatible open-source substitute, via
+% LuaLaTeX/fontspec (needed for proper Greek+Latin glyph coverage).
+\ifPDFTeX\else
+  \usepackage{fontspec}
+  \setmainfont{Liberation Serif}
+  \setsansfont{Liberation Sans}
+  \setmonofont{Liberation Mono}
+\fi
 
 % Language switching commands
 \def\tl{\textlatin}
@@ -24,7 +43,9 @@
 % Index generation
 \makeindex
 
-% Page layout settings
+% Page layout settings (binding margin used for the main chapters;
+% overridden to symmetric values for the front matter, then restored --
+% see the \oddsidemargin/\evensidemargin assignments after \begin{document})
 \evensidemargin=0 cm
 \oddsidemargin=1 cm
 \textwidth=15 cm
@@ -35,6 +56,13 @@
 % Drop caps package
 \usepackage{styles/drop}
 \begin{document}
+
+% Symmetric (centered) margins for the front matter -- title pages,
+% abstracts, acknowledgments, TOC/LOF/LOT -- since the asymmetric
+% binding margin used for the main text only makes sense once pages
+% carry body text meant to be bound.
+\oddsidemargin=0.5cm
+\evensidemargin=0.5cm
 
 % Include title pages
 \input{./title_pages}
@@ -89,6 +117,10 @@
 \pagestyle{headings}
 \cleardoublepage
 
+% Restore the asymmetric binding margin for the main (two-sided) text
+\oddsidemargin=1cm
+\evensidemargin=0cm
+
 % Start Arabic numbering for main content
 \newpage
 \pagenumbering{arabic}
@@ -119,6 +151,7 @@
 
 % Bibliography
 \bibliographystyle{unsrt}
+\addcontentsline{toc}{chapter}{Bibliography}
 \bibliography{references} % Use references.bib
 
 % Abbreviations

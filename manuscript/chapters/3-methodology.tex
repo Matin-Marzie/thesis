@@ -1,17 +1,24 @@
 \section{System Overview}
-    Glosy is designed as a three-service architecture in which a mobile frontend, a primary REST API backend, and a dedicated reels microservice each handle a well-defined subset of the system's responsibilities. Figure~\ref{fig:architecture} illustrates the high-level interaction between these components. All services share a single PostgreSQL database instance and are co-ordinated in development via Docker Compose.
+    
 
     \begin{itemize}
-        \item \textbf{Frontend:} A cross-platform mobile application built with React Native (Expo SDK 54), targeting Android and iOS from a single JavaScript/TypeScript codebase.
-        \item \textbf{Backend API:} A Node.js/Express service (ESM modules) responsible for user authentication, vocabulary management, progress synchronisation, and the dictionary.
-        \item \textbf{Reels Service:} A Python FastAPI microservice Recommendation System responsible for serving reels enriched with structured dialogue data—sentences, timestamped tokens, and translations.
-        \item \textbf{Database:} PostgreSQL 16, whose schema encodes the vocabulary model, user progress, content metadata, and engagement signals.
+        \item \textbf{Frontend:} 
+        \item \textbf{Backend API:} 
+        \item \textbf{Reels Service:} 
+        \item \textbf{Database:} 
     \end{itemize}
+
+    \begin{figure}[htbp]
+        \centering
+        \includegraphics[width=0.85\textwidth]{figures/architecture.pdf}
+        \caption{High-level system architecture: the mobile frontend communicates with the Backend API (\texttt{api.glosy.gr}) and the Reels Service (\texttt{recs.glosy.gr}) over authenticated REST endpoints; both services share a single PostgreSQL instance.}
+        \label{fig:architecture}
+    \end{figure}
 
 
 \section{Technology Stack}
     \subsection{Frontend — React Native / Expo}
-    React Native was selected to enable cross-platform deployment from a single codebase without sacrificing the native rendering performance required for smooth video playback. Expo SDK 54 provides managed native modules for video (\texttt{expo-video}), secure credential storage (\texttt{expo-secure-store}), and build tooling (\texttt{eas-cli}). The application uses Expo Router (file-system-based navigation) and React Native Reanimated for gesture-driven animations in the game interfaces.
+    React Native was selected to enable cross-platform deployment from a single codebase without sacrificing the native rendering performance required for smooth video playback. Expo SDK 57 provides managed native modules for video (\texttt{expo-video}), secure credential storage (\texttt{expo-secure-store}), and build tooling (\texttt{eas-cli}). The application uses Expo Router (file-system-based navigation) and React Native Reanimated for gesture-driven animations in the game interfaces.
 
     \subsection{Backend — Node.js / Express}
     The backend is implemented as an ES-module Node.js application using Express 4. This choice reflects the project's existing expertise in JavaScript and the maturity of the Express ecosystem for REST API development. Authentication is handled with JSON Web Tokens (JWT): a short-lived access token (15 minutes) and a long-lived refresh token (30 days) follow the standard rotation pattern. Google OAuth 2.0 is supported alongside email/password authentication via the \texttt{google-auth-library}. Input validation uses Joi schemas for every endpoint, and the API is documented with Swagger (OpenAPI 3.0) accessible at \texttt{/swagger}.
@@ -23,7 +30,7 @@
     PostgreSQL was chosen for its support of complex relational queries, array operators, and procedural functions—all of which are used in the vocabulary bulk-initialisation and the planned recommendation engine. The full schema is maintained in \texttt{database/thesis\_db.sql}.
 
 
-\section{Data Modelling}
+\section{Data Modelling} \label{sec:data_modelling}
     The database schema models the domain along three axes: linguistic content, user state, and engagement signals.
 
     \textbf{Linguistic content} 
@@ -36,13 +43,26 @@
     The recommendation engine is the theoretical core of the system. Its goal is to select, from the pool of available reels, those that are simultaneously \textit{comprehensible} (the learner knows enough vocabulary to follow the content) and \textit{pedagogically productive} (the reel contains words that are due for review or represent the next developmental step). The design follows a three-stage pipeline.
 
     \subsection{Stage 1: Comprehensibility Filtering}
-        For each candidate reel, the engine computes the proportion of the reel's unique word tokens that are present in the learner's vocabulary model at mastery level $\geq 1$. A reel passes the filter only if this proportion meets or exceeds 98\%, corresponding to Nation's [nation2001learning] threshold for unassisted reading comprehension. This criterion implements the ZPD operationally: the learner encounters real language while remaining within a comprehensible range.
+        For each candidate reel, the engine computes the proportion of the reel's unique word tokens that are present in the learner's vocabulary model at mastery level $\geq 1$. A reel passes the filter only if this proportion meets or exceeds 98\%, corresponding to Nation's \cite{nation2001learning} threshold for unassisted reading comprehension. This criterion implements the ZPD operationally: the learner encounters real language while remaining within a comprehensible range.
+
+        The content-based recommendation subsystem analyzes subtitle transcripts generated from short-form video units. Each transcript is tokenized, normalized, and mapped against the user's documented knowledge state in the \texttt{user\_vocabulary} table. The candidate reel scoring function prioritizes videos that satisfy the pedagogical constraint:
+        \begin{equation}
+            \text{Coverage}(U, R) = \frac{|V_R \cap V_U|}{|V_R|} \ge 0.98
+        \end{equation}
+        where $V_R$ is the unique set of lexical tokens in reel $R$, and $V_U$ represents the known vocabulary lexicon of user $U$.
+
+        The unified recommendation engine integrates content-based lexical filtering, collaborative behavioral patterns, and FSRS memory-decay state into a multi-objective ranking function:
+        \begin{equation}
+            S(U, R) = w_1 \cdot \text{ZPD\_Fit}(U, R) + w_2 \cdot \text{SRS\_Urgency}(U, R) + w_3 \cdot \text{CollaborativeScore}(U, R)
+        \end{equation}
+        This formulation ensures that recommendations balance conversational authenticity, immediate comprehensibility ($i+1$), and overdue vocabulary reinforcement.
 
     \subsection{Stage 2: Spaced-Repetition Scoring}
-        Each reel is scored according to the review urgency of the vocabulary it contains. For each word $w$ in the reel with mastery level $m$ and days since last review $d$, the system computes an urgency score based on the Ebbinghaus forgetting function. The reel's aggregate score is the mean urgency across its target vocabulary. This stage ensures that reels containing words the learner is about to forget are ranked above reels containing words that were recently reviewed.
 
     \subsection{Stage 3: Content Personalisation}
-        The final stage personalises the recommendation by incorporating engagement signals. Reels that have been liked are boosted. This stage allows the system to learn the learner's preferences over time, promoting content that is both pedagogically useful and personally engaging, thus considering demographic factors too.
+    
+    
+    
 
 
 \section{Gamification Design}

@@ -1,5 +1,5 @@
 % ---- Microlearning ----
-% [Unverified]
+% [Unverified, don't reference them]
 @techreport{mordor2026micro,
   author       = {{Mordor Intelligence}},
   title        = {Microlearning Market Size and Share Analysis - Growth Trends and Forecast (2026-2031)},
@@ -159,6 +159,7 @@ doi = {10.1080/01490400.2023.2211056}
 % /figures/application_offline_mode_usage
 % individual Learners represent the 80% of the market
 % around 65% of learners cite declining motivation as a barier over time.
+% Emerging technologies such as natural language processing, machine learning algorithms, and voice recognition are expected to strengthen Language Learning Application Market Opportunities by improving accuracy, engagement, and learning outcomes.
 @misc{businessresearch2026languageapps,
   author       = {{Business Research Insights}},
   title        = {Language Learning Application Market Size, Share, Growth, and Industry Analysis},
@@ -205,6 +206,15 @@ doi = {10.1080/01490400.2023.2211056}
   pages={150--166},
   year={2022},
   publisher={Hellenic Open University}
+}
+
+% Dedicated language-exchange app, cited as an example that solves social scaffolding by forgoing structured curriculum/SRS
+@misc{hellotalk2026,
+  author       = {{HelloTalk Inc.}},
+  title        = {{HelloTalk} -- Learn Languages with Native Speakers},
+  howpublished = {\url{https://www.hellotalk.com}},
+  year         = {2026},
+  note         = {Accessed: 2026-09-15}
 }
 
 
@@ -388,12 +398,284 @@ Indeed, Similarweb’s App Intelligence data shows that the typical TikTok user 
 % ----SPACED-REPETITION----
 
 % FSRS springs from DHP model, which is based on the "Three Component Model of Memory".
-@article{article,
+% [Venue left as originally entered -- not independently verified]
+@misc{ye2022stochastic,
 author = {Ye, Junyao and Su, Jingyong and Cao, Yilong},
 year = {2022},
 month = {08},
-pages = {},
 title = {A Stochastic Shortest Path Algorithm for Optimizing Spaced Repetition Scheduling}
+}
+
+% Primary source for the exact FSRS-6 / FSRS-5 / FSRS-4.5 / v4 equations and default parameters used in Section B.2.4.4
+@misc{opensr2026algorithm,
+  author       = {{Open Spaced Repetition}},
+  title        = {The Algorithm},
+  howpublished = {GitHub wiki, \url{https://github.com/open-spaced-repetition/awesome-fsrs/wiki/The-Algorithm}},
+  year         = {2026},
+  note         = {Accessed: 2026-09-16}
+}
+
+% Duolingo's Half-Life Regression paper (the p = 2^(-dt/h) model used in methodology.tex)
+@inproceedings{settles2016trainable,
+  author    = {Settles, Burr and Meeder, Brendan},
+  title     = {A Trainable Spaced Repetition Model for Language Learning},
+  booktitle = {Proceedings of the 54th Annual Meeting of the Association for Computational Linguistics (ACL)},
+  pages     = {1848--1858},
+  year      = {2016},
+  doi       = {10.18653/v1/P16-1174}
+}
+
+% Origin of the Leitner box spaced-repetition system
+@book{leitner1972lernen,
+  author    = {Leitner, Sebastian},
+  title     = {So lernt man lernen: Der Weg zum Erfolg},
+  year      = {1972},
+  publisher = {Herder},
+  address   = {Freiburg}
+}
+
+% Diagram of the classic Leitner box system used as Figure~\ref{fig:leitner_system}
+@misc{zirguezi2012leitner,
+  author       = {Zirguezi},
+  title        = {Leitner System (Alternative)},
+  howpublished = {Wikimedia Commons, \url{https://commons.wikimedia.org/wiki/File:Leitner_system_alternative.svg}},
+  year         = {2012},
+  note         = {CC0 1.0 Public Domain Dedication. Accessed: 2026-09-15}
+}
+
+% The classical forgetting-curve study underlying all SRS models
+@book{ebbinghaus1885memory,
+  author    = {Ebbinghaus, Hermann},
+  title     = {Memory: A Contribution to Experimental Psychology},
+  year      = {1885},
+  note      = {Translated by Henry A. Ruger and Clara E. Bussenius, 1913},
+  publisher = {Teachers College, Columbia University},
+  address   = {New York}
+}
+
+% Modern replication of Ebbinghaus's forgetting curve; source of Figure~\ref{fig:ebbinghaus_curve} (image CC BY 4.0, Wikimedia Commons)
+@article{murre2015replication,
+  author  = {Murre, Jaap M. J. and Dros, Joeri},
+  title   = {Replication and Analysis of Ebbinghaus' Forgetting Curve},
+  journal = {PLOS ONE},
+  volume  = {10},
+  number  = {7},
+  pages   = {e0120644},
+  year    = {2015},
+  doi     = {10.1371/journal.pone.0120644}
+}
+
+% Active recall / testing effect -- theoretical grounding for the Wordle-style / WoW game modalities
+@article{roediger2006testing,
+  author  = {Roediger, Henry L. and Karpicke, Jeffrey D.},
+  title   = {Test-Enhanced Learning: Taking Memory Tests Improves Long-Term Retention},
+  journal = {Psychological Science},
+  volume  = {17},
+  number  = {3},
+  pages   = {249--255},
+  year    = {2006}
+}
+
+
+% ----PEDAGOGICAL THEORY (Section 2.B)----
+
+% Sociocultural Theory / Zone of Proximal Development
+@book{vygotsky1978mind,
+  author    = {Vygotsky, Lev S.},
+  title     = {Mind in Society: The Development of Higher Psychological Processes},
+  year      = {1978},
+  note      = {Edited by Michael Cole, Vera John-Steiner, Sylvia Scribner, and Ellen Souberman},
+  publisher = {Harvard University Press},
+  address   = {Cambridge, MA}
+}
+
+% Sociocultural Theory applied specifically to SLA
+@book{lantolf2000sociocultural,
+  editor    = {Lantolf, James P.},
+  title     = {Sociocultural Theory and Second Language Learning},
+  year      = {2000},
+  publisher = {Oxford University Press},
+  address   = {Oxford}
+}
+
+% Krashen's Input Hypothesis -- source of the "i+1" notation used in methodology.tex
+@book{krashen1985input,
+  author    = {Krashen, Stephen D.},
+  title     = {The Input Hypothesis: Issues and Implications},
+  year      = {1985},
+  publisher = {Longman},
+  address   = {London}
+}
+
+% Original empirical source of the 98% lexical-coverage threshold used in the recommendation engine (Stage 1)
+@article{hunation2000,
+  author  = {Hu, Marcella and Nation, I.S.P.},
+  title   = {Unknown Vocabulary Density and Reading Comprehension},
+  journal = {Reading in a Foreign Language},
+  volume  = {13},
+  number  = {1},
+  pages   = {403--430},
+  year    = {2000}
+}
+
+% Widely-cited synthesis of the 98% threshold; matches the [nation2001learning] placeholder already in methodology.tex
+@book{nation2001learning,
+  author    = {Nation, I.S.P.},
+  title     = {Learning Vocabulary in Another Language},
+  year      = {2001},
+  publisher = {Cambridge University Press},
+  address   = {Cambridge, UK}
+}
+
+% Cognitive Load Theory -- theoretical basis for microlearning / bounded reel & game session length
+@article{sweller1988cognitive,
+  author  = {Sweller, John},
+  title   = {Cognitive Load During Problem Solving: Effects on Learning},
+  journal = {Cognitive Science},
+  volume  = {12},
+  number  = {2},
+  pages   = {257--285},
+  year    = {1988}
+}
+
+% Working-memory capacity bound, complements Sweller for the microlearning argument
+@article{miller1956magical,
+  author  = {Miller, George A.},
+  title   = {The Magical Number Seven, Plus or Minus Two: Some Limits on Our Capacity for Processing Information},
+  journal = {Psychological Review},
+  volume  = {63},
+  number  = {2},
+  pages   = {81--97},
+  year    = {1956}
+}
+
+
+% ----GAMIFICATION / GAME-BASED LEARNING THEORY----
+
+% Canonical definition distinguishing gamification from full game-based learning ("shallow gamification" critique)
+@inproceedings{deterding2011gamification,
+  author    = {Deterding, Sebastian and Dixon, Dan and Khaled, Rilla and Nacke, Lennart},
+  title     = {From Game Design Elements to Gamefulness: Defining Gamification},
+  booktitle = {Proceedings of the 15th International Academic MindTrek Conference: Envisioning Future Media Environments},
+  pages     = {9--15},
+  year      = {2011},
+  publisher = {ACM}
+}
+
+@article{plass2015foundations,
+  author  = {Plass, Jan L. and Homer, Bruce D. and Kinzer, Charles K.},
+  title   = {Foundations of Game-Based Learning},
+  journal = {Educational Psychologist},
+  volume  = {50},
+  number  = {4},
+  pages   = {258--283},
+  year    = {2015}
+}
+
+@book{sykes2013language,
+  author    = {Sykes, Julie M. and Reinhardt, Jonathon},
+  title     = {Language at Play: Digital Games in Second and Foreign Language Teaching and Learning},
+  year      = {2013},
+  publisher = {Pearson Education},
+  address   = {New York}
+}
+
+@article{godwinjones2014games,
+  author  = {Godwin-Jones, Robert},
+  title   = {Games in Language Learning: Opportunities and Challenges},
+  journal = {Language Learning \& Technology},
+  volume  = {18},
+  number  = {2},
+  pages   = {9--19},
+  year    = {2014}
+}
+
+
+% ----SHORT-FORM / CAPTIONED VIDEO AND VOCABULARY ACQUISITION----
+
+@article{vanderplank1988value,
+  author  = {Vanderplank, Robert},
+  title   = {The Value of Teletext Sub-titles in Language Learning},
+  journal = {ELT Journal},
+  volume  = {42},
+  number  = {4},
+  pages   = {272--281},
+  year    = {1988}
+}
+
+@article{monteroperez2018vocabulary,
+  author  = {Montero Perez, Maribel and Peters, Elke and Desmet, Piet},
+  title   = {Vocabulary Learning through Viewing Video: The Effect of Two Enhancement Techniques},
+  journal = {Computer Assisted Language Learning},
+  volume  = {31},
+  number  = {1-2},
+  pages   = {1--26},
+  year    = {2018}
+}
+
+@article{peters2018incidental,
+  author  = {Peters, Elke and Webb, Stuart},
+  title   = {Incidental Vocabulary Acquisition through Viewing {L2} Television and Factors that Affect Learning},
+  journal = {Studies in Second Language Acquisition},
+  volume  = {40},
+  number  = {3},
+  pages   = {551--577},
+  year    = {2018}
+}
+
+
+% ----RECOMMENDER SYSTEMS THEORY (Section 4)----
+
+@article{adomavicius2005toward,
+  author  = {Adomavicius, Gediminas and Tuzhilin, Alexander},
+  title   = {Toward the Next Generation of Recommender Systems: A Survey of the State-of-the-Art and Possible Extensions},
+  journal = {IEEE Transactions on Knowledge and Data Engineering},
+  volume  = {17},
+  number  = {6},
+  pages   = {734--749},
+  year    = {2005}
+}
+
+% Hybridization-strategy taxonomy; the Glosy S(U,R) ranking function is a "weighted" hybrid in Burke's terms
+@article{burke2002hybrid,
+  author  = {Burke, Robin},
+  title   = {Hybrid Recommender Systems: Survey and Experiments},
+  journal = {User Modeling and User-Adapted Interaction},
+  volume  = {12},
+  number  = {4},
+  pages   = {331--370},
+  year    = {2002}
+}
+
+@incollection{ricci2011introduction,
+  author    = {Ricci, Francesco and Rokach, Lior and Shapira, Bracha},
+  title     = {Introduction to Recommender Systems Handbook},
+  booktitle = {Recommender Systems Handbook},
+  editor    = {Ricci, Francesco and Rokach, Lior and Shapira, Bracha and Kantor, Paul B.},
+  pages     = {1--35},
+  year      = {2011},
+  publisher = {Springer}
+}
+
+@article{klasnja2011elearning,
+  author  = {Klašnja-Milićević, Aleksandra and Vesin, Boban and Ivanović, Mirjana and Budimac, Zoran},
+  title   = {E-Learning Personalization Based on Hybrid Recommendation Strategy and Learning Style Identification},
+  journal = {Computers \& Education},
+  volume  = {56},
+  number  = {3},
+  pages   = {885--899},
+  year    = {2011}
+}
+
+% Knowledge tracing -- contrasted with the HLR/FSRS memory-decay approach adopted by Glosy
+@article{corbett1994knowledge,
+  author  = {Corbett, Albert T. and Anderson, John R.},
+  title   = {Knowledge Tracing: Modeling the Acquisition of Procedural Knowledge},
+  journal = {User Modeling and User-Adapted Interaction},
+  volume  = {4},
+  number  = {4},
+  pages   = {253--278},
+  year    = {1994}
 }
 
 % https://link.springer.com/chapter/10.1007/978-3-031-98459-4_19

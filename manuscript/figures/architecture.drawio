@@ -1,0 +1,51 @@
+<mxfile host="app.diagrams.net" version="24.7.5">
+  <diagram name="System Architecture" id="glosy-architecture">
+    <mxGraphModel dx="1200" dy="700" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="900" pageHeight="560" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <!-- Mobile Frontend -->
+        <mxCell id="frontend" value="Mobile Frontend&lt;br&gt;&lt;font style=&quot;font-size:11px&quot;&gt;React Native (Expo SDK 54)&lt;br&gt;Android / iOS&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontStyle=1;fontSize=14;arcSize=12;" vertex="1" parent="1">
+          <mxGeometry x="330" y="40" width="240" height="80" as="geometry" />
+        </mxCell>
+
+        <!-- Backend API -->
+        <mxCell id="backend" value="Backend API&lt;br&gt;&lt;font style=&quot;font-size:11px&quot;&gt;Node.js / Express (ESM)&lt;br&gt;&lt;b&gt;api.glosy.gr&lt;/b&gt;&lt;br&gt;Auth (JWT), Vocabulary,&lt;br&gt;Progress Sync, Dictionary&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontStyle=1;fontSize=14;arcSize=12;" vertex="1" parent="1">
+          <mxGeometry x="150" y="220" width="260" height="130" as="geometry" />
+        </mxCell>
+
+        <!-- Reels Service -->
+        <mxCell id="reels" value="Reels Service&lt;br&gt;&lt;font style=&quot;font-size:11px&quot;&gt;Python / FastAPI&lt;br&gt;&lt;b&gt;recs.glosy.gr&lt;/b&gt;&lt;br&gt;Recommendation Engine,&lt;br&gt;Reels + Dialogue Data&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontStyle=1;fontSize=14;arcSize=12;" vertex="1" parent="1">
+          <mxGeometry x="500" y="220" width="260" height="130" as="geometry" />
+        </mxCell>
+
+        <!-- PostgreSQL -->
+        <mxCell id="postgres" value="PostgreSQL 16&lt;br&gt;&lt;font style=&quot;font-size:11px&quot;&gt;thesis_db&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontStyle=1;fontSize=14;arcSize=12;shape=cylinder3;boundedLbl=1;size=15;" vertex="1" parent="1">
+          <mxGeometry x="325" y="420" width="250" height="90" as="geometry" />
+        </mxCell>
+
+        <!-- Frontend -> Backend -->
+        <mxCell id="e1" value="REST / JSON&lt;br&gt;JWT bearer" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;fontSize=11;exitX=0.25;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="frontend" target="backend">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Frontend -> Reels -->
+        <mxCell id="e2" value="REST / JSON&lt;br&gt;JWT bearer (optional)" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;fontSize=11;exitX=0.75;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="frontend" target="reels">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Backend -> Postgres -->
+        <mxCell id="e3" value="pg (node-postgres)" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;fontSize=11;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.25;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="backend" target="postgres">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Reels -> Postgres -->
+        <mxCell id="e4" value="SQLAlchemy (async)" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;fontSize=11;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.75;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="reels" target="postgres">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

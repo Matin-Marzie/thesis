@@ -1,25 +1,33 @@
 #!/usr/bin/env bash
-# Compile the thesis: pdflatex → bibtex → pdflatex × 2
+# Compile the thesis: lualatex → bibtex → lualatex × 2
+# LuaLaTeX (rather than pdflatex) is required for fontspec/Liberation Serif.
 # Run from the manuscript/ directory or from anywhere (script cd's automatically).
-
-set -e
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 cd "$SCRIPT_DIR"
 
 MAIN="thesis"
 
-echo "==> Pass 1: pdflatex"
-pdflatex -interaction=nonstopmode "$MAIN.tex"
+# Intermediate passes routinely "fail" (nonzero exit) on undefined
+# references/citations that later passes resolve, so don't abort on those;
+# only the final PDF's presence indicates real success.
+
+echo "==> Pass 1: lualatex"
+lualatex -interaction=nonstopmode "$MAIN.tex" || true
 
 echo "==> BibTeX"
-bibtex "$MAIN"
+bibtex "$MAIN" || true
 
-echo "==> Pass 2: pdflatex"
-pdflatex -interaction=nonstopmode "$MAIN.tex"
+echo "==> Pass 2: lualatex"
+lualatex -interaction=nonstopmode "$MAIN.tex" || true
 
-echo "==> Pass 3: pdflatex (resolves cross-references)"
-pdflatex -interaction=nonstopmode "$MAIN.tex"
+echo "==> Pass 3: lualatex (resolves cross-references)"
+lualatex -interaction=nonstopmode "$MAIN.tex" || true
 
 echo ""
-echo "Done. Output: $SCRIPT_DIR/$MAIN.pdf"
+if [ -f "$MAIN.pdf" ]; then
+  echo "Done. Output: $SCRIPT_DIR/$MAIN.pdf"
+else
+  echo "FAILED: no $MAIN.pdf was produced. See $MAIN.log for the fatal error."
+  exit 1
+fi
