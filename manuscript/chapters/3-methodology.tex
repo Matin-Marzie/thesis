@@ -1,11 +1,11 @@
 \section{System Overview}
-    
+
 
     \begin{itemize}
-        \item \textbf{Frontend:} 
-        \item \textbf{Backend API:} 
-        \item \textbf{Reels Service:} 
-        \item \textbf{Database:} 
+        \item \textbf{Frontend:}
+        \item \textbf{Backend API:}
+        \item \textbf{Reels Service:}
+        \item \textbf{Database:}
     \end{itemize}
 
     \begin{figure}[htbp]
@@ -17,64 +17,66 @@
 
 
 \section{Technology Stack}
-    \subsection{Frontend — React Native / Expo}
-    React Native was selected to enable cross-platform deployment from a single codebase without sacrificing the native rendering performance required for smooth video playback. Expo SDK 57 provides managed native modules for video (\texttt{expo-video}), secure credential storage (\texttt{expo-secure-store}), and build tooling (\texttt{eas-cli}). The application uses Expo Router (file-system-based navigation) and React Native Reanimated for gesture-driven animations in the game interfaces.
+\label{sec:tech_stack}
+    \subsection{Frontend --- React Native / Expo}
+    \label{subsec:frontend_stack}
 
-    \subsection{Backend — Node.js / Express}
-    The backend is implemented as an ES-module Node.js application using Express 4. This choice reflects the project's existing expertise in JavaScript and the maturity of the Express ecosystem for REST API development. Authentication is handled with JSON Web Tokens (JWT): a short-lived access token (15 minutes) and a long-lived refresh token (30 days) follow the standard rotation pattern. Google OAuth 2.0 is supported alongside email/password authentication via the \texttt{google-auth-library}. Input validation uses Joi schemas for every endpoint, and the API is documented with Swagger (OpenAPI 3.0) accessible at \texttt{/swagger}.
+    \subsection{Backend API --- Node.js / Express}
+    \label{subsec:backend_stack}
 
-    \subsection{Reels Service — Python / FastAPI}
-    The reels microservice is implemented in Python using FastAPI and SQLAlchemy (async). The separation from the main backend is motivated by the richer data-processing requirements of the reels pipeline: joining reels with their associated dialogues, sentences, per-token word data, and sentence translations in a single query is better expressed in SQLAlchemy's ORM than in raw SQL via the Node.js \texttt{pg} client.
+    \subsection{Reels Service --- Python / FastAPI}
+    \label{subsec:reels_stack}
 
-    \subsection{Database — PostgreSQL 16}
-    PostgreSQL was chosen for its support of complex relational queries, array operators, and procedural functions—all of which are used in the vocabulary bulk-initialisation and the planned recommendation engine. The full schema is maintained in \texttt{database/thesis\_db.sql}.
+    \subsection{Database --- PostgreSQL}
+    \label{subsec:db_stack}
 
 
 \section{Data Modelling} \label{sec:data_modelling}
-    The database schema models the domain along three axes: linguistic content, user state, and engagement signals.
+    \subsection{Linguistic Content}
+    \label{subsec:data_linguistic}
 
-    \textbf{Linguistic content} 
+    \subsection{User State}
+    \label{subsec:data_user_state}
 
-    \textbf{User state} is captured in two tables. \texttt{user\_languages} records each language pair a user is studying and \texttt{user\_vocabulary} is the core of the learner model.
+    \subsection{Engagement Signals}
+    \label{subsec:data_engagement}
 
-    \textbf{Engagement signals} are stored in \texttt{reel\_interactions}, which records views, likes, saves, comments, shares, and reports per (user, reel) pair. These signals are reserved for the personalised recommendation pipeline described in Section~\ref{sec:recommendation}.
 
 \section{Recommendation Engine Design} \label{sec:recommendation}
-    The recommendation engine is the theoretical core of the system. Its goal is to select, from the pool of available reels, those that are simultaneously \textit{comprehensible} (the learner knows enough vocabulary to follow the content) and \textit{pedagogically productive} (the reel contains words that are due for review or represent the next developmental step). The design follows a three-stage pipeline.
-
     \subsection{Stage 1: Comprehensibility Filtering}
-        For each candidate reel, the engine computes the proportion of the reel's unique word tokens that are present in the learner's vocabulary model at mastery level $\geq 1$. A reel passes the filter only if this proportion meets or exceeds 98\%, corresponding to Nation's \cite{nation2001learning} threshold for unassisted reading comprehension. This criterion implements the ZPD operationally: the learner encounters real language while remaining within a comprehensible range.
+    \label{subsec:stage1_design}
 
-        The content-based recommendation subsystem analyzes subtitle transcripts generated from short-form video units. Each transcript is tokenized, normalized, and mapped against the user's documented knowledge state in the \texttt{user\_vocabulary} table. The candidate reel scoring function prioritizes videos that satisfy the pedagogical constraint:
         \begin{equation}
             \text{Coverage}(U, R) = \frac{|V_R \cap V_U|}{|V_R|} \ge 0.98
         \end{equation}
         where $V_R$ is the unique set of lexical tokens in reel $R$, and $V_U$ represents the known vocabulary lexicon of user $U$.
 
-        The unified recommendation engine integrates content-based lexical filtering, collaborative behavioral patterns, and FSRS memory-decay state into a multi-objective ranking function:
-        \begin{equation}
-            S(U, R) = w_1 \cdot \text{ZPD\_Fit}(U, R) + w_2 \cdot \text{SRS\_Urgency}(U, R) + w_3 \cdot \text{CollaborativeScore}(U, R)
-        \end{equation}
-        This formulation ensures that recommendations balance conversational authenticity, immediate comprehensibility ($i+1$), and overdue vocabulary reinforcement.
+    \subsection{Stage 2: Spaced-Repetition Prioritisation}
+    \label{subsec:stage2_design}
 
-    \subsection{Stage 2: Spaced-Repetition Scoring}
+    \subsection{Stage 3: Content-Based Personalisation}
+    \label{subsec:stage3_design}
 
-    \subsection{Stage 3: Content Personalisation}
-    
-    
-    
+    \subsection{Combining the Three Stages: A Cascade, Not a Weighted Sum}
+    \label{subsec:cascade_design}
 
 
 \section{Gamification Design}
-    The gamification layer consists of two components: a progression system and two vocabulary-driven games.
+\label{sec:gamification_design}
+    \subsection{Progression Currencies: Coins, Energy, and Experience}
+    \label{subsec:currencies_design}
 
-    The \textbf{progression system} (XP), (Coins) provide a secondary reward currency redeemable for in-app benefits.
+    \subsection{Design Principle: Every Game Round Doubles as an FSRS Review}
+    \label{subsec:game_review_design}
+
 
 \section{Vocabulary-Driven Games}
-    
-    \subsection{Wordle-style Game}
-        %To DO: explain how the grid generater works, in the F Implementation section add the pseudocode of it.
-    \subsection{Word of Wonders}
+\label{sec:games_design}
+    \subsection{Wordle-Style Game}
+    \label{subsec:wordle_design}
+
+    \subsection{Word of Wonders (Crossword)}
+    \label{subsec:wow_design}
 
 
 \newpage

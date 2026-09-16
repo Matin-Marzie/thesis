@@ -18,6 +18,7 @@
         \item \textbf{Multi-language expansion:} The schema and service layer are language-agnostic (language is a foreign key throughout); adding a new language requires only content ingestion, not code changes.
         \item \textbf{Collaborative learning features:} Shared vocabulary challenges, leaderboards scoped to friend groups, and comment-driven vocabulary discussion on individual reels, supporting the social dimension of Vygotsky's theory.
         \item \textbf{Vocabulary synchronisation performance:} Replacing the serial per-word UPDATE loop in \texttt{syncController.js} with a bulk \texttt{INSERT ... ON CONFLICT DO UPDATE} statement to support large offline sessions without latency degradation.
+        % use Cache like Redis
     \end{itemize}
 
     
