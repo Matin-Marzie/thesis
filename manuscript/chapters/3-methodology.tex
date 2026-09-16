@@ -1,82 +1,121 @@
 \section{System Overview}
+\label{sec:system_overview}
 
+    \textit{Glosy} is designed as a three-service architecture in which a mobile frontend, a Node.js backend API, and a dedicated Python reels microservice each own a distinct part of the system's responsibilities, all three sharing a single PostgreSQL database. In development, the three services and the database are orchestrated together with Docker Compose: the backend API listens on port 3500, the reels service on port 3600, and PostgreSQL 16 on its default port, each built and reloaded independently of the others so a change to one service does not require restarting the rest of the stack.
 
     \begin{itemize}
-        \item \textbf{Frontend:}
-        \item \textbf{Backend API:}
-        \item \textbf{Reels Service:}
-        \item \textbf{Database:}
+        \item \textbf{Frontend:} A cross-platform mobile application built with React Native and Expo Router, targeting Android and iOS from a single JavaScript/TypeScript codebase, and responsible for the offline-first client state, the reels feed, and the two vocabulary-driven games.
+        \item \textbf{Backend API:} A Node.js/Express service responsible for authentication, user and vocabulary state, offline synchronisation, and the dictionary and letters modules.
+        \item \textbf{Reels Service:} A Python/FastAPI microservice responsible for serving reels together with their structured dialogue data, and for the three-stage recommendation engine that selects and ranks them per learner.
+        \item \textbf{Database:} A single PostgreSQL 16 instance, shared by both back-end services, whose schema encodes linguistic content, user state, and engagement signals (Section~\ref{sec:data_modelling}).
     \end{itemize}
 
-    \begin{figure}[htbp]
+    \begin{wrapfigure}{r}{0.38\textwidth}
         \centering
-        \includegraphics[width=0.85\textwidth]{figures/architecture.pdf}
+        \vspace{-0.5\baselineskip}
+        \includegraphics[width=\linewidth]{figures/architecture.jpg}
         \caption{High-level system architecture: the mobile frontend communicates with the Backend API (\texttt{api.glosy.gr}) and the Reels Service (\texttt{recs.glosy.gr}) over authenticated REST endpoints; both services share a single PostgreSQL instance.}
         \label{fig:architecture}
-    \end{figure}
+    \end{wrapfigure}
+    Splitting the reels service from the backend API is a deliberate choice rather than an accident of the codebase's history: the recommendation engine's queries --- joining a reel with its dialogue, sentences, per-token word data, and translations, then scoring the result against a learner's vocabulary and engagement history --- are naturally expressed as an object-relational query built up in code, which SQLAlchemy's async ORM supports directly, whereas the backend API's own queries are simple enough that raw parameterised SQL via the \texttt{pg} client remains the more direct choice. The two services therefore use different data-access strategies deliberately matched to the shape of the queries each one runs, rather than a single ORM standardised across the whole system.
+
+    A reel's duration is capped at 90 seconds at upload time, rejected outright by the reel-creation schema if exceeded; this is a direct application of the microlearning bound of Section~\ref{subsec:cognitive_load_microlearning}, keeping a single unit of video input short enough that it cannot itself exceed a learner's working-memory budget regardless of how much unfamiliar vocabulary it contains. Section~\ref{sec:games_design} describes the analogous bound on the other side of a learning episode, the games' own attempt and word-count limits.
 
 
 \section{Technology Stack}
 \label{sec:tech_stack}
     \subsection{Frontend --- React Native / Expo}
     \label{subsec:frontend_stack}
+    The frontend is built with React Native 0.86 and React 19, on Expo SDK 57, using Expo Router for file-system-based navigation between the application's five tabs and its onboarding, settings, and game routes. \texttt{expo-video} handles reel playback, \texttt{expo-secure-store} holds authentication tokens, and React Native Reanimated (4.5) drives the gesture-based interactions in the reels feed and the two games, together with \texttt{@gorhom/bottom-sheet} for the swipe-to-review prompt described in Section~\ref{subsec:game_review_design}. The FSRS scheduling itself (Section~\ref{subsec:cascade_design}) runs entirely on-device via \texttt{ts-fsrs}, a published TypeScript implementation of the algorithm reviewed in Section~\ref{subsubsec:fsrs}, rather than a bespoke implementation --- there is no pedagogical reason to re-derive difficulty/stability/retrievability update rules whose reference implementation is both open-source and already exercised against the FSRS benchmark.
 
     \subsection{Backend API --- Node.js / Express}
     \label{subsec:backend_stack}
+    The backend is a Node.js service on Express~4, communicating with PostgreSQL through the plain \texttt{pg} client rather than an ORM, since its own queries (per-row inserts/updates keyed by user and word id) do not benefit from an object-relational mapping layer the way the reels service's join-heavy queries do (Section~\ref{sec:system_overview}). Authentication combines JSON Web Tokens (short-lived access tokens, longer-lived refresh tokens, rotated via \texttt{jsonwebtoken}) with Google OAuth~2.0 (\texttt{google-auth-library}) as an alternative sign-in path; every request body is validated against a Joi schema before it reaches a controller, and the API is self-documented with Swagger/OpenAPI at \texttt{/swagger}. Video thumbnails are generated server-side with \texttt{fluent-ffmpeg} over a statically-bundled \texttt{ffmpeg} binary, and both the backend and the reels service read and write the same Cloudflare R2 (S3-compatible) object storage bucket through the AWS SDK's \texttt{S3Client}, so a reel's media is addressable identically regardless of which service produced it.
 
     \subsection{Reels Service --- Python / FastAPI}
     \label{subsec:reels_stack}
+    The reels service is a FastAPI application over Pydantic~2 for request/response validation and SQLAlchemy~2's async ORM (via \texttt{asyncpg}) for the join-heavy queries described in Section~\ref{sec:system_overview}. It does not run its own authentication: instead, \texttt{python-jose} decodes the same HS256-signed access tokens the Node backend issues, against the same shared secret, so a single login session is valid across both services without a second sign-in step or a token-exchange call between them. Stage~3 of the recommendation engine (Section~\ref{subsec:stage3_design}) is implemented with scikit-learn's \texttt{TfidfTransformer} and \texttt{cosine\_similarity}, a deliberately lightweight, CPU-only choice: the service runs on a 512~MB host, which rules out loading a full NLP pipeline (spaCy, Stanza, or Hazm) into every request worker purely to vectorise a reel's word-id bag. Sentence tokenisation and lemmatisation, which do need those heavier libraries, are instead performed offline by a separate backfill script rather than at request time, keeping the request path itself dependent only on scikit-learn's lightweight vectorisers.
 
     \subsection{Database --- PostgreSQL}
     \label{subsec:db_stack}
+    Both backend services share a single PostgreSQL~16 instance (Section~\ref{sec:system_overview}), chosen for its support of array operators, window functions, and common table expressions --- used throughout the vocabulary bulk-seeding logic of Section~\ref{subsec:registration_impl} --- over a lighter-weight embedded database that would not support these directly in SQL. The full schema is detailed in Section~\ref{sec:data_modelling} and Section~\ref{sec:db_schema}.
 
 
 \section{Data Modelling} \label{sec:data_modelling}
+    The schema is organised along the same three axes used throughout Chapter~\ref{chapter:related_work}'s theoretical framework: content that exists independently of any learner, the state the system tracks about a specific learner, and the signals a learner generates while engaging with that content.
+
+    \begin{figure}[htbp]
+        \centering
+        \includegraphics[width=\textwidth]{figures/database.jpg}
+        \caption{Entity-relationship diagram of the 21-table schema, grouped into the three axes of Section~\ref{sec:data_modelling}: Linguistic Content, User State, and Engagement Signals.}
+        \label{fig:database_schema}
+    \end{figure}
+
     \subsection{Linguistic Content}
     \label{subsec:data_linguistic}
+    This axis holds everything a learner can be shown, independent of who they are: \texttt{languages}, \texttt{words} (each tagged with a \texttt{level} drawn from the CEFR scale A1--C2 plus a small number of non-CEFR codes used elsewhere in the schema) and their \texttt{word\_translations}, \texttt{letters} for the alphabet-drill dictionary entries, \texttt{sentences} with per-token (\texttt{sentence\_tokens}) and per-language (\texttt{sentence\_translations}) annotation, \texttt{dialogues} that group sentences into a single reel's transcript, and \texttt{reels} themselves, which reference a dialogue and their creator but otherwise carry only media metadata (URL, thumbnail, duration). A reel's own row never records who it is comprehensible \emph{to}: comprehensibility is only ever computed relative to a specific learner's vocabulary at query time (Section~\ref{subsec:stage1_design}), not stored as a property of the reel itself, even though the reel row does reference the single user who created it.
 
     \subsection{User State}
     \label{subsec:data_user_state}
+    \texttt{users} carries authentication and profile fields alongside the two progression currencies from Section~\ref{subsec:currencies_design}, \texttt{coins} and \texttt{energy}. \texttt{user\_languages} records one row per (user, native language, learning language) triple, including a \texttt{proficiency\_level}, a per-language \texttt{experience} counter, and an \texttt{is\_current\_language} flag, since a learner may study more than one language but only one is active at a time. \texttt{user\_vocabulary} is the learner model proper: one row per (user, word) pair, carrying the full FSRS memory state reviewed in Section~\ref{subsubsec:fsrs} directly as columns --- \texttt{stability}, \texttt{difficulty}, \texttt{lapses}, \texttt{fsrs\_state}, \texttt{learning\_steps}, \texttt{review\_count}, and \texttt{next\_review\_at} --- so that "is this word due" is a plain column comparison rather than a value recomputed from a review history log on every read.
 
     \subsection{Engagement Signals}
     \label{subsec:data_engagement}
+    \texttt{reel\_interactions} records one row per (user, reel) pair, accumulating likes, saves, shares, and comments as boolean/text columns rather than a separate event-log table, plus the two bookkeeping fields Stage~1 and Stage~3 depend on directly: a \texttt{view\_count} distinguishing a genuine repeat view from the first, and a \texttt{last\_recommended\_at} timestamp used to exclude a reel already shown to this learner within the cooldown window (Section~\ref{subsec:stage1_design}). \texttt{reel\_reports} and \texttt{feedback} complete this axis, capturing moderation and product-feedback signals that do not feed the recommendation engine but share the same "signal generated by a learner about a piece of content" shape.
 
 
 \section{Recommendation Engine Design} \label{sec:recommendation}
+    The engine's goal is to select, from the pool of reels in the learner's target language, those that are simultaneously comprehensible, due for review, and matched to that learner's own demonstrated interests. It does so as a three-stage pipeline over a candidate pool scoped to the learner's language pair: a hard filter, followed by two re-ranking passes over the filter's survivors.
+
     \subsection{Stage 1: Comprehensibility Filtering}
     \label{subsec:stage1_design}
-
+    Every candidate reel is first checked against two independent conditions, either of which removes it from consideration outright. The first is recency: a reel already shown to this learner within a cooldown window is excluded, tracked via a \texttt{last\_recommended\_at} timestamp rather than an actual-viewing signal, since a genuine view is only confirmed after 2 seconds of continuous playback and would otherwise let an unwatched, scrolled-past reel block itself from ever being shown again. The second is the comprehensibility threshold operationalising Section~\ref{subsec:comprehensible_input}'s $i+1$ boundary directly:
         \begin{equation}
             \text{Coverage}(U, R) = \frac{|V_R \cap V_U|}{|V_R|} \ge 0.98
         \end{equation}
-        where $V_R$ is the unique set of lexical tokens in reel $R$, and $V_U$ represents the known vocabulary lexicon of user $U$.
+        where $V_R$ is the unique set of word ids in reel $R$'s transcript and $V_U$ is the set of word ids anywhere in learner $U$'s tracked vocabulary --- membership only, independent of each word's FSRS state, since comprehension depends on a word being recognisable at all, not on how due it is for review. This is the content-based filtering pattern reviewed in Section~\ref{subsec:content_based_filtering}: a reel's own lexical features scored against a profile built from this one learner's vocabulary, with no reference to any other learner. Every reel surviving both conditions carries its computed coverage forward as a \texttt{comprehensibility\_percentage}, displayed to the learner alongside the reel itself.
 
     \subsection{Stage 2: Spaced-Repetition Prioritisation}
     \label{subsec:stage2_design}
+    Because FSRS runs on-device (Section~\ref{subsec:frontend_stack}), the recommendation engine does not compute due words itself: the frontend supplies an ordered list of word ids currently due for review, oldest-due-first, with each request. Among Stage~1's survivors, a reel containing at least one of these words is preferred over one that does not --- re-ranking the survivor set rather than filtering it further, so that a learner is never shown fewer reels merely because none of them happen to contain a due word. This is the mechanism that closes the gap identified in Section~\ref{subsubsec:passive_consumption_gap}: watching a reel that happens to contain a due word is what triggers the in-context review step of Section~\ref{subsec:game_review_design}, giving passive viewing the scheduled, active-recall reinforcement it otherwise lacks. Once a page of reels is selected, due words are assigned back to specific reels on a first-due, first-assigned basis, so that a page carrying several due words can surface a distinct review prompt for each, rather than only ever reviewing the single most-overdue word.
 
     \subsection{Stage 3: Content-Based Personalisation}
     \label{subsec:stage3_design}
+    Within equal Stage~2 priority, survivors are further ranked by similarity to the learner's own engagement history --- a second content-based pass, not collaborative filtering (Section~\ref{subsec:cascade_hybrid}), since no other learner's data enters the computation. Each reel in the candidate pool is represented as a TF-IDF vector over its word-id bag (Section~\ref{subsec:reels_stack} motivates the choice of scikit-learn here on engineering, not only theoretical, grounds); the learner's profile vector is the weighted \emph{sum} (not an average --- there is no normalisation by total weight or interaction count) of the vectors of reels they have previously engaged with, weighted by the strength of that engagement (a comment or a save contributing more than a bare view), and candidates are ranked by cosine similarity to that profile. A learner with no engagement history yet simply has no profile vector, and this stage contributes no signal for them, rather than failing or substituting an arbitrary default.
 
     \subsection{Combining the Three Stages: A Cascade, Not a Weighted Sum}
     \label{subsec:cascade_design}
+    The three stages are combined as a \emph{cascade} in Burke's sense (Section~\ref{subsec:cascade_hybrid}), not a weighted linear combination: Stage~1 is a hard pass/fail filter, and Stages~2 and~3 together form a single sort key, (has-due-word, content-similarity), applied to Stage~1's survivors with a random tiebreak. Stage~2's binary flag is always the primary key and Stage~3's similarity only breaks ties within it, so a reel containing a due word is never outranked by one that merely resembles the learner's past engagement more closely. Both signals degrade gracefully to a constant when they have nothing to work with --- no word currently due, or no engagement history yet to build a profile from --- which turns that half of the sort key into a no-op rather than a failure; when neither stage has any signal at all, the ranking degrades cleanly to the same random selection a brand-new learner would have received before either signal existed.
 
 
 \section{Gamification Design}
 \label{sec:gamification_design}
+    Section~\ref{subsubsec:gbl_vs_gamification} distinguished decorative gamification --- points and streaks layered onto an unchanged drill --- from game-based learning, in which the reward layer is structural. \textit{Glosy}'s progression system is deliberately scoped to the former role only: a light extrinsic-motivation layer sitting on top of the two games and the reel-review loop, which are themselves where the game-based-learning argument of Chapter~\ref{chapter:related_work} is made.
+
     \subsection{Progression Currencies: Coins, Energy, and Experience}
     \label{subsec:currencies_design}
+    Three progression stats are tracked per user (or, for \texttt{experience}, per learning language): coins, energy, and experience. Of the three, only coins currently have a complete reward loop: a learner earns coins for rating a spaced-repetition review prompt after watching a reel (Section~\ref{subsec:game_review_design}) and for winning a round of either game. The coin amounts are not yet unified into a single reward schedule, however --- the review prompt and a Word of Wonders win both award a flat 20 coins, while Wordle awards 5 coins for a win and 1 for a loss --- a discrepancy worth reconciling into a single schedule rather than a deliberate design choice.
+
+    Energy and experience, by contrast, are present in the data model, synced between client and server, and displayed in the profile and header UI, but have no gameplay loop attached to them yet: no screen in the application currently spends energy to start a round, and no action currently increments experience. The schema and configuration already anticipate more than is implemented --- \texttt{users} carries an \texttt{energy\_updated\_at} timestamp alongside \texttt{coins\_updated\_at}, and the backend defines \texttt{MAX\_ENERGY} and \texttt{ENERGY\_REGEN\_INTERVAL} environment variables --- but no code path on either the client or the server currently reads them to compute a regenerated value, and the stored default for a new user's energy (100) does not match the validated cap those settings imply (5). These two currencies should be read as scaffolding for a future energy-gated play loop, not as an oversight discovered late; Chapter~\ref{chapter:conclusions} returns to this as a direction for future work.
 
     \subsection{Design Principle: Every Game Round Doubles as an FSRS Review}
     \label{subsec:game_review_design}
+    Both vocabulary-driven games and the reel-review prompt share one design rule: the word being tested is always drawn from the learner's own tracked vocabulary, and preferentially from the words FSRS currently marks as due, rather than from the full dictionary or an arbitrary in-game selection. This is the direct operationalisation of Section~\ref{subsec:testing_effect}'s testing effect and the gap identified in Section~\ref{subsubsec:passive_consumption_gap}: a game round is not merely themed around vocabulary, it \emph{is} the productive-retrieval review step that closes that gap, with the game's win condition and the FSRS review coinciding rather than sitting side by side.
+
+    The two games apply this rule differently, however, rather than sharing one uniform mechanism. Word of Wonders only ever treats the practice word as a graded FSRS review, surfacing the learner-facing Forgot/Hard/Good/Easy prompt of Section~\ref{subsec:game_review_design} on its finish screen, when that word actually came from the due-word queue --- finding the board's practice word when nothing was due is not graded at all. The Wordle-style game does not use that self-graded prompt in any case: finding the secret word within the attempt limit is always recorded as a successful review (a fixed \texttt{Good} rating) regardless of whether the word was genuinely due or a random tracked fallback, and running out of attempts leaves the word's FSRS state untouched rather than recording a failed review. Word of Wonders' gate exists precisely to avoid the corruption a uniform rule would otherwise risk --- grading a word that was never due would inject a review event that should not exist --- while Wordle accepts that risk in exchange for a simpler, ungraded win/loss outcome; Section~\ref{subsec:wordle_impl} and Section~\ref{subsec:wow_impl} detail each mechanism concretely.
 
 
 \section{Vocabulary-Driven Games}
 \label{sec:games_design}
+    Both games realise the word-reconstruction format motivated in Section~\ref{subsubsec:active_recall_games}: the player recalls and produces a word letter-by-letter rather than recognising it among distractors, and in both games that word is drawn from the learner's own tracked vocabulary under the rule of Section~\ref{subsec:game_review_design}. Each is also bounded in scope for the same microlearning reason as the 90-second reel cap of Section~\ref{sec:system_overview}: Wordle limits a round to six guesses, and Word of Wonders caps both the number of words placed on a board and the size of the shared letter pool a learner must scan (Section~\ref{subsec:wow_impl}), so neither game's single round can grow into a long-form session at odds with Section~\ref{subsec:cognitive_load_microlearning}'s account of bounded working memory.
+
     \subsection{Wordle-Style Game}
     \label{subsec:wordle_design}
+    The learner has six attempts to guess a five-letter secret word, with each guess coloured letter-by-letter as correct, present-elsewhere, or absent, following the now-familiar Wordle mechanic. What distinguishes it from a generic port of that mechanic is that it is genuinely multilingual rather than English-only with translated labels: each of the three supported languages (English, Greek, Farsi) has its own letter-validity pattern restricting guesses to that language's script, its own on-screen keyboard layout, and, for Farsi, a right-to-left board and keyboard rather than a mirrored English one. This matters pedagogically as well as cosmetically: a Greek or Farsi learner is guessing within their target language's own orthography, not a Latin-script approximation of it.
 
     \subsection{Word of Wonders (Crossword)}
     \label{subsec:wow_design}
+    Word of Wonders places the practice word --- the due word, or a random tracked fallback (Section~\ref{subsec:game_review_design}) --- on a grid alongside several other words from the same learner's tracked vocabulary, each intersecting the others at a shared letter, in the style of a crossword. Where Wordle exercises one word per round, Word of Wonders' board therefore reinforces several previously-introduced words simultaneously around the single word under FSRS review, at the cost of a puzzle that takes visibly longer to solve; the concrete placement algorithm, and the letter-budget constraint that keeps that trade-off bounded, are detailed in Section~\ref{subsec:wow_impl}. A secondary "extra words" mechanic rewards the learner for continuing to explore the revealed letters after the placed words are found --- any additional valid word spelt out by the board's letters counts towards a bonus, paid out in batches --- extending engagement with the same board past the point where the due-word review is technically already complete.
 
 
 \newpage
