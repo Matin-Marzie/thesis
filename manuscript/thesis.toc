@@ -29,9 +29,9 @@
 \contentsline {subsection}{\numberline {B.2.4}Memory Decay and Spaced Repetition Models}{11}{}%
 \contentsline {subsubsection}{\numberline {B.2.4.1}The Ebbinghaus Forgetting Curve}{11}{}%
 \contentsline {subsubsection}{\numberline {B.2.4.2}Classic Leitner's Algorithm}{12}{}%
-\contentsline {subsubsection}{\numberline {B.2.4.3}Parametric Half-Life Regression}{12}{}%
+\contentsline {subsubsection}{\numberline {B.2.4.3}Parametric Half-Life Regression}{13}{}%
 \contentsline {subsubsection}{\numberline {B.2.4.4}FSRS and the DHP Model}{13}{}%
-\contentsline {paragraph}{The forgetting curve.}{13}{}%
+\contentsline {paragraph}{The forgetting curve.}{14}{}%
 \contentsline {paragraph}{Initial state and difficulty updates.}{14}{}%
 \contentsline {paragraph}{Stability updates.}{14}{}%
 \contentsline {paragraph}{Same-day reviews (FSRS-6).}{15}{}%

@@ -34,7 +34,9 @@
 
     \subsection{Reels Service --- Python / FastAPI}
     \label{subsec:reels_stack}
+    \begin{sloppypar}
     The reels service is a FastAPI application over Pydantic~2 for request/response validation and SQLAlchemy~2's async ORM (via \texttt{asyncpg}) for the join-heavy queries described in Section~\ref{sec:system_overview}. It does not run its own authentication: instead, \texttt{python-jose} decodes the same HS256-signed access tokens the Node backend issues, against the same shared secret, so a single login session is valid across both services without a second sign-in step or a token-exchange call between them. Stage~3 of the recommendation engine (Section~\ref{subsec:stage3_design}) is implemented with scikit-learn's \texttt{TfidfTransformer} and \texttt{cosine\_similarity}, a deliberately lightweight, CPU-only choice: the service runs on a 512~MB host, which rules out loading a full NLP pipeline (spaCy, Stanza, or Hazm) into every request worker purely to vectorise a reel's word-id bag. Sentence tokenisation and lemmatisation, which do need those heavier libraries, are instead performed offline by a separate backfill script rather than at request time, keeping the request path itself dependent only on scikit-learn's lightweight vectorisers.
+    \end{sloppypar}
 
     \subsection{Database --- PostgreSQL}
     \label{subsec:db_stack}
@@ -57,7 +59,9 @@
 
     \subsection{User State}
     \label{subsec:data_user_state}
+    \begin{sloppypar}
     \texttt{users} carries authentication and profile fields alongside the two progression currencies from Section~\ref{subsec:currencies_design}, \texttt{coins} and \texttt{energy}. \texttt{user\_languages} records one row per (user, native language, learning language) triple, including a \texttt{proficiency\_level}, a per-language \texttt{experience} counter, and an \texttt{is\_current\_language} flag, since a learner may study more than one language but only one is active at a time. \texttt{user\_vocabulary} is the learner model proper: one row per (user, word) pair, carrying the full FSRS memory state reviewed in Section~\ref{subsubsec:fsrs} directly as columns --- \texttt{stability}, \texttt{difficulty}, \texttt{lapses}, \texttt{fsrs\_state}, \texttt{learning\_steps}, \texttt{review\_count}, and \texttt{next\_review\_at} --- so that "is this word due" is a plain column comparison rather than a value recomputed from a review history log on every read.
+    \end{sloppypar}
 
     \subsection{Engagement Signals}
     \label{subsec:data_engagement}

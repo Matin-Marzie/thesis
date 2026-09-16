@@ -36,6 +36,7 @@
         \small
         \caption{Comparative feature matrix: Established LLPs vs. Glosy framework.}
         \label{tab:platform_comparison}
+        \resizebox{\textwidth}{!}{%
         \begin{tabular}{lcccccc}
             \hline
             \textbf{Feature / Dimension}            & \textbf{Duolingo} & \textbf{Memrise} & \textbf{Busuu} & \textbf{Babbel} & \textbf{LingQ} & \textbf{Glosy} \\
@@ -49,7 +50,8 @@
             Open-source                             & No                & No               & No             & No              & No             & \textbf{Yes}   \\
             Novice (A0--A1) Onboarding Ease          & High              & High             & High           & High            & Low            & \textbf{Low}   \\
             \hline
-        \end{tabular}
+        \end{tabular}%
+        }
     \end{table}
 
     The remainder of this chapter builds the theoretical foundation from which the \textit{Glosy} design responds to each of these six limitations: Section~\ref{sec:pedagogical_foundations} establishes the pedagogical theory, Section~\ref{sec:modalities} reviews the two content modalities (short-form video and serious games) through which that theory is delivered, and Section~\ref{sec:recommendation_algorithms} reviews the algorithmic frameworks that select and sequence content for the individual learner. Section~\ref{sec:synthesis} closes the chapter by mapping each theoretical foundation explicitly onto a corresponding design decision realised in Chapter~\ref{methodology}.
@@ -94,7 +96,9 @@
             \caption{The forgetting curve, with original data from Ebbinghaus \cite{ebbinghaus1885memory}, as replotted by Murre and Dros \cite{murre2015replication}. Image: Jaap M. J. Murre, Wikimedia Commons, CC BY 4.0.}
             \label{fig:ebbinghaus_curve}
         \end{wrapfigure}
+        \begin{sloppypar}
         Ebbinghaus's foundational experiments on nonsense-syllable recall demonstrated that memory retention decays over time in the absence of reinforcement, most rapidly immediately after initial exposure and more slowly thereafter \cite{ebbinghaus1885memory}. Although Ebbinghaus's own savings-method data did not yield a single closed-form expression, later reconstructions commonly approximate the resulting \emph{forgetting curve} as a negative exponential function of elapsed time $t$ and a memory-strength parameter $S$: retention $R(t) = e^{-t/S}$, where a larger $S$ corresponds to a more durably consolidated memory. This exponential-decay account is the shared theoretical ancestor of every spaced-repetition model reviewed below: each attempts, with increasing sophistication, to estimate the parameters of an individual learner's own decay curve for an individual item, and to schedule review immediately before predicted recall failure.
+        \end{sloppypar}
 
         \subsubsection{Classic Leitner's Algorithm}
         \label{subsubsec:leitner}
@@ -246,24 +250,24 @@
             \hline
             ZPD (\ref{subsec:sociocultural_theory}) \& Input Hypothesis (\ref{subsec:comprehensible_input}) &
             Recommend content at the $i+1$ comprehensibility boundary &
-            Stage 1: Comprehensibility Filtering, 98\% lexical coverage (Sec.~\ref{sec:recommendation}) \\
+            Stage 1: Comprehensibility Filtering, 98\% lexical coverage (Sec.~\ref{subsec:stage1_design}) \\
             \hline
             Cognitive Load Theory \& Microlearning (\ref{subsec:cognitive_load_microlearning}) &
             Bound each learning episode to a short, self-contained unit &
-            Reel length and game session length constraints \\
+            90-second reel cap; Wordle attempt limit; Word of Wonders word/letter caps (Sec.~\ref{sec:system_overview}, Sec.~\ref{sec:games_design}) \\
             \hline
             Forgetting Curve \& Spaced Repetition (\ref{subsec:srs_models}) &
             Schedule review before predicted recall failure &
-            Stage 2: SRS Scoring, \texttt{SRS\_Urgency} term (Sec.~\ref{sec:recommendation}) \\
+            Stage 2: Spaced-Repetition Prioritisation, due-word partitioning (Sec.~\ref{subsec:stage2_design}) \\
             \hline
             Testing Effect (\ref{subsec:testing_effect}) \&
             Game-Based Learning (\ref{subsec:serious_games}) &
             Require productive retrieval, not passive recognition &
-            Wordle-style and Word-of-Wonders vocabulary games (Sec.~\ref{sec:recommendation}) \\
+            Wordle-style and Word of Wonders vocabulary games (Sec.~\ref{sec:games_design}) \\
             \hline
             Cascade Hybrid Recommender (\ref{subsec:cascade_hybrid}) &
             Filter by comprehensibility, partition by due-for-review, break ties by engagement-weighted content similarity &
-            Stage 1--3 cascade ranking (Sec.~\ref{sec:recommendation}) \\
+            Stage 1--3 cascade ranking (Sec.~\ref{subsec:cascade_design}) \\
             \hline
             Sociocultural Theory (\ref{subsec:sociocultural_theory}) &
             Provide social scaffolding for culturally-opaque authentic input &

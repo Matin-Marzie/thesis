@@ -1,78 +1,176 @@
 \section{Database Schema}
 \label{sec:db_schema}
+    The schema comprises 21 tables in a single PostgreSQL~16 database (Section~\ref{subsec:db_stack}), organised below along the same three axes introduced in Section~\ref{sec:data_modelling}.
+
     \subsection{Linguistic Content Tables}
     \label{subsec:schema_linguistic}
+    \texttt{languages}, \texttt{words} and \texttt{word\_translations}, and \texttt{letters} hold the base vocabulary. A sentence's text lives in \texttt{sentences}, its per-word annotation in \texttt{sentence\_tokens} (word id, position, part of speech), and its cross-language equivalents in \texttt{sentence\_translations}. \texttt{dialogues} groups an ordered sequence of sentences via \texttt{dialogue\_sentences} (which also carries each sentence's \texttt{start\_time\_ms}/\texttt{end\_time\_ms} within the video), and \texttt{reels} references exactly one dialogue alongside its media URL, thumbnail, duration, and creator. Rather than re-joining \texttt{sentences}, \texttt{sentence\_tokens}, and \texttt{sentence\_translations} on every read, \texttt{dialogues} additionally carries a denormalised \texttt{sentences\_json} column: a precomputed snapshot of the full dialogue, tokens and all-language translations included, written once when a reel's subtitles are created or edited and read directly thereafter (Section~\ref{subsec:reel_creation_impl}).
 
     \subsection{User State Tables}
     \label{subsec:schema_user_state}
+    \begin{sloppypar}
+    \texttt{users} holds authentication fields and the two implemented-and-scaffolded progression currencies of Section~\ref{subsec:currencies_design} (\texttt{coins}, \texttt{energy}, each with its own \texttt{\_updated\_at} timestamp). \texttt{user\_languages} records one row per language pair a user studies, with its own \texttt{proficiency\_level} and \texttt{experience}. \texttt{user\_vocabulary} is the FSRS learner model described in Section~\ref{subsec:data_user_state}, carrying \texttt{stability}, \texttt{difficulty}, \texttt{lapses}, \texttt{fsrs\_state}, and \texttt{learning\_steps} directly as columns. \texttt{user\_sentences} tracks per-sentence progress on a separate, coarser scheme: a \texttt{mastery\_level} between 1 and 6, alongside its own \texttt{review\_count} and \texttt{next\_review\_at}, distinct from \texttt{user\_vocabulary}'s continuous FSRS state. \texttt{refresh\_tokens} (family-scoped, for the rotation scheme of Section~\ref{subsec:auth_impl}), \texttt{password\_reset\_codes}, and \texttt{email\_verification\_codes} round out this axis with authentication-adjacent state.
+    \end{sloppypar}
 
     \subsection{Engagement Signal Tables}
     \label{subsec:schema_engagement}
+    \begin{sloppypar}
+    \texttt{reel\_interactions} carries one row per (user, reel) pair: boolean \texttt{is\_liked}/\texttt{is\_saved}/\texttt{is\_shared} flags, an optional \texttt{comment}, a \texttt{view\_count}, and the \texttt{last\_recommended\_at} timestamp Stage~1 filters on (Section~\ref{subsec:stage1_design}). \texttt{reel\_reports} and \texttt{feedback} record moderation reports and free-form product feedback respectively; neither feeds the recommendation engine, but both share this axis's shape of a learner-generated signal attached to a specific piece of content.
+    \end{sloppypar}
 
 
 \section{Backend API}
 \label{sec:backend_api}
-    The API has been documented using Swagger/OpenAPI. The documentation is available at \texttt{/swagger} endpoint.
+    The API is documented with Swagger/OpenAPI, generated from JSDoc annotations on each route and served at \texttt{/swagger}. Every request body is validated against a Joi schema before it reaches a controller (Section~\ref{subsec:backend_stack}), and large, uniform list responses --- the dictionary word list and a learner's vocabulary state --- are serialised in a columnar \{\texttt{columns}, \texttt{rows}\} shape rather than one JSON object per row, avoiding repeated field names across thousands of otherwise identically-shaped entries.
 
     \subsection{Authentication and Authorization}
     \label{subsec:auth_impl}
         \subsubsection{JWT Access/Refresh Token Rotation}
+        \begin{sloppypar}
+        Login and registration issue a short-lived access token and a longer-lived refresh token. Rather than storing refresh tokens verbatim, the \texttt{refresh\_tokens} table stores only a hash of each one, grouped into rotation \emph{families} by a \texttt{family\_id}. Every use of \texttt{POST /refresh} runs a single atomic operation: it locks the presented token's row (\texttt{SELECT~...~FOR~UPDATE}, inside a transaction, so two concurrent refresh attempts against the same token cannot race each other), and then branches on that row's state:
+        \begin{itemize}
+            \item if the row is already \texttt{revoked}, the presented token has already been rotated away once before --- a replay of an old token --- so every active token in that family is revoked immediately and the request is rejected;
+            \item if the row is unrevoked but past \texttt{expires\_at}, the family is revoked and the request is rejected;
+            \item otherwise, a new token row is inserted into the same family, copying the original \texttt{expires\_at} verbatim so a session's absolute lifetime never resets on activity, the presented row is marked revoked with a \texttt{replaced\_by\_id} pointer to the new one, and the new access/refresh pair is returned.
+        \end{itemize}
+        This gives the family reuse-detection property standard to refresh-token rotation: a stolen refresh token is only usable once before the legitimate client's next refresh attempt discovers the token has already moved on and revokes the whole family, rather than the theft going undetected indefinitely.
+        \end{sloppypar}
+
         \subsubsection{Google OAuth 2.0}
+        \begin{sloppypar}
+        \texttt{verifyGoogleToken} middleware validates a client-supplied Google ID token against the OAuth client id registered for the requesting platform, using \texttt{google-auth-library}'s \texttt{OAuth2Client.verifyIdToken}, before either the login or registration controller runs. On success it attaches the decoded profile (Google id, email, name, picture) to the request; the downstream controller then finds-or-creates a user keyed by that Google id exactly as it would for a password-based account, so both sign-in paths converge on the same JWT issuance logic described above.
+        \end{sloppypar}
 
     \subsection{Registration and Vocabulary Initialisation}
     \label{subsec:registration_impl}
+    Registration requires a verified email address: a code sent to the address must be confirmed against a hashed, expiring, attempt-limited pending record before any user row is created, and the pending record is deleted on success so the code cannot be reused. The username is derived from the email's local part, with two disambiguating fallback variations (an underscore or dot plus a numeric suffix) tried in sequence if the plain form is already taken.
+
         \subsubsection{Proficiency-Based Vocabulary Auto-Seeding}
+        \begin{sloppypar}
+        Immediately after a new language pair is created, if the learner declared a proficiency level above the lowest, \texttt{userVocabularyModel.addByProficiencyLevel} seeds \texttt{user\_vocabulary} with every word at a level below their stated one, on the assumption that a self-declared B1 learner already knows their A1 and A2 vocabulary without having reviewed it inside \textit{Glosy}. Seeded words are inserted directly into FSRS's Review state rather than New, with an initial stability drawn --- uniformly at random per word, via a single SQL \texttt{CASE} expression keyed on each word's own level --- from a range that widens with distance below the target level (up to 7 days for the level immediately below, 20 for two levels below, 60 for three or more): a word closer to the learner's stated level is assumed more recently and less thoroughly reinforced than one several levels more elementary. Randomising per word rather than assigning one flat value per level matters operationally as much as pedagogically: without it, an entire level's worth of seeded words --- potentially thousands, for a learner who declares a high starting level --- would all share the same \texttt{next\_review\_at} and become due for review on the exact same day.
+        \end{sloppypar}
 
     \subsection{Offline Synchronisation}
     \label{subsec:sync_impl}
+    \begin{sloppypar}
+    A single \texttt{POST /sync} endpoint reconciles everything the frontend's offline-first client (Section~\ref{subsec:offline_impl}) has accumulated since its last successful sync: updated \texttt{user\_progress} (coins, energy), and \texttt{vocabulary\_changes}/\texttt{sentence\_changes}, each split into \texttt{inserts}, \texttt{updates}, and \texttt{deletes} keyed by word or sentence id.
+    \end{sloppypar}
+
         \subsubsection{Change-Set Ordering: Deletes, Updates, Inserts}
+        \begin{sloppypar}
+        Within each change-set, the three operations are applied in a fixed order --- deletes, then updates, then inserts --- rather than in whatever order the client happened to record them. This ordering is what makes the endpoint correct in the presence of a delete-then-recreate on the same word or sentence id during one offline session (a learner removing a tracked word and later re-adding it before ever reconnecting): applying the delete first and the insert last guarantees the row exists with the client's latest state once the request completes, regardless of the order the two actions occurred in on-device. Vocabulary updates are currently applied one word at a time in a per-row loop rather than as a single batched statement; Chapter~\ref{chapter:conclusions} identifies replacing this with a bulk \texttt{INSERT~...~ON~CONFLICT~DO~UPDATE} as a concrete performance target for large offline sessions.
+        \end{sloppypar}
 
     \subsection{Dictionary and Letters Modules}
     \label{subsec:dictionary_impl}
+    The dictionary endpoints serve a language's full word list, optionally joined with translations into a second language, keyed by ISO language code and validated against a fixed three-language enum (English, Farsi, Greek) hard-coded into the request schema, rather than a live lookup against whichever languages happen to be present in the database at the time. The letters module serves each language's alphabet as its own lightweight dictionary --- vowels and consonants for Farsi split further into short/long forms, per the RTL and script-specific handling already noted for the Wordle-style game (Section~\ref{subsec:wordle_design}) --- so that alphabet drills can reuse the same word-list UI components as ordinary vocabulary instead of a bespoke screen.
 
 
 \section{Frontend Architecture}
 \label{sec:frontend_arch}
     \subsection{Navigation and Screen Structure}
     \label{subsec:navigation_impl}
+    Expo Router maps the file system directly onto the navigation tree. The five tabs from Section~\ref{sec:system_overview} --- Home, Reels, Create, Practice, Profile --- sit under a single \texttt{(tabs)} route group, each independently stackable (Create, for instance, pushes a details and a subtitle-sync screen on top of its own tab without affecting the other four); onboarding, settings, and the two full-screen games each live under their own top-level route group outside the tab bar, since none of them should show tab chrome while active.
 
     \subsection{State Management: Context and Hooks}
     \label{subsec:state_mgmt_impl}
+    Vocabulary state is split across two parallel structures rather than one: \texttt{userVocabulary} itself (keyed by word id, holding each word's FSRS fields) and a separate \texttt{vocabularyChanges} object recording only the inserts/updates/deletes made since the last successful sync. A single dispatch function updates both together for an ordinary edit, through two separate reducers, so the change-set is always an accurate diff rather than something reconstructed by re-comparing full snapshots at sync time. Two call sites deliberately bypass the change-set half of this: \texttt{bulkAddVocabulary}, used for onboarding auto-fill, since that seed mirrors what the backend's own proficiency-based auto-seed (Section~\ref{subsec:registration_impl}) already creates server-side and so is not itself a change to push back; and \texttt{reviewWord}, which computes a word's next FSRS state on-device via \texttt{scheduleReview} (Section~\ref{subsec:frontend_stack}) and dispatches it as an ordinary \texttt{UPDATE} --- a graded spaced-repetition review is not treated as a special kind of state change requiring its own sync path, it is simply an update to the same fields any manual edit would touch.
 
     \subsection{Offline-First Strategy}
     \label{subsec:offline_impl}
+    Every piece of state that must survive an app restart --- vocabulary, its pending change-set, sentences, user progress --- is held through a shared \texttt{usePersistedState} hook backed by AsyncStorage, each exposing an \texttt{isLoaded} flag so dependent logic (most importantly, sync) can wait for disk hydration to finish before deciding anything is dirty. \texttt{useBackendSync} generalises over an arbitrary list of such change-sets and pushes them to \texttt{POST /sync} (Section~\ref{subsec:sync_impl}) under three independent triggers: a five-minute interval while changes are pending, the instant \texttt{isOnline} transitions from false to true, and the app moving to the background --- covering the periodic case, the reconnection case, and the "about to be suspended, don't lose this" case respectively, rather than relying on any one of them alone. Dirtiness itself is tracked precisely rather than optimistically: a change to \texttt{coins} or \texttt{energy} is only flagged when its actual value diverges from the last value known to be reflected server-side, so that a reference-only update to \texttt{userProgress} --- switching the active language, or applying a fresh snapshot the server itself just returned --- does not mark anything dirty and trigger a needless sync. A failed sync leaves its change-sets marked dirty for the next trigger to retry, surfaces an error banner once rather than on every retry, and treats an HTTP 401 as "this session is over," clearing the dirty flag rather than retrying a request that will never succeed until the learner logs in again.
 
 
 \section{Reels Service}
 \label{sec:reels_service_impl}
     \subsection{Service Architecture}
     \label{subsec:reels_arch_impl}
-    The reels microservice (\texttt{reels-service/}) is a FastAPI python application.
+    \begin{sloppypar}
+    The reels microservice (\texttt{reels-service/}) follows a conventional FastAPI layering: \texttt{routers} parse and validate the HTTP layer only, delegating immediately to a \texttt{services} class holding the actual business logic (\texttt{ReelService} for reading/recommending reels, \texttt{ReelCreationService} for writing them), which in turn operates on SQLAlchemy \texttt{models} through Pydantic \texttt{schemas} at the boundary. \texttt{GET /reels} is deliberately dual-mode: it decodes the same JWT the Node backend issues (Section~\ref{subsec:auth_impl}) if one is present, but does not require it, so an unauthenticated request still gets a working reels feed via \texttt{get\_random\_reels} while an authenticated one gets the full recommendation pipeline via \texttt{get\_personalized\_reels} --- there is no separate "guest mode" flag anywhere in the request, only the presence or absence of a decodable token.
+    \end{sloppypar}
 
     \subsection{Reel Creation and Dialogue Enrichment}
     \label{subsec:reel_creation_impl}
-    Each uploaded reel response embeds the full dialogue associated with the reel's video content.
+    \begin{sloppypar}
+    Creating a reel with its subtitles is one all-or-nothing transaction: a \texttt{dialogues} row, one \texttt{sentences} row per subtitle line (reusing an existing row for identical text in that language rather than duplicating it), one \texttt{dialogue\_sentences} row per line carrying its millisecond-precise start/end time, and any translation lines linked in via \texttt{sentence\_translations}. A line's position in the client-supplied array, not any position value the client sends, determines its stored \texttt{position}, so a malformed or out-of-order request can never violate the dialogue's position ordering. Tokenising each sentence into \texttt{sentence\_tokens} --- which requires the lemmatisation libraries Section~\ref{subsec:reels_stack} deliberately keeps out of this service's live request path --- does not happen at creation time; a newly-created reel's dialogue therefore has no per-word token data until a separate offline script backfills it. What \emph{is} computed immediately, in the same transaction, is the \texttt{sentences\_json} denormalisation of Section~\ref{subsec:schema_linguistic}: one aggregating SQL query rebuilds the dialogue's full JSON snapshot --- text, every language's translations, and whatever tokens already exist --- once, at write time, rather than reassembling it from four joined tables on every subsequent read. Editing a published reel's subtitles (\texttt{PUT /reel/\{id\}/dialogue}) reuses the identical insert logic over the new lines, after first clearing the dialogue's existing \texttt{dialogue\_sentences} links, and recomputes the same JSON snapshot.
+    \end{sloppypar}
 
     \subsection{Recommendation Engine Implementation}
     \label{subsec:recommendation_impl}
-        \subsubsection{Stage 1: SQL-Level Comprehensibility Filtering}
+        \subsubsection{Stage 1: Candidate Loading and Comprehensibility Scoring}
+        The candidate pool for a request is every reel in the learner's target language, loaded with its language, creator, and dialogue eager-loaded in one query --- the catalog is small enough at present that scoring the whole pool in application code is acceptable, a scaling assumption Section~\ref{subsec:personalisation_status} returns to. Two SQL-backed exclusions run first: reels already recommended to this learner within the cooldown window (a \texttt{reel\_interactions.last\_recommended\_at} lookup), and, separately, whether the learner has a \texttt{user\_languages} row for this pair at all --- if not, the request falls through entirely to the same unauthenticated \texttt{get\_random\_reels} path a guest gets, since there is no tracked vocabulary yet to filter on. For each surviving candidate, its unique word-id set is extracted from the cached \texttt{sentences\_json} in Python (no query, since it is already in memory) and intersected against the learner's known-word set, also fetched once per request; a candidate passes only once that ratio reaches \texttt{COMPREHENSIBILITY\_THRESHOLD} (0.98, Section~\ref{subsec:stage1_design}). A reel with no tokens yet --- one whose dialogue has not been through the offline tokenisation backfill --- cannot be measured against this threshold at all, and is excluded rather than assumed comprehensible.
+
         \subsubsection{Stage 2: Frontend-Supplied Due-Word Partitioning}
+        The engine never computes which words are due itself: \texttt{due\_word\_ids} arrives as a comma-separated, oldest-first query parameter, populated from the on-device FSRS state of Section~\ref{subsec:offline_impl}. Stage~1's survivors are partitioned by simple set membership --- does this reel's word-id set intersect the due-word set at all --- and that boolean, not the number or identity of due words matched, is the primary key of the sort described next. Once a page is selected, due words are assigned back to specific reels oldest-first, each to the first still-unclaimed reel in that page containing it, so that a single response can carry a distinct review prompt for more than one due word rather than only ever the single most-overdue one.
+
         \subsubsection{Stage 3: TF-IDF Profile Vectors and Cosine Similarity}
+        Every candidate's word-id bag is vectorised together, over the whole pool rather than per-request, so that the TF-IDF weighting's inverse-document-frequency term reflects the full catalog and not just one learner's survivors: \texttt{DictVectorizer} turns each reel's \{word\_id: count\} mapping into a sparse count matrix, and \texttt{TfidfTransformer} weights it. The learner's profile vector is the sum of the TF-IDF rows for every reel they have previously interacted with, each row scaled by that interaction's weight (a flat 0.2 for a bare view, stacked with 1.0 for a like, 1.5 for a save, 1.0 for a share, and 1.5 for a comment, so a single heavily-engaged reel can outweigh several passive views); a learner with no interaction history yet simply has no profile vector, and \texttt{cosine\_similarity} is skipped rather than computed against a zero vector.
+
+        Stages~2 and~3 are combined as a single sort key over Stage~1's survivors, \texttt{(has\_due\_word, similarity)}, applied after a random shuffle so equally-ranked candidates do not always resolve in the same order: this is Python's ordinary stable tuple sort, not a weighted formula (Section~\ref{subsec:cascade_design}). When a request has neither a due-word list nor an existing profile vector to work with, both components of the key are constant across every candidate, and the stable sort degrades to the pre-shuffle random order --- the same random selection \texttt{get\_random\_reels} would have produced.
 
     \subsection{Personalisation Implementation Status}
     \label{subsec:personalisation_status}
+    Three simplifications are explicit, commented design decisions in the code rather than oversights discovered while writing this thesis. First, the candidate pool is loaded and scored in full on every request; the service's own comment on this notes it directly: the catalog is small enough for now that this is acceptable, and it should move to a SQL-side computation once the reel catalog grows large enough for per-request, in-memory TF-IDF fitting to become a bottleneck. Second, there is no collaborative-filtering component anywhere in the engine, for the cold-start reason already given in Section~\ref{subsec:cascade_hybrid}: a cross-learner interaction matrix dense enough to be useful does not yet exist for a newly-launched application, so Stage~3 substitutes a second content-based pass over the learner's own history rather than attempting a collaborative signal on too little data. A third, narrower limitation follows directly from Section~\ref{subsec:reel_creation_impl}: a reel is only ever comprehensibility-scored once its dialogue has been tokenised, so a newly-uploaded reel is effectively invisible to the personalised feed until the offline backfill script has processed it, a manual step rather than an automatic part of publishing.
 
 
 \section{Game Modules}
 \label{sec:game_modules_impl}
     \subsection{Wordle-Style Game Implementation}
     \label{subsec:wordle_impl}
+    The secret word is drawn exclusively from the learner's own \texttt{userVocabulary} (Section~\ref{subsec:game_review_design}), never the full dictionary: due words are collected via \texttt{getDueWords} (Section~\ref{subsec:frontend_stack}) and one is chosen at random when at least one exists, falling back to a random tracked word otherwise. Guesses and the secret word are compared through the same \texttt{normalizeWord} canonicalisation used throughout the app --- stripping Greek diacritics and Farsi harakat and uppercasing Latin script --- so that a learner is not penalised for a guess that differs from the stored form only in diacritics their keyboard does not easily produce. Word length (5), attempt count (6), the permitted letter pattern, and the on-screen keyboard layout are all resolved per-language from \texttt{getWordleConfig} (Section~\ref{subsec:wordle_design}) rather than hard-coded, and the board and keyboard render right-to-left when the active language's config marks it as such. The due-word and tracked-word sets are read through refs rather than directly inside the round-initialisation callback, specifically so that a mid-round \texttt{reviewWord} call --- which updates \texttt{userVocabulary}, and so would otherwise change those sets' identity --- does not itself retrigger initialisation and silently restart the round before the learner reaches the collect step. Unlike Word of Wonders (Section~\ref{subsec:wow_impl}), Wordle does not use the self-graded Forgot/Hard/Good/Easy prompt at all: guessing the secret word within the attempt limit always records a review with a fixed \texttt{Good} rating, whether or not that word was genuinely due, and running out of attempts records no review at all rather than a failing one. Coins are awarded through the same \texttt{userProgress} update path regardless of outcome (5 for a win, 1 for a loss).
 
     \subsection{Word of Wonders: Procedural Crossword Generation}
     \label{subsec:wow_impl}
         \subsubsection{Word Placement and Intersection Search}
+        A level is built on an 8$\times$8 grid, starting from the practice word and greedily placing further words from the learner's tracked vocabulary wherever they intersect an already-placed word at a shared letter. A candidate placement is rejected if it would overlap a perpendicular word at a non-shared cell, or touch an existing word edge-to-edge without actually crossing it, which is what keeps every placed word legible as a separate word rather than fusing into an unintended run of letters. Algorithm~\ref{alg:wow_placement} summarises the core loop, run until either every candidate word has been tried or \texttt{MAX\_WORDS} (12) placements have been made.
+
+        \begin{algorithm}
+        \caption{Word of Wonders board generation (per level)}
+        \label{alg:wow_placement}
+        \begin{algorithmic}[1]
+        \STATE $\textit{words} \gets$ learner's tracked vocabulary, filtered to valid length and script for the target language
+        \STATE $\textit{practice} \gets$ due word if one exists and survives the filter above, else a random word from \textit{words}
+        \STATE place \textit{practice} horizontally at a random row on the empty board
+        \STATE sort remaining \textit{words} by the priority heuristic of Algorithm~\ref{alg:wow_priority} (descending)
+        \FOR{each \textit{word} in sorted \textit{words}, while placed count $<$ \texttt{MAX\_WORDS}}
+            \IF{placing \textit{word} would exceed the letter budget (Section~\ref{subsec:wow_impl}, next)}
+                \STATE \textbf{skip} \textit{word}
+            \ENDIF
+            \FOR{each already-placed word $p$}
+                \FOR{each shared-letter intersection between $p$ and \textit{word}}
+                    \IF{the resulting placement is valid (in bounds, no illegal overlap)}
+                        \STATE place \textit{word} at that intersection; \textbf{break} out of both loops
+                    \ENDIF
+                \ENDFOR
+            \ENDFOR
+        \ENDFOR
+        \STATE trim the board to the bounding box of all placed cells
+        \end{algorithmic}
+        \end{algorithm}
+
         \subsubsection{Letter-Budget and Word-Priority Heuristics}
+        The player picks letters for each word from a single shared pool of physical letter tiles shown alongside the board, rather than a full keyboard, so that pool must stay small regardless of how many words end up on the board. \texttt{MAX\_LETTERS\_LENGTH} (8) bounds it: a candidate word is only placed if the \emph{multiset union} of its letters with the letters already in use --- not the sum of both counts --- stays within that budget, so a word reusing letters already on the board is cheaper to add than one introducing entirely new letters. Candidate words are tried in priority order for exactly this reason (Algorithm~\ref{alg:wow_priority}): ranked first by how many letters they share with the pool already in use, and second (as a tiebreak) by how few new letters they would add, so the generator exhausts low-cost, letter-reusing words before it is forced to spend budget on words that would grow the pool.
+
+        \begin{algorithm}
+        \caption{Word priority for placement ordering}
+        \label{alg:wow_priority}
+        \begin{algorithmic}[1]
+        \STATE $\textit{shared}, \textit{added} \gets 0, 0$
+        \FOR{each letter $\ell$ appearing in \textit{word} or already in the pool}
+            \STATE $\textit{before} \gets$ pool's current count of $\ell$
+            \STATE $\textit{after} \gets \max(\textit{before}, \text{\textit{word}'s count of } \ell)$
+            \IF{$\textit{after} > \textit{before}$}
+                \STATE $\textit{added} \gets \textit{added} + (\textit{after} - \textit{before})$ \COMMENT{word needs more of $\ell$ than the pool has}
+            \ELSE
+                \STATE $\textit{shared} \gets \textit{shared} + \textit{before}$ \COMMENT{pool already covers $\ell$; credit its full existing count}
+            \ENDIF
+        \ENDFOR
+        \RETURN $(\textit{shared}, -\textit{added})$ \COMMENT{sort descending: more shared letters first, then fewer added letters}
+        \end{algorithmic}
+        \end{algorithm}
+
         \subsubsection{Due-Word Injection as the Practice Word}
+        The practice word is the one word in a Word of Wonders level whose discovery is treated as an FSRS review, and it is only ever marked as such --- surfacing the self-graded rating prompt of Section~\ref{subsec:game_review_design} on the finish screen --- when it was actually drawn from the due-word queue rather than substituted at random because nothing was due. Every other word placed on the board is practice in the ordinary sense (the learner has tracked it before and may re-encounter it here) without being graded as a spaced-repetition event, keeping FSRS state changes limited to words genuinely scheduled for review rather than every word that happens to appear on a given board. This due-word gate is specific to Word of Wonders; the Wordle-style game (Section~\ref{subsec:wordle_impl}) grades every completed round regardless of due-word status, rather than gating on it the same way.
 
 
 \newpage
