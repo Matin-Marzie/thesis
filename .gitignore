@@ -77,3 +77,5 @@ package-lock.json
 
 scripts
 lemma.py
+# Full production data dump (contains user data); regenerate with pg_dump, never commit
+database/glosy_data.sql
