@@ -104,10 +104,18 @@
 \contentsline {subsubsection}{\numberline {D.5.2.2}Letter-Budget and Word-Priority Heuristics}{44}{}%
 \contentsline {subsubsection}{\numberline {D.5.2.3}Due-Word Injection as the Practice Word}{44}{}%
 \contentsline {chapter}{\numberline {E}Evaluation \& Results}{46}{}%
-\contentsline {chapter}{\numberline {F}Conclusions \& Future work}{47}{}%
-\contentsline {section}{\numberline {F.1}Contributions}{47}{}%
-\contentsline {section}{\numberline {F.2}Limitations}{47}{}%
-\contentsline {section}{\numberline {F.3}Future Work}{47}{}%
-\contentsline {chapter}{Bibliography}{49}{}%
-\contentsline {chapter}{Abbreviations}{54}{}%
-\contentsline {chapter}{Glossary}{55}{}%
+\contentsline {section}{\numberline {E.1}Evaluation Approach}{46}{}%
+\contentsline {section}{\numberline {E.2}Component-Level Algorithmic Evaluation}{46}{}%
+\contentsline {subsection}{\numberline {E.2.1}Word of Wonders: Grid-Generation Benchmark}{46}{}%
+\contentsline {subsubsection}{\numberline {E.2.1.1}Method}{47}{}%
+\contentsline {subsubsection}{\numberline {E.2.1.2}Robustness}{47}{}%
+\contentsline {subsubsection}{\numberline {E.2.1.3}Words Placed}{47}{}%
+\contentsline {subsubsection}{\numberline {E.2.1.4}Qualitative Example: On-Device Boards Across CEFR Levels}{48}{}%
+\contentsline {subsubsection}{\numberline {E.2.1.5}Generation Time}{48}{}%
+\contentsline {chapter}{\numberline {F}Conclusions \& Future work}{51}{}%
+\contentsline {section}{\numberline {F.1}Contributions}{51}{}%
+\contentsline {section}{\numberline {F.2}Limitations}{51}{}%
+\contentsline {section}{\numberline {F.3}Future Work}{51}{}%
+\contentsline {chapter}{Bibliography}{53}{}%
+\contentsline {chapter}{Abbreviations}{58}{}%
+\contentsline {chapter}{Glossary}{59}{}%

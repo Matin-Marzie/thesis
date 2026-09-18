@@ -19,4 +19,7 @@
 \contentsline {figure}{\numberline {C.4}{\ignorespaces Entity-relationship diagram of the 21-table schema, grouped into the three axes of Section~\ref {sec:data_modelling}: Linguistic Content, User State, and Engagement Signals.}}{26}{}%
 \addvspace {10\p@ }
 \addvspace {10\p@ }
+\contentsline {figure}{\numberline {E.5}{\ignorespaces Mean words placed on the board (cap = 12) as a function of simulated tracked-vocabulary size, per language. Error bars show $\pm 1$ standard deviation over 200 repetitions per point.}}{47}{}%
+\contentsline {figure}{\numberline {E.6}{\ignorespaces Word of Wonders boards generated on a physical device for an English learner who declared each of the six CEFR levels at onboarding, all other conditions held fixed. Board density visibly grows from a bare two-word cross at A1 to a multi-armed board of several intersecting words by B2--C2.}}{49}{}%
+\contentsline {figure}{\numberline {E.7}{\ignorespaces Mean grid-generation wall-clock time (ms) as a function of simulated tracked-vocabulary size, per language, measured under Node.js/V8 on a development machine. Error bars show $\pm 1$ standard deviation over 200 repetitions per point.}}{50}{}%
 \addvspace {10\p@ }
