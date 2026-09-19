@@ -112,8 +112,8 @@
 \contentsline {subsubsection}{\numberline {E.2.1.4}Qualitative Example: On-Device Boards Across CEFR Levels}{48}{}%
 \contentsline {subsubsection}{\numberline {E.2.1.5}Generation Time}{50}{}%
 \contentsline {subsection}{\numberline {E.2.2}Recommendation Engine: The Cold-Start Problem}{51}{}%
-\contentsline {subsection}{\numberline {E.2.3}Recommendation Engine: Stage 1 Comprehensibility Filter}{52}{}%
-\contentsline {subsection}{\numberline {E.2.4}Recommendation Engine: Stage 2 Due-Word Prioritisation}{53}{}%
+\contentsline {subsection}{\numberline {E.2.3}Recommendation Engine: Stage 1 Comprehensibility Filter}{53}{}%
+\contentsline {subsection}{\numberline {E.2.4}Recommendation Engine: Stage 2 Due-Word Prioritisation}{54}{}%
 \contentsline {subsection}{\numberline {E.2.5}Recommendation Engine: Stage 3 Content-Based Ranking}{54}{}%
 \contentsline {chapter}{\numberline {F}Conclusions \& Future work}{55}{}%
 \contentsline {section}{\numberline {F.1}Contributions}{55}{}%

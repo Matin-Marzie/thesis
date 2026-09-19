@@ -70,6 +70,14 @@
 
 % Drop caps package
 \usepackage{styles/drop}
+% Blank pages inserted by \cleardoublepage (to start the next page on a recto) must be
+% truly empty: with the default definition they inherit the "headings" style and print a
+% stray page number, e.g. a "2" after each front-matter title page.
+\makeatletter
+\def\cleardoublepage{\clearpage\if@twoside\ifodd\c@page\else
+  \hbox{}\thispagestyle{empty}\newpage\if@twocolumn\hbox{}\newpage\fi\fi\fi}
+\makeatother
+
 \begin{document}
 
 % Symmetric (centered) margins for the front matter -- title pages,
