@@ -1,13 +1,13 @@
 \section{System Overview}
 \label{sec:system_overview}
 
-    \textit{Glosy} is designed as a three-service architecture in which a mobile frontend, a Node.js backend API, and a dedicated Python reels microservice each own a distinct part of the system's responsibilities, all three sharing a single PostgreSQL database. In development, the three services and the database are orchestrated together with Docker Compose: the backend API listens on port 3500, the reels service on port 3600, and PostgreSQL 16 on its default port, each built and reloaded independently of the others so a change to one service does not require restarting the rest of the stack.
+    \textit{Glosy} is designed as a three-service architecture in which a mobile frontend, a Node.js backend API, and a dedicated Python reels microservice each own a distinct part of the system's responsibilities, all three sharing a single PostgreSQL database. In development, the three services and the database are orchestrated together with Docker Compose: the backend API listens on port 3500, the reels service on port 3600, and PostgreSQL 18 on host port 5433 (mapped to its default port 5432 inside the container), each built and reloaded independently of the others so a change to one service does not require restarting the rest of the stack.
 
     \begin{itemize}
         \item \textbf{Frontend:} A cross-platform mobile application built with React Native and Expo Router, targeting Android and iOS from a single JavaScript/TypeScript codebase, and responsible for the offline-first client state, the reels feed, and the two vocabulary-driven games.
         \item \textbf{Backend API:} A Node.js/Express service responsible for authentication, user and vocabulary state, offline synchronisation, and the dictionary and letters modules.
         \item \textbf{Reels Service:} A Python/FastAPI microservice responsible for serving reels together with their structured dialogue data, and for the three-stage recommendation engine that selects and ranks them per learner.
-        \item \textbf{Database:} A single PostgreSQL 16 instance, shared by both back-end services, whose schema encodes linguistic content, user state, and engagement signals (Section~\ref{sec:data_modelling}).
+        \item \textbf{Database:} A single PostgreSQL 18 instance, shared by both back-end services, whose schema encodes linguistic content, user state, and engagement signals (Section~\ref{sec:data_modelling}).
     \end{itemize}
 
     \begin{wrapfigure}{r}{0.38\textwidth}
@@ -40,7 +40,7 @@
 
     \subsection{Database --- PostgreSQL}
     \label{subsec:db_stack}
-    Both backend services share a single PostgreSQL~16 instance (Section~\ref{sec:system_overview}), chosen for its support of array operators, window functions, and common table expressions --- used throughout the vocabulary bulk-seeding logic of Section~\ref{subsec:registration_impl} --- over a lighter-weight embedded database that would not support these directly in SQL. The full schema is detailed in Section~\ref{sec:data_modelling} and Section~\ref{sec:db_schema}.
+    Both backend services share a single PostgreSQL~18 instance (Section~\ref{sec:system_overview}), chosen for its support of array operators, window functions, and common table expressions --- used throughout the vocabulary bulk-seeding logic of Section~\ref{subsec:registration_impl} --- over a lighter-weight embedded database that would not support these directly in SQL. The full schema is detailed in Section~\ref{sec:data_modelling} and Section~\ref{sec:db_schema}.
 
 
 \section{Data Modelling} \label{sec:data_modelling}

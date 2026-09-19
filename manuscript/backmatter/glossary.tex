@@ -1,45 +1,61 @@
 % Glossary of Terms
-% Two-column layout via the \gl macro (styles/ioniostyle.sty), as specified
-% in the guidelines. Keep entries in alphabetical order.
+% Two-column list via the \gl macro inside the entrylist environment
+% (defined in thesis.tex). Keep entries in alphabetical order.
 
-\gl
-{Algorithm}
-{A sequence of instructions for solving a problem}
-
-\gl
-{Comprehensible Input}
-{Language input a learner can understand despite containing some unknown elements, per Krashen's Input Hypothesis ($i+1$)}
-
-\gl
-{Forgetting Curve}
-{The exponential decline of memory retention over time in the absence of reinforcement, first described by Ebbinghaus}
-
-\gl
-{Gamification}
-{The addition of game-design elements (points, streaks, badges) to a non-game task, as distinct from game-based learning}
-
-\gl
-{Lexical Coverage}
-{The proportion of word tokens in a text that a reader already knows; 98\% coverage is the established threshold for unassisted comprehension}
-
-\gl
-{Recommender System}
-{An algorithm that ranks or filters candidate items for a user based on content features, collaborative behaviour, or both}
-
-\gl
-{Spaced Repetition}
-{A learning technique that schedules review of an item at increasing intervals timed to precede predicted memory decay}
-
-\gl
-{Testing Effect}
-{The finding that actively retrieving information from memory produces better long-term retention than passive re-study}
-
-\gl
-{Zone of Proximal Development}
-{The gap between what a learner can do unaided and what they can do with appropriate scaffolding, per Vygotsky's sociocultural theory}
-
-% Add additional terms used in your thesis
-% Example:
-% \gl
-% {[Term]}
-% {[Definition/Explanation]}
+\begin{entrylist}
+\gl{Active Recall}{Retrieving a target item from memory unaided, for example recalling and typing a word, rather than recognising it among distractors; the review format favoured by the testing effect}
+\gl{Algorithm}{A sequence of instructions for solving a problem}
+\gl{Authentic Input}{Language produced by native speakers for native speakers within a genuine communicative context, rather than written or graded for learners}
+\gl{Auto-Seeding}{At registration, inserting every dictionary word below the learner's declared CEFR level into their tracked vocabulary, directly in FSRS's Review state with a randomised initial stability}
+\gl{Bag of Words}{A representation of a text as the unordered counts of the words in it, discarding word order; \textit{Glosy} represents each reel as a bag of word ids}
+\gl{Cascade Hybrid Recommender}{A hybrid recommender in which one technique coarsely ranks or partitions the candidates and a second is applied only to break ties within that ranking, per Burke; the strategy of \textit{Glosy}'s three-stage engine}
+\gl{CEFR Level}{One of the six proficiency levels of the Common European Framework of Reference for Languages, from A1 (beginner) to C2 (mastery); used to tag dictionary words and to record a learner's declared level}
+\gl{Cognitive Load Theory}{The theory that working memory is strictly limited, so instruction should minimise extraneous load (imposed by poor presentation) to leave capacity for germane load (the work of building long-term schemata)}
+\gl{Cold-Start Problem}{The difficulty a recommender faces when it has few users or little accumulated interaction history, which particularly affects collaborative filtering}
+\gl{Collaborative Filtering}{Recommending items from patterns of agreement across many users' behaviour, rather than from an item's own features; not used in \textit{Glosy}}
+\gl{Comprehensibility Filter}{Stage 1 of \textit{Glosy}'s recommender: a hard pass/fail filter that removes a reel if its lexical coverage of the learner's tracked vocabulary is below 98\%, or if it was recommended to that learner within the cooldown window}
+\gl{Comprehensible Input}{Language input a learner can understand despite containing some unknown elements, per Krashen's Input Hypothesis ($i+1$)}
+\gl{Content-Based Filtering}{Recommending items by comparing an item's own features with a profile of one user's preferences built from that user's history, without reference to other users}
+\gl{Cosine Similarity}{A measure of the similarity of two vectors, given by the cosine of the angle between them; \textit{Glosy} ranks reels by their cosine similarity to the learner's profile vector}
+\gl{Diacritics}{Marks added to letters that modify their pronunciation or meaning, such as Greek accents and Farsi harakat (short-vowel marks); stripped from words before comparison in the Wordle-style game}
+\gl{Dialogue}{In \textit{Glosy}'s data model, the ordered sequence of timestamped subtitle sentences that forms a reel's transcript}
+\gl{DSR Model}{The memory model underlying FSRS, which represents an item's state by three jointly updated variables: difficulty (how intrinsically hard the item is), stability (the days for retrievability to decay to 90\%), and retrievability (the momentary probability of recall)}
+\gl{Due Word}{A tracked word whose scheduled review time has been reached; the frontend supplies these to the recommendation engine oldest-first, and the games draw their practice word from them}
+\gl{Dynamic Difficulty Adjustment}{Algorithmically tuning a game's difficulty to the individual player's observed performance rather than fixing it in advance}
+\gl{Engagement Signal}{A learner-generated record of interaction with a piece of content, such as a view, like, save, share, or comment; weighted by strength, these form the learner's profile vector}
+\gl{Forgetting Curve}{The exponential decline of memory retention over time in the absence of reinforcement, first described by Ebbinghaus}
+\gl{Free Spaced Repetition Scheduler}{An open-source spaced-repetition algorithm, descended from the DHP model, that updates each item's DSR state after every graded review; \textit{Glosy} runs it on-device with the published default parameters}
+\gl{Game-Based Learning}{Learning in which the instructional content is embedded in the core mechanical loop of a game, so that linguistic competence is needed to win rather than merely rewarded afterwards; contrasted with gamification}
+\gl{Gamification}{The addition of game-design elements (points, streaks, badges) to a non-game task, as distinct from game-based learning}
+\gl{Half-Life Regression}{Duolingo's spaced-repetition model (Settles and Meeder), which estimates a per-item, per-learner memory half-life by regression over a large corpus of pooled review data}
+\gl{Hypercasual Game}{A mobile-native game with a minimalist interface, instant tap-to-play mechanics, and a very short core loop that needs no learning curve; hybrid-casual games add mid-core features such as progression and item collection}
+\gl{Incidental Vocabulary Acquisition}{Learning words as a by-product of exposure, such as watching captioned video, without an explicit study task}
+\gl{JSON Web Token (JWT)}{A compact, signed token used to authenticate API requests; \textit{Glosy} issues a short-lived access token and a longer-lived refresh token, and both backend services verify the same access token}
+\gl{Language Learning Platform}{A digital application or service for studying a language, such as Duolingo, Memrise, Busuu, Babbel, or LingQ}
+\gl{Leitner System}{A non-parametric flashcard scheduling method in which a correctly answered card moves to a box reviewed at a longer interval, and an incorrectly answered card returns to the first box}
+\gl{Lemmatisation}{Reducing an inflected word form to its dictionary base form (lemma), so that different forms of a word map to one vocabulary item; performed offline in \textit{Glosy} by a backfill script}
+\gl{Letter Budget}{The cap of 8 on the shared pool of letter tiles in a Word of Wonders level: a word is placed only if the multiset union of its letters with those already in use (the per-letter maximum count, not the sum) stays within it}
+\gl{Lexical Coverage}{The proportion of word tokens in a text that a reader already knows; 98\% coverage is the established threshold for unassisted comprehension}
+\gl{Microlearning}{Decomposing instruction into short, self-contained units so that a single episode cannot exceed working-memory capacity; the basis of \textit{Glosy}'s 90-second reel cap and its bounded game rounds}
+\gl{Mobile-Assisted Language Learning}{Language learning supported by mobile devices, typically through self-directed applications available on demand}
+\gl{Offline-First}{A design in which the client keeps its own persistent copy of state, works without a connection, and reconciles its changes with the server when connectivity returns}
+\gl{Practice Word}{The word around which a Word of Wonders board is built; it is graded as an FSRS review only when it was drawn from the due-word queue}
+\gl{Profile Vector}{A learner's preference profile in Stage 3 of the recommender: the weighted sum of the TF-IDF vectors of the reels they have engaged with, each weighted by the strength of that engagement}
+\gl{Progression Currencies}{Coins, energy, and experience: the light extrinsic-motivation layer of \textit{Glosy}, of which only coins currently have a complete reward loop}
+\gl{Recommender System}{An algorithm that ranks or filters candidate items for a user based on content features, collaborative behaviour, or both}
+\gl{Reel}{In \textit{Glosy}, a short-form video of at most 90 seconds with an attached dialogue of timestamped, tokenised subtitles from which its vocabulary is derived}
+\gl{Refresh Token Rotation}{Issuing a new refresh token at every use and revoking the old one; \textit{Glosy} groups tokens into families, so replaying an already-rotated token revokes the whole family}
+\gl{Review Grade}{The learner's self-rated recall outcome for a review (again, hard, good, or easy), which FSRS uses to update a word's state; an \emph{again} grade records a lapse}
+\gl{Second Language Acquisition}{The process by which people learn a language other than their first, and the research field that studies it}
+\gl{Shallow Gamification}{Gamification reduced to repetitive, decontextualised drills wrapped in points, streaks, and leaderboards, so that the reward layer is decorative rather than structural}
+\gl{Short-Form Video}{Brief video native to social platforms, typically 15 seconds to 3 minutes long and optimised for rapid, algorithmically driven consumption}
+\gl{Sociocultural Theory}{Vygotsky's account of learning as a socially mediated process in which language is the primary cognitive tool; the source of the zone of proximal development and of scaffolding, the temporary support given by a more capable other}
+\gl{Spaced Repetition}{A learning technique that schedules review of an item at increasing intervals timed to precede predicted memory decay}
+\gl{Testing Effect}{The finding that actively retrieving information from memory produces better long-term retention than passive re-study}
+\gl{TF-IDF}{Term frequency--inverse document frequency: a weighting that scales down a term's frequency in a document by how common the term is across the whole collection; applied by \textit{Glosy} to reels' word-id bags}
+\gl{Tokenisation}{Splitting text into individual units (tokens), here words, each linked to a dictionary word id}
+\gl{Tracked Vocabulary}{The set of words in a learner's \texttt{user\_vocabulary}, each with its FSRS memory state; the system's model of what that learner knows}
+\gl{Word of Wonders}{\textit{Glosy}'s crossword-style game: a procedurally generated 8$\times$8 grid of intersecting words drawn from the learner's tracked vocabulary, solved by picking letters from a shared pool}
+\gl{Wordle-Style Game}{\textit{Glosy}'s second game: six attempts to guess a five-letter word from the learner's tracked vocabulary, with each guess coloured letter by letter, in English, Greek, or Farsi}
+\gl{Zone of Proximal Development}{The gap between what a learner can do unaided and what they can do with appropriate scaffolding, per Vygotsky's sociocultural theory}
+\end{entrylist}

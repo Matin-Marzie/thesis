@@ -7,7 +7,6 @@
 \babel@toc {english}{}\relax 
 \babel@toc {greek}{}\relax 
 \babel@toc {english}{}\relax 
-\babel@toc {english}{}\relax 
 \babel@toc {greek}{}\relax 
 \babel@toc {english}{}\relax 
 \contentsline {chapter}{\numberline {A}Introduction}{1}{}%
@@ -111,11 +110,15 @@
 \contentsline {subsubsection}{\numberline {E.2.1.2}Robustness}{47}{}%
 \contentsline {subsubsection}{\numberline {E.2.1.3}Words Placed}{47}{}%
 \contentsline {subsubsection}{\numberline {E.2.1.4}Qualitative Example: On-Device Boards Across CEFR Levels}{48}{}%
-\contentsline {subsubsection}{\numberline {E.2.1.5}Generation Time}{48}{}%
-\contentsline {chapter}{\numberline {F}Conclusions \& Future work}{51}{}%
-\contentsline {section}{\numberline {F.1}Contributions}{51}{}%
-\contentsline {section}{\numberline {F.2}Limitations}{51}{}%
-\contentsline {section}{\numberline {F.3}Future Work}{51}{}%
-\contentsline {chapter}{Bibliography}{53}{}%
-\contentsline {chapter}{Abbreviations}{58}{}%
-\contentsline {chapter}{Glossary}{59}{}%
+\contentsline {subsubsection}{\numberline {E.2.1.5}Generation Time}{50}{}%
+\contentsline {subsection}{\numberline {E.2.2}Recommendation Engine: The Cold-Start Problem}{51}{}%
+\contentsline {subsection}{\numberline {E.2.3}Recommendation Engine: Stage 1 Comprehensibility Filter}{52}{}%
+\contentsline {subsection}{\numberline {E.2.4}Recommendation Engine: Stage 2 Due-Word Prioritisation}{53}{}%
+\contentsline {subsection}{\numberline {E.2.5}Recommendation Engine: Stage 3 Content-Based Ranking}{54}{}%
+\contentsline {chapter}{\numberline {F}Conclusions \& Future work}{55}{}%
+\contentsline {section}{\numberline {F.1}Contributions}{55}{}%
+\contentsline {section}{\numberline {F.2}Limitations}{55}{}%
+\contentsline {section}{\numberline {F.3}Future Work}{55}{}%
+\contentsline {chapter}{Bibliography}{57}{}%
+\contentsline {chapter}{Abbreviations}{62}{}%
+\contentsline {chapter}{Glossary}{64}{}%

@@ -10,6 +10,8 @@
 
     \textbf{Lack of social scaffolding.} The system lacks mechanisms for social scaffolding through peer or native-speaker interaction.
 
+    % Write this claude: some language are formal/informal spoken/written like farsi. English and Greek is not like that. Also some languages have suffixes and prefixes that form grammer like turkish and farsi. for example مادَر is mother and my mother in colloquial is مادَرَم. In English, we don't have that. that's why Tokenizers (hazm) fails to tokenize all words in farsi that are included in out database words table. In the future give option to manually tokenize words while creating a reel. 
+
 \section{Future Work}
     The following directions are identified as high-value:
     \begin{sloppypar}
@@ -20,6 +22,8 @@
         \item \textbf{Collaborative learning features:} Shared vocabulary challenges, leaderboards scoped to friend groups, and comment-driven vocabulary discussion on individual reels, supporting the social dimension of Vygotsky's theory.
         \item \textbf{Vocabulary synchronisation performance:} Replacing the serial per-word UPDATE loop in \texttt{syncController.js} with a bulk \texttt{INSERT ... ON CONFLICT DO UPDATE} statement to support large offline sessions without latency degradation.
         % use Cache like Redis
+        \item \textbf{Cold-start mitigation via onboarding preferences:} Wiring the topic preferences and age already collected by onboarding's \texttt{PersonalizationSlide.tsx} (Section~\ref{subsec:recommender_cold_start}) into Stage~3 as a cold-start substitute for the interaction-based profile vector, replacing its current fixed, hand-picked eight-topic taxonomy with automated topic generation derived from reel content once the library is large enough to support it.
+        \item \textbf{Age-conditioned recommendation:} Using the \texttt{age} column, already collected at onboarding but currently unread by the recommendation engine, as a further ranking or filtering signal once a concrete policy for it is designed.
     \end{itemize}
     \end{sloppypar}
 

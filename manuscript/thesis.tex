@@ -23,6 +23,20 @@
 \usepackage{algorithmic}
 \usepackage[section]{placeins} % stop floats (tables/figures) from drifting past a \section boundary
 \usepackage{wrapfig} % lets a small figure sit inline with text that wraps around it
+\usepackage{array} % >{...} column modifiers for the entrylist columns
+\usepackage{longtable} % one continuous table per back-matter list (Abbreviations, Glossary)
+
+% Compact two-column list for the Abbreviations and Glossary: inside it, \gl{term}{definition}
+% (from styles/ioniostyle.sty) becomes a bold term beside its definition, one table row per
+% entry, at single line spacing -- instead of the class default of one loose tabular per entry.
+\newenvironment{entrylist}{%
+  \renewcommand{\gl}[2]{\textbf{##1} & ##2 \\[1.5pt]}%
+  \linespread{1}\selectfont
+  \setlength{\LTleft}{0pt}\setlength{\LTright}{0pt}\setlength{\LTpre}{0pt}\setlength{\LTpost}{0pt}%
+  \begin{longtable}{@{}>{\raggedright}p{4.2cm}@{\hspace{1em}}p{\dimexpr\linewidth-4.2cm-1em\relax}@{}}%
+}{%
+  \end{longtable}%
+}
 
 % Main font: Times New Roman is not freely redistributable, so we use
 % Liberation Serif, its metric-compatible open-source substitute, via
@@ -156,13 +170,15 @@
 \bibliography{references} % Use references.bib
 
 % Abbreviations
-\chapter*{Abbreviations} 
+\chapter*{Abbreviations}
+\markboth{Abbreviations}{Abbreviations} % same reason as the Glossary below
 \addcontentsline{toc}{chapter}{Abbreviations}
 \pagestyle{headings}
 \input{./backmatter/abbreviations}
 
 % Glossary
-\chapter*{Glossary} 
+\chapter*{Glossary}
+\markboth{Glossary}{Glossary} % \chapter* sets no running head, so the multi-page glossary would inherit "Bibliography"
 \addcontentsline{toc}{chapter}{Glossary}
 \pagestyle{headings}
 \input{./backmatter/glossary}
