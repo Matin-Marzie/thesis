@@ -4,7 +4,7 @@
 
 - Docker & Docker Compose (for containerized setup)
 - Node.js 18+ & npm (for local development)
-- PostgreSQL 15+ (if running locally)
+- PostgreSQL 18+ (if running locally)
 
 ## Installation & Setup
 
@@ -39,7 +39,7 @@ NODE_ENV=development
 3. Initialize database:
 ```bash
 # Create database and import schema
-psql -U root -h localhost -d thesis_db -f ../database/thesis_db.sql
+psql -U root -h localhost -d thesis_db -f ../database/glosy_structure.sql
 ```
 
 4. Start development server:
