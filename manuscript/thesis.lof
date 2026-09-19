@@ -11,8 +11,8 @@
 \babel@toc {english}{}\relax 
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {B.1}{\ignorespaces The forgetting curve, with original data from Ebbinghaus \cite {ebbinghaus1885memory}, as replotted by Murre and Dros \cite {murre2015replication}. Image: Jaap M. J. Murre, Wikimedia Commons, CC BY 4.0.}}{12}{}%
-\contentsline {figure}{\numberline {B.2}{\ignorespaces The classic five-box Leitner scheduling system. Image: Zirguezi, Wikimedia Commons \cite {zirguezi2012leitner}, CC0 1.0.}}{13}{}%
+\contentsline {figure}{\numberline {B.1}{\ignorespaces The forgetting curve, with original data from Ebbinghaus \cite {ebbinghaus1885memory}, as replotted by Murre and Dros \cite {murre2015replication}. Image: Jaap M. J. Murre, Wikimedia Commons, CC BY 4.0.}}{13}{}%
+\contentsline {figure}{\numberline {B.2}{\ignorespaces The classic five-box Leitner scheduling system. Image: Zirguezi, Wikimedia Commons \cite {zirguezi2012leitner}, CC0 1.0.}}{14}{}%
 \addvspace {10\p@ }
 \contentsline {figure}{\numberline {C.3}{\ignorespaces High-level system architecture: the mobile frontend communicates with the Backend API (\texttt {api.glosy.gr}) and the Reels Service (\texttt {recs.glosy.gr}) over authenticated REST endpoints; both services share a single PostgreSQL instance.}}{24}{}%
 \contentsline {figure}{\numberline {C.4}{\ignorespaces Entity-relationship diagram of the 21-table schema, grouped into the three axes of Section~\ref {sec:data_modelling}: Linguistic Content, User State, and Engagement Signals.}}{27}{}%

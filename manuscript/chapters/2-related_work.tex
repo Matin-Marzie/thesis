@@ -89,27 +89,27 @@
 
         \subsubsection{The Ebbinghaus Forgetting Curve}
         \label{subsubsec:ebbinghaus}
-        \begin{wrapfigure}{r}{0.48\textwidth}
-            \centering
-            \vspace{-0.5\baselineskip}
-            \includegraphics[width=\linewidth]{figures/ebbinghaus_curve.png}
-            \caption{The forgetting curve, with original data from Ebbinghaus \cite{ebbinghaus1885memory}, as replotted by Murre and Dros \cite{murre2015replication}. Image: Jaap M. J. Murre, Wikimedia Commons, CC BY 4.0.}
-            \label{fig:ebbinghaus_curve}
-        \end{wrapfigure}
         \begin{sloppypar}
         Ebbinghaus's foundational experiments on nonsense-syllable recall demonstrated that memory retention decays over time in the absence of reinforcement, most rapidly immediately after initial exposure and more slowly thereafter \cite{ebbinghaus1885memory}. Although Ebbinghaus's own savings-method data did not yield a single closed-form expression, later reconstructions commonly approximate the resulting \emph{forgetting curve} as a negative exponential function of elapsed time $t$ and a memory-strength parameter $S$: retention $R(t) = e^{-t/S}$, where a larger $S$ corresponds to a more durably consolidated memory. This exponential-decay account is the shared theoretical ancestor of every spaced-repetition model reviewed below: each attempts, with increasing sophistication, to estimate the parameters of an individual learner's own decay curve for an individual item, and to schedule review immediately before predicted recall failure.
         \end{sloppypar}
 
+        \begin{figure}[!htbp]
+            \centering
+            \includegraphics[width=0.60\textwidth]{figures/ebbinghaus_curve.png}
+            \caption{The forgetting curve, with original data from Ebbinghaus \cite{ebbinghaus1885memory}, as replotted by Murre and Dros \cite{murre2015replication}. Image: Jaap M. J. Murre, Wikimedia Commons, CC BY 4.0.}
+            \label{fig:ebbinghaus_curve}
+        \end{figure}
+
         \subsubsection{Classic Leitner's Algorithm}
         \label{subsubsec:leitner}
-        \begin{wrapfigure}{r}{0.48\textwidth}
+        The Leitner system operationalised the forgetting curve as a simple, non-parametric scheduling heuristic decades before it became computationally tractable to fit an individual decay curve per item \cite{leitner1972lernen}. Flashcards are sorted into a series of boxes; a card answered correctly is promoted one box forward, to be reviewed at a longer interval, while a card answered incorrectly is reset all the way back to the first box, regardless of how far it had previously advanced, to be reviewed again at the shortest interval. The scheme requires no numerical memory model at all --- the box number is a coarse, discretised proxy for the item's memory strength $S$ --- which makes it trivially implementable but insensitive to the fact that different items, and different learners, decay at markedly different rates even within the same box.
+
+        \begin{figure}[!htbp]
             \centering
-            \vspace{-0.5\baselineskip}
-            \includegraphics[width=\linewidth]{figures/leitner_system.pdf}
+            \includegraphics[width=0.62\textwidth]{figures/leitner_system.pdf}
             \caption{The classic five-box Leitner scheduling system. Image: Zirguezi, Wikimedia Commons \cite{zirguezi2012leitner}, CC0 1.0.}
             \label{fig:leitner_system}
-        \end{wrapfigure}
-        The Leitner system operationalised the forgetting curve as a simple, non-parametric scheduling heuristic decades before it became computationally tractable to fit an individual decay curve per item \cite{leitner1972lernen}. Flashcards are sorted into a series of boxes; a card answered correctly is promoted one box forward, to be reviewed at a longer interval, while a card answered incorrectly is reset all the way back to the first box, regardless of how far it had previously advanced, to be reviewed again at the shortest interval. The scheme requires no numerical memory model at all --- the box number is a coarse, discretised proxy for the item's memory strength $S$ --- which makes it trivially implementable but insensitive to the fact that different items, and different learners, decay at markedly different rates even within the same box.
+        \end{figure}
 
         \subsubsection{Parametric Half-Life Regression}
         \label{subsubsec:hlr}
