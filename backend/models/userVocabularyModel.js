@@ -1,4 +1,5 @@
 import pool from '../config/db.js';
+import { batchUpdateByKey } from '../utils/batchUpdate.js';
 
 // Field order used whenever a controller serializes user_vocabulary (keyed
 // by word_id) as columnar JSON - see utils/columnar.js's toColumnarFromKeyedObject.
@@ -107,80 +108,31 @@ const userVocabularyModel = {
     },
 
 
-    // Update vocabulary words
+    // Update vocabulary words. One set-based UPDATE per chunk of rows inside a
+    // single transaction (see utils/batchUpdate.js) instead of a query per word;
+    // ids that no longer exist are skipped, and unsent fields keep their value.
     async update(userId, userLanguagesId, updates) {
-        const results = [];
-
-        for (const [wordId, data] of Object.entries(updates)) {
-            const fields = [];
-            const values = [userId, Number(wordId), userLanguagesId];
-            let paramCount = 4;
-
-            if (data.last_review !== undefined) {
-                fields.push(`last_review = $${paramCount}`);
-                values.push(data.last_review);
-                paramCount++;
-            }
-
-            if (data.review_count !== undefined) {
-                fields.push(`review_count = $${paramCount}`);
-                values.push(data.review_count);
-                paramCount++;
-            }
-
-            if (data.next_review_at !== undefined) {
-                fields.push(`next_review_at = $${paramCount}`);
-                values.push(data.next_review_at);
-                paramCount++;
-            }
-
-            if (data.stability !== undefined) {
-                fields.push(`stability = $${paramCount}`);
-                values.push(data.stability);
-                paramCount++;
-            }
-
-            if (data.difficulty !== undefined) {
-                fields.push(`difficulty = $${paramCount}`);
-                values.push(data.difficulty);
-                paramCount++;
-            }
-
-            if (data.lapses !== undefined) {
-                fields.push(`lapses = $${paramCount}`);
-                values.push(data.lapses);
-                paramCount++;
-            }
-
-            if (data.fsrs_state !== undefined) {
-                fields.push(`fsrs_state = $${paramCount}`);
-                values.push(data.fsrs_state);
-                paramCount++;
-            }
-
-            if (data.learning_steps !== undefined) {
-                fields.push(`learning_steps = $${paramCount}`);
-                values.push(data.learning_steps);
-                paramCount++;
-            }
-
-            if (fields.length > 0) {
-                const query = `
-                    UPDATE user_vocabulary
-                    SET ${fields.join(', ')}
-                    WHERE user_id = $1 AND word_id = $2 AND user_languages_id = $3
-                    RETURNING word_id, user_languages_id, last_review, created_at, review_count, next_review_at, stability, difficulty, lapses, fsrs_state, learning_steps
-                `;
-
-                const result = await pool.query(query, values);
-                if (result.rows.length > 0) {
-                    results.push(result.rows[0]);
-                }
-            }
-        }
+        const rows = await batchUpdateByKey({
+            table: 'user_vocabulary',
+            keyColumn: 'word_id',
+            fields: [
+                { name: 'last_review', type: 'timestamptz' },
+                { name: 'review_count', type: 'integer' },
+                { name: 'next_review_at', type: 'timestamptz' },
+                { name: 'stability', type: 'double precision' },
+                { name: 'difficulty', type: 'double precision' },
+                { name: 'lapses', type: 'smallint' },
+                { name: 'fsrs_state', type: 'smallint' },
+                { name: 'learning_steps', type: 'smallint' },
+            ],
+            returning: ['word_id', 'user_languages_id', 'last_review', 'created_at', 'review_count', 'next_review_at', 'stability', 'difficulty', 'lapses', 'fsrs_state', 'learning_steps'],
+            userId,
+            userLanguagesId,
+            updates,
+        });
 
         // Reshape results to match expected format
-        return results.reduce((acc, row) => {
+        return rows.reduce((acc, row) => {
             acc[row.word_id] = {
                 last_review: row.last_review,
                 created_at: row.created_at,

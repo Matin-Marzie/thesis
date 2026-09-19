@@ -1,4 +1,5 @@
 import pool from '../config/db.js';
+import { batchUpdateByKey } from '../utils/batchUpdate.js';
 
 const userSentencesModel = {
 
@@ -92,56 +93,28 @@ const userSentencesModel = {
     },
 
 
-    // Update saved sentences
+    // Update saved sentences. One set-based UPDATE per chunk of rows inside a
+    // single transaction (see utils/batchUpdate.js) instead of a query per
+    // sentence; ids that no longer exist are skipped, and unsent fields keep
+    // their value.
     async update(userId, userLanguagesId, updates) {
-        const results = [];
-
-        for (const [sentenceId, data] of Object.entries(updates)) {
-            const fields = [];
-            const values = [userId, Number(sentenceId), userLanguagesId];
-            let paramCount = 4;
-
-            if (data.mastery_level !== undefined) {
-                fields.push(`mastery_level = $${paramCount}`);
-                values.push(data.mastery_level);
-                paramCount++;
-            }
-
-            if (data.last_review !== undefined) {
-                fields.push(`last_review = $${paramCount}`);
-                values.push(data.last_review);
-                paramCount++;
-            }
-
-            if (data.review_count !== undefined) {
-                fields.push(`review_count = $${paramCount}`);
-                values.push(data.review_count);
-                paramCount++;
-            }
-
-            if (data.next_review_at !== undefined) {
-                fields.push(`next_review_at = $${paramCount}`);
-                values.push(data.next_review_at);
-                paramCount++;
-            }
-
-            if (fields.length > 0) {
-                const query = `
-                    UPDATE user_sentences
-                    SET ${fields.join(', ')}
-                    WHERE user_id = $1 AND sentence_id = $2 AND user_languages_id = $3
-                    RETURNING sentence_id, user_languages_id, mastery_level, last_review, created_at, review_count, next_review_at
-                `;
-
-                const result = await pool.query(query, values);
-                if (result.rows.length > 0) {
-                    results.push(result.rows[0]);
-                }
-            }
-        }
+        const rows = await batchUpdateByKey({
+            table: 'user_sentences',
+            keyColumn: 'sentence_id',
+            fields: [
+                { name: 'mastery_level', type: 'smallint' },
+                { name: 'last_review', type: 'timestamptz' },
+                { name: 'review_count', type: 'integer' },
+                { name: 'next_review_at', type: 'timestamptz' },
+            ],
+            returning: ['sentence_id', 'user_languages_id', 'mastery_level', 'last_review', 'created_at', 'review_count', 'next_review_at'],
+            userId,
+            userLanguagesId,
+            updates,
+        });
 
         // Reshape results to match expected format
-        return results.reduce((acc, row) => {
+        return rows.reduce((acc, row) => {
             acc[row.sentence_id] = {
                 mastery_level: row.mastery_level,
                 last_review: row.last_review,
