@@ -1,5 +1,5 @@
 import React, { useCallback, useRef, useState } from 'react';
-import { View, StyleSheet, ScrollView, StatusBar, Alert } from 'react-native';
+import { View, StyleSheet, ScrollView, StatusBar, Alert, RefreshControl } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
 import type { BottomSheetModal } from '@gorhom/bottom-sheet';
@@ -8,7 +8,8 @@ import { useProfile } from '@/context/ProfileContext';
 import { useProgress } from '@/context/ProgressContext';
 import { useUserReels } from '@/context/UserReelsContext';
 import { useAuth } from '@/context/AuthContext';
-import { uploadProfilePicture, deleteProfilePicture } from '@/api/user';
+import { useNetwork } from '@/context/NetworkContext';
+import { uploadProfilePicture, deleteProfilePicture, getCurrentUser } from '@/api/user';
 import { LANGUAGES_META } from '@/constants/SupportedLanguages';
 import { DARK_COLORS } from '@/constants/App';
 import { useColorScheme } from '@/components/useColorScheme';
@@ -21,12 +22,14 @@ import { ProfileAuthButtons } from '@/components/profile/ProfileAuthButtons';
 
 export default function ProfileScreen() {
   const isDark = useColorScheme() === 'dark';
-  const { userProfile, setUserProfile } = useProfile();
-  const { userProgress } = useProgress();
-  const { userReels, isFetchingUserReels } = useUserReels();
-  const { isAuthenticated } = useAuth();
+  const { userProfile, setUserProfile, updateUserProfile } = useProfile();
+  const { userProgress, setUserProgress } = useProgress();
+  const { userReels, isFetchingUserReels, refreshUserReels } = useUserReels();
+  const { isAuthenticated, forceSync } = useAuth();
+  const { isOnline } = useNetwork();
   const router = useRouter();
   const [changingPicture, setChangingPicture] = useState(false);
+  const [refreshing, setRefreshing] = useState(false);
   const pictureOptionsSheetRef = useRef<BottomSheetModal>(null);
 
   const handlePickPicture = useCallback(async () => {
@@ -82,6 +85,29 @@ export default function ProfileScreen() {
     pictureOptionsSheetRef.current?.present();
   }, [userProfile?.profile_picture, handlePickPicture]);
 
+  const handleRefresh = useCallback(async () => {
+    if (!isAuthenticated || !isOnline) return;
+
+    setRefreshing(true);
+    try {
+      // Local coins/energy can be ahead of the server, so push them first;
+      // if that fails, overwriting userProgress would silently drop them.
+      const synced = await forceSync();
+      const refreshUser = synced
+        ? getCurrentUser().then(async (data: any) => {
+            await updateUserProfile(data.user_profile);
+            await setUserProgress(data.user_progress);
+          })
+        : Promise.resolve();
+
+      // Best-effort: refreshUserReels already swallows its own errors, and a
+      // failed /user/me leaves the persisted profile/progress untouched.
+      await Promise.allSettled([refreshUser, refreshUserReels()]);
+    } finally {
+      setRefreshing(false);
+    }
+  }, [isAuthenticated, isOnline, forceSync, updateUserProfile, setUserProgress, refreshUserReels]);
+
   const currentLanguage = userProgress?.languages?.find((l) => l.is_current_language) || userProgress?.languages?.[0];
   const languageMeta = Object.values(LANGUAGES_META).find((l) => l.id === Number(currentLanguage?.learning_language?.id));
 
@@ -91,7 +117,19 @@ export default function ProfileScreen() {
       style={[styles.container, isDark && { backgroundColor: DARK_COLORS.background }]}
     >
       <StatusBar barStyle={isDark ? 'light-content' : 'dark-content'} />
-      <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}>
+      <ScrollView
+        style={styles.scrollView}
+        showsVerticalScrollIndicator={false}
+        refreshControl={
+          isAuthenticated ? (
+            <RefreshControl
+              refreshing={refreshing}
+              onRefresh={handleRefresh}
+              tintColor={isDark ? '#fff' : undefined}
+            />
+          ) : undefined
+        }
+      >
         <View style={styles.content}>
           {userProfile && (
             <>
