@@ -21,123 +21,129 @@
 \contentsline {subsection}{\numberline {A.4.3}Methodological Approach}{6}{}%
 \contentsline {section}{\numberline {A.5}Significance}{7}{}%
 \contentsline {section}{\numberline {A.6}Thesis Structure}{7}{}%
-\contentsline {chapter}{\numberline {B}Literature Review}{8}{}%
-\contentsline {section}{\numberline {B.1}The Landscape of Mobile-Assisted Language Learning (MALL)}{8}{}%
-\contentsline {subsection}{\numberline {B.1.1}Market Evolution and Platform Proliferation}{8}{}%
-\contentsline {subsection}{\numberline {B.1.2}Critical Review and Systematic Limitations of Current Platforms}{9}{}%
-\contentsline {section}{\numberline {B.2}Pedagogical Foundations}{11}{}%
-\contentsline {subsection}{\numberline {B.2.1}Sociocultural Theory and the Zone of Proximal Development (ZPD)}{12}{}%
-\contentsline {subsection}{\numberline {B.2.2}The Input Hypothesis and the Lexical Coverage Threshold}{12}{}%
-\contentsline {subsection}{\numberline {B.2.3}Cognitive Load Theory and Microlearning}{13}{}%
-\contentsline {subsection}{\numberline {B.2.4}Memory Decay and Spaced Repetition Models}{13}{}%
-\contentsline {subsubsection}{\numberline {B.2.4.1}The Ebbinghaus Forgetting Curve}{13}{}%
-\contentsline {subsubsection}{\numberline {B.2.4.2}Classic Leitner's Algorithm}{14}{}%
-\contentsline {subsubsection}{\numberline {B.2.4.3}Parametric Half-Life Regression}{14}{}%
-\contentsline {subsubsection}{\numberline {B.2.4.4}FSRS and the DHP Model}{15}{}%
-\contentsline {paragraph}{The forgetting curve.}{16}{}%
-\contentsline {paragraph}{Initial state and difficulty updates.}{16}{}%
-\contentsline {paragraph}{Stability updates.}{17}{}%
-\contentsline {paragraph}{Same-day reviews (FSRS-6).}{17}{}%
-\contentsline {subsection}{\numberline {B.2.5}Active Recall and the Testing Effect}{18}{}%
-\contentsline {section}{\numberline {B.3}Modalities for Language Acquisition}{18}{}%
-\contentsline {subsection}{\numberline {B.3.1}Short-Form Video in Second Language Acquisition (SLA)}{18}{}%
-\contentsline {subsubsection}{\numberline {B.3.1.1}Incidental Vocabulary Acquisition through Audiovisual Input}{18}{}%
-\contentsline {subsubsection}{\numberline {B.3.1.2}The Gap: Passive Consumption without Reinforcement}{19}{}%
-\contentsline {subsection}{\numberline {B.3.2}Serious Games and Gamification in Language Learning}{20}{}%
-\contentsline {subsubsection}{\numberline {B.3.2.1}Game-Based Learning versus Gamification}{20}{}%
-\contentsline {subsubsection}{\numberline {B.3.2.2}Difficulty Adaptation in Hypercasual Games}{20}{}%
-\contentsline {subsubsection}{\numberline {B.3.2.3}Active-Recall Game Mechanics for Vocabulary}{20}{}%
-\contentsline {section}{\numberline {B.4}Algorithmic Frameworks for Personalized Recommendation}{21}{}%
-\contentsline {subsection}{\numberline {B.4.1}Content-Based Filtering}{21}{}%
-\contentsline {subsection}{\numberline {B.4.2}Collaborative Filtering and Hybrid Recommender Systems}{21}{}%
-\contentsline {subsection}{\numberline {B.4.3}Recommender Systems in Educational Technology}{22}{}%
-\contentsline {section}{\numberline {B.5}Synthesis: A Theory-Driven Design Framework}{22}{}%
-\contentsline {chapter}{\numberline {C}System Architecture \& Methodology}{24}{}%
-\contentsline {section}{\numberline {C.1}Design Requirements}{24}{}%
-\contentsline {subsection}{\numberline {C.1.1}Functional Requirements}{24}{}%
-\contentsline {subsection}{\numberline {C.1.2}Non-Functional Requirements}{25}{}%
-\contentsline {section}{\numberline {C.2}System Overview}{26}{}%
-\contentsline {section}{\numberline {C.3}Technology Stack}{28}{}%
-\contentsline {subsection}{\numberline {C.3.1}Frontend --- React Native / Expo}{28}{}%
-\contentsline {subsection}{\numberline {C.3.2}Backend API --- Node.js / Express}{28}{}%
-\contentsline {subsection}{\numberline {C.3.3}Reels Service --- Python / FastAPI}{29}{}%
-\contentsline {subsection}{\numberline {C.3.4}Database --- PostgreSQL}{29}{}%
-\contentsline {section}{\numberline {C.4}Data Modelling}{29}{}%
-\contentsline {subsection}{\numberline {C.4.1}Linguistic Content}{29}{}%
-\contentsline {subsection}{\numberline {C.4.2}User State}{31}{}%
-\contentsline {subsection}{\numberline {C.4.3}Engagement Signals}{31}{}%
-\contentsline {section}{\numberline {C.5}Onboarding and Learner-Model Initialisation}{32}{}%
-\contentsline {section}{\numberline {C.6}Recommendation Engine Design}{32}{}%
-\contentsline {subsection}{\numberline {C.6.1}Stage 1: Comprehensibility Filtering}{33}{}%
-\contentsline {subsection}{\numberline {C.6.2}Stage 2: Spaced-Repetition Prioritisation}{33}{}%
-\contentsline {subsection}{\numberline {C.6.3}Stage 3: Content-Based Personalisation}{34}{}%
-\contentsline {subsection}{\numberline {C.6.4}Combining the Three Stages: A Cascade, Not a Weighted Sum}{34}{}%
-\contentsline {section}{\numberline {C.7}Gamification Design}{34}{}%
-\contentsline {subsection}{\numberline {C.7.1}Progression Currencies: Coins, Energy, and Experience}{35}{}%
-\contentsline {subsection}{\numberline {C.7.2}Design Principle: Every Game Round Doubles as an FSRS Review}{35}{}%
-\contentsline {section}{\numberline {C.8}Vocabulary-Driven Games}{36}{}%
-\contentsline {subsection}{\numberline {C.8.1}Wordle-Style Game}{36}{}%
-\contentsline {subsection}{\numberline {C.8.2}Word of Wonders (Crossword)}{37}{}%
-\contentsline {chapter}{\numberline {D}Implementation Details}{38}{}%
-\contentsline {section}{\numberline {D.1}Database Schema}{38}{}%
-\contentsline {subsection}{\numberline {D.1.1}Linguistic Content Tables}{38}{}%
-\contentsline {subsection}{\numberline {D.1.2}User State Tables}{39}{}%
-\contentsline {subsection}{\numberline {D.1.3}Engagement Signal Tables}{39}{}%
-\contentsline {section}{\numberline {D.2}Backend API}{39}{}%
-\contentsline {subsection}{\numberline {D.2.1}Authentication and Authorization}{40}{}%
-\contentsline {subsubsection}{\numberline {D.2.1.1}JWT Access/Refresh Token Rotation}{40}{}%
-\contentsline {subsubsection}{\numberline {D.2.1.2}Google OAuth 2.0}{40}{}%
-\contentsline {subsubsection}{\numberline {D.2.1.3}Password Reset and Request Limiting}{41}{}%
-\contentsline {subsection}{\numberline {D.2.2}Registration and Vocabulary Initialisation}{41}{}%
-\contentsline {subsubsection}{\numberline {D.2.2.1}Proficiency-Based Vocabulary Auto-Seeding}{41}{}%
-\contentsline {subsection}{\numberline {D.2.3}Offline Synchronisation}{42}{}%
-\contentsline {subsubsection}{\numberline {D.2.3.1}Change-Set Ordering: Deletes, Updates, Inserts}{42}{}%
-\contentsline {subsection}{\numberline {D.2.4}Dictionary and Letters Modules}{42}{}%
-\contentsline {subsection}{\numberline {D.2.5}Account Deletion and Personal Data}{43}{}%
-\contentsline {section}{\numberline {D.3}Frontend Architecture}{43}{}%
-\contentsline {subsection}{\numberline {D.3.1}Navigation and Screen Structure}{43}{}%
-\contentsline {subsection}{\numberline {D.3.2}State Management: Context and Hooks}{44}{}%
-\contentsline {subsection}{\numberline {D.3.3}Offline-First Strategy}{44}{}%
-\contentsline {subsection}{\numberline {D.3.4}Practice Reminders}{45}{}%
-\contentsline {subsection}{\numberline {D.3.5}Grammar Video Library}{46}{}%
-\contentsline {section}{\numberline {D.4}Reels Service}{46}{}%
-\contentsline {subsection}{\numberline {D.4.1}Service Architecture}{46}{}%
-\contentsline {subsection}{\numberline {D.4.2}Reel Creation and Dialogue Enrichment}{47}{}%
-\contentsline {subsection}{\numberline {D.4.3}Recommendation Engine Implementation}{47}{}%
-\contentsline {subsubsection}{\numberline {D.4.3.1}Stage 1: Candidate Loading and Comprehensibility Scoring}{47}{}%
-\contentsline {subsubsection}{\numberline {D.4.3.2}Stage 2: Frontend-Supplied Due-Word Partitioning}{48}{}%
-\contentsline {subsubsection}{\numberline {D.4.3.3}Stage 3: TF-IDF Profile Vectors and Cosine Similarity}{48}{}%
-\contentsline {subsection}{\numberline {D.4.4}Personalisation Implementation Status}{49}{}%
-\contentsline {section}{\numberline {D.5}Game Modules}{49}{}%
-\contentsline {subsection}{\numberline {D.5.1}Wordle-Style Game Implementation}{49}{}%
-\contentsline {subsection}{\numberline {D.5.2}Word of Wonders: Procedural Crossword Generation}{50}{}%
-\contentsline {subsubsection}{\numberline {D.5.2.1}Word Placement and Intersection Search}{50}{}%
-\contentsline {subsubsection}{\numberline {D.5.2.2}Letter-Budget and Word-Priority Heuristics}{50}{}%
-\contentsline {subsubsection}{\numberline {D.5.2.3}Due-Word Injection as the Practice Word}{50}{}%
-\contentsline {section}{\numberline {D.6}Deployment and Distribution}{52}{}%
-\contentsline {chapter}{\numberline {E}Evaluation \& Results}{53}{}%
-\contentsline {section}{\numberline {E.1}Evaluation Approach}{53}{}%
-\contentsline {section}{\numberline {E.2}Component-Level Algorithmic Evaluation}{53}{}%
-\contentsline {subsection}{\numberline {E.2.1}Word of Wonders: Grid-Generation Benchmark}{53}{}%
-\contentsline {subsubsection}{\numberline {E.2.1.1}Method}{54}{}%
-\contentsline {subsubsection}{\numberline {E.2.1.2}Robustness}{54}{}%
-\contentsline {subsubsection}{\numberline {E.2.1.3}Words Placed}{54}{}%
-\contentsline {subsubsection}{\numberline {E.2.1.4}Qualitative Example: On-Device Boards Across CEFR Levels}{55}{}%
-\contentsline {subsubsection}{\numberline {E.2.1.5}Generation Time}{57}{}%
-\contentsline {subsection}{\numberline {E.2.2}Recommendation Engine: The Cold-Start Problem}{58}{}%
-\contentsline {subsection}{\numberline {E.2.3}Recommendation Engine: Stage 1 Comprehensibility Filter}{60}{}%
-\contentsline {subsection}{\numberline {E.2.4}Recommendation Engine: Stage 2 Due-Word Prioritisation}{61}{}%
-\contentsline {subsection}{\numberline {E.2.5}Recommendation Engine: Stage 3 Content-Based Ranking}{61}{}%
-\contentsline {chapter}{\numberline {F}Conclusions \& Future work}{62}{}%
-\contentsline {section}{\numberline {F.1}Contributions}{62}{}%
-\contentsline {subsection}{\numberline {F.1.1}Answers to the Research Questions}{63}{}%
-\contentsline {section}{\numberline {F.2}Limitations}{64}{}%
-\contentsline {subsection}{\numberline {F.2.1}Evidence and Content}{64}{}%
-\contentsline {subsection}{\numberline {F.2.2}Language Processing}{65}{}%
-\contentsline {subsection}{\numberline {F.2.3}Recommendation and Progression}{65}{}%
-\contentsline {subsection}{\numberline {F.2.4}Onboarding and Social Scaffolding}{66}{}%
-\contentsline {section}{\numberline {F.3}Future Work}{67}{}%
-\contentsline {section}{\numberline {F.4}Concluding Remarks}{68}{}%
-\contentsline {chapter}{Bibliography}{69}{}%
-\contentsline {chapter}{Abbreviations}{74}{}%
-\contentsline {chapter}{Glossary}{76}{}%
+\contentsline {chapter}{\numberline {B}Literature Review}{9}{}%
+\contentsline {section}{\numberline {B.1}The Landscape of Mobile-Assisted Language Learning (MALL)}{9}{}%
+\contentsline {subsection}{\numberline {B.1.1}Market Evolution and Platform Proliferation}{9}{}%
+\contentsline {subsection}{\numberline {B.1.2}Critical Review and Systematic Limitations of Current Platforms}{10}{}%
+\contentsline {section}{\numberline {B.2}Pedagogical Foundations}{12}{}%
+\contentsline {subsection}{\numberline {B.2.1}Sociocultural Theory and the Zone of Proximal Development (ZPD)}{13}{}%
+\contentsline {subsection}{\numberline {B.2.2}The Input Hypothesis and the Lexical Coverage Threshold}{13}{}%
+\contentsline {subsection}{\numberline {B.2.3}Cognitive Load Theory and Microlearning}{14}{}%
+\contentsline {subsection}{\numberline {B.2.4}Memory Decay and Spaced Repetition Models}{14}{}%
+\contentsline {subsubsection}{\numberline {B.2.4.1}The Ebbinghaus Forgetting Curve}{14}{}%
+\contentsline {subsubsection}{\numberline {B.2.4.2}Classic Leitner's Algorithm}{15}{}%
+\contentsline {subsubsection}{\numberline {B.2.4.3}Parametric Half-Life Regression}{15}{}%
+\contentsline {subsubsection}{\numberline {B.2.4.4}FSRS and the DHP Model}{16}{}%
+\contentsline {paragraph}{The forgetting curve.}{17}{}%
+\contentsline {paragraph}{Initial state and difficulty updates.}{17}{}%
+\contentsline {paragraph}{Stability updates.}{18}{}%
+\contentsline {paragraph}{Same-day reviews (FSRS-6).}{18}{}%
+\contentsline {subsection}{\numberline {B.2.5}Active Recall and the Testing Effect}{19}{}%
+\contentsline {section}{\numberline {B.3}Modalities for Language Acquisition}{19}{}%
+\contentsline {subsection}{\numberline {B.3.1}Short-Form Video in Second Language Acquisition (SLA)}{19}{}%
+\contentsline {subsubsection}{\numberline {B.3.1.1}Incidental Vocabulary Acquisition through Audiovisual Input}{19}{}%
+\contentsline {subsubsection}{\numberline {B.3.1.2}The Gap: Passive Consumption without Reinforcement}{20}{}%
+\contentsline {subsection}{\numberline {B.3.2}Serious Games and Gamification in Language Learning}{21}{}%
+\contentsline {subsubsection}{\numberline {B.3.2.1}Game-Based Learning versus Gamification}{21}{}%
+\contentsline {subsubsection}{\numberline {B.3.2.2}Difficulty Adaptation in Hypercasual Games}{21}{}%
+\contentsline {subsubsection}{\numberline {B.3.2.3}Active-Recall Game Mechanics for Vocabulary}{21}{}%
+\contentsline {section}{\numberline {B.4}Algorithmic Frameworks for Personalized Recommendation}{22}{}%
+\contentsline {subsection}{\numberline {B.4.1}Content-Based Filtering}{22}{}%
+\contentsline {subsection}{\numberline {B.4.2}Collaborative Filtering and Hybrid Recommender Systems}{22}{}%
+\contentsline {subsection}{\numberline {B.4.3}Recommender Systems in Educational Technology}{23}{}%
+\contentsline {section}{\numberline {B.5}Synthesis: A Theory-Driven Design Framework}{23}{}%
+\contentsline {chapter}{\numberline {C}System Architecture \& Methodology}{25}{}%
+\contentsline {section}{\numberline {C.1}Design Requirements}{25}{}%
+\contentsline {subsection}{\numberline {C.1.1}Functional Requirements}{25}{}%
+\contentsline {subsection}{\numberline {C.1.2}Non-Functional Requirements}{26}{}%
+\contentsline {section}{\numberline {C.2}System Overview}{27}{}%
+\contentsline {section}{\numberline {C.3}Technology Stack}{29}{}%
+\contentsline {subsection}{\numberline {C.3.1}Frontend --- React Native / Expo}{29}{}%
+\contentsline {subsection}{\numberline {C.3.2}Backend API --- Node.js / Express}{29}{}%
+\contentsline {subsection}{\numberline {C.3.3}Reels Service --- Python / FastAPI}{30}{}%
+\contentsline {subsection}{\numberline {C.3.4}Database --- PostgreSQL}{30}{}%
+\contentsline {section}{\numberline {C.4}Data Modelling}{30}{}%
+\contentsline {subsection}{\numberline {C.4.1}Linguistic Content}{30}{}%
+\contentsline {subsection}{\numberline {C.4.2}User State}{32}{}%
+\contentsline {subsection}{\numberline {C.4.3}Engagement Signals}{32}{}%
+\contentsline {section}{\numberline {C.5}Onboarding and Learner-Model Initialisation}{33}{}%
+\contentsline {section}{\numberline {C.6}Recommendation Engine Design}{33}{}%
+\contentsline {subsection}{\numberline {C.6.1}Stage 1: Comprehensibility Filtering}{34}{}%
+\contentsline {subsection}{\numberline {C.6.2}Stage 2: Spaced-Repetition Prioritisation}{34}{}%
+\contentsline {subsection}{\numberline {C.6.3}Stage 3: Content-Based Personalisation}{35}{}%
+\contentsline {subsection}{\numberline {C.6.4}Combining the Three Stages: A Cascade, Not a Weighted Sum}{35}{}%
+\contentsline {section}{\numberline {C.7}Gamification Design}{35}{}%
+\contentsline {subsection}{\numberline {C.7.1}Progression Currencies: Coins, Energy, and Experience}{36}{}%
+\contentsline {subsection}{\numberline {C.7.2}Design Principle: Every Game Round Doubles as an FSRS Review}{36}{}%
+\contentsline {section}{\numberline {C.8}Vocabulary-Driven Games}{37}{}%
+\contentsline {subsection}{\numberline {C.8.1}Wordle-Style Game}{37}{}%
+\contentsline {subsection}{\numberline {C.8.2}Word of Wonders (Crossword)}{38}{}%
+\contentsline {chapter}{\numberline {D}Implementation Details}{39}{}%
+\contentsline {section}{\numberline {D.1}Database Schema}{39}{}%
+\contentsline {subsection}{\numberline {D.1.1}Linguistic Content Tables}{39}{}%
+\contentsline {subsection}{\numberline {D.1.2}User State Tables}{40}{}%
+\contentsline {subsection}{\numberline {D.1.3}Engagement Signal Tables}{40}{}%
+\contentsline {section}{\numberline {D.2}Backend API}{40}{}%
+\contentsline {subsection}{\numberline {D.2.1}Authentication and Authorization}{41}{}%
+\contentsline {subsubsection}{\numberline {D.2.1.1}JWT Access/Refresh Token Rotation}{41}{}%
+\contentsline {subsubsection}{\numberline {D.2.1.2}Google OAuth 2.0}{41}{}%
+\contentsline {subsubsection}{\numberline {D.2.1.3}Password Reset and Request Limiting}{42}{}%
+\contentsline {subsection}{\numberline {D.2.2}Registration and Vocabulary Initialisation}{42}{}%
+\contentsline {subsubsection}{\numberline {D.2.2.1}Proficiency-Based Vocabulary Auto-Seeding}{42}{}%
+\contentsline {subsection}{\numberline {D.2.3}Offline Synchronisation}{43}{}%
+\contentsline {subsubsection}{\numberline {D.2.3.1}Change-Set Ordering: Deletes, Updates, Inserts}{43}{}%
+\contentsline {subsection}{\numberline {D.2.4}Dictionary and Letters Modules}{43}{}%
+\contentsline {subsection}{\numberline {D.2.5}Account Deletion and Personal Data}{44}{}%
+\contentsline {section}{\numberline {D.3}Frontend Architecture}{44}{}%
+\contentsline {subsection}{\numberline {D.3.1}Navigation and Screen Structure}{44}{}%
+\contentsline {subsection}{\numberline {D.3.2}State Management: Context and Hooks}{45}{}%
+\contentsline {subsection}{\numberline {D.3.3}Offline-First Strategy}{45}{}%
+\contentsline {subsection}{\numberline {D.3.4}Practice Reminders}{46}{}%
+\contentsline {subsection}{\numberline {D.3.5}Grammar Video Library}{47}{}%
+\contentsline {section}{\numberline {D.4}Reels Service}{47}{}%
+\contentsline {subsection}{\numberline {D.4.1}Service Architecture}{47}{}%
+\contentsline {subsection}{\numberline {D.4.2}Reel Creation and Dialogue Enrichment}{48}{}%
+\contentsline {subsection}{\numberline {D.4.3}Recommendation Engine Implementation}{48}{}%
+\contentsline {subsubsection}{\numberline {D.4.3.1}Stage 1: Candidate Loading and Comprehensibility Scoring}{48}{}%
+\contentsline {subsubsection}{\numberline {D.4.3.2}Stage 2: Frontend-Supplied Due-Word Partitioning}{49}{}%
+\contentsline {subsubsection}{\numberline {D.4.3.3}Stage 3: TF-IDF Profile Vectors and Cosine Similarity}{49}{}%
+\contentsline {subsection}{\numberline {D.4.4}Personalisation Implementation Status}{50}{}%
+\contentsline {section}{\numberline {D.5}Game Modules}{50}{}%
+\contentsline {subsection}{\numberline {D.5.1}Wordle-Style Game Implementation}{50}{}%
+\contentsline {subsection}{\numberline {D.5.2}Word of Wonders: Procedural Crossword Generation}{51}{}%
+\contentsline {subsubsection}{\numberline {D.5.2.1}Word Placement and Intersection Search}{51}{}%
+\contentsline {subsubsection}{\numberline {D.5.2.2}Letter-Budget and Word-Priority Heuristics}{51}{}%
+\contentsline {subsubsection}{\numberline {D.5.2.3}Due-Word Injection as the Practice Word}{51}{}%
+\contentsline {section}{\numberline {D.6}Deployment and Distribution}{53}{}%
+\contentsline {chapter}{\numberline {E}Evaluation \& Results}{54}{}%
+\contentsline {section}{\numberline {E.1}Evaluation Approach}{54}{}%
+\contentsline {subsection}{\numberline {E.1.1}Research Questions and Evidence}{54}{}%
+\contentsline {subsection}{\numberline {E.1.2}Data and Reproducibility}{55}{}%
+\contentsline {section}{\numberline {E.2}Component-Level Algorithmic Evaluation}{56}{}%
+\contentsline {subsection}{\numberline {E.2.1}Word of Wonders: Grid-Generation Benchmark}{56}{}%
+\contentsline {subsubsection}{\numberline {E.2.1.1}Method}{56}{}%
+\contentsline {subsubsection}{\numberline {E.2.1.2}Robustness}{56}{}%
+\contentsline {subsubsection}{\numberline {E.2.1.3}Words Placed}{57}{}%
+\contentsline {subsubsection}{\numberline {E.2.1.4}Qualitative Example: On-Device Boards Across CEFR Levels}{58}{}%
+\contentsline {subsubsection}{\numberline {E.2.1.5}Generation Time}{58}{}%
+\contentsline {subsection}{\numberline {E.2.2}Recommendation Engine: The Cold-Start Problem}{60}{}%
+\contentsline {subsection}{\numberline {E.2.3}Recommendation Engine: Stage 1 Comprehensibility Filter}{61}{}%
+\contentsline {subsection}{\numberline {E.2.4}Recommendation Engine: Stage 2 Due-Word Prioritisation}{62}{}%
+\contentsline {subsection}{\numberline {E.2.5}Recommendation Engine: Stage 3 Content-Based Ranking}{64}{}%
+\contentsline {section}{\numberline {E.3}Backend Correctness Testing}{64}{}%
+\contentsline {section}{\numberline {E.4}Discussion and Threats to Validity}{66}{}%
+\contentsline {subsection}{\numberline {E.4.1}What the Results Show}{66}{}%
+\contentsline {subsection}{\numberline {E.4.2}Threats to Validity}{66}{}%
+\contentsline {chapter}{\numberline {F}Conclusions \& Future work}{68}{}%
+\contentsline {section}{\numberline {F.1}Contributions}{68}{}%
+\contentsline {subsection}{\numberline {F.1.1}Answers to the Research Questions}{69}{}%
+\contentsline {section}{\numberline {F.2}Limitations}{70}{}%
+\contentsline {subsection}{\numberline {F.2.1}Evidence and Content}{70}{}%
+\contentsline {subsection}{\numberline {F.2.2}Language Processing}{71}{}%
+\contentsline {subsection}{\numberline {F.2.3}Recommendation and Progression}{71}{}%
+\contentsline {subsection}{\numberline {F.2.4}Onboarding and Social Scaffolding}{72}{}%
+\contentsline {section}{\numberline {F.3}Future Work}{73}{}%
+\contentsline {section}{\numberline {F.4}Concluding Remarks}{74}{}%
+\contentsline {chapter}{Bibliography}{75}{}%
+\contentsline {chapter}{Abbreviations}{80}{}%
+\contentsline {chapter}{Glossary}{82}{}%

@@ -1,6 +1,35 @@
 \section{Evaluation Approach}
 \label{sec:eval_approach}
-    As acknowledged in Chapter~\ref{chapter:conclusions}, \textit{Glosy} has not yet been evaluated in a controlled study with human learners. This is the main disadvantage of the present work: none of the results in this chapter can speak to actual vocabulary gain, retention, or engagement, since no learner has yet used the system under observation. In the absence of that evidence, this chapter instead evaluates the system's own algorithmic components directly, against real seeded content, to establish whether each behaves as its design in Chapter~\ref{methodology} intends and where it does not --- a necessary but not sufficient substitute for pedagogical evidence, and one that Chapter~\ref{chapter:conclusions} returns to among its directions for future work. Each section below targets one component in isolation, using the real, unmodified implementation from Chapter~\ref{chapter:discussion} rather than a re-derived model of it.
+    As acknowledged in Chapter~\ref{chapter:conclusions}, \textit{Glosy} has not yet been evaluated in a controlled study with human learners. This is the main disadvantage of the present work: none of the results in this chapter can speak to actual vocabulary gain, retention, or engagement, since no learner has yet used the system under observation. In the absence of that evidence, this chapter instead evaluates the system's own algorithmic components directly, against real seeded content, to establish whether each behaves as its design in Chapter~\ref{methodology} intends and where it does not --- a necessary but not sufficient substitute for pedagogical evidence, and one that Chapter~\ref{chapter:conclusions} returns to among its directions for future work. Each section below targets one component in isolation. The crossword generator and the Stage~2 ranking are run as the real, unmodified implementation from Chapter~\ref{chapter:discussion}; the Stage~1 comprehensibility filter is recomputed from the seeded data by a script that mirrors its formula.
+
+    \subsection{Research Questions and Evidence}
+    \label{subsec:eval_rq_mapping}
+    Table~\ref{tab:eval_rq_mapping} shows which research question each experiment speaks to and what it leaves untested. Every research question has at least one component evaluated, and none of them can be answered in terms of learning outcomes.
+
+    \begin{center}
+        \begin{minipage}{\linewidth}% keeps the caption on the same page as its table
+        \small
+        \captionof{table}{Evidence gathered for each research question, and what remains untested.}
+        \label{tab:eval_rq_mapping}
+        \begin{tabular}{L{1.2cm}L{4.4cm}L{3.6cm}L{3.9cm}}
+            \hline
+            \textbf{RQ} & \textbf{Evaluated} & \textbf{Where} & \textbf{Not evaluated} \\
+            \hline
+            RQ1 & Word-level linkage of reel transcripts to the vocabulary model, exercised through Stage~1's coverage measure & Sec.~\ref{subsec:stage1_eval} & Whether tracked words are actually learned \\
+            \hline
+            RQ2 & Comprehensibility pass rates per level; due-word prioritisation on a guest's first page & Sec.~\ref{subsec:stage1_eval}, \ref{subsec:stage2_eval} & Content-based ranking (Stage~3); relevance as the learner sees it \\
+            \hline
+            RQ3 & Crossword generator: robustness, board richness, generation time & Sec.~\ref{subsec:wow_eval} & Wordle-style game; effectiveness as spaced-repetition practice \\
+            \hline
+            All & Batched offline synchronisation and token rotation, as supporting infrastructure & Sec.~\ref{sec:backend_tests} & Registration, password reset, account deletion \\
+            \hline
+        \end{tabular}
+        \end{minipage}
+    \end{center}
+
+    \subsection{Data and Reproducibility}
+    \label{subsec:eval_data}
+    Every experiment runs on the system's own seeded content rather than on synthetic stand-ins, but not all of that content can be shared. The crossword benchmark samples from the three seeded dictionaries (13,373 English, 13,722 Greek, and 14,315 Farsi entries). These dictionaries are part of the repository, as are the harness, its raw per-trial results, and the aggregated summary, so the crossword figures can be regenerated, or the 4{,}200 trials repeated, from the repository alone. The recommender experiments use the Farsi reel catalogue of 56 reels, of which 50 have tokenised transcripts and can therefore be scored (Section~\ref{subsec:stage1_eval}). That catalogue is read from a full export of the production database, which contains user data and is deliberately kept out of the repository. The recommender scripts under \texttt{scripts/evaluation/} are published, but their input is not, so these two experiments cannot be repeated from the repository alone. They can be repeated on any database export that contains the reels and their tokenised transcripts, and their results are reported here as measured.
 
 \section{Component-Level Algorithmic Evaluation}
 \label{sec:component_eval}
@@ -128,3 +157,57 @@
     \subsection{Recommendation Engine: Stage 3 Content-Based Ranking}
     \label{subsec:stage3_eval}
     Stage~3 (Section~\ref{subsec:stage3_design}) is not tested here. It is built entirely on scikit-learn's TF-IDF weighting and cosine similarity, an established library implementing a long-standing retrieval technique, so re-testing those components would evaluate the library rather than \textit{Glosy}. What remains specific to the system, its dependence on an interaction history that no user has yet accumulated, is discussed in Section~\ref{subsec:recommender_cold_start}.
+
+
+\section{Backend Correctness Testing}
+\label{sec:backend_tests}
+    The algorithmic experiments above do not cover the code that keeps a learner's data consistent between the device and the server. The backend therefore has an automated test suite, centred on the synchronisation endpoint (Section~\ref{subsec:sync_impl}). The endpoint applies the vocabulary and sentence updates in chunks of 500 rows, one set-based statement per chunk, inside a single transaction. Because this code silently holds learner state, a defect in it would go unnoticed, so the tests check its behaviour directly: the meaning of each field, the transactional guarantees, and agreement with a simple reference implementation. The suite also covers refresh-token rotation and logout. It has 33 test cases in four files and is run with \texttt{npm test}.
+
+    The tests are integration tests, not unit tests with mocks. They run under Jest against a real PostgreSQL database: the endpoint tests call the real Express application through Supertest, and the batching tests call the update functions directly. Each file creates a throwaway user with its own language, words, and sentences, and deletes it afterwards; the foreign keys' \texttt{ON DELETE CASCADE} removes everything that depends on it.
+
+    \begin{sloppypar}
+    \textbf{Field semantics.} Twenty tests cover the batched vocabulary and sentence updates, 12 and 8 respectively. They check the field semantics that the client depends on. Fields that were not sent keep their stored value, an explicit \texttt{0} is written rather than treated as ``unchanged'', and an explicit \texttt{null} clears the nullable columns. An id with no row is skipped and not created, so a word deleted in the meantime is not resurrected. An empty batch returns at once without touching the database. Two keys that name the same id, such as \texttt{"1"} and \texttt{"01"}, are merged with the later entry winning per field, and only the rows of the given language entry are touched.
+    \end{sloppypar}
+
+    \begin{sloppypar}
+    \textbf{Batching and failure behaviour.} A batch of 1{,}100 rows, which needs three chunks, must be applied as exactly one \texttt{BEGIN}, three \texttt{UPDATE} statements, and one \texttt{COMMIT}; the test counts them by recording every statement sent over the connection. Failure must be all-or-nothing: when an invalid value in the last chunk violates a \texttt{NOT NULL} constraint after the earlier chunks have already run, the table must end up exactly as it was. Finally, after 15 consecutive failing calls, more than the pool's ten connections, the pool must still be usable with no connection left checked out.
+    \end{sloppypar}
+
+    \begin{sloppypar}
+    \textbf{Agreement with a reference implementation.} The strongest check is a differential test. A straightforward row-by-row implementation, with one \texttt{UPDATE} per row, is kept in the test file as a reference. For both vocabulary and sentences, a randomised payload of 200 rows is applied to identically seeded rows, once by the reference and once by the batched code. The payload mixes omitted fields, zeros, and nulls, and comes from a fixed-seed generator so that a failure can be reproduced. The test requires the same final table and the same returned rows, so the batching is shown to change how the update is executed and not its result.
+    \end{sloppypar}
+
+    \begin{sloppypar}
+    \textbf{The endpoint.} Three tests drive the sync endpoint itself. A mixed payload that deletes, updates, and inserts must apply the deletes first, then the updates, then the inserts. It includes an update for a word deleted in the same sync, which must be skipped, and a word deleted and inserted again, which must come back fresh. The response must have the expected keys, with updates keyed by id and carrying every field. An updates-only payload returns the updated rows keyed by id. A payload with an invalid update must answer with a server error and leave no part of the batch in the database.
+    \end{sloppypar}
+
+    \textbf{Sessions.} Ten further tests cover the session endpoints. For refresh tokens they check that a valid token is rotated, that replaying a used token is detected and revokes the whole family including the token that replaced it, that a token past its absolute lifetime is rejected as expired, and that a garbage token is rejected differently from a reused one. They also check that two device sessions of one user are independent and that rotation does not extend the family's expiry. For logout they check that only the presented token's family is revoked, so other devices stay signed in, and that logging out twice or without a token is harmless.
+
+    The suite has clear limits. It covers the server only: the frontend has no substantive automated tests. The atomicity it verifies is that of the update step, and the sync as a whole is still not atomic (Section~\ref{subsec:sync_impl}). It does not test registration, password reset, account deletion, or the rate limiters. It also does not exercise the case that the row lock in the refresh endpoint exists to protect, two refresh requests for the same token arriving at the same moment.
+
+
+\section{Discussion and Threats to Validity}
+\label{sec:eval_discussion}
+
+    \subsection{What the Results Show}
+    \begin{sloppypar}
+    Taken together, the experiments answer a narrower question than the research questions ask: whether each component does what its design says. On that question the answer is largely yes. The crossword generator did not fail in 4{,}200 trials, and its boards grow richer as the learner's vocabulary grows (RQ3). Stage~2 puts a due word in every reel on a guest's first page and gives every due word a review prompt (RQ2). The batched synchronisation and the token rotation are covered by 33 automated tests, all of which pass, including a comparison against a row-by-row reference implementation (Section~\ref{sec:backend_tests}).
+    \end{sloppypar}
+
+    \begin{sloppypar}
+    The results also share a pattern: where a component falls short, the limit is the amount of data, not the logic. At the 0.98 threshold Stage~1 passes only 4\% of reels for a level-N learner and 12\% for A1, and a looser threshold does not help. Stage~2 works because the catalogue was built around four starter words and holds only 11 reels that contain them. The crossword gives a new learner a board of one or two words because their tracked vocabulary is small. In each case more content, or a larger vocabulary, would improve the outcome without any change to the algorithm. This is a design finding as well as a limitation: the next investment should be content, above all easier reels for beginners, rather than a more elaborate ranking.
+    \end{sloppypar}
+
+    \subsection{Threats to Validity}
+    \label{subsec:eval_threats}
+    Five limitations qualify these results.
+
+    \textbf{Construct validity.} Pass rates, words placed, and generation times are properties of the algorithms. None of them measures whether a learner understands a reel or remembers a word, so the results show that the mechanisms work, not that learners benefit from them.
+
+    \textbf{Simulated learners.} The benchmark draws tracked vocabularies uniformly from the dictionary, whereas a real learner's vocabulary is structured by level. The Stage~1 experiment assumes that a learner knows exactly the words that registration seeds for the declared level (Section~\ref{sec:onboarding_design}). Real learners will differ, so the absolute numbers should be read as indicative.
+
+    \textbf{A small, curated catalogue.} The recommender experiments use 50 tokenised Farsi reels chosen by the maintainer to demonstrate the filter (Section~\ref{sec:limitations}), and the Stage~2 result depends on the catalogue having been built around the four starter words. Results for English or Greek, or for a larger and less curated library, could differ.
+
+    \textbf{Measurement conditions.} Generation times come from a laptop running Node.js, not from phones running Hermes, and each figure comes from a single machine. They are evidence of how the algorithm scales, not of latency on a device.
+
+    \textbf{Limited reproducibility.} The recommender results cannot be independently repeated from the repository, because the reel catalogue they were measured on is not published (Section~\ref{subsec:eval_data}). A reader can inspect the scripts but must either take the measured pass rates as reported or repeat the experiments on their own reels.
