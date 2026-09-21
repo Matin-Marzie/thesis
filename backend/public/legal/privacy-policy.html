@@ -38,13 +38,13 @@
 <body>
 
 <h1>Privacy Policy for glosy</h1>
-<p class="meta">Effective date: August 12, 2026<br>
+<p class="meta">Effective date: September 21, 2026<br>
 Data controller: Mohammad Matin Marzie, operating as an individual developer based in Greece<br>
 Contact: <a href="mailto:support@glosy.gr">support@glosy.gr</a></p>
 
 <p>glosy ("the App", "we", "us") is a language-learning mobile application that lets you learn new languages through short subtitled videos ("reels") and vocabulary practice, including reels uploaded by other users. This Privacy Policy explains what data we collect, why, how it's used, and the rights you have over it.</p>
 
-<p>This policy applies to the glosy mobile app and its backend services. It does not apply to third-party services we link to or integrate with (like Google Sign-In), which have their own privacy policies.</p>
+<p>This policy applies to the glosy mobile app and its backend services. It does not apply to third-party services we link to or integrate with (like Google Sign-In, Wiktionary, or YouTube), which have their own privacy policies.</p>
 
 <h2>1. Data We Collect</h2>
 
@@ -75,7 +75,7 @@ Contact: <a href="mailto:support@glosy.gr">support@glosy.gr</a></p>
 
 <h3>1.4 Technical data</h3>
 <p>Like virtually any networked app, our servers automatically log standard technical data with each request — IP address, device/OS type, timestamps, and similar metadata. We use this only for security, debugging, and abuse prevention, not for tracking or profiling you.</p>
-<p>If you enable notifications, we store a push-notification token used to deliver reminders to your device.</p>
+<p>If you enable practice reminders, your device schedules them locally. Our servers do not send them, and we do not receive or store any push-notification token.</p>
 
 <h3>1.5 What we do <em>not</em> collect</h3>
 <ul>
@@ -92,7 +92,7 @@ Contact: <a href="mailto:support@glosy.gr">support@glosy.gr</a></p>
   <li>To operate the social features of the App — the reels feed, likes, comments, saves</li>
   <li>To send account-related emails: email verification codes and password reset codes</li>
   <li>To review and act on content reports and enforce our <a href="/static/legal/terms-of-use.html">Terms of Use</a></li>
-  <li>To send optional push notifications, if you've enabled them</li>
+  <li>To provide optional daily practice reminders, which your device schedules locally, if you've enabled them</li>
   <li>To maintain the security and integrity of the App</li>
 </ul>
 
@@ -101,7 +101,7 @@ Contact: <a href="mailto:support@glosy.gr">support@glosy.gr</a></p>
   <tr><th>Processing activity</th><th>Legal basis</th></tr>
   <tr><td>Account creation, authentication, core app functionality</td><td>Performance of a contract (our Terms of Use) with you</td></tr>
   <tr><td>Security, fraud/abuse prevention, technical logs</td><td>Legitimate interest</td></tr>
-  <tr><td>Optional push notifications</td><td>Consent (you can withdraw it anytime in Settings)</td></tr>
+  <tr><td>Optional practice reminders (local notifications on your device)</td><td>Consent (you can withdraw it anytime in Settings)</td></tr>
   <tr><td>Responding to legal requests</td><td>Legal obligation</td></tr>
 </table>
 
@@ -114,7 +114,12 @@ Contact: <a href="mailto:support@glosy.gr">support@glosy.gr</a></p>
     <ul>
       <li>An email delivery provider (Brevo), used solely to send verification and password-reset codes to your email.</li>
       <li>Google, if you use Sign-In with Google, to authenticate you.</li>
-      <li>Push notification infrastructure (via Expo, relaying through Apple/Google's own push services), if you enable notifications.</li>
+    </ul>
+  </li>
+  <li><strong>Third-party services your device contacts directly</strong>, only when you use the related feature. These requests go from your device to the provider, not through our servers, so the provider receives your IP address and the request itself, and handles them under its own privacy policy:
+    <ul>
+      <li>Wikimedia (Wiktionary), when you look up a word definition. The word you look up is sent to <code>en.wiktionary.org</code>.</li>
+      <li>YouTube (Google), when you watch an embedded grammar video. The video player and its metadata are loaded from YouTube.</li>
     </ul>
   </li>
   <li><strong>Legal authorities</strong>, only if required to comply with a legal obligation, protect our rights, or protect the safety of users or the public.</li>
