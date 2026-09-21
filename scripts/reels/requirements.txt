@@ -1,0 +1,11 @@
+psycopg2-binary>=2.9.9
+python-dotenv>=1.0.0
+
+# NLP: lemmatization for backfill_tokens.py, moved here from reels-service
+# (512MB host can't afford these). One-time local setup after installing:
+#   python -m spacy download en_core_web_sm
+#   python -c "import stanza; stanza.download('el')"
+# hazm (fa) needs no separate model download.
+spacy>=3.8.0
+stanza>=1.8.0
+hazm>=0.10.0
