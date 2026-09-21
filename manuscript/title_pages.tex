@@ -46,7 +46,11 @@
 \end{center}
 \end{titlepage}
 
-\cleardoublepage
+% No blank page here: the English and Greek title pages face each other as a spread.
+% The titlepage environment resets the page counter, so restore an odd value or the
+% next titlepage's \cleardoublepage would still insert a blank.
+\clearpage
+\setcounter{page}{1}
 
 
 

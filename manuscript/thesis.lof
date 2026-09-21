@@ -11,16 +11,16 @@
 \babel@toc {english}{}\relax 
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {B.1}{\ignorespaces The forgetting curve, with original data from Ebbinghaus \cite {ebbinghaus1885memory}, as replotted by Murre and Dros \cite {murre2015replication}. Image: Jaap M. J. Murre, Wikimedia Commons, CC BY 4.0.}}{13}{}%
-\contentsline {figure}{\numberline {B.2}{\ignorespaces The classic five-box Leitner scheduling system. Image: Zirguezi, Wikimedia Commons \cite {zirguezi2012leitner}, CC0 1.0.}}{14}{}%
+\contentsline {figure}{\numberline {B.1}{\ignorespaces The forgetting curve, with original data from Ebbinghaus \cite {ebbinghaus1885memory}, as replotted by Murre and Dros \cite {murre2015replication}. Image: Jaap M. J. Murre, Wikimedia Commons, CC BY 4.0.}}{14}{}%
+\contentsline {figure}{\numberline {B.2}{\ignorespaces The classic five-box Leitner scheduling system. Image: Zirguezi, Wikimedia Commons \cite {zirguezi2012leitner}, CC0 1.0.}}{15}{}%
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {C.3}{\ignorespaces High-level system architecture: the mobile frontend communicates with the Backend API (\texttt {api.glosy.gr}) and the Reels Service (\texttt {recs.glosy.gr}) over authenticated REST endpoints; both services share a single PostgreSQL instance.}}{24}{}%
-\contentsline {figure}{\numberline {C.4}{\ignorespaces Entity-relationship diagram of the 21-table schema, grouped into the three axes of Section~\ref {sec:data_modelling}: Linguistic Content, User State, and Engagement Signals.}}{27}{}%
+\contentsline {figure}{\numberline {C.3}{\ignorespaces High-level system architecture: the mobile frontend communicates with the Backend API (\texttt {api.glosy.gr}) and the Reels Service (\texttt {recs.glosy.gr}) over authenticated REST endpoints; both services share a single PostgreSQL instance.}}{25}{}%
+\contentsline {figure}{\numberline {C.4}{\ignorespaces Entity-relationship diagram of the 21-table schema, grouped into the three axes of Section~\ref {sec:data_modelling}: Linguistic Content, User State, and Engagement Signals.}}{28}{}%
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {E.5}{\ignorespaces Mean words placed on the board (cap = 12) as a function of simulated tracked-vocabulary size, per language. Error bars show $\pm 1$ standard deviation over 200 repetitions per point.}}{48}{}%
-\contentsline {figure}{\numberline {E.6}{\ignorespaces Word of Wonders boards generated on a physical device for an English learner who declared each of the six CEFR levels at onboarding, all other conditions held fixed. Board density visibly grows from a bare two-word cross at A1 to a multi-armed board of several intersecting words by B2--C2.}}{49}{}%
-\contentsline {figure}{\numberline {E.7}{\ignorespaces Mean grid-generation wall-clock time (ms) as a function of simulated tracked-vocabulary size, per language, measured under Node.js/V8 on a development machine. Error bars show $\pm 1$ standard deviation over 200 repetitions per point.}}{50}{}%
-\contentsline {figure}{\numberline {E.8}{\ignorespaces The Personalization screen (\texttt {PersonalizationSlide.tsx}), the last onboarding page}}{52}{}%
-\contentsline {figure}{\numberline {E.9}{\ignorespaces Share of the 50 tokenised Farsi reels passing Stage~1, per onboarding level, at the threshold the application uses (0.98) and, for comparison only, a looser one (0.5). Each level's known vocabulary is what registration seeds for it (Section~\ref {subsec:registration_impl}); level N receives only four starter words.}}{53}{}%
+\contentsline {figure}{\numberline {E.5}{\ignorespaces Mean words placed on the board (cap = 12) as a function of simulated tracked-vocabulary size, per language. Error bars show $\pm 1$ standard deviation over 200 repetitions per point.}}{49}{}%
+\contentsline {figure}{\numberline {E.6}{\ignorespaces Word of Wonders boards generated on a physical device for an English learner who declared each of the six CEFR levels at onboarding, all other conditions held fixed. Board density visibly grows from a bare two-word cross at A1 to a multi-armed board of several intersecting words by B2--C2.}}{50}{}%
+\contentsline {figure}{\numberline {E.7}{\ignorespaces Mean grid-generation wall-clock time (ms) as a function of simulated tracked-vocabulary size, per language, measured under Node.js/V8 on a development machine. Error bars show $\pm 1$ standard deviation over 200 repetitions per point.}}{51}{}%
+\contentsline {figure}{\numberline {E.8}{\ignorespaces The Personalization screen (\texttt {PersonalizationSlide.tsx}), the last onboarding page}}{53}{}%
+\contentsline {figure}{\numberline {E.9}{\ignorespaces Share of the 50 tokenised Farsi reels passing Stage~1, per onboarding level, at the threshold the application uses (0.98) and, for comparison only, a looser one (0.5). Each level's known vocabulary is what registration seeds for it (Section~\ref {subsec:registration_impl}); level N receives only four starter words.}}{54}{}%
 \addvspace {10\p@ }

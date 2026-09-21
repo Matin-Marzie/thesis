@@ -87,6 +87,12 @@
 \oddsidemargin=0.5cm
 \evensidemargin=0.5cm
 
+% Opening blank page (guidelines: (a) blank page, (b) title page). The titlepage
+% environment forces a \cleardoublepage on the page counter, so reset it to an odd
+% value to stop it inserting a second blank page before the title.
+\thispagestyle{empty}\mbox{}\clearpage
+\setcounter{page}{1}
+
 % Include title pages
 \input{./title_pages}
 
@@ -191,9 +197,14 @@
 \pagestyle{headings}
 \input{./backmatter/glossary}
 
-% Index
-\newpage
-\addcontentsline{toc}{chapter}{Index}
-\printindex
+% Index -- disabled: the thesis has no \index{} entries, so it would print nothing and the
+% TOC line would point at an empty page. Re-enable once index terms are added.
+% \newpage
+% \addcontentsline{toc}{chapter}{Index}
+% \printindex
+
+% Closing blank page (guidelines: final blank page)
+\clearpage
+\thispagestyle{empty}\mbox{}
 
 \end{document}

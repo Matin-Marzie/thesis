@@ -69,6 +69,29 @@ A natural objection is that a learner could already acquire vocabulary by watchi
 This thesis proposes \textbf{Glosy}, a cross-platform mobile application that addresses the identified gaps by embedding vocabulary acquisition within short-form authentic video content and reinforcing it through personalised hypercasual games. The system tracks each learner's vocabulary state at the word level, uses that state to select contextually appropriate reels, and builds the words of every game round from the same vocabulary model.
 
 
+% ----------OBJECTIVES, SCOPE AND APPROACH----------
+\section{Objectives, Scope, and Approach}
+\label{sec:objectives_scope}
+
+    \subsection{Objectives}
+    The research questions above translate into four concrete objectives:
+
+    \begin{enumerate}
+        \item[\textbf{O1.}] Model each learner's vocabulary word by word, holding a spaced-repetition card for every tracked word and linking it to the dictionary and to the subtitles of every reel (RQ1).
+
+        \item[\textbf{O2.}] Build a three-stage recommendation engine that filters reels for comprehensibility, prioritises those containing words due for review, and ranks the remainder by similarity to the learner's viewing history (RQ2).
+
+        \item[\textbf{O3.}] Generate two vocabulary-driven games, a Wordle-style guessing game and a procedurally generated crossword, from the same vocabulary state, so that every round of play is also a spaced-repetition review (RQ3).
+        
+        \item[\textbf{O4.}] Deliver these components as a working, offline-capable prototype for Android and iOS, and evaluate their algorithmic behaviour on real seeded content.
+    \end{enumerate}
+
+    \subsection{Scope and Delimitations}
+    The work is deliberately bounded. The system's own learning mechanics address vocabulary acquisition only. Grammar is not taught or tested within \textit{Glosy}; it is supported only by a curated collection of external YouTube lessons, kept per learning language, which the learner can watch from the application's Videos screen or open in YouTube. The application offers no pronunciation or speaking exercises. It supports three languages --- English, Greek, and Farsi, the last a right-to-left script --- and targets both Android and iOS from one codebase. The two platforms are at different stages of distribution: the Android build is published as versioned APK releases on GitHub, whereas the iOS build is currently available only through Expo. The thesis also treats content supply as outside its scope: the reel catalogue is small and was seeded by a maintainer to demonstrate the recommender, not curated as a learning library (Section~\ref{sec:limitations}). Most importantly, the thesis evaluates the system's algorithmic components, not its effect on learners. No controlled study with learners has been conducted, so no claim is made about vocabulary gain, retention, or engagement, and the content-based ranking stage of the recommender, although implemented, is not tested (Chapter~\ref{chapter:evaluation_results}).
+
+    \subsection{Methodological Approach}
+    The thesis follows a design-and-build approach. The literature review (Chapter~\ref{chapter:related_work}) yields the design principles: among them the 98\% lexical-coverage criterion for comprehensible input and a spaced-repetition model of memory decay. Chapters~\ref{methodology} and~\ref{chapter:discussion} turn these principles into an architecture and a working implementation, and Chapter~\ref{chapter:evaluation_results} tests the result. Because no learner has yet used the system, the evaluation examines each component directly. The crossword generator is benchmarked over 4{,}200 trials on word pools sampled from the seeded dictionaries, and the first two recommender stages are run on the real reel catalogue. The benchmark harness and evaluation scripts are part of the project repository, so every reported result can be reproduced (Section~\ref{sec:eval_approach}).
+
 % ----------SIGNIFICANCE----------
 \section{Significance}
     The significance of this work lies in three areas.
