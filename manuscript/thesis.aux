@@ -249,158 +249,164 @@
 \newlabel{subsec:wordle_design}{{C.8.1}{37}{}{}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {C.8.2}Word of Wonders (Crossword)}{38}{}\protected@file@percent }
 \newlabel{subsec:wow_design}{{C.8.2}{38}{}{}{}}
-\@writefile{toc}{\contentsline {chapter}{\numberline {D}Implementation Details}{39}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {C.9}Design Decisions and Trade-offs}{38}{}\protected@file@percent }
+\newlabel{sec:design_decisions}{{C.9}{38}{}{}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {C.9.1}Offline-First Client State}{38}{}\protected@file@percent }
+\newlabel{subsec:offline_first_design}{{C.9.1}{38}{}{}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {C.9.2}Memory State on the Device}{39}{}\protected@file@percent }
+\newlabel{subsec:on_device_memory_design}{{C.9.2}{39}{}{}{}}
+\@writefile{toc}{\contentsline {chapter}{\numberline {D}Implementation Details}{40}{}\protected@file@percent }
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
-\newlabel{chapter:discussion}{{D}{39}{}{}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {D.1}Database Schema}{39}{}\protected@file@percent }
-\newlabel{sec:db_schema}{{D.1}{39}{}{}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {D.1.1}Linguistic Content Tables}{39}{}\protected@file@percent }
-\newlabel{subsec:schema_linguistic}{{D.1.1}{39}{}{}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {D.1.2}User State Tables}{40}{}\protected@file@percent }
-\newlabel{subsec:schema_user_state}{{D.1.2}{40}{}{}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {D.1.3}Engagement Signal Tables}{40}{}\protected@file@percent }
-\newlabel{subsec:schema_engagement}{{D.1.3}{40}{}{}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {D.2}Backend API}{40}{}\protected@file@percent }
-\newlabel{sec:backend_api}{{D.2}{40}{}{}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {D.2.1}Authentication and Authorization}{41}{}\protected@file@percent }
-\newlabel{subsec:auth_impl}{{D.2.1}{41}{}{}{}}
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {D.2.1.1}JWT Access/Refresh Token Rotation}{41}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {D.2.1.2}Google OAuth 2.0}{41}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {D.2.1.3}Password Reset and Request Limiting}{42}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {D.2.2}Registration and Vocabulary Initialisation}{42}{}\protected@file@percent }
-\newlabel{subsec:registration_impl}{{D.2.2}{42}{}{}{}}
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {D.2.2.1}Proficiency-Based Vocabulary Auto-Seeding}{42}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {D.2.3}Offline Synchronisation}{43}{}\protected@file@percent }
-\newlabel{subsec:sync_impl}{{D.2.3}{43}{}{}{}}
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {D.2.3.1}Change-Set Ordering: Deletes, Updates, Inserts}{43}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {D.2.4}Dictionary and Letters Modules}{43}{}\protected@file@percent }
-\newlabel{subsec:dictionary_impl}{{D.2.4}{43}{}{}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {D.2.5}Account Deletion and Personal Data}{44}{}\protected@file@percent }
-\newlabel{subsec:account_deletion_impl}{{D.2.5}{44}{}{}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {D.3}Frontend Architecture}{44}{}\protected@file@percent }
-\newlabel{sec:frontend_arch}{{D.3}{44}{}{}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {D.3.1}Navigation and Screen Structure}{44}{}\protected@file@percent }
-\newlabel{subsec:navigation_impl}{{D.3.1}{44}{}{}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {D.3.2}State Management: Context and Hooks}{45}{}\protected@file@percent }
-\newlabel{subsec:state_mgmt_impl}{{D.3.2}{45}{}{}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {D.3.3}Offline-First Strategy}{45}{}\protected@file@percent }
-\newlabel{subsec:offline_impl}{{D.3.3}{45}{}{}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {D.3.4}Practice Reminders}{46}{}\protected@file@percent }
-\newlabel{subsec:reminders_impl}{{D.3.4}{46}{}{}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {D.3.5}Grammar Video Library}{47}{}\protected@file@percent }
-\newlabel{subsec:grammar_videos_impl}{{D.3.5}{47}{}{}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {D.4}Reels Service}{47}{}\protected@file@percent }
-\newlabel{sec:reels_service_impl}{{D.4}{47}{}{}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {D.4.1}Service Architecture}{47}{}\protected@file@percent }
-\newlabel{subsec:reels_arch_impl}{{D.4.1}{47}{}{}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {D.4.2}Reel Creation and Dialogue Enrichment}{48}{}\protected@file@percent }
-\newlabel{subsec:reel_creation_impl}{{D.4.2}{48}{}{}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {D.4.3}Recommendation Engine Implementation}{48}{}\protected@file@percent }
-\newlabel{subsec:recommendation_impl}{{D.4.3}{48}{}{}{}}
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {D.4.3.1}Stage 1: Candidate Loading and Comprehensibility Scoring}{48}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {D.4.3.2}Stage 2: Frontend-Supplied Due-Word Partitioning}{49}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {D.4.3.3}Stage 3: TF-IDF Profile Vectors and Cosine Similarity}{49}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {D.4.4}Personalisation Implementation Status}{50}{}\protected@file@percent }
-\newlabel{subsec:personalisation_status}{{D.4.4}{50}{}{}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {D.5}Game Modules}{50}{}\protected@file@percent }
-\newlabel{sec:game_modules_impl}{{D.5}{50}{}{}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {D.5.1}Wordle-Style Game Implementation}{50}{}\protected@file@percent }
-\newlabel{subsec:wordle_impl}{{D.5.1}{50}{}{}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {D.5.2}Word of Wonders: Procedural Crossword Generation}{51}{}\protected@file@percent }
-\newlabel{subsec:wow_impl}{{D.5.2}{51}{}{}{}}
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {D.5.2.1}Word Placement and Intersection Search}{51}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {D.5.2.2}Letter-Budget and Word-Priority Heuristics}{51}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {D.5.2.3}Due-Word Injection as the Practice Word}{51}{}\protected@file@percent }
-\@writefile{loa}{\contentsline {algorithm}{\numberline {1}{\ignorespaces Word of Wonders board generation (per level)}}{52}{}\protected@file@percent }
-\newlabel{alg:wow_placement}{{1}{52}{}{}{}}
-\@writefile{loa}{\contentsline {algorithm}{\numberline {2}{\ignorespaces Word priority for placement ordering}}{52}{}\protected@file@percent }
-\newlabel{alg:wow_priority}{{2}{52}{}{}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {D.6}Deployment and Distribution}{53}{}\protected@file@percent }
-\newlabel{sec:deployment_impl}{{D.6}{53}{}{}{}}
-\@writefile{toc}{\contentsline {chapter}{\numberline {E}Evaluation \& Results}{54}{}\protected@file@percent }
+\newlabel{chapter:discussion}{{D}{40}{}{}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {D.1}Database Schema}{40}{}\protected@file@percent }
+\newlabel{sec:db_schema}{{D.1}{40}{}{}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {D.1.1}Linguistic Content Tables}{40}{}\protected@file@percent }
+\newlabel{subsec:schema_linguistic}{{D.1.1}{40}{}{}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {D.1.2}User State Tables}{41}{}\protected@file@percent }
+\newlabel{subsec:schema_user_state}{{D.1.2}{41}{}{}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {D.1.3}Engagement Signal Tables}{41}{}\protected@file@percent }
+\newlabel{subsec:schema_engagement}{{D.1.3}{41}{}{}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {D.2}Backend API}{41}{}\protected@file@percent }
+\newlabel{sec:backend_api}{{D.2}{41}{}{}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {D.2.1}Authentication and Authorization}{42}{}\protected@file@percent }
+\newlabel{subsec:auth_impl}{{D.2.1}{42}{}{}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {D.2.1.1}JWT Access/Refresh Token Rotation}{42}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {D.2.1.2}Google OAuth 2.0}{42}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {D.2.1.3}Password Reset and Request Limiting}{43}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {D.2.2}Registration and Vocabulary Initialisation}{43}{}\protected@file@percent }
+\newlabel{subsec:registration_impl}{{D.2.2}{43}{}{}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {D.2.2.1}Proficiency-Based Vocabulary Auto-Seeding}{43}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {D.2.3}Offline Synchronisation}{44}{}\protected@file@percent }
+\newlabel{subsec:sync_impl}{{D.2.3}{44}{}{}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {D.2.3.1}Change-Set Ordering: Deletes, Updates, Inserts}{44}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {D.2.4}Dictionary and Letters Modules}{44}{}\protected@file@percent }
+\newlabel{subsec:dictionary_impl}{{D.2.4}{44}{}{}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {D.2.5}Account Deletion and Personal Data}{45}{}\protected@file@percent }
+\newlabel{subsec:account_deletion_impl}{{D.2.5}{45}{}{}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {D.3}Frontend Architecture}{45}{}\protected@file@percent }
+\newlabel{sec:frontend_arch}{{D.3}{45}{}{}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {D.3.1}Navigation and Screen Structure}{45}{}\protected@file@percent }
+\newlabel{subsec:navigation_impl}{{D.3.1}{45}{}{}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {D.3.2}State Management: Context and Hooks}{46}{}\protected@file@percent }
+\newlabel{subsec:state_mgmt_impl}{{D.3.2}{46}{}{}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {D.3.3}Offline-First Strategy}{46}{}\protected@file@percent }
+\newlabel{subsec:offline_impl}{{D.3.3}{46}{}{}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {D.3.4}Practice Reminders}{47}{}\protected@file@percent }
+\newlabel{subsec:reminders_impl}{{D.3.4}{47}{}{}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {D.3.5}Grammar Video Library}{48}{}\protected@file@percent }
+\newlabel{subsec:grammar_videos_impl}{{D.3.5}{48}{}{}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {D.4}Reels Service}{48}{}\protected@file@percent }
+\newlabel{sec:reels_service_impl}{{D.4}{48}{}{}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {D.4.1}Service Architecture}{48}{}\protected@file@percent }
+\newlabel{subsec:reels_arch_impl}{{D.4.1}{48}{}{}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {D.4.2}Reel Creation and Dialogue Enrichment}{49}{}\protected@file@percent }
+\newlabel{subsec:reel_creation_impl}{{D.4.2}{49}{}{}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {D.4.3}Recommendation Engine Implementation}{49}{}\protected@file@percent }
+\newlabel{subsec:recommendation_impl}{{D.4.3}{49}{}{}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {D.4.3.1}Stage 1: Candidate Loading and Comprehensibility Scoring}{49}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {D.4.3.2}Stage 2: Frontend-Supplied Due-Word Partitioning}{50}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {D.4.3.3}Stage 3: TF-IDF Profile Vectors and Cosine Similarity}{50}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {D.4.4}Personalisation Implementation Status}{51}{}\protected@file@percent }
+\newlabel{subsec:personalisation_status}{{D.4.4}{51}{}{}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {D.5}Game Modules}{51}{}\protected@file@percent }
+\newlabel{sec:game_modules_impl}{{D.5}{51}{}{}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {D.5.1}Wordle-Style Game Implementation}{51}{}\protected@file@percent }
+\newlabel{subsec:wordle_impl}{{D.5.1}{51}{}{}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {D.5.2}Word of Wonders: Procedural Crossword Generation}{52}{}\protected@file@percent }
+\newlabel{subsec:wow_impl}{{D.5.2}{52}{}{}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {D.5.2.1}Word Placement and Intersection Search}{52}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {D.5.2.2}Letter-Budget and Word-Priority Heuristics}{52}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {D.5.2.3}Due-Word Injection as the Practice Word}{52}{}\protected@file@percent }
+\@writefile{loa}{\contentsline {algorithm}{\numberline {1}{\ignorespaces Word of Wonders board generation (per level)}}{53}{}\protected@file@percent }
+\newlabel{alg:wow_placement}{{1}{53}{}{}{}}
+\@writefile{loa}{\contentsline {algorithm}{\numberline {2}{\ignorespaces Word priority for placement ordering}}{53}{}\protected@file@percent }
+\newlabel{alg:wow_priority}{{2}{53}{}{}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {D.6}Deployment and Distribution}{54}{}\protected@file@percent }
+\newlabel{sec:deployment_impl}{{D.6}{54}{}{}{}}
+\@writefile{toc}{\contentsline {chapter}{\numberline {E}Evaluation \& Results}{55}{}\protected@file@percent }
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
-\newlabel{chapter:evaluation_results}{{E}{54}{}{}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {E.1}Evaluation Approach}{54}{}\protected@file@percent }
-\newlabel{sec:eval_approach}{{E.1}{54}{}{}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {E.1.1}Research Questions and Evidence}{54}{}\protected@file@percent }
-\newlabel{subsec:eval_rq_mapping}{{E.1.1}{54}{}{}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {E.1}{\ignorespaces Evidence gathered for each research question, and what remains untested.}}{55}{}\protected@file@percent }
-\newlabel{tab:eval_rq_mapping}{{E.1}{55}{}{}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {E.1.2}Data and Reproducibility}{55}{}\protected@file@percent }
-\newlabel{subsec:eval_data}{{E.1.2}{55}{}{}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {E.2}Component-Level Algorithmic Evaluation}{56}{}\protected@file@percent }
-\newlabel{sec:component_eval}{{E.2}{56}{}{}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {E.2.1}Word of Wonders: Grid-Generation Benchmark}{56}{}\protected@file@percent }
-\newlabel{subsec:wow_eval}{{E.2.1}{56}{}{}{}}
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {E.2.1.1}Method}{56}{}\protected@file@percent }
-\newlabel{subsubsec:wow_eval_method}{{E.2.1.1}{56}{}{}{}}
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {E.2.1.2}Robustness}{56}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {E.2.1.3}Words Placed}{57}{}\protected@file@percent }
-\newlabel{subsubsec:wow_eval_words_placed}{{E.2.1.3}{57}{}{}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {E.5}{\ignorespaces Mean words placed on the board (cap = 12) as a function of simulated tracked-vocabulary size, per language. Error bars show $\pm 1$ standard deviation over 200 repetitions per point.}}{57}{}\protected@file@percent }
-\newlabel{fig:wow_words_placed}{{E.5}{57}{}{}{}}
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {E.2.1.4}Qualitative Example: On-Device Boards Across CEFR Levels}{58}{}\protected@file@percent }
-\newlabel{subsubsec:wow_eval_screenshots}{{E.2.1.4}{58}{}{}{}}
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {E.2.1.5}Generation Time}{58}{}\protected@file@percent }
-\newlabel{subsubsec:wow_eval_gen_time}{{E.2.1.5}{58}{}{}{}}
-\newlabel{fig:wow_shot_a1}{{E.6a}{59}{}{}{}}
-\newlabel{sub@fig:wow_shot_a1}{{a}{59}{}{}{}}
-\newlabel{fig:wow_shot_a2}{{E.6b}{59}{}{}{}}
-\newlabel{sub@fig:wow_shot_a2}{{b}{59}{}{}{}}
-\newlabel{fig:wow_shot_b1}{{E.6c}{59}{}{}{}}
-\newlabel{sub@fig:wow_shot_b1}{{c}{59}{}{}{}}
-\newlabel{fig:wow_shot_b2}{{E.6d}{59}{}{}{}}
-\newlabel{sub@fig:wow_shot_b2}{{d}{59}{}{}{}}
-\newlabel{fig:wow_shot_c1}{{E.6e}{59}{}{}{}}
-\newlabel{sub@fig:wow_shot_c1}{{e}{59}{}{}{}}
-\newlabel{fig:wow_shot_c2}{{E.6f}{59}{}{}{}}
-\newlabel{sub@fig:wow_shot_c2}{{f}{59}{}{}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {E.6}{\ignorespaces Word of Wonders boards generated on a physical device for an English learner who declared each of the six CEFR levels at onboarding, all other conditions held fixed. Board density visibly grows from a bare two-word cross at A1 to a multi-armed board of several intersecting words by B2--C2.}}{59}{}\protected@file@percent }
-\newlabel{fig:wow_screenshots_cefr}{{E.6}{59}{}{}{}}
+\newlabel{chapter:evaluation_results}{{E}{55}{}{}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {E.1}Evaluation Approach}{55}{}\protected@file@percent }
+\newlabel{sec:eval_approach}{{E.1}{55}{}{}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {E.1.1}Research Questions and Evidence}{55}{}\protected@file@percent }
+\newlabel{subsec:eval_rq_mapping}{{E.1.1}{55}{}{}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {E.1}{\ignorespaces Evidence gathered for each research question, and what remains untested.}}{56}{}\protected@file@percent }
+\newlabel{tab:eval_rq_mapping}{{E.1}{56}{}{}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {E.1.2}Data and Reproducibility}{56}{}\protected@file@percent }
+\newlabel{subsec:eval_data}{{E.1.2}{56}{}{}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {E.2}Component-Level Algorithmic Evaluation}{57}{}\protected@file@percent }
+\newlabel{sec:component_eval}{{E.2}{57}{}{}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {E.2.1}Word of Wonders: Grid-Generation Benchmark}{57}{}\protected@file@percent }
+\newlabel{subsec:wow_eval}{{E.2.1}{57}{}{}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {E.2.1.1}Method}{57}{}\protected@file@percent }
+\newlabel{subsubsec:wow_eval_method}{{E.2.1.1}{57}{}{}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {E.2.1.2}Robustness}{57}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {E.2.1.3}Words Placed}{58}{}\protected@file@percent }
+\newlabel{subsubsec:wow_eval_words_placed}{{E.2.1.3}{58}{}{}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {E.5}{\ignorespaces Mean words placed on the board (cap = 12) as a function of simulated tracked-vocabulary size, per language. Error bars show $\pm 1$ standard deviation over 200 repetitions per point.}}{58}{}\protected@file@percent }
+\newlabel{fig:wow_words_placed}{{E.5}{58}{}{}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {E.2.1.4}Qualitative Example: On-Device Boards Across CEFR Levels}{59}{}\protected@file@percent }
+\newlabel{subsubsec:wow_eval_screenshots}{{E.2.1.4}{59}{}{}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {E.2.1.5}Generation Time}{59}{}\protected@file@percent }
+\newlabel{subsubsec:wow_eval_gen_time}{{E.2.1.5}{59}{}{}{}}
+\newlabel{fig:wow_shot_a1}{{E.6a}{60}{}{}{}}
+\newlabel{sub@fig:wow_shot_a1}{{a}{60}{}{}{}}
+\newlabel{fig:wow_shot_a2}{{E.6b}{60}{}{}{}}
+\newlabel{sub@fig:wow_shot_a2}{{b}{60}{}{}{}}
+\newlabel{fig:wow_shot_b1}{{E.6c}{60}{}{}{}}
+\newlabel{sub@fig:wow_shot_b1}{{c}{60}{}{}{}}
+\newlabel{fig:wow_shot_b2}{{E.6d}{60}{}{}{}}
+\newlabel{sub@fig:wow_shot_b2}{{d}{60}{}{}{}}
+\newlabel{fig:wow_shot_c1}{{E.6e}{60}{}{}{}}
+\newlabel{sub@fig:wow_shot_c1}{{e}{60}{}{}{}}
+\newlabel{fig:wow_shot_c2}{{E.6f}{60}{}{}{}}
+\newlabel{sub@fig:wow_shot_c2}{{f}{60}{}{}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {E.6}{\ignorespaces Word of Wonders boards generated on a physical device for an English learner who declared each of the six CEFR levels at onboarding, all other conditions held fixed. Board density visibly grows from a bare two-word cross at A1 to a multi-armed board of several intersecting words by B2--C2.}}{60}{}\protected@file@percent }
+\newlabel{fig:wow_screenshots_cefr}{{E.6}{60}{}{}{}}
 \citation{adomavicius2005toward}
-\@writefile{lof}{\contentsline {figure}{\numberline {E.7}{\ignorespaces Mean grid-generation wall-clock time (ms) as a function of simulated tracked-vocabulary size, per language, measured under Node.js/V8 on a development machine. Error bars show $\pm 1$ standard deviation over 200 repetitions per point.}}{60}{}\protected@file@percent }
-\newlabel{fig:wow_generation_time}{{E.7}{60}{}{}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {E.2.2}Recommendation Engine: The Cold-Start Problem}{60}{}\protected@file@percent }
-\newlabel{subsec:recommender_cold_start}{{E.2.2}{60}{}{}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {E.2.3}Recommendation Engine: Stage 1 Comprehensibility Filter}{61}{}\protected@file@percent }
-\newlabel{subsec:stage1_eval}{{E.2.3}{61}{}{}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {E.8}{\ignorespaces The Personalization screen (\texttt  {PersonalizationSlide.tsx}), the last onboarding page}}{62}{}\protected@file@percent }
-\newlabel{fig:onboarding_personalization}{{E.8}{62}{}{}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {E.2.4}Recommendation Engine: Stage 2 Due-Word Prioritisation}{62}{}\protected@file@percent }
-\newlabel{subsec:stage2_eval}{{E.2.4}{62}{}{}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {E.9}{\ignorespaces Share of the 50 tokenised Farsi reels passing Stage~1, per onboarding level, at the threshold the application uses (0.98) and, for comparison only, a looser one (0.5). Each level's known vocabulary is what registration seeds for it (Section~\ref {subsec:registration_impl}); level N receives only four starter words.}}{63}{}\protected@file@percent }
-\newlabel{fig:stage1_pass_rate}{{E.9}{63}{}{}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {E.2.5}Recommendation Engine: Stage 3 Content-Based Ranking}{64}{}\protected@file@percent }
-\newlabel{subsec:stage3_eval}{{E.2.5}{64}{}{}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {E.3}Backend Correctness Testing}{64}{}\protected@file@percent }
-\newlabel{sec:backend_tests}{{E.3}{64}{}{}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {E.4}Discussion and Threats to Validity}{66}{}\protected@file@percent }
-\newlabel{sec:eval_discussion}{{E.4}{66}{}{}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {E.4.1}What the Results Show}{66}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {E.4.2}Threats to Validity}{66}{}\protected@file@percent }
-\newlabel{subsec:eval_threats}{{E.4.2}{66}{}{}{}}
-\@writefile{toc}{\contentsline {chapter}{\numberline {F}Conclusions \& Future work}{68}{}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {E.7}{\ignorespaces Mean grid-generation wall-clock time (ms) as a function of simulated tracked-vocabulary size, per language, measured under Node.js/V8 on a development machine. Error bars show $\pm 1$ standard deviation over 200 repetitions per point.}}{61}{}\protected@file@percent }
+\newlabel{fig:wow_generation_time}{{E.7}{61}{}{}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {E.2.2}Recommendation Engine: The Cold-Start Problem}{61}{}\protected@file@percent }
+\newlabel{subsec:recommender_cold_start}{{E.2.2}{61}{}{}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {E.2.3}Recommendation Engine: Stage 1 Comprehensibility Filter}{62}{}\protected@file@percent }
+\newlabel{subsec:stage1_eval}{{E.2.3}{62}{}{}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {E.8}{\ignorespaces The Personalization screen (\texttt  {PersonalizationSlide.tsx}), the last onboarding page}}{63}{}\protected@file@percent }
+\newlabel{fig:onboarding_personalization}{{E.8}{63}{}{}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {E.2.4}Recommendation Engine: Stage 2 Due-Word Prioritisation}{63}{}\protected@file@percent }
+\newlabel{subsec:stage2_eval}{{E.2.4}{63}{}{}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {E.9}{\ignorespaces Share of the 50 tokenised Farsi reels passing Stage~1, per onboarding level, at the threshold the application uses (0.98) and, for comparison only, a looser one (0.5). Each level's known vocabulary is what registration seeds for it (Section~\ref {subsec:registration_impl}); level N receives only four starter words.}}{64}{}\protected@file@percent }
+\newlabel{fig:stage1_pass_rate}{{E.9}{64}{}{}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {E.2.5}Recommendation Engine: Stage 3 Content-Based Ranking}{65}{}\protected@file@percent }
+\newlabel{subsec:stage3_eval}{{E.2.5}{65}{}{}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {E.3}Backend Correctness Testing}{65}{}\protected@file@percent }
+\newlabel{sec:backend_tests}{{E.3}{65}{}{}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {E.4}Discussion and Threats to Validity}{67}{}\protected@file@percent }
+\newlabel{sec:eval_discussion}{{E.4}{67}{}{}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {E.4.1}What the Results Show}{67}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {E.4.2}Threats to Validity}{67}{}\protected@file@percent }
+\newlabel{subsec:eval_threats}{{E.4.2}{67}{}{}{}}
+\@writefile{toc}{\contentsline {chapter}{\numberline {F}Conclusions \& Future work}{69}{}\protected@file@percent }
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
-\newlabel{chapter:conclusions}{{F}{68}{}{}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {F.1}Contributions}{68}{}\protected@file@percent }
-\newlabel{sec:contributions}{{F.1}{68}{}{}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {F.1.1}Answers to the Research Questions}{69}{}\protected@file@percent }
-\newlabel{subsec:rq_answers}{{F.1.1}{69}{}{}{}}
+\newlabel{chapter:conclusions}{{F}{69}{}{}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {F.1}Contributions}{69}{}\protected@file@percent }
+\newlabel{sec:contributions}{{F.1}{69}{}{}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {F.1.1}Answers to the Research Questions}{70}{}\protected@file@percent }
+\newlabel{subsec:rq_answers}{{F.1.1}{70}{}{}{}}
 \citation{adomavicius2005toward}
-\@writefile{toc}{\contentsline {section}{\numberline {F.2}Limitations}{70}{}\protected@file@percent }
-\newlabel{sec:limitations}{{F.2}{70}{}{}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {F.2.1}Evidence and Content}{70}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {F.2.2}Language Processing}{71}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {F.2.3}Recommendation and Progression}{71}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {F.2}Limitations}{71}{}\protected@file@percent }
+\newlabel{sec:limitations}{{F.2}{71}{}{}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {F.2.1}Evidence and Content}{71}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {F.2.2}Language Processing}{72}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {F.2.3}Recommendation and Progression}{72}{}\protected@file@percent }
 \citation{karasimos2022battle}
-\@writefile{toc}{\contentsline {subsection}{\numberline {F.2.4}Onboarding and Social Scaffolding}{72}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {F.3}Future Work}{73}{}\protected@file@percent }
-\newlabel{sec:future_work}{{F.3}{73}{}{}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {F.4}Concluding Remarks}{75}{}\protected@file@percent }
-\newlabel{sec:concluding_remarks}{{F.4}{75}{}{}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {F.2.4}Onboarding and Social Scaffolding}{73}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {F.3}Future Work}{74}{}\protected@file@percent }
+\newlabel{sec:future_work}{{F.3}{74}{}{}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {F.4}Concluding Remarks}{76}{}\protected@file@percent }
+\newlabel{sec:concluding_remarks}{{F.4}{76}{}{}{}}
 \bibstyle{unsrt}
 \bibdata{references}
 \bibcite{ebbinghaus1885memory}{1}
@@ -415,7 +421,7 @@
 \bibcite{similarweb2025}{10}
 \bibcite{pew2025teens}{11}
 \bibcite{pew2025social}{12}
-\@writefile{toc}{\contentsline {chapter}{Bibliography}{77}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {chapter}{Bibliography}{78}{}\protected@file@percent }
 \bibcite{postplanify2026}{13}
 \bibcite{wistia2026}{14}
 \bibcite{vidyard2024}{15}
@@ -459,9 +465,9 @@
 \gdef \LT@i {\LT@entry 
     {1}{130.45148pt}\LT@entry 
     {1}{296.33986pt}}
-\@writefile{toc}{\contentsline {chapter}{Abbreviations}{82}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {chapter}{Abbreviations}{83}{}\protected@file@percent }
 \gdef \LT@ii {\LT@entry 
     {1}{130.45148pt}\LT@entry 
     {1}{296.33986pt}}
-\@writefile{toc}{\contentsline {chapter}{Glossary}{84}{}\protected@file@percent }
-\gdef \@abspage@last{114}
+\@writefile{toc}{\contentsline {chapter}{Glossary}{85}{}\protected@file@percent }
+\gdef \@abspage@last{115}
