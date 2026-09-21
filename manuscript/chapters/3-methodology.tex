@@ -1,3 +1,74 @@
+% Ragged bottom for this section only: its two unbreakable tables would otherwise force
+% the page above each one to be stretched vertically to full height.
+\raggedbottom
+\section{Design Requirements}
+\label{sec:design_requirements}
+    The design of \textit{Glosy} follows from three sources. The research questions of Chapter~\ref{chapter:intro} state what the system must accomplish; the theoretical foundations reviewed in Chapter~\ref{chapter:related_work} and traced in Table~\ref{tab:theory_synthesis} state how it should do so; and the practical setting --- a mobile application built and hosted on modest resources --- sets limits on both. This section turns these sources into an explicit list of functional and non-functional requirements, so that each design decision in the rest of the chapter can be traced to the need it answers.
+
+    \subsection{Functional Requirements}
+    Table~\ref{tab:functional_requirements} lists what the system must do. FR1 to FR4 correspond directly to the research questions, and FR5 to FR7 are the requirements a learner meets before any of them: choosing a language, arriving with an empty vocabulary, and entering the application without an account.
+
+    \begin{center}
+        \begin{minipage}{\linewidth}% keeps each caption on the same page as its table
+        \small
+        \captionof{table}{Functional requirements, the source of each, and where it is realised.}
+        \label{tab:functional_requirements}
+        \begin{tabular}{L{0.9cm}L{5.2cm}L{3.5cm}L{3.5cm}}
+            \hline
+            \textbf{ID} & \textbf{Requirement} & \textbf{Source} & \textbf{Realised in} \\
+            \hline
+            FR1 & Track each learner's vocabulary word by word, with a memory state that says when each word is next due & RQ1; spaced repetition (Sec.~\ref{subsec:srs_models}) & User State (Sec.~\ref{subsec:data_user_state}) \\
+            \hline
+            FR2 & Present authentic short videos whose transcripts are linked word by word to the dictionary & RQ1; short-form video (Sec.~\ref{section:reels_in_sla}) & Linguistic Content (Sec.~\ref{subsec:data_linguistic}) \\
+            \hline
+            FR3 & Recommend only reels the learner can largely understand, preferring those that contain words due for review & RQ2; comprehensible input (Sec.~\ref{subsec:comprehensible_input}) & Stages 1 and 2 (Sec.~\ref{subsec:stage1_design}, \ref{subsec:stage2_design}) \\
+            \hline
+            FR4 & Make every game round a review of words from the learner's own vocabulary & RQ3; testing effect (Sec.~\ref{subsec:testing_effect}) & Game design (Sec.~\ref{subsec:game_review_design}) \\
+            \hline
+            FR5 & Support English, Greek, and Farsi, including a right-to-left script & Multilingual scope of the thesis & Wordle-style game (Sec.~\ref{subsec:wordle_design}) \\
+            \hline
+            FR6 & Initialise a new learner's vocabulary without a placement test & Cold start (Sec.~\ref{subsec:cascade_hybrid}) & Onboarding (Sec.~\ref{sec:onboarding_design}) \\
+            \hline
+            FR7 & Let a learner start without an account and later carry that progress into one & First-week attrition (Chapter~\ref{chapter:intro}) & Onboarding (Sec.~\ref{sec:onboarding_design}) \\
+            \hline
+        \end{tabular}
+        \end{minipage}
+    \end{center}
+
+    \subsection{Non-Functional Requirements}
+    Table~\ref{tab:nonfunctional_requirements} lists the qualities the system must have. Several of them pull against the functional requirements, and the design settles each conflict explicitly rather than by accident.
+
+    \begin{center}
+        \begin{minipage}{\linewidth}% keeps each caption on the same page as its table
+        \small
+        \captionof{table}{Non-functional requirements, the source of each, and where it is realised.}
+        \label{tab:nonfunctional_requirements}
+        \begin{tabular}{L{1.1cm}L{5.0cm}L{3.5cm}L{3.5cm}}
+            \hline
+            \textbf{ID} & \textbf{Requirement} & \textbf{Source} & \textbf{Realised in} \\
+            \hline
+            NFR1 & Keep every learning episode short and bounded & Microlearning (Sec.~\ref{subsec:cognitive_load_microlearning}) & 90-second reel cap; game limits (Sec.~\ref{sec:system_overview}, \ref{sec:games_design}) \\
+            \hline
+            NFR2 & Allow practice and play without connectivity, synchronising later & Learners with limited access (Chapter~\ref{chapter:intro}) & Offline-first client (Sec.~\ref{subsec:frontend_stack}, \ref{subsec:offline_impl}) \\
+            \hline
+            NFR3 & Degrade gracefully when data is sparse: no due words, no history, or few reels & Cold start (Sec.~\ref{subsec:cascade_hybrid}) & Cascade ranking (Sec.~\ref{subsec:cascade_design}) \\
+            \hline
+            NFR4 & Run on modest server hardware & 512~MB reels-service host & CPU-only vectorisation (Sec.~\ref{subsec:reels_stack}) \\
+            \hline
+            NFR5 & Serve Android and iOS from one codebase & Development resources & React Native and Expo (Sec.~\ref{subsec:frontend_stack}) \\
+            \hline
+            NFR6 & Add a new language through content, not code changes & Extensibility (Chapter~\ref{chapter:conclusions}) & Language-independent schema (Sec.~\ref{sec:data_modelling}) \\
+            \hline
+            NFR7 & Use one login session across both back-end services & Usability and security & Shared token scheme (Sec.~\ref{subsec:backend_stack}, \ref{subsec:reels_stack}) \\
+            \hline
+        \end{tabular}
+        \end{minipage}
+    \end{center}
+
+    Three of these conflicts shape the architecture. NFR4 rules out a heavy natural-language pipeline in the request path, so Stage~3 uses lightweight TF-IDF vectors and all linguistic preprocessing is done offline. NFR2 rules out scoring against server-side memory state, so the memory model runs on the device and the client tells the server which words are due. NFR1 caps the reel and game lengths even though longer units could carry more vocabulary. In each case the requirement that protects the learner's time or access wins over the one that would add sophistication.
+\flushbottom
+
+
 \section{System Overview}
 \label{sec:system_overview}
 
@@ -66,6 +137,17 @@
     \subsection{Engagement Signals}
     \label{subsec:data_engagement}
     \texttt{reel\_interactions} records one row per (user, reel) pair, accumulating likes, saves, shares, and comments as boolean/text columns rather than a separate event-log table, plus the two bookkeeping fields Stage~1 and Stage~3 depend on directly: a \texttt{view\_count} distinguishing a genuine repeat view from the first, and a \texttt{last\_recommended\_at} timestamp used to exclude a reel already shown to this learner within the cooldown window (Section~\ref{subsec:stage1_design}). \texttt{reel\_reports} and \texttt{feedback} complete this axis, capturing moderation and product-feedback signals that do not feed the recommendation engine but share the same ``signal generated by a learner about a piece of content'' shape.
+
+
+\section{Onboarding and Learner-Model Initialisation}
+\label{sec:onboarding_design}
+    A new learner is a cold start on two counts: the vocabulary model of FR1 is empty, and there is no engagement history for Stage~3 to rank by (Section~\ref{sec:recommendation}). Onboarding is the design's answer to both. It is a sequence of five short screens shown before any account exists: a welcome, the choice of native and learning language, a self-declared proficiency level, the reminder settings, and finally the learner's age and preferred topics.
+
+    The level is declared, not measured. Each option is worded as something the learner can do, from ``learning the language for the first time'' to ``I have mastered the language completely'', and maps onto the CEFR scale from N (a complete beginner) through A1 to C2. A placement test would measure more accurately, but it would place a test in the first minutes of use, when the attrition described in Chapter~\ref{chapter:intro} is highest. The design accepts a less exact starting point instead, on the understanding that the memory model corrects itself as the learner's reviews accumulate.
+
+    The declared level initialises the vocabulary model. Every word below that level is assumed known and is entered as an already-learned card, given a longer interval the further the word lies below the declared level (Section~\ref{subsec:registration_impl} gives the mechanics). This assumption directly affects Stage~1: a learner who overstates their level starts with a vocabulary that is too large and is shown reels that are harder than intended, until lapses in review pull the model back. A complete beginner has no lower level to seed from, and is instead given a handful of everyday starter words as new cards; this is currently implemented for Farsi.
+
+    Because onboarding runs before an account exists, a learner can reach the reels feed and the games immediately, and their progress stays on the device. When they later sign in, they choose whether to merge the device's progress into the account or to overwrite it with the account's saved progress. Age and topic preferences are collected during onboarding for personalisation, but the recommender does not yet use them; Section~\ref{subsec:recommender_cold_start} evaluates this gap and Chapter~\ref{chapter:conclusions} lists it as future work.
 
 
 \section{Recommendation Engine Design} \label{sec:recommendation}

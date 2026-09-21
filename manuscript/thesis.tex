@@ -24,6 +24,7 @@
 \usepackage[section]{placeins} % stop floats (tables/figures) from drifting past a \section boundary
 \usepackage{wrapfig} % lets a small figure sit inline with text that wraps around it
 \usepackage{array} % >{...} column modifiers for the entrylist columns
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}} % left-aligned fixed-width column (avoids stretched gaps in narrow table cells)
 \usepackage{longtable} % one continuous table per back-matter list (Abbreviations, Glossary)
 
 % Compact two-column list for the Abbreviations and Glossary: inside it, \gl{term}{definition}

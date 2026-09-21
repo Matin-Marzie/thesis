@@ -53,82 +53,86 @@
 \contentsline {subsection}{\numberline {B.4.3}Recommender Systems in Educational Technology}{22}{}%
 \contentsline {section}{\numberline {B.5}Synthesis: A Theory-Driven Design Framework}{22}{}%
 \contentsline {chapter}{\numberline {C}System Architecture \& Methodology}{24}{}%
-\contentsline {section}{\numberline {C.1}System Overview}{24}{}%
-\contentsline {section}{\numberline {C.2}Technology Stack}{25}{}%
-\contentsline {subsection}{\numberline {C.2.1}Frontend --- React Native / Expo}{25}{}%
-\contentsline {subsection}{\numberline {C.2.2}Backend API --- Node.js / Express}{26}{}%
-\contentsline {subsection}{\numberline {C.2.3}Reels Service --- Python / FastAPI}{26}{}%
-\contentsline {subsection}{\numberline {C.2.4}Database --- PostgreSQL}{27}{}%
-\contentsline {section}{\numberline {C.3}Data Modelling}{27}{}%
-\contentsline {subsection}{\numberline {C.3.1}Linguistic Content}{27}{}%
-\contentsline {subsection}{\numberline {C.3.2}User State}{29}{}%
-\contentsline {subsection}{\numberline {C.3.3}Engagement Signals}{29}{}%
-\contentsline {section}{\numberline {C.4}Recommendation Engine Design}{29}{}%
-\contentsline {subsection}{\numberline {C.4.1}Stage 1: Comprehensibility Filtering}{29}{}%
-\contentsline {subsection}{\numberline {C.4.2}Stage 2: Spaced-Repetition Prioritisation}{30}{}%
-\contentsline {subsection}{\numberline {C.4.3}Stage 3: Content-Based Personalisation}{30}{}%
-\contentsline {subsection}{\numberline {C.4.4}Combining the Three Stages: A Cascade, Not a Weighted Sum}{31}{}%
-\contentsline {section}{\numberline {C.5}Gamification Design}{31}{}%
-\contentsline {subsection}{\numberline {C.5.1}Progression Currencies: Coins, Energy, and Experience}{31}{}%
-\contentsline {subsection}{\numberline {C.5.2}Design Principle: Every Game Round Doubles as an FSRS Review}{32}{}%
-\contentsline {section}{\numberline {C.6}Vocabulary-Driven Games}{33}{}%
-\contentsline {subsection}{\numberline {C.6.1}Wordle-Style Game}{33}{}%
-\contentsline {subsection}{\numberline {C.6.2}Word of Wonders (Crossword)}{33}{}%
-\contentsline {chapter}{\numberline {D}Implementation Details}{35}{}%
-\contentsline {section}{\numberline {D.1}Database Schema}{35}{}%
-\contentsline {subsection}{\numberline {D.1.1}Linguistic Content Tables}{35}{}%
-\contentsline {subsection}{\numberline {D.1.2}User State Tables}{36}{}%
-\contentsline {subsection}{\numberline {D.1.3}Engagement Signal Tables}{36}{}%
-\contentsline {section}{\numberline {D.2}Backend API}{36}{}%
-\contentsline {subsection}{\numberline {D.2.1}Authentication and Authorization}{37}{}%
-\contentsline {subsubsection}{\numberline {D.2.1.1}JWT Access/Refresh Token Rotation}{37}{}%
-\contentsline {subsubsection}{\numberline {D.2.1.2}Google OAuth 2.0}{37}{}%
-\contentsline {subsection}{\numberline {D.2.2}Registration and Vocabulary Initialisation}{38}{}%
-\contentsline {subsubsection}{\numberline {D.2.2.1}Proficiency-Based Vocabulary Auto-Seeding}{38}{}%
-\contentsline {subsection}{\numberline {D.2.3}Offline Synchronisation}{38}{}%
-\contentsline {subsubsection}{\numberline {D.2.3.1}Change-Set Ordering: Deletes, Updates, Inserts}{39}{}%
-\contentsline {subsection}{\numberline {D.2.4}Dictionary and Letters Modules}{39}{}%
-\contentsline {section}{\numberline {D.3}Frontend Architecture}{39}{}%
-\contentsline {subsection}{\numberline {D.3.1}Navigation and Screen Structure}{39}{}%
-\contentsline {subsection}{\numberline {D.3.2}State Management: Context and Hooks}{40}{}%
-\contentsline {subsection}{\numberline {D.3.3}Offline-First Strategy}{40}{}%
-\contentsline {section}{\numberline {D.4}Reels Service}{41}{}%
-\contentsline {subsection}{\numberline {D.4.1}Service Architecture}{41}{}%
-\contentsline {subsection}{\numberline {D.4.2}Reel Creation and Dialogue Enrichment}{41}{}%
-\contentsline {subsection}{\numberline {D.4.3}Recommendation Engine Implementation}{42}{}%
-\contentsline {subsubsection}{\numberline {D.4.3.1}Stage 1: Candidate Loading and Comprehensibility Scoring}{42}{}%
-\contentsline {subsubsection}{\numberline {D.4.3.2}Stage 2: Frontend-Supplied Due-Word Partitioning}{42}{}%
-\contentsline {subsubsection}{\numberline {D.4.3.3}Stage 3: TF-IDF Profile Vectors and Cosine Similarity}{43}{}%
-\contentsline {subsection}{\numberline {D.4.4}Personalisation Implementation Status}{43}{}%
-\contentsline {section}{\numberline {D.5}Game Modules}{44}{}%
-\contentsline {subsection}{\numberline {D.5.1}Wordle-Style Game Implementation}{44}{}%
-\contentsline {subsection}{\numberline {D.5.2}Word of Wonders: Procedural Crossword Generation}{44}{}%
-\contentsline {subsubsection}{\numberline {D.5.2.1}Word Placement and Intersection Search}{44}{}%
-\contentsline {subsubsection}{\numberline {D.5.2.2}Letter-Budget and Word-Priority Heuristics}{45}{}%
-\contentsline {subsubsection}{\numberline {D.5.2.3}Due-Word Injection as the Practice Word}{46}{}%
-\contentsline {chapter}{\numberline {E}Evaluation \& Results}{47}{}%
-\contentsline {section}{\numberline {E.1}Evaluation Approach}{47}{}%
-\contentsline {section}{\numberline {E.2}Component-Level Algorithmic Evaluation}{47}{}%
-\contentsline {subsection}{\numberline {E.2.1}Word of Wonders: Grid-Generation Benchmark}{47}{}%
-\contentsline {subsubsection}{\numberline {E.2.1.1}Method}{48}{}%
-\contentsline {subsubsection}{\numberline {E.2.1.2}Robustness}{48}{}%
-\contentsline {subsubsection}{\numberline {E.2.1.3}Words Placed}{48}{}%
-\contentsline {subsubsection}{\numberline {E.2.1.4}Qualitative Example: On-Device Boards Across CEFR Levels}{49}{}%
-\contentsline {subsubsection}{\numberline {E.2.1.5}Generation Time}{51}{}%
-\contentsline {subsection}{\numberline {E.2.2}Recommendation Engine: The Cold-Start Problem}{52}{}%
-\contentsline {subsection}{\numberline {E.2.3}Recommendation Engine: Stage 1 Comprehensibility Filter}{54}{}%
-\contentsline {subsection}{\numberline {E.2.4}Recommendation Engine: Stage 2 Due-Word Prioritisation}{55}{}%
-\contentsline {subsection}{\numberline {E.2.5}Recommendation Engine: Stage 3 Content-Based Ranking}{55}{}%
-\contentsline {chapter}{\numberline {F}Conclusions \& Future work}{56}{}%
-\contentsline {section}{\numberline {F.1}Contributions}{56}{}%
-\contentsline {subsection}{\numberline {F.1.1}Answers to the Research Questions}{57}{}%
-\contentsline {section}{\numberline {F.2}Limitations}{58}{}%
-\contentsline {subsection}{\numberline {F.2.1}Evidence and Content}{58}{}%
-\contentsline {subsection}{\numberline {F.2.2}Language Processing}{59}{}%
-\contentsline {subsection}{\numberline {F.2.3}Recommendation and Progression}{59}{}%
-\contentsline {subsection}{\numberline {F.2.4}Onboarding and Social Scaffolding}{60}{}%
-\contentsline {section}{\numberline {F.3}Future Work}{61}{}%
-\contentsline {section}{\numberline {F.4}Concluding Remarks}{62}{}%
-\contentsline {chapter}{Bibliography}{63}{}%
-\contentsline {chapter}{Abbreviations}{68}{}%
-\contentsline {chapter}{Glossary}{70}{}%
+\contentsline {section}{\numberline {C.1}Design Requirements}{24}{}%
+\contentsline {subsection}{\numberline {C.1.1}Functional Requirements}{24}{}%
+\contentsline {subsection}{\numberline {C.1.2}Non-Functional Requirements}{25}{}%
+\contentsline {section}{\numberline {C.2}System Overview}{26}{}%
+\contentsline {section}{\numberline {C.3}Technology Stack}{28}{}%
+\contentsline {subsection}{\numberline {C.3.1}Frontend --- React Native / Expo}{28}{}%
+\contentsline {subsection}{\numberline {C.3.2}Backend API --- Node.js / Express}{28}{}%
+\contentsline {subsection}{\numberline {C.3.3}Reels Service --- Python / FastAPI}{29}{}%
+\contentsline {subsection}{\numberline {C.3.4}Database --- PostgreSQL}{29}{}%
+\contentsline {section}{\numberline {C.4}Data Modelling}{29}{}%
+\contentsline {subsection}{\numberline {C.4.1}Linguistic Content}{29}{}%
+\contentsline {subsection}{\numberline {C.4.2}User State}{31}{}%
+\contentsline {subsection}{\numberline {C.4.3}Engagement Signals}{31}{}%
+\contentsline {section}{\numberline {C.5}Onboarding and Learner-Model Initialisation}{32}{}%
+\contentsline {section}{\numberline {C.6}Recommendation Engine Design}{32}{}%
+\contentsline {subsection}{\numberline {C.6.1}Stage 1: Comprehensibility Filtering}{33}{}%
+\contentsline {subsection}{\numberline {C.6.2}Stage 2: Spaced-Repetition Prioritisation}{33}{}%
+\contentsline {subsection}{\numberline {C.6.3}Stage 3: Content-Based Personalisation}{34}{}%
+\contentsline {subsection}{\numberline {C.6.4}Combining the Three Stages: A Cascade, Not a Weighted Sum}{34}{}%
+\contentsline {section}{\numberline {C.7}Gamification Design}{34}{}%
+\contentsline {subsection}{\numberline {C.7.1}Progression Currencies: Coins, Energy, and Experience}{35}{}%
+\contentsline {subsection}{\numberline {C.7.2}Design Principle: Every Game Round Doubles as an FSRS Review}{35}{}%
+\contentsline {section}{\numberline {C.8}Vocabulary-Driven Games}{36}{}%
+\contentsline {subsection}{\numberline {C.8.1}Wordle-Style Game}{36}{}%
+\contentsline {subsection}{\numberline {C.8.2}Word of Wonders (Crossword)}{37}{}%
+\contentsline {chapter}{\numberline {D}Implementation Details}{38}{}%
+\contentsline {section}{\numberline {D.1}Database Schema}{38}{}%
+\contentsline {subsection}{\numberline {D.1.1}Linguistic Content Tables}{38}{}%
+\contentsline {subsection}{\numberline {D.1.2}User State Tables}{39}{}%
+\contentsline {subsection}{\numberline {D.1.3}Engagement Signal Tables}{39}{}%
+\contentsline {section}{\numberline {D.2}Backend API}{39}{}%
+\contentsline {subsection}{\numberline {D.2.1}Authentication and Authorization}{40}{}%
+\contentsline {subsubsection}{\numberline {D.2.1.1}JWT Access/Refresh Token Rotation}{40}{}%
+\contentsline {subsubsection}{\numberline {D.2.1.2}Google OAuth 2.0}{40}{}%
+\contentsline {subsection}{\numberline {D.2.2}Registration and Vocabulary Initialisation}{41}{}%
+\contentsline {subsubsection}{\numberline {D.2.2.1}Proficiency-Based Vocabulary Auto-Seeding}{41}{}%
+\contentsline {subsection}{\numberline {D.2.3}Offline Synchronisation}{41}{}%
+\contentsline {subsubsection}{\numberline {D.2.3.1}Change-Set Ordering: Deletes, Updates, Inserts}{42}{}%
+\contentsline {subsection}{\numberline {D.2.4}Dictionary and Letters Modules}{42}{}%
+\contentsline {section}{\numberline {D.3}Frontend Architecture}{42}{}%
+\contentsline {subsection}{\numberline {D.3.1}Navigation and Screen Structure}{42}{}%
+\contentsline {subsection}{\numberline {D.3.2}State Management: Context and Hooks}{43}{}%
+\contentsline {subsection}{\numberline {D.3.3}Offline-First Strategy}{43}{}%
+\contentsline {section}{\numberline {D.4}Reels Service}{44}{}%
+\contentsline {subsection}{\numberline {D.4.1}Service Architecture}{44}{}%
+\contentsline {subsection}{\numberline {D.4.2}Reel Creation and Dialogue Enrichment}{44}{}%
+\contentsline {subsection}{\numberline {D.4.3}Recommendation Engine Implementation}{45}{}%
+\contentsline {subsubsection}{\numberline {D.4.3.1}Stage 1: Candidate Loading and Comprehensibility Scoring}{45}{}%
+\contentsline {subsubsection}{\numberline {D.4.3.2}Stage 2: Frontend-Supplied Due-Word Partitioning}{45}{}%
+\contentsline {subsubsection}{\numberline {D.4.3.3}Stage 3: TF-IDF Profile Vectors and Cosine Similarity}{46}{}%
+\contentsline {subsection}{\numberline {D.4.4}Personalisation Implementation Status}{46}{}%
+\contentsline {section}{\numberline {D.5}Game Modules}{47}{}%
+\contentsline {subsection}{\numberline {D.5.1}Wordle-Style Game Implementation}{47}{}%
+\contentsline {subsection}{\numberline {D.5.2}Word of Wonders: Procedural Crossword Generation}{47}{}%
+\contentsline {subsubsection}{\numberline {D.5.2.1}Word Placement and Intersection Search}{47}{}%
+\contentsline {subsubsection}{\numberline {D.5.2.2}Letter-Budget and Word-Priority Heuristics}{48}{}%
+\contentsline {subsubsection}{\numberline {D.5.2.3}Due-Word Injection as the Practice Word}{49}{}%
+\contentsline {chapter}{\numberline {E}Evaluation \& Results}{50}{}%
+\contentsline {section}{\numberline {E.1}Evaluation Approach}{50}{}%
+\contentsline {section}{\numberline {E.2}Component-Level Algorithmic Evaluation}{50}{}%
+\contentsline {subsection}{\numberline {E.2.1}Word of Wonders: Grid-Generation Benchmark}{50}{}%
+\contentsline {subsubsection}{\numberline {E.2.1.1}Method}{51}{}%
+\contentsline {subsubsection}{\numberline {E.2.1.2}Robustness}{51}{}%
+\contentsline {subsubsection}{\numberline {E.2.1.3}Words Placed}{51}{}%
+\contentsline {subsubsection}{\numberline {E.2.1.4}Qualitative Example: On-Device Boards Across CEFR Levels}{52}{}%
+\contentsline {subsubsection}{\numberline {E.2.1.5}Generation Time}{54}{}%
+\contentsline {subsection}{\numberline {E.2.2}Recommendation Engine: The Cold-Start Problem}{55}{}%
+\contentsline {subsection}{\numberline {E.2.3}Recommendation Engine: Stage 1 Comprehensibility Filter}{57}{}%
+\contentsline {subsection}{\numberline {E.2.4}Recommendation Engine: Stage 2 Due-Word Prioritisation}{58}{}%
+\contentsline {subsection}{\numberline {E.2.5}Recommendation Engine: Stage 3 Content-Based Ranking}{58}{}%
+\contentsline {chapter}{\numberline {F}Conclusions \& Future work}{59}{}%
+\contentsline {section}{\numberline {F.1}Contributions}{59}{}%
+\contentsline {subsection}{\numberline {F.1.1}Answers to the Research Questions}{60}{}%
+\contentsline {section}{\numberline {F.2}Limitations}{61}{}%
+\contentsline {subsection}{\numberline {F.2.1}Evidence and Content}{61}{}%
+\contentsline {subsection}{\numberline {F.2.2}Language Processing}{62}{}%
+\contentsline {subsection}{\numberline {F.2.3}Recommendation and Progression}{62}{}%
+\contentsline {subsection}{\numberline {F.2.4}Onboarding and Social Scaffolding}{63}{}%
+\contentsline {section}{\numberline {F.3}Future Work}{64}{}%
+\contentsline {section}{\numberline {F.4}Concluding Remarks}{65}{}%
+\contentsline {chapter}{Bibliography}{66}{}%
+\contentsline {chapter}{Abbreviations}{71}{}%
+\contentsline {chapter}{Glossary}{73}{}%
