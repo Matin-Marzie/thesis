@@ -41,6 +41,13 @@
         \texttt{verifyGoogleToken} middleware validates a client-supplied Google ID token against the OAuth client id registered for the requesting platform, using \texttt{google-auth-library}'s \texttt{OAuth2Client.verifyIdToken}, before either the login or registration controller runs. On success it attaches the decoded profile (Google id, email, name, picture) to the request; the downstream controller then finds-or-creates a user keyed by that Google id exactly as it would for a password-based account, so both sign-in paths converge on the same JWT issuance logic described above.
         \end{sloppypar}
 
+        \subsubsection{Password Reset and Request Limiting}
+        \begin{sloppypar}
+        Password recovery uses the same hashed-code pattern as registration. The forgot-password endpoint always returns the same generic response, whether or not the address belongs to an account, so it cannot be used to discover which emails are registered. Only the email that is sent differs: a reset code for a password account, a ``not registered'' notice, or a pointer to Google sign-in for an account that has no password. A second request within 60 seconds is absorbed without sending another email. The code is stored only as a hash, expires after a fixed time, and is rejected once a limited number of wrong attempts has been made. A successful reset writes the new password hash and revokes every refresh token of that user, so a session held by someone else does not survive the change.
+        \end{sloppypar}
+
+        Each sensitive endpoint also has its own rate limiter over a 15-minute window. The tightest limits sit on the endpoints that send email or accept guessable codes: 5 requests for code sending and for forgot-password, 10 for login, code verification and password reset, and 30 for token refresh.
+
     \subsection{Registration and Vocabulary Initialisation}
     \label{subsec:registration_impl}
     Registration requires a verified email address: a code sent to the address must be confirmed against a hashed, expiring, attempt-limited pending record before any user row is created, and the pending record is deleted on success so the code cannot be reused. The username is derived from the email's local part, with two disambiguating fallback variations (an underscore or dot plus a numeric suffix) tried in sequence if the plain form is already taken.
@@ -65,6 +72,14 @@
     \label{subsec:dictionary_impl}
     The dictionary endpoints serve a language's full word list, optionally joined with translations into a second language, keyed by ISO language code and validated against a fixed three-language enum (English, Farsi, Greek) hard-coded into the request schema, rather than a live lookup against whichever languages happen to be present in the database at the time. The letters module serves each language's alphabet as its own lightweight dictionary --- vowels and consonants for Farsi split further into short/long forms, per the RTL and script-specific handling already noted for the Wordle-style game (Section~\ref{subsec:wordle_design}) --- so that alphabet drills can reuse the same word-list UI components as ordinary vocabulary instead of a bespoke screen.
 
+    \subsection{Account Deletion and Personal Data}
+    \label{subsec:account_deletion_impl}
+    \begin{sloppypar}
+    The application keeps little personal data: an email address, name and username, a password hash, an age, the topic preferences chosen at onboarding, the language pair, the vocabulary state, and the content the user creates. The privacy policy, served from the backend's static directory, states that the application uses no location data, contacts, advertising or analytics SDKs, and that it is intended for users aged 16 and over, which is the lowest age the onboarding screen accepts. Two lookups bypass the servers altogether: the device fetches word definitions directly from the English Wiktionary and loads grammar videos directly from YouTube (Section~\ref{subsec:grammar_videos_impl}), so those providers see the request rather than \textit{Glosy}.
+    \end{sloppypar}
+
+    A user can delete their account permanently from within the application. The backend deletes the \texttt{users} row, and foreign keys declared \texttt{ON DELETE CASCADE} remove the user's languages, vocabulary, sentences, refresh tokens, reels, reel interactions, and reports. The controller then removes the user's media from object storage, under the \texttt{reels/} and \texttt{profile\_pictures/} prefixes for that user's id. The two steps are not atomic: if the storage cleanup fails after the row has been deleted, the request reports an error although the account is gone, and the files remain in storage. On the client, the \texttt{useDeleteAccount} hook changes local state only after the server confirms the deletion. It then stops pending synchronisation, clears the stored tokens and all persisted data, resets every context and the onboarding flag, and returns the learner to the welcome screen. If the request fails, local data is left untouched.
+
 
 \section{Frontend Architecture}
 \label{sec:frontend_arch}
@@ -79,6 +94,22 @@
     \subsection{Offline-First Strategy}
     \label{subsec:offline_impl}
     Every piece of state that must survive an app restart --- vocabulary, its pending change-set, sentences, user progress --- is held through a shared \texttt{usePersistedState} hook backed by AsyncStorage, each exposing an \texttt{isLoaded} flag so dependent logic (most importantly, sync) can wait for disk hydration to finish before deciding anything is dirty. \texttt{useBackendSync} generalises over an arbitrary list of such change-sets and pushes them to \texttt{POST /sync} (Section~\ref{subsec:sync_impl}) under three independent triggers: a five-minute interval while changes are pending, the instant \texttt{isOnline} transitions from false to true, and the app moving to the background --- covering the periodic case, the reconnection case, and the ``about to be suspended, don't lose this'' case respectively, rather than relying on any one of them alone. Dirtiness itself is tracked precisely rather than optimistically: a change to \texttt{coins} or \texttt{energy} is only flagged when its actual value diverges from the last value known to be reflected server-side, so that a reference-only update to \texttt{userProgress} --- switching the active language, or applying a fresh snapshot the server itself just returned --- does not mark anything dirty and trigger a needless sync. A failed sync leaves its change-sets marked dirty for the next trigger to retry, surfaces an error banner once rather than on every retry, and treats an HTTP 401 as ``this session is over,'' clearing the dirty flag rather than retrying a request that will never succeed until the learner logs in again.
+
+    \subsection{Practice Reminders}
+    \label{subsec:reminders_impl}
+    \begin{sloppypar}
+    The daily practice reminder is a local notification scheduled on the device with \texttt{expo-\allowbreak notifications}. The server takes no part in it: no push token is stored, and the reminder works offline. The settings (enabled, hour, minute) are persisted through the same \texttt{usePersistedState} mechanism as the rest of the client state (Section~\ref{subsec:offline_impl}), and a single effect in \texttt{ReminderContext} keeps the operating system's schedule in step with them. Whenever a setting or the learner's first name changes, it cancels the notification registered under a fixed identifier and schedules a new daily trigger, or only cancels when reminders are off. Because the identifier is fixed, rescheduling on every launch cannot create duplicates. The message addresses the learner by first name, and tapping it opens the Reels tab, including when the application is launched cold from the notification.
+    \end{sloppypar}
+
+    Permission is requested only when the learner opts in, either with the ``Remind me'' button on the onboarding screen or by switching the reminder on in Settings. If the operating system refuses, the switch stays off and the learner is told to enable notifications in the device settings. On Android the reminder uses its own notification channel. The notifications module is loaded lazily and skipped in Expo Go on Android, where SDK~53 removed push support and importing the module would otherwise throw.
+
+    One trade-off was accepted deliberately. On Android~12 and later, a scheduled notification is delivered through an inexact alarm unless the application holds the \texttt{SCHEDULE\_EXACT\_ALARM} permission, so a reminder can arrive a few minutes late (about two minutes in testing). The application does not request that permission: a nudge to practise is not time-critical, an exact-alarm permission adds a request flow for the learner, and Google Play restricts the permission to applications whose main function is alarms or calendars.
+
+    \subsection{Grammar Video Library}
+    \label{subsec:grammar_videos_impl}
+    Grammar lies outside the vocabulary model (Section~\ref{sec:objectives_scope}), but the application points learners to a curated library of external YouTube lessons. A \texttt{grammer\_videos} table stores each lesson's YouTube link, an optional title, and its learning language, and a rate-limited \texttt{GET /videos/:\allowbreak language\_\allowbreak code} endpoint returns the lessons for one language in the order they were added. The Videos screen, opened from an icon in the header of the home tab, lists them as cards with the YouTube thumbnail. Tapping a card plays the lesson in place with \texttt{react-native-youtube-iframe}, one at a time. The video id is extracted from any of the link shapes YouTube produces (\texttt{watch}, \texttt{youtu.be}, \texttt{embed}, \texttt{shorts}), so links can be stored exactly as shared.
+
+    Because a video's owner can disable embedding, a player error marks that card, and the next tap opens the video in YouTube through an in-app browser instead. Titles left empty when the library was seeded are fetched at display time from YouTube's oEmbed metadata. The library currently holds 45 lessons, all for Farsi, arranged from the alphabet and pronunciation through pronouns and the verb ``to be'' to noun plurals, and the other languages show an empty list. Watching a lesson is not recorded and does not feed the vocabulary or recommendation model.
 
 
 \section{Reels Service}
@@ -172,5 +203,13 @@
         \subsubsection{Due-Word Injection as the Practice Word}
         The practice word is the one word in a Word of Wonders level whose discovery is treated as an FSRS review, and it is only ever marked as such --- surfacing the self-graded rating prompt of Section~\ref{subsec:game_review_design} on the finish screen --- when it was actually drawn from the due-word queue rather than substituted at random because nothing was due. Every other word placed on the board is practice in the ordinary sense (the learner has tracked it before and may re-encounter it here) without being graded as a spaced-repetition event, keeping FSRS state changes limited to words genuinely scheduled for review rather than every word that happens to appear on a given board. This due-word gate is specific to Word of Wonders; the Wordle-style game (Section~\ref{subsec:wordle_impl}) grades every completed round regardless of due-word status, rather than gating on it the same way.
 
+
+\section{Deployment and Distribution}
+\label{sec:deployment_impl}
+    The backend and the reels service each run on their own host, behind their public addresses. All configuration is read from environment variables rather than from code: database credentials, token secrets and lifetimes, the Google client ids for each platform, the storage credentials, and the mail settings. The backend refuses to start if its storage configuration is incomplete.
+
+    Media never passes through the API servers. To upload a reel or a profile picture, the client asks the API for a presigned upload URL, valid for 15 minutes, for a key under that user's own prefix. It sends the file directly to the Cloudflare R2 bucket, and the server checks that the object exists before it writes the file's URL to the database. This keeps large video bodies off the small hosts, consistent with the memory limit of the reels service (Section~\ref{subsec:reels_stack}).
+
+    The mobile application is built with Expo Application Services using three profiles: a development client for internal use, a preview profile that produces an Android APK, and a production profile that produces an Android app bundle for the internal track of Google Play. The Android APKs are also published as versioned releases on GitHub, while the iOS build is currently available only through Expo.
 
 \newpage
