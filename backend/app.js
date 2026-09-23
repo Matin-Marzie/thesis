@@ -31,14 +31,9 @@ const __dirname = path.dirname(__filename);
 const app = express();
 const API_VERSION = 'v1';
 
-// Render sits two proxy hops in front of the app; trust them so req.ip is the real client IP
-app.set('trust proxy', 2);
-
-// TEMPORARY: verify the trust proxy hop count on Render, then remove
-app.get('/ip', (req, res) => res.json({
-  ip: req.ip,
-  xForwardedFor: req.get('x-forwarded-for'),
-}));
+// Requests reach the app through three proxies (client -> Cloudflare -> Render
+// edge -> Render internal); trust them so req.ip is the real client IP
+app.set('trust proxy', 3);
 
 // Public website (glosy.gr) shares this server with the API (api.glosy.gr)
 const WEBSITE_HOST = 'glosy.gr';
