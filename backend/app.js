@@ -31,6 +31,12 @@ const __dirname = path.dirname(__filename);
 const app = express();
 const API_VERSION = 'v1';
 
+// Render sits one proxy hop in front of the app; trust it so req.ip is the real client IP
+app.set('trust proxy', 1);
+
+// TEMPORARY: verify the trust proxy hop count on Render, then remove
+app.get('/ip', (req, res) => res.send(req.ip));
+
 // Public website (glosy.gr) shares this server with the API (api.glosy.gr)
 const WEBSITE_HOST = 'glosy.gr';
 const PUBLIC_DIR = path.join(__dirname, 'public');
