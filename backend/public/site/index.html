@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>glosy — Personalized Language Learning</title>
+<meta name="description" content="Learn languages through short subtitled video reels, vocabulary practice and quick games. Download glosy for Android.">
+<meta name="theme-color" content="#0f8690">
+<meta property="og:title" content="glosy — Personalized Language Learning">
+<meta property="og:description" content="Learn languages through short subtitled video reels, vocabulary practice and quick games.">
+<meta property="og:image" content="https://glosy.gr/static/site/icon.png">
+<meta property="og:url" content="https://glosy.gr/">
+<link rel="icon" type="image/png" href="/static/site/icon.png">
+<link rel="apple-touch-icon" href="/static/site/icon.png">
+<style>
+  :root {
+    color-scheme: light dark;
+    --primary: #0f8690;
+    --primary-hover: #0c6f77;
+    --bg: #e9e7e8;
+    --surface: #f6f5f5;
+    --text: #1a1a1a;
+    --muted: #666;
+    --border: #d6d3d4;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --primary-hover: #13a0ab;
+      --bg: #030303;
+      --surface: #141414;
+      --text: #f2f2f2;
+      --muted: #a0a0a0;
+      --border: #2a2a2a;
+    }
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+  }
+  main { max-width: 720px; margin: 0 auto; padding: 32px 16px 48px; }
+
+  .hero { text-align: center; padding-top: 24px; }
+  .hero picture img { width: 300px; max-width: 80%; height: auto; display: block; margin: 0 auto; }
+  .logo {
+    font-size: 3.5rem; font-weight: 700; letter-spacing: 2px;
+    color: var(--primary); margin: 8px 0 0; line-height: 1.1;
+  }
+  .tagline { font-size: 1.2rem; color: var(--muted); margin: 8px 0 0; }
+  .pitch { max-width: 520px; margin: 20px auto 0; font-size: 1.05rem; }
+
+  .download { margin-top: 32px; display: flex; flex-direction: column; align-items: center; gap: 10px; }
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+    width: 100%; max-width: 360px; padding: 16px 24px; border-radius: 12px;
+    background: var(--primary); color: #fff; text-decoration: none;
+    font-size: 1rem; font-weight: 700; letter-spacing: 0.5px;
+    transition: background 0.15s ease;
+  }
+  .btn:hover, .btn:focus-visible { background: var(--primary-hover); }
+  .btn svg { width: 22px; height: 22px; flex: none; }
+  .release-meta { color: var(--muted); font-size: 0.9rem; margin: 0; }
+  .release-meta a { color: var(--primary); }
+
+  section { margin-top: 48px; }
+  h2 { font-size: 1.3rem; margin: 0 0 16px; }
+
+  .features { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; }
+  .card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 12px; padding: 16px;
+  }
+  .card h3 { margin: 0 0 4px; font-size: 1rem; color: var(--primary); }
+  .card p { margin: 0; color: var(--muted); font-size: 0.95rem; }
+
+  ol.steps { margin: 0; padding-left: 1.4em; }
+  ol.steps li { margin-bottom: 8px; }
+  .note { color: var(--muted); font-size: 0.9rem; margin-top: 12px; }
+
+  footer {
+    border-top: 1px solid var(--border); margin-top: 56px; padding-top: 20px;
+    text-align: center; color: var(--muted); font-size: 0.9rem;
+  }
+  footer nav { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px 20px; margin-bottom: 10px; }
+  footer a { color: var(--primary); text-decoration: none; }
+  footer a:hover { text-decoration: underline; }
+</style>
+</head>
+<body>
+<main>
+  <header class="hero">
+    <picture>
+      <source srcset="/static/site/cat-dark.gif" media="(prefers-color-scheme: dark)">
+      <img src="/static/site/cat-light.gif" alt="The glosy cat mascot wagging its tail" width="337" height="355">
+    </picture>
+    <h1 class="logo">glosy</h1>
+    <p class="tagline">Personalized Language Learning</p>
+    <p class="pitch">Learn a new language from short subtitled video reels, build your vocabulary word by word, and practise with quick games.</p>
+
+    <div class="download">
+      <a class="btn" id="download-btn" href="https://github.com/Matin-Marzie/thesis/releases/latest/download/app-release.apk">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.6 9.48l1.84-3.18a.38.38 0 0 0-.66-.38l-1.87 3.23a11.4 11.4 0 0 0-9.82 0L5.22 5.92a.38.38 0 0 0-.66.38L6.4 9.48A10.8 10.8 0 0 0 1 18h22a10.8 10.8 0 0 0-5.4-8.52zM7 15.25a1.25 1.25 0 1 1 0-2.5 1.25 1.25 0 0 1 0 2.5zm10 0a1.25 1.25 0 1 1 0-2.5 1.25 1.25 0 0 1 0 2.5z"/></svg>
+        DOWNLOAD FOR ANDROID
+      </a>
+      <p class="release-meta" id="release-meta">Latest release · APK · <a href="https://github.com/Matin-Marzie/thesis/releases">all versions</a></p>
+    </div>
+  </header>
+
+  <section aria-labelledby="features-title">
+    <h2 id="features-title">What you can do</h2>
+    <div class="features">
+      <div class="card">
+        <h3>Watch reels</h3>
+        <p>Short videos with subtitles, picked to match the words you already know.</p>
+      </div>
+      <div class="card">
+        <h3>Collect words</h3>
+        <p>Tap any word for its meaning and save it to your personal dictionary.</p>
+      </div>
+      <div class="card">
+        <h3>Play games</h3>
+        <p>Quick word games that turn practice into a few minutes of fun.</p>
+      </div>
+    </div>
+  </section>
+
+  <section aria-labelledby="install-title">
+    <h2 id="install-title">How to install</h2>
+    <ol class="steps">
+      <li>Open this page on your Android phone and tap <strong>Download for Android</strong>.</li>
+      <li>Open the downloaded <code>app-release.apk</code> file.</li>
+      <li>If Android asks, allow your browser or file manager to <strong>install unknown apps</strong>.</li>
+      <li>Tap <strong>Install</strong>, then open glosy.</li>
+    </ol>
+    <p class="note">glosy is currently available for Android only.</p>
+  </section>
+
+  <footer>
+    <nav aria-label="Legal">
+      <a href="/privacy">Privacy Policy</a>
+      <a href="/terms">Terms of Use</a>
+      <a href="/licenses">Open-source licenses</a>
+      <a href="/feedback">Feedback</a>
+      <a href="mailto:support@glosy.gr">support@glosy.gr</a>
+    </nav>
+    <p>&copy; 2026 glosy</p>
+  </footer>
+</main>
+
+<script>
+  // Fill in the version and size of the newest release; the static text above is the fallback.
+  fetch('https://api.github.com/repos/Matin-Marzie/thesis/releases/latest')
+    .then((res) => (res.ok ? res.json() : Promise.reject(res.status)))
+    .then((release) => {
+      const apk = (release.assets || []).find((a) => a.name.endsWith('.apk'));
+      if (!apk) return;
+      const sizeMb = Math.round(apk.size / (1024 * 1024));
+      document.getElementById('download-btn').href = apk.browser_download_url;
+      document.getElementById('release-meta').firstChild.textContent =
+        `Version ${release.tag_name.replace(/^v/, '')} · ${sizeMb} MB · `;
+    })
+    .catch(() => {});
+</script>
+</body>
+</html>

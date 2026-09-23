@@ -31,6 +31,18 @@ const __dirname = path.dirname(__filename);
 const app = express();
 const API_VERSION = 'v1';
 
+// Public website (glosy.gr) shares this server with the API (api.glosy.gr)
+const WEBSITE_HOST = 'glosy.gr';
+const PUBLIC_DIR = path.join(__dirname, 'public');
+
+// Redirect www.glosy.gr to the bare domain
+app.use((req, res, next) => {
+  if (req.hostname === `www.${WEBSITE_HOST}`) {
+    return res.redirect(301, `https://${WEBSITE_HOST}${req.originalUrl}`);
+  }
+  next();
+});
+
 // Middleware
 app.use(logger); // Custom logger
 app.use(express.json()); // Parse JSON bodies
@@ -38,7 +50,18 @@ app.use(express.urlencoded({ extended: false })); // Parse URL-encoded bodies
 app.use(cookieParser()); // Parse cookies
 
 // Serve static files
-app.use('/static', express.static(path.join(__dirname, 'public')));
+app.use('/static', express.static(PUBLIC_DIR));
+
+// Short URLs for the website's legal and feedback pages
+const PAGE_ALIASES = {
+  '/privacy': 'legal/privacy-policy.html',
+  '/terms': 'legal/terms-of-use.html',
+  '/licenses': 'legal/licenses.html',
+  '/feedback': 'feedback.html',
+};
+Object.entries(PAGE_ALIASES).forEach(([route, file]) => {
+  app.get(route, (req, res) => res.sendFile(path.join(PUBLIC_DIR, file)));
+});
 
 // Swagger documentation
 app.use('/swagger', swaggerUi.serve, swaggerUi.setup(swaggerSpec, {
@@ -83,6 +106,9 @@ app.use(`/api/${API_VERSION}/videos`, videosRouter);
  */
 
 app.get('/', (req, res) => {
+  if (req.hostname === WEBSITE_HOST) {
+    return res.sendFile(path.join(PUBLIC_DIR, 'site', 'index.html'));
+  }
   res.json({
     message: 'Personalized Language Learning API v1.0',
     documentation: '/api-docs',
